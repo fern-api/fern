@@ -1,5 +1,5 @@
 import type { Argv } from "yargs";
-import type { GlobalArgs } from "../../context/GlobalArgs";
+import type { GlobalArgs } from "../../context/GlobalArgs.js";
 
 type CommandAdder = (cli: Argv<GlobalArgs>) => void;
 

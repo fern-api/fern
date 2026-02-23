@@ -5,7 +5,7 @@ import { mkdir, rm } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 
-import { runContainer } from "../runDocker";
+import { runContainer } from "../runDocker.js";
 
 const promisifiedExec = promisify(exec);
 
@@ -31,14 +31,15 @@ beforeAll(async () => {
 }, 60_000);
 
 describe("runContainer", () => {
-    it("basic-writer", async () => {
+    it("basic-writer", async ({ signal }) => {
         const expectedOutputFilePath = "my-file.txt";
 
         await runContainer({
             logger: CONSOLE_LOGGER,
             imageName: BASIC_WRITER_IMAGE_NAME,
             args: [expectedOutputFilePath],
-            binds: [`${HOST_OUTPUT_DIR}:${IMAGE_OUTPUT_DIR}`]
+            binds: [`${HOST_OUTPUT_DIR}:${IMAGE_OUTPUT_DIR}`],
+            signal
         });
 
         const fileExists = await doesPathExist(join(HOST_OUTPUT_DIR, RelativeFilePath.of(expectedOutputFilePath)));

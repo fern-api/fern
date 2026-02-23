@@ -21,7 +21,7 @@
  * // }
  * ```
  */
-type LazyResult<T> = {
+export type LazyResult<T> = {
     // If it's a function AND has no required parameters, check if it's truly zero-param
     [K in keyof T]: T[K] extends (...args: infer Args) => infer R
         ? Args extends [] // True zero-parameter function

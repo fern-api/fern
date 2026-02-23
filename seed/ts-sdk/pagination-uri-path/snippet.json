@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/uri",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithUriPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationUriPathClient } from \"@fern/pagination-uri-path\";\n\nconst client = new SeedPaginationUriPathClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithUriPagination();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/path",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithPathPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationUriPathClient } from \"@fern/pagination-uri-path\";\n\nconst client = new SeedPaginationUriPathClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithPathPagination();\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -1,2 +1,2 @@
-export { InlinedRequestBodyGenerator } from "./InlinedRequestBodyGenerator";
-export { RequestGenerator } from "./RequestGenerator";
+export { InlinedRequestBodyGenerator } from "./InlinedRequestBodyGenerator.js";
+export { RequestGenerator } from "./RequestGenerator.js";

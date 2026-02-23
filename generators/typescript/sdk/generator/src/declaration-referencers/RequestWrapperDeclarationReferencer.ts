@@ -1,15 +1,15 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, PackageId } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 
-import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer";
-import { DeclarationReferencer } from "./DeclarationReferencer";
+import { AbstractSdkClientClassDeclarationReferencer } from "./AbstractSdkClientClassDeclarationReferencer.js";
+import { DeclarationReferencer } from "./DeclarationReferencer.js";
 
 export declare namespace RequestWrapperDeclarationReferencer {
     export interface Name {
         packageId: PackageId;
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
     }
 
     export interface Init extends AbstractSdkClientClassDeclarationReferencer.Init {

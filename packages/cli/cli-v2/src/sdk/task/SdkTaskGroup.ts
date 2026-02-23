@@ -1,9 +1,9 @@
-import type { Context } from "../../context/Context";
-import { TaskGroup } from "../../ui/TaskGroup";
-import type { TaskStageDefinition } from "../../ui/TaskStage";
-import type { TaskStageLabels } from "../../ui/TaskStageLabels";
-import { SdkTask } from "./SdkTask";
-import type { SdkTaskStageId } from "./SdkTaskStageId";
+import type { Context } from "../../context/Context.js";
+import { TaskGroup } from "../../ui/TaskGroup.js";
+import type { TaskStageDefinition } from "../../ui/TaskStage.js";
+import type { TaskStageLabels } from "../../ui/TaskStageLabels.js";
+import { SdkTask } from "./SdkTask.js";
+import type { SdkTaskStageId } from "./SdkTaskStageId.js";
 
 /** Stage label overrides keyed by stage ID */
 export type SdkStageOverrides = Partial<Record<SdkTaskStageId, Partial<TaskStageLabels>>>;

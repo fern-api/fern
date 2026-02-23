@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
 
-import { ProtobufFileInfo, ProtobufParser } from "../ProtobufParser";
+import { ProtobufFileInfo, ProtobufParser } from "../ProtobufParser.js";
 
 const TEST_DEFINITIONS = AbsoluteFilePath.of(path.join(__dirname, "protobuf/test-definitions"));
 

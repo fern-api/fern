@@ -1,4 +1,6 @@
+import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { noop } from "@fern-api/core-utils";
+import { replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { convertIrToApiDefinition, DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
@@ -8,12 +10,10 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { randomUUID } from "crypto";
 import path from "path";
-
-import { SourceResolverImpl } from "../../../../../cli-source-resolver/src/SourceResolverImpl";
-import { Rule, RuleViolation } from "../../Rule";
-import { checkIfPathnameExists } from "./check-if-pathname-exists";
-import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames";
-import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils";
+import { Rule, RuleViolation } from "../../Rule.js";
+import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
+import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
+import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
 
 const NOOP_CONTEXT = createMockTaskContext({ logger: createLogger(noop) });
 
@@ -95,8 +95,15 @@ export const ValidMarkdownLinks: Rule = {
                     return [];
                 }
 
+                const { markdown: resolvedContent } = await replaceReferencedMarkdown({
+                    markdown: content,
+                    absolutePathToFernFolder: workspace.absoluteFilePath,
+                    absolutePathToMarkdownFile: absoluteFilepath,
+                    context: NOOP_CONTEXT
+                });
+
                 // Find all matches in the Markdown text
-                const { pathnamesToCheck, violations } = collectPathnamesToCheck(content, {
+                const { pathnamesToCheck, violations } = collectPathnamesToCheck(resolvedContent, {
                     absoluteFilepath,
                     instanceUrls
                 });

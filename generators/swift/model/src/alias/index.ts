@@ -1,1 +1,1 @@
-export * from "./AliasGenerator";
+export * from "./AliasGenerator.js";

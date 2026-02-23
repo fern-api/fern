@@ -1,4 +1,4 @@
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const ValidPathParametersConfigurationRule: Rule = {
     name: "valid-path-parameters-configuration",

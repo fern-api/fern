@@ -1,1 +1,1 @@
-export { addCheckCommand } from "./command";
+export { addCheckCommand } from "./command.js";

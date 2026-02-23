@@ -12,7 +12,6 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernIr, serialization } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     constructNpmPackage,
     constructNpmPackageArgs,
@@ -23,9 +22,9 @@ import {
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
-import { publishPackage } from "./publishPackage";
-import { writeGenerationMetadata } from "./writeGenerationMetadata";
-import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
+import { publishPackage } from "./publishPackage.js";
+import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
+import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -119,6 +118,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
+            const codeGenStartTime = Date.now();
             const typescriptProject = await this.generateTypescriptProject({
                 config,
                 customConfig,
@@ -126,6 +126,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 generatorContext,
                 intermediateRepresentation: ir
             });
+            logger.info(`[TIMING] code generation took ${Date.now() - codeGenStartTime}ms`);
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
             }
@@ -285,7 +286,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         customConfig: CustomConfig;
         npmPackage: NpmPackage | undefined;
         generatorContext: GeneratorContext;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject>;
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
     protected abstract publishToJsr(customConfig: CustomConfig): boolean;
@@ -295,7 +296,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract shouldTolerateRepublish(customConfig: CustomConfig): boolean;
     protected abstract shouldSkipNpmPkgFix(customConfig: CustomConfig): boolean;
 
-    private shouldGenerateFullProject(ir: IntermediateRepresentation): boolean {
+    private shouldGenerateFullProject(ir: FernIr.IntermediateRepresentation): boolean {
         const publishConfig = ir.publishConfig;
         if (publishConfig == null) {
             return false;
@@ -312,7 +313,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     }
 
     private async pushToGitHub(
-        ir: IntermediateRepresentation,
+        ir: FernIr.IntermediateRepresentation,
         sourceDirectory: string,
         logger: Logger
     ): Promise<string> {
@@ -332,7 +333,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         ir,
         sourceDirectory
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         sourceDirectory: string;
     }): RawGithubConfig {
         return {

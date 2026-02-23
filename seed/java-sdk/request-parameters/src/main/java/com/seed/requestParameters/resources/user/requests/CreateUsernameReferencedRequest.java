@@ -84,6 +84,10 @@ public final class CreateUsernameReferencedRequest {
     public interface _FinalStage {
         CreateUsernameReferencedRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage tags(List<String> tags);
 
         _FinalStage addTags(String tags);
@@ -143,6 +147,18 @@ public final class CreateUsernameReferencedRequest {
         @java.lang.Override
         public CreateUsernameReferencedRequest build() {
             return new CreateUsernameReferencedRequest(tags, body, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

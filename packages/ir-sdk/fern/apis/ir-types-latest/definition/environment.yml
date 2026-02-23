@@ -23,6 +23,7 @@ types:
       id: EnvironmentId
       name: commons.Name
       url: EnvironmentUrl
+      audiences: optional<list<string>>
       defaultUrl:
         type: optional<string>
         docs: |
@@ -62,6 +63,7 @@ types:
       id: EnvironmentId
       name: commons.Name
       urls: map<EnvironmentBaseUrlId, EnvironmentUrl>
+      audiences: optional<list<string>>
       defaultUrls:
         type: optional<map<EnvironmentBaseUrlId, string>>
         docs: |

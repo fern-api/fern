@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractExtension } from "../AbstractExtension";
+import { AbstractExtension } from "../AbstractExtension.js";
 
 export declare namespace ServerNameExtension {
     export interface Args extends AbstractExtension.Args {

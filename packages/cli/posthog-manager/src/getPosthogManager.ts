@@ -1,9 +1,9 @@
 import { getAccessToken, getUserToken } from "@fern-api/auth";
 
-import { AccessTokenPosthogManager } from "./AccessTokenPosthogManager";
-import { NoopPosthogManager } from "./NoopPosthogManager";
-import { PosthogManager } from "./PosthogManager";
-import { UserPosthogManager } from "./UserPosthogManager";
+import { AccessTokenPosthogManager } from "./AccessTokenPosthogManager.js";
+import { NoopPosthogManager } from "./NoopPosthogManager.js";
+import { PosthogManager } from "./PosthogManager.js";
+import { UserPosthogManager } from "./UserPosthogManager.js";
 
 let posthogManager: PosthogManager | undefined;
 

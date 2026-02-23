@@ -1,23 +1,22 @@
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export function getEndpointReturnType({
     context,
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): php.Type | undefined {
     if (endpoint.response?.body == null) {
         return undefined;
     }
     return endpoint.response.body._visit({
-        bytes: () => undefined,
+        bytes: () => php.Type.string(),
         streamParameter: () => undefined,
-        fileDownload: () => undefined,
+        fileDownload: () => php.Type.string(),
         json: (reference) => {
             return context.phpTypeMapper.convert({ reference: reference.responseBodyType });
         },

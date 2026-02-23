@@ -14,9 +14,9 @@ import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
-import { GROUP_CLI_OPTION } from "../../constants";
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
-import { GenerationMode } from "./generateAPIWorkspaces";
+import { GROUP_CLI_OPTION } from "../../constants.js";
+import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues.js";
+import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
     organization,

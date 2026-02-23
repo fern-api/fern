@@ -41,9 +41,9 @@ class JsonSerializer
     /**
      * Serializes an array based on type annotations (either a list or map).
      *
-     * @param mixed[]|array<string, mixed> $data The array to be serialized.
-     * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
-     * @return mixed[]|array<string, mixed> The serialized array.
+     * @param array<mixed> $data The array to be serialized.
+     * @param array<mixed> $type The type definition from the annotation.
+     * @return array<mixed> The serialized array.
      * @throws JsonException If serialization fails.
      */
     public static function serializeArray(array $data, array $type): array
@@ -71,7 +71,7 @@ class JsonSerializer
             return self::serializeArray((array)$data, $type);
         }
 
-        if (gettype($type) != "string") {
+        if (gettype($type) !== "string") {
             throw new JsonException("Unexpected non-string type.");
         }
 
@@ -159,8 +159,8 @@ class JsonSerializer
     /**
      * Serializes a map (associative array) with defined key and value types.
      *
-     * @param array<string, mixed> $data The associative array to serialize.
-     * @param array<string, mixed> $type The type definition for the map.
+     * @param array<mixed> $data The associative array to serialize.
+     * @param array<mixed> $type The type definition for the map.
      * @return array<string, mixed> The serialized map.
      * @throws JsonException If serialization fails.
      */
@@ -170,11 +170,13 @@ class JsonSerializer
         if ($keyType === null) {
             throw new JsonException("Unexpected no key in ArrayType.");
         }
+        $keyType = (string) $keyType;
         $valueType = $type[$keyType];
+        /** @var array<string, mixed> $result */
         $result = [];
 
         foreach ($data as $key => $item) {
-            $key = Utils::castKey($key, $keyType);
+            $key = (string) Utils::castKey($key, $keyType);
             $result[$key] = self::serializeValue($item, $valueType);
         }
 
@@ -184,14 +186,15 @@ class JsonSerializer
     /**
      * Serializes a list (indexed array) where only the value type is defined.
      *
-     * @param array<int, mixed> $data The list to serialize.
-     * @param array<int, mixed> $type The type definition for the list.
+     * @param array<mixed> $data The list to serialize.
+     * @param array<mixed> $type The type definition for the list.
      * @return array<int, mixed> The serialized list.
      * @throws JsonException If serialization fails.
      */
     private static function serializeList(array $data, array $type): array
     {
         $valueType = $type[0];
+        /** @var array<int, mixed> */
         return array_map(fn ($item) => self::serializeValue($item, $valueType), $data);
     }
 }

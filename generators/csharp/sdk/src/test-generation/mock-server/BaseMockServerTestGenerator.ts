@@ -2,12 +2,18 @@ import { NamedArgument } from "@fern-api/base-generator";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleEndpointCall, InferredAuthScheme, Name, OAuthScheme } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type InferredAuthScheme = FernIr.InferredAuthScheme;
+type Name = FernIr.Name;
+type OAuthScheme = FernIr.OAuthScheme;
+
 import { fail } from "assert";
-import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator";
-import { RootClientGenerator } from "../../root-client/RootClientGenerator";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { MockEndpointGenerator } from "./MockEndpointGenerator";
+import { MultiUrlEnvironmentGenerator } from "../../environment/MultiUrlEnvironmentGenerator.js";
+import { RootClientGenerator } from "../../root-client/RootClientGenerator.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private readonly rootClientGenerator: RootClientGenerator;

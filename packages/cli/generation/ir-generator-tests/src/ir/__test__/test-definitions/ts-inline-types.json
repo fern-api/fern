@@ -2255,7 +2255,8 @@
                         "availability": null,
                         "docs": "lorem ipsum"
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_:DiscriminatedUnion1InlineType1",
@@ -4109,7 +4110,8 @@
                         "availability": null,
                         "docs": "lorem ipsum"
                     }
-                ]
+                ],
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_:UndiscriminatedUnion1DiscriminatedUnion1InlineType1",

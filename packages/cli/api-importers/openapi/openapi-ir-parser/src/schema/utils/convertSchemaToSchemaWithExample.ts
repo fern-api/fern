@@ -241,6 +241,7 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 availability: oneOfSchema.availability,
                 discriminantProperty: oneOfSchema.discriminantProperty,
                 discriminantPropertyNameOverride: oneOfSchema.discriminantPropertyNameOverride,
+                discriminatorContext: oneOfSchema.discriminatorContext,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 title: oneOfSchema.title,

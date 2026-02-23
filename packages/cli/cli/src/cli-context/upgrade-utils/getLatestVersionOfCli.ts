@@ -1,6 +1,6 @@
 import latestVersion from "latest-version";
 
-import { CliEnvironment } from "../CliEnvironment";
+import { CliEnvironment } from "../CliEnvironment.js";
 
 export async function getLatestVersionOfCli({
     cliEnvironment,

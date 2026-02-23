@@ -1,15 +1,14 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { DeclaredTypeName, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import {
     REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
     REQUEST_OPTIONS_PARAMETER_NAME
-} from "./requestOptionsParameter";
+} from "./requestOptionsParameter.js";
 
 export declare namespace GeneratedQueryParams {
     export interface Init {
-        queryParameters: QueryParameter[] | undefined;
+        queryParameters: FernIr.QueryParameter[] | undefined;
         referenceToQueryParameterProperty: (queryParameterKey: string, context: SdkContext) => ts.Expression;
     }
 }
@@ -17,7 +16,7 @@ export declare namespace GeneratedQueryParams {
 export class GeneratedQueryParams {
     public static readonly QUERY_PARAMS_VARIABLE_NAME = "_queryParams" as const;
 
-    private queryParameters: QueryParameter[] | undefined;
+    private queryParameters: FernIr.QueryParameter[] | undefined;
     private referenceToQueryParameterProperty: (queryParameterKey: string, context: SdkContext) => ts.Expression;
 
     constructor({ queryParameters, referenceToQueryParameterProperty }: GeneratedQueryParams.Init) {
@@ -84,7 +83,7 @@ export class GeneratedQueryParams {
         referenceToQueryParameter,
         context
     }: {
-        queryParameter: QueryParameter;
+        queryParameter: FernIr.QueryParameter;
         referenceToQueryParameter: ts.Expression;
         context: SdkContext;
     }): ts.Expression {
@@ -138,7 +137,7 @@ export class GeneratedQueryParams {
         referenceToQueryParameter,
         context
     }: {
-        queryParameter: QueryParameter;
+        queryParameter: FernIr.QueryParameter;
         referenceToQueryParameter: ts.Expression;
         context: SdkContext;
     }): ts.Expression {
@@ -198,9 +197,9 @@ export class GeneratedQueryParams {
         listItemType,
         context
     }: {
-        queryParameter: QueryParameter;
+        queryParameter: FernIr.QueryParameter;
         referenceToQueryParameter: ts.Expression;
-        listItemType: TypeReference;
+        listItemType: FernIr.TypeReference;
         context: SdkContext;
     }): ts.Expression {
         const objectType = this.getObjectType(listItemType, context);
@@ -290,7 +289,10 @@ export class GeneratedQueryParams {
         }
     }
 
-    private getPrimitiveType(typeReference: TypeReference, context: SdkContext): TypeReference.Primitive | undefined {
+    private getPrimitiveType(
+        typeReference: FernIr.TypeReference,
+        context: SdkContext
+    ): FernIr.TypeReference.Primitive | undefined {
         switch (typeReference.type) {
             case "primitive":
                 return typeReference;
@@ -316,7 +318,10 @@ export class GeneratedQueryParams {
         return undefined;
     }
 
-    private getObjectType(typeReference: TypeReference, context: SdkContext): DeclaredTypeName | undefined {
+    private getObjectType(
+        typeReference: FernIr.TypeReference,
+        context: SdkContext
+    ): FernIr.DeclaredTypeName | undefined {
         switch (typeReference.type) {
             case "named":
                 {
@@ -342,14 +347,14 @@ export class GeneratedQueryParams {
         return undefined;
     }
 
-    private isOptional(typeReference: TypeReference): boolean {
+    private isOptional(typeReference: FernIr.TypeReference): boolean {
         if (typeReference.type === "container" && typeReference.container.type === "optional") {
             return true;
         }
         return false;
     }
 
-    private listItemNeedsTransform(listItemType: TypeReference, context: SdkContext): boolean {
+    private listItemNeedsTransform(listItemType: FernIr.TypeReference, context: SdkContext): boolean {
         const objectType = this.getObjectType(listItemType, context);
         if (objectType != null) {
             return context.includeSerdeLayer;
@@ -361,7 +366,7 @@ export class GeneratedQueryParams {
         return true;
     }
 
-    private scalarValueNeedsTransform(typeReference: TypeReference, context: SdkContext): boolean {
+    private scalarValueNeedsTransform(typeReference: FernIr.TypeReference, context: SdkContext): boolean {
         const objectType = this.getObjectType(typeReference, context);
         if (objectType != null) {
             return context.includeSerdeLayer;

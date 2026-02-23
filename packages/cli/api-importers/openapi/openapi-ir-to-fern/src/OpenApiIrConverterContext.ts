@@ -13,8 +13,8 @@ import {
 } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 
-import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions";
-import { State } from "./State";
+import { ConvertOpenAPIOptions, getConvertOptions } from "./ConvertOpenAPIOptions.js";
+import { State } from "./State.js";
 
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;

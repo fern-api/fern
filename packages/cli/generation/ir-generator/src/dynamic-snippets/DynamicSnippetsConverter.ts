@@ -40,7 +40,7 @@ import {
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 
-import { Version } from "./version";
+import { Version } from "./version.js";
 
 interface EndpointWithFilepath extends HttpEndpoint {
     servicePathParameters: PathParameter[];

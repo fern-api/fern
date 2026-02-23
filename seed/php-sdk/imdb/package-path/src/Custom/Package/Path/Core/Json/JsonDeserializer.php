@@ -45,9 +45,9 @@ class JsonDeserializer
     /**
      * Deserializes an array based on type annotations (either a list or a map).
      *
-     * @param mixed[]|array<string, mixed> $data The array to be deserialized.
-     * @param mixed[]|array<string, mixed> $type The type definition from the annotation.
-     * @return mixed[]|array<string, mixed> The deserialized array.
+     * @param array<mixed> $data The array to be deserialized.
+     * @param array<mixed> $type The type definition from the annotation.
+     * @return array<mixed> The deserialized array.
      * @throws JsonException If deserialization fails.
      */
     public static function deserializeArray(array $data, array $type): array
@@ -75,7 +75,7 @@ class JsonDeserializer
             return self::deserializeArray((array)$data, $type);
         }
 
-        if (gettype($type) != "string") {
+        if (gettype($type) !== "string") {
             throw new JsonException("Unexpected non-string type.");
         }
 
@@ -134,6 +134,7 @@ class JsonDeserializer
         }
 
         if (class_exists($type) && is_array($data)) {
+            /** @var array<string, mixed> $data */
             return self::deserializeObject($data, $type);
         }
 
@@ -171,19 +172,24 @@ class JsonDeserializer
     /**
      * Deserializes a map (associative array) with defined key and value types.
      *
-     * @param array<string, mixed> $data The associative array to deserialize.
-     * @param array<string, mixed> $type The type definition for the map.
+     * @param array<mixed> $data The associative array to deserialize.
+     * @param array<mixed> $type The type definition for the map.
      * @return array<string, mixed> The deserialized map.
      * @throws JsonException If deserialization fails.
      */
     private static function deserializeMap(array $data, array $type): array
     {
         $keyType = array_key_first($type);
+        if ($keyType === null) {
+            throw new JsonException("Unexpected no key in ArrayType.");
+        }
+        $keyType = (string) $keyType;
         $valueType = $type[$keyType];
+        /** @var array<string, mixed> $result */
         $result = [];
 
         foreach ($data as $key => $item) {
-            $key = Utils::castKey($key, (string)$keyType);
+            $key = (string) Utils::castKey($key, $keyType);
             $result[$key] = self::deserializeValue($item, $valueType);
         }
 
@@ -193,14 +199,15 @@ class JsonDeserializer
     /**
      * Deserializes a list (indexed array) with a defined value type.
      *
-     * @param array<int, mixed> $data The list to deserialize.
-     * @param array<int, mixed> $type The type definition for the list.
+     * @param array<mixed> $data The list to deserialize.
+     * @param array<mixed> $type The type definition for the list.
      * @return array<int, mixed> The deserialized list.
      * @throws JsonException If deserialization fails.
      */
     private static function deserializeList(array $data, array $type): array
     {
         $valueType = $type[0];
+        /** @var array<int, mixed> */
         return array_map(fn ($item) => self::deserializeValue($item, $valueType), $data);
     }
 }

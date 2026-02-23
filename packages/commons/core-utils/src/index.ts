@@ -1,6 +1,6 @@
 // Force cache invalidation for CI - server URL templating feature
-export { addPrefixToString } from "./addPrefixToString";
-export { applyOpenAPIOverlay, type Overlay, type OverlayAction } from "./applyOpenAPIOverlay";
+export { addPrefixToString } from "./addPrefixToString.js";
+export { applyOpenAPIOverlay, type Overlay, type OverlayAction } from "./applyOpenAPIOverlay.js";
 export {
     assert,
     assertDefined,
@@ -9,42 +9,42 @@ export {
     assertNonNull,
     assertString,
     assertVoidNoThrow
-} from "./assert";
-export { delay } from "./delay/delay";
-export { withMinimumTime } from "./delay/withMinimumTime";
-export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
-export * as Examples from "./examples";
-export { extractErrorMessage } from "./extractErrorMessage";
-export { getDuplicates } from "./getDuplicates";
-export { identity } from "./identity";
-export { isNonNullish } from "./isNonNullish";
-export { MediaType } from "./mediaType";
-export { mergeWithOverrides } from "./mergeWithOverrides";
-export { noop } from "./noop";
+} from "./assert.js";
+export { delay } from "./delay/delay.js";
+export { withMinimumTime } from "./delay/withMinimumTime.js";
+export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty.js";
+export * as Examples from "./examples.js";
+export { extractErrorMessage } from "./extractErrorMessage.js";
+export { getDuplicates } from "./getDuplicates.js";
+export { identity } from "./identity.js";
+export { isNonNullish } from "./isNonNullish.js";
+export { MediaType } from "./mediaType.js";
+export { mergeWithOverrides } from "./mergeWithOverrides.js";
+export { noop } from "./noop.js";
 export {
     haveSameNullishness,
     nullIfNullish,
     nullIfSomeNullish,
     undefinedIfNullish,
     undefinedIfSomeNullish
-} from "./nullishUtils";
-export { type ObjectPropertiesVisitor, visitObject, visitObjectAsync } from "./ObjectPropertiesVisitor";
-export { type Entries, entries } from "./objects/entries";
-export { isPlainObject } from "./objects/isPlainObject";
-export { keys } from "./objects/keys";
-export { mapValues } from "./objects/mapValues";
-export { type Values, values } from "./objects/values";
-export { parseEndpointLocator } from "./parseEndpointLocator";
-export { PLATFORM, type Platform } from "./platform";
-export { removeSuffix } from "./removeSuffix";
-export { replaceEnvVariables } from "./replaceEnvVars";
-export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry";
-export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues";
-export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils";
-export { type SetRequired } from "./setRequired";
-export { stripLeadingSlash } from "./stripLeadingSlash";
-export { titleCase } from "./titleCase";
-export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
-export { validateAgainstJsonSchema } from "./validateAgainstJsonSchema";
-export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
-export type { WithoutQuestionMarks } from "./withoutQuestionMarks";
+} from "./nullishUtils.js";
+export { type ObjectPropertiesVisitor, visitObject, visitObjectAsync } from "./ObjectPropertiesVisitor.js";
+export { type Entries, entries } from "./objects/entries.js";
+export { isPlainObject } from "./objects/isPlainObject.js";
+export { keys } from "./objects/keys.js";
+export { mapValues } from "./objects/mapValues.js";
+export { type Values, values } from "./objects/values.js";
+export { parseEndpointLocator } from "./parseEndpointLocator.js";
+export { PLATFORM, type Platform } from "./platform.js";
+export { removeSuffix } from "./removeSuffix.js";
+export { replaceEnvVariables } from "./replaceEnvVars.js";
+export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry.js";
+export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
+export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
+export { type SetRequired } from "./setRequired.js";
+export { stripLeadingSlash } from "./stripLeadingSlash.js";
+export { titleCase } from "./titleCase.js";
+export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types.js";
+export { validateAgainstJsonSchema } from "./validateAgainstJsonSchema.js";
+export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion.js";
+export type { WithoutQuestionMarks } from "./withoutQuestionMarks.js";

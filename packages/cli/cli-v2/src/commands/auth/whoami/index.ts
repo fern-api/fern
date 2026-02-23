@@ -1,1 +1,1 @@
-export { addWhoamiCommand } from "./command";
+export { addWhoamiCommand } from "./command.js";

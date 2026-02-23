@@ -1,2 +1,2 @@
-export * from "./TemplateDataGenerator";
-export * from "./WireTestSuiteGenerator";
+export * from "./TemplateDataGenerator.js";
+export * from "./WireTestSuiteGenerator.js";

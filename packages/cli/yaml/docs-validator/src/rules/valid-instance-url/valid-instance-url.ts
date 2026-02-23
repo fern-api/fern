@@ -1,4 +1,4 @@
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 const VALID_FERN_DOMAINS = ["docs.buildwithfern.com", "docs.dev.buildwithfern.com"];
 const MAX_SUBDOMAIN_LENGTH = 62;

@@ -306,6 +306,57 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToUndiscriminatedUnion</a>({ ...params }) -> Record&lt;string, SeedExhaustive.MixedType&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+    "string": 1.1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, SeedExhaustive.MixedType>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> SeedExhaustive.ObjectWithRequiredField | undefined</code></summary>
 <dl>
 <dd>
@@ -1280,6 +1331,88 @@ await client.endpoints.object.getAndReturnWithDatetimeLikeString({
 <dd>
 
 **requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Pagination
+<details><summary><code>client.endpoints.pagination.<a href="/src/test-packagePath/api/resources/endpoints/resources/pagination/client/Client.ts">listItems</a>({ ...params }) -> core.Page&lt;SeedExhaustive.ObjectWithRequiredField, SeedExhaustive.PaginatedResponse&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+const pageableResponse = await client.endpoints.pagination.listItems({
+    cursor: "cursor",
+    limit: 1
+});
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.endpoints.pagination.listItems({
+    cursor: "cursor",
+    limit: 1
+});
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.endpoints.ListItemsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PaginationClient.RequestOptions` 
     
 </dd>
 </dl>

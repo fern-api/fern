@@ -14,10 +14,10 @@
 
 ```ruby
 client.headers.send_(
-  endpoint_version: '02-12-2024',
+  endpoint_version: "02-12-2024",
   async: true,
-  query: 'What is the weather today'
-);
+  query: "What is the weather today"
+)
 ```
 </dd>
 </dl>
@@ -84,18 +84,18 @@ client.headers.send_(
 ```ruby
 client.inlined.send_(
   temperature: 10.1,
-  prompt: 'You are a helpful assistant',
+  prompt: "You are a helpful assistant",
   context: "You're super wise",
   aliased_context: "You're super wise",
   maybe_context: "You're super wise",
   object_with_literal: {
     nested_literal: {
-      my_literal: 'How super cool'
+      my_literal: "How super cool"
     }
   },
   stream: false,
-  query: 'What is the weather today'
-);
+  query: "What is the weather today"
+)
 ```
 </dd>
 </dl>
@@ -200,7 +200,7 @@ client.inlined.send_(
 <dd>
 
 ```ruby
-client.path.send_(id: '123');
+client.path.send_(id: "123")
 ```
 </dd>
 </dl>
@@ -250,16 +250,16 @@ client.path.send_(id: '123');
 
 ```ruby
 client.query.send_(
-  prompt: 'You are a helpful assistant',
-  optional_prompt: 'You are a helpful assistant',
-  alias_prompt: 'You are a helpful assistant',
-  alias_optional_prompt: 'You are a helpful assistant',
+  prompt: "You are a helpful assistant",
+  optional_prompt: "You are a helpful assistant",
+  alias_prompt: "You are a helpful assistant",
+  alias_optional_prompt: "You are a helpful assistant",
   stream: false,
   optional_stream: false,
   alias_stream: false,
   alias_optional_stream: false,
-  query: 'What is the weather today'
-);
+  query: "What is the weather today"
+)
 ```
 </dd>
 </dl>
@@ -373,18 +373,18 @@ client.query.send_(
 
 ```ruby
 client.reference.send_(
-  prompt: 'You are a helpful assistant',
-  query: 'What is the weather today',
+  prompt: "You are a helpful assistant",
+  query: "What is the weather today",
   stream: false,
   context: "You're super wise",
   container_object: {
     nested_objects: [{
-      literal_1: 'literal1',
-      literal_2: 'literal2',
-      str_prop: 'strProp'
+      literal_1: "literal1",
+      literal_2: "literal2",
+      str_prop: "strProp"
     }]
   }
-);
+)
 ```
 </dd>
 </dl>

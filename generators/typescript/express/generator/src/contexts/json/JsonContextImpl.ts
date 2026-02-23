@@ -2,7 +2,7 @@ import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/comm
 import { JsonContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 
-import { JsonDeclarationReferencer } from "../../declaration-referencers/JsonDeclarationReferencer";
+import { JsonDeclarationReferencer } from "../../declaration-referencers/JsonDeclarationReferencer.js";
 
 export declare namespace JsonContextImpl {
     export interface Init {

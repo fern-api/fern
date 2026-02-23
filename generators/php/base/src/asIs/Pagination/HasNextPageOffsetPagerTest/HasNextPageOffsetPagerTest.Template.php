@@ -81,7 +81,7 @@ class HasNextPageOffsetPagerTest extends TestCase
                 $responses->next();
                 return $response;
             },
-            fn(Request $request) => $request->pagination?->page ?? 0,
+            fn(Request $request) => $request->pagination->page ?? 0,
             function (Request $request, int $offset) {
                 if($request->pagination === null) {
                     $request->pagination = new Pagination(0);

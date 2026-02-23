@@ -1,47 +1,38 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    DeclaredTypeName,
-    ExampleTypeReference,
-    ResolvedTypeReference,
-    Type,
-    TypeDeclaration,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
 import { Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { GeneratedType } from "./GeneratedType";
-import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample";
+import { GeneratedType } from "./GeneratedType.js";
+import { GeneratedTypeReferenceExample } from "./GeneratedTypeReferenceExample.js";
 
 export interface TypeContext {
-    getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
+    getReferenceToType: (typeReference: FernIr.TypeReference) => TypeReferenceNode;
     getReferenceToInlinePropertyType: (
-        typeReference: TypeReference,
+        typeReference: FernIr.TypeReference,
         parentTypeName: string,
         propertyName: string
     ) => TypeReferenceNode;
-    getReferenceToInlineAliasType: (typeReference: TypeReference, aliasTypeName: string) => TypeReferenceNode;
-    getReferenceToTypeForInlineUnion: (typeReference: TypeReference) => TypeReferenceNode;
+    getReferenceToInlineAliasType: (typeReference: FernIr.TypeReference, aliasTypeName: string) => TypeReferenceNode;
+    getReferenceToTypeForInlineUnion: (typeReference: FernIr.TypeReference) => TypeReferenceNode;
     stringify: (
         valueToStringify: ts.Expression,
-        valueType: TypeReference,
+        valueType: FernIr.TypeReference,
         opts: { includeNullCheckIfOptional: boolean }
     ) => ts.Expression;
-    getReferenceToNamedType: (typeName: DeclaredTypeName) => Reference;
-    resolveTypeReference: (typeReference: TypeReference) => ResolvedTypeReference;
-    resolveTypeName: (typeName: DeclaredTypeName) => ResolvedTypeReference;
-    getTypeDeclaration: (typeName: DeclaredTypeName) => TypeDeclaration;
-    getGeneratedType: (typeName: DeclaredTypeName, typeNameOverride?: string) => GeneratedType;
-    getGeneratedTypeById: (typeId: TypeId) => GeneratedType;
-    getGeneratedExample: (example: ExampleTypeReference) => GeneratedTypeReferenceExample;
-    isNullable: (typeReference: TypeReference) => boolean;
-    isOptional: (typeReference: TypeReference) => boolean;
-    isLiteral: (typeReference: TypeReference) => boolean;
-    hasDefaultValue: (typeReference: TypeReference) => boolean;
-    needsRequestResponseTypeVariant: (typeReference: TypeReference) => { request: boolean; response: boolean };
-    needsRequestResponseTypeVariantById: (typeId: TypeId) => { request: boolean; response: boolean };
-    needsRequestResponseTypeVariantByType(type: Type): { request: boolean; response: boolean };
-    typeNameToTypeReference(typeName: DeclaredTypeName): TypeReference;
+    getReferenceToNamedType: (typeName: FernIr.DeclaredTypeName) => Reference;
+    resolveTypeReference: (typeReference: FernIr.TypeReference) => FernIr.ResolvedTypeReference;
+    resolveTypeName: (typeName: FernIr.DeclaredTypeName) => FernIr.ResolvedTypeReference;
+    getTypeDeclaration: (typeName: FernIr.DeclaredTypeName) => FernIr.TypeDeclaration;
+    getGeneratedType: (typeName: FernIr.DeclaredTypeName, typeNameOverride?: string) => GeneratedType;
+    getGeneratedTypeById: (typeId: FernIr.TypeId) => GeneratedType;
+    getGeneratedExample: (example: FernIr.ExampleTypeReference) => GeneratedTypeReferenceExample;
+    isNullable: (typeReference: FernIr.TypeReference) => boolean;
+    isOptional: (typeReference: FernIr.TypeReference) => boolean;
+    isLiteral: (typeReference: FernIr.TypeReference) => boolean;
+    hasDefaultValue: (typeReference: FernIr.TypeReference) => boolean;
+    needsRequestResponseTypeVariant: (typeReference: FernIr.TypeReference) => { request: boolean; response: boolean };
+    needsRequestResponseTypeVariantById: (typeId: FernIr.TypeId) => { request: boolean; response: boolean };
+    needsRequestResponseTypeVariantByType(type: FernIr.Type): { request: boolean; response: boolean };
+    typeNameToTypeReference(typeName: FernIr.DeclaredTypeName): FernIr.TypeReference;
     generateGetterForResponsePropertyAsString({
         variable,
         isVariableOptional,

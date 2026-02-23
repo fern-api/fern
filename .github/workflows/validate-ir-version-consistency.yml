@@ -35,6 +35,7 @@ jobs:
             generators
             scripts
             .github
+          filter: tree:0
 
       - name: Validate IR version consistency
         run: ./scripts/validate-ir-version-consistency.sh

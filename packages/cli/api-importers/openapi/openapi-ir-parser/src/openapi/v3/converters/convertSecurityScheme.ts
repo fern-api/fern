@@ -1,19 +1,19 @@
 import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../getExtension";
-import { convertEnum } from "../../../schema/convertEnum";
-import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema";
-import { isReferenceObject } from "../../../schema/utils/isReferenceObject";
-import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
-import { OpenAPIExtension } from "../extensions/extensions";
-import { FernOpenAPIExtension } from "../extensions/fernExtensions";
-import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
+import { getExtension } from "../../../getExtension.js";
+import { convertEnum } from "../../../schema/convertEnum.js";
+import { convertSchemaWithExampleToSchema } from "../../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { isReferenceObject } from "../../../schema/utils/isReferenceObject.js";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext.js";
+import { OpenAPIExtension } from "../extensions/extensions.js";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions.js";
+import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames.js";
 import {
     getBasicSecuritySchemeNameAndEnvvar,
     HeaderSecuritySchemeNames,
     SecuritySchemeNames
-} from "../extensions/getSecuritySchemeNameAndEnvvars";
+} from "../extensions/getSecuritySchemeNameAndEnvvars.js";
 
 export function convertSecurityScheme(
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,

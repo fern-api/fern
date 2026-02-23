@@ -25,7 +25,7 @@ $client->service->simple();
 </dl>
 </details>
 
-<details><summary><code>$client-&gt;service-&gt;downloadFile()</code></summary>
+<details><summary><code>$client-&gt;service-&gt;downloadFile() -> string</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ $client->service->simple();
 <dd>
 
 ```php
-$client->service->downloadFile();
+$client->service->downloadFile(): string;
 ```
 </dd>
 </dl>

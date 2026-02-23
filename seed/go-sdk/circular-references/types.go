@@ -31,6 +31,9 @@ func (i *ImportingA) GetA() *A {
 }
 
 func (i *ImportingA) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
 	return i.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (i *ImportingA) MarshalJSON() ([]byte, error) {
 }
 
 func (i *ImportingA) String() string {
+	if i == nil {
+		return "<nil>"
+	}
 	if len(i.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
 			return value
@@ -109,6 +115,9 @@ func (r *RootType) GetS() string {
 }
 
 func (r *RootType) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -154,6 +163,9 @@ func (r *RootType) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RootType) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value

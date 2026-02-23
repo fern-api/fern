@@ -7,7 +7,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { z } from "zod";
 
-import { Rule } from "../../Rule";
+import { Rule } from "../../Rule.js";
 
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",

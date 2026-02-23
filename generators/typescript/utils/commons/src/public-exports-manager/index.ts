@@ -1,1 +1,1 @@
-export { PublicExportsManager } from "./PublicExportsManager";
+export { PublicExportsManager } from "./PublicExportsManager.js";

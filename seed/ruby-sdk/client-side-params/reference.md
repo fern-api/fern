@@ -30,12 +30,12 @@ List resources with pagination
 client.service.list_resources(
   page: 1,
   per_page: 1,
-  sort: 'created_at',
-  order: 'desc',
+  sort: "created_at",
+  order: "desc",
   include_totals: true,
-  fields: 'fields',
-  search: 'search'
-);
+  fields: "fields",
+  search: "search"
+)
 ```
 </dd>
 </dl>
@@ -146,10 +146,10 @@ Get a single resource
 
 ```ruby
 client.service.get_resource(
-  resource_id: 'resourceId',
+  resource_id: "resourceId",
   include_metadata: true,
-  format: 'json'
-);
+  format: "json"
+)
 ```
 </dd>
 </dl>
@@ -230,9 +230,9 @@ Search resources with complex parameters
 client.service.search_resources(
   limit: 1,
   offset: 1,
-  query: 'query',
+  query: "query",
   filters: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -322,12 +322,12 @@ client.service.list_users(
   page: 1,
   per_page: 1,
   include_totals: true,
-  sort: 'sort',
-  connection: 'connection',
-  q: 'q',
-  search_engine: 'search_engine',
-  fields: 'fields'
-);
+  sort: "sort",
+  connection: "connection",
+  q: "q",
+  search_engine: "search_engine",
+  fields: "fields"
+)
 ```
 </dd>
 </dl>
@@ -446,10 +446,10 @@ Get a user by ID
 
 ```ruby
 client.service.get_user_by_id(
-  user_id: 'userId',
-  fields: 'fields',
+  user_id: "userId",
+  fields: "fields",
   include_fields: true
-);
+)
 ```
 </dd>
 </dl>
@@ -528,16 +528,16 @@ Create a new user
 
 ```ruby
 client.service.create_user(
-  email: 'email',
+  email: "email",
   email_verified: true,
-  username: 'username',
-  password: 'password',
-  phone_number: 'phone_number',
+  username: "username",
+  password: "password",
+  phone_number: "phone_number",
   phone_verified: true,
   user_metadata: {},
   app_metadata: {},
-  connection: 'connection'
-);
+  connection: "connection"
+)
 ```
 </dd>
 </dl>
@@ -600,17 +600,17 @@ Update a user
 
 ```ruby
 client.service.update_user(
-  user_id: 'userId',
-  email: 'email',
+  user_id: "userId",
+  email: "email",
   email_verified: true,
-  username: 'username',
-  phone_number: 'phone_number',
+  username: "username",
+  phone_number: "phone_number",
   phone_verified: true,
   user_metadata: {},
   app_metadata: {},
-  password: 'password',
+  password: "password",
   blocked: true
-);
+)
 ```
 </dd>
 </dl>
@@ -680,7 +680,7 @@ Delete a user
 <dd>
 
 ```ruby
-client.service.delete_user(user_id: 'userId');
+client.service.delete_user(user_id: "userId")
 ```
 </dd>
 </dl>
@@ -743,10 +743,10 @@ List all connections
 
 ```ruby
 client.service.list_connections(
-  strategy: 'strategy',
-  name: 'name',
-  fields: 'fields'
-);
+  strategy: "strategy",
+  name: "name",
+  fields: "fields"
+)
 ```
 </dd>
 </dl>
@@ -825,9 +825,9 @@ Get a connection by ID
 
 ```ruby
 client.service.get_connection(
-  connection_id: 'connectionId',
-  fields: 'fields'
-);
+  connection_id: "connectionId",
+  fields: "fields"
+)
 ```
 </dd>
 </dl>
@@ -898,15 +898,15 @@ List all clients/applications
 
 ```ruby
 client.service.list_clients(
-  fields: 'fields',
+  fields: "fields",
   include_fields: true,
   page: 1,
   per_page: 1,
   include_totals: true,
   is_global: true,
   is_first_party: true,
-  app_type: ['app_type', 'app_type']
-);
+  app_type: %w[app_type app_type]
+)
 ```
 </dd>
 </dl>
@@ -1025,10 +1025,10 @@ Get a client by ID
 
 ```ruby
 client.service.get_client(
-  client_id: 'clientId',
-  fields: 'fields',
+  client_id: "clientId",
+  fields: "fields",
   include_fields: true
-);
+)
 ```
 </dd>
 </dl>

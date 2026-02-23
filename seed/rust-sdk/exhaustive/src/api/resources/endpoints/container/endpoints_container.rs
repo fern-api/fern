@@ -74,6 +74,16 @@ impl ContainerClient {
         ).await
     }
 
+    pub async fn get_and_return_map_of_prim_to_undiscriminated_union(&self, request: &HashMap<String, MixedType>, options: Option<RequestOptions>) -> Result<HashMap<String, MixedType>, ApiError> {
+        self.http_client.execute_request(
+            Method::POST,
+            "/container/map-prim-to-union",
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
     pub async fn get_and_return_optional(&self, request: &Option<ObjectWithRequiredField>, options: Option<RequestOptions>) -> Result<Option<ObjectWithRequiredField>, ApiError> {
         self.http_client.execute_request(
             Method::POST,

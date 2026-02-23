@@ -1,8 +1,8 @@
-import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { EndpointSampleCode } from "../../commons/EndpointSampleCode";
-import { SdkContext } from "../SdkContext";
+import { EndpointSampleCode } from "../../commons/EndpointSampleCode.js";
+import { SdkContext } from "../SdkContext.js";
 
 export namespace GeneratedEndpointImplementation {
     export interface EndpointSignature {
@@ -12,14 +12,14 @@ export namespace GeneratedEndpointImplementation {
 }
 
 export interface GeneratedEndpointImplementation {
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
     getStatements: (context: SdkContext) => ts.Statement[];
     getOverloads: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignature[];
     getSignature: (context: SdkContext) => GeneratedEndpointImplementation.EndpointSignature;
     getDocs: (context: SdkContext) => string | undefined;
     getExample: (args: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
         clientReference: ts.Identifier;
     }) => EndpointSampleCode | undefined;

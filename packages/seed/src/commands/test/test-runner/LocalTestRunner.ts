@@ -4,11 +4,11 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { runNativeGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import path from "path";
-import { LocalBuildInfo } from "../../../config/api";
-import { runScript } from "../../../runScript";
-import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
-import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
-import { TestRunner } from "./TestRunner";
+import { LocalBuildInfo } from "../../../config/api/index.js";
+import { runScript } from "../../../runScript.js";
+import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants.js";
+import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation.js";
+import { TestRunner } from "./TestRunner.js";
 
 export class LocalTestRunner extends TestRunner {
     public async build(): Promise<void> {

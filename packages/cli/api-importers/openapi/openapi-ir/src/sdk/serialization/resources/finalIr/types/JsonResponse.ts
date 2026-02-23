@@ -12,6 +12,7 @@ export const JsonResponse: core.serialization.ObjectSchema<serializers.JsonRespo
         .objectWithoutOptionalProperties({
             schema: core.serialization.lazy(() => serializers.Schema),
             responseProperty: core.serialization.string().optional(),
+            terminator: core.serialization.string().optional(),
         })
         .extend(WithDescription)
         .extend(WithSource)
@@ -21,5 +22,6 @@ export declare namespace JsonResponse {
     export interface Raw extends WithDescription.Raw, WithSource.Raw, WithStatusCode.Raw {
         schema: serializers.Schema.Raw;
         responseProperty?: string | null;
+        terminator?: string | null;
     }
 }

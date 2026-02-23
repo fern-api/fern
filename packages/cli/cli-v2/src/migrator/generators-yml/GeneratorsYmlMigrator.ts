@@ -7,9 +7,9 @@ import {
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { convertApiSpecs } from "../converters/convertApiSpecs";
-import { convertSdkTargetsFromRaw } from "../converters/convertSdkTargets";
-import type { DetectResult, MigratorWarning } from "../types";
+import { convertApiSpecs } from "../converters/convertApiSpecs.js";
+import { convertSdkTargetsFromRaw } from "../converters/convertSdkTargets.js";
+import type { DetectResult, MigratorWarning } from "../types/index.js";
 
 export declare namespace GeneratorsYmlMigrator {
     export interface Config {

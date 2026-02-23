@@ -1,9 +1,9 @@
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { convertAllAuthSchemes, convertAuth, PlaygroundConfig } from "./convertAuth";
-import { convertIrAvailability, convertPackage } from "./convertPackage";
-import { convertTypeReference, convertTypeShape } from "./convertTypeShape";
+import { convertAllAuthSchemes, convertAuth, PlaygroundConfig } from "./convertAuth.js";
+import { convertIrAvailability, convertPackage } from "./convertPackage.js";
+import { convertTypeReference, convertTypeShape } from "./convertTypeShape.js";
 
 export function convertIrToFdrApi({
     ir,
@@ -25,7 +25,7 @@ export function convertIrToFdrApi({
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
-        rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations),
+        rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations, graphqlTypes),
         apiName: apiNameOverride ?? ir.apiName.originalName,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),

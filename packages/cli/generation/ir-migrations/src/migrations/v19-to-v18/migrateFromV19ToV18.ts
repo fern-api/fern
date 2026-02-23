@@ -1,13 +1,13 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { mapValues } from "lodash-es";
 
-import { IrMigrationContext } from "../../IrMigrationContext";
-import { IrVersions } from "../../ir-versions";
+import { IrMigrationContext } from "../../IrMigrationContext.js";
+import { IrVersions } from "../../ir-versions/index.js";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
     IrMigration
-} from "../../types/IrMigration";
+} from "../../types/IrMigration.js";
 
 export const V19_TO_V18_MIGRATION: IrMigration<
     IrVersions.V19.ir.IntermediateRepresentation,
@@ -32,10 +32,8 @@ export const V19_TO_V18_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: "0.0.44-1-gbf4b0f3",
         [GeneratorName.PYTHON_SDK]: "0.3.4-rc0-9-ge815162f",
-        [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
-        [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,

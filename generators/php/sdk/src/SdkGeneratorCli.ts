@@ -6,21 +6,23 @@ import { generateModels, generateTraits } from "@fern-api/php-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator";
-import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
-import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
-import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
-import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator";
-import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
-import { buildReference } from "./reference/buildReference";
-import { RootClientGenerator } from "./root-client/RootClientGenerator";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
-import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
-import { convertIr } from "./utils/convertIr";
-import { WireTestGenerator } from "./wire-tests";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator.js";
+import { EnvironmentGenerator } from "./environment/EnvironmentGenerator.js";
+import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator.js";
+import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator.js";
+import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator.js";
+import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator.js";
+import { buildReference } from "./reference/buildReference.js";
+import { RootClientGenerator } from "./root-client/RootClientGenerator.js";
+import { RootClientInterfaceGenerator } from "./root-client/RootClientInterfaceGenerator.js";
+import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator.js";
+import { SubPackageClientInterfaceGenerator } from "./subpackage-client/SubPackageClientInterfaceGenerator.js";
+import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest.js";
+import { convertIr } from "./utils/convertIr.js";
+import { WireTestGenerator } from "./wire-tests/index.js";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -29,7 +31,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         generatorConfig,
         generatorNotificationService
     }: {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         customConfig: SdkCustomConfigSchema;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
@@ -58,6 +60,10 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         generateTraits(context);
         this.generateRootClient(context);
         this.generateSubpackages(context);
+        if (context.customConfig.generateClientInterfaces) {
+            this.generateRootClientInterface(context);
+            this.generateSubpackageInterfaces(context);
+        }
         this.generateEnvironment(context);
         this.generateErrors(context);
         this.generateOauthTokenProvider(context);
@@ -123,7 +129,28 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         }
     }
 
-    private generateRequests(context: SdkGeneratorContext, service: HttpService, serviceId: string) {
+    private generateRootClientInterface(context: SdkGeneratorContext) {
+        const rootClientInterface = new RootClientInterfaceGenerator(context);
+        context.project.addSourceFiles(rootClientInterface.generate());
+    }
+
+    private generateSubpackageInterfaces(context: SdkGeneratorContext) {
+        for (const subpackage of Object.values(context.ir.subpackages)) {
+            if (!context.shouldGenerateSubpackageClient(subpackage)) {
+                continue;
+            }
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const subClientInterface = new SubPackageClientInterfaceGenerator({
+                context,
+                subpackage,
+                serviceId: subpackage.service ?? undefined,
+                service
+            });
+            context.project.addSourceFiles(subClientInterface.generate());
+        }
+    }
+
+    private generateRequests(context: SdkGeneratorContext, service: FernIr.HttpService, serviceId: string) {
         for (const endpoint of service.endpoints) {
             if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
                 if (context.shouldSkipWrappedRequest({ endpoint, wrapper: endpoint.sdkRequest.shape })) {

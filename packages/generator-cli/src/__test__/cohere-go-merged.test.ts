@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/cohere-go-merged/readme";
-import { testGenerateReadme } from "./testGenerateReadme";
+import { default as CONFIG } from "./fixtures/cohere-go-merged/readme.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("cohere-go-merged", () => {
     testGenerateReadme({

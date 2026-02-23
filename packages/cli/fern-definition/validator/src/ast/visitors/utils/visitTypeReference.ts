@@ -1,6 +1,6 @@
 import { NodePath, RawSchemas } from "@fern-api/fern-definition-schema";
 
-import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
+import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor.js";
 
 export function createTypeReferenceVisitor(
     visitor: Partial<DefinitionFileAstVisitor>

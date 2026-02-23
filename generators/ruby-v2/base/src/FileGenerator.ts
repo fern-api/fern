@@ -1,7 +1,7 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseRubyCustomConfigSchema } from "@fern-api/ruby-ast";
-import { AbstractRubyGeneratorContext } from "./context/AbstractRubyGeneratorContext";
+import { AbstractRubyGeneratorContext } from "./context/AbstractRubyGeneratorContext.js";
 
 export abstract class FileGenerator<
     GeneratedFile extends File,

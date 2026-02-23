@@ -1,5 +1,5 @@
-import { AbsoluteFilePath } from "./AbsoluteFilePath";
-import { RelativeFilePath } from "./RelativeFilePath";
+import { AbsoluteFilePath } from "./AbsoluteFilePath.js";
+import { RelativeFilePath } from "./RelativeFilePath.js";
 
 // For convenience, we re-export the convertToOsPath type for any caller
 // that requires fs-utils.

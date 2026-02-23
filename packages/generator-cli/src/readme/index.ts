@@ -1,2 +1,2 @@
-export { ReadmeGenerator } from "./ReadmeGenerator";
-export { ReadmeParser } from "./ReadmeParser";
+export { ReadmeGenerator } from "./ReadmeGenerator.js";
+export { ReadmeParser } from "./ReadmeParser.js";

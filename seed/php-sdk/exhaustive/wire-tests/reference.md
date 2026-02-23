@@ -274,6 +274,50 @@ $client->endpoints->container->getAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnMapOfPrimToUndiscriminatedUnion($request) -> array</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
+    [
+        'string' => 1.1,
+    ],
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnOptional($request) -> ?ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
@@ -1182,6 +1226,74 @@ $client->endpoints->object->getAndReturnWithDatetimeLikeString(
 <dd>
 
 **$request:** `ObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Pagination
+<details><summary><code>$client-&gt;endpoints-&gt;pagination-&gt;listItems($request) -> PaginatedResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->pagination->listItems(
+    new ListItemsRequest([
+        'cursor' => 'cursor',
+        'limit' => 1,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$cursor:** `?string` — The cursor for pagination
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$limit:** `?int` — Maximum number of items to return
     
 </dd>
 </dl>

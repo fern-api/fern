@@ -2,8 +2,8 @@ import { createVenusService } from "@fern-api/core";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 
-import { FernUserToken } from "../FernToken";
-import { getOrganizationNameValidationError } from "./getOrganizationNameValidationError";
+import { FernUserToken } from "../FernToken.js";
+import { getOrganizationNameValidationError } from "./getOrganizationNameValidationError.js";
 
 export async function createOrganizationIfDoesNotExist({
     organization,

@@ -1,1 +1,1 @@
-export { addAuthCommand } from "./command";
+export { addAuthCommand } from "./command.js";

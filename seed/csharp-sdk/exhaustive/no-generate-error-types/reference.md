@@ -262,6 +262,48 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfPrimToUndiscriminatedUnionAsync</a>(Dictionary&lt;string, OneOf&lt;double, bool, string, IEnumerable&lt;string&gt;&gt;&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, OneOf&lt;double, bool, string, IEnumerable&lt;string&gt;&gt;&gt;&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>() { { "string", 1.1 } }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnOptionalAsync</a>(ObjectWithRequiredField? { ... }) -> WithRawResponseTask&lt;ObjectWithRequiredField?&gt;</code></summary>
 <dl>
 <dd>
@@ -1115,6 +1157,63 @@ await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
 <dd>
 
 **request:** `ObjectWithDatetimeLikeString` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Pagination
+<details><summary><code>client.Endpoints.Pagination.<a href="/src/SeedExhaustive/Endpoints/Pagination/PaginationClient.cs">ListItemsAsync</a>(ListItemsRequest { ... }) -> Pager&lt;ObjectWithRequiredField&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Pagination.ListItemsAsync(
+    new ListItemsRequest { Cursor = "cursor", Limit = 1 }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ListItemsRequest` 
     
 </dd>
 </dl>

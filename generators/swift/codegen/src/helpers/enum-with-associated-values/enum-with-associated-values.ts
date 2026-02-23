@@ -1,7 +1,7 @@
 import { camelCase, upperFirst } from "lodash-es";
 import { toWords } from "number-to-words";
 
-import { pascalCase } from "../pascal-case";
+import { pascalCase } from "../pascal-case.js";
 
 /**
  * Generates a PascalCase name from a value (for type/struct names).
