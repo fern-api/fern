@@ -164,8 +164,8 @@ function convertHttpService(
     return {
         ...service,
         availability: convertAvailability(service.availability),
-        headers: service.headers.map((h) => convertHttpHeader(h)),
-        endpoints: service.endpoints.map((endpoint) => convertHttpEndpoint(endpoint, context))
+        headers: service.headers?.map((h) => convertHttpHeader(h)),
+        endpoints: service.endpoints?.map((endpoint) => convertHttpEndpoint(endpoint, context))
     } as unknown as IrVersions.V63.http.HttpService;
 }
 
@@ -176,8 +176,8 @@ function convertHttpEndpoint(
     return {
         ...endpoint,
         availability: convertAvailability(endpoint.availability),
-        headers: endpoint.headers.map((h) => convertHttpHeader(h)),
-        queryParameters: endpoint.queryParameters.map((q) => convertQueryParameter(q)),
+        headers: endpoint.headers?.map((h) => convertHttpHeader(h)),
+        queryParameters: endpoint.queryParameters?.map((q) => convertQueryParameter(q)),
         requestBody: endpoint.requestBody != null ? convertRequestBody(endpoint.requestBody) : undefined,
         response: endpoint.response != null ? convertHttpResponse(endpoint.response) : undefined,
         pagination: endpoint.pagination != null ? convertPagination(endpoint.pagination, context) : undefined,
@@ -282,7 +282,7 @@ function convertWebhook(webhook: IrVersions.V65.Webhook): IrVersions.V63.webhook
     return {
         ...webhook,
         availability: convertAvailability(webhook.availability),
-        headers: webhook.headers.map((h) => convertHttpHeader(h)),
+        headers: webhook.headers?.map((h) => convertHttpHeader(h)),
         payload: convertWebhookPayload(webhook.payload)
     } as unknown as IrVersions.V63.webhooks.Webhook;
 }
@@ -306,9 +306,9 @@ function convertWebsocketChannel(channel: IrVersions.V65.WebSocketChannel): IrVe
     return {
         ...channel,
         availability: convertAvailability(channel.availability),
-        headers: channel.headers.map((h) => convertHttpHeader(h)),
-        queryParameters: channel.queryParameters.map((q) => convertQueryParameter(q)),
-        messages: channel.messages.map((m) => convertWebsocketMessage(m))
+        headers: channel.headers?.map((h) => convertHttpHeader(h)),
+        queryParameters: channel.queryParameters?.map((q) => convertQueryParameter(q)),
+        messages: channel.messages?.map((m) => convertWebsocketMessage(m))
     } as unknown as IrVersions.V63.websocket.WebSocketChannel;
 }
 
