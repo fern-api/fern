@@ -72,13 +72,14 @@ describe("ir", () => {
         const { only = false } = fixture;
         (only ? it.only : it.concurrent)(
             `${JSON.stringify(fixture)}`,
-            async ({ expect }) => {
+            async ({ expect, signal }) => {
                 const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
                 const irContents = await generateIrAsString({
                     fixturePath,
                     language: fixture.language,
                     audiences: fixture.audiences,
-                    version: fixture.version
+                    version: fixture.version,
+                    signal
                 });
                 // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 expect(irContents).toMatchSnapshot();
@@ -87,22 +88,32 @@ describe("ir", () => {
         );
     }
 
-    it.concurrent("works with latest version", async ({ expect }) => {
+    it.concurrent("works with latest version", async ({ expect, signal }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
-        const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v27"], {
-            cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
-            reject: false
-        });
+        const { stdout } = await runFernCli(
+            ["ir", tmpFile.path, "--version", "v27"],
+            {
+                cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
+                reject: false
+            },
+            true,
+            signal
+        );
         await tmpFile.cleanup();
         expect(stdout).toContain("Wrote IR to");
     }, 10_000);
 
-    it.concurrent("fails with invalid version", async ({ expect }) => {
+    it.concurrent("fails with invalid version", async ({ expect, signal }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
-        const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v100"], {
-            cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
-            reject: false
-        });
+        const { stdout } = await runFernCli(
+            ["ir", tmpFile.path, "--version", "v100"],
+            {
+                cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
+                reject: false
+            },
+            true,
+            signal
+        );
         await tmpFile.cleanup();
         expect(stdout).toContain("IR v100 does not exist");
     }, 10_000);
@@ -110,12 +121,17 @@ describe("ir", () => {
 
 describe("ir from proto", () => {
     // biome-ignore lint/suspicious/noSkippedTests: Allow test skip for now
-    it.skip("works with proto-ir", async () => {
+    it.skip("works with proto-ir", async ({ signal }) => {
         try {
-            await runFernCli(["ir", "ir.json", "--from-openapi"], {
-                cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-ir")),
-                reject: false
-            });
+            await runFernCli(
+                ["ir", "ir.json", "--from-openapi"],
+                {
+                    cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-ir")),
+                    reject: false
+                },
+                true,
+                signal
+            );
             const contents = await readFile(
                 path.join(FIXTURES_DIR, RelativeFilePath.of("proto-ir"), "ir.json"),
                 "utf-8"
@@ -127,12 +143,17 @@ describe("ir from proto", () => {
         }
     }, 10_000);
     // biome-ignore lint/suspicious/noSkippedTests: Allow test skip for now
-    it.skip("ir from proto through oas", async () => {
+    it.skip("ir from proto through oas", async ({ signal }) => {
         try {
-            await runFernCli(["ir", "ir.json", "--from-openapi"], {
-                cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-oas-ir")),
-                reject: false
-            });
+            await runFernCli(
+                ["ir", "ir.json", "--from-openapi"],
+                {
+                    cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-oas-ir")),
+                    reject: false
+                },
+                true,
+                signal
+            );
             const contents = await readFile(
                 path.join(FIXTURES_DIR, RelativeFilePath.of("proto-oas-ir"), "ir.json"),
                 "utf-8"

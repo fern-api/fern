@@ -19,10 +19,11 @@ const HOST_OUTPUT_DIR = join(BASIC_WRITER_DIR, RelativeFilePath.of("host-output"
 const BASIC_WRITER_IMAGE_NAME = "basic-writer";
 const IMAGE_OUTPUT_DIR = "/image-output";
 
-beforeAll(async () => {
+beforeAll(async ({ signal }) => {
     // build docker
     await promisifiedExec(
-        `docker build -f ${path.join(BASIC_WRITER_DIR, "Dockerfile")} -t ${BASIC_WRITER_IMAGE_NAME} ${BASIC_WRITER_DIR}`
+        `docker build -f ${path.join(BASIC_WRITER_DIR, "Dockerfile")} -t ${BASIC_WRITER_IMAGE_NAME} ${BASIC_WRITER_DIR}`,
+        { signal }
     );
 
     // delete and remake host's output dir
@@ -31,7 +32,7 @@ beforeAll(async () => {
 }, 60_000);
 
 describe("runContainer", () => {
-    it("basic-writer", async () => {
+    it("basic-writer", async ({ signal }) => {
         const expectedOutputFilePath = "my-file.txt";
 
         await runContainer({

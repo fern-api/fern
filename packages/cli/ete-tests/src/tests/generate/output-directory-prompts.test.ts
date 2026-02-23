@@ -8,13 +8,18 @@ const envWithCI = {
 };
 
 describe("output directory prompts", () => {
-    it("doesn't show prompts for CI environment", async () => {
-        const pathOfDirectory = await init();
+    it("doesn't show prompts for CI environment", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
 
-        const { stdout } = await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory,
-            env: envWithCI
-        });
+        const { stdout } = await runFernCli(
+            ["generate", "--local", "--keepDocker"],
+            {
+                cwd: pathOfDirectory,
+                env: envWithCI
+            },
+            true,
+            signal
+        );
 
         const cleanOutput = stripAnsi(stdout).trim();
         expect(cleanOutput).not.toContain("contains existing files");

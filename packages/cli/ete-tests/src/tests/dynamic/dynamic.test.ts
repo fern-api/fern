@@ -24,13 +24,14 @@ describe("fdr", () => {
         const { only = false } = fixture;
         (only ? it.only : it)(
             `${JSON.stringify(fixture)}`,
-            async () => {
+            async ({ signal }) => {
                 const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
                 const dynamicContents = await generateDynamicIrAsString({
                     fixturePath,
                     language: fixture.language,
                     audiences: fixture.audiences,
-                    version: fixture.version
+                    version: fixture.version,
+                    signal
                 });
                 // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 expect(dynamicContents).toMatchSnapshot();

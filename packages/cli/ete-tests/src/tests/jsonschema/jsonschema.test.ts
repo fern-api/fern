@@ -5,12 +5,17 @@ import { runFernCli } from "../../utils/runFernCli.js";
 import { init } from "../init/init.js";
 
 describe("jsonschema", () => {
-    it("works with latest version", async () => {
-        const pathOfDirectory = await init({ additionalArgs: [{ name: "--fern-definition" }] });
-        await runFernCli(["jsonschema", "schema.json", "--type", "imdb.Movie"], {
-            cwd: pathOfDirectory,
-            reject: false
-        });
+    it("works with latest version", async ({ signal }) => {
+        const pathOfDirectory = await init({ additionalArgs: [{ name: "--fern-definition" }], signal });
+        await runFernCli(
+            ["jsonschema", "schema.json", "--type", "imdb.Movie"],
+            {
+                cwd: pathOfDirectory,
+                reject: false
+            },
+            true,
+            signal
+        );
 
         const jsonSchema = JSON.parse(
             await readFile(join(pathOfDirectory, RelativeFilePath.of("schema.json")), "utf-8")

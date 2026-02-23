@@ -24,21 +24,17 @@ describe("write-definition", () => {
 
 function itFixture(fixtureName: string) {
     it.concurrent(// eslint-disable-next-line jest/valid-title
-    fixtureName, async ({ expect }) => {
+    fixtureName, async ({ expect, signal }) => {
         const fixturePath = path.join(FIXTURES_DIR, fixtureName);
         const definitionOutputPath = path.join(fixturePath, "fern", ".definition");
         if (await doesPathExist(AbsoluteFilePath.of(definitionOutputPath))) {
             await rm(definitionOutputPath, { force: true, recursive: true });
         }
 
-        await runFernCli(["write-definition", "--log-level", "debug"], {
-            cwd: fixturePath
-        });
+        await runFernCli(["write-definition", "--log-level", "debug"], { cwd: fixturePath }, true, signal);
 
         expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
 
-        await runFernCli(["check", "--log-level", "debug"], {
-            cwd: fixturePath
-        });
+        await runFernCli(["check", "--log-level", "debug"], { cwd: fixturePath }, true, signal);
     }, 90_000);
 }

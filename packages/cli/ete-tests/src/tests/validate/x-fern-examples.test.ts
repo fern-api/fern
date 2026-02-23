@@ -6,13 +6,18 @@ import { runFernCli } from "../../utils/runFernCli.js";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("x-fern-examples file-linking", () => {
-    it("should resolve $ref to external code sample files", async () => {
+    it("should resolve $ref to external code sample files", async ({ signal }) => {
         const fixturePath = path.join(FIXTURES_DIR, "x-fern-examples-file-linking");
 
-        const { stdout, exitCode } = await runFernCli(["check"], {
-            cwd: fixturePath,
-            reject: false
-        });
+        const { stdout, exitCode } = await runFernCli(
+            ["check"],
+            {
+                cwd: fixturePath,
+                reject: false
+            },
+            true,
+            signal
+        );
 
         const strippedOutput = stripAnsi(stdout).trim();
 

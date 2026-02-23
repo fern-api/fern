@@ -8,21 +8,31 @@ import { init } from "../init/init.js";
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 describe("fern generate", () => {
-    it.concurrent("default api (fern init)", async () => {
+    it.concurrent("default api (fern init)", async ({ signal }) => {
         const pathOfDirectory = await init();
 
-        await runFernCli(["generate", "--local", "--keepDocker"], {
-            cwd: pathOfDirectory
-        });
+        await runFernCli(
+            ["generate", "--local", "--keepDocker"],
+            {
+                cwd: pathOfDirectory
+            },
+            true,
+            signal
+        );
 
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
     }, 180_000);
 
-    it.concurrent("ir contains fdr definitionid", async () => {
-        const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("basic")),
-            reject: false
-        });
+    it.concurrent("ir contains fdr definitionid", async ({ signal }) => {
+        const { stdout, stderr } = await runFernCli(
+            ["generate", "--log-level", "debug"],
+            {
+                cwd: join(fixturesDir, RelativeFilePath.of("basic")),
+                reject: false
+            },
+            true,
+            signal
+        );
 
         console.log("stdout", stdout);
         console.log("stderr", stderr);
@@ -34,7 +44,7 @@ describe("fern generate", () => {
 
         const process = exec(
             `./ir-contains-fdr-definition-id.sh ${filepath}`,
-            { cwd: __dirname },
+            { cwd: __dirname, signal },
             (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error: ${error.message}`);
@@ -53,11 +63,16 @@ describe("fern generate", () => {
     // It's otherwise flaky on developer machines that haven't logged in with the fern CLI.
     //
     // biome-ignore lint/suspicious/noSkippedTests: allow
-    it.skip("missing docs page", async () => {
-        const { stdout } = await runFernCli(["generate", "--docs"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
-            reject: false
-        });
+    it.skip("missing docs page", async ({ signal }) => {
+        const { stdout } = await runFernCli(
+            ["generate", "--docs"],
+            {
+                cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
+                reject: false
+            },
+            true,
+            signal
+        );
 
         expect(
             stripAnsi(stdout)
@@ -66,49 +81,69 @@ describe("fern generate", () => {
         ).toMatchSnapshot();
     }, 180_000);
 
-    it.concurrent("generate docs with no auth requires login", async () => {
-        const { stdout, stderr } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
-            reject: false,
-            env: {
-                FERN_TOKEN: ""
-            }
-        });
+    it.concurrent("generate docs with no auth requires login", async ({ signal }) => {
+        const { stdout, stderr } = await runFernCliWithoutAuthToken(
+            ["generate", "--docs"],
+            {
+                cwd: join(fixturesDir, RelativeFilePath.of("docs")),
+                reject: false,
+                env: {
+                    FERN_TOKEN: ""
+                }
+            },
+            undefined,
+            signal
+        );
         const output = stdout + stderr;
         expect(output).toContain(
             "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable."
         );
     }, 180_000);
 
-    it.concurrent("generate docs with auth bypass fails", async () => {
-        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
-            reject: false,
-            env: {
-                FERN_SELF_HOSTED: "true",
-                FERN_TOKEN: ""
-            }
-        });
+    it.concurrent("generate docs with auth bypass fails", async ({ signal }) => {
+        const { stdout } = await runFernCliWithoutAuthToken(
+            ["generate", "--docs"],
+            {
+                cwd: join(fixturesDir, RelativeFilePath.of("docs")),
+                reject: false,
+                env: {
+                    FERN_SELF_HOSTED: "true",
+                    FERN_TOKEN: ""
+                }
+            },
+            undefined,
+            signal
+        );
         expect(stdout).toContain("No token found. Please set the FERN_TOKEN environment variable.");
     }, 180_000);
 
-    it.concurrent("generate docs with auth bypass succeeds", async () => {
-        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("docs")),
-            reject: false,
-            env: {
-                FERN_SELF_HOSTED: "true",
-                FERN_TOKEN: "dummy"
-            }
-        });
+    it.concurrent("generate docs with auth bypass succeeds", async ({ signal }) => {
+        const { stdout } = await runFernCliWithoutAuthToken(
+            ["generate", "--docs"],
+            {
+                cwd: join(fixturesDir, RelativeFilePath.of("docs")),
+                reject: false,
+                env: {
+                    FERN_SELF_HOSTED: "true",
+                    FERN_TOKEN: "dummy"
+                }
+            },
+            undefined,
+            signal
+        );
         expect(stdout).toContain("ferndevtest.docs.dev.buildwithfern.com Started.");
     }, 180_000);
 
-    it.concurrent("generate docs with no docs.yml file fails", async () => {
-        const { stdout } = await runFernCli(["generate", "--docs"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("basic")),
-            reject: false
-        });
+    it.concurrent("generate docs with no docs.yml file fails", async ({ signal }) => {
+        const { stdout } = await runFernCli(
+            ["generate", "--docs"],
+            {
+                cwd: join(fixturesDir, RelativeFilePath.of("basic")),
+                reject: false
+            },
+            true,
+            signal
+        );
         expect(stdout).toContain("No docs.yml file found. Please make sure your project has one.");
     }, 180_000);
 });

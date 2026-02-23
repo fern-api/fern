@@ -10,13 +10,15 @@ export async function generateIrAsString({
     language,
     audiences,
     apiName,
-    version
+    version,
+    signal
 }: {
     fixturePath: AbsoluteFilePath;
     language?: generatorsYml.GenerationLanguage;
     audiences?: string[];
     apiName?: string;
     version?: string;
+    signal?: AbortSignal;
 }): Promise<string> {
     const tmpFile = await tmp.file({ postfix: ".json" });
     const irOutputPath = AbsoluteFilePath.of(tmpFile.path);
@@ -38,9 +40,7 @@ export async function generateIrAsString({
         command.push("--version", version);
     }
 
-    await runFernCli(command, {
-        cwd: fixturePath
-    });
+    await runFernCli(command, { cwd: fixturePath }, true, signal);
 
     const irContents = await readFile(irOutputPath);
     await tmpFile.cleanup();

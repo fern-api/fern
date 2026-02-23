@@ -1,10 +1,31 @@
 import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { loggingExeca } from "@fern-api/logging-execa";
-import { Options } from "execa";
+import { loggingExeca, runExeca } from "@fern-api/logging-execa";
+import { ExecaChildProcess, Options } from "execa";
 import * as fs from "fs/promises";
 import * as path from "path";
 import stripAnsi from "strip-ansi";
 import tmp from "tmp-promise";
+
+/**
+ * Wire an AbortSignal to kill an execa child process.
+ * When the signal aborts (e.g. on test timeout or Ctrl+C), the child
+ * process is terminated so it doesn't leak.
+ */
+function wireSignal(childProcess: ExecaChildProcess, signal?: AbortSignal): void {
+    if (!signal) {
+        return;
+    }
+    if (signal.aborted) {
+        childProcess.kill();
+        return;
+    }
+    const onAbort = (): void => {
+        childProcess.kill();
+    };
+    signal.addEventListener("abort", onAbort, { once: true });
+    // biome-ignore lint/suspicious/noMisplacedFunctionDeclaration: cleanup needs access to onAbort
+    void childProcess.finally(() => signal.removeEventListener("abort", onAbort));
+}
 
 export declare namespace CliV2 {
     export interface Options {
@@ -22,6 +43,8 @@ export declare namespace CliV2 {
         expectError?: boolean;
         /** Authentication token (set to null to explicitly remove FERN_TOKEN) */
         authToken?: string | null;
+        /** AbortSignal from vitest test context for cleanup on timeout/bail/Ctrl+C */
+        signal?: AbortSignal;
     }
 
     export interface Result {
@@ -131,10 +154,12 @@ export async function runCliV2(options: CliV2.Options): Promise<CliV2.Result> {
             reject: false // Don't throw on non-zero exit.
         };
 
-        const result = await loggingExeca(CONSOLE_LOGGER, "node", ["--enable-source-maps", cliPath, ...options.args], {
+        const childProcess = runExeca(CONSOLE_LOGGER, "node", ["--enable-source-maps", cliPath, ...options.args], {
             ...execaOptions,
             doNotPipeOutput: options.expectError ?? false
         });
+        wireSignal(childProcess, options.signal);
+        const result = await childProcess;
 
         const duration = Date.now() - startTime;
 

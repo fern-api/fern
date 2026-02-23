@@ -3,32 +3,36 @@ import { init } from "../init/init.js";
 
 // Ensure that the generators list command works and the format doesn't change, since fern-bot consumes this
 describe("fern generator list", () => {
-    it("fern generator list", async () => {
-        const pathOfDirectory = await init();
+    it("fern generator list", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
 
-        const out = await runFernCli(["generator", "list"], {
-            cwd: pathOfDirectory
-        });
+        const out = await runFernCli(["generator", "list"], { cwd: pathOfDirectory }, true, signal);
 
         expect(out.stdout).toMatchSnapshot();
     }, 60_000);
 
-    it("fern generator list with exclude", async () => {
-        const pathOfDirectory = await init();
+    it("fern generator list with exclude", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
 
-        const out = await runFernCli(["generator", "list", "--exclude-mode", "local-file-system"], {
-            cwd: pathOfDirectory
-        });
+        const out = await runFernCli(
+            ["generator", "list", "--exclude-mode", "local-file-system"],
+            { cwd: pathOfDirectory },
+            true,
+            signal
+        );
 
         expect(out.stdout).toMatchSnapshot();
     }, 60_000);
 
-    it("fern generator list with include", async () => {
-        const pathOfDirectory = await init();
+    it("fern generator list with include", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
 
-        const out = await runFernCli(["generator", "list", "--include-mode", "local-file-system"], {
-            cwd: pathOfDirectory
-        });
+        const out = await runFernCli(
+            ["generator", "list", "--include-mode", "local-file-system"],
+            { cwd: pathOfDirectory },
+            true,
+            signal
+        );
 
         expect(out.stdout).toMatchSnapshot();
     }, 60_000);

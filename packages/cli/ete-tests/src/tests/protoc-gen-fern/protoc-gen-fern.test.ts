@@ -6,13 +6,13 @@ import path from "path";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("fern protoc-gen-fern", () => {
-    it("test with buf", async () => {
+    it("test with buf", async ({ signal }) => {
         const buf = createLoggingExecutable("buf", {
             cwd: FIXTURES_DIR,
             logger: createEmptyProtobufLogger()
         });
 
-        await buf(["generate"]);
+        await buf(["generate"], { signal });
         const contents = await readFile(path.join(FIXTURES_DIR, "output", "ir.json"), "utf-8");
         try {
             expect(contents).toMatchSnapshot();
