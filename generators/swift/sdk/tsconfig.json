@@ -5,6 +5,5 @@
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "exclude": ["./src/**/*.globalSetup.ts"]
+  "include": ["./src/**/*"]
 }
