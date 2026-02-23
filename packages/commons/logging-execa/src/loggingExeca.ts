@@ -36,7 +36,8 @@ function wireSignal(childProcess: import("execa").ExecaChildProcess, signal?: Ab
         childProcess.kill();
     };
     signal.addEventListener("abort", onAbort, { once: true });
-    void childProcess.finally(() => signal.removeEventListener("abort", onAbort));
+    // biome-ignore lint/suspicious/noEmptyBlockStatements: swallow rejection from .finally() chain
+    void childProcess.finally(() => signal.removeEventListener("abort", onAbort)).catch(() => {});
 }
 
 // returns the current command being run by execa
