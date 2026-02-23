@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-
 - version: 3.83.0
   changelogEntry:
     - summary: |
@@ -10,7 +9,6 @@
       type: feat
   createdAt: "2026-02-23"
   irVersion: 65
-
 - version: 3.82.0
   changelogEntry:
     - summary: |

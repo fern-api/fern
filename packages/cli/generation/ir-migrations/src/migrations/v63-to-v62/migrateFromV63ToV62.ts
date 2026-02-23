@@ -797,19 +797,13 @@ function convertAvailabilityStatus(
     status: IrVersions.V63.AvailabilityStatus
 ): IrVersions.V62.commons.AvailabilityStatus {
     switch (status) {
-        case "ALPHA":
         case "IN_DEVELOPMENT":
             return IrVersions.V62.commons.AvailabilityStatus.InDevelopment;
         case "PRE_RELEASE":
             return IrVersions.V62.commons.AvailabilityStatus.PreRelease;
-        case "BETA":
-        case "PREVIEW":
-            return IrVersions.V62.commons.AvailabilityStatus.PreRelease;
         case "GENERAL_AVAILABILITY":
-        case "STABLE":
             return IrVersions.V62.commons.AvailabilityStatus.GeneralAvailability;
         case "DEPRECATED":
-        case "LEGACY":
             return IrVersions.V62.commons.AvailabilityStatus.Deprecated;
         default:
             return IrVersions.V62.commons.AvailabilityStatus.GeneralAvailability;
