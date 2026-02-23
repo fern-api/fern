@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.81.2
+  changelogEntry:
+    - summary: |
+        Set `auth: true` on WebSocket channels when the AsyncAPI spec defines security
+        schemes on servers. Previously, WebSocket channels always had `auth: false` hardcoded,
+        which prevented the API explorer from showing the auth form and auto-prepending the
+        Bearer prefix for authenticated WebSocket endpoints.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
 - version: 3.81.1
   changelogEntry:
     - summary: |

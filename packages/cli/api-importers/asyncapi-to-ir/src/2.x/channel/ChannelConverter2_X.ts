@@ -101,13 +101,15 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
+        const auth = this.hasServerSecurity();
+
         return {
             channel: {
                 name: this.context.casingsGenerator.generateName(groupName),
                 displayName,
                 baseUrl,
                 path,
-                auth: false,
+                auth,
                 headers,
                 queryParameters,
                 pathParameters,
@@ -130,6 +132,27 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             audiences,
             inlinedTypes: this.inlinedTypes
         };
+    }
+
+    private hasServerSecurity(): boolean {
+        const servers = this.context.spec.servers ?? {};
+
+        if (this.channel.servers && this.channel.servers.length > 0) {
+            for (const serverName of this.channel.servers) {
+                const server = (servers as Record<string, AsyncAPIV2.ServerV2>)[serverName];
+                if (server?.security && server.security.length > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        for (const server of Object.values(servers)) {
+            if ((server as AsyncAPIV2.ServerV2).security && (server as AsyncAPIV2.ServerV2).security!.length > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private convertMessage({

@@ -23,6 +23,7 @@ export interface ServerV3 {
     name: string;
     host: string;
     protocol: string;
+    security?: Array<OpenAPIV3.ReferenceObject | Record<string, string[]>>;
 }
 
 export interface ChannelV3 {
