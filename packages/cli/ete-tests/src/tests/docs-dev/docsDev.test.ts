@@ -18,9 +18,7 @@ describe.sequential("fern docs dev --legacy", () => {
             cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
-        await sleep(20_000);
-
-        const response = await fetch("http://localhost:3000/v2/registry/docs/load-with-url", {
+        const response = await waitForServer("http://localhost:3000/v2/registry/docs/load-with-url", {
             method: "POST"
         });
 
@@ -53,9 +51,7 @@ describe.sequential("fern docs dev --beta", () => {
             reject: true
         });
 
-        await sleep(40_000);
-
-        const response = await fetch("http://localhost:3001/v2/registry/docs/load-with-url", {
+        const response = await waitForServer("http://localhost:3001/v2/registry/docs/load-with-url", {
             method: "POST"
         });
 
@@ -85,9 +81,7 @@ describe.sequential("fern docs dev", () => {
             cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
-        await sleep(40_000);
-
-        const response = await fetch("http://localhost:3002/v2/registry/docs/load-with-url", {
+        const response = await waitForServer("http://localhost:3002/v2/registry/docs/load-with-url", {
             method: "POST"
         });
 
@@ -102,6 +96,19 @@ describe.sequential("fern docs dev", () => {
     }, 50_000);
 });
 
-function sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+async function waitForServer(
+    url: string,
+    init: Parameters<typeof fetch>[1],
+    { interval = 1_000, timeout = 60_000 }: { interval?: number; timeout?: number } = {}
+): Promise<Awaited<ReturnType<typeof fetch>>> {
+    const deadline = Date.now() + timeout;
+    while (Date.now() < deadline) {
+        try {
+            return await fetch(url, init);
+        } catch {
+            await new Promise((resolve) => setTimeout(resolve, interval));
+        }
+    }
+    // Final attempt – let it throw if the server is still unreachable
+    return await fetch(url, init);
 }
