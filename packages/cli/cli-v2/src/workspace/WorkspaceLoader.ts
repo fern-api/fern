@@ -59,10 +59,12 @@ export class WorkspaceLoader {
 
     public async load({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<WorkspaceLoader.Result> {
         const ai = this.convertAi({ fernYml });
-        const apis = await this.convertApis({ fernYml });
-        const cliVersion = await this.convertCliVersion({ fernYml });
         const docs = this.convertDocs({ fernYml });
-        const sdks = await this.convertSdks({ fernYml });
+        const [apis, cliVersion, sdks] = await Promise.all([
+            this.convertApis({ fernYml }),
+            this.convertCliVersion({ fernYml }),
+            this.convertSdks({ fernYml })
+        ]);
         if (this.issues.length > 0) {
             return {
                 success: false,
