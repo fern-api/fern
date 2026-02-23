@@ -14,7 +14,7 @@ import { init } from "./init.js";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
-describe("fern init", () => {
+describe.concurrent("fern init", () => {
     it("no existing fern directory", async () => {
         const pathOfDirectory = await init();
         expect(
