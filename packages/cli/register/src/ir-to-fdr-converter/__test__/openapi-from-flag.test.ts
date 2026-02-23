@@ -2883,19 +2883,17 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Validate the basic auth scheme structure
         const basicAuthScheme = intermediateRepresentation.auth.schemes[0];
         expect(basicAuthScheme).toBeDefined();
-        expect(basicAuthScheme?.type).toBe("basic");
+        expect.assert(basicAuthScheme?.type === "basic");
 
         // Verify that x-fern-basic custom names are correctly flowing through to the IR
         // The OpenAPI spec has x-fern-basic with username.name="project_id" and password.name="api_token"
-        if (basicAuthScheme?.type === "basic") {
-            // Verify custom names from x-fern-basic are used
-            expect(basicAuthScheme.username.originalName).toBe("project_id");
-            expect(basicAuthScheme.password.originalName).toBe("api_token");
+        // Verify custom names from x-fern-basic are used
+        expect(basicAuthScheme.username.originalName).toBe("project_id");
+        expect(basicAuthScheme.password.originalName).toBe("api_token");
 
-            // Verify env vars are also passed through
-            expect(basicAuthScheme.usernameEnvVar).toBe("PLANT_STORE_PROJECT_ID");
-            expect(basicAuthScheme.passwordEnvVar).toBe("PLANT_STORE_API_TOKEN");
-        }
+        // Verify env vars are also passed through
+        expect(basicAuthScheme.usernameEnvVar).toBe("PLANT_STORE_PROJECT_ID");
+        expect(basicAuthScheme.passwordEnvVar).toBe("PLANT_STORE_API_TOKEN");
 
         // Validate FDR auth schemes
         expect(fdrApiDefinition.authSchemes).toBeDefined();
@@ -2903,12 +2901,10 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(fdrAuthSchemes).toBeDefined();
         if (fdrAuthSchemes) {
             const basicAuth = Object.values(fdrAuthSchemes).find((scheme) => scheme.type === "basicAuth");
-            expect(basicAuth).toBeDefined();
-            if (basicAuth?.type === "basicAuth") {
-                // Verify custom names from x-fern-basic flow through to FDR
-                expect(basicAuth.usernameName).toBe("project_id");
-                expect(basicAuth.passwordName).toBe("api_token");
-            }
+            expect.assert(basicAuth?.type === "basicAuth");
+            // Verify custom names from x-fern-basic flow through to FDR
+            expect(basicAuth.usernameName).toBe("project_id");
+            expect(basicAuth.passwordName).toBe("api_token");
         }
 
         // Snapshot the complete output for regression testing

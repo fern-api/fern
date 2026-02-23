@@ -868,14 +868,12 @@
                 {
                   "key": "shallow",
                   "description": null,
-                  "value": "false",
-                  "disabled": true
+                  "value": "false"
                 },
                 {
                   "key": "tag",
                   "description": null,
-                  "value": "development",
-                  "disabled": true
+                  "value": "development"
                 }
               ],
               "variable": []
@@ -916,14 +914,12 @@
                     {
                       "key": "shallow",
                       "description": null,
-                      "value": "false",
-                      "disabled": true
+                      "value": "false"
                     },
                     {
                       "key": "tag",
                       "description": null,
-                      "value": "development",
-                      "disabled": true
+                      "value": "development"
                     }
                   ],
                   "variable": []
@@ -967,14 +963,12 @@
                     {
                       "key": "shallow",
                       "description": null,
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     },
                     {
                       "key": "tag",
                       "description": null,
-                      "value": "tag",
-                      "disabled": true
+                      "value": "tag"
                     }
                   ],
                   "variable": []
