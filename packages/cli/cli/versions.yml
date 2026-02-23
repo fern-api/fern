@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add slug collision detection to `fern check`. When multiple navigation nodes in
+        docs.yml resolve to the same URL slug, one page silently shadows the other, making
+        it invisible and unlinkable. `fern check` now warns about these collisions and
+        recommends adding a custom `slug` to disambiguate the pages.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
 - version: 3.82.0
   changelogEntry:
     - summary: |
