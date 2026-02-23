@@ -5,4 +5,6 @@ import type * as FernDefinition from "../../../index.js";
 export type PaginationSchema =
     | FernDefinition.CursorPaginationSchema
     | FernDefinition.OffsetPaginationSchema
-    | FernDefinition.CustomPaginationSchema;
+    | FernDefinition.CustomPaginationSchema
+    | FernDefinition.UriPaginationSchema
+    | FernDefinition.PathPaginationSchema;

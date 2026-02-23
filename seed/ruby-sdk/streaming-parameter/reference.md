@@ -16,7 +16,7 @@
 client.dummy.generate(
   stream: false,
   num_events: 5
-);
+)
 ```
 </dd>
 </dl>

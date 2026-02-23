@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```ruby
-client.basic_auth.get_with_basic_auth();
+client.basic_auth.get_with_basic_auth
 ```
 </dd>
 </dl>
@@ -81,7 +81,7 @@ POST request with basic auth scheme
 <dd>
 
 ```ruby
-client.basic_auth.post_with_basic_auth();
+client.basic_auth.post_with_basic_auth
 ```
 </dd>
 </dl>

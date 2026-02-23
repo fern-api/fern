@@ -86,6 +86,28 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
+    public getRootClientInterfaceClassName(): string {
+        return `${this.getRootClientClassName()}Interface`;
+    }
+
+    public getRootClientInterfaceClassReference(): php.ClassReference {
+        return php.classReference({
+            name: this.getRootClientInterfaceClassName(),
+            namespace: this.getRootNamespace()
+        });
+    }
+
+    public getSubpackageInterfaceClassReference(subpackage: FernIr.Subpackage): php.ClassReference {
+        return php.classReference({
+            name: `${subpackage.name.pascalCase.unsafeName}ClientInterface`,
+            namespace: this.getFileLocation(subpackage.fernFilepath).namespace
+        });
+    }
+
+    public getSubpackageGetterName(subpackage: FernIr.Subpackage): string {
+        return `get${subpackage.name.pascalCase.safeName}`;
+    }
+
     public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         // TODO: Propogate reserved keywords through IR via CasingsGenerator.
         const unsafeName = endpoint.name.camelCase.unsafeName;

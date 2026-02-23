@@ -9,10 +9,6 @@ const NEMO_FUNCTIONS: Record<string, FdrAPI.libraryDocs.PythonFunctionIr> = JSON
     readFileSync(join(__dirname, "fixtures", "nemo-functions.json"), "utf-8")
 );
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
 /** Minimal render context with no type linking. */
 function emptyCtx(): RenderContext {
     return { baseSlug: "reference/python", validPaths: new Set(), pathAliases: new Map() };
@@ -52,10 +48,6 @@ function makeParam(overrides: Partial<FdrAPI.libraryDocs.PythonParameterIr>): Fd
         ...overrides
     } as FdrAPI.libraryDocs.PythonParameterIr;
 }
-
-// ---------------------------------------------------------------------------
-// renderFunctionDetailed
-// ---------------------------------------------------------------------------
 
 describe("renderFunctionDetailed", () => {
     it("renders anchor with correct ID", () => {
@@ -304,10 +296,6 @@ describe("renderFunctionDetailed", () => {
     });
 });
 
-// ---------------------------------------------------------------------------
-// renderMethodDetailed
-// ---------------------------------------------------------------------------
-
 describe("renderMethodDetailed", () => {
     it("omits self from method signature", () => {
         const func = makeFunction({
@@ -389,10 +377,6 @@ describe("renderMethodDetailed", () => {
         expect(result).toContain("pkg.MyClass.reset()");
     });
 });
-
-// ---------------------------------------------------------------------------
-// renderProperty
-// ---------------------------------------------------------------------------
 
 describe("renderProperty", () => {
     it("renders property signature as name: Type", () => {
@@ -490,10 +474,6 @@ describe("renderProperty", () => {
         expect(result).not.toContain("<Badge>");
     });
 });
-
-// ---------------------------------------------------------------------------
-// NeMo IR fixture tests
-// ---------------------------------------------------------------------------
 
 describe("renderFunctionDetailed (NeMo fixtures)", () => {
     it("patch_transformers_module_dir: simple function with typed param, no docstring", () => {

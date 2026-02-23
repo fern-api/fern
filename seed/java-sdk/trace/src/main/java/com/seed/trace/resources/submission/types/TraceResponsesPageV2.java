@@ -134,5 +134,15 @@ public final class TraceResponsesPageV2 {
         public TraceResponsesPageV2 build() {
             return new TraceResponsesPageV2(offset, traceResponses, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

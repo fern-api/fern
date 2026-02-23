@@ -8,8 +8,8 @@ private func main() async throws {
     )
 
     _ = try await client.endpoints.object.getAndReturnWithDatetimeLikeString(request: ObjectWithDatetimeLikeString(
-        datetimeLikeString: "datetimeLikeString",
-        actualDatetime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601)
+        datetimeLikeString: "2023-08-31T14:15:22Z",
+        actualDatetime: try! Date("2023-08-31T14:15:22Z", strategy: .iso8601)
     ))
 }
 

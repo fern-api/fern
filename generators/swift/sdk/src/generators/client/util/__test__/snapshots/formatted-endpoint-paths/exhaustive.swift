@@ -5,6 +5,7 @@
 "/container/set-of-objects"
 "/container/map-prim-to-prim"
 "/container/map-prim-to-object"
+"/container/map-prim-to-union"
 "/container/opt-objects"
 
 // service_endpoints/content-type
@@ -29,6 +30,9 @@
 "/object/get-and-return-nested-with-required-field/\(string)"
 "/object/get-and-return-nested-with-required-field-list"
 "/object/get-and-return-with-datetime-like-string"
+
+// service_endpoints/pagination
+"/pagination"
 
 // service_endpoints/params
 "/params/path/\(param)"

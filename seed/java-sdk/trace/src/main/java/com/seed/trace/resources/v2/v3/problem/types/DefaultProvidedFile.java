@@ -84,6 +84,10 @@ public final class DefaultProvidedFile {
     public interface _FinalStage {
         DefaultProvidedFile build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage relatedTypes(List<VariableType> relatedTypes);
 
         _FinalStage addRelatedTypes(VariableType relatedTypes);
@@ -143,6 +147,18 @@ public final class DefaultProvidedFile {
         @java.lang.Override
         public DefaultProvidedFile build() {
             return new DefaultProvidedFile(file, relatedTypes, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

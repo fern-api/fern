@@ -147,7 +147,14 @@ func do() {
             Nodes: []*fern.Node{
                 &fern.Node{
                     Name: "name",
-                    Nodes: []*fern.Node{},
+                    Nodes: []*fern.Node{
+                        &fern.Node{
+                            Name: "name",
+                        },
+                        &fern.Node{
+                            Name: "name",
+                        },
+                    },
                     Trees: []*fern.Tree{
                         &fern.Tree{
                             Nodes: []*fern.Node{},
@@ -159,7 +166,14 @@ func do() {
                 },
                 &fern.Node{
                     Name: "name",
-                    Nodes: []*fern.Node{},
+                    Nodes: []*fern.Node{
+                        &fern.Node{
+                            Name: "name",
+                        },
+                        &fern.Node{
+                            Name: "name",
+                        },
+                    },
                     Trees: []*fern.Tree{
                         &fern.Tree{
                             Nodes: []*fern.Node{},
@@ -226,7 +240,14 @@ func do() {
                             Contents: "contents",
                         },
                     },
-                    Directories: []*fern.Directory{},
+                    Directories: []*fern.Directory{
+                        &fern.Directory{
+                            Name: "name",
+                        },
+                        &fern.Directory{
+                            Name: "name",
+                        },
+                    },
                 },
                 &fern.Directory{
                     Name: "name",
@@ -240,7 +261,14 @@ func do() {
                             Contents: "contents",
                         },
                     },
-                    Directories: []*fern.Directory{},
+                    Directories: []*fern.Directory{
+                        &fern.Directory{
+                            Name: "name",
+                        },
+                        &fern.Directory{
+                            Name: "name",
+                        },
+                    },
                 },
             },
         },

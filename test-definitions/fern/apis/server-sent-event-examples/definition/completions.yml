@@ -4,6 +4,23 @@ types:
       delta: string
       tokens: optional<integer>
 
+  CompletionEvent:
+    properties:
+      content: string
+
+  ErrorEvent:
+    properties:
+      error: string
+      code: optional<integer>
+
+  StreamEvent:
+    discriminant:
+      value: event
+      context: protocol
+    union:
+      completion: CompletionEvent
+      error: ErrorEvent
+
 service:
   auth: false
   base-path: ""
@@ -34,3 +51,16 @@ service:
                 data:
                   delta: "bar"
                   tokens: 2
+
+    streamEvents:
+      method: POST
+      path: /stream-events
+      request:
+        name: StreamEventsRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: StreamEvent
+        format: sse
+        terminator: "[DONE]"

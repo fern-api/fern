@@ -14,12 +14,12 @@
 
 ```ruby
 client.auth.get_token_with_client_credentials(
-  client_id: 'client_id',
-  client_secret: 'client_secret',
-  audience: 'https://api.example.com',
-  grant_type: 'client_credentials',
-  scope: 'scope'
-);
+  client_id: "client_id",
+  client_secret: "client_secret",
+  audience: "https://api.example.com",
+  grant_type: "client_credentials",
+  scope: "scope"
+)
 ```
 </dd>
 </dl>
@@ -68,13 +68,13 @@ client.auth.get_token_with_client_credentials(
 
 ```ruby
 client.auth.refresh_token(
-  client_id: 'client_id',
-  client_secret: 'client_secret',
-  refresh_token: 'refresh_token',
-  audience: 'https://api.example.com',
-  grant_type: 'refresh_token',
-  scope: 'scope'
-);
+  client_id: "client_id",
+  client_secret: "client_secret",
+  refresh_token: "refresh_token",
+  audience: "https://api.example.com",
+  grant_type: "refresh_token",
+  scope: "scope"
+)
 ```
 </dd>
 </dl>
@@ -123,7 +123,7 @@ client.auth.refresh_token(
 <dd>
 
 ```ruby
-client.nested_no_auth.api.get_something();
+client.nested_no_auth.api.get_something
 ```
 </dd>
 </dl>
@@ -164,7 +164,7 @@ client.nested_no_auth.api.get_something();
 <dd>
 
 ```ruby
-client.nested.api.get_something();
+client.nested.api.get_something
 ```
 </dd>
 </dl>
@@ -205,7 +205,7 @@ client.nested.api.get_something();
 <dd>
 
 ```ruby
-client.simple.get_something();
+client.simple.get_something
 ```
 </dd>
 </dl>

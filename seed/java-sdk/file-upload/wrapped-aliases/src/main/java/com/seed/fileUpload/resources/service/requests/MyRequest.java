@@ -201,6 +201,10 @@ public final class MyRequest {
     public interface _FinalStage {
         MyRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage maybeString(Optional<String> maybeString);
 
         _FinalStage maybeString(String maybeString);
@@ -445,6 +449,18 @@ public final class MyRequest {
                     listOfAliasObject,
                     aliasListOfObject,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

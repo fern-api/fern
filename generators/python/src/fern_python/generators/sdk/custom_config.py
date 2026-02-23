@@ -152,6 +152,17 @@ class SDKCustomConfig(pydantic.BaseModel):
     # and <package>/sentry_integration.py if they exist)
     import_paths: Optional[List[str]] = None
 
+    # If true, expose an http_client parameter on the client constructor
+    # that accepts an httpx.BaseTransport/AsyncBaseTransport, passed through to
+    # httpx.Client/AsyncClient. Intended for SDK developers to supply custom
+    # transports via custom code (e.g., factory/classmethod wrappers).
+    custom_transport: bool = False
+
+    # Controls how offset pagination increments between pages.
+    # "item-index" (default): offset increments by the number of items returned.
+    # "page-index": offset increments by 1 each page.
+    offset_semantics: Literal["item-index", "page-index"] = "item-index"
+
     class Config:
         extra = pydantic.Extra.forbid
 
@@ -161,6 +172,8 @@ class SDKCustomConfig(pydantic.BaseModel):
             obj = obj.copy()
             if "custom-pager-name" in obj and "custom_pager_name" not in obj:
                 obj["custom_pager_name"] = obj.pop("custom-pager-name")
+            if "offsetSemantics" in obj and "offset_semantics" not in obj:
+                obj["offset_semantics"] = obj.pop("offsetSemantics")
 
         obj = super().parse_obj(obj)
 

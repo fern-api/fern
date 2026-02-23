@@ -363,6 +363,7 @@ $client->reference->send(
                 ]),
             ],
         ]),
+        'ending' => '$ending',
     ]),
 );
 ```

@@ -30,7 +30,7 @@ export class TaskContextLogger implements Logger {
 
     public debug(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logFileWriter.write({ taskName: this.task.name, level: LogLevel.Debug, message });
+        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Debug, message });
 
         if (this.shouldLogToTask(LogLevel.Debug)) {
             if (this.task.logs == null) {
@@ -42,7 +42,7 @@ export class TaskContextLogger implements Logger {
 
     public info(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logFileWriter.write({ taskName: this.task.name, level: LogLevel.Info, message });
+        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Info, message });
 
         if (this.shouldLogToTask(LogLevel.Info)) {
             if (this.task.logs == null) {
@@ -55,7 +55,7 @@ export class TaskContextLogger implements Logger {
 
     public warn(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logFileWriter.write({ taskName: this.task.name, level: LogLevel.Warn, message });
+        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Warn, message });
 
         if (this.shouldLogToTask(LogLevel.Warn)) {
             if (this.task.logs == null) {
@@ -67,7 +67,7 @@ export class TaskContextLogger implements Logger {
 
     public error(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logFileWriter.write({ taskName: this.task.name, level: LogLevel.Error, message });
+        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Error, message });
 
         if (this.shouldLogToTask(LogLevel.Error)) {
             this.collectedErrors.push(message);

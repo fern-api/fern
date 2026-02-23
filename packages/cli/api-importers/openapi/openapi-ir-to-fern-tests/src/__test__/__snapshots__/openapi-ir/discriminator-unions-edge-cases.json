@@ -513,6 +513,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "animalType",
+          "discriminatorContext": "data",
           "generatedName": "Animal",
           "schemas": {
             "dog": {
@@ -883,6 +884,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "paymentMethod",
+          "discriminatorContext": "data",
           "generatedName": "Payment",
           "schemas": {
             "credit_card": {

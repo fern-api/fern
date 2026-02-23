@@ -91,7 +91,14 @@ private func main() async throws {
             nodes: [
                 Node(
                     name: "name",
-                    nodes: [],
+                    nodes: [
+                        Node(
+                            name: "name"
+                        ),
+                        Node(
+                            name: "name"
+                        )
+                    ],
                     trees: [
                         Tree(
                             nodes: []
@@ -103,7 +110,14 @@ private func main() async throws {
                 ),
                 Node(
                     name: "name",
-                    nodes: [],
+                    nodes: [
+                        Node(
+                            name: "name"
+                        ),
+                        Node(
+                            name: "name"
+                        )
+                    ],
                     trees: [
                         Tree(
                             nodes: []
@@ -170,7 +184,14 @@ private func main() async throws {
                             contents: "contents"
                         )
                     ],
-                    directories: []
+                    directories: [
+                        Directory(
+                            name: "name"
+                        ),
+                        Directory(
+                            name: "name"
+                        )
+                    ]
                 ),
                 Directory(
                     name: "name",
@@ -184,7 +205,14 @@ private func main() async throws {
                             contents: "contents"
                         )
                     ],
-                    directories: []
+                    directories: [
+                        Directory(
+                            name: "name"
+                        ),
+                        Directory(
+                            name: "name"
+                        )
+                    ]
                 )
             ]
         ),

@@ -114,6 +114,10 @@ public final class CreateUsernameRequest {
     public interface _FinalStage {
         CreateUsernameRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage tags(List<String> tags);
 
         _FinalStage addTags(String tags);
@@ -193,6 +197,18 @@ public final class CreateUsernameRequest {
         @java.lang.Override
         public CreateUsernameRequest build() {
             return new CreateUsernameRequest(tags, username, password, name, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

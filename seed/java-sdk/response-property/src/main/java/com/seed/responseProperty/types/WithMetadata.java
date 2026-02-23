@@ -102,5 +102,15 @@ public final class WithMetadata implements IWithMetadata {
         public WithMetadata build() {
             return new WithMetadata(metadata, additionalProperties);
         }
+
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
+        }
     }
 }

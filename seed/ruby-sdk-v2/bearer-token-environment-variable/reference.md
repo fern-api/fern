@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```ruby
-client.service.get_with_bearer_token();
+client.service.get_with_bearer_token
 ```
 </dd>
 </dl>

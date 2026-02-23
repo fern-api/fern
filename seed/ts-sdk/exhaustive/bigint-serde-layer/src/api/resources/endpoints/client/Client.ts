@@ -7,6 +7,7 @@ import { ContentTypeClient } from "../resources/contentType/client/Client.js";
 import { EnumClient } from "../resources/enum/client/Client.js";
 import { HttpMethodsClient } from "../resources/httpMethods/client/Client.js";
 import { ObjectClient } from "../resources/object/client/Client.js";
+import { PaginationClient } from "../resources/pagination/client/Client.js";
 import { ParamsClient } from "../resources/params/client/Client.js";
 import { PrimitiveClient } from "../resources/primitive/client/Client.js";
 import { PutClient } from "../resources/put/client/Client.js";
@@ -24,6 +25,7 @@ export class EndpointsClient {
     protected _enum: EnumClient | undefined;
     protected _httpMethods: HttpMethodsClient | undefined;
     protected _object: ObjectClient | undefined;
+    protected _pagination: PaginationClient | undefined;
     protected _params: ParamsClient | undefined;
     protected _primitive: PrimitiveClient | undefined;
     protected _put: PutClient | undefined;
@@ -52,6 +54,10 @@ export class EndpointsClient {
 
     public get object(): ObjectClient {
         return (this._object ??= new ObjectClient(this._options));
+    }
+
+    public get pagination(): PaginationClient {
+        return (this._pagination ??= new PaginationClient(this._options));
     }
 
     public get params(): ParamsClient {

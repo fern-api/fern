@@ -93,13 +93,6 @@ describe("library docs configuration", () => {
             expect(isRawLibraryReferenceConfig(config)).toBe(false);
         });
 
-        it("should return false for python-docs config", () => {
-            const config = {
-                pythonDocs: "https://github.com/django/django"
-            };
-            expect(isRawLibraryReferenceConfig(config)).toBe(false);
-        });
-
         it("should return false when library is not a string", () => {
             const config = {
                 library: 123

@@ -104,6 +104,18 @@ export function buildEndpoint({
                     results: endpoint.pagination.results
                 };
                 break;
+            case "uri":
+                pagination = {
+                    next_uri: endpoint.pagination.nextUri,
+                    results: endpoint.pagination.results
+                };
+                break;
+            case "path":
+                pagination = {
+                    next_path: endpoint.pagination.nextPath,
+                    results: endpoint.pagination.results
+                };
+                break;
             default:
                 assertNever(endpoint.pagination);
         }
@@ -227,7 +239,8 @@ export function buildEndpoint({
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
-                    format: "json"
+                    format: "json",
+                    terminator: jsonResponse.terminator ?? undefined
                 };
             },
             streamingSse: (jsonResponse) => {
@@ -241,7 +254,8 @@ export function buildEndpoint({
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference),
-                    format: "sse"
+                    format: "sse",
+                    terminator: jsonResponse.terminator ?? undefined
                 };
             },
             file: (fileResponse) => {

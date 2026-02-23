@@ -49,17 +49,75 @@ paths:
           name: limit
           schema:
             type: integer
+  /list-uri-pagination:
+    get:
+      x-fern-pagination:
+        next_uri: $response.meta.nextUri
+        results: $response.users
+      operationId: listWithUriPagination
+      summary: List with URI pagination
+      description: ""
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersUriPaginationResponse"
+  /list-path-pagination:
+    get:
+      x-fern-pagination:
+        next_path: $response.meta.nextPath
+        results: $response.users
+      operationId: listWithPathPagination
+      summary: List with Path pagination
+      description: ""
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersPathPaginationResponse"
 components:
   schemas:
     Meta:
       properties:
         hasMore:
           type: boolean
+    UriPaginationMeta:
+      properties:
+        nextUri:
+          type: string
+          description: Full URI to the next page
+    PathPaginationMeta:
+      properties:
+        nextPath:
+          type: string
+          description: Path to the next page (excluding base URL)
     UsersResponse:
       type: object
       properties:
         meta:
           $ref: "#/components/schemas/Meta"
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+    UsersUriPaginationResponse:
+      type: object
+      properties:
+        meta:
+          $ref: "#/components/schemas/UriPaginationMeta"
+        users:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+    UsersPathPaginationResponse:
+      type: object
+      properties:
+        meta:
+          $ref: "#/components/schemas/PathPaginationMeta"
         users:
           type: array
           items:

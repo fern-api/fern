@@ -42,7 +42,6 @@ type Mode uint8
 const (
 	ModeModel = iota + 1
 	ModeClient
-	ModeFiber
 )
 
 // Generator represents the Go code generator.
@@ -160,6 +159,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 		g.config.InlinePathParameters,
 		g.config.InlineFileProperties,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -178,6 +178,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -191,11 +192,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 					return nil, nil, err
 				}
 			case typeToGenerate.Endpoint != nil:
-				if mode == ModeFiber {
-					if err := writer.WriteFiberRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
-						return nil, nil, err
-					}
-				} else if mode == ModeClient {
+				if mode == ModeClient {
 					if err := writer.WriteRequestType(
 						typeToGenerate.FernFilepath,
 						typeToGenerate.Endpoint,
@@ -214,6 +211,15 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			return nil, nil, err
 		}
 		files = append(files, file)
+
+		// Generate test file for getter/setter methods
+		testFile, err := writer.GenerateGetterSetterTestFile()
+		if err != nil {
+			return nil, nil, err
+		}
+		if testFile != nil {
+			files = append(files, testFile)
+		}
 	}
 	return files, generatedRootClients, nil
 }
@@ -292,6 +298,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			nil,
@@ -317,6 +324,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			nil,
@@ -349,8 +357,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
 	switch mode {
-	case ModeFiber:
-		break
 	case ModeClient:
 		var (
 			generatedAuth        *GeneratedAuth
@@ -369,6 +375,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -405,8 +412,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -434,6 +442,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -469,8 +478,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -495,8 +505,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -524,8 +535,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -552,6 +564,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.UseReaderForBytesRequest,
 			g.config.GettersPassByValue,
 			g.config.ExportAllRequestsAtRoot,
+			g.config.OmitEmptyRequestWrappers,
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
 			ir.Types,
@@ -581,6 +594,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newEnvironmentInternalFile(g.coordinator))
 		}
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
+		files = append(files, newPointerTestFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
 		if needsFileUploadHelpers(ir) {
@@ -605,8 +619,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.UseReaderForBytesRequest,
 				g.config.GettersPassByValue,
 				g.config.ExportAllRequestsAtRoot,
+				g.config.OmitEmptyRequestWrappers,
 				g.config.UnionVersion,
-			g.config.CustomPagerName,
+				g.config.CustomPagerName,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -740,7 +755,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 	}
 
-
 	for _, file := range files {
 		fmt.Printf("v1 output file %s\n", file.Path)
 	}
@@ -767,8 +781,9 @@ func (g *Generator) generateRootService(
 		g.config.UseReaderForBytesRequest,
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -818,8 +833,9 @@ func (g *Generator) generateService(
 		g.config.UseReaderForBytesRequest,
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -872,8 +888,9 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.UseReaderForBytesRequest,
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -921,8 +938,9 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.UseReaderForBytesRequest,
 		g.config.GettersPassByValue,
 		g.config.ExportAllRequestsAtRoot,
+		g.config.OmitEmptyRequestWrappers,
 		g.config.UnionVersion,
-			g.config.CustomPagerName,
+		g.config.CustomPagerName,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -1135,6 +1153,43 @@ func newPointerFile(coordinator *coordinator.Client, rootPackageName string, gen
 	)
 }
 
+// newPointerTestFile returns a *File containing the tests for pointer helper functions.
+// The location matches where newPointerFile places pointer.go (either root or core package).
+func newPointerTestFile(coordinator *coordinator.Client, rootPackageName string, generatedNames map[string]struct{}) *File {
+	// Determine whether pointer.go was placed in core package
+	var useCorePackage bool
+	for generatedName := range generatedNames {
+		if _, ok := pointerFunctionNames[generatedName]; ok {
+			useCorePackage = true
+			break
+		}
+	}
+	if useCorePackage {
+		return NewFile(
+			coordinator,
+			"core/pointer_test.go",
+			[]byte(pointerTestFile),
+		)
+	}
+	// Place test file at root alongside pointer.go
+	filename := "pointer_test.go"
+	if _, ok := generatedNames["Pointer"]; ok {
+		filename = "_pointer_test.go"
+	}
+	// Replace package declaration to match root package
+	content := strings.Replace(
+		pointerTestFile,
+		"package core",
+		fmt.Sprintf("package %s", rootPackageName),
+		1,
+	)
+	return NewFile(
+		coordinator,
+		filename,
+		[]byte(content),
+	)
+}
+
 // newFileParamFile returns a *File containing the FileParam helper type
 // for multipart file uploads.
 //
@@ -1194,6 +1249,7 @@ func newClientTestFile(
 		filename,
 		packageName,
 		baseImportPath,
+		false,
 		false,
 		false,
 		false,
@@ -1563,12 +1619,11 @@ func generatedPackagesFromIR(ir *fernir.IntermediateRepresentation) map[string]s
 }
 
 // shouldSkipRequestType returns true if the request type should not be generated.
-func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint, inlinePathParameters bool, inlineFileProperties bool) bool {
+func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint, serviceHeaders []*fernir.HttpHeader, inlinePathParameters bool, inlineFileProperties bool, omitEmptyRequestWrappers bool) bool {
 	if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
-		// This endpoint doesn't have any in-lined request types that need to be generated.
 		return true
 	}
-	return !needsRequestParameter(irEndpoint, inlinePathParameters, inlineFileProperties)
+	return !needsRequestParameter(irEndpoint, serviceHeaders, inlinePathParameters, inlineFileProperties, omitEmptyRequestWrappers)
 }
 
 // fileUploadHasBodyProperties returns true if the file upload request has at least
@@ -1646,13 +1701,14 @@ func fileInfoToTypes(
 	inlinePathParameters bool,
 	inlineFileProperties bool,
 	exportAllRequestsAtRoot bool,
+	omitEmptyRequestWrappers bool,
 ) (map[fileInfo][]*typeToGenerate, error) {
 	result := make(map[fileInfo][]*typeToGenerate)
 
 	for _, irService := range irServices {
 		subpackageFileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
 		for _, irEndpoint := range irService.Endpoints {
-			if shouldSkipRequestType(irEndpoint, inlinePathParameters, inlineFileProperties) {
+			if shouldSkipRequestType(irEndpoint, irService.Headers, inlinePathParameters, inlineFileProperties, omitEmptyRequestWrappers) {
 				continue
 			}
 

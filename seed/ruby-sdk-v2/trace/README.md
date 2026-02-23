@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: "<token>")
 
 client.admin.update_test_submission_status(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   request: {}
-);
+)
 ```
 
 ## Environments

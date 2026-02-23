@@ -2,6 +2,16 @@
 
 # isort: skip_file
 
+from .completion_event import CompletionEvent
+from .error_event import ErrorEvent
+from .stream_event import StreamEvent, StreamEvent_Completion, StreamEvent_Error
 from .streamed_completion import StreamedCompletion
 
-__all__ = ["StreamedCompletion"]
+__all__ = [
+    "CompletionEvent",
+    "ErrorEvent",
+    "StreamEvent",
+    "StreamEvent_Completion",
+    "StreamEvent_Error",
+    "StreamedCompletion",
+]

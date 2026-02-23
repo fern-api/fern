@@ -63,6 +63,10 @@ export class ErrorReporter {
         return this.errors.length;
     }
 
+    public truncate(size: number): void {
+        this.errors.length = size;
+    }
+
     public clone(): ErrorReporter {
         const clone = new ErrorReporter();
         clone.errors = [...this.errors];

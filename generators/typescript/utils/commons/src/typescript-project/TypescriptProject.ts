@@ -381,7 +381,7 @@ export abstract class TypescriptProject {
             typescript: "~5.7.2"
         };
         if (this.linter === "biome" || this.formatter === "biome") {
-            deps["@biomejs/biome"] = "2.3.11";
+            deps["@biomejs/biome"] = "2.4.3";
         }
         if (this.linter === "oxlint") {
             deps["oxlint"] = "1.42.0";
