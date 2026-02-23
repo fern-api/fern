@@ -520,7 +520,7 @@ exports[`migrateFromV58ToV57 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "979f50be3a1bb1d6",
+                "id": "979f50be",
                 "name": null,
                 "queryParameters": [
                   {
