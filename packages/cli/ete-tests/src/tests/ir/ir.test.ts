@@ -72,7 +72,7 @@ describe("ir", () => {
         const { only = false } = fixture;
         (only ? it.only : it.concurrent)(
             `${JSON.stringify(fixture)}`,
-            async () => {
+            async ({ expect }) => {
                 const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
                 const irContents = await generateIrAsString({
                     fixturePath,
@@ -87,7 +87,7 @@ describe("ir", () => {
         );
     }
 
-    it.concurrent("works with latest version", async () => {
+    it.concurrent("works with latest version", async ({ expect }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
         const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v27"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
@@ -97,7 +97,7 @@ describe("ir", () => {
         expect(stdout).toContain("Wrote IR to");
     }, 10_000);
 
-    it.concurrent("fails with invalid version", async () => {
+    it.concurrent("fails with invalid version", async ({ expect }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
         const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v100"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
