@@ -1,7 +1,7 @@
 import stripAnsi from "strip-ansi";
 import { describe, expect, it } from "vitest";
 
-import { buildSlugCollisionViolations } from "../build-violations.js";
+import { buildSlugCollisionViolations, type SlugCollectorLike } from "../build-violations.js";
 
 // ---------------------------------------------------------------------------
 // Helpers – build mock NodeCollector-like objects for testing
@@ -22,11 +22,11 @@ function mockCollector({
 }: {
     slugMap: Map<string, MockNode>;
     orphanedPages: MockNode[];
-}) {
+}): SlugCollectorLike {
     return {
         slugMap,
         getOrphanedPages: () => orphanedPages
-    } as any;
+    };
 }
 
 // ---------------------------------------------------------------------------
@@ -49,16 +49,14 @@ describe("buildSlugCollisionViolations", () => {
 
     it("should detect a slug collision between two pages", () => {
         const collector = mockCollector({
-            slugMap: new Map([
-                ["docs/conversations", { title: "Conversations Overview", slug: "docs/conversations" }]
-            ]),
+            slugMap: new Map([["docs/conversations", { title: "Conversations Overview", slug: "docs/conversations" }]]),
             orphanedPages: [{ title: "Conversations API", slug: "docs/conversations" }]
         });
 
         const violations = buildSlugCollisionViolations(collector);
 
         expect(violations).toHaveLength(1);
-        const msg = stripAnsi(violations[0]!.message);
+        const msg = stripAnsi(violations[0]?.message ?? "");
         expect(msg).toContain("Conversations API");
         expect(msg).toContain("shadowed by another page with the same slug");
         expect(msg).toContain("/docs/conversations");
@@ -86,7 +84,7 @@ describe("buildSlugCollisionViolations", () => {
         const violations = buildSlugCollisionViolations(collector);
 
         expect(violations).toHaveLength(1);
-        const msg = stripAnsi(violations[0]!.message);
+        const msg = stripAnsi(violations[0]?.message ?? "");
         expect(msg).toContain("Loser Page");
         expect(msg).toContain("(kept:");
         expect(msg).toContain("Winner Page");
@@ -101,7 +99,7 @@ describe("buildSlugCollisionViolations", () => {
         const violations = buildSlugCollisionViolations(collector);
 
         expect(violations).toHaveLength(1);
-        const msg = stripAnsi(violations[0]!.message);
+        const msg = stripAnsi(violations[0]?.message ?? "");
         expect(msg).toContain("Add a custom slug");
         expect(msg).toContain("docs.yml");
     });
@@ -146,7 +144,7 @@ describe("buildSlugCollisionViolations", () => {
         const violations = buildSlugCollisionViolations(collector);
 
         expect(violations).toHaveLength(1);
-        const msg = stripAnsi(violations[0]!.message);
+        const msg = stripAnsi(violations[0]?.message ?? "");
         expect(msg).toContain("Orphan");
         expect(msg).toContain("/docs/orphan");
         // Should NOT contain "(kept: ...)" since there's no winner
