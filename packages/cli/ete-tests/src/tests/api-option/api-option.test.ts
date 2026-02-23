@@ -14,41 +14,31 @@ function testFixture(fixtureName: string) {
     describe(fixtureName, () => {
         it("Fails if API is not specified", async ({ signal }) => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const { stdout, failed } = await runFernCli(
-                ["ir", (await tmp.file()).path],
-                {
-                    cwd: fixturePath,
-                    reject: false
-                },
-                true,
+            const { stdout, failed } = await runFernCli(["ir", (await tmp.file()).path], {
+                cwd: fixturePath,
+                reject: false,
                 signal
-            );
+            });
             expect(failed).toBe(true);
             expect(stdout).toContain("There are multiple workspaces. You must specify one with --api");
         }, 90_000);
 
         it("Succeeds if API is specified", async ({ signal }) => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const { failed } = await runFernCli(
-                ["--api", "api1", "ir", (await tmp.file()).path],
-                { cwd: fixturePath },
-                true,
+            const { failed } = await runFernCli(["--api", "api1", "ir", (await tmp.file()).path], {
+                cwd: fixturePath,
                 signal
-            );
+            });
             expect(failed).toBe(false);
         }, 90_000);
 
         it("Fail if API does not exist", async ({ signal }) => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const { failed } = await runFernCli(
-                ["--api", "api3", "ir", (await tmp.file()).path],
-                {
-                    cwd: fixturePath,
-                    reject: false
-                },
-                true,
+            const { failed } = await runFernCli(["--api", "api3", "ir", (await tmp.file()).path], {
+                cwd: fixturePath,
+                reject: false,
                 signal
-            );
+            });
             expect(failed).toBe(true);
         }, 90_000);
     });

@@ -8,14 +8,10 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 describe("fern mock", () => {
     // biome-ignore lint/suspicious/noSkippedTests: allow
     it.skip("mock request/response", async ({ signal }) => {
-        void runFernCli(
-            ["mock", "--api", "simple", "--port", "3001"],
-            {
-                cwd: join(fixturesDir, RelativeFilePath.of("simple"))
-            },
-            true,
+        void runFernCli(["mock", "--api", "simple", "--port", "3001"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
             signal
-        );
+        });
 
         await sleep(5000);
 

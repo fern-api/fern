@@ -20,15 +20,11 @@ function itFixture(fixtureName: string) {
         const irOutputPath = path.join(fixturePath, "api", "ir.json");
         await rm(irOutputPath, { force: true, recursive: true });
 
-        const { stdout } = await runFernCli(
-            ["check"],
-            {
-                cwd: fixturePath,
-                reject: false
-            },
-            true,
+        const { stdout } = await runFernCli(["check"], {
+            cwd: fixturePath,
+            reject: false,
             signal
-        );
+        });
 
         if (fixtureName == "simple") {
             expect(

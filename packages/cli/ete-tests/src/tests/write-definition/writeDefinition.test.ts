@@ -31,10 +31,10 @@ function itFixture(fixtureName: string) {
             await rm(definitionOutputPath, { force: true, recursive: true });
         }
 
-        await runFernCli(["write-definition", "--log-level", "debug"], { cwd: fixturePath }, true, signal);
+        await runFernCli(["write-definition", "--log-level", "debug"], { cwd: fixturePath, signal });
 
         expect(await getDirectoryContentsForSnapshot(AbsoluteFilePath.of(definitionOutputPath))).toMatchSnapshot();
 
-        await runFernCli(["check", "--log-level", "debug"], { cwd: fixturePath }, true, signal);
+        await runFernCli(["check", "--log-level", "debug"], { cwd: fixturePath, signal });
     }, 90_000);
 }

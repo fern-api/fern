@@ -28,6 +28,6 @@ export async function init(options: InitOptions = {}): Promise<AbsoluteFilePath>
         }
     }
 
-    await runFernCli(cliArgs, { cwd: directory }, true, options.signal);
+    await runFernCli(cliArgs, { cwd: directory, signal: options.signal });
     return directory;
 }

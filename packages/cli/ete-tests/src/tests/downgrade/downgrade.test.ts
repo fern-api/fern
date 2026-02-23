@@ -17,7 +17,7 @@ describe("fern downgrade", () => {
         const initialConfig = JSON.parse((await readFile(fernConfigFilepath)).toString());
         expect(initialConfig.version).toBeDefined();
 
-        await runFernCli(["downgrade", "0.30.0"], { cwd: directory }, true, signal);
+        await runFernCli(["downgrade", "0.30.0"], { cwd: directory, signal });
 
         const updatedConfig = JSON.parse((await readFile(fernConfigFilepath)).toString());
         expect(updatedConfig.version).toBe("0.30.0");
@@ -32,7 +32,7 @@ describe("fern downgrade", () => {
             RelativeFilePath.of(PROJECT_CONFIG_FILENAME)
         );
 
-        await runFernCli(["downgrade", "0.25.5"], { cwd: directory }, true, signal);
+        await runFernCli(["downgrade", "0.25.5"], { cwd: directory, signal });
 
         const updatedConfig = JSON.parse((await readFile(fernConfigFilepath)).toString());
         expect(updatedConfig.version).toBe("0.25.5");

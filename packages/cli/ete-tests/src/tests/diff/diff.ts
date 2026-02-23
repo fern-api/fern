@@ -21,27 +21,23 @@ export async function diff({
     const fromIrFilename = await tmpName();
     await rm(fromIrFilename, { force: true, recursive: true });
 
-    await runFernCli(["ir", fromIrFilename], { cwd: join(fixturePath, RelativeFilePath.of("from")) }, true, signal);
+    await runFernCli(["ir", fromIrFilename], { cwd: join(fixturePath, RelativeFilePath.of("from")), signal });
 
     const toIrFilename = await tmpName();
     await rm(toIrFilename, { force: true, recursive: true });
 
-    await runFernCli(["ir", toIrFilename], { cwd: join(fixturePath, RelativeFilePath.of("to")) }, true, signal);
+    await runFernCli(["ir", toIrFilename], { cwd: join(fixturePath, RelativeFilePath.of("to")), signal });
 
     const command = ["diff", "--from", fromIrFilename, "--to", toIrFilename];
     if (fromVersion != null) {
         command.push("--from-version", fromVersion);
     }
 
-    const result = await runFernCli(
-        command,
-        {
-            cwd: join(fixturePath, RelativeFilePath.of("from")),
-            reject: false
-        },
-        true,
+    const result = await runFernCli(command, {
+        cwd: join(fixturePath, RelativeFilePath.of("from")),
+        reject: false,
         signal
-    );
+    });
 
     return {
         exitCode: result.exitCode,

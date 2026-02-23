@@ -17,7 +17,7 @@ describe("fern generator upgrade", () => {
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
-        await runFernCli(["generator", "upgrade"], { cwd: directory }, true, signal);
+        await runFernCli(["generator", "upgrade"], { cwd: directory, signal });
 
         const outputFile = join(directory, RelativeFilePath.of("version.txt"));
         await runFernCli(
@@ -32,9 +32,7 @@ describe("fern generator upgrade", () => {
                 "-o",
                 outputFile
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
@@ -57,9 +55,7 @@ describe("fern generator upgrade", () => {
                 "fernapi/fern-python-sdk",
                 "--include-major"
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         const outputFile = join(directory, RelativeFilePath.of("version.txt"));
@@ -75,9 +71,7 @@ describe("fern generator upgrade", () => {
                 "-o",
                 outputFile
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
@@ -91,12 +85,11 @@ describe("fern generator upgrade", () => {
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
         expect(
-            (await runFernCli(["generator", "--help"], { cwd: directory, reject: false }, true, signal)).stdout
+            (await runFernCli(["generator", "--help"], { cwd: directory, reject: false, signal })).stdout
         ).toMatchSnapshot();
 
         expect(
-            (await runFernCli(["generator", "upgrade", "--help"], { cwd: directory, reject: false }, true, signal))
-                .stdout
+            (await runFernCli(["generator", "upgrade", "--help"], { cwd: directory, reject: false, signal })).stdout
         ).toMatchSnapshot();
     }, 60_000);
 
@@ -109,9 +102,7 @@ describe("fern generator upgrade", () => {
 
         await runFernCli(
             ["generator", "upgrade", "--group", "shouldnt-upgrade", "--generator", "fernapi/fern-python-sdk"],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         const outputFile = join(directory, RelativeFilePath.of("version.txt"));
@@ -127,9 +118,7 @@ describe("fern generator upgrade", () => {
                 "-o",
                 outputFile
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         expect(JSON.parse((await readFile(outputFile)).toString()).version).toEqual("2.16.0");
@@ -144,9 +133,7 @@ describe("fern generator upgrade", () => {
                 "fernapi/fern-python-sdk",
                 "--include-major"
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         const outputFileNewMajor = join(directory, RelativeFilePath.of("version-new.txt"));
@@ -162,9 +149,7 @@ describe("fern generator upgrade", () => {
                 "-o",
                 outputFileNewMajor
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         expect(JSON.parse((await readFile(outputFileNewMajor)).toString()).version).not.toEqual("2.16.0");
@@ -192,9 +177,7 @@ describe("fern generator upgrade", () => {
                         "-o",
                         outputFileNewMajor
                     ],
-                    { cwd: directory },
-                    true,
-                    signal
+                    { cwd: directory, signal }
                 )
             ).stderr
         ).toMatchSnapshot();
@@ -217,9 +200,7 @@ describe("fern generator upgrade", () => {
                 "--include-major",
                 "--skip-autorelease-disabled"
             ],
-            { cwd: directory, reject: false },
-            true,
-            signal
+            { cwd: directory, reject: false, signal }
         );
 
         expect(result.stdout).toContain("Skipped generators with autorelease disabled:");
@@ -239,9 +220,7 @@ describe("fern generator upgrade", () => {
                 "-o",
                 outputFile
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         expect(JSON.parse((await readFile(outputFile)).toString()).version).toEqual("3.0.0");
@@ -259,9 +238,7 @@ describe("fern generator upgrade", () => {
                 "-o",
                 outputFileJava
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         expect(JSON.parse((await readFile(outputFileJava)).toString()).version).not.toEqual("0.0.1");
@@ -275,12 +252,10 @@ describe("fern generator upgrade", () => {
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
-        await runFernCli(
-            ["generator", "upgrade", "--group", "autorelease-disabled", "--include-major"],
-            { cwd: directory },
-            true,
+        await runFernCli(["generator", "upgrade", "--group", "autorelease-disabled", "--include-major"], {
+            cwd: directory,
             signal
-        );
+        });
 
         const outputFile = join(directory, RelativeFilePath.of("version-no-skip.txt"));
         await runFernCli(
@@ -295,9 +270,7 @@ describe("fern generator upgrade", () => {
                 "-o",
                 outputFile
             ],
-            { cwd: directory },
-            true,
-            signal
+            { cwd: directory, signal }
         );
 
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
@@ -311,9 +284,7 @@ describe("fern generator upgrade", () => {
 
         const result = await runFernCli(
             ["generator", "upgrade", "--group", "shouldnt-upgrade", "--generator", "fernapi/fern-python-sdk"],
-            { cwd: directory, reject: false },
-            true,
-            signal
+            { cwd: directory, reject: false, signal }
         );
 
         expect(result.stdout).toContain("Major version upgrades available:");

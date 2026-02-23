@@ -18,23 +18,21 @@ export declare namespace loggingExeca {
  * When the signal aborts (e.g. on test timeout or Ctrl+C), the child
  * process is terminated so it doesn't leak.
  */
-export function wireSignal(childProcess: import("execa").ExecaChildProcess, signal?: AbortSignal): void {
+function wireSignal(childProcess: import("execa").ExecaChildProcess, signal?: AbortSignal): void {
     if (!signal) {
         return;
     }
-    // Swallow the rejection that execa emits when we intentionally kill the
-    // process so it doesn't surface as an unhandled-rejection in Vitest.
-    const swallowKill = (): void => {
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow rejection
-        childProcess.catch(() => {});
-    };
+    // Proactively swallow any kill-related rejection so that neither
+    // signal-triggered kills nor manual `.kill()` calls surface as
+    // unhandled rejections in Vitest.
+    // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow rejection
+    childProcess.catch(() => {});
+
     if (signal.aborted) {
-        swallowKill();
         childProcess.kill();
         return;
     }
     const onAbort = (): void => {
-        swallowKill();
         childProcess.kill();
     };
     signal.addEventListener("abort", onAbort, { once: true });

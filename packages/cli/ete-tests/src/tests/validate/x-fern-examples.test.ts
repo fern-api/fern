@@ -9,15 +9,11 @@ describe("x-fern-examples file-linking", () => {
     it("should resolve $ref to external code sample files", async ({ signal }) => {
         const fixturePath = path.join(FIXTURES_DIR, "x-fern-examples-file-linking");
 
-        const { stdout, exitCode } = await runFernCli(
-            ["check"],
-            {
-                cwd: fixturePath,
-                reject: false
-            },
-            true,
+        const { stdout, exitCode } = await runFernCli(["check"], {
+            cwd: fixturePath,
+            reject: false,
             signal
-        );
+        });
 
         const strippedOutput = stripAnsi(stdout).trim();
 

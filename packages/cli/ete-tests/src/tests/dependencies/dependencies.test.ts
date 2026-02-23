@@ -26,56 +26,40 @@ describe("dependencies", () => {
     }, 90_000);
 
     it("fails when dependency does not exist", async ({ signal }) => {
-        const { stdout } = await runFernCli(
-            ["check"],
-            {
-                cwd: join(FIXTURES_DIR, RelativeFilePath.of("non-existent-dependency")),
-                reject: false
-            },
-            true,
+        const { stdout } = await runFernCli(["check"], {
+            cwd: join(FIXTURES_DIR, RelativeFilePath.of("non-existent-dependency")),
+            reject: false,
             signal
-        );
+        });
         expect(stdout).toContain("Failed to load dependency: @fern/non-existent-dependency");
     }, 90_000);
 
     it("fails when dependency is not listed in dependencies.yml", async ({ signal }) => {
-        const { stdout } = await runFernCli(
-            ["check"],
-            {
-                cwd: join(FIXTURES_DIR, RelativeFilePath.of("unlisted-dependency")),
-                reject: false
-            },
-            true,
+        const { stdout } = await runFernCli(["check"], {
+            cwd: join(FIXTURES_DIR, RelativeFilePath.of("unlisted-dependency")),
+            reject: false,
             signal
-        );
+        });
         expect(stripAnsi(stdout).trim()).toEqual(
             "[api]: Dependency is not listed in dependencies.yml: @fern/unlisted-dependency"
         );
     }, 90_000);
 
     it("fails when export package contains definitions", async ({ signal }) => {
-        const { stdout } = await runFernCli(
-            ["check"],
-            {
-                cwd: join(FIXTURES_DIR, RelativeFilePath.of("other-definitions-specified")),
-                reject: false
-            },
-            true,
+        const { stdout } = await runFernCli(["check"], {
+            cwd: join(FIXTURES_DIR, RelativeFilePath.of("other-definitions-specified")),
+            reject: false,
             signal
-        );
+        });
         expect(stripAnsi(stdout).trim()).toEqual("[api]: Exported package contains API definitions: package1");
     }, 90_000);
 
     it("fails when exporting package marker has non-export keys", async ({ signal }) => {
-        const { stdout } = await runFernCli(
-            ["check"],
-            {
-                cwd: join(FIXTURES_DIR, RelativeFilePath.of("invalid-package-marker")),
-                reject: false
-            },
-            true,
+        const { stdout } = await runFernCli(["check"], {
+            cwd: join(FIXTURES_DIR, RelativeFilePath.of("invalid-package-marker")),
+            reject: false,
             signal
-        );
+        });
         expect(stdout).toContain("imported/__package__.yml has an export so it cannot define other keys.");
     }, 90_000);
 });

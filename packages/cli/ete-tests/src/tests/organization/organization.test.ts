@@ -9,7 +9,7 @@ describe("fern organization", () => {
     it("fern organization", async ({ signal }) => {
         const pathOfDirectory = await init({ signal });
 
-        const out = await runFernCli(["organization"], { cwd: pathOfDirectory }, true, signal);
+        const out = await runFernCli(["organization"], { cwd: pathOfDirectory, signal });
 
         expect(out.stdout).toEqual("fern");
     }, 60_000);
@@ -18,7 +18,7 @@ describe("fern organization", () => {
         const pathOfDirectory = await init({ signal });
 
         const tmpFile = await tmp.file();
-        await runFernCli(["organization", "-o", tmpFile.path], { cwd: pathOfDirectory }, true, signal);
+        await runFernCli(["organization", "-o", tmpFile.path], { cwd: pathOfDirectory, signal });
 
         const out = await readFile(tmpFile.path, "utf-8");
         expect(out).toEqual("fern");

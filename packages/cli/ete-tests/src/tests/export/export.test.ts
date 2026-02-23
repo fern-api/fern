@@ -17,7 +17,7 @@ function itFixture(fixtureName: string) {
         const fixturePath = path.join(FIXTURES_DIR, fixtureName);
         for (const filename of ["openapi.yml", "openapi.json"]) {
             const outputPath = path.join(fixturePath, "output", filename);
-            await runFernCli(["export", outputPath], { cwd: fixturePath }, true, signal);
+            await runFernCli(["export", outputPath], { cwd: fixturePath, signal });
             expect((await readFile(AbsoluteFilePath.of(outputPath))).toString()).toMatchSnapshot();
         }
     }, 90_000);
@@ -29,7 +29,7 @@ function itFixtureWithIndent(fixtureName: string, indent: number) {
         const fixturePath = path.join(FIXTURES_DIR, fixtureName);
         for (const filename of ["openapi.yml", "openapi.json"]) {
             const outputPath = path.join(fixturePath, "output", filename);
-            await runFernCli(["export", outputPath, "--indent", String(indent)], { cwd: fixturePath }, true, signal);
+            await runFernCli(["export", outputPath, "--indent", String(indent)], { cwd: fixturePath, signal });
             expect((await readFile(AbsoluteFilePath.of(outputPath))).toString()).toMatchSnapshot();
         }
     }, 90_000);

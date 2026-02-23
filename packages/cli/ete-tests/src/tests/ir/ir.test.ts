@@ -89,30 +89,22 @@ describe("ir", () => {
 
     it.concurrent("works with latest version", async ({ expect, signal }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
-        const { stdout } = await runFernCli(
-            ["ir", tmpFile.path, "--version", "v27"],
-            {
-                cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
-                reject: false
-            },
-            true,
+        const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v27"], {
+            cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
+            reject: false,
             signal
-        );
+        });
         await tmpFile.cleanup();
         expect(stdout).toContain("Wrote IR to");
     }, 10_000);
 
     it.concurrent("fails with invalid version", async ({ expect, signal }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
-        const { stdout } = await runFernCli(
-            ["ir", tmpFile.path, "--version", "v100"],
-            {
-                cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
-                reject: false
-            },
-            true,
+        const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v100"], {
+            cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
+            reject: false,
             signal
-        );
+        });
         await tmpFile.cleanup();
         expect(stdout).toContain("IR v100 does not exist");
     }, 10_000);
@@ -122,15 +114,11 @@ describe("ir from proto", () => {
     // biome-ignore lint/suspicious/noSkippedTests: Allow test skip for now
     it.skip("works with proto-ir", async ({ signal }) => {
         try {
-            await runFernCli(
-                ["ir", "ir.json", "--from-openapi"],
-                {
-                    cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-ir")),
-                    reject: false
-                },
-                true,
+            await runFernCli(["ir", "ir.json", "--from-openapi"], {
+                cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-ir")),
+                reject: false,
                 signal
-            );
+            });
             const contents = await readFile(
                 path.join(FIXTURES_DIR, RelativeFilePath.of("proto-ir"), "ir.json"),
                 "utf-8"
@@ -144,15 +132,11 @@ describe("ir from proto", () => {
     // biome-ignore lint/suspicious/noSkippedTests: Allow test skip for now
     it.skip("ir from proto through oas", async ({ signal }) => {
         try {
-            await runFernCli(
-                ["ir", "ir.json", "--from-openapi"],
-                {
-                    cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-oas-ir")),
-                    reject: false
-                },
-                true,
+            await runFernCli(["ir", "ir.json", "--from-openapi"], {
+                cwd: join(FIXTURES_DIR, RelativeFilePath.of("proto-oas-ir")),
+                reject: false,
                 signal
-            );
+            });
             const contents = await readFile(
                 path.join(FIXTURES_DIR, RelativeFilePath.of("proto-oas-ir"), "ir.json"),
                 "utf-8"

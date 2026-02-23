@@ -27,7 +27,7 @@ describe("fern init", () => {
             additionalArgs: [{ name: "--fern-definition" }],
             signal
         });
-        await runFernCli(["check"], { cwd: pathOfDirectory }, true, signal);
+        await runFernCli(["check"], { cwd: pathOfDirectory, signal });
         expect(
             await getDirectoryContentsForSnapshot(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))
         ).toMatchSnapshot();
@@ -177,10 +177,9 @@ describe("fern init", () => {
             ["init", "--organization", "fern", "--openapi", "petstore-openapi.yml", "--fern-definition"],
             {
                 cwd: AbsoluteFilePath.of(tmpDir.path),
-                reject: false
-            },
-            true,
-            signal
+                reject: false,
+                signal
+            }
         );
         expect(result.exitCode).not.toBe(0);
     }, 60_000);
@@ -191,7 +190,7 @@ describe("fern init", () => {
             signal
         });
 
-        await runFernCli(["init", "--docs", "--organization", "fern"], { cwd: pathOfDirectory }, true, signal);
+        await runFernCli(["init", "--docs", "--organization", "fern"], { cwd: pathOfDirectory, signal });
 
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);

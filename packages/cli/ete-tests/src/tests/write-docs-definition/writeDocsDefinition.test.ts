@@ -21,12 +21,10 @@ async function testFixture(fixtureName: string, signal?: AbortSignal) {
     }
 
     // Generate docs definition
-    await runFernCli(
-        ["write-docs-definition", "docs-definition.json", "--log-level", "debug"],
-        { cwd: fixturePath },
-        true,
+    await runFernCli(["write-docs-definition", "docs-definition.json", "--log-level", "debug"], {
+        cwd: fixturePath,
         signal
-    );
+    });
 
     // Read and verify output
     const contents = await readFile(AbsoluteFilePath.of(outputPath), "utf-8");

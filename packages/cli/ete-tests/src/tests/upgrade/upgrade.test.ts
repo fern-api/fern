@@ -100,18 +100,14 @@ describe("fern upgrade", () => {
         // make sure the file exists
         await readFile(generatorsConfigurationFilepath);
         await writeFile(generatorsConfigurationFilepath, yaml.dump(GENERATORS_CONFIGURATION));
-        await runFernCli(
-            ["upgrade"],
-            {
-                cwd: directory,
-                env: {
-                    // this env var needs to be defined so the CLI thinks we're mid-upgrade
-                    FERN_PRE_UPGRADE_VERSION: "0.0.0"
-                }
+        await runFernCli(["upgrade"], {
+            cwd: directory,
+            env: {
+                // this env var needs to be defined so the CLI thinks we're mid-upgrade
+                FERN_PRE_UPGRADE_VERSION: "0.0.0"
             },
-            true,
             signal
-        );
+        });
         const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString();
         expect(generatorsConfiguration).toMatchSnapshot();
     }, 90_000);

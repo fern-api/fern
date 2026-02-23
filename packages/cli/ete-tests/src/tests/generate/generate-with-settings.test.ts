@@ -13,7 +13,7 @@ describe("fern generate with settings", () => {
 
         await cp(fixturesDir, directory, { recursive: true });
 
-        await runFernCli(["generate", "--local", "--keepDocker"], { cwd: directory }, true, signal);
+        await runFernCli(["generate", "--local", "--keepDocker"], { cwd: directory, signal });
 
         expect(
             await getDirectoryContentsForSnapshot(join(directory, RelativeFilePath.of("sdks/python")))
@@ -27,7 +27,7 @@ describe("fern generate with settings", () => {
 
         await cp(fixturesDir, directory, { recursive: true });
 
-        await runFernCli(["generate", "--local", "--keepDocker", "--api", "unioned"], { cwd: directory }, true, signal);
+        await runFernCli(["generate", "--local", "--keepDocker", "--api", "unioned"], { cwd: directory, signal });
 
         expect(
             await getDirectoryContentsForSnapshot(join(directory, RelativeFilePath.of("sdks/python")))

@@ -8,7 +8,7 @@ describe("fern add", () => {
         const pathOfDirectory = await init({ signal });
 
         const add = async (generator: string) => {
-            await runFernCli(["add", generator], { cwd: pathOfDirectory }, true, signal);
+            await runFernCli(["add", generator], { cwd: pathOfDirectory, signal });
         };
 
         await add("fernapi/fern-java-sdk");
@@ -21,7 +21,7 @@ describe("fern add", () => {
         const pathOfDirectory = await init({ signal });
 
         const add = async (generator: string, groupName: string) => {
-            await runFernCli(["add", generator, "--group", groupName], { cwd: pathOfDirectory }, true, signal);
+            await runFernCli(["add", generator, "--group", groupName], { cwd: pathOfDirectory, signal });
         };
 
         await add("fern-typescript", "typescript");

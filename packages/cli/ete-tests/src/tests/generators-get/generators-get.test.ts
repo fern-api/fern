@@ -11,9 +11,7 @@ describe("fern generator get", () => {
 
         const out = await runFernCli(
             ["generator", "get", "--generator", "fernapi/fern-typescript-sdk", "--group", "local", "--version"],
-            { cwd: pathOfDirectory },
-            true,
-            signal
+            { cwd: pathOfDirectory, signal }
         );
 
         expect(out.stdout).toMatchSnapshot();
@@ -24,9 +22,7 @@ describe("fern generator get", () => {
 
         const out = await runFernCli(
             ["generator", "get", "--generator", "fernapi/fern-typescript-sdk", "--group", "local", "--language"],
-            { cwd: pathOfDirectory },
-            true,
-            signal
+            { cwd: pathOfDirectory, signal }
         );
 
         expect(out.stdout).toMatchSnapshot();
@@ -49,9 +45,7 @@ describe("fern generator get", () => {
                 "-o",
                 tmpFile.path
             ],
-            { cwd: pathOfDirectory },
-            true,
-            signal
+            { cwd: pathOfDirectory, signal }
         );
 
         const out = await readFile(tmpFile.path, "utf-8");

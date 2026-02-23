@@ -40,7 +40,7 @@ export async function generateIrAsString({
         command.push("--version", version);
     }
 
-    await runFernCli(command, { cwd: fixturePath }, true, signal);
+    await runFernCli(command, { cwd: fixturePath, signal });
 
     const irContents = await readFile(irOutputPath);
     await tmpFile.cleanup();

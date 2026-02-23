@@ -8,24 +8,17 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 
 describe.sequential("fern docs dev --legacy", () => {
     it("basic docs --legacy", async ({ signal }) => {
-        const check = await runFernCli(
-            ["check"],
-            {
-                cwd: join(fixturesDir, RelativeFilePath.of("simple"))
-            },
-            true,
+        const check = await runFernCli(["check"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
             signal
-        );
+        });
 
         expect(check.exitCode).toBe(0);
 
-        const process = captureFernCli(
-            ["docs", "dev", "--legacy"],
-            {
-                cwd: join(fixturesDir, RelativeFilePath.of("simple"))
-            },
+        const process = captureFernCli(["docs", "dev", "--legacy"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
             signal
-        );
+        });
 
         const response = await waitForServer(
             "http://localhost:3000/v2/registry/docs/load-with-url",
@@ -44,9 +37,6 @@ describe.sequential("fern docs dev --legacy", () => {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
 
-        // Swallow the rejection execa emits when we intentionally kill, then kill.
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow rejection
-        process.catch(() => {});
         const finishProcess = process.kill();
         expect(finishProcess).toBeTruthy();
     }, 90_000);
@@ -54,26 +44,19 @@ describe.sequential("fern docs dev --legacy", () => {
 
 describe.sequential("fern docs dev --beta", () => {
     it("basic docs --beta", async ({ signal }) => {
-        const check = await runFernCli(
-            ["check"],
-            {
-                cwd: join(fixturesDir, RelativeFilePath.of("simple")),
-                reject: true
-            },
-            true,
+        const check = await runFernCli(["check"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
+            reject: true,
             signal
-        );
+        });
 
         expect(check.exitCode).toBe(0);
 
-        const process = captureFernCli(
-            ["docs", "dev", "--beta", "--backend-port", "3001"],
-            {
-                cwd: join(fixturesDir, RelativeFilePath.of("simple")),
-                reject: true
-            },
+        const process = captureFernCli(["docs", "dev", "--beta", "--backend-port", "3001"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
+            reject: true,
             signal
-        );
+        });
 
         const response = await waitForServer(
             "http://localhost:3001/v2/registry/docs/load-with-url",
@@ -92,9 +75,6 @@ describe.sequential("fern docs dev --beta", () => {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
 
-        // Swallow the rejection execa emits when we intentionally kill, then kill.
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow rejection
-        process.catch(() => {});
         const finishProcess = process.kill();
         expect(finishProcess).toBeTruthy();
     }, 90_000);
@@ -102,24 +82,17 @@ describe.sequential("fern docs dev --beta", () => {
 
 describe.sequential("fern docs dev", () => {
     it("basic docs", async ({ signal }) => {
-        const check = await runFernCli(
-            ["check"],
-            {
-                cwd: join(fixturesDir, RelativeFilePath.of("simple"))
-            },
-            true,
+        const check = await runFernCli(["check"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
             signal
-        );
+        });
 
         expect(check.exitCode).toBe(0);
 
-        const process = captureFernCli(
-            ["docs", "dev", "--backend-port", "3002"],
-            {
-                cwd: join(fixturesDir, RelativeFilePath.of("simple"))
-            },
+        const process = captureFernCli(["docs", "dev", "--backend-port", "3002"], {
+            cwd: join(fixturesDir, RelativeFilePath.of("simple")),
             signal
-        );
+        });
 
         const response = await waitForServer(
             "http://localhost:3002/v2/registry/docs/load-with-url",

@@ -18,7 +18,7 @@ describe("fern api update", () => {
         const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
-        await runFernCli(["api", "update"], { cwd: directory }, true, signal);
+        await runFernCli(["api", "update"], { cwd: directory, signal });
 
         expect(await getDirectoryContentsForSnapshot(outputPath)).toMatchSnapshot();
 
@@ -35,7 +35,7 @@ describe("fern api update", () => {
         const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
-        await runFernCli(["api", "update", "--indent", "4"], { cwd: directory }, true, signal);
+        await runFernCli(["api", "update", "--indent", "4"], { cwd: directory, signal });
 
         expect(await getDirectoryContentsForSnapshot(outputPath)).toMatchSnapshot();
 

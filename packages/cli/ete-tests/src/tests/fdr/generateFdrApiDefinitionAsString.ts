@@ -39,7 +39,7 @@ export async function generateFdrApiDefinitionAsString({
         command.push("--version", version);
     }
 
-    await runFernCli(command, { cwd: fixturePath }, true, signal);
+    await runFernCli(command, { cwd: fixturePath, signal });
 
     const fdrContents = await readFile(fdrOutputPath);
     return fdrContents.toString();

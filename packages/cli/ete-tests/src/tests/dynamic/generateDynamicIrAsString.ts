@@ -39,7 +39,7 @@ export async function generateDynamicIrAsString({
         command.push("--version", version);
     }
 
-    await runFernCli(command, { cwd: fixturePath }, true, signal);
+    await runFernCli(command, { cwd: fixturePath, signal });
 
     const dynamicContents = await readFile(dynamicOutputPath);
     return dynamicContents.toString();
