@@ -112,7 +112,13 @@ function transformAndValidateUnion<
         };
     }
 
-    const { [discriminant]: discriminantValue, ...additionalProperties } = value;
+    const discriminantValue = value[discriminant];
+    const additionalProperties: Record<string, unknown> = {};
+    for (const key in value) {
+        if (Object.prototype.hasOwnProperty.call(value, key) && key !== discriminant) {
+            additionalProperties[key] = value[key];
+        }
+    }
 
     if (discriminantValue == null) {
         return {

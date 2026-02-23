@@ -1,14 +1,14 @@
-import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
-import { entries } from "../../utils/entries.js";
-import { filterObject } from "../../utils/filterObject.js";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
-import { isPlainObject } from "../../utils/isPlainObject.js";
-import { keys } from "../../utils/keys.js";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
-import { partition } from "../../utils/partition.js";
-import { getObjectLikeUtils } from "../object-like/index.js";
-import { getSchemaUtils } from "../schema-utils/index.js";
-import { isProperty } from "./property.js";
+import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema";
+import { entries } from "../../utils/entries";
+import { filterObject } from "../../utils/filterObject";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
+import { isPlainObject } from "../../utils/isPlainObject";
+import { keys } from "../../utils/keys";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
+import { partition } from "../../utils/partition";
+import { getObjectLikeUtils } from "../object-like/index";
+import { getSchemaUtils } from "../schema-utils/index";
+import { isProperty } from "./property";
 import type {
     BaseObjectSchema,
     inferObjectSchemaFromPropertySchemas,
@@ -17,7 +17,7 @@ import type {
     ObjectSchema,
     ObjectUtils,
     PropertySchemas,
-} from "./types.js";
+} from "./types";
 
 interface ObjectPropertyWithRawKey {
     rawKey: string;
@@ -59,6 +59,8 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 
     let _parseRequiredKeys: string[] | undefined;
     let _jsonRequiredKeys: string[] | undefined;
+    let _parseRequiredKeysSet: Set<string> | undefined;
+    let _jsonRequiredKeysSet: Set<string> | undefined;
 
     function getParseRequiredKeys(): string[] {
         if (_parseRequiredKeys == null) {
@@ -76,6 +78,8 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                     _jsonRequiredKeys.push(parsedKey as string);
                 }
             }
+            _parseRequiredKeysSet = new Set(_parseRequiredKeys);
+            _jsonRequiredKeysSet = new Set(_jsonRequiredKeys);
         }
         return _parseRequiredKeys;
     }
@@ -85,6 +89,20 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
             getParseRequiredKeys();
         }
         return _jsonRequiredKeys!;
+    }
+
+    function getParseRequiredKeysSet(): Set<string> {
+        if (_parseRequiredKeysSet == null) {
+            getParseRequiredKeys();
+        }
+        return _parseRequiredKeysSet!;
+    }
+
+    function getJsonRequiredKeysSet(): Set<string> {
+        if (_jsonRequiredKeysSet == null) {
+            getParseRequiredKeys();
+        }
+        return _jsonRequiredKeysSet!;
     }
 
     const baseSchema: BaseObjectSchema<
@@ -98,9 +116,11 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         _getParsedProperties: () => keys(schemas) as unknown as (keyof inferParsedObjectFromPropertySchemas<T>)[],
 
         parse: (raw, opts) => {
+            const breadcrumbsPrefix = opts?.breadcrumbsPrefix ?? [];
             return validateAndTransformObject({
                 value: raw,
                 requiredKeys: getParseRequiredKeys(),
+                requiredKeysSet: getParseRequiredKeysSet(),
                 getProperty: (rawKey) => {
                     const property = getRawKeyToProperty()[rawKey];
                     if (property == null) {
@@ -108,24 +128,28 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                     }
                     return {
                         transformedKey: property.parsedKey,
-                        transform: (propertyValue) =>
-                            property.valueSchema.parse(propertyValue, {
+                        transform: (propertyValue) => {
+                            const childBreadcrumbs = [...breadcrumbsPrefix, rawKey];
+                            return property.valueSchema.parse(propertyValue, {
                                 ...opts,
-                                breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawKey],
-                            }),
+                                breadcrumbsPrefix: childBreadcrumbs,
+                            });
+                        },
                     };
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
-                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                breadcrumbsPrefix,
                 omitUndefined: opts?.omitUndefined,
             });
         },
 
         json: (parsed, opts) => {
+            const breadcrumbsPrefix = opts?.breadcrumbsPrefix ?? [];
             return validateAndTransformObject({
                 value: parsed,
                 requiredKeys: getJsonRequiredKeys(),
+                requiredKeysSet: getJsonRequiredKeysSet(),
                 getProperty: (
                     parsedKey,
                 ): { transformedKey: string; transform: (propertyValue: object) => MaybeValid<any> } | undefined => {
@@ -139,26 +163,30 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                     if (isProperty(property)) {
                         return {
                             transformedKey: property.rawKey,
-                            transform: (propertyValue) =>
-                                property.valueSchema.json(propertyValue, {
+                            transform: (propertyValue) => {
+                                const childBreadcrumbs = [...breadcrumbsPrefix, parsedKey];
+                                return property.valueSchema.json(propertyValue, {
                                     ...opts,
-                                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey],
-                                }),
+                                    breadcrumbsPrefix: childBreadcrumbs,
+                                });
+                            },
                         };
                     } else {
                         return {
                             transformedKey: parsedKey,
-                            transform: (propertyValue) =>
-                                property.json(propertyValue, {
+                            transform: (propertyValue) => {
+                                const childBreadcrumbs = [...breadcrumbsPrefix, parsedKey];
+                                return property.json(propertyValue, {
                                     ...opts,
-                                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey],
-                                }),
+                                    breadcrumbsPrefix: childBreadcrumbs,
+                                });
+                            },
                         };
                     }
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
-                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                breadcrumbsPrefix,
                 omitUndefined: opts?.omitUndefined,
             });
         },
@@ -177,6 +205,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 function validateAndTransformObject<Transformed>({
     value,
     requiredKeys,
+    requiredKeysSet,
     getProperty,
     unrecognizedObjectKeys = "fail",
     skipValidation = false,
@@ -184,6 +213,7 @@ function validateAndTransformObject<Transformed>({
 }: {
     value: unknown;
     requiredKeys: string[];
+    requiredKeysSet: Set<string>;
     getProperty: (
         preTransformedKey: string,
     ) => { transformedKey: string; transform: (propertyValue: object) => MaybeValid<any> } | undefined;
@@ -204,15 +234,23 @@ function validateAndTransformObject<Transformed>({
         };
     }
 
-    const missingRequiredKeys = new Set(requiredKeys);
+    // Track which required keys have been seen.
+    // Use a counter instead of copying the Set to avoid per-call allocation.
+    let missingRequiredCount = requiredKeys.length;
     const errors: ValidationError[] = [];
     const transformed: Record<string | number | symbol, any> = {};
 
-    for (const [preTransformedKey, preTransformedItemValue] of Object.entries(value)) {
+    for (const preTransformedKey in value) {
+        if (!Object.prototype.hasOwnProperty.call(value, preTransformedKey)) {
+            continue;
+        }
+        const preTransformedItemValue = value[preTransformedKey];
         const property = getProperty(preTransformedKey);
 
         if (property != null) {
-            missingRequiredKeys.delete(preTransformedKey);
+            if (missingRequiredCount > 0 && requiredKeysSet.has(preTransformedKey)) {
+                missingRequiredCount--;
+            }
 
             const value = property.transform(preTransformedItemValue as object);
             if (value.ok) {
@@ -238,14 +276,16 @@ function validateAndTransformObject<Transformed>({
         }
     }
 
-    errors.push(
-        ...requiredKeys
-            .filter((key) => missingRequiredKeys.has(key))
-            .map((key) => ({
-                path: breadcrumbsPrefix,
-                message: `Missing required key "${key}"`,
-            })),
-    );
+    if (missingRequiredCount > 0) {
+        for (const key of requiredKeys) {
+            if (!(key in (value as Record<string, unknown>))) {
+                errors.push({
+                    path: breadcrumbsPrefix,
+                    message: `Missing required key "${key}"`,
+                });
+            }
+        }
+    }
 
     if (errors.length === 0 || skipValidation) {
         return {

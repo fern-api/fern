@@ -1,5 +1,4 @@
 import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema";
-import { entries } from "../../utils/entries";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 import { isPlainObject } from "../../utils/isPlainObject";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
@@ -82,14 +81,18 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
     const result = {} as Record<TransformedKey, TransformedValue>;
     const errors: ValidationError[] = [];
 
-    for (const [stringKey, entryValue] of entries(value)) {
+    for (const stringKey in value) {
+        if (!Object.prototype.hasOwnProperty.call(value, stringKey)) {
+            continue;
+        }
+        const entryValue = (value as Record<string, unknown>)[stringKey];
         if (entryValue === undefined) {
             continue;
         }
 
-        let key: string | number = stringKey as string;
+        let key: string | number = stringKey;
         if (isKeyNumeric) {
-            const numberKey = (stringKey as string).length > 0 ? Number(stringKey) : NaN;
+            const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
             if (!Number.isNaN(numberKey)) {
                 key = numberKey;
             }

@@ -1,10 +1,9 @@
-import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
-import { entries } from "../../utils/entries.js";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
-import { isPlainObject } from "../../utils/isPlainObject.js";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
-import { getSchemaUtils } from "../schema-utils/index.js";
-import type { BaseRecordSchema, RecordSchema } from "./types.js";
+import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
+import { isPlainObject } from "../../utils/isPlainObject";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
+import { getSchemaUtils } from "../schema-utils/index";
+import type { BaseRecordSchema, RecordSchema } from "./types";
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,
@@ -82,14 +81,18 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
     const result = {} as Record<TransformedKey, TransformedValue>;
     const errors: ValidationError[] = [];
 
-    for (const [stringKey, entryValue] of entries(value)) {
+    for (const stringKey in value) {
+        if (!Object.prototype.hasOwnProperty.call(value, stringKey)) {
+            continue;
+        }
+        const entryValue = (value as Record<string, unknown>)[stringKey];
         if (entryValue === undefined) {
             continue;
         }
 
-        let key: string | number = stringKey as string;
+        let key: string | number = stringKey;
         if (isKeyNumeric) {
-            const numberKey = (stringKey as string).length > 0 ? Number(stringKey) : NaN;
+            const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
             if (!Number.isNaN(numberKey)) {
                 key = numberKey;
             }

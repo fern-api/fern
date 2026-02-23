@@ -5,16 +5,16 @@ import { keys } from "../../utils/keys.js";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { enum_ } from "../enum/index.js";
 import type { ObjectSchema } from "../object/index.js";
-import { getObjectLikeUtils, type ObjectLikeSchema } from "../object-like/index.js";
+import { getObjectLikeUtils, type ObjectLikeSchema } from "../object-like.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
-import type { Discriminant } from "./discriminant.js";
+import type { Discriminant } from "./discriminant";
 import type {
     inferParsedDiscriminant,
     inferParsedUnion,
     inferRawDiscriminant,
     inferRawUnion,
     UnionSubtypes,
-} from "./types.js";
+} from "./types";
 
 export function union<D extends string | Discriminant<any, any>, U extends UnionSubtypes<any>>(
     discriminant: D,
@@ -112,7 +112,13 @@ function transformAndValidateUnion<
         };
     }
 
-    const { [discriminant]: discriminantValue, ...additionalProperties } = value;
+    const discriminantValue = value[discriminant];
+    const additionalProperties: Record<string, unknown> = {};
+    for (const key in value) {
+        if (Object.prototype.hasOwnProperty.call(value, key) && key !== discriminant) {
+            additionalProperties[key] = value[key];
+        }
+    }
 
     if (discriminantValue == null) {
         return {
