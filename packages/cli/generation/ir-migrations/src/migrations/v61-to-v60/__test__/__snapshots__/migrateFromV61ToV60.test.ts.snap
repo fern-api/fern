@@ -710,7 +710,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "2225517fa3fc8646f5dcf523f64180b4",
+                "id": "acc746fca4f79c72",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -1440,7 +1440,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "e244f6b4935aa5ea0565663e78e515e1",
+                "id": "c983525d857b766b",
                 "name": null,
                 "queryParameters": [],
                 "request": {
