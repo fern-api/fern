@@ -8,8 +8,13 @@ import {
     RawSchemas
 } from "@fern-api/fern-definition-schema";
 import {
+    AsymmetricAlgorithm,
+    AsymmetricKeySignatureVerification,
+    AsymmetricKeySource,
     Availability,
     ExampleWebhookCall,
+    HmacAlgorithm,
+    HmacSignatureVerification,
     HttpResponse,
     HttpResponseBody,
     InlinedWebhookPayloadProperty,
@@ -17,7 +22,13 @@ import {
     StreamingResponse,
     Webhook,
     WebhookGroup,
-    WebhookPayload
+    WebhookPayload,
+    WebhookPayloadComponent,
+    WebhookPayloadFormat,
+    WebhookSignatureEncoding,
+    WebhookSignatureVerification,
+    WebhookTimestampConfig,
+    WebhookTimestampFormat
 } from "@fern-api/ir-sdk";
 import { IdGenerator, isReferencedWebhookPayloadSchema } from "@fern-api/ir-utils";
 
@@ -60,6 +71,7 @@ export function convertWebhookGroup({
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
+            signatureVerification: convertWebhookSignatureSchema({ signature: webhook.signature, file }),
             fileUploadPayload: undefined,
             responses: convertWebhookResponses({ webhook, file, typeResolver }),
             examples:
@@ -359,4 +371,190 @@ function convertWebhookJsonResponse(
             v2Examples: undefined
         })
     );
+}
+
+function convertWebhookSignatureSchema({
+    signature,
+    file
+}: {
+    signature: RawSchemas.WebhookSignatureSchema | undefined;
+    file: FernFileContext;
+}): WebhookSignatureVerification | undefined {
+    if (signature == null) {
+        return undefined;
+    }
+
+    switch (signature.type) {
+        case "hmac":
+            return WebhookSignatureVerification.hmac(convertHmacSignature({ hmac: signature, file }));
+        case "asymmetric":
+            return WebhookSignatureVerification.asymmetric(convertAsymmetricSignature({ asymmetric: signature, file }));
+        default:
+            return undefined;
+    }
+}
+
+function convertHmacSignature({
+    hmac,
+    file
+}: {
+    hmac: RawSchemas.HmacSignatureSchema;
+    file: FernFileContext;
+}): HmacSignatureVerification {
+    return {
+        signatureHeaderName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: hmac.header,
+            name: hmac.header
+        }),
+        algorithm: convertHmacAlgorithm(hmac.algorithm),
+        encoding: convertSignatureEncoding(hmac.encoding),
+        signaturePrefix: hmac["signature-prefix"],
+        payloadFormat: convertPayloadFormat(hmac["payload-format"]),
+        timestamp: convertTimestampConfig({ timestamp: hmac.timestamp, file })
+    };
+}
+
+function convertAsymmetricSignature({
+    asymmetric,
+    file
+}: {
+    asymmetric: RawSchemas.AsymmetricSignatureSchema;
+    file: FernFileContext;
+}): AsymmetricKeySignatureVerification {
+    return {
+        signatureHeaderName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: asymmetric.header,
+            name: asymmetric.header
+        }),
+        algorithm: convertAsymmetricAlgorithm(asymmetric["asymmetric-algorithm"]),
+        encoding: convertSignatureEncoding(asymmetric.encoding),
+        signaturePrefix: asymmetric["signature-prefix"],
+        keySource: convertKeySource({ asymmetric, file }),
+        timestamp: convertTimestampConfig({ timestamp: asymmetric.timestamp, file })
+    };
+}
+
+function convertHmacAlgorithm(algorithm: RawSchemas.WebhookSignatureAlgorithmSchema | undefined): HmacAlgorithm {
+    switch (algorithm) {
+        case "sha1":
+            return HmacAlgorithm.Sha1;
+        case "sha384":
+            return HmacAlgorithm.Sha384;
+        case "sha512":
+            return HmacAlgorithm.Sha512;
+        case "sha256":
+        case undefined:
+            return HmacAlgorithm.Sha256;
+    }
+}
+
+function convertSignatureEncoding(
+    encoding: RawSchemas.WebhookSignatureEncodingSchema | undefined
+): WebhookSignatureEncoding {
+    switch (encoding) {
+        case "hex":
+            return WebhookSignatureEncoding.Hex;
+        case "base64":
+        case undefined:
+            return WebhookSignatureEncoding.Base64;
+    }
+}
+
+function convertAsymmetricAlgorithm(algorithm: RawSchemas.AsymmetricAlgorithmSchema): AsymmetricAlgorithm {
+    switch (algorithm) {
+        case "rsa-sha256":
+            return AsymmetricAlgorithm.RsaSha256;
+        case "rsa-sha384":
+            return AsymmetricAlgorithm.RsaSha384;
+        case "rsa-sha512":
+            return AsymmetricAlgorithm.RsaSha512;
+        case "ecdsa-sha256":
+            return AsymmetricAlgorithm.EcdsaSha256;
+        case "ecdsa-sha384":
+            return AsymmetricAlgorithm.EcdsaSha384;
+        case "ecdsa-sha512":
+            return AsymmetricAlgorithm.EcdsaSha512;
+        case "ed25519":
+            return AsymmetricAlgorithm.Ed25519;
+    }
+}
+
+function convertKeySource({
+    asymmetric,
+    file
+}: {
+    asymmetric: RawSchemas.AsymmetricSignatureSchema;
+    file: FernFileContext;
+}): AsymmetricKeySource {
+    if (asymmetric["jwks-url"] != null) {
+        return AsymmetricKeySource.jwks({
+            url: asymmetric["jwks-url"],
+            keyIdHeader:
+                asymmetric["key-id-header"] != null
+                    ? file.casingsGenerator.generateNameAndWireValue({
+                          wireValue: asymmetric["key-id-header"],
+                          name: asymmetric["key-id-header"]
+                      })
+                    : undefined
+        });
+    }
+    return AsymmetricKeySource.static({});
+}
+
+function convertPayloadFormat(payloadFormat: RawSchemas.WebhookPayloadFormatSchema | undefined): WebhookPayloadFormat {
+    if (payloadFormat == null) {
+        return {
+            components: [WebhookPayloadComponent.Body],
+            delimiter: ""
+        };
+    }
+    return {
+        components: payloadFormat.components.map(convertPayloadComponent),
+        delimiter: payloadFormat.delimiter ?? ""
+    };
+}
+
+function convertPayloadComponent(component: RawSchemas.WebhookPayloadComponentSchema): WebhookPayloadComponent {
+    switch (component) {
+        case "body":
+            return WebhookPayloadComponent.Body;
+        case "timestamp":
+            return WebhookPayloadComponent.Timestamp;
+        case "notification-url":
+            return WebhookPayloadComponent.NotificationUrl;
+        case "message-id":
+            return WebhookPayloadComponent.MessageId;
+    }
+}
+
+function convertTimestampConfig({
+    timestamp,
+    file
+}: {
+    timestamp: RawSchemas.WebhookTimestampSchema | undefined;
+    file: FernFileContext;
+}): WebhookTimestampConfig | undefined {
+    if (timestamp == null) {
+        return undefined;
+    }
+    return {
+        headerName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: timestamp.header,
+            name: timestamp.header
+        }),
+        format: convertTimestampFormat(timestamp.format),
+        tolerance: timestamp.tolerance
+    };
+}
+
+function convertTimestampFormat(format: RawSchemas.WebhookTimestampFormatSchema | undefined): WebhookTimestampFormat {
+    switch (format) {
+        case "unix-millis":
+            return WebhookTimestampFormat.UnixMillis;
+        case "iso8601":
+            return WebhookTimestampFormat.Iso8601;
+        case "unix-seconds":
+        case undefined:
+            return WebhookTimestampFormat.UnixSeconds;
+    }
 }

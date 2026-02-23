@@ -37,6 +37,7 @@
             "headers": {},
             "method": "POST",
             "payload": "Pet",
+            "signature": undefined,
           },
         },
       },

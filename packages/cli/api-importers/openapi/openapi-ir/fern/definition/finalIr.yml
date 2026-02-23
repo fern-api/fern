@@ -106,6 +106,7 @@ types:
           Optional multipart form data payload for webhooks that use multipart/form-data content type.
           This is populated when the webhook request body uses multipart/form-data encoding.
       response: optional<Response>
+      signatureVerification: optional<WebhookSignatureVerification>
       examples: list<WebhookExampleCall>
 
   MultipartFormDataWebhookPayload:
@@ -179,6 +180,89 @@ types:
     enum:
       - GET
       - POST
+
+  WebhookSignatureVerification:
+    discriminant: type
+    union:
+      hmac: HmacWebhookSignatureVerification
+      asymmetric: AsymmetricWebhookSignatureVerification
+
+  HmacWebhookSignatureVerification:
+    properties:
+      header: string
+      algorithm: optional<WebhookSignatureAlgorithm>
+      encoding: optional<WebhookSignatureEncoding>
+      signaturePrefix: optional<string>
+      payloadFormat: optional<WebhookPayloadFormat>
+      timestamp: optional<WebhookTimestamp>
+
+  AsymmetricWebhookSignatureVerification:
+    properties:
+      header: string
+      asymmetricAlgorithm: AsymmetricAlgorithm
+      encoding: optional<WebhookSignatureEncoding>
+      signaturePrefix: optional<string>
+      jwksUrl: optional<string>
+      keyIdHeader: optional<string>
+      timestamp: optional<WebhookTimestamp>
+
+  WebhookSignatureAlgorithm:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookSignatureEncoding:
+    enum:
+      - base64
+      - hex
+
+  WebhookTimestamp:
+    properties:
+      header: string
+      format: optional<WebhookTimestampFormat>
+      tolerance: optional<integer>
+
+  WebhookTimestampFormat:
+    enum:
+      - name: unixSeconds
+        value: unix-seconds
+      - name: unixMillis
+        value: unix-millis
+      - name: iso8601
+        value: iso8601
+
+  WebhookPayloadFormat:
+    properties:
+      components: list<WebhookPayloadComponent>
+      delimiter: optional<string>
+
+  WebhookPayloadComponent:
+    enum:
+      - body
+      - timestamp
+      - name: notificationUrl
+        value: notification-url
+      - name: messageId
+        value: message-id
+
+  AsymmetricAlgorithm:
+    enum:
+      - name: rsaSha256
+        value: rsa-sha256
+      - name: rsaSha384
+        value: rsa-sha384
+      - name: rsaSha512
+        value: rsa-sha512
+      - name: ecdsaSha256
+        value: ecdsa-sha256
+      - name: ecdsaSha384
+        value: ecdsa-sha384
+      - name: ecdsaSha512
+        value: ecdsa-sha512
+      - name: ed25519
+        value: ed25519
 
   Availability:
     enum:

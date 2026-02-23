@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.82.1
+- version: 3.83.1
   changelogEntry:
     - summary: |
         Preserve existing README.md during local SDK generation when the generator
@@ -11,24 +11,63 @@
       type: fix
   createdAt: "2026-02-23"
   irVersion: 65
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification support. Webhooks can now declare a `signature`
+        configuration with `type: hmac` or `type: asymmetric`, including algorithm, encoding,
+        signature prefix parsing, payload format composition, and timestamp-based replay protection.
+        Supported via Fern Definition `signature` field, OpenAPI `x-fern-webhook-signature` extension,
+        and the IR `WebhookSignatureVerification` union.
+
+        **OpenAPI example** — set `x-fern-webhook-signature` at the document level so
+        all webhooks inherit the same signature configuration:
+
+        ```yaml
+        openapi: 3.1.0
+        info:
+          title: My API
+          version: 1.0.0
+        x-fern-webhook-signature:
+          type: hmac
+          header: x-webhook-signature
+          algorithm: sha256
+          encoding: hex
+          signature-prefix: "sha256="
+          payload-format:
+            components:
+              - timestamp
+              - body
+            delimiter: "."
+          timestamp:
+            header: x-webhook-timestamp
+            format: unix-seconds
+            tolerance: 300
+        webhooks:
+          orderCreated:
+            post:
+              operationId: orderCreated
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/OrderEvent'
+        ```
+
+        Individual webhook operations can also override the document-level default by
+        specifying their own `x-fern-webhook-signature` configuration inline.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
 - version: 3.82.0
   changelogEntry:
     - summary: |
-        Add `terminator` field support for SSE streaming throughout the OpenAPI to Fern pipeline.
-        The field was already present in the Fern definition schema but missing from the OpenAPI
-        extension parsing, OpenAPI-IR schema, and the OpenAPI-IR to Fern conversion layers.
+        Add webhook signature verification configuration to the IR. Webhooks can now
+        specify a `signature` block (in Fern Definition) or `x-fern-webhook-signature`
+        extension (in OpenAPI) with algorithm, encoding, header name, and payload format.
+        SDK generators can use this to produce signature verification utilities.
       type: feat
-  createdAt: "2026-02-20"
-  irVersion: 65
-- version: 3.81.1
-  changelogEntry:
-    - summary: |
-        Fix example object keys starting with `$` (e.g. `$ref`) not being unescaped when
-        generating the IR `jsonExample`. The Fern definition escapes `$`-prefixed keys with
-        a backslash to avoid collision with example references, but the backslash was not
-        removed when building the wire-format JSON example, causing generators to emit
-        invalid code (e.g. `"\$ref"` in Go).
-      type: fix
   createdAt: "2026-02-19"
   irVersion: 65
 - version: 3.81.0
