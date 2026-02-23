@@ -27,9 +27,10 @@
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../knip.json --no-config-hints",
-    "test": "vitest --passWithNoTests --run",
-    "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --passWithNoTests --run -u"
+    "generate-tests": "node generateTests.mjs",
+    "test": "node generateTests.mjs && vitest --passWithNoTests --run",
+    "test:debug": "node generateTests.mjs && pnpm run test --inspect --no-file-parallelism",
+    "test:update": "node generateTests.mjs && vitest --passWithNoTests --run -u"
   },
   "dependencies": {
     "@fern-api/casings-generator": "workspace:*",
