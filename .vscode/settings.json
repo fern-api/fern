@@ -131,5 +131,6 @@
   "javascript.updateImportsOnFileMove.enabled": "never",
   "extensions.ignoreRecommendations": false,
   "git.ignoreLimitWarning": true,
-  "git.branchProtection": ["main", "master"]
+  "git.branchProtection": ["main", "master"],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
