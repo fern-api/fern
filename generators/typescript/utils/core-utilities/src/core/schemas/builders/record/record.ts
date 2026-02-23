@@ -5,6 +5,9 @@ import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { getSchemaUtils } from "../schema-utils/index";
 import type { BaseRecordSchema, RecordSchema } from "./types";
 
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
+
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,
     valueSchema: Schema<RawValue, ParsedValue>,
@@ -82,7 +85,7 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
     const errors: ValidationError[] = [];
 
     for (const stringKey in value) {
-        if (!Object.prototype.hasOwnProperty.call(value, stringKey)) {
+        if (!_hasOwn.call(value, stringKey)) {
             continue;
         }
         const entryValue = (value as Record<string, unknown>)[stringKey];

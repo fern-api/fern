@@ -5,6 +5,9 @@ import { isPlainObject } from "../../utils/isPlainObject.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
 import type { ObjectLikeSchema, ObjectLikeUtils } from "./types.js";
 
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
+
 export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed> {
     return {
         withParsedProperties: (properties) => withParsedProperties(schema, properties),
@@ -28,7 +31,7 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
 
             const additionalProperties: Record<string, any> = {};
             for (const key in properties) {
-                if (Object.prototype.hasOwnProperty.call(properties, key)) {
+                if (_hasOwn.call(properties, key)) {
                     const value = properties[key as keyof Properties];
                     additionalProperties[key] = typeof value === "function" ? (value as Function)(parsedObject.value) : value;
                 }

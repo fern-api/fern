@@ -19,6 +19,9 @@ import type {
     PropertySchemas,
 } from "./types";
 
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
+
 interface ObjectPropertyWithRawKey {
     rawKey: string;
     parsedKey: string;
@@ -241,7 +244,7 @@ function validateAndTransformObject<Transformed>({
     const transformed: Record<string | number | symbol, any> = {};
 
     for (const preTransformedKey in value) {
-        if (!Object.prototype.hasOwnProperty.call(value, preTransformedKey)) {
+        if (!_hasOwn.call(value, preTransformedKey)) {
             continue;
         }
         const preTransformedItemValue = value[preTransformedKey];

@@ -1,14 +1,14 @@
-import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema";
-import { entries } from "../../utils/entries";
-import { filterObject } from "../../utils/filterObject";
-import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
-import { isPlainObject } from "../../utils/isPlainObject";
-import { keys } from "../../utils/keys";
-import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
-import { partition } from "../../utils/partition";
-import { getObjectLikeUtils } from "../object-like/index";
-import { getSchemaUtils } from "../schema-utils/index";
-import { isProperty } from "./property";
+import { type MaybeValid, type Schema, SchemaType, type ValidationError } from "../../Schema.js";
+import { entries } from "../../utils/entries.js";
+import { filterObject } from "../../utils/filterObject.js";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
+import { isPlainObject } from "../../utils/isPlainObject.js";
+import { keys } from "../../utils/keys.js";
+import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
+import { partition } from "../../utils/partition.js";
+import { getObjectLikeUtils } from "../object-like/index.js";
+import { getSchemaUtils } from "../schema-utils/index.js";
+import { isProperty } from "./property.js";
 import type {
     BaseObjectSchema,
     inferObjectSchemaFromPropertySchemas,
@@ -17,7 +17,10 @@ import type {
     ObjectSchema,
     ObjectUtils,
     PropertySchemas,
-} from "./types";
+} from "./types.js";
+
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
 
 interface ObjectPropertyWithRawKey {
     rawKey: string;
@@ -241,7 +244,7 @@ function validateAndTransformObject<Transformed>({
     const transformed: Record<string | number | symbol, any> = {};
 
     for (const preTransformedKey in value) {
-        if (!Object.prototype.hasOwnProperty.call(value, preTransformedKey)) {
+        if (!_hasOwn.call(value, preTransformedKey)) {
             continue;
         }
         const preTransformedItemValue = value[preTransformedKey];
