@@ -1,12 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.82.1
-  changelogEntry:
-    - summary: |
-        Use vitest `expect.assert()` for type narrowing in tests, replacing manual
-        `if`-block and `as`-cast patterns around discriminated unions.
-      type: chore
-  createdAt: "2026-02-23"
-  irVersion: 65
 - version: 3.82.0
   changelogEntry:
     - summary: |
