@@ -192,16 +192,13 @@ export async function loadAPIWorkspace({
     cliVersion: string;
     workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
-    const generatorsConfiguration = await loadGeneratorsConfiguration({
-        absolutePathToWorkspace,
-        context
-    });
-
-    let changelog = undefined;
-    try {
-        changelog = await loadAPIChangelog({ absolutePathToWorkspace });
-        // biome-ignore lint/suspicious/noEmptyBlockStatements: allow
-    } catch (err) {}
+    const [generatorsConfiguration, changelog] = await Promise.all([
+        loadGeneratorsConfiguration({
+            absolutePathToWorkspace,
+            context
+        }),
+        loadAPIChangelog({ absolutePathToWorkspace }).catch(() => undefined)
+    ]);
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {
         return {
@@ -237,12 +234,17 @@ export async function loadAPIWorkspace({
             }
             specs.push(...maybeSpecs);
         } else {
-            for (const [namespace, definitions] of Object.entries(generatorsConfiguration.api.definitions)) {
-                const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
-                    absolutePathToWorkspace,
-                    namespace,
-                    definitions
-                });
+            const namespaceEntries = Object.entries(generatorsConfiguration.api.definitions);
+            const namespaceResults = await Promise.all(
+                namespaceEntries.map(([namespace, definitions]) =>
+                    loadSingleNamespaceAPIWorkspace({
+                        absolutePathToWorkspace,
+                        namespace,
+                        definitions
+                    })
+                )
+            );
+            for (const maybeSpecs of namespaceResults) {
                 if (!Array.isArray(maybeSpecs)) {
                     return maybeSpecs;
                 }
