@@ -159,7 +159,7 @@ export class ApiDefinitionConverter {
                 const specs = await this.convertSpecs({
                     absoluteFernYmlPath,
                     specs: apiDef.specs,
-                    sourced: sourcedApiDef!.specs
+                    sourced: sourcedApiDef?.specs
                 });
                 const definition: ApiDefinition = {
                     specs,

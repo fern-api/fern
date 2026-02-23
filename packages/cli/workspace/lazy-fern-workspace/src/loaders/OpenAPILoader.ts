@@ -21,9 +21,7 @@ export class OpenAPILoader {
         specs: OpenAPISpec[];
         loadAiExamples?: boolean;
     }): Promise<Document[]> {
-        const results = await Promise.all(
-            specs.map((spec) => this.loadDocument({ context, spec, loadAiExamples }))
-        );
+        const results = await Promise.all(specs.map((spec) => this.loadDocument({ context, spec, loadAiExamples })));
         return results.filter((doc): doc is Document => doc != null);
     }
 
