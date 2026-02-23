@@ -1,63 +1,78 @@
-import { createHash } from "crypto";
-
 const MAX_DEPTH = 64;
-const BUFFER_FLUSH_SIZE = 65536;
 
+/**
+ * Produces a deterministic hash of a JSON-serializable value.
+ * Keys of objects are sorted to ensure consistent ordering.
+ *
+ * Uses dual FNV-1a hashing (two independent 32-bit hashes combined into
+ * a 16-character hex string) with direct numeric accumulation — no
+ * intermediate string is built, so memory pressure stays minimal even
+ * for very large object graphs.
+ */
 export function hashJSON(obj: unknown): string {
-    const hash = createHash("md5");
-    let buffer = "";
+    let h1 = 0x811c9dc5 | 0;
+    let h2 = 0x01000193 | 0;
 
     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     function traverse(value: any, currentDepth: number): void {
-        if (typeof value !== "object" || value == null) {
-            buffer += String(value);
-            if (buffer.length >= BUFFER_FLUSH_SIZE) {
-                hash.update(buffer);
-                buffer = "";
+        const t = typeof value;
+        if (t !== "object" || value === null) {
+            const s: string = t === "string" ? value : String(value);
+            for (let i = 0, len = s.length; i < len; i++) {
+                const c = s.charCodeAt(i);
+                h1 = Math.imul(h1 ^ c, 0x01000193);
+                h2 = Math.imul(h2 ^ c, 0x811c9dc5);
             }
             return;
         }
         if (currentDepth > MAX_DEPTH) {
-            buffer += "[MaxDepthExceeded]";
-            if (buffer.length >= BUFFER_FLUSH_SIZE) {
-                hash.update(buffer);
-                buffer = "";
+            // "[MaxDepthExceeded]" — 18 chars, inlined for speed
+            const s = "[MaxDepthExceeded]";
+            for (let i = 0; i < 18; i++) {
+                const c = s.charCodeAt(i);
+                h1 = Math.imul(h1 ^ c, 0x01000193);
+                h2 = Math.imul(h2 ^ c, 0x811c9dc5);
             }
             return;
         }
-
         if (Array.isArray(value)) {
-            buffer += "[";
-            for (let i = 0; i < value.length; i++) {
+            h1 = Math.imul(h1 ^ 91, 0x01000193); // '['
+            h2 = Math.imul(h2 ^ 91, 0x811c9dc5);
+            const len = value.length;
+            for (let i = 0; i < len; i++) {
                 if (i > 0) {
-                    buffer += ",";
+                    h1 = Math.imul(h1 ^ 44, 0x01000193); // ','
+                    h2 = Math.imul(h2 ^ 44, 0x811c9dc5);
                 }
                 traverse(value[i], currentDepth + 1);
             }
-            buffer += "]";
+            h1 = Math.imul(h1 ^ 93, 0x01000193); // ']'
+            h2 = Math.imul(h2 ^ 93, 0x811c9dc5);
         } else {
-            buffer += "{";
+            h1 = Math.imul(h1 ^ 123, 0x01000193); // '{'
+            h2 = Math.imul(h2 ^ 123, 0x811c9dc5);
             const keys = Object.keys(value).sort();
-            for (let i = 0; i < keys.length; i++) {
-                const key = keys[i] ?? "";
+            const klen = keys.length;
+            for (let i = 0; i < klen; i++) {
                 if (i > 0) {
-                    buffer += ",";
+                    h1 = Math.imul(h1 ^ 44, 0x01000193); // ','
+                    h2 = Math.imul(h2 ^ 44, 0x811c9dc5);
                 }
-                buffer += key;
-                buffer += ":";
-                traverse(value[key], currentDepth + 1);
+                const k = keys[i] ?? "";
+                for (let j = 0, jl = k.length; j < jl; j++) {
+                    const c = k.charCodeAt(j);
+                    h1 = Math.imul(h1 ^ c, 0x01000193);
+                    h2 = Math.imul(h2 ^ c, 0x811c9dc5);
+                }
+                h1 = Math.imul(h1 ^ 58, 0x01000193); // ':'
+                h2 = Math.imul(h2 ^ 58, 0x811c9dc5);
+                traverse(value[k], currentDepth + 1);
             }
-            buffer += "}";
-        }
-        if (buffer.length >= BUFFER_FLUSH_SIZE) {
-            hash.update(buffer);
-            buffer = "";
+            h1 = Math.imul(h1 ^ 125, 0x01000193); // '}'
+            h2 = Math.imul(h2 ^ 125, 0x811c9dc5);
         }
     }
 
     traverse(obj, 0);
-    if (buffer.length > 0) {
-        hash.update(buffer);
-    }
-    return hash.digest("hex");
+    return (h1 >>> 0).toString(16).padStart(8, "0") + (h2 >>> 0).toString(16).padStart(8, "0");
 }
