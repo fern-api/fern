@@ -86,17 +86,11 @@ function convertPagination(
 ): IrVersions.V63.http.Pagination | undefined {
     switch (pagination.type) {
         case "cursor":
-            return IrVersions.V63.http.Pagination.cursor(
-                pagination as unknown as IrVersions.V63.http.CursorPagination
-            );
+            return IrVersions.V63.http.Pagination.cursor(pagination as unknown as IrVersions.V63.http.CursorPagination);
         case "offset":
-            return IrVersions.V63.http.Pagination.offset(
-                pagination as unknown as IrVersions.V63.http.OffsetPagination
-            );
+            return IrVersions.V63.http.Pagination.offset(pagination as unknown as IrVersions.V63.http.OffsetPagination);
         case "custom":
-            return IrVersions.V63.http.Pagination.custom(
-                pagination as unknown as IrVersions.V63.http.CustomPagination
-            );
+            return IrVersions.V63.http.Pagination.custom(pagination as unknown as IrVersions.V63.http.CustomPagination);
         case "uri":
         case "path":
             context.taskContext.logger.warn(
