@@ -1,30 +1,18 @@
-import { readdirSync } from "node:fs";
-import { resolve } from "node:path";
-
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createSampleIr } from "@fern-api/test-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-v59-sdk/api";
 import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift.js";
 
-const pathToTestDefinitions = resolve(__dirname, "../../../../../../../../test-definitions/fern/apis");
-const testDefinitionNames = readdirSync(pathToTestDefinitions, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+// Pre-generated endpoint fixture data extracted from test-definitions IR.
+// To regenerate: npx vitest run src/generators/client/util/__test__/generate-endpoint-fixtures.test.ts
+import endpointFixtures from "./endpoint-fixtures.json";
 
-async function getIRForTestDefinition(testDefinitionName: string): Promise<IntermediateRepresentation> {
-    const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(pathToTestDefinitions, testDefinitionName));
-    return (await createSampleIr(absolutePathToWorkspace, {
-        version: "v59" // make sure to upgrade this when the IR version is upgraded
-    })) as IntermediateRepresentation;
-}
+const testDefinitionNames = Object.keys(endpointFixtures).sort();
 
 describe.each(testDefinitionNames)("formatEndpointPathForSwift - %s", (testDefinitionName) => {
     // This allows us to conveniently review the formatted endpoint paths for every test definition in a single location
 
-    it("correctly formats all endpoint paths for definition", async () => {
-        const ir = await getIRForTestDefinition(testDefinitionName);
+    it("correctly formats all endpoint paths for definition", () => {
+        const fixture = endpointFixtures[testDefinitionName as keyof typeof endpointFixtures];
         const endpointPathsByService = Object.fromEntries(
-            Object.entries(ir.services).map(([serviceName, service]) => {
+            Object.entries(fixture.services).map(([serviceName, service]) => {
                 return [
                     serviceName,
                     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
@@ -37,5 +25,5 @@ describe.each(testDefinitionNames)("formatEndpointPathForSwift - %s", (testDefin
             .map(({ serviceName, serviceContent }) => `// ${serviceName}\n${serviceContent}`)
             .join("\n\n");
         expect(fileContents).toMatchSnapshot();
-    }, 10_000);
+    });
 });
