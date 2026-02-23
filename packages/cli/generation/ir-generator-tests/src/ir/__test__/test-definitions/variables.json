@@ -242,7 +242,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "0d06dc41",
+                                "id": "d06dc41",
                                 "name": null,
                                 "url": "/endpointParam",
                                 "rootPathParameters": [],
