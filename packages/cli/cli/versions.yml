@@ -8,7 +8,7 @@
         `pre-release`, `generally-available`, and `deprecated` statuses. The new statuses are supported
         in the v3 OpenAPI importer and rendered in docs via the IR-to-FDR converter.
       type: feat
-  createdAt: "2026-02-23"    
+  createdAt: "2026-02-23"
   irVersion: 65
 
 - version: 3.82.0
@@ -270,10 +270,6 @@
   changelogEntry:
     - summary: Regenerate older IR types with new TypeScript SDK generator.
       type: internal
-<<<<<<< HEAD
->>>>>>> d58db0c06ecfa94c5f40eeaf775ebf134b85a64e
-=======
->>>>>>> 60b4c1ab40068513deadd4bd084eb2b35c548b55
   createdAt: "2026-02-06"
   irVersion: 63
 
