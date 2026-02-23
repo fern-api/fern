@@ -101,7 +101,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
-        const auth = this.hasServerSecurity();
+        const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
 
         return {
             channel: {

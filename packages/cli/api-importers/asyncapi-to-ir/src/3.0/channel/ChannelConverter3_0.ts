@@ -105,7 +105,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 breadcrumbs: this.breadcrumbs
             }) ?? [];
 
-        const auth = this.hasServerSecurity();
+        const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
 
         return {
             channel: {
