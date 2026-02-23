@@ -1,6 +1,7 @@
 import { ContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
-import { loggingExeca } from "@fern-api/logging-execa";
+import { runExeca } from "@fern-api/logging-execa";
+import { ExecaChildProcess } from "execa";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
@@ -15,6 +16,8 @@ export declare namespace runContainer {
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
+        /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
+        signal?: AbortSignal;
     }
 
     export interface Result {
@@ -31,7 +34,8 @@ export async function runContainer({
     ports = {},
     writeLogsToFile = true,
     removeAfterCompletion = false,
-    runner
+    runner,
+    signal
 }: runContainer.Args): Promise<void> {
     const tryRun = () =>
         tryRunContainer({
@@ -43,13 +47,14 @@ export async function runContainer({
             ports,
             removeAfterCompletion,
             writeLogsToFile,
-            runner
+            runner,
+            signal
         });
     try {
         await tryRun();
     } catch (e) {
         if (e instanceof Error && e.message.includes("No such image")) {
-            await pullImage(imageName, runner);
+            await pullImage(imageName, runner, signal);
             await tryRun();
         } else {
             throw e;
@@ -71,6 +76,8 @@ export declare namespace runDocker {
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
+        /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
+        signal?: AbortSignal;
     }
 
     export interface Result {
@@ -83,6 +90,34 @@ export declare namespace runDocker {
  */
 export const runDocker = runContainer;
 
+/**
+ * Wire an AbortSignal to kill an execa child process.
+ * When the signal aborts (e.g. on test timeout or Ctrl+C), the child
+ * process is terminated so it doesn't leak.
+ */
+function wireSignal(childProcess: ExecaChildProcess, signal?: AbortSignal): void {
+    if (!signal) {
+        return;
+    }
+    // Swallow the rejection that execa emits when we intentionally kill the
+    // process so it doesn't surface as an unhandled-rejection in Vitest.
+    const swallowKill = (): void => {
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow rejection
+        childProcess.catch(() => {});
+    };
+    if (signal.aborted) {
+        swallowKill();
+        childProcess.kill();
+        return;
+    }
+    const onAbort = (): void => {
+        swallowKill();
+        childProcess.kill();
+    };
+    signal.addEventListener("abort", onAbort, { once: true });
+    void childProcess.finally(() => signal.removeEventListener("abort", onAbort));
+}
+
 async function tryRunContainer({
     logger,
     imageName,
@@ -92,7 +127,8 @@ async function tryRunContainer({
     ports = {},
     removeAfterCompletion,
     writeLogsToFile,
-    runner
+    runner,
+    signal
 }: {
     logger: Logger;
     imageName: string;
@@ -103,6 +139,7 @@ async function tryRunContainer({
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
+    signal?: AbortSignal;
 }): Promise<void> {
     if (process.env["FERN_STACK_TRACK"]) {
         envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
@@ -120,11 +157,13 @@ async function tryRunContainer({
     ].filter(Boolean);
 
     const containerRunner = runner ?? "docker";
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, containerRunner, containerArgs, {
+    const childProcess = runExeca(logger, containerRunner, containerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true
     });
+    wireSignal(childProcess, signal);
+    const { stdout, stderr, exitCode } = await childProcess;
 
     const logs = stdout + stderr;
 
@@ -148,9 +187,11 @@ async function tryRunContainer({
     }
 }
 
-async function pullImage(imageName: string, runner?: ContainerRunner): Promise<void> {
-    await loggingExeca(undefined, runner ?? "docker", ["pull", imageName], {
+async function pullImage(imageName: string, runner?: ContainerRunner, signal?: AbortSignal): Promise<void> {
+    const childProcess = runExeca(undefined, runner ?? "docker", ["pull", imageName], {
         all: true,
         doNotPipeOutput: true
     });
+    wireSignal(childProcess, signal);
+    await childProcess;
 }

@@ -38,7 +38,8 @@ describe("runContainer", () => {
             logger: CONSOLE_LOGGER,
             imageName: BASIC_WRITER_IMAGE_NAME,
             args: [expectedOutputFilePath],
-            binds: [`${HOST_OUTPUT_DIR}:${IMAGE_OUTPUT_DIR}`]
+            binds: [`${HOST_OUTPUT_DIR}:${IMAGE_OUTPUT_DIR}`],
+            signal
         });
 
         const fileExists = await doesPathExist(join(HOST_OUTPUT_DIR, RelativeFilePath.of(expectedOutputFilePath)));
