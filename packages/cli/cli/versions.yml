@@ -9,6 +9,18 @@
       type: feat
   createdAt: "2026-02-23"
   irVersion: 65
+- version: 3.83.3
+  changelogEntry:
+    - summary: |
+        Preserve existing README.md during local SDK generation when the generator
+        does not produce one. Previously, `copyGeneratedFiles` deleted all files
+        before copying generator output, so if README generation failed silently
+        the file was removed from the target repository. The file copy methods now
+        skip deleting README.md when the generated output directory does not
+        include it.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
 - version: 3.83.2
   changelogEntry:
     - summary: |

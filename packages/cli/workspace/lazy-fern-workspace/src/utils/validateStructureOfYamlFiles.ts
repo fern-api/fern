@@ -15,6 +15,11 @@ import * as DefinitionFileJsonSchema from "../fern.schema.json";
 import * as PackageMarkerFileJsonSchema from "../package-yml.schema.json";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
 
+/** Cast a JSON schema import to the type expected by validateAgainstJsonSchema. */
+function asJsonSchema(schema: Record<string, unknown>): Parameters<typeof validateAgainstJsonSchema>[1] {
+    return schema as Parameters<typeof validateAgainstJsonSchema>[1];
+}
+
 /**
  * Module-level caches for validated/parsed file contents.
  * Keyed on the raw YAML string (file contents), these caches avoid redundant
@@ -98,8 +103,7 @@ export function validateStructureOfYamlFiles({
                     rawContents: file.rawContents
                 };
             } else {
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                const result = validateAgainstJsonSchema(parsedFileContents, RootApiFileJsonSchema as any);
+                const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(RootApiFileJsonSchema));
                 if (result.success) {
                     const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents);
                     rootApiParsedCache.set(file.rawContents, contents);
@@ -130,8 +134,10 @@ export function validateStructureOfYamlFiles({
                     rawContents: file.rawContents
                 };
             } else {
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                const result = validateAgainstJsonSchema(parsedFileContents, PackageMarkerFileJsonSchema as any);
+                const result = validateAgainstJsonSchema(
+                    parsedFileContents,
+                    asJsonSchema(PackageMarkerFileJsonSchema)
+                );
                 if (result.success) {
                     const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
                     packageMarkerParsedCache.set(file.rawContents, contents);
@@ -164,8 +170,10 @@ export function validateStructureOfYamlFiles({
                     absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
                 };
             } else {
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                const result = validateAgainstJsonSchema(parsedFileContents, DefinitionFileJsonSchema as any);
+                const result = validateAgainstJsonSchema(
+                    parsedFileContents,
+                    asJsonSchema(DefinitionFileJsonSchema)
+                );
                 if (result.success) {
                     const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
                     definitionParsedCache.set(file.rawContents, contents);
