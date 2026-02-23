@@ -8,8 +8,8 @@
     "./*": "./*"
   },
   "devDependencies": {
-    "esbuild-plugin-polyfill-node": "^0.3.0",
-    "tsup": "^8.5.0",
-    "vitest": "^4.0.8"
+    "esbuild-plugin-polyfill-node": "catalog:",
+    "tsup": "catalog:",
+    "vitest": "catalog:"
   }
 }

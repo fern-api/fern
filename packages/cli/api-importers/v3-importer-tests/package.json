@@ -23,7 +23,7 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib",
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../knip.json --no-config-hints",
@@ -48,8 +48,8 @@
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
-    "@types/node": "18.15.3",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

@@ -9,13 +9,15 @@ export async function generateDynamicIrAsString({
     language,
     audiences,
     apiName,
-    version
+    version,
+    signal
 }: {
     fixturePath: AbsoluteFilePath;
     language?: generatorsYml.GenerationLanguage;
     audiences?: string[];
     apiName?: string;
     version?: string;
+    signal?: AbortSignal;
 }): Promise<string> {
     const dynamicOutputPath = join(fixturePath, RelativeFilePath.of("dynamic.json"));
     await rm(dynamicOutputPath, { force: true, recursive: true });
@@ -37,9 +39,7 @@ export async function generateDynamicIrAsString({
         command.push("--version", version);
     }
 
-    await runFernCli(command, {
-        cwd: fixturePath
-    });
+    await runFernCli(command, { cwd: fixturePath, signal });
 
     const dynamicContents = await readFile(dynamicOutputPath);
     return dynamicContents.toString();

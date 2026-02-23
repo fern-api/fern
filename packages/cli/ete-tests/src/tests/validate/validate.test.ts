@@ -15,14 +15,15 @@ describe("validate", () => {
 
 function itFixture(fixtureName: string) {
     it(// eslint-disable-next-line jest/valid-title
-    fixtureName, async () => {
+    fixtureName, async ({ signal }) => {
         const fixturePath = path.join(FIXTURES_DIR, fixtureName);
         const irOutputPath = path.join(fixturePath, "api", "ir.json");
         await rm(irOutputPath, { force: true, recursive: true });
 
         const { stdout } = await runFernCli(["check"], {
             cwd: fixturePath,
-            reject: false
+            reject: false,
+            signal
         });
 
         if (fixtureName == "simple") {

@@ -1,81 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*", "./src/*.json"],
-  "references": [
-    {
-      "path": "../../../commons/casings-generator"
-    },
-    {
-      "path": "../../api-importers/v3-importer-commons"
-    },
-    {
-      "path": "../../api-importers/openrpc-to-ir"
-    },
-    {
-      "path": "../../api-importers/asyncapi-to-ir"
-    },
-    {
-      "path": "../../../commons/ir-utils"
-    },
-    {
-      "path": "../../../ir-sdk"
-    },
-    {
-      "path": "../../api-importers/openapi-to-ir"
-    },
-    {
-      "path": "../../task-context"
-    },
-    {
-      "path": "../../semver-utils"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir-parser"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir"
-    },
-    {
-      "path": "../../../commons/logging-execa"
-    },
-    {
-      "path": "../../logger"
-    },
-    {
-      "path": "../../../commons/fs-utils"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../../../commons/core-utils"
-    },
-    {
-      "path": "../../../core"
-    },
-    {
-      "path": "../../api-importers/conjure/conjure-to-fern"
-    },
-    {
-      "path": "../../configuration-loader"
-    },
-    {
-      "path": "../../configuration"
-    },
-    {
-      "path": "../../cli-logger"
-    },
-    {
-      "path": "../commons"
-    },
-    {
-      "path": "../../api-importers/graphql"
-    }
-  ]
+  "include": ["./src/**/*", "./src/*.json"]
 }

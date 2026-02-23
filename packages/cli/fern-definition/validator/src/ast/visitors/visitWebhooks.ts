@@ -94,6 +94,7 @@ export function visitWebhooks({
                 }
             });
         },
+        signature: noop,
         response: noop,
         "response-stream": noop,
         audiences: noop,

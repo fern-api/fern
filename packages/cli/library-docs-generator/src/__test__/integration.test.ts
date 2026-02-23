@@ -268,13 +268,10 @@ describe("generate() — full pipeline integration", () => {
         }
 
         // data section has nested aime section
-        // biome-ignore lint/style/noNonNullAssertion: length asserted above
-        const dataSection = result.navigation[2]!;
-        expect(dataSection.type).toBe("section");
-        if (dataSection.type === "section") {
-            expect(dataSection.children).toHaveLength(1);
-            expect(dataSection.children[0]?.title).toBe("aime");
-        }
+        const dataSection = result.navigation[2];
+        expect.assert(dataSection?.type === "section");
+        expect(dataSection.children).toHaveLength(1);
+        expect(dataSection.children[0]?.title).toBe("aime");
     });
 
     it("navigation page nodes have correct slugs and pageIds", () => {
@@ -288,10 +285,9 @@ describe("generate() — full pipeline integration", () => {
         expect(pages).toHaveLength(3);
 
         for (const page of pages) {
-            if (page.type === "page") {
-                expect(page.slug).toMatch(/^reference\/python\//);
-                expect(page.pageId).toBe(`${page.slug}.mdx`);
-            }
+            expect.assert(page.type === "page");
+            expect(page.slug).toMatch(/^reference\/python\//);
+            expect(page.pageId).toBe(`${page.slug}.mdx`);
         }
     });
 

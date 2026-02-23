@@ -16,10 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithRequiredField{
-        FieldString: "string",
+    request := map[string]*types.MixedType{
+        "string": &types.MixedType{
+            Double: 1.1,
+        },
     }
-    client.Endpoints.Container.GetAndReturnOptional(
+    client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
         context.TODO(),
         request,
     )

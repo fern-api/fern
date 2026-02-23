@@ -1,62 +1,8 @@
 {
   "extends": "@fern-api/configs/tsconfig/test.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../api-importers/v3-importer-commons"
-    },
-    {
-      "path": "../task-context"
-    },
-    {
-      "path": "../api-importers/openapi-to-ir"
-    },
-    {
-      "path": "../api-importers/openapi-pruner"
-    },
-    {
-      "path": "../logger"
-    },
-    {
-      "path": "../workspace/lazy-fern-workspace"
-    },
-    {
-      "path": "../../commons/ir-utils"
-    },
-    {
-      "path": "../../ir-sdk"
-    },
-    {
-      "path": "../generation/ir-generator"
-    },
-    {
-      "path": "../../commons/fs-utils"
-    },
-    {
-      "path": "../../commons/core-utils"
-    },
-    {
-      "path": "../../core"
-    },
-    {
-      "path": "../configuration"
-    },
-    {
-      "path": "../cli-source-resolver"
-    },
-    {
-      "path": "../auth"
-    },
-    {
-      "path": "../workspace/commons"
-    },
-    {
-      "path": "../workspace/loader"
-    }
-  ]
+  "include": ["./src/**/*"]
 }
