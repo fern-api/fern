@@ -38,6 +38,10 @@ interface FileWithMimeType {
     relativeFilePath: RelativeFilePath;
 }
 
+interface FileWithSanitizedPathAndMimeType extends FileWithMimeType {
+    sanitizedPath: RelativeFilePath;
+}
+
 export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | string): Promise<string> {
     const fileBuffer = await readFile(absoluteFilePath);
     return createHash("sha256").update(new Uint8Array(fileBuffer)).digest("hex");
@@ -120,21 +124,24 @@ export async function publishDocs({
         taskContext: context,
         editThisPage,
         uploadFiles: async (files) => {
-            const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
-            // Create mapping from original relative paths to sanitized relative paths
-            const sanitizedPathsMap = new Map(
-                files.map((file) => [file.relativeFilePath, sanitizeRelativePathForS3(file.relativeFilePath)])
-            );
-            // Create mapping from sanitized relative paths to original absolute paths
+            // Pre-compute sanitized paths and attach to file objects
+            const filesWithSanitizedPaths = files.map((file) => ({
+                ...file,
+                sanitizedPath: sanitizeRelativePathForS3(file.relativeFilePath)
+            }));
+
+            const filesMap = new Map(filesWithSanitizedPaths.map((file) => [file.absoluteFilePath, file]));
             const sanitizedToAbsoluteMap = new Map(
-                files.map((file) => [sanitizedPathsMap.get(file.relativeFilePath)!, file.absoluteFilePath])
+                filesWithSanitizedPaths.map((file) => [file.sanitizedPath, file.absoluteFilePath])
             );
-            const filesWithMimeType: FileWithMimeType[] = files
+            const filesWithMimeType: FileWithSanitizedPathAndMimeType[] = filesWithSanitizedPaths
                 .map((fileMetadata) => ({
                     ...fileMetadata,
                     mediaType: mime.lookup(fileMetadata.absoluteFilePath)
                 }))
-                .filter((fileMetadata): fileMetadata is FileWithMimeType => fileMetadata.mediaType !== false);
+                .filter(
+                    (fileMetadata): fileMetadata is FileWithSanitizedPathAndMimeType => fileMetadata.mediaType !== false
+                );
 
             const imagesToMeasure = filesWithMimeType
                 .filter((file) => MediaType.parse(file.mediaType)?.isImage() ?? false)
@@ -155,7 +162,7 @@ export async function publishDocs({
                         return null;
                     }
 
-                    const sanitizedPath = sanitizedPathsMap.get(filePath.relativeFilePath)!;
+                    const sanitizedPath = filePath.sanitizedPath;
                     const obj = {
                         filePath: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(sanitizedPath)),
                         width: image.width,
@@ -174,7 +181,9 @@ export async function publishDocs({
             const hashImageTime = performance.now() - hashImageStart;
             context.logger.debug(`Hashed ${images.length} images in ${hashImageTime.toFixed(0)}ms`);
 
-            const nonImageFiles = files.filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath));
+            const nonImageFiles = filesWithSanitizedPaths.filter(
+                ({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath)
+            );
 
             context.logger.debug(
                 `Hashing ${nonImageFiles.length} non-image files with concurrency ${HASH_CONCURRENCY}...`
@@ -184,9 +193,8 @@ export async function publishDocs({
                 HASH_CONCURRENCY,
                 nonImageFiles,
                 async (file) => {
-                    const sanitizedPath = sanitizedPathsMap.get(file.relativeFilePath)!;
                     return {
-                        path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(sanitizedPath)),
+                        path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.sanitizedPath)),
                         fileHash: await calculateFileHash(file.absoluteFilePath)
                     };
                 }
