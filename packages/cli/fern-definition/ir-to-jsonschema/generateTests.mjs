@@ -1,7 +1,6 @@
+import { generateTestsFromDirectory } from "@fern-api/configs/vitest/generateTestsFromDirectory.mjs";
 import path from "path";
 import { fileURLToPath } from "url";
-
-import { generateTestsFromDirectory } from "@fern-api/configs/vitest/generateTestsFromDirectory.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(__dirname, "../../../..");

@@ -31,6 +31,9 @@ export async function runJsonSchemaTest({ fixtureName }: { fixtureName: string }
         throw new Error(`No workspace found for fixture ${fixtureName}`);
     }
     const workspace = apiWorkspaces[0];
+    if (workspace == null) {
+        throw new Error(`No workspace found for fixture ${fixtureName}`);
+    }
 
     const fernWorkspace = await workspace.toFernWorkspace({
         context

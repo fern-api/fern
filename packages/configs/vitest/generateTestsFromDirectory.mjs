@@ -56,6 +56,8 @@ export function generateTestsFromDirectory({
         const argsBlock = `{\n${argsLines.join("\n")}\n    }`;
 
         const content = `${GENERATED_HEADER}
+import { it } from "vitest";
+
 import { ${testRunnerFunction} } from "${testRunnerImport}";
 
 it(${JSON.stringify(name)}, async () => {
