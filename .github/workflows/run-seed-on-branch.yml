@@ -1,0 +1,140 @@
+name: Run Seed on Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      generator:
+        description: "Generator to run seed tests for (required, single generator)"
+        required: true
+        type: choice
+        options:
+          - csharp-model
+          - csharp-sdk
+          - fastapi
+          - go-model
+          - go-sdk
+          - java-model
+          - java-sdk
+          - java-spring
+          - openapi
+          - php-model
+          - php-sdk
+          - postman
+          - pydantic
+          - pydantic-v2
+          - python-sdk
+          - ruby-sdk-v2
+          - rust-model
+          - rust-sdk
+          - swift-sdk
+          - ts-express
+          - ts-sdk
+      fixtures:
+        description: "Space-separated list of fixtures to run (leave empty for all)"
+        required: false
+        default: ""
+        type: string
+      skip-scripts:
+        description: "Skip running compile/test scripts during seed generation"
+        required: false
+        default: false
+        type: boolean
+      allow-unexpected-failures:
+        description: "Allow unexpected test failures without failing the command"
+        required: false
+        default: false
+        type: boolean
+      parallel:
+        description: "Number of parallel test executions"
+        required: false
+        default: "16"
+        type: string
+
+# Cancel previous runs of this workflow on the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+env:
+  DOCKER_BUILDKIT: 1
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 60
+
+jobs:
+  run-seed:
+    runs-on: Seed
+    timeout-minutes: 120
+    steps:
+      - name: Validate inputs
+        shell: bash
+        run: |
+          if [[ -z "${{ inputs.generator }}" ]]; then
+            echo "Error: generator is required"
+            exit 1
+          fi
+          echo "Generator: ${{ inputs.generator }}"
+          echo "Fixtures: ${{ inputs.fixtures || 'all' }}"
+          echo "Skip scripts: ${{ inputs.skip-scripts }}"
+          echo "Allow unexpected failures: ${{ inputs.allow-unexpected-failures }}"
+          echo "Parallel: ${{ inputs.parallel }}"
+
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        shell: bash
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: Run seed tests
+        shell: bash
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          FIXTURES_ARG=""
+          if [[ -n "${{ inputs.fixtures }}" ]]; then
+            FIXTURES_ARG="--fixture ${{ inputs.fixtures }}"
+          fi
+
+          pnpm seed:local test \
+            --generator ${{ inputs.generator }} \
+            --parallel ${{ inputs.parallel }} \
+            ${FIXTURES_ARG} \
+            ${{ inputs.skip-scripts == true && '--skip-scripts' || '' }} \
+            ${{ inputs.allow-unexpected-failures == true && '--allow-unexpected-failures' || '' }} | tee output.log
+
+      - name: Commit and push changes
+        shell: bash
+        run: |
+          # Check for changes in the seed output directory
+          git add seed/${{ inputs.generator }}/*
+
+          if git diff --staged --quiet; then
+            echo "No changes detected in seed/${{ inputs.generator }}/"
+            echo "Seed tests ran successfully with no output changes."
+          else
+            echo "Changes detected in seed/${{ inputs.generator }}/, committing..."
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore: update ${{ inputs.generator }} seed snapshots"
+            git push
+            echo "Changes committed and pushed to branch."
+          fi
