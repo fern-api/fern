@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.82.1
+  changelogEntry:
+    - summary: |
+        Fix `live-test` CI job failing with `EUNSUPPORTEDPROTOCOL` error when installing the CLI
+        tarball. The build script writes pnpm `catalog:` protocol references into the dist
+        `package.json`, which `npm pack` passed through verbatim. Switched to `pnpm pack` so
+        that catalog references are resolved to real version numbers before the tarball is created.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
 - version: 3.82.0
   changelogEntry:
     - summary: |
