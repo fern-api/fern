@@ -134,10 +134,7 @@ export function validateStructureOfYamlFiles({
                     rawContents: file.rawContents
                 };
             } else {
-                const result = validateAgainstJsonSchema(
-                    parsedFileContents,
-                    asJsonSchema(PackageMarkerFileJsonSchema)
-                );
+                const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(PackageMarkerFileJsonSchema));
                 if (result.success) {
                     const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
                     packageMarkerParsedCache.set(file.rawContents, contents);
@@ -170,10 +167,7 @@ export function validateStructureOfYamlFiles({
                     absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
                 };
             } else {
-                const result = validateAgainstJsonSchema(
-                    parsedFileContents,
-                    asJsonSchema(DefinitionFileJsonSchema)
-                );
+                const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(DefinitionFileJsonSchema));
                 if (result.success) {
                     const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
                     definitionParsedCache.set(file.rawContents, contents);
