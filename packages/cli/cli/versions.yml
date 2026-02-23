@@ -5,7 +5,7 @@
         Fix S3 signature mismatch for docs assets outside fern/ folder. Paths containing "../"
         are now sanitized to prevent HTTP client URL normalization from breaking S3 presigned URLs.
       type: fix
-  createdAt: "2026-02-20"
+  createdAt: "2026-02-23"
   irVersion: 65
 - version: 3.83.0
   changelogEntry:
