@@ -2,14 +2,14 @@
 /* eslint-disable jest/valid-describe-callback */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { readdirSync } from "fs";
 import path from "path";
 
-import { generateAndSnapshotIRFromPath } from "./generateAndSnapshotIR.js";
-
-// Test-definitions tests are now generated as individual files by globalSetup
-// for full parallel execution. See __generated__/test-definitions/ and
-// __generated__/test-definitions-openapi/ directories.
+import { loadApisOrThrow } from "../../loadApisOrThrow.js";
+import { generateAndSnapshotIR, generateAndSnapshotIRFromPath } from "./generateAndSnapshotIR.js";
 
 const IR_DIR = path.join(__dirname, "irs");
 
@@ -62,6 +62,78 @@ it.skip("fhir", async () => {
         workspaceName: "fhir"
     });
 }, 200_000);
+
+describe("test definitions", () => {
+    const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions");
+    const apiNames = readdirSync(path.join(TEST_DEFINITIONS_DIR, "fern/apis"), { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .map((d) => d.name);
+
+    let workspaceMap: Map<string, AbstractAPIWorkspace<unknown>>;
+
+    beforeAll(async () => {
+        const apiWorkspaces = await loadApisOrThrow({
+            fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
+            context: createMockTaskContext(),
+            cliVersion: "0.0.0",
+            cliName: "fern",
+            commandLineApiWorkspace: undefined,
+            defaultToAllApiWorkspaces: true
+        });
+        workspaceMap = new Map(apiWorkspaces.map((w) => [w.workspaceName ?? "", w]));
+    }, 200_000);
+
+    apiNames.forEach((name) => {
+        it.concurrent(name, async () => {
+            const workspace = workspaceMap.get(name);
+            if (!workspace) {
+                throw new Error(`Workspace ${name} not found`);
+            }
+            await generateAndSnapshotIR({
+                absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
+                workspace,
+                audiences: { type: "all" },
+                workspaceName: name
+            });
+        }, 30_000);
+    });
+});
+
+describe("test definitions openapi", () => {
+    const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions-openapi");
+    const apiNames = readdirSync(path.join(TEST_DEFINITIONS_DIR, "fern/apis"), { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .map((d) => d.name);
+
+    let workspaceMap: Map<string, AbstractAPIWorkspace<unknown>>;
+
+    beforeAll(async () => {
+        const apiWorkspaces = await loadApisOrThrow({
+            fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
+            context: createMockTaskContext(),
+            cliVersion: "0.0.0",
+            cliName: "fern",
+            commandLineApiWorkspace: undefined,
+            defaultToAllApiWorkspaces: true
+        });
+        workspaceMap = new Map(apiWorkspaces.map((w) => [w.workspaceName ?? "", w]));
+    }, 200_000);
+
+    apiNames.forEach((name) => {
+        it.concurrent(name, async () => {
+            const workspace = workspaceMap.get(name);
+            if (!workspace) {
+                throw new Error(`Workspace ${name} not found`);
+            }
+            await generateAndSnapshotIR({
+                absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions-openapi")),
+                workspace,
+                audiences: name === "audiences" ? { type: "select", audiences: ["public"] } : { type: "all" },
+                workspaceName: name
+            });
+        }, 10_000);
+    });
+});
 
 it("generics", async () => {
     const GENERICS_DIR = path.join(__dirname, "fixtures/generics/fern");
