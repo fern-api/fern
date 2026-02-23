@@ -2,12 +2,16 @@
 
 import type * as FernDefinition from "../../../index.js";
 
-export interface WebhookSignatureSchema {
-    header: string;
-    /** Defaults to sha256. */
-    algorithm?: FernDefinition.WebhookSignatureAlgorithmSchema;
-    /** Defaults to base64. */
-    encoding?: FernDefinition.WebhookSignatureEncodingSchema;
-    /** Defaults to body-only. */
-    "payload-format"?: FernDefinition.WebhookPayloadFormatSchema;
+export type WebhookSignatureSchema =
+    | FernDefinition.WebhookSignatureSchema.Hmac
+    | FernDefinition.WebhookSignatureSchema.Asymmetric;
+
+export namespace WebhookSignatureSchema {
+    export interface Hmac extends FernDefinition.HmacSignatureSchema {
+        type: "hmac";
+    }
+
+    export interface Asymmetric extends FernDefinition.AsymmetricSignatureSchema {
+        type: "asymmetric";
+    }
 }

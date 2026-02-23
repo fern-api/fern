@@ -1421,8 +1421,8 @@
                     },
                     "docs": null
                 },
-                "fileUploadPayload": null,
                 "signatureVerification": null,
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,

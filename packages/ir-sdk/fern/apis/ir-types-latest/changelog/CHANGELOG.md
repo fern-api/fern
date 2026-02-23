@@ -5,13 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v65.2.0] - 2026-02-19
-- Feature: Add optional `signatureVerification` field to `Webhook` for webhook signature verification configuration.
-  Includes algorithm (SHA256/SHA1/SHA384/SHA512), encoding (base64/hex), signature header name, and payload format (bodyOnly/urlPrefixed).
-
-## [v65.1.0] - 2026-02-12
-- Feature: Add optional `discriminatorContext` field to `UnionTypeDeclaration` to indicate where the discriminator lives
-  relative to the union type (data vs. protocol level, e.g. SSE event field).
+## [v65.2.0] - 2026-02-23
+- Feature: Add `WebhookSignatureVerification` discriminated union to the `Webhook` type.
+  Supports HMAC-based and asymmetric key signature verification with configurable algorithms,
+  encoding, signature prefix parsing, payload format composition, and timestamp-based replay protection.
+  New types: `HmacSignatureVerification`, `AsymmetricKeySignatureVerification`, `HmacAlgorithm`,
+  `AsymmetricAlgorithm`, `WebhookSignatureEncoding`, `WebhookPayloadFormat`, `WebhookPayloadComponent`,
+  `WebhookTimestampConfig`, `WebhookTimestampFormat`, `AsymmetricKeySource`, `JwksKeySource`, `StaticKeySource`.
 
 ## [v65.0.0] - 2026-02-03
 - Feature: Add new pagination types where the cursor is to be consumed as the full URI, or full path (HATEOS-style)

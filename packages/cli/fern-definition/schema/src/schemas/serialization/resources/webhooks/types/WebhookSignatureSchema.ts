@@ -3,25 +3,30 @@
 import type * as FernDefinition from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { WebhookPayloadFormatSchema } from "./WebhookPayloadFormatSchema.js";
-import { WebhookSignatureAlgorithmSchema } from "./WebhookSignatureAlgorithmSchema.js";
-import { WebhookSignatureEncodingSchema } from "./WebhookSignatureEncodingSchema.js";
+import { AsymmetricSignatureSchema } from "./AsymmetricSignatureSchema.js";
+import { HmacSignatureSchema } from "./HmacSignatureSchema.js";
 
-export const WebhookSignatureSchema: core.serialization.ObjectSchema<
+export const WebhookSignatureSchema: core.serialization.Schema<
     serializers.WebhookSignatureSchema.Raw,
     FernDefinition.WebhookSignatureSchema
-> = core.serialization.object({
-    header: core.serialization.string(),
-    algorithm: WebhookSignatureAlgorithmSchema.optional(),
-    encoding: WebhookSignatureEncodingSchema.optional(),
-    "payload-format": WebhookPayloadFormatSchema.optional(),
-});
+> = core.serialization
+    .union("type", {
+        hmac: HmacSignatureSchema,
+        asymmetric: AsymmetricSignatureSchema,
+    })
+    .transform<FernDefinition.WebhookSignatureSchema>({
+        transform: (value) => value,
+        untransform: (value) => value,
+    });
 
 export declare namespace WebhookSignatureSchema {
-    export interface Raw {
-        header: string;
-        algorithm?: WebhookSignatureAlgorithmSchema.Raw | null;
-        encoding?: WebhookSignatureEncodingSchema.Raw | null;
-        "payload-format"?: WebhookPayloadFormatSchema.Raw | null;
+    export type Raw = WebhookSignatureSchema.Hmac | WebhookSignatureSchema.Asymmetric;
+
+    export interface Hmac extends HmacSignatureSchema.Raw {
+        type: "hmac";
+    }
+
+    export interface Asymmetric extends AsymmetricSignatureSchema.Raw {
+        type: "asymmetric";
     }
 }

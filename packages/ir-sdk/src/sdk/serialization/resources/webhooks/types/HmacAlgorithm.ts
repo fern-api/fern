@@ -4,11 +4,9 @@ import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const WebhookSignatureAlgorithm: core.serialization.Schema<
-    serializers.WebhookSignatureAlgorithm.Raw,
-    FernIr.WebhookSignatureAlgorithm
-> = core.serialization.enum_(["SHA256", "SHA1", "SHA384", "SHA512"]);
+export const HmacAlgorithm: core.serialization.Schema<serializers.HmacAlgorithm.Raw, FernIr.HmacAlgorithm> =
+    core.serialization.enum_(["SHA256", "SHA1", "SHA384", "SHA512"]);
 
-export declare namespace WebhookSignatureAlgorithm {
+export declare namespace HmacAlgorithm {
     export type Raw = "SHA256" | "SHA1" | "SHA384" | "SHA512";
 }

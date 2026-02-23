@@ -5195,8 +5195,8 @@
                     },
                     "docs": null
                 },
-                "fileUploadPayload": null,
                 "signatureVerification": {
+                    "type": "hmac",
                     "signatureHeaderName": {
                         "name": {
                             "originalName": "x-webhook-signature",
@@ -5221,10 +5221,42 @@
                     },
                     "algorithm": "SHA256",
                     "encoding": "HEX",
+                    "signaturePrefix": "sha256=",
                     "payloadFormat": {
-                        "type": "bodyOnly"
+                        "components": [
+                            "TIMESTAMP",
+                            "BODY"
+                        ],
+                        "delimiter": "."
+                    },
+                    "timestamp": {
+                        "headerName": {
+                            "name": {
+                                "originalName": "x-webhook-timestamp",
+                                "camelCase": {
+                                    "unsafeName": "xWebhookTimestamp",
+                                    "safeName": "xWebhookTimestamp"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_webhook_timestamp",
+                                    "safeName": "x_webhook_timestamp"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_WEBHOOK_TIMESTAMP",
+                                    "safeName": "X_WEBHOOK_TIMESTAMP"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XWebhookTimestamp",
+                                    "safeName": "XWebhookTimestamp"
+                                }
+                            },
+                            "wireValue": "x-webhook-timestamp"
+                        },
+                        "format": "UNIX_SECONDS",
+                        "tolerance": 300
                     }
                 },
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,
@@ -5328,8 +5360,8 @@
                     },
                     "docs": null
                 },
-                "fileUploadPayload": null,
                 "signatureVerification": null,
+                "fileUploadPayload": null,
                 "responses": null,
                 "examples": null,
                 "v2Examples": null,

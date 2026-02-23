@@ -3,12 +3,19 @@
 import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { WebhookPayloadComponent } from "./WebhookPayloadComponent.js";
 
-export const WebhookPayloadFormat: core.serialization.Schema<
+export const WebhookPayloadFormat: core.serialization.ObjectSchema<
     serializers.WebhookPayloadFormat.Raw,
     FernOpenapiIr.WebhookPayloadFormat
-> = core.serialization.enum_(["body-only", "url-prefixed"]);
+> = core.serialization.objectWithoutOptionalProperties({
+    components: core.serialization.list(WebhookPayloadComponent),
+    delimiter: core.serialization.string().optional(),
+});
 
 export declare namespace WebhookPayloadFormat {
-    export type Raw = "body-only" | "url-prefixed";
+    export interface Raw {
+        components: WebhookPayloadComponent.Raw[];
+        delimiter?: string | null;
+    }
 }

@@ -98,6 +98,38 @@ export const FernOpenAPIExtension = {
     TYPE_DEFINITION: "x-fern-type",
 
     /**
+     * Used to specify webhook signature verification configuration.
+     * Can be set at the document level (applies to all webhooks) or
+     * on individual webhook operations (overrides the document default).
+     *
+     * Document-level usage (all webhooks inherit):
+     *   x-fern-webhook-signature:
+     *     type: hmac
+     *     header: x-webhook-signature
+     *     algorithm: sha256
+     *     encoding: hex
+     *
+     * Operation-level usage (HMAC):
+     *   x-fern-webhook-signature:
+     *     type: hmac
+     *     header: x-hub-signature-256
+     *     algorithm: sha256
+     *     encoding: hex
+     *     signature-prefix: "sha256="
+     *
+     * Operation-level usage (asymmetric):
+     *   x-fern-webhook-signature:
+     *     type: asymmetric
+     *     header: x-signature
+     *     asymmetric-algorithm: rsa-sha256
+     *     jwks-url: https://api.example.com/.well-known/jwks.json
+     *
+     * Inherit document-level config explicitly:
+     *   x-fern-webhook-signature: true
+     */
+    WEBHOOK_SIGNATURE: "x-fern-webhook-signature",
+
+    /**
      * Used to specify if an endpoint should be generated
      * as a streaming endpoint.
      *
@@ -173,28 +205,6 @@ export const FernOpenAPIExtension = {
      *       x-fern-webhook: true
      */
     WEBHOOK: "x-fern-webhook",
-
-    /**
-     * Used to configure webhook signature verification.
-     * Can be set globally on the document root (applies to all webhooks)
-     * or per-webhook operation (overrides global config).
-     * Example usage:
-     *   # Global (document root)
-     *   x-fern-webhook-signature:
-     *     header: x-webhook-signature
-     *     algorithm: sha256
-     *     encoding: base64
-     *     payload-format: body-only
-     *
-     *   # Per-webhook override
-     *   webhooks:
-     *     paymentProcessed:
-     *       post:
-     *         x-fern-webhook-signature:
-     *           header: x-custom-signature
-     *           algorithm: sha512
-     */
-    WEBHOOK_SIGNATURE: "x-fern-webhook-signature",
 
     /**
      * Used to detect if an endpoint has an async version of it

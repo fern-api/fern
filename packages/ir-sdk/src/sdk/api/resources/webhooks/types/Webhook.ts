@@ -10,17 +10,16 @@ export interface Webhook extends FernIr.Declaration {
     headers: FernIr.HttpHeader[];
     payload: FernIr.WebhookPayload;
     /**
+     * Configuration for verifying webhook signatures. When present, SDK generators
+     * can produce utilities that verify the signature of incoming webhook requests.
+     */
+    signatureVerification: FernIr.WebhookSignatureVerification | undefined;
+    /**
      * Optional multipart form data payload for webhooks that use multipart/form-data content type.
      * This is populated when the webhook request body uses multipart/form-data encoding.
      * When set, the payload field will contain a reference type as a placeholder.
      */
     fileUploadPayload: FernIr.FileUploadRequest | undefined;
-    /**
-     * Optional configuration for webhook signature verification.
-     * When present, generators can produce utilities to verify that
-     * incoming webhook requests originate from the API provider.
-     */
-    signatureVerification: FernIr.WebhookSignatureVerification | undefined;
     responses: FernIr.HttpResponse[] | undefined;
     examples: FernIr.ExampleWebhookCall[] | undefined;
     v2Examples: FernIr.V2WebhookExamples | undefined;

@@ -3,12 +3,19 @@
 import type * as FernDefinition from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { WebhookPayloadComponentSchema } from "./WebhookPayloadComponentSchema.js";
 
-export const WebhookPayloadFormatSchema: core.serialization.Schema<
+export const WebhookPayloadFormatSchema: core.serialization.ObjectSchema<
     serializers.WebhookPayloadFormatSchema.Raw,
     FernDefinition.WebhookPayloadFormatSchema
-> = core.serialization.enum_(["body-only", "url-prefixed"]);
+> = core.serialization.object({
+    components: core.serialization.list(WebhookPayloadComponentSchema),
+    delimiter: core.serialization.string().optional(),
+});
 
 export declare namespace WebhookPayloadFormatSchema {
-    export type Raw = "body-only" | "url-prefixed";
+    export interface Raw {
+        components: WebhookPayloadComponentSchema.Raw[];
+        delimiter?: string | null;
+    }
 }

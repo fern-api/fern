@@ -119,7 +119,7 @@ export function convertWebhookOperation({
                 payload = request.schema;
             }
 
-            const signatureExtension = getFernWebhookSignatureExtension(document, operation);
+            const signatureVerification = getFernWebhookSignatureExtension(document, operation);
 
             const webhook: WebhookWithExample = {
                 summary: operation.summary,
@@ -132,17 +132,9 @@ export function convertWebhookOperation({
                 headers: convertedParameters.headers,
                 generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
                 payload,
+                signatureVerification,
                 multipartFormData,
                 response: convertedResponse?.value,
-                signatureVerification:
-                    signatureExtension != null
-                        ? {
-                              header: signatureExtension.header,
-                              algorithm: signatureExtension.algorithm ?? "sha256",
-                              encoding: signatureExtension.encoding ?? "base64",
-                              payloadFormat: signatureExtension["payload-format"] ?? "body-only"
-                          }
-                        : undefined,
                 description: operation.description,
                 examples: convertWebhookExamples(request.fullExamples),
                 source

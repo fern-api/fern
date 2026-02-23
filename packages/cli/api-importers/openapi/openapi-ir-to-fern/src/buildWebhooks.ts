@@ -255,10 +255,151 @@ function convertSignatureVerification(
     if (signatureVerification == null) {
         return undefined;
     }
+
+    switch (signatureVerification.type) {
+        case "hmac": {
+            const hmac = signatureVerification;
+            const result: RawSchemas.WebhookSignatureSchema.Hmac = {
+                type: "hmac",
+                header: hmac.header,
+                algorithm: convertSignatureAlgorithm(hmac.algorithm),
+                encoding: convertSignatureEncoding(hmac.encoding),
+                "signature-prefix": hmac.signaturePrefix,
+                "payload-format": convertPayloadFormat(hmac.payloadFormat),
+                timestamp: convertTimestamp(hmac.timestamp)
+            };
+            return result;
+        }
+        case "asymmetric": {
+            const asymmetric = signatureVerification;
+            const result: RawSchemas.WebhookSignatureSchema.Asymmetric = {
+                type: "asymmetric",
+                header: asymmetric.header,
+                "asymmetric-algorithm": convertAsymmetricAlgorithm(asymmetric.asymmetricAlgorithm),
+                encoding: convertSignatureEncoding(asymmetric.encoding),
+                "signature-prefix": asymmetric.signaturePrefix,
+                "jwks-url": asymmetric.jwksUrl,
+                "key-id-header": asymmetric.keyIdHeader,
+                timestamp: convertTimestamp(asymmetric.timestamp)
+            };
+            return result;
+        }
+        default:
+            return undefined;
+    }
+}
+
+function convertSignatureAlgorithm(
+    algorithm: string | undefined
+): RawSchemas.WebhookSignatureAlgorithmSchema | undefined {
+    if (algorithm == null) {
+        return undefined;
+    }
+    switch (algorithm) {
+        case "sha256":
+            return "sha256";
+        case "sha1":
+            return "sha1";
+        case "sha384":
+            return "sha384";
+        case "sha512":
+            return "sha512";
+        default:
+            return undefined;
+    }
+}
+
+function convertSignatureEncoding(
+    encoding: string | undefined
+): RawSchemas.WebhookSignatureEncodingSchema | undefined {
+    if (encoding == null) {
+        return undefined;
+    }
+    switch (encoding) {
+        case "base64":
+            return "base64";
+        case "hex":
+            return "hex";
+        default:
+            return undefined;
+    }
+}
+
+function convertAsymmetricAlgorithm(
+    algorithm: string
+): RawSchemas.AsymmetricAlgorithmSchema {
+    switch (algorithm) {
+        case "rsa-sha256":
+            return "rsa-sha256";
+        case "rsa-sha384":
+            return "rsa-sha384";
+        case "rsa-sha512":
+            return "rsa-sha512";
+        case "ecdsa-sha256":
+            return "ecdsa-sha256";
+        case "ecdsa-sha384":
+            return "ecdsa-sha384";
+        case "ecdsa-sha512":
+            return "ecdsa-sha512";
+        case "ed25519":
+            return "ed25519";
+        default:
+            return "rsa-sha256";
+    }
+}
+
+function convertPayloadFormat(
+    payloadFormat: { components: string[]; delimiter?: string } | undefined
+): RawSchemas.WebhookPayloadFormatSchema | undefined {
+    if (payloadFormat == null) {
+        return undefined;
+    }
     return {
-        header: signatureVerification.header,
-        algorithm: signatureVerification.algorithm ?? undefined,
-        encoding: signatureVerification.encoding ?? undefined,
-        "payload-format": signatureVerification.payloadFormat ?? undefined
+        components: payloadFormat.components.map(convertPayloadComponent),
+        delimiter: payloadFormat.delimiter
+    };
+}
+
+function convertPayloadComponent(
+    component: string
+): RawSchemas.WebhookPayloadComponentSchema {
+    switch (component) {
+        case "body":
+            return "body";
+        case "timestamp":
+            return "timestamp";
+        case "notification-url":
+            return "notification-url";
+        case "message-id":
+            return "message-id";
+        default:
+            return "body";
+    }
+}
+
+function convertTimestamp(
+    timestamp: { header: string; format?: string; tolerance?: number } | undefined
+): RawSchemas.WebhookTimestampSchema | undefined {
+    if (timestamp == null) {
+        return undefined;
+    }
+    let format: RawSchemas.WebhookTimestampFormatSchema | undefined;
+    if (timestamp.format != null) {
+        switch (timestamp.format) {
+            case "unix-seconds":
+                format = "unix-seconds";
+                break;
+            case "unix-millis":
+                format = "unix-millis";
+                break;
+            case "iso8601":
+                format = "iso8601";
+                break;
+        }
+    }
+    return {
+        header: timestamp.header,
+        format,
+        tolerance: timestamp.tolerance
     };
 }
