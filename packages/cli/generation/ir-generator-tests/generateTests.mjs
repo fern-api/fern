@@ -4,9 +4,10 @@
  * Run before vitest starts so that generated files are discoverable.
  * Also called by globalSetup's onTestsRerun for watch mode.
  */
+
+import { generateTestsFromDirectory } from "@fern-api/configs/vitest/generateTestsFromDirectory.mjs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { generateTestsFromDirectory } from "@fern-api/configs/vitest/generateTestsFromDirectory.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
