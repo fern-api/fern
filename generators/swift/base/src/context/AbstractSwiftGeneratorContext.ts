@@ -103,7 +103,7 @@ export abstract class AbstractSwiftGeneratorContext<
         });
 
         registeredSchemaTypes.forEach(({ typeDeclaration, registeredSymbol }) => {
-            registerDiscriminatedUnionVariants({
+            const standaloneVariantDiscriminantWireValues = registerDiscriminatedUnionVariants({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 typeDeclaration,
@@ -113,7 +113,8 @@ export abstract class AbstractSwiftGeneratorContext<
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,
                 typeDeclaration,
-                context: this
+                context: this,
+                standaloneVariantDiscriminantWireValues
             });
             registerUndiscriminatedUnionVariants({
                 parentSymbol: registeredSymbol,
