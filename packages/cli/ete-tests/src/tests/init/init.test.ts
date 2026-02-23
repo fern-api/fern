@@ -14,15 +14,15 @@ import { init } from "./init.js";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
-describe.concurrent("fern init", () => {
-    it("no existing fern directory", async () => {
+describe("fern init", () => {
+    it.concurrent("no existing fern directory", async ({ expect }) => {
         const pathOfDirectory = await init();
         expect(
             await getDirectoryContentsForSnapshot(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))
         ).toMatchSnapshot();
     }, 60_000);
 
-    it("no existing fern directory with fern definition", async () => {
+    it.concurrent("no existing fern directory with fern definition", async ({ expect }) => {
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }]
         });
@@ -34,7 +34,7 @@ describe.concurrent("fern init", () => {
         ).toMatchSnapshot();
     }, 60_000);
 
-    it("existing fern directory", async () => {
+    it.concurrent("existing fern directory", async ({ expect }) => {
         // add existing directory
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }]
@@ -57,7 +57,7 @@ describe.concurrent("fern init", () => {
         ).toBe(true);
     }, 60_000);
 
-    it("init openapi", async () => {
+    it.concurrent("init openapi", async ({ expect }) => {
         // Create a temporary directory for the OpenAPI test
         const tmpDir = await tmp.dir();
         const sourceOpenAPI = join(
@@ -78,7 +78,7 @@ describe.concurrent("fern init", () => {
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 
-    it("existing openapi fern directory", async () => {
+    it.concurrent("existing openapi fern directory", async ({ expect }) => {
         const pathOfDirectory = await init();
 
         await init({
@@ -128,7 +128,7 @@ describe.concurrent("fern init", () => {
         ).toBe(true);
     }, 60_000);
 
-    it("existing openapi then fern-definition", async () => {
+    it.concurrent("existing openapi then fern-definition", async ({ expect }) => {
         const pathOfDirectory = await init();
 
         await init({
@@ -159,7 +159,7 @@ describe.concurrent("fern init", () => {
         ).toBe(true);
     }, 60_000);
 
-    it("conflicting --openapi and --fern-definition flags", async () => {
+    it.concurrent("conflicting --openapi and --fern-definition flags", async ({ expect }) => {
         const tmpDir = await tmp.dir();
         const sourceOpenAPI = join(
             FIXTURES_DIR,
@@ -179,7 +179,7 @@ describe.concurrent("fern init", () => {
         expect(result.exitCode).not.toBe(0);
     }, 60_000);
 
-    it("init docs", async () => {
+    it.concurrent("init docs", async ({ expect }) => {
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }]
         });
@@ -191,7 +191,7 @@ describe.concurrent("fern init", () => {
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 
-    it("init mintlify", async () => {
+    it.concurrent("init mintlify", async ({ expect }) => {
         const mintJsonPath = join(FIXTURES_DIR, RelativeFilePath.of("mintlify"), RelativeFilePath.of("mint.json"));
 
         const pathOfDirectory = await init({
