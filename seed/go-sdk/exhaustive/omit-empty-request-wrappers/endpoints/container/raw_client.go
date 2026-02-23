@@ -276,6 +276,47 @@ func (r *RawClient) GetAndReturnMapOfPrimToObject(
 	}, nil
 }
 
+func (r *RawClient) GetAndReturnMapOfPrimToUndiscriminatedUnion(
+	ctx context.Context,
+	request map[string]*types.MixedType,
+	opts ...option.RequestOption,
+) (*core.Response[map[string]*types.MixedType], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/container/map-prim-to-union"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response map[string]*types.MixedType
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[map[string]*types.MixedType]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) GetAndReturnOptional(
 	ctx context.Context,
 	request *types.ObjectWithRequiredField,

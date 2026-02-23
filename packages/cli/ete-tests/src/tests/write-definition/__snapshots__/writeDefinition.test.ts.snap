@@ -1,112 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`validate > petstore 1`] = `
-[
-  {
-    "contents": "types:
-  Error:
-    properties:
-      code: integer
-      message: string
-    source:
-      openapi: openapi/openapi.yml
-  Pet:
-    properties:
-      id: long
-      name: string
-      tag: optional<string>
-    source:
-      openapi: openapi/openapi.yml
-  Pets: list<Pet>
-",
-    "name": "__package__.yml",
-    "type": "file",
-  },
-  {
-    "contents": "default-environment: Default
-display-name: Swagger Petstore
-environments:
-  Default: http://petstore.swagger.io/v1
-error-discrimination:
-  strategy: status-code
-name: api
-",
-    "name": "api.yml",
-    "type": "file",
-  },
-  {
-    "contents": "imports:
-  root: __package__.yml
-service:
-  auth: false
-  base-path: ''
-  endpoints:
-    createPets:
-      display-name: Create a pet
-      examples:
-        - {}
-      method: POST
-      path: /pets
-      source:
-        openapi: openapi/openapi.yml
-    listPets:
-      display-name: List all pets
-      examples:
-        - response:
-            body:
-              - id: 1000000
-                name: name
-                tag: tag
-      method: GET
-      path: /pets
-      request:
-        name: ListPetsRequest
-        query-parameters:
-          limit:
-            docs: How many items to return at one time (max 100)
-            type: optional<integer>
-            validation:
-              max: 100
-      response:
-        docs: A paged array of pets
-        status-code: 200
-        type: root.Pets
-      source:
-        openapi: openapi/openapi.yml
-    showPetById:
-      display-name: Info for a specific pet
-      examples:
-        - path-parameters:
-            petId: petId
-          response:
-            body:
-              id: 1000000
-              name: name
-              tag: tag
-      method: GET
-      path: /pets/{petId}
-      request:
-        name: ShowPetByIdRequest
-        path-parameters:
-          petId:
-            docs: The id of the pet to retrieve
-            type: string
-      response:
-        docs: Expected response to a valid request
-        status-code: 200
-        type: root.Pet
-      source:
-        openapi: openapi/openapi.yml
-  source:
-    openapi: openapi/openapi.yml
-",
-    "name": "pets.yml",
-    "type": "file",
-  },
-]
-`;
-
-exports[`validate header overrides > header-overrides 1`] = `
+exports[`write-definition > header-overrides 1`] = `
 [
   {
     "contents": "types:
@@ -219,7 +113,7 @@ service:
 ]
 `;
 
-exports[`validate multi no endpoint > multiple-no-endpoint 1`] = `
+exports[`write-definition > multiple-no-endpoint 1`] = `
 [
   {
     "contents": "service:
@@ -260,7 +154,7 @@ name: api
 ]
 `;
 
-exports[`validate multi no endpoint asyncapi > multiple-no-endpoint-async 1`] = `
+exports[`write-definition > multiple-no-endpoint-async 1`] = `
 [
   {
     "contents": "service:
@@ -344,7 +238,7 @@ name: api
 ]
 `;
 
-exports[`validate multi with endpoint > multiple-with-endpoint 1`] = `
+exports[`write-definition > multiple-with-endpoint 1`] = `
 [
   {
     "contents": "service:
@@ -393,7 +287,7 @@ name: api
 ]
 `;
 
-exports[`validate multi with endpoint async > multiple-with-endpoint-async 1`] = `
+exports[`write-definition > multiple-with-endpoint-async 1`] = `
 [
   {
     "contents": "service:
@@ -480,7 +374,7 @@ name: api
 ]
 `;
 
-exports[`validate namespaced API > namespaced 1`] = `
+exports[`write-definition > namespaced 1`] = `
 [
   {
     "contents": "types:
@@ -1879,7 +1773,167 @@ service:
 ]
 `;
 
-exports[`validate namespaced API from Cohere > namespaced-fleshedout 1`] = `
+exports[`write-definition > namespaced-asyncapi 1`] = `
+[
+  {
+    "contents": "{}
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": [
+      {
+        "contents": "types:
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: alpha_one.yml
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+    source:
+      openapi: alpha_one.yml
+  Pets: list<unknown>
+",
+        "name": "__package__.yml",
+        "type": "file",
+      },
+      {
+        "contents": "imports:
+  alphaRoot: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createPets:
+      display-name: Create a pet
+      examples:
+        - {}
+      method: POST
+      path: /pets
+      source:
+        openapi: alpha_one.yml
+    listPets:
+      display-name: List all pets
+      examples:
+        - response:
+            body: []
+      method: GET
+      path: /list-all
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            docs: How many items to return at one time (max 100)
+            type: optional<integer>
+            validation:
+              max: 100
+      response:
+        docs: A paged array of pets
+        status-code: 200
+        type: alphaRoot.Pets
+      source:
+        openapi: alpha_two.yml
+    showPetById:
+      display-name: Info for a specific pet
+      examples:
+        - path-parameters:
+            petId: petId
+          response:
+            body:
+              id: 1000000
+              name: name
+              tag: tag
+      method: GET
+      path: /pets/{petId}
+      request:
+        name: ShowPetByIdRequest
+        path-parameters:
+          petId:
+            docs: The id of the pet to retrieve
+            type: string
+      response:
+        docs: Expected response to a valid request
+        status-code: 200
+        type: alphaRoot.Pet
+      source:
+        openapi: alpha_one.yml
+  source:
+    openapi: alpha_two.yml
+",
+        "name": "pets.yml",
+        "type": "file",
+      },
+    ],
+    "name": "alpha",
+    "type": "directory",
+  },
+  {
+    "contents": "default-environment: Default
+default-url: Base
+display-name: Alpha One
+environments:
+  Default:
+    urls:
+      Base: http://petstore.swagger.io/v1
+      websocket: wss://api.async.com
+      websocket2: wss://api2.async.com
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": [
+      {
+        "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel_sendMessage
+  messages:
+    testChannel_sendMessage:
+      body: string
+      origin: client
+  path: /test
+  url: websocket
+",
+        "name": "betaOne.yml",
+        "type": "file",
+      },
+      {
+        "contents": "channel:
+  auth: false
+  examples:
+    - messages:
+        - body: string
+          type: testChannel2_sendMessage
+  messages:
+    testChannel2_sendMessage:
+      body: string
+      origin: client
+  path: /test2
+  url: websocket2
+",
+        "name": "betaTwo.yml",
+        "type": "file",
+      },
+    ],
+    "name": "beta",
+    "type": "directory",
+  },
+]
+`;
+
+exports[`write-definition > namespaced-fleshedout 1`] = `
 [
   {
     "contents": "{}
@@ -2700,39 +2754,43 @@ service:
 ]
 `;
 
-exports[`validate namespaced API with multiple namespaces > namespaced-asyncapi 1`] = `
+exports[`write-definition > petstore 1`] = `
 [
   {
-    "contents": "{}
-",
-    "name": "__package__.yml",
-    "type": "file",
-  },
-  {
-    "contents": [
-      {
-        "contents": "types:
+    "contents": "types:
   Error:
     properties:
       code: integer
       message: string
     source:
-      openapi: alpha_one.yml
+      openapi: openapi/openapi.yml
   Pet:
     properties:
       id: long
       name: string
       tag: optional<string>
     source:
-      openapi: alpha_one.yml
-  Pets: list<unknown>
+      openapi: openapi/openapi.yml
+  Pets: list<Pet>
 ",
-        "name": "__package__.yml",
-        "type": "file",
-      },
-      {
-        "contents": "imports:
-  alphaRoot: __package__.yml
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "default-environment: Default
+display-name: Swagger Petstore
+environments:
+  Default: http://petstore.swagger.io/v1
+error-discrimination:
+  strategy: status-code
+name: api
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": "imports:
+  root: __package__.yml
 service:
   auth: false
   base-path: ''
@@ -2744,14 +2802,17 @@ service:
       method: POST
       path: /pets
       source:
-        openapi: alpha_one.yml
+        openapi: openapi/openapi.yml
     listPets:
       display-name: List all pets
       examples:
         - response:
-            body: []
+            body:
+              - id: 1000000
+                name: name
+                tag: tag
       method: GET
-      path: /list-all
+      path: /pets
       request:
         name: ListPetsRequest
         query-parameters:
@@ -2763,9 +2824,9 @@ service:
       response:
         docs: A paged array of pets
         status-code: 200
-        type: alphaRoot.Pets
+        type: root.Pets
       source:
-        openapi: alpha_two.yml
+        openapi: openapi/openapi.yml
     showPetById:
       display-name: Info for a specific pet
       examples:
@@ -2787,80 +2848,19 @@ service:
       response:
         docs: Expected response to a valid request
         status-code: 200
-        type: alphaRoot.Pet
+        type: root.Pet
       source:
-        openapi: alpha_one.yml
+        openapi: openapi/openapi.yml
   source:
-    openapi: alpha_two.yml
+    openapi: openapi/openapi.yml
 ",
-        "name": "pets.yml",
-        "type": "file",
-      },
-    ],
-    "name": "alpha",
-    "type": "directory",
-  },
-  {
-    "contents": "default-environment: Default
-default-url: Base
-display-name: Alpha One
-environments:
-  Default:
-    urls:
-      Base: http://petstore.swagger.io/v1
-      websocket: wss://api.async.com
-      websocket2: wss://api2.async.com
-error-discrimination:
-  strategy: status-code
-name: api
-",
-    "name": "api.yml",
+    "name": "pets.yml",
     "type": "file",
-  },
-  {
-    "contents": [
-      {
-        "contents": "channel:
-  auth: false
-  examples:
-    - messages:
-        - body: string
-          type: testChannel_sendMessage
-  messages:
-    testChannel_sendMessage:
-      body: string
-      origin: client
-  path: /test
-  url: websocket
-",
-        "name": "betaOne.yml",
-        "type": "file",
-      },
-      {
-        "contents": "channel:
-  auth: false
-  examples:
-    - messages:
-        - body: string
-          type: testChannel2_sendMessage
-  messages:
-    testChannel2_sendMessage:
-      body: string
-      origin: client
-  path: /test2
-  url: websocket2
-",
-        "name": "betaTwo.yml",
-        "type": "file",
-      },
-    ],
-    "name": "beta",
-    "type": "directory",
   },
 ]
 `;
 
-exports[`validate single no endpoint > single-no-endpoint 1`] = `
+exports[`write-definition > single-no-endpoint 1`] = `
 [
   {
     "contents": "service:
@@ -2900,7 +2900,7 @@ name: api
 ]
 `;
 
-exports[`validate single no endpoint async > single-no-endpoint-async 1`] = `
+exports[`write-definition > single-no-endpoint-async 1`] = `
 [
   {
     "contents": "service:
@@ -2979,7 +2979,7 @@ name: api
 ]
 `;
 
-exports[`validate single with endpoint > single-with-endpoint 1`] = `
+exports[`write-definition > single-with-endpoint 1`] = `
 [
   {
     "contents": "service:
@@ -3024,7 +3024,7 @@ name: api
 ]
 `;
 
-exports[`validate single with endpoint async > single-with-endpoint-async 1`] = `
+exports[`write-definition > single-with-endpoint-async 1`] = `
 [
   {
     "contents": "service:

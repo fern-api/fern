@@ -9,13 +9,15 @@ export async function generateFdrApiDefinitionAsString({
     language,
     audiences,
     apiName,
-    version
+    version,
+    signal
 }: {
     fixturePath: AbsoluteFilePath;
     language?: generatorsYml.GenerationLanguage;
     audiences?: string[];
     apiName?: string;
     version?: string;
+    signal?: AbortSignal;
 }): Promise<string> {
     const fdrOutputPath = join(fixturePath, RelativeFilePath.of("fdr.json"));
     await rm(fdrOutputPath, { force: true, recursive: true });
@@ -37,9 +39,7 @@ export async function generateFdrApiDefinitionAsString({
         command.push("--version", version);
     }
 
-    await runFernCli(command, {
-        cwd: fixturePath
-    });
+    await runFernCli(command, { cwd: fixturePath, signal });
 
     const fdrContents = await readFile(fdrOutputPath);
     return fdrContents.toString();

@@ -173,6 +173,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     }
 
     public async persist(): Promise<void> {
+        const persistStartTime = Date.now();
         // Get configurable output paths
         const outputPath = this.settings.outputPath;
         const libraryPath = outputPath.library;
@@ -206,6 +207,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         this.context.logger.debug(`mkdir ${absolutePathToOtherDirectory}`);
         await mkdir(absolutePathToOtherDirectory, { recursive: true });
 
+        const createProjectStartTime = Date.now();
         const absolutePathToProjectDirectory = await this.createProject({
             absolutePathToLibraryDirectory,
             absolutePathToSolutionDirectory,
@@ -213,19 +215,26 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             libraryPath,
             solutionPath
         });
+        this.context.logger.info(`[TIMING] createProject took ${Date.now() - createProjectStartTime}ms`);
+        const createTestProjectStartTime = Date.now();
         const absolutePathToTestProjectDirectory = await this.createTestProject({
             absolutePathToTestDirectory,
             absolutePathToSolutionDirectory,
             absolutePathToProjectDirectory
         });
+        this.context.logger.info(`[TIMING] createTestProject took ${Date.now() - createTestProjectStartTime}ms`);
 
+        const writeSourceFilesStartTime = Date.now();
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
         }
+        this.context.logger.info(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
+        const writeTestFilesStartTime = Date.now();
         for (const file of this.testFiles) {
             await file.write(absolutePathToTestProjectDirectory);
         }
+        this.context.logger.info(`[TIMING] writeTestFiles took ${Date.now() - writeTestFilesStartTime}ms`);
 
         await this.createRawFiles();
 
@@ -301,6 +310,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
+        const dotnetFormatStartTime = Date.now();
         if (this.settings.useDotnetFormat) {
             // apply dotnet analyzer and formatter pass 1
             await this.dotnetFormat(
@@ -325,9 +335,13 @@ dotnet_diagnostic.IDE0005.severity = error
           `
             );
         }
+        this.context.logger.info(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
 
         // format the code cleanly using csharpier on the full output directory
+        const csharpierStartTime = Date.now();
         await this.csharpier(this.absolutePathToOutputDirectory);
+        this.context.logger.info(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
+        this.context.logger.info(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
     }
 
     private async createProject({

@@ -5,8 +5,8 @@ package com.seed.paginationUriPath.resources.users;
 
 import com.seed.paginationUriPath.core.ClientOptions;
 import com.seed.paginationUriPath.core.RequestOptions;
-import com.seed.paginationUriPath.resources.users.types.ListUsersPathPaginationResponse;
-import com.seed.paginationUriPath.resources.users.types.ListUsersUriPaginationResponse;
+import com.seed.paginationUriPath.core.pagination.SyncPagingIterable;
+import com.seed.paginationUriPath.resources.users.types.User;
 
 public class UsersClient {
     protected final ClientOptions clientOptions;
@@ -25,19 +25,19 @@ public class UsersClient {
         return this.rawClient;
     }
 
-    public ListUsersUriPaginationResponse listWithUriPagination() {
+    public SyncPagingIterable<User> listWithUriPagination() {
         return this.rawClient.listWithUriPagination().body();
     }
 
-    public ListUsersUriPaginationResponse listWithUriPagination(RequestOptions requestOptions) {
+    public SyncPagingIterable<User> listWithUriPagination(RequestOptions requestOptions) {
         return this.rawClient.listWithUriPagination(requestOptions).body();
     }
 
-    public ListUsersPathPaginationResponse listWithPathPagination() {
+    public SyncPagingIterable<User> listWithPathPagination() {
         return this.rawClient.listWithPathPagination().body();
     }
 
-    public ListUsersPathPaginationResponse listWithPathPagination(RequestOptions requestOptions) {
+    public SyncPagingIterable<User> listWithPathPagination(RequestOptions requestOptions) {
         return this.rawClient.listWithPathPagination(requestOptions).body();
     }
 }

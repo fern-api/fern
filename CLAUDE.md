@@ -276,7 +276,14 @@ Here are additional TypeScript rules beyond type safety:
 
 When creating pull requests in this repository:
 
-1. **PR Title**: Must follow semantic commit message rules with format `<type>(<scope>): <description>`. The type and scope must match those defined in `.github/workflows/lint-pr-title.yml`. For example: `chore(docs): update guidelines` or `feat(python): add new feature`.
+1. **PR Title**: Must follow semantic commit message rules enforced by CI (`.github/workflows/lint-pr-title.yml`). Format: `<type>(<scope>): <description>`. Both type and scope are **required**.
+
+   **Allowed types**: `fix`, `feat`, `revert`, `break`, `chore`
+
+   **Allowed scopes**: `docs`, `changelog`, `internal`, `cli`, `typescript`, `python`, `java`, `csharp`, `go`, `php`, `ruby`, `seed`, `postman`, `ci`, `lint`, `fastapi`, `spring`, `express`, `openapi`, `deps`, `deps-dev`, `fiber`, `pydantic`, `ai-search`, `swift`, `rust`
+
+   **Examples**: `chore(docs): update guidelines`, `feat(python): add new feature`, `fix(cli): resolve config loading bug`
+
 2. **Assignee**: Always assign the person who prompted you to create the PR as the assignee
 3. **Description**: Follow the PR template in `.github/pull_request_template.md`
 4. **Testing**: Ensure all tests pass before marking PR as ready for review

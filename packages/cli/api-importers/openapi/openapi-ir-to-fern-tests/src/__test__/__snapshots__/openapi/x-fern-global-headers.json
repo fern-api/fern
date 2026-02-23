@@ -189,6 +189,7 @@
               "response-stream": {
                 "docs": "",
                 "format": "json",
+                "terminator": undefined,
                 "type": "root.StreamUser",
               },
               "source": {

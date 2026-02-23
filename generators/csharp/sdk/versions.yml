@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.1
+  changelogEntry:
+    - summary: |
+        Add [TIMING] log statements throughout the C# generator to help identify performance bottlenecks during code generation, project creation, formatting, and output.
+      type: chore
+  createdAt: "2026-02-21"
+  irVersion: 62
+
 - version: 2.22.0
   changelogEntry:
     - summary: |
