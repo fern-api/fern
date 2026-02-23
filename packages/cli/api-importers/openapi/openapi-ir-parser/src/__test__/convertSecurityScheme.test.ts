@@ -59,15 +59,13 @@ describe("convertSecurityScheme", () => {
         const result = convertSecurityScheme(securitySchemeRef, source, mockTaskContext, context);
 
         // Verify the result
-        expect(result).toBeDefined();
-        expect(result?.type).toBe("bearer");
-        if (result?.type === "bearer") {
-            expect(result.tokenVariableName).toBeUndefined();
-            expect(result.tokenEnvVar).toBeUndefined();
-        }
+        expect.assert(result != null);
+        expect.assert(result.type === "bearer");
+        expect(result.tokenVariableName).toBeUndefined();
+        expect(result.tokenEnvVar).toBeUndefined();
     });
 
-    it("should throw an error when resolving reference without context", () => {
+    it("should throw an error when resolving reference without context",() => {
         const securitySchemeRef: OpenAPIV3.ReferenceObject = {
             $ref: "#/components/securitySchemes/BearerAuth"
         };
@@ -86,11 +84,9 @@ describe("convertSecurityScheme", () => {
 
         const result = convertSecurityScheme(securityScheme, source, mockTaskContext);
 
-        expect(result).toBeDefined();
-        expect(result?.type).toBe("bearer");
-        if (result?.type === "bearer") {
-            expect(result.tokenVariableName).toBeUndefined();
-            expect(result.tokenEnvVar).toBeUndefined();
-        }
+        expect.assert(result != null);
+        expect.assert(result.type === "bearer");
+        expect(result.tokenVariableName).toBeUndefined();
+        expect(result.tokenEnvVar).toBeUndefined();
     });
 });
