@@ -28,28 +28,35 @@ interface ObjectPropertyWithRawKey {
 export function object<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(
     schemas: T,
 ): inferObjectSchemaFromPropertySchemas<T> {
-    // Pre-compute property metadata once at schema construction time
-    const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
+    // All property metadata is lazily computed on first use.
+    // This keeps schema construction free of iteration, which matters when
+    // many schemas are defined but only some are exercised at runtime.
+    // Required-key computation is also deferred because lazy() schemas may
+    // not be resolved at construction time.
 
-    for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
-        const rawKey = isProperty(schemaOrObjectProperty)
-            ? schemaOrObjectProperty.rawKey
-            : (parsedKey as string);
-        const valueSchema: Schema<any, any> = isProperty(schemaOrObjectProperty)
-            ? schemaOrObjectProperty.valueSchema
-            : schemaOrObjectProperty;
+    let _rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> | undefined;
 
-        const property: ObjectPropertyWithRawKey = {
-            rawKey,
-            parsedKey: parsedKey as string,
-            valueSchema,
-        };
+    function getRawKeyToProperty(): Record<string, ObjectPropertyWithRawKey> {
+        if (_rawKeyToProperty == null) {
+            _rawKeyToProperty = {};
+            for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
+                const rawKey = isProperty(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.rawKey
+                    : (parsedKey as string);
+                const valueSchema: Schema<any, any> = isProperty(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.valueSchema
+                    : schemaOrObjectProperty;
 
-        rawKeyToProperty[rawKey] = property;
+                _rawKeyToProperty[rawKey] = {
+                    rawKey,
+                    parsedKey: parsedKey as string,
+                    valueSchema,
+                };
+            }
+        }
+        return _rawKeyToProperty;
     }
 
-    // Lazily compute required keys on first use (deferred because lazy schemas
-    // may not be resolved at construction time)
     let _parseRequiredKeys: string[] | undefined;
     let _jsonRequiredKeys: string[] | undefined;
 
@@ -95,7 +102,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
                 value: raw,
                 requiredKeys: getParseRequiredKeys(),
                 getProperty: (rawKey) => {
-                    const property = rawKeyToProperty[rawKey];
+                    const property = getRawKeyToProperty()[rawKey];
                     if (property == null) {
                         return undefined;
                     }
