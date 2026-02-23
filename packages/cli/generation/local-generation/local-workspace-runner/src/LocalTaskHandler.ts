@@ -431,10 +431,9 @@ export class LocalTaskHandler {
     private async generatedOutputMissingReadme(): Promise<boolean> {
         try {
             const contents = await readdir(this.absolutePathToTmpOutputDirectory);
-            // If the output is a zip file we can't inspect its contents,
+            // If the output is a single zip file we can't inspect its contents,
             // so conservatively assume it includes a README.
-            const firstItem = contents[0];
-            if (firstItem != null && firstItem.endsWith(".zip")) {
+            if (contents.length === 1 && contents[0] != null && contents[0].endsWith(".zip")) {
                 return false;
             }
             return !contents.includes("README.md");
