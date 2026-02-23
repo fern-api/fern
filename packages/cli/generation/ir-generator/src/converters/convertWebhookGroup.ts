@@ -384,17 +384,14 @@ function convertWebhookSignatureSchema({
         return undefined;
     }
 
-    if (signature.type === "hmac") {
-        const hmac = signature as RawSchemas.HmacSignatureSchema & { type: "hmac" };
-        return WebhookSignatureVerification.hmac(convertHmacSignature({ hmac, file }));
+    switch (signature.type) {
+        case "hmac":
+            return WebhookSignatureVerification.hmac(convertHmacSignature({ hmac: signature, file }));
+        case "asymmetric":
+            return WebhookSignatureVerification.asymmetric(convertAsymmetricSignature({ asymmetric: signature, file }));
+        default:
+            return undefined;
     }
-
-    if (signature.type === "asymmetric") {
-        const asymmetric = signature as RawSchemas.AsymmetricSignatureSchema & { type: "asymmetric" };
-        return WebhookSignatureVerification.asymmetric(convertAsymmetricSignature({ asymmetric, file }));
-    }
-
-    return undefined;
 }
 
 function convertHmacSignature({

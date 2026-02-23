@@ -1,6 +1,16 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Webhook, WebhookSignatureVerification } from "@fern-api/openapi-ir";
+import {
+    AsymmetricAlgorithm,
+    Webhook,
+    WebhookPayloadComponent,
+    WebhookPayloadFormat,
+    WebhookSignatureAlgorithm,
+    WebhookSignatureEncoding,
+    WebhookSignatureVerification,
+    WebhookTimestamp,
+    WebhookTimestampFormat
+} from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader.js";
@@ -257,40 +267,34 @@ function convertSignatureVerification(
     }
 
     switch (signatureVerification.type) {
-        case "hmac": {
-            const hmac = signatureVerification;
-            const result: RawSchemas.WebhookSignatureSchema.Hmac = {
+        case "hmac":
+            return {
                 type: "hmac",
-                header: hmac.header,
-                algorithm: convertSignatureAlgorithm(hmac.algorithm),
-                encoding: convertSignatureEncoding(hmac.encoding),
-                "signature-prefix": hmac.signaturePrefix,
-                "payload-format": convertPayloadFormat(hmac.payloadFormat),
-                timestamp: convertTimestamp(hmac.timestamp)
+                header: signatureVerification.header,
+                algorithm: convertSignatureAlgorithm(signatureVerification.algorithm),
+                encoding: convertSignatureEncoding(signatureVerification.encoding),
+                "signature-prefix": signatureVerification.signaturePrefix,
+                "payload-format": convertPayloadFormat(signatureVerification.payloadFormat),
+                timestamp: convertTimestamp(signatureVerification.timestamp)
             };
-            return result;
-        }
-        case "asymmetric": {
-            const asymmetric = signatureVerification;
-            const result: RawSchemas.WebhookSignatureSchema.Asymmetric = {
+        case "asymmetric":
+            return {
                 type: "asymmetric",
-                header: asymmetric.header,
-                "asymmetric-algorithm": convertAsymmetricAlgorithm(asymmetric.asymmetricAlgorithm),
-                encoding: convertSignatureEncoding(asymmetric.encoding),
-                "signature-prefix": asymmetric.signaturePrefix,
-                "jwks-url": asymmetric.jwksUrl,
-                "key-id-header": asymmetric.keyIdHeader,
-                timestamp: convertTimestamp(asymmetric.timestamp)
+                header: signatureVerification.header,
+                "asymmetric-algorithm": convertAsymmetricAlgorithm(signatureVerification.asymmetricAlgorithm),
+                encoding: convertSignatureEncoding(signatureVerification.encoding),
+                "signature-prefix": signatureVerification.signaturePrefix,
+                "jwks-url": signatureVerification.jwksUrl,
+                "key-id-header": signatureVerification.keyIdHeader,
+                timestamp: convertTimestamp(signatureVerification.timestamp)
             };
-            return result;
-        }
         default:
             return undefined;
     }
 }
 
 function convertSignatureAlgorithm(
-    algorithm: string | undefined
+    algorithm: WebhookSignatureAlgorithm | undefined
 ): RawSchemas.WebhookSignatureAlgorithmSchema | undefined {
     if (algorithm == null) {
         return undefined;
@@ -309,7 +313,9 @@ function convertSignatureAlgorithm(
     }
 }
 
-function convertSignatureEncoding(encoding: string | undefined): RawSchemas.WebhookSignatureEncodingSchema | undefined {
+function convertSignatureEncoding(
+    encoding: WebhookSignatureEncoding | undefined
+): RawSchemas.WebhookSignatureEncodingSchema | undefined {
     if (encoding == null) {
         return undefined;
     }
@@ -323,7 +329,7 @@ function convertSignatureEncoding(encoding: string | undefined): RawSchemas.Webh
     }
 }
 
-function convertAsymmetricAlgorithm(algorithm: string): RawSchemas.AsymmetricAlgorithmSchema {
+function convertAsymmetricAlgorithm(algorithm: AsymmetricAlgorithm): RawSchemas.AsymmetricAlgorithmSchema {
     switch (algorithm) {
         case "rsa-sha256":
             return "rsa-sha256";
@@ -345,7 +351,7 @@ function convertAsymmetricAlgorithm(algorithm: string): RawSchemas.AsymmetricAlg
 }
 
 function convertPayloadFormat(
-    payloadFormat: { components: string[]; delimiter?: string } | undefined
+    payloadFormat: WebhookPayloadFormat | undefined
 ): RawSchemas.WebhookPayloadFormatSchema | undefined {
     if (payloadFormat == null) {
         return undefined;
@@ -356,7 +362,7 @@ function convertPayloadFormat(
     };
 }
 
-function convertPayloadComponent(component: string): RawSchemas.WebhookPayloadComponentSchema {
+function convertPayloadComponent(component: WebhookPayloadComponent): RawSchemas.WebhookPayloadComponentSchema {
     switch (component) {
         case "body":
             return "body";
@@ -371,29 +377,26 @@ function convertPayloadComponent(component: string): RawSchemas.WebhookPayloadCo
     }
 }
 
-function convertTimestamp(
-    timestamp: { header: string; format?: string; tolerance?: number } | undefined
-): RawSchemas.WebhookTimestampSchema | undefined {
+function convertTimestampFormat(format: WebhookTimestampFormat): RawSchemas.WebhookTimestampFormatSchema | undefined {
+    switch (format) {
+        case "unix-seconds":
+            return "unix-seconds";
+        case "unix-millis":
+            return "unix-millis";
+        case "iso8601":
+            return "iso8601";
+        default:
+            return undefined;
+    }
+}
+
+function convertTimestamp(timestamp: WebhookTimestamp | undefined): RawSchemas.WebhookTimestampSchema | undefined {
     if (timestamp == null) {
         return undefined;
     }
-    let format: RawSchemas.WebhookTimestampFormatSchema | undefined;
-    if (timestamp.format != null) {
-        switch (timestamp.format) {
-            case "unix-seconds":
-                format = "unix-seconds";
-                break;
-            case "unix-millis":
-                format = "unix-millis";
-                break;
-            case "iso8601":
-                format = "iso8601";
-                break;
-        }
-    }
     return {
         header: timestamp.header,
-        format,
+        format: timestamp.format != null ? convertTimestampFormat(timestamp.format) : undefined,
         tolerance: timestamp.tolerance
     };
 }

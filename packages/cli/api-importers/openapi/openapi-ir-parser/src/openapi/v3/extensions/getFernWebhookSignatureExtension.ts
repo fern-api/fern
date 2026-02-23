@@ -3,6 +3,15 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension.js";
 import { FernOpenAPIExtension } from "./fernExtensions.js";
 
+type AsymmetricAlgorithmString =
+    | "rsa-sha256"
+    | "rsa-sha384"
+    | "rsa-sha512"
+    | "ecdsa-sha256"
+    | "ecdsa-sha384"
+    | "ecdsa-sha512"
+    | "ed25519";
+
 interface WebhookTimestampExtensionSchema {
     header: string;
     format?: "unix-seconds" | "unix-millis" | "iso8601";
@@ -24,9 +33,20 @@ interface WebhookSignatureExtensionSchema {
     "payload-format"?: WebhookPayloadFormatExtensionSchema;
     timestamp?: WebhookTimestampExtensionSchema;
     // Asymmetric fields
-    "asymmetric-algorithm"?: string;
+    "asymmetric-algorithm"?: AsymmetricAlgorithmString;
     "jwks-url"?: string;
     "key-id-header"?: string;
+}
+
+function convertTimestampFormat(format: "unix-seconds" | "unix-millis" | "iso8601"): finalIr.WebhookTimestampFormat {
+    switch (format) {
+        case "unix-seconds":
+            return finalIr.WebhookTimestampFormat.UnixSeconds;
+        case "unix-millis":
+            return finalIr.WebhookTimestampFormat.UnixMillis;
+        case "iso8601":
+            return finalIr.WebhookTimestampFormat.Iso8601;
+    }
 }
 
 function convertTimestamp(
@@ -35,23 +55,9 @@ function convertTimestamp(
     if (timestamp == null) {
         return undefined;
     }
-    let format: finalIr.WebhookTimestampFormat | undefined;
-    if (timestamp.format != null) {
-        switch (timestamp.format) {
-            case "unix-seconds":
-                format = finalIr.WebhookTimestampFormat.UnixSeconds;
-                break;
-            case "unix-millis":
-                format = finalIr.WebhookTimestampFormat.UnixMillis;
-                break;
-            case "iso8601":
-                format = finalIr.WebhookTimestampFormat.Iso8601;
-                break;
-        }
-    }
     return {
         header: timestamp.header,
-        format,
+        format: timestamp.format != null ? convertTimestampFormat(timestamp.format) : undefined,
         tolerance: timestamp.tolerance
     };
 }
@@ -109,7 +115,9 @@ function convertEncoding(encoding: "base64" | "hex" | undefined): finalIr.Webhoo
     }
 }
 
-function convertAsymmetricAlgorithm(algorithm: string | undefined): finalIr.AsymmetricAlgorithm | undefined {
+function convertAsymmetricAlgorithm(
+    algorithm: AsymmetricAlgorithmString | undefined
+): finalIr.AsymmetricAlgorithm | undefined {
     if (algorithm == null) {
         return undefined;
     }
@@ -128,8 +136,6 @@ function convertAsymmetricAlgorithm(algorithm: string | undefined): finalIr.Asym
             return finalIr.AsymmetricAlgorithm.EcdsaSha512;
         case "ed25519":
             return finalIr.AsymmetricAlgorithm.Ed25519;
-        default:
-            return undefined;
     }
 }
 
@@ -166,6 +172,14 @@ function convertSignatureSchema(
     return undefined;
 }
 
+function getDocumentLevelSignature(document: OpenAPIV3.Document): finalIr.WebhookSignatureVerification | undefined {
+    const extension = getExtension<WebhookSignatureExtensionSchema>(document, FernOpenAPIExtension.WEBHOOK_SIGNATURE);
+    if (extension == null || typeof extension === "boolean") {
+        return undefined;
+    }
+    return convertSignatureSchema(extension);
+}
+
 export function getFernWebhookSignatureExtension(
     document: OpenAPIV3.Document,
     operation: OpenAPIV3.OperationObject
@@ -178,25 +192,11 @@ export function getFernWebhookSignatureExtension(
     if (extension != null) {
         if (typeof extension === "boolean") {
             // Operation says "true" → inherit from document-level config
-            const documentExtension = getExtension<WebhookSignatureExtensionSchema>(
-                document,
-                FernOpenAPIExtension.WEBHOOK_SIGNATURE
-            );
-            if (documentExtension == null || typeof documentExtension === "boolean") {
-                return undefined;
-            }
-            return convertSignatureSchema(documentExtension);
+            return getDocumentLevelSignature(document);
         }
         return convertSignatureSchema(extension);
     }
 
     // No operation-level extension; fall back to document-level default for all webhooks
-    const documentExtension = getExtension<WebhookSignatureExtensionSchema>(
-        document,
-        FernOpenAPIExtension.WEBHOOK_SIGNATURE
-    );
-    if (documentExtension == null || typeof documentExtension === "boolean") {
-        return undefined;
-    }
-    return convertSignatureSchema(documentExtension);
+    return getDocumentLevelSignature(document);
 }
