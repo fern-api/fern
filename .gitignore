@@ -92,9 +92,6 @@ seed/python-sdk/**/output.prof
 
 **/vitest.config.ts.*.mjs
 
-# Generated test files (created by globalSetup for parallel execution)
-**/__generated__/
-
 .local
 
 # Seed build artifacts and caches
