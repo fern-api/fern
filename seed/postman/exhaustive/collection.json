@@ -1996,12 +1996,14 @@
                     {
                       "key": "cursor",
                       "description": "The cursor for pagination",
-                      "value": "cursor"
+                      "value": "cursor",
+                      "disabled": true
                     },
                     {
                       "key": "limit",
                       "description": "Maximum number of items to return",
-                      "value": "1"
+                      "value": "1",
+                      "disabled": true
                     }
                   ],
                   "variable": []
@@ -2036,12 +2038,14 @@
                         {
                           "key": "cursor",
                           "description": "The cursor for pagination",
-                          "value": "cursor"
+                          "value": "cursor",
+                          "disabled": true
                         },
                         {
                           "key": "limit",
                           "description": "Maximum number of items to return",
-                          "value": "1"
+                          "value": "1",
+                          "disabled": true
                         }
                       ],
                       "variable": []
