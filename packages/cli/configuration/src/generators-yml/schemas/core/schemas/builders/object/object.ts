@@ -30,8 +30,6 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
 ): inferObjectSchemaFromPropertySchemas<T> {
     // Pre-compute property metadata once at schema construction time
     const rawKeyToProperty: Record<string, ObjectPropertyWithRawKey> = {};
-    const parseRequiredKeys: string[] = [];
-    const jsonRequiredKeys: string[] = [];
 
     for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
         const rawKey = isProperty(schemaOrObjectProperty)
@@ -48,11 +46,38 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         };
 
         rawKeyToProperty[rawKey] = property;
+    }
 
-        if (isSchemaRequired(valueSchema)) {
-            parseRequiredKeys.push(rawKey);
-            jsonRequiredKeys.push(parsedKey as string);
+    // Lazily compute required keys on first use (deferred because lazy schemas
+    // may not be resolved at construction time)
+    let _parseRequiredKeys: string[] | undefined;
+    let _jsonRequiredKeys: string[] | undefined;
+
+    function getParseRequiredKeys(): string[] {
+        if (_parseRequiredKeys == null) {
+            _parseRequiredKeys = [];
+            _jsonRequiredKeys = [];
+            for (const [parsedKey, schemaOrObjectProperty] of entries(schemas)) {
+                const rawKey = isProperty(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.rawKey
+                    : (parsedKey as string);
+                const valueSchema: Schema<any, any> = isProperty(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.valueSchema
+                    : schemaOrObjectProperty;
+                if (isSchemaRequired(valueSchema)) {
+                    _parseRequiredKeys.push(rawKey);
+                    _jsonRequiredKeys.push(parsedKey as string);
+                }
+            }
         }
+        return _parseRequiredKeys;
+    }
+
+    function getJsonRequiredKeys(): string[] {
+        if (_jsonRequiredKeys == null) {
+            getParseRequiredKeys();
+        }
+        return _jsonRequiredKeys!;
     }
 
     const baseSchema: BaseObjectSchema<
@@ -68,7 +93,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         parse: (raw, opts) => {
             return validateAndTransformObject({
                 value: raw,
-                requiredKeys: parseRequiredKeys,
+                requiredKeys: getParseRequiredKeys(),
                 getProperty: (rawKey) => {
                     const property = rawKeyToProperty[rawKey];
                     if (property == null) {
@@ -93,7 +118,7 @@ export function object<ParsedKeys extends string, T extends PropertySchemas<Pars
         json: (parsed, opts) => {
             return validateAndTransformObject({
                 value: parsed,
-                requiredKeys: jsonRequiredKeys,
+                requiredKeys: getJsonRequiredKeys(),
                 getProperty: (
                     parsedKey,
                 ): { transformedKey: string; transform: (propertyValue: object) => MaybeValid<any> } | undefined => {
