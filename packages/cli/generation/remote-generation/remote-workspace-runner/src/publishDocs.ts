@@ -44,9 +44,9 @@ export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | str
 }
 
 export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
-    // Replace ../ segments with _up_/ to prevent HTTP client normalization issues
+    // Replace ../ segments with _dot_dot_/ to prevent HTTP client normalization issues
     // that cause S3 signature mismatches when paths contain parent directory references
-    return relativeFilePath.replace(/\.\.\//g, "_up_/") as RelativeFilePath;
+    return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
 }
 
 export async function publishDocs({
