@@ -36,8 +36,6 @@ describe.each(testDefinitionNames)("formatEndpointPathForSwift - %s", (testDefin
             .map(([serviceName, paths]) => ({ serviceName, serviceContent: paths.map((p) => `"${p}"`).join("\n") }))
             .map(({ serviceName, serviceContent }) => `// ${serviceName}\n${serviceContent}`)
             .join("\n\n");
-        await expect(fileContents).toMatchFileSnapshot(
-            `snapshots/formatted-endpoint-paths/${testDefinitionName}.swift`
-        );
+        expect(fileContents).toMatchSnapshot();
     }, 10_000);
 });

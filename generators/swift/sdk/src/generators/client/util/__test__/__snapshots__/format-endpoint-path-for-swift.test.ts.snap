@@ -1,0 +1,1176 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`formatEndpointPathForSwift - accept-header > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/container""
+`;
+
+exports[`formatEndpointPathForSwift - alias > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/\\(typeID)""
+`;
+
+exports[`formatEndpointPathForSwift - alias-extends > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/extends/extended-inline-request-body""
+`;
+
+exports[`formatEndpointPathForSwift - any-auth > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+
+// service_user
+"/users"
+"/admins""
+`;
+
+exports[`formatEndpointPathForSwift - api-wide-base-path > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/test/\\(pathParam)/\\(serviceParam)/\\(endpointParam)/\\(resourceParam)""
+`;
+
+exports[`formatEndpointPathForSwift - audiences > correctly formats all endpoint paths for definition 1`] = `
+"// service_folder-a/service
+"/"
+
+// service_folder-d/service
+"/partner-path"
+
+// service_foo
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - basic-auth > correctly formats all endpoint paths for definition 1`] = `
+"// service_basic-auth
+"/basic-auth"
+"/basic-auth""
+`;
+
+exports[`formatEndpointPathForSwift - basic-auth-environment-variables > correctly formats all endpoint paths for definition 1`] = `
+"// service_basic-auth
+"/basic-auth"
+"/basic-auth""
+`;
+
+exports[`formatEndpointPathForSwift - bearer-token-environment-variable > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/apiKey""
+`;
+
+exports[`formatEndpointPathForSwift - bytes-download > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/snippet"
+"/download-content/\\(id)""
+`;
+
+exports[`formatEndpointPathForSwift - bytes-upload > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/upload-content""
+`;
+
+exports[`formatEndpointPathForSwift - circular-references > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - circular-references-advanced > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - client-side-params > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/api/resources"
+"/api/resources/\\(resourceID)"
+"/api/resources/search"
+"/api/users"
+"/api/users/\\(userID)"
+"/api/users"
+"/api/users/\\(userID)"
+"/api/users/\\(userID)"
+"/api/connections"
+"/api/connections/\\(connectionID)"
+"/api/clients"
+"/api/clients/\\(clientID)""
+`;
+
+exports[`formatEndpointPathForSwift - content-type > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/"
+"/complex/\\(id)"
+"/named-mixed/\\(id)"
+"/optional-merge-patch-test"
+"/regular/\\(id)""
+`;
+
+exports[`formatEndpointPathForSwift - cross-package-type-names > correctly formats all endpoint paths for definition 1`] = `
+"// service_folder-a/service
+"/"
+
+// service_folder-d/service
+"/"
+
+// service_foo
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - csharp-grpc-proto > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - csharp-grpc-proto-exhaustive > correctly formats all endpoint paths for definition 1`] = `
+"// service_dataservice
+"/foo""
+`;
+
+exports[`formatEndpointPathForSwift - csharp-namespace-collision > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/users"
+"/users"
+
+// service_System
+"/users"
+"/users""
+`;
+
+exports[`formatEndpointPathForSwift - csharp-namespace-conflict > correctly formats all endpoint paths for definition 1`] = `
+"// service_tasktest
+"/hello""
+`;
+
+exports[`formatEndpointPathForSwift - csharp-readonly-request > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/vendors/batch""
+`;
+
+exports[`formatEndpointPathForSwift - csharp-system-collision > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/users"
+"/users"
+"/users/empty""
+`;
+
+exports[`formatEndpointPathForSwift - csharp-xml-entities > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/timezone""
+`;
+
+exports[`formatEndpointPathForSwift - dollar-string-examples > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - empty-clients > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - endpoint-security-auth > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+
+// service_user
+"/users"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users""
+`;
+
+exports[`formatEndpointPathForSwift - enum > correctly formats all endpoint paths for definition 1`] = `
+"// service_headers
+"/headers"
+
+// service_inlined-request
+"/inlined"
+
+// service_multipart-form
+"/multipart"
+
+// service_path-param
+"/path/\\(operand)/\\(operandOrColor)"
+
+// service_query-param
+"/query"
+"/query-list""
+`;
+
+exports[`formatEndpointPathForSwift - error-property > correctly formats all endpoint paths for definition 1`] = `
+"// service_property-based-error
+"/property-based-error""
+`;
+
+exports[`formatEndpointPathForSwift - errors > correctly formats all endpoint paths for definition 1`] = `
+"// service_simple
+"/foo1"
+"/foo2"
+"/foo3""
+`;
+
+exports[`formatEndpointPathForSwift - examples > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/"
+"/"
+
+// service_file/notification/service
+"/file/notification/\\(notificationID)"
+
+// service_file/service
+"/file/\\(filename)"
+
+// service_health/service
+"/check/\\(id)"
+"/ping"
+
+// service_service
+"/movie/\\(movieID)"
+"/movie"
+"/metadata"
+"/big-entity"
+"/refresh-token""
+`;
+
+exports[`formatEndpointPathForSwift - exhaustive > correctly formats all endpoint paths for definition 1`] = `
+"// service_endpoints/container
+"/container/list-of-primitives"
+"/container/list-of-objects"
+"/container/set-of-primitives"
+"/container/set-of-objects"
+"/container/map-prim-to-prim"
+"/container/map-prim-to-object"
+"/container/map-prim-to-union"
+"/container/opt-objects"
+
+// service_endpoints/content-type
+"/foo/bar"
+"/foo/baz"
+
+// service_endpoints/enum
+"/enum"
+
+// service_endpoints/http-methods
+"/http-methods/\\(id)"
+"/http-methods"
+"/http-methods/\\(id)"
+"/http-methods/\\(id)"
+"/http-methods/\\(id)"
+
+// service_endpoints/object
+"/object/get-and-return-with-optional-field"
+"/object/get-and-return-with-required-field"
+"/object/get-and-return-with-map-of-map"
+"/object/get-and-return-nested-with-optional-field"
+"/object/get-and-return-nested-with-required-field/\\(string)"
+"/object/get-and-return-nested-with-required-field-list"
+"/object/get-and-return-with-datetime-like-string"
+
+// service_endpoints/pagination
+"/pagination"
+
+// service_endpoints/params
+"/params/path/\\(param)"
+"/params/path/\\(param)"
+"/params"
+"/params"
+"/params/path-query/\\(param)"
+"/params/path-query/\\(param)"
+"/params/path/\\(param)"
+"/params/path/\\(param)"
+
+// service_endpoints/primitive
+"/primitive/string"
+"/primitive/integer"
+"/primitive/long"
+"/primitive/double"
+"/primitive/boolean"
+"/primitive/datetime"
+"/primitive/date"
+"/primitive/uuid"
+"/primitive/base64"
+
+// service_endpoints/put
+"/\\(id)"
+
+// service_endpoints/union
+"/union"
+
+// service_endpoints/urls
+"/urls/MixedCase"
+"/urls/no-ending-slash"
+"/urls/with-ending-slash"
+"/urls/with_underscores"
+
+// service_inlined-requests
+"/req-bodies/object"
+
+// service_no-auth
+"/no-auth"
+
+// service_no-req-body
+"/no-req-body"
+"/no-req-body"
+
+// service_req-with-headers
+"/test-headers/custom-header""
+`;
+
+exports[`formatEndpointPathForSwift - extends > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/extends/extended-inline-request-body""
+`;
+
+exports[`formatEndpointPathForSwift - extra-properties > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/user""
+`;
+
+exports[`formatEndpointPathForSwift - file-download > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/snippet"
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - file-upload > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/"
+"/just-file"
+"/just-file-with-query-params"
+"/just-file-with-optional-query-params"
+"/with-content-type"
+"/with-form-encoding"
+"/"
+"/optional-args"
+"/inline-type"
+"/with-json-property"
+"/snippet"
+"/with-literal-enum""
+`;
+
+exports[`formatEndpointPathForSwift - file-upload-openapi > correctly formats all endpoint paths for definition 1`] = `
+"// service_fileUploadExample
+"/upload-file""
+`;
+
+exports[`formatEndpointPathForSwift - folders > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/"
+
+// service_a/b
+"/"
+
+// service_a/c
+"/"
+
+// service_folder
+"/"
+
+// service_folder/service
+"/service"
+"/service""
+`;
+
+exports[`formatEndpointPathForSwift - go-bytes-request > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/upload-content""
+`;
+
+exports[`formatEndpointPathForSwift - go-content-type > correctly formats all endpoint paths for definition 1`] = `
+"// service_imdb
+"/movies/create-movie""
+`;
+
+exports[`formatEndpointPathForSwift - go-optional-literal-alias > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/search""
+`;
+
+exports[`formatEndpointPathForSwift - go-undiscriminated-union-wire-tests > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/rerank""
+`;
+
+exports[`formatEndpointPathForSwift - header-auth > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/apiKey""
+`;
+
+exports[`formatEndpointPathForSwift - header-auth-environment-variable > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/apiKey""
+`;
+
+exports[`formatEndpointPathForSwift - http-head > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/users"
+"/users""
+`;
+
+exports[`formatEndpointPathForSwift - idempotency-headers > correctly formats all endpoint paths for definition 1`] = `
+"// service_payment
+"/payment"
+"/payment/\\(paymentID)""
+`;
+
+exports[`formatEndpointPathForSwift - imdb > correctly formats all endpoint paths for definition 1`] = `
+"// service_imdb
+"/movies/create-movie"
+"/movies/\\(movieID)""
+`;
+
+exports[`formatEndpointPathForSwift - inferred-auth-explicit > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token/refresh"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - inferred-auth-implicit > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token/refresh"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - inferred-auth-implicit-api-key > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - inferred-auth-implicit-no-expiry > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token/refresh"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - inferred-auth-implicit-reference > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token/refresh"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - java-builder-extension > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/api/hello""
+`;
+
+exports[`formatEndpointPathForSwift - java-custom-package-prefix > correctly formats all endpoint paths for definition 1`] = `
+"// service_imdb
+"/movies/create-movie"
+"/movies/\\(movieID)""
+`;
+
+exports[`formatEndpointPathForSwift - java-default-timeout > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/user""
+`;
+
+exports[`formatEndpointPathForSwift - java-inline-types > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/root/root"
+"/root/discriminated-union"
+"/root/undiscriminated-union""
+`;
+
+exports[`formatEndpointPathForSwift - java-nullable-named-request-types > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/postWithNullableNamedRequestBodyType/\\(id)"
+"/postWithNonNullableNamedRequestBodyType/\\(id)""
+`;
+
+exports[`formatEndpointPathForSwift - java-optional-nullable-query-params > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/api/search""
+`;
+
+exports[`formatEndpointPathForSwift - java-optional-query-params-overloads > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/api/users/\\(userID)/insurance"
+"/api/policies/search"
+"/api/policies""
+`;
+
+exports[`formatEndpointPathForSwift - java-output-directory > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/users/\\(userID)""
+`;
+
+exports[`formatEndpointPathForSwift - java-pagination-deep-cursor-path > correctly formats all endpoint paths for definition 1`] = `
+"// service_deep-cursor-path
+"/"
+"/"
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - java-path-param-key-conflict > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/\\(key)/\\(value)""
+`;
+
+exports[`formatEndpointPathForSwift - java-required-body-optional-headers > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/api/users"
+"/api/users/\\(userID)"
+"/api/users/with-options"
+"/api/users/required-header"
+"/api/users/required-query"
+"/api/users"
+"/api/users/inlined""
+`;
+
+exports[`formatEndpointPathForSwift - java-single-property-endpoint > correctly formats all endpoint paths for definition 1`] = `
+"// service_single-property
+"/\\(id)""
+`;
+
+exports[`formatEndpointPathForSwift - java-staged-builder-ordering > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/staged-builder/simple"
+"/staged-builder/medium"
+"/staged-builder/complex"
+"/staged-builder/mixed"
+"/staged-builder/parent""
+`;
+
+exports[`formatEndpointPathForSwift - java-streaming-accept-header > correctly formats all endpoint paths for definition 1`] = `
+"// service_dummy
+"/generate-stream"
+"/generate""
+`;
+
+exports[`formatEndpointPathForSwift - java-with-property-conflict > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - license > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - literal > correctly formats all endpoint paths for definition 1`] = `
+"// service_headers
+"/headers"
+
+// service_inlined
+"/inlined"
+
+// service_path
+"/path/\\(id)"
+
+// service_query
+"/query"
+
+// service_reference
+"/reference""
+`;
+
+exports[`formatEndpointPathForSwift - literals-unions > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - mixed-case > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/resource/\\(resourceID)"
+"/resource""
+`;
+
+exports[`formatEndpointPathForSwift - mixed-file-directory > correctly formats all endpoint paths for definition 1`] = `
+"// service_organization
+"/organizations"
+
+// service_user
+"/users"
+
+// service_user/events
+"/users/events"
+
+// service_user/events/metadata
+"/users/events/metadata""
+`;
+
+exports[`formatEndpointPathForSwift - multi-line-docs > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/users/\\(userID)"
+"/users""
+`;
+
+exports[`formatEndpointPathForSwift - multi-url-environment > correctly formats all endpoint paths for definition 1`] = `
+"// service_ec2
+"/ec2/boot"
+
+// service_s3
+"/s3/presigned-url""
+`;
+
+exports[`formatEndpointPathForSwift - multi-url-environment-no-default > correctly formats all endpoint paths for definition 1`] = `
+"// service_ec2
+"/ec2/boot"
+
+// service_s3
+"/s3/presigned-url""
+`;
+
+exports[`formatEndpointPathForSwift - multiple-request-bodies > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/documents/upload"
+"/documents/upload""
+`;
+
+exports[`formatEndpointPathForSwift - no-environment > correctly formats all endpoint paths for definition 1`] = `
+"// service_dummy
+"/dummy""
+`;
+
+exports[`formatEndpointPathForSwift - no-retries > correctly formats all endpoint paths for definition 1`] = `
+"// service_retries
+"/users""
+`;
+
+exports[`formatEndpointPathForSwift - nullable > correctly formats all endpoint paths for definition 1`] = `
+"// service_nullable
+"/users"
+"/users"
+"/users""
+`;
+
+exports[`formatEndpointPathForSwift - nullable-allof-extends > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/test"
+"/test""
+`;
+
+exports[`formatEndpointPathForSwift - nullable-optional > correctly formats all endpoint paths for definition 1`] = `
+"// service_nullable-optional
+"/api/users/\\(userID)"
+"/api/users"
+"/api/users/\\(userID)"
+"/api/users"
+"/api/users/search"
+"/api/profiles/complex"
+"/api/profiles/complex/\\(profileID)"
+"/api/profiles/complex/\\(profileID)"
+"/api/test/deserialization"
+"/api/users/filter"
+"/api/users/\\(userID)/notifications"
+"/api/users/\\(userID)/tags"
+"/api/search""
+`;
+
+exports[`formatEndpointPathForSwift - nullable-request-body > correctly formats all endpoint paths for definition 1`] = `
+"// service_testGroup
+"/optional-request-body/\\(pathParam)""
+`;
+
+exports[`formatEndpointPathForSwift - oauth-client-credentials > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - oauth-client-credentials-custom > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - oauth-client-credentials-default > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - oauth-client-credentials-environment-variables > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - oauth-client-credentials-mandatory-auth > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - oauth-client-credentials-nested-root > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - oauth-client-credentials-reference > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - oauth-client-credentials-with-variables > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token"
+
+// service_nested-no-auth/api
+"/nested-no-auth/get-something"
+
+// service_nested/api
+"/nested/get-something"
+
+// service_service
+"/service/\\(endpointParam)"
+
+// service_simple
+"/get-something""
+`;
+
+exports[`formatEndpointPathForSwift - object > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - objects-with-imports > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - optional > correctly formats all endpoint paths for definition 1`] = `
+"// service_optional
+"/send-optional-body"
+"/send-optional-typed-body"
+"/deploy/\\(actionID)/versions/\\(id)""
+`;
+
+exports[`formatEndpointPathForSwift - package-yml > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/\\(id)"
+
+// service_service
+"/\\(id)//\\(nestedID)""
+`;
+
+exports[`formatEndpointPathForSwift - pagination > correctly formats all endpoint paths for definition 1`] = `
+"// service_complex
+"/\\(index)/conversations/search"
+
+// service_inline-users/inline-users
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+"/inline-users"
+
+// service_users
+"/users"
+"/users"
+"/users"
+"/users/top-level-cursor"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users"
+"/users/optional-data""
+`;
+
+exports[`formatEndpointPathForSwift - pagination-custom > correctly formats all endpoint paths for definition 1`] = `
+"// service_users
+"/users""
+`;
+
+exports[`formatEndpointPathForSwift - pagination-uri-path > correctly formats all endpoint paths for definition 1`] = `
+"// service_users
+"/users/uri"
+"/users/path""
+`;
+
+exports[`formatEndpointPathForSwift - path-parameters > correctly formats all endpoint paths for definition 1`] = `
+"// service_organizations
+"/\\(tenantID)/organizations/\\(organizationID)"
+"/\\(tenantID)/organizations/\\(organizationID)/users/\\(userID)"
+"/\\(tenantID)/organizations/\\(organizationID)/search"
+
+// service_user
+"/\\(tenantID)/user/\\(userID)"
+"/\\(tenantID)/user"
+"/\\(tenantID)/user/\\(userID)"
+"/\\(tenantID)/user/\\(userID)/search"
+"/\\(tenantID)/user/\\(userID)/metadata/v\\(version)"
+"/\\(tenantID)/user/\\(userID)/specifics/\\(version)/\\(thought)""
+`;
+
+exports[`formatEndpointPathForSwift - plain-text > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/text""
+`;
+
+exports[`formatEndpointPathForSwift - property-access > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/users""
+`;
+
+exports[`formatEndpointPathForSwift - public-object > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/helloworld.txt""
+`;
+
+exports[`formatEndpointPathForSwift - python-backslash-escape > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/users/\\(id)""
+`;
+
+exports[`formatEndpointPathForSwift - python-mypy-exclude > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - python-positional-single-property > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/create""
+`;
+
+exports[`formatEndpointPathForSwift - python-streaming-parameter-openapi > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/chat"
+"/chat""
+`;
+
+exports[`formatEndpointPathForSwift - query-parameters > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/user""
+`;
+
+exports[`formatEndpointPathForSwift - query-parameters-openapi > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/user/getUsername""
+`;
+
+exports[`formatEndpointPathForSwift - query-parameters-openapi-as-objects > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/user/getUsername""
+`;
+
+exports[`formatEndpointPathForSwift - request-parameters > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/user/username"
+"/user/username-referenced"
+"/user/username-optional"
+"/user""
+`;
+
+exports[`formatEndpointPathForSwift - required-nullable > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/foo"
+"/foo/\\(id)""
+`;
+
+exports[`formatEndpointPathForSwift - reserved-keywords > correctly formats all endpoint paths for definition 1`] = `
+"// service_package
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - response-property > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/movie"
+"/movie"
+"/movie"
+"/movie"
+"/movie"
+"/movie"
+"/movie""
+`;
+
+exports[`formatEndpointPathForSwift - ruby-reserved-word-properties > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/ruby-reserved-word-properties/getFoo""
+`;
+
+exports[`formatEndpointPathForSwift - server-sent-event-examples > correctly formats all endpoint paths for definition 1`] = `
+"// service_completions
+"/stream"
+"/stream-events""
+`;
+
+exports[`formatEndpointPathForSwift - server-sent-events > correctly formats all endpoint paths for definition 1`] = `
+"// service_completions
+"/stream"
+"/stream-no-terminator""
+`;
+
+exports[`formatEndpointPathForSwift - server-url-templating > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/users"
+"/users/\\(userID)"
+"/auth/token""
+`;
+
+exports[`formatEndpointPathForSwift - simple-api > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/users/\\(id)""
+`;
+
+exports[`formatEndpointPathForSwift - simple-fhir > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/account/\\(accountID)""
+`;
+
+exports[`formatEndpointPathForSwift - single-url-environment-default > correctly formats all endpoint paths for definition 1`] = `
+"// service_dummy
+"/dummy""
+`;
+
+exports[`formatEndpointPathForSwift - single-url-environment-no-default > correctly formats all endpoint paths for definition 1`] = `
+"// service_dummy
+"/dummy""
+`;
+
+exports[`formatEndpointPathForSwift - streaming > correctly formats all endpoint paths for definition 1`] = `
+"// service_dummy
+"/generate-stream"
+"/generate""
+`;
+
+exports[`formatEndpointPathForSwift - streaming-parameter > correctly formats all endpoint paths for definition 1`] = `
+"// service_dummy
+"/generate""
+`;
+
+exports[`formatEndpointPathForSwift - trace > correctly formats all endpoint paths for definition 1`] = `
+"// service_v2
+"/"
+
+// service_admin
+"/admin/store-test-submission-status/\\(submissionID)"
+"/admin/store-test-submission-status-v2/\\(submissionID)"
+"/admin/store-workspace-submission-status/\\(submissionID)"
+"/admin/store-workspace-submission-status-v2/\\(submissionID)"
+"/admin/store-test-trace/submission/\\(submissionID)/testCase/\\(testCaseID)"
+"/admin/store-test-trace-v2/submission/\\(submissionID)/testCase/\\(testCaseID)"
+"/admin/store-workspace-trace/submission/\\(submissionID)"
+"/admin/store-workspace-trace-v2/submission/\\(submissionID)"
+
+// service_homepage
+"/homepage-problems"
+"/homepage-problems"
+
+// service_migration
+"/migration-info/all"
+
+// service_playlist
+"/v2/playlist/\\(serviceParam)/create"
+"/v2/playlist/\\(serviceParam)/all"
+"/v2/playlist/\\(serviceParam)/\\(playlistID)"
+"/v2/playlist/\\(serviceParam)/\\(playlistID)"
+"/v2/playlist/\\(serviceParam)/\\(playlistID)"
+
+// service_problem
+"/problem-crud/create"
+"/problem-crud/update/\\(problemID)"
+"/problem-crud/delete/\\(problemID)"
+"/problem-crud/default-starter-files"
+
+// service_submission
+"/sessions/create-session/\\(language)"
+"/sessions/\\(sessionID)"
+"/sessions/stop/\\(sessionID)"
+"/sessions/execution-sessions-state"
+
+// service_sysprop
+"/sysprop/num-warm-instances/\\(language)/\\(numWarmInstances)"
+"/sysprop/num-warm-instances"
+
+// service_v2/problem
+"/problems-v2/lightweight-problem-info"
+"/problems-v2/problem-info"
+"/problems-v2/problem-info/\\(problemID)"
+"/problems-v2/problem-info/\\(problemID)/version/\\(problemVersion)"
+
+// service_v2/v3/problem
+"/problems-v2/lightweight-problem-info"
+"/problems-v2/problem-info"
+"/problems-v2/problem-info/\\(problemID)"
+"/problems-v2/problem-info/\\(problemID)/version/\\(problemVersion)""
+`;
+
+exports[`formatEndpointPathForSwift - ts-express-casing > correctly formats all endpoint paths for definition 1`] = `
+"// service_imdb
+"/movies/create-movie"
+"/movies/\\(movieID)""
+`;
+
+exports[`formatEndpointPathForSwift - ts-extra-properties > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/user"
+"/user""
+`;
+
+exports[`formatEndpointPathForSwift - ts-inline-types > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/root/root"
+"/root/discriminated-union"
+"/root/undiscriminated-union""
+`;
+
+exports[`formatEndpointPathForSwift - undiscriminated-union-with-response-property > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/union"
+"/unions""
+`;
+
+exports[`formatEndpointPathForSwift - undiscriminated-unions > correctly formats all endpoint paths for definition 1`] = `
+"// service_union
+"/"
+"/metadata"
+"/metadata"
+"/call"
+"/duplicate"
+"/nested"
+"/camel-case""
+`;
+
+exports[`formatEndpointPathForSwift - unions > correctly formats all endpoint paths for definition 1`] = `
+"// service_bigunion
+"/\\(id)"
+"/"
+"/many"
+
+// service_union
+"/\\(id)"
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - unions-with-local-date > correctly formats all endpoint paths for definition 1`] = `
+"// service_bigunion
+"/\\(id)"
+"/"
+"/many"
+
+// service_types
+"/time/\\(id)"
+"/time"
+
+// service_union
+"/\\(id)"
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - unknown > correctly formats all endpoint paths for definition 1`] = `
+"// service_unknown
+"/"
+"/with-object""
+`;
+
+exports[`formatEndpointPathForSwift - url-form-encoded > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/submit""
+`;
+
+exports[`formatEndpointPathForSwift - validation > correctly formats all endpoint paths for definition 1`] = `
+"// service_
+"/create"
+"/""
+`;
+
+exports[`formatEndpointPathForSwift - variables > correctly formats all endpoint paths for definition 1`] = `
+"// service_service
+"/\\(endpointParam)""
+`;
+
+exports[`formatEndpointPathForSwift - version > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/users/\\(userID)""
+`;
+
+exports[`formatEndpointPathForSwift - version-no-default > correctly formats all endpoint paths for definition 1`] = `
+"// service_user
+"/users/\\(userID)""
+`;
+
+exports[`formatEndpointPathForSwift - webhook-audience > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - websocket > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - websocket-bearer-auth > correctly formats all endpoint paths for definition 1`] = `""`;
+
+exports[`formatEndpointPathForSwift - websocket-inferred-auth > correctly formats all endpoint paths for definition 1`] = `
+"// service_auth
+"/token"
+"/token/refresh""
+`;
