@@ -91,15 +91,12 @@ describe("fern generator upgrade", () => {
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
         expect(
-            (
-                await runFernCli(["generator", "--help"], { cwd: directory, reject: false }, true, signal)
-            ).stdout
+            (await runFernCli(["generator", "--help"], { cwd: directory, reject: false }, true, signal)).stdout
         ).toMatchSnapshot();
 
         expect(
-            (
-                await runFernCli(["generator", "upgrade", "--help"], { cwd: directory, reject: false }, true, signal)
-            ).stdout
+            (await runFernCli(["generator", "upgrade", "--help"], { cwd: directory, reject: false }, true, signal))
+                .stdout
         ).toMatchSnapshot();
     }, 60_000);
 
@@ -203,7 +200,9 @@ describe("fern generator upgrade", () => {
         ).toMatchSnapshot();
     }, 60_000);
 
-    it.concurrent("fern generator upgrade --skip-autorelease-disabled skips autorelease false generators", async ({ signal }) => {
+    it.concurrent("fern generator upgrade --skip-autorelease-disabled skips autorelease false generators", async ({
+        signal
+    }) => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
 
@@ -268,7 +267,9 @@ describe("fern generator upgrade", () => {
         expect(JSON.parse((await readFile(outputFileJava)).toString()).version).not.toEqual("0.0.1");
     }, 60_000);
 
-    it.concurrent("fern generator upgrade without --skip-autorelease-disabled upgrades all generators", async ({ signal }) => {
+    it.concurrent("fern generator upgrade without --skip-autorelease-disabled upgrades all generators", async ({
+        signal
+    }) => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
 

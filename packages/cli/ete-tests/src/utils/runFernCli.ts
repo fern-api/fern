@@ -20,7 +20,6 @@ function wireSignal(childProcess: ExecaChildProcess, signal?: AbortSignal): void
         childProcess.kill();
     };
     signal.addEventListener("abort", onAbort, { once: true });
-    // biome-ignore lint/suspicious/noMisplacedFunctionDeclaration: cleanup needs access to onAbort
     void childProcess.finally(() => signal.removeEventListener("abort", onAbort));
 }
 
@@ -70,11 +69,7 @@ export async function runFernCliWithoutAuthToken(
     return runFernCli(args, options, false, signal);
 }
 
-export function captureFernCli(
-    args: string[],
-    options?: Options,
-    signal?: AbortSignal
-): ExecaChildProcess {
+export function captureFernCli(args: string[], options?: Options, signal?: AbortSignal): ExecaChildProcess {
     const childProcess = runExeca(
         CONSOLE_LOGGER,
         "node",

@@ -1,5 +1,5 @@
 import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { loggingExeca, runExeca } from "@fern-api/logging-execa";
+import { runExeca } from "@fern-api/logging-execa";
 import { ExecaChildProcess, Options } from "execa";
 import * as fs from "fs/promises";
 import * as path from "path";
@@ -23,7 +23,6 @@ function wireSignal(childProcess: ExecaChildProcess, signal?: AbortSignal): void
         childProcess.kill();
     };
     signal.addEventListener("abort", onAbort, { once: true });
-    // biome-ignore lint/suspicious/noMisplacedFunctionDeclaration: cleanup needs access to onAbort
     void childProcess.finally(() => signal.removeEventListener("abort", onAbort));
 }
 

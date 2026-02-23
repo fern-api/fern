@@ -81,7 +81,6 @@ describe("ir", () => {
                     version: fixture.version,
                     signal
                 });
-                // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 expect(irContents).toMatchSnapshot();
             },
             90_000
