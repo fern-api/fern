@@ -9,7 +9,7 @@ import { runFernCli } from "../../utils/runFernCli.js";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
-describe("fern generator upgrade", () => {
+describe.concurrent("fern generator upgrade", () => {
     it("fern generator upgrade", async () => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
