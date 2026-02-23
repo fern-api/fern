@@ -399,9 +399,15 @@ def pytest_unconfigure(config: pytest.Config) -> None:
     }
 
     /**
-     * Gets the full module path including package_path if set.
+     * Gets the full module path, prioritizing package_name from custom config.
      */
     private getModulePath(): string {
+        // First priority: Use package_name if set
+        if (this.context.customConfig.package_name != null) {
+            return this.context.customConfig.package_name;
+        }
+
+        // Fallback: Use organization + package_path logic
         const orgName = this.context.config.organization;
         const packagePath = this.context.customConfig.package_path;
         if (packagePath) {

@@ -50,6 +50,7 @@ export const SdkCustomConfigSchema = z.object({
     /** @deprecated Use `wire_tests.enabled` instead */
     enable_wire_tests: z.boolean().optional(),
     package_path: relativePathSchema.optional(),
+    package_name: z.string().optional(),
     client: ClientConfigSchema.optional(),
     client_class_name: z.string().optional(),
     inline_request_params: z.boolean().optional(),
