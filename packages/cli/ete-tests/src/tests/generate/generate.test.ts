@@ -1,7 +1,6 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { exec } from "child_process";
 import stripAnsi from "strip-ansi";
-import { vi } from "vitest";
 
 import { runFernCli, runFernCliWithoutAuthToken } from "../../utils/runFernCli.js";
 import { init } from "../init/init.js";
@@ -9,7 +8,7 @@ import { init } from "../init/init.js";
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 describe("fern generate", () => {
-    it("default api (fern init)", async () => {
+    it.concurrent("default api (fern init)", async () => {
         const pathOfDirectory = await init();
 
         await runFernCli(["generate", "--local", "--keepDocker"], {
@@ -19,7 +18,7 @@ describe("fern generate", () => {
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
     }, 180_000);
 
-    it("ir contains fdr definitionid", async () => {
+    it.concurrent("ir contains fdr definitionid", async () => {
         const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
             cwd: join(fixturesDir, RelativeFilePath.of("basic")),
             reject: false
@@ -67,11 +66,13 @@ describe("fern generate", () => {
         ).toMatchSnapshot();
     }, 180_000);
 
-    it("generate docs with no auth requires login", async () => {
-        vi.stubEnv("FERN_TOKEN", undefined);
+    it.concurrent("generate docs with no auth requires login", async () => {
         const { stdout, stderr } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
-            reject: false
+            reject: false,
+            env: {
+                FERN_TOKEN: ""
+            }
         });
         const output = stdout + stderr;
         expect(output).toContain(
@@ -79,21 +80,19 @@ describe("fern generate", () => {
         );
     }, 180_000);
 
-    it("generate docs with auth bypass fails", async () => {
-        vi.stubEnv("FERN_TOKEN", undefined);
+    it.concurrent("generate docs with auth bypass fails", async () => {
         const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
-                FERN_SELF_HOSTED: "true"
+                FERN_SELF_HOSTED: "true",
+                FERN_TOKEN: ""
             }
         });
         expect(stdout).toContain("No token found. Please set the FERN_TOKEN environment variable.");
     }, 180_000);
 
-    it("generate docs with auth bypass succeeds", async () => {
-        vi.stubEnv("FERN_TOKEN", "dummy");
-
+    it.concurrent("generate docs with auth bypass succeeds", async () => {
         const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
@@ -105,7 +104,7 @@ describe("fern generate", () => {
         expect(stdout).toContain("ferndevtest.docs.dev.buildwithfern.com Started.");
     }, 180_000);
 
-    it("generate docs with no docs.yml file fails", async () => {
+    it.concurrent("generate docs with no docs.yml file fails", async () => {
         const { stdout } = await runFernCli(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("basic")),
             reject: false
