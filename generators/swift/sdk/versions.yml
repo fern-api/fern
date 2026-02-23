@@ -1,12 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 0.27.1
-  changelogEntry:
-    - type: chore
-      summary: |
-        Replace per-file snapshots with built-in vitest snapshots in endpoint path formatter tests.
-  createdAt: "2026-02-23"
-  irVersion: 61
-
 - version: 0.27.0
   changelogEntry:
     - type: feat
