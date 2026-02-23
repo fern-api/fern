@@ -2,6 +2,7 @@ import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import path from "path";
+import tmp from "tmp-promise";
 import { runFernCli } from "../../utils/runFernCli.js";
 import { generateIrAsString } from "./generateIrAsString.js";
 
@@ -69,7 +70,7 @@ interface Fixture {
 describe("ir", () => {
     for (const fixture of FIXTURES) {
         const { only = false } = fixture;
-        (only ? it.only : it)(
+        (only ? it.only : it.concurrent)(
             `${JSON.stringify(fixture)}`,
             async () => {
                 const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
@@ -86,19 +87,23 @@ describe("ir", () => {
         );
     }
 
-    it("works with latest version", async () => {
-        const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v27"], {
+    it.concurrent("works with latest version", async () => {
+        const tmpFile = await tmp.file({ postfix: ".json" });
+        const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v27"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
             reject: false
         });
+        await tmpFile.cleanup();
         expect(stdout).toContain("Wrote IR to");
     }, 10_000);
 
-    it("fails with invalid version", async () => {
-        const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v100"], {
+    it.concurrent("fails with invalid version", async () => {
+        const tmpFile = await tmp.file({ postfix: ".json" });
+        const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v100"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
             reject: false
         });
+        await tmpFile.cleanup();
         expect(stdout).toContain("IR v100 does not exist");
     }, 10_000);
 });
