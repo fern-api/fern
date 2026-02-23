@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, TimeZone, Utc};
 use serde::Serialize;
 
 /// Modern query builder with type-safe method chaining
@@ -114,10 +114,20 @@ impl QueryBuilder {
         self
     }
 
-    /// Add a datetime parameter (DateTime<Utc>)
-    pub fn datetime(mut self, key: &str, value: impl Into<Option<DateTime<Utc>>>) -> Self {
+    /// Add a datetime parameter (any DateTime timezone)
+    pub fn datetime<Tz: TimeZone>(
+        mut self,
+        key: &str,
+        value: impl Into<Option<DateTime<Tz>>>,
+    ) -> Self
+    where
+        Tz::Offset: std::fmt::Display,
+    {
         if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
+            self.params.push((
+                key.to_string(),
+                v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
+            ));
         }
         self
     }
@@ -135,7 +145,10 @@ impl QueryBuilder {
         if let Some(v) = value.into() {
             // Convert NaiveDate to DateTime<Utc> at start of day
             let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
-            self.params.push((key.to_string(), datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true)));
+            self.params.push((
+                key.to_string(),
+                datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
+            ));
         }
         self
     }

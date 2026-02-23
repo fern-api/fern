@@ -46,8 +46,13 @@ impl RequestOptions {
         self
     }
 
-    pub fn additional_query_param(mut self, key: impl Into<String>, value: impl Into<String>) -> Self {
-        self.additional_query_params.insert(key.into(), value.into());
+    pub fn additional_query_param(
+        mut self,
+        key: impl Into<String>,
+        value: impl Into<String>,
+    ) -> Self {
+        self.additional_query_params
+            .insert(key.into(), value.into());
         self
     }
 }
