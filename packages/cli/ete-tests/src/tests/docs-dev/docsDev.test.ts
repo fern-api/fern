@@ -44,7 +44,9 @@ describe.sequential("fern docs dev --legacy", () => {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
 
-        // kill the process
+        // Swallow the rejection execa emits when we intentionally kill, then kill.
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow rejection
+        process.catch(() => {});
         const finishProcess = process.kill();
         expect(finishProcess).toBeTruthy();
     }, 90_000);
@@ -90,6 +92,9 @@ describe.sequential("fern docs dev --beta", () => {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
 
+        // Swallow the rejection execa emits when we intentionally kill, then kill.
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow rejection
+        process.catch(() => {});
         const finishProcess = process.kill();
         expect(finishProcess).toBeTruthy();
     }, 90_000);
