@@ -3260,6 +3260,254 @@
         }
       ]
     },
+    "webhooks.WebhookSignatureAlgorithmSchema": {
+      "type": "string",
+      "enum": [
+        "sha256",
+        "sha1",
+        "sha384",
+        "sha512"
+      ]
+    },
+    "webhooks.WebhookSignatureEncodingSchema": {
+      "type": "string",
+      "enum": [
+        "base64",
+        "hex"
+      ]
+    },
+    "webhooks.WebhookPayloadComponentSchema": {
+      "type": "string",
+      "enum": [
+        "body",
+        "timestamp",
+        "notification-url",
+        "message-id"
+      ]
+    },
+    "webhooks.WebhookPayloadFormatSchema": {
+      "type": "object",
+      "properties": {
+        "components": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/webhooks.WebhookPayloadComponentSchema"
+          }
+        },
+        "delimiter": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "components"
+      ],
+      "additionalProperties": false
+    },
+    "webhooks.WebhookTimestampFormatSchema": {
+      "type": "string",
+      "enum": [
+        "unix-seconds",
+        "unix-millis",
+        "iso8601"
+      ]
+    },
+    "webhooks.WebhookTimestampSchema": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "string"
+        },
+        "format": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookTimestampFormatSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tolerance": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "header"
+      ],
+      "additionalProperties": false
+    },
+    "webhooks.AsymmetricAlgorithmSchema": {
+      "type": "string",
+      "enum": [
+        "rsa-sha256",
+        "rsa-sha384",
+        "rsa-sha512",
+        "ecdsa-sha256",
+        "ecdsa-sha384",
+        "ecdsa-sha512",
+        "ed25519"
+      ]
+    },
+    "webhooks.WebhookSignatureSchema": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "hmac",
+            "asymmetric"
+          ]
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "type": {
+              "const": "hmac"
+            },
+            "header": {
+              "type": "string"
+            },
+            "algorithm": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookSignatureAlgorithmSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "encoding": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookSignatureEncodingSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "signature-prefix": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "payload-format": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookPayloadFormatSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "timestamp": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookTimestampSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "header"
+          ]
+        },
+        {
+          "properties": {
+            "type": {
+              "const": "asymmetric"
+            },
+            "header": {
+              "type": "string"
+            },
+            "asymmetric-algorithm": {
+              "$ref": "#/definitions/webhooks.AsymmetricAlgorithmSchema"
+            },
+            "encoding": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookSignatureEncodingSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "signature-prefix": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "jwks-url": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "key-id-header": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "timestamp": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookTimestampSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "type",
+            "header",
+            "asymmetric-algorithm"
+          ]
+        }
+      ]
+    },
     "examples.ExampleWebhookCallSchema": {
       "type": "object",
       "properties": {
@@ -3366,6 +3614,16 @@
         },
         "payload": {
           "$ref": "#/definitions/webhooks.WebhookPayloadSchema"
+        },
+        "signature": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/webhooks.WebhookSignatureSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "response": {
           "oneOf": [
