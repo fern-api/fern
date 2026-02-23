@@ -3,14 +3,14 @@ import { FernRegistry } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { Argv } from "yargs";
 
-import { CliContext } from "./cli-context/CliContext";
-import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage";
-import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions";
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList";
-import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
-import { getOrganization } from "./commands/organization/getOrganization";
-import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
+import { CliContext } from "./cli-context/CliContext.js";
+import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernUpgradeMessage.js";
+import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions.js";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
+import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList.js";
+import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata.js";
+import { getOrganization } from "./commands/organization/getOrganization.js";
+import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator.js";
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -156,6 +156,13 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             default: false,
                             description:
                                 "When specified, a list of available upgrades will be displayed, but no upgrade will be taken."
+                        })
+                        .option("skip-autorelease-disabled", {
+                            boolean: true,
+                            default: false,
+                            hidden: true,
+                            description:
+                                "Skip upgrading generators that have autorelease: false set in their configuration."
                         }),
                 async (argv) => {
                     await cliContext.instrumentPostHogEvent({
@@ -205,6 +212,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                                 defaultToAllApiWorkspaces: true
                             }),
                             includeMajor: argv.includeMajor,
+                            skipAutoreleaseDisabled: argv.skipAutoreleaseDisabled,
                             channel: argv.channel
                         });
                     }

@@ -34,6 +34,7 @@ paths:
           schema:
             type: string
           x-fern-ignore: true
+        - $ref: "#/components/parameters/IgnoredRefParam"
   /ignored-operation:
     get:
       operationId: ignored-operation
@@ -44,6 +45,13 @@ paths:
         "200":
           description: Success
 components:
+  parameters:
+    IgnoredRefParam:
+      in: query
+      name: ignoredRefParam
+      schema:
+        type: string
+      x-fern-ignore: true
   schemas:
     Meta:
       properties:

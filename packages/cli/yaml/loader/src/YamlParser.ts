@@ -2,7 +2,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { RelativeFilePath, relative } from "@fern-api/path-utils";
 import { readFile } from "fs/promises";
 import { parse, parseDocument } from "yaml";
-import { YamlDocument } from "./YamlDocument";
+import { YamlDocument } from "./YamlDocument.js";
 
 export class YamlParser {
     /**

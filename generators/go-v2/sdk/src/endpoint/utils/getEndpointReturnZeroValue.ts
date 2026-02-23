@@ -1,16 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, HttpResponseBody, JsonResponse } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export function getEndpointReturnZeroValue({
     context,
     endpoint
 }: {
     context: SdkGeneratorContext;
-    endpoint: HttpEndpoint;
+    endpoint: FernIr.HttpEndpoint;
 }): go.TypeInstantiation | undefined {
     const response = endpoint.response;
     if (response?.body == null) {
@@ -28,7 +27,7 @@ function getEndpointReturnZeroValueResponseBody({
     body
 }: {
     context: SdkGeneratorContext;
-    body: HttpResponseBody;
+    body: FernIr.HttpResponseBody;
 }): go.TypeInstantiation {
     switch (body.type) {
         case "json":
@@ -50,7 +49,7 @@ function getEndpointReturnZeroValueJson({
     json
 }: {
     context: SdkGeneratorContext;
-    json: JsonResponse;
+    json: FernIr.JsonResponse;
 }): go.TypeInstantiation {
     switch (json.type) {
         case "response":

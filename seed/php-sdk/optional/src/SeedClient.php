@@ -3,7 +3,7 @@
 namespace Seed;
 
 use Seed\Optional\OptionalClient;
-use GuzzleHttp\ClientInterface;
+use Psr\Http\Client\ClientInterface;
 use Seed\Core\Client\RawClient;
 
 class SeedClient

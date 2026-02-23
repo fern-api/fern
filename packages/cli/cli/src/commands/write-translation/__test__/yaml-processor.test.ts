@@ -1,7 +1,7 @@
 import * as yaml from "js-yaml";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { CliContext } from "../../../cli-context/CliContext";
-import { translateYamlContent } from "../yaml-processor";
+import { CliContext } from "../../../cli-context/CliContext.js";
+import { translateYamlContent } from "../yaml-processor.js";
 
 vi.mock("../translation-service", () => ({
     translateText: vi.fn(({ text }: { text: string }) => Promise.resolve(`[TRANSLATED] ${text}`))

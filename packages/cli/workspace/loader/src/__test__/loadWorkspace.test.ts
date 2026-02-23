@@ -3,7 +3,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import assert from "assert";
 
-import { loadAPIWorkspace } from "../loadAPIWorkspace";
+import { loadAPIWorkspace } from "../loadAPIWorkspace.js";
 
 describe("loadWorkspace", () => {
     it("fern definition", async () => {

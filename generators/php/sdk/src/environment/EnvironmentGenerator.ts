@@ -1,6 +1,6 @@
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { MultiUrlEnvironmentGenerator } from "./MultiUrlEnvironmentGenerator";
-import { SingleUrlEnvironmentGenerator } from "./SingleUrlEnvironmentGenerator";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { MultiUrlEnvironmentGenerator } from "./MultiUrlEnvironmentGenerator.js";
+import { SingleUrlEnvironmentGenerator } from "./SingleUrlEnvironmentGenerator.js";
 
 export class EnvironmentGenerator {
     private context: SdkGeneratorContext;

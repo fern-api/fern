@@ -1,10 +1,4 @@
-import {
-    ExampleEndpointCall,
-    HttpEndpoint,
-    HttpRequestBody,
-    HttpService,
-    IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import {
     ExportsManager,
     Fetcher,
@@ -15,20 +9,20 @@ import {
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
-import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders";
-import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature";
-import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
-import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter";
-import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest";
+import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
+import { generateHeaders, HEADERS_VAR_NAME } from "../endpoints/utils/generateHeaders.js";
+import { getPathParametersForEndpointSignature } from "../endpoints/utils/getPathParametersForEndpointSignature.js";
+import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
+import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter.js";
+import { GeneratedEndpointRequest } from "./GeneratedEndpointRequest.js";
 
 export declare namespace GeneratedBytesEndpointRequest {
     export interface Init {
-        ir: IntermediateRepresentation;
+        ir: FernIr.IntermediateRepresentation;
         packageId: PackageId;
-        service: HttpService;
-        endpoint: HttpEndpoint;
-        requestBody: HttpRequestBody.Bytes;
+        service: FernIr.HttpService;
+        endpoint: FernIr.HttpEndpoint;
+        requestBody: FernIr.HttpRequestBody.Bytes;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         retainOriginalCasing: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -40,12 +34,12 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
     private static readonly BINARY_UPLOAD_REQUEST_VARIABLE_NAME = "_binaryUploadRequest";
     private static readonly UPLOADABLE_PARAMETER_NAME = "uploadable";
 
-    private readonly ir: IntermediateRepresentation;
+    private readonly ir: FernIr.IntermediateRepresentation;
     private readonly requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
-    private readonly service: HttpService;
-    private readonly endpoint: HttpEndpoint;
-    private readonly requestBody: HttpRequestBody.Bytes;
+    private readonly service: FernIr.HttpService;
+    private readonly endpoint: FernIr.HttpEndpoint;
+    private readonly requestBody: FernIr.HttpRequestBody.Bytes;
     private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
@@ -114,7 +108,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
         opts
     }: {
         context: SdkContext;
-        example: ExampleEndpointCall;
+        example: FernIr.ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];

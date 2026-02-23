@@ -12,6 +12,7 @@ export const defaultConfig = {
                 fallbackCJS: true
             }
         },
+        reporters: process.env.CI ? [["default", { summary: false }], "github-actions"] : ["default"],
         maxConcurrency: 10,
         passWithNoTests: true
     }

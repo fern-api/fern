@@ -1,10 +1,10 @@
-import { AstNode } from "./AstNode";
-import { Enum } from "./Enum";
-import { ImplBlock } from "./ImplBlock";
-import { ModuleDeclaration } from "./ModuleDeclaration";
-import { Struct } from "./Struct";
-import { UseStatement } from "./UseStatement";
-import { Writer } from "./Writer";
+import { AstNode } from "./AstNode.js";
+import { Enum } from "./Enum.js";
+import { ImplBlock } from "./ImplBlock.js";
+import { ModuleDeclaration } from "./ModuleDeclaration.js";
+import { Struct } from "./Struct.js";
+import { UseStatement } from "./UseStatement.js";
+import { Writer } from "./Writer.js";
 
 export declare namespace Module {
     interface Args {

@@ -1,7 +1,7 @@
 import path from "path";
 import tmp from "tmp-promise";
 
-import { runFernCli } from "../../utils/runFernCli";
+import { runFernCli } from "../../utils/runFernCli.js";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
@@ -12,29 +12,32 @@ describe("--api", () => {
 function testFixture(fixtureName: string) {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
-        it("Fails if API is not specified", async () => {
+        it("Fails if API is not specified", async ({ signal }) => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
             const { stdout, failed } = await runFernCli(["ir", (await tmp.file()).path], {
                 cwd: fixturePath,
-                reject: false
+                reject: false,
+                signal
             });
             expect(failed).toBe(true);
             expect(stdout).toContain("There are multiple workspaces. You must specify one with --api");
         }, 90_000);
 
-        it("Succeeds if API is specified", async () => {
+        it("Succeeds if API is specified", async ({ signal }) => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
             const { failed } = await runFernCli(["--api", "api1", "ir", (await tmp.file()).path], {
-                cwd: fixturePath
+                cwd: fixturePath,
+                signal
             });
             expect(failed).toBe(false);
         }, 90_000);
 
-        it("Fail if API does not exist", async () => {
+        it("Fail if API does not exist", async ({ signal }) => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
             const { failed } = await runFernCli(["--api", "api3", "ir", (await tmp.file()).path], {
                 cwd: fixturePath,
-                reject: false
+                reject: false,
+                signal
             });
             expect(failed).toBe(true);
         }, 90_000);

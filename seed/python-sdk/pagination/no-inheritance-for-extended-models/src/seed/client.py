@@ -6,6 +6,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 
 if typing.TYPE_CHECKING:
     from .complex_.client import AsyncComplexClient, ComplexClient
@@ -35,6 +36,9 @@ class SeedPagination:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import SeedPagination
@@ -54,6 +58,7 @@ class SeedPagination:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -68,6 +73,7 @@ class SeedPagination:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._complex_: typing.Optional[ComplexClient] = None
         self._inline_users: typing.Optional[InlineUsersClient] = None
@@ -120,6 +126,9 @@ class AsyncSeedPagination:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import AsyncSeedPagination
@@ -139,6 +148,7 @@ class AsyncSeedPagination:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
@@ -153,6 +163,7 @@ class AsyncSeedPagination:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._complex_: typing.Optional[AsyncComplexClient] = None
         self._inline_users: typing.Optional[AsyncInlineUsersClient] = None

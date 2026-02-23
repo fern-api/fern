@@ -1,8 +1,8 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { EXAMPLE_REFERENCE_PREFIX } from "@fern-api/fern-definition-schema";
 
-import { FernFileContext } from "../FernFileContext";
-import { TypeResolver } from "./TypeResolver";
+import { FernFileContext } from "../FernFileContext.js";
+import { TypeResolver } from "./TypeResolver.js";
 
 export interface ExampleResolver {
     resolveAllReferencesInExample: (args: {
@@ -60,7 +60,10 @@ export class ExampleResolverImpl implements ExampleResolver {
                 if (resolvedExampleValue == null) {
                     return undefined;
                 }
-                newExample[exampleKey] = resolvedExampleValue.resolvedExample;
+                const unescapedKey = exampleKey.startsWith(`\\${EXAMPLE_REFERENCE_PREFIX}`)
+                    ? exampleKey.slice(1)
+                    : exampleKey;
+                newExample[unescapedKey] = resolvedExampleValue.resolvedExample;
             }
             return { resolvedExample: newExample };
         } else if (Array.isArray(example)) {

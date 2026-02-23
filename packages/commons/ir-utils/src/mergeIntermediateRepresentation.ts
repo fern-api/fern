@@ -228,6 +228,7 @@ function mergeEnvironments(
                             )
                         },
                         docs: undefined,
+                        audiences: env.audiences,
                         defaultUrls: undefined,
                         urlTemplates: undefined,
                         urlVariables: undefined

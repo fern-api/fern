@@ -2,7 +2,7 @@ import axios from "axios";
 import { IncomingMessage, Server } from "http";
 import open from "open";
 
-import { createServer } from "./createServer";
+import { createServer } from "./createServer.js";
 
 const SUCCESS_PAGE = `
 <!DOCTYPE html>

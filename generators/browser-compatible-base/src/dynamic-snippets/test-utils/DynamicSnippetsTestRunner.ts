@@ -348,6 +348,30 @@ export class DynamicSnippetsTestRunner {
                             bigint: "1000000"
                         }
                     }
+                },
+                {
+                    description: "POST /container/map-prim-to-union (mixed values)",
+                    giveRequest: {
+                        endpoint: {
+                            method: "POST",
+                            path: "/container/map-prim-to-union"
+                        },
+                        baseURL: undefined,
+                        environment: undefined,
+                        auth: {
+                            type: "bearer",
+                            token: "<YOUR_API_KEY>"
+                        },
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: undefined,
+                        requestBody: {
+                            test: 0,
+                            test2: true,
+                            test3: "Test",
+                            test4: ["1", "1", "1", "1"]
+                        }
+                    }
                 }
             ]
         });

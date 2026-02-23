@@ -249,6 +249,7 @@
           "Pet": {
             "availability": undefined,
             "base-properties": {},
+            "context": "data",
             "discriminant": "petType",
             "docs": undefined,
             "encoding": undefined,
@@ -415,6 +416,7 @@ types:
       cat: Cat
     source:
       openapi: ../openapi.yml
+    context: data
   ResponseData:
     properties:
       success: optional<boolean>

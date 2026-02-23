@@ -2,7 +2,7 @@ import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { Rule, RuleViolation } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule.js";
 
 /**
  * Validates that a reference path exists in the OpenAPI specification
@@ -14,9 +14,7 @@ function validateReference(ref: string, spec: unknown): boolean {
         .split("/")
         .map((part) =>
             // Decode JSON Pointer escapes: ~1 -> /, ~0 -> ~
-            part
-                .replace(/~1/g, "/")
-                .replace(/~0/g, "~")
+            part.replace(/~1/g, "/").replace(/~0/g, "~")
         );
 
     let current: unknown = spec;

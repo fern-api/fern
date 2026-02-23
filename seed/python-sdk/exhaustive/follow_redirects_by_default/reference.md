@@ -360,6 +360,63 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_map_of_prim_to_undiscriminated_union</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, MixedType]]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+    request={"string": 1.1},
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `typing.Dict[str, MixedType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="src/seed/endpoints/container/client.py">get_and_return_optional</a>(...) -&gt; AsyncHttpResponse[typing.Optional[ObjectWithRequiredField]]</code></summary>
 <dl>
 <dd>
@@ -1906,6 +1963,92 @@ client.endpoints.object.get_and_return_with_datetime_like_string(
 <dd>
 
 **actual_datetime:** `dt.datetime` — An actual datetime field for comparison
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints Pagination
+<details><summary><code>client.endpoints.pagination.<a href="src/seed/endpoints/pagination/client.py">list_items</a>(...) -&gt; AsyncPager[ObjectWithRequiredField, PaginatedResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List items with cursor pagination
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+response = client.endpoints.pagination.list_items(
+    cursor="cursor",
+    limit=1,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `typing.Optional[str]` — The cursor for pagination
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[int]` — Maximum number of items to return
     
 </dd>
 </dl>

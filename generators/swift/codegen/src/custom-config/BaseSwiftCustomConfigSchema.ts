@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 export const BaseSwiftCustomConfigSchema = z.object({
     moduleName: z.string().optional(),

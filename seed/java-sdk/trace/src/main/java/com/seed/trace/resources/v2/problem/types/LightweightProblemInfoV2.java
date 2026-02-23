@@ -115,6 +115,10 @@ public final class LightweightProblemInfoV2 {
     public interface _FinalStage {
         LightweightProblemInfoV2 build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage variableTypes(Set<VariableType> variableTypes);
 
         _FinalStage addVariableTypes(VariableType variableTypes);
@@ -195,6 +199,18 @@ public final class LightweightProblemInfoV2 {
         public LightweightProblemInfoV2 build() {
             return new LightweightProblemInfoV2(
                     problemId, problemName, problemVersion, variableTypes, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

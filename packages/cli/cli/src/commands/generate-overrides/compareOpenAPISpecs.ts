@@ -2,7 +2,7 @@ import { AbsoluteFilePath, dirname, doesPathExist, getFilename, join, RelativeFi
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { CliContext } from "../../cli-context/CliContext";
+import { CliContext } from "../../cli-context/CliContext.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
 type OpenAPISpec = Record<string, any>;

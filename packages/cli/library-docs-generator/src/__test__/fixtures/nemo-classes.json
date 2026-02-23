@@ -1,0 +1,968 @@
+{
+  "PackedTensor": {
+    "name": "PackedTensor",
+    "path": "nemo_rl.data.multimodal_utils.PackedTensor",
+    "kind": "CLASS",
+    "bases": [],
+    "docstring": {
+      "summary": "Wrapper around a list of torch tensors and a dimension along which to pack the tensors.",
+      "description": "Wrapper around a list of torch tensors and a dimension along which to pack the tensors.\n\nThis class is used to wrap a list of tensors along with a `dim_to_pack` parameter.\nIt can be used for data that can be packed along different dimensions (such as multimodal data).\n\n`dim_to_pack` is used to specify the dimension along which to pack the tensors.\n\nThe list of tensors can be returned as a single packed tensor by calling `as_tensor` which will concatenate the tensors along the `dim_to_pack` dimension.",
+      "params": [],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "constructorParams": [
+      {
+        "name": "tensors",
+        "typeInfo": {
+          "display": "Union[Tensor, list[Optional[Tensor]], list[None]]",
+          "resolvedPath": "typing.Union[torch.Tensor, list[typing.Optional[torch.Tensor]], list[None]]",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      },
+      {
+        "name": "dim_to_pack",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      }
+    ],
+    "methods": [
+      {
+        "name": "as_tensor",
+        "path": "nemo_rl.data.multimodal_utils.PackedTensor.as_tensor",
+        "signature": "def nemo_rl.data.multimodal_utils.PackedTensor.as_tensor(self, device: typing.Optional[torch.device] = None) -> typing.Optional[torch.Tensor]",
+        "parameters": [
+          {
+            "name": "self",
+            "kind": "POSITIONAL",
+            "typeInfo": null,
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "device",
+            "typeInfo": {
+              "display": "Optional[device]",
+              "resolvedPath": "typing.Optional[torch.device]",
+              "basePath": null
+            },
+            "default": "None",
+            "kind": "POSITIONAL",
+            "description": null
+          }
+        ],
+        "returnTypeInfo": {
+          "display": "Optional[Tensor]",
+          "resolvedPath": "typing.Optional[torch.Tensor]",
+          "basePath": null
+        },
+        "isAsync": false,
+        "decorators": [],
+        "isClassmethod": false,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 56,
+          "endLine": 68
+        },
+        "docstring": null
+      },
+      {
+        "name": "concat",
+        "path": "nemo_rl.data.multimodal_utils.PackedTensor.concat",
+        "signature": "def nemo_rl.data.multimodal_utils.PackedTensor.concat(\n    cls,\n    from_packed_tensors: list[nemo_rl.data.multimodal_utils.PackedTensor]\n) -> nemo_rl.data.multimodal_utils.PackedTensor",
+        "docstring": {
+          "summary": "Concatenate a list of PackedTensor objects into a single PackedTensor.",
+          "description": "Concatenate a list of PackedTensor objects into a single PackedTensor.\n\nThe underlying tensors from the PackedTensors are combined into a single list of tensors and used to create a new PackedTensor.\n\nEach batch must have the same dim_to_pack.\n\nExample:\n```{doctest}\n>>> import torch\n>>> from nemo_rl.data.multimodal_utils import PackedTensor\n>>> p1 = PackedTensor([torch.tensor([1, 2, 3]), torch.tensor([4, 5, 6])], dim_to_pack=0)\n>>> p2 = PackedTensor([torch.tensor([7, 8, 9])], dim_to_pack=0)\n>>> p3 = PackedTensor.concat([p1, p2])\n>>> p3.tensors\n[tensor([1, 2, 3]), tensor([4, 5, 6]), tensor([7, 8, 9])]\n>>> p3.as_tensor()\ntensor([1, 2, 3, 4, 5, 6, 7, 8, 9])\n>>>\n```",
+          "params": [],
+          "raises": [],
+          "examples": [],
+          "notes": [],
+          "warnings": [],
+          "returns": null
+        },
+        "parameters": [
+          {
+            "name": "cls",
+            "kind": "POSITIONAL",
+            "typeInfo": null,
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "from_packed_tensors",
+            "typeInfo": {
+              "display": "list[PackedTensor]",
+              "resolvedPath": "list[nemo_rl.data.multimodal_utils.PackedTensor]",
+              "basePath": null
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          }
+        ],
+        "returnTypeInfo": {
+          "display": "PackedTensor",
+          "resolvedPath": "nemo_rl.data.multimodal_utils.PackedTensor",
+          "basePath": "nemo_rl.data.multimodal_utils.PackedTensor"
+        },
+        "isAsync": false,
+        "decorators": [
+          "classmethod"
+        ],
+        "isClassmethod": true,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 90,
+          "endLine": 121
+        }
+      }
+    ],
+    "attributes": [
+      {
+        "name": "dim_to_pack",
+        "path": "nemo_rl.data.multimodal_utils.PackedTensor.dim_to_pack",
+        "value": "dim_to_pack",
+        "typeInfo": null,
+        "docstring": null
+      },
+      {
+        "name": "tensors",
+        "path": "nemo_rl.data.multimodal_utils.PackedTensor.tensors",
+        "typeInfo": {
+          "display": "list[Optional[Tensor]]",
+          "resolvedPath": "list[typing.Optional[torch.Tensor]]",
+          "basePath": null
+        },
+        "value": "[tensors]",
+        "docstring": null
+      }
+    ],
+    "decorators": [],
+    "isAbstract": false,
+    "hasSlots": false,
+    "sourceLocation": {
+      "startLine": 25,
+      "endLine": 154
+    },
+    "metaclass": null,
+    "typedDictFields": null,
+    "enumMembers": null
+  },
+  "LossType": {
+    "name": "LossType",
+    "path": "nemo_rl.algorithms.interfaces.LossType",
+    "kind": "ENUM",
+    "bases": [
+      {
+        "name": "enum.Enum",
+        "typeInfo": {
+          "display": "Enum",
+          "resolvedPath": "enum.Enum",
+          "basePath": null
+        }
+      }
+    ],
+    "constructorParams": [],
+    "methods": [],
+    "attributes": [
+      {
+        "name": "SEQUENCE_LEVEL",
+        "path": "nemo_rl.algorithms.interfaces.LossType.SEQUENCE_LEVEL",
+        "value": "'sequence_level'",
+        "typeInfo": null,
+        "docstring": null
+      },
+      {
+        "name": "TOKEN_LEVEL",
+        "path": "nemo_rl.algorithms.interfaces.LossType.TOKEN_LEVEL",
+        "value": "'token_level'",
+        "typeInfo": null,
+        "docstring": null
+      }
+    ],
+    "decorators": [],
+    "isAbstract": false,
+    "hasSlots": false,
+    "enumMembers": [
+      {
+        "name": "SEQUENCE_LEVEL",
+        "value": "'sequence_level'"
+      },
+      {
+        "name": "TOKEN_LEVEL",
+        "value": "'token_level'"
+      }
+    ],
+    "sourceLocation": {
+      "startLine": 23,
+      "endLine": 25
+    },
+    "docstring": null,
+    "metaclass": null,
+    "typedDictFields": null
+  },
+  "DistillationConfig": {
+    "name": "DistillationConfig",
+    "path": "nemo_rl.algorithms.distillation.DistillationConfig",
+    "kind": "TYPEDDICT",
+    "bases": [
+      {
+        "name": "TypedDict",
+        "typeInfo": {
+          "display": "TypedDict",
+          "resolvedPath": "typing.TypedDict",
+          "basePath": null
+        }
+      }
+    ],
+    "constructorParams": [],
+    "methods": [],
+    "attributes": [
+      {
+        "name": "max_num_epochs",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.max_num_epochs",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "max_num_steps",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.max_num_steps",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "max_rollout_turns",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.max_rollout_turns",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "max_val_samples",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.max_val_samples",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "num_generations_per_prompt",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.num_generations_per_prompt",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "num_prompts_per_step",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.num_prompts_per_step",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "seed",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.seed",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "topk_logits_k",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.topk_logits_k",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "val_at_start",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.val_at_start",
+        "typeInfo": {
+          "display": "bool",
+          "resolvedPath": "bool",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "val_batch_size",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.val_batch_size",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      },
+      {
+        "name": "val_period",
+        "path": "nemo_rl.algorithms.distillation.DistillationConfig.val_period",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "value": null,
+        "docstring": null
+      }
+    ],
+    "decorators": [],
+    "isAbstract": false,
+    "hasSlots": false,
+    "typedDictFields": [
+      {
+        "name": "max_num_epochs",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "max_num_steps",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "max_rollout_turns",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "required": true,
+        "description": null
+      },
+      {
+        "name": "max_val_samples",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "required": true,
+        "description": null
+      }
+    ],
+    "sourceLocation": {
+      "startLine": 73,
+      "endLine": 85
+    },
+    "docstring": null,
+    "metaclass": null,
+    "enumMembers": null
+  },
+  "LossFunction": {
+    "name": "LossFunction",
+    "path": "nemo_rl.algorithms.interfaces.LossFunction",
+    "kind": "PROTOCOL",
+    "bases": [
+      {
+        "name": "Protocol",
+        "typeInfo": {
+          "display": "Protocol",
+          "resolvedPath": "typing.Protocol",
+          "basePath": null
+        }
+      }
+    ],
+    "docstring": {
+      "summary": "Signature for loss functions used in reinforcement learning algorithms.",
+      "description": "Signature for loss functions used in reinforcement learning algorithms.\n\nLoss functions compute a scalar loss value and associated metrics from\nmodel logprobs and other data contained in a BatchedDataDict.",
+      "params": [],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "constructorParams": [],
+    "methods": [
+      {
+        "name": "__call__",
+        "path": "nemo_rl.algorithms.interfaces.LossFunction.__call__",
+        "signature": "def nemo_rl.algorithms.interfaces.LossFunction.__call__(\n    self,\n    next_token_logits: torch.Tensor,\n    data: nemo_rl.distributed.batched_data_dict.BatchedDataDict,\n    global_valid_seqs: torch.Tensor,\n    global_valid_toks: torch.Tensor\n) -> tuple[torch.Tensor, dict[str, typing.Any]]",
+        "docstring": {
+          "summary": "Compute loss and metrics from logprobs and other data.",
+          "description": "Compute loss and metrics from logprobs and other data.",
+          "params": [
+            {
+              "name": "next_token_logits",
+              "type": "torch.Tensor",
+              "description": "Logits from the model, typically with shape [batch_size, seq_len, vocab_size].\n               For each position (b, i), contains the logit distribution over the entire vocabulary\n               for predicting the next token (at position i+1). For example, if processing \"The cat sat on\",\n               then next_token_logits[b, 3] would contain the logits for predicting the word\n               that follows \"on\".",
+              "default": null
+            },
+            {
+              "name": "data",
+              "type": "BatchedDataDict",
+              "description": "Dictionary containing all relevant data for loss computation\n  such as rewards, values, actions, advantages, masks, and other\n  algorithm-specific information needed for the particular loss calculation.",
+              "default": null
+            },
+            {
+              "name": "global_valid_seqs",
+              "type": "torch.Tensor",
+              "description": "torch.Tensor\nthis tensor should contain the number of valid sequences in the microbatch.\nIt's used for global normalization for losses/metrics that are computed at the sequence level\nand needs to be aggregated across all microbatches.",
+              "default": null
+            },
+            {
+              "name": "global_valid_toks",
+              "type": "torch.Tensor",
+              "description": "torch.Tensor\nThis tensor should contain the number of valid tokens in the microbatch.\nIt's used for global normalization for losses/metrics that are computed at the token level\nand needs to be aggregated across all microbatches.",
+              "default": null
+            }
+          ],
+          "returns": {
+            "type": "tuple[torch.Tensor, dict[str, Any]]",
+            "description": "(loss, metrics)\n- loss: A scalar tensor representing the loss value to be minimized during training\n- metrics: A dictionary of metrics related to the loss computation, which may include\n  component losses, statistics about gradients/rewards, and other diagnostic information"
+          },
+          "raises": [],
+          "examples": [],
+          "notes": [],
+          "warnings": []
+        },
+        "parameters": [
+          {
+            "name": "self",
+            "kind": "POSITIONAL",
+            "typeInfo": null,
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "next_token_logits",
+            "typeInfo": {
+              "display": "Tensor",
+              "resolvedPath": "torch.Tensor",
+              "basePath": null
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "data",
+            "typeInfo": {
+              "display": "BatchedDataDict",
+              "resolvedPath": "nemo_rl.distributed.batched_data_dict.BatchedDataDict",
+              "basePath": "nemo_rl.distributed.batched_data_dict.BatchedDataDict"
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "global_valid_seqs",
+            "typeInfo": {
+              "display": "Tensor",
+              "resolvedPath": "torch.Tensor",
+              "basePath": null
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "global_valid_toks",
+            "typeInfo": {
+              "display": "Tensor",
+              "resolvedPath": "torch.Tensor",
+              "basePath": null
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          }
+        ],
+        "returnTypeInfo": {
+          "display": "tuple[Tensor, dict[str, Any]]",
+          "resolvedPath": "tuple[torch.Tensor, dict[str, typing.Any]]",
+          "basePath": null
+        },
+        "isAsync": false,
+        "decorators": [],
+        "isClassmethod": false,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 37,
+          "endLine": 70
+        }
+      }
+    ],
+    "attributes": [
+      {
+        "name": "loss_type",
+        "path": "nemo_rl.algorithms.interfaces.LossFunction.loss_type",
+        "typeInfo": {
+          "display": "LossType",
+          "resolvedPath": "nemo_rl.algorithms.interfaces.LossType",
+          "basePath": "nemo_rl.algorithms.interfaces.LossType"
+        },
+        "value": null,
+        "docstring": null
+      }
+    ],
+    "decorators": [],
+    "isAbstract": false,
+    "hasSlots": false,
+    "sourceLocation": {
+      "startLine": 28,
+      "endLine": 70
+    },
+    "metaclass": null,
+    "typedDictFields": null,
+    "enumMembers": null
+  },
+  "OverridesError": {
+    "name": "OverridesError",
+    "path": "nemo_rl.utils.config.OverridesError",
+    "kind": "EXCEPTION",
+    "bases": [
+      {
+        "name": "Exception",
+        "typeInfo": {
+          "display": "Exception",
+          "resolvedPath": "Exception",
+          "basePath": null
+        }
+      }
+    ],
+    "docstring": {
+      "summary": "Custom exception for Hydra override parsing errors.",
+      "description": "Custom exception for Hydra override parsing errors.",
+      "params": [],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "constructorParams": [],
+    "methods": [],
+    "attributes": [],
+    "decorators": [],
+    "isAbstract": false,
+    "hasSlots": false,
+    "sourceLocation": {
+      "startLine": 140,
+      "endLine": 143
+    },
+    "metaclass": null,
+    "typedDictFields": null,
+    "enumMembers": null
+  },
+  "FLOPSConfig": {
+    "name": "FLOPSConfig",
+    "path": "nemo_rl.utils.flops_formulas.FLOPSConfig",
+    "kind": "DATACLASS",
+    "bases": [],
+    "docstring": {
+      "summary": "Contains the model hparams needed for FLOPS computations.",
+      "description": "Contains the model hparams needed for FLOPS computations.",
+      "params": [],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "constructorParams": [
+      {
+        "name": "gbs",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      },
+      {
+        "name": "enc_seq_len",
+        "typeInfo": {
+          "display": "Optional[int]",
+          "resolvedPath": "typing.Optional[int]",
+          "basePath": null
+        },
+        "default": "None",
+        "kind": "POSITIONAL",
+        "description": null
+      },
+      {
+        "name": "hs",
+        "typeInfo": {
+          "display": "Optional[int]",
+          "resolvedPath": "typing.Optional[int]",
+          "basePath": null
+        },
+        "default": "None",
+        "kind": "POSITIONAL",
+        "description": null
+      }
+    ],
+    "methods": [],
+    "attributes": [
+      {
+        "name": "attention_heads",
+        "path": "nemo_rl.utils.flops_formulas.FLOPSConfig.attention_heads",
+        "typeInfo": {
+          "display": "Optional[int]",
+          "resolvedPath": "typing.Optional[int]",
+          "basePath": null
+        },
+        "value": "None",
+        "docstring": null
+      },
+      {
+        "name": "causal_self_attn",
+        "path": "nemo_rl.utils.flops_formulas.FLOPSConfig.causal_self_attn",
+        "typeInfo": {
+          "display": "Optional[bool]",
+          "resolvedPath": "typing.Optional[bool]",
+          "basePath": null
+        },
+        "value": "None",
+        "docstring": null
+      },
+      {
+        "name": "class_token_len",
+        "path": "nemo_rl.utils.flops_formulas.FLOPSConfig.class_token_len",
+        "typeInfo": {
+          "display": "Optional[int]",
+          "resolvedPath": "typing.Optional[int]",
+          "basePath": null
+        },
+        "value": "None",
+        "docstring": null
+      }
+    ],
+    "decorators": [
+      "dataclass"
+    ],
+    "isAbstract": false,
+    "hasSlots": false,
+    "sourceLocation": {
+      "startLine": 20,
+      "endLine": 59
+    },
+    "metaclass": null,
+    "typedDictFields": null,
+    "enumMembers": null
+  },
+  "AbstractClass": {
+    "name": "SequencePacker",
+    "path": "nemo_rl.data.packing.algorithms.SequencePacker",
+    "kind": "CLASS",
+    "bases": [
+      {
+        "name": "ABC",
+        "typeInfo": {
+          "display": "ABC",
+          "resolvedPath": "abc.ABC",
+          "basePath": null
+        }
+      }
+    ],
+    "docstring": {
+      "summary": "Abstract base class for sequence packing algorithms.",
+      "description": "Abstract base class for sequence packing algorithms.\n\nSequence packing is the process of efficiently arranging sequences of different\nlengths into fixed-capacity bins (batches) to maximize computational efficiency.",
+      "params": [],
+      "raises": [],
+      "examples": [],
+      "notes": [],
+      "warnings": [],
+      "returns": null
+    },
+    "constructorParams": [
+      {
+        "name": "bin_capacity",
+        "typeInfo": {
+          "display": "int",
+          "resolvedPath": "int",
+          "basePath": null
+        },
+        "kind": "POSITIONAL",
+        "default": null,
+        "description": null
+      },
+      {
+        "name": "collect_metrics",
+        "typeInfo": {
+          "display": "bool",
+          "resolvedPath": "bool",
+          "basePath": null
+        },
+        "default": "False",
+        "kind": "POSITIONAL",
+        "description": null
+      },
+      {
+        "name": "min_bin_count",
+        "typeInfo": {
+          "display": "Optional[int]",
+          "resolvedPath": "typing.Optional[int]",
+          "basePath": null
+        },
+        "default": "None",
+        "kind": "POSITIONAL",
+        "description": null
+      },
+      {
+        "name": "bin_count_multiple",
+        "typeInfo": {
+          "display": "Optional[int]",
+          "resolvedPath": "typing.Optional[int]",
+          "basePath": null
+        },
+        "default": "None",
+        "kind": "POSITIONAL",
+        "description": null
+      }
+    ],
+    "methods": [
+      {
+        "name": "_adjust_bin_count",
+        "path": "nemo_rl.data.packing.algorithms.SequencePacker._adjust_bin_count",
+        "signature": "def nemo_rl.data.packing.algorithms.SequencePacker._adjust_bin_count(self, bins: typing.List[typing.List[int]]) -> typing.List[typing.List[int]]",
+        "docstring": {
+          "summary": "Adjust the number of bins to meet minimum and multiple constraints.",
+          "description": "Adjust the number of bins to meet minimum and multiple constraints.\n\nThis method preserves the existing bin packing as much as possible and only\nmoves sequences one at a time to create additional bins when needed.",
+          "params": [
+            {
+              "name": "bins",
+              "type": "List[List[int]]",
+              "description": "The original bins from the packing algorithm.",
+              "default": null
+            }
+          ],
+          "returns": {
+            "type": "List[List[int]]",
+            "description": "Adjusted bins with minimal changes to meet constraints."
+          },
+          "raises": [
+            {
+              "type": "ValueError",
+              "description": "If there aren't enough sequences to fill the required number of bins."
+            }
+          ],
+          "examples": [],
+          "notes": [],
+          "warnings": []
+        },
+        "parameters": [
+          {
+            "name": "self",
+            "kind": "POSITIONAL",
+            "typeInfo": null,
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "bins",
+            "typeInfo": {
+              "display": "List[List[int]]",
+              "resolvedPath": "typing.List[typing.List[int]]",
+              "basePath": null
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          }
+        ],
+        "returnTypeInfo": {
+          "display": "List[List[int]]",
+          "resolvedPath": "typing.List[typing.List[int]]",
+          "basePath": null
+        },
+        "isAsync": false,
+        "decorators": [],
+        "isClassmethod": false,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 91,
+          "endLine": 167
+        }
+      },
+      {
+        "name": "_create_indexed_lengths",
+        "path": "nemo_rl.data.packing.algorithms.SequencePacker._create_indexed_lengths",
+        "signature": "def nemo_rl.data.packing.algorithms.SequencePacker._create_indexed_lengths(\n    self,\n    sequence_lengths: typing.List[int],\n    reverse: bool = False\n) -> typing.List[typing.Tuple[int, int]]",
+        "docstring": {
+          "summary": "Create a list of (length, index) pairs from sequence lengths.",
+          "description": "Create a list of (length, index) pairs from sequence lengths.",
+          "params": [
+            {
+              "name": "sequence_lengths",
+              "type": "List[int]",
+              "description": "A list of sequence lengths.",
+              "default": null
+            },
+            {
+              "name": "reverse",
+              "type": "bool",
+              "description": "Whether to sort in descending order (True) or ascending order (False).",
+              "default": "False"
+            }
+          ],
+          "returns": {
+            "type": "List[Tuple[int, int]]",
+            "description": "A list of (length, index) pairs, optionally sorted."
+          },
+          "raises": [],
+          "examples": [],
+          "notes": [],
+          "warnings": []
+        },
+        "parameters": [
+          {
+            "name": "self",
+            "kind": "POSITIONAL",
+            "typeInfo": null,
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "sequence_lengths",
+            "typeInfo": {
+              "display": "List[int]",
+              "resolvedPath": "typing.List[int]",
+              "basePath": null
+            },
+            "kind": "POSITIONAL",
+            "default": null,
+            "description": null
+          },
+          {
+            "name": "reverse",
+            "typeInfo": {
+              "display": "bool",
+              "resolvedPath": "bool",
+              "basePath": null
+            },
+            "default": "False",
+            "kind": "POSITIONAL",
+            "description": null
+          }
+        ],
+        "returnTypeInfo": {
+          "display": "List[Tuple[int, int]]",
+          "resolvedPath": "typing.List[typing.Tuple[int, int]]",
+          "basePath": null
+        },
+        "isAsync": false,
+        "decorators": [],
+        "isClassmethod": false,
+        "isStaticmethod": false,
+        "isProperty": false,
+        "sourceLocation": {
+          "startLine": 258,
+          "endLine": 273
+        }
+      }
+    ],
+    "attributes": [
+      {
+        "name": "bin_capacity",
+        "path": "nemo_rl.data.packing.algorithms.SequencePacker.bin_capacity",
+        "value": "bin_capacity",
+        "typeInfo": null,
+        "docstring": null
+      },
+      {
+        "name": "bin_count_multiple",
+        "path": "nemo_rl.data.packing.algorithms.SequencePacker.bin_count_multiple",
+        "value": "bin_count_multiple",
+        "typeInfo": null,
+        "docstring": null
+      },
+      {
+        "name": "collect_metrics",
+        "path": "nemo_rl.data.packing.algorithms.SequencePacker.collect_metrics",
+        "value": "collect_metrics",
+        "typeInfo": null,
+        "docstring": null
+      },
+      {
+        "name": "metrics",
+        "path": "nemo_rl.data.packing.algorithms.SequencePacker.metrics",
+        "value": "None",
+        "typeInfo": null,
+        "docstring": null
+      },
+      {
+        "name": "min_bin_count",
+        "path": "nemo_rl.data.packing.algorithms.SequencePacker.min_bin_count",
+        "value": "min_bin_count",
+        "typeInfo": null,
+        "docstring": null
+      }
+    ],
+    "decorators": [],
+    "isAbstract": true,
+    "hasSlots": false,
+    "sourceLocation": {
+      "startLine": 34,
+      "endLine": 285
+    },
+    "metaclass": null,
+    "typedDictFields": null,
+    "enumMembers": null
+  }
+}

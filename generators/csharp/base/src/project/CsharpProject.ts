@@ -1,14 +1,14 @@
 import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-api/base-generator";
-import { WithGeneration } from "@fern-api/csharp-codegen";
+import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
-import { AsIsFiles } from "../AsIs";
-import { GeneratorContext } from "../context/GeneratorContext";
-import { findDotnetToolPath } from "../findDotNetToolPath";
-import { CSharpFile } from "./CSharpFile";
+import { AsIsFiles } from "../AsIs.js";
+import { GeneratorContext } from "../context/GeneratorContext.js";
+import { findDotnetToolPath } from "../findDotNetToolPath.js";
+import { CSharpFile } from "./CSharpFile.js";
 
 export const CORE_DIRECTORY_NAME = "Core";
 export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
@@ -40,58 +40,58 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             sourceConfig: this.context.ir.sourceConfig
         });
     }
-    protected get generation() {
+    protected get generation(): Generation {
         return this.context.generation;
     }
-    protected get namespaces() {
+    protected get namespaces(): Generation["namespaces"] {
         return this.generation.namespaces;
     }
-    protected get registry() {
+    protected get registry(): Generation["registry"] {
         return this.generation.registry;
     }
-    protected get settings() {
+    protected get settings(): Generation["settings"] {
         return this.generation.settings;
     }
-    protected get constants() {
+    protected get constants(): Generation["constants"] {
         return this.generation.constants;
     }
-    protected get names() {
+    protected get names(): Generation["names"] {
         return this.generation.names;
     }
-    protected get model() {
+    protected get model(): Generation["model"] {
         return this.generation.model;
     }
-    protected get format() {
+    protected get format(): Generation["format"] {
         return this.generation.format;
     }
-    protected get csharp() {
+    protected get csharp(): Generation["csharp"] {
         return this.generation.csharp;
     }
-    protected get Types() {
+    protected get Types(): Generation["Types"] {
         return this.generation.Types;
     }
-    protected get System() {
+    protected get System(): Generation["extern"]["System"] {
         return this.generation.extern.System;
     }
-    protected get NUnit() {
+    protected get NUnit(): Generation["extern"]["NUnit"] {
         return this.generation.extern.NUnit;
     }
-    protected get OneOf() {
+    protected get OneOf(): Generation["extern"]["OneOf"] {
         return this.generation.extern.OneOf;
     }
-    protected get Google() {
+    protected get Google(): Generation["extern"]["Google"] {
         return this.generation.extern.Google;
     }
-    protected get WireMock() {
+    protected get WireMock(): Generation["extern"]["WireMock"] {
         return this.generation.extern.WireMock;
     }
-    protected get Primitive() {
+    protected get Primitive(): Generation["Primitive"] {
         return this.generation.Primitive;
     }
-    protected get Value() {
+    protected get Value(): Generation["Value"] {
         return this.generation.Value;
     }
-    protected get Collection() {
+    protected get Collection(): Generation["Collection"] {
         return this.generation.Collection;
     }
 
@@ -173,6 +173,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     }
 
     public async persist(): Promise<void> {
+        const persistStartTime = Date.now();
         // Get configurable output paths
         const outputPath = this.settings.outputPath;
         const libraryPath = outputPath.library;
@@ -206,6 +207,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         this.context.logger.debug(`mkdir ${absolutePathToOtherDirectory}`);
         await mkdir(absolutePathToOtherDirectory, { recursive: true });
 
+        const createProjectStartTime = Date.now();
         const absolutePathToProjectDirectory = await this.createProject({
             absolutePathToLibraryDirectory,
             absolutePathToSolutionDirectory,
@@ -213,19 +215,26 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             libraryPath,
             solutionPath
         });
+        this.context.logger.info(`[TIMING] createProject took ${Date.now() - createProjectStartTime}ms`);
+        const createTestProjectStartTime = Date.now();
         const absolutePathToTestProjectDirectory = await this.createTestProject({
             absolutePathToTestDirectory,
             absolutePathToSolutionDirectory,
             absolutePathToProjectDirectory
         });
+        this.context.logger.info(`[TIMING] createTestProject took ${Date.now() - createTestProjectStartTime}ms`);
 
+        const writeSourceFilesStartTime = Date.now();
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
         }
+        this.context.logger.info(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
+        const writeTestFilesStartTime = Date.now();
         for (const file of this.testFiles) {
             await file.write(absolutePathToTestProjectDirectory);
         }
+        this.context.logger.info(`[TIMING] writeTestFiles took ${Date.now() - writeTestFilesStartTime}ms`);
 
         await this.createRawFiles();
 
@@ -301,6 +310,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
+        const dotnetFormatStartTime = Date.now();
         if (this.settings.useDotnetFormat) {
             // apply dotnet analyzer and formatter pass 1
             await this.dotnetFormat(
@@ -325,9 +335,13 @@ dotnet_diagnostic.IDE0005.severity = error
           `
             );
         }
+        this.context.logger.info(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
 
         // format the code cleanly using csharpier on the full output directory
+        const csharpierStartTime = Date.now();
         await this.csharpier(this.absolutePathToOutputDirectory);
+        this.context.logger.info(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
+        this.context.logger.info(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
     }
 
     private async createProject({

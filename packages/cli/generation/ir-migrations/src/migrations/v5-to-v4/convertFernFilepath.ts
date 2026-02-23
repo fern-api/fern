@@ -1,5 +1,5 @@
-import { IrVersions } from "../../ir-versions";
-import { convertNameToV1, convertNameToV2 } from "./convertName";
+import { IrVersions } from "../../ir-versions/index.js";
+import { convertNameToV1, convertNameToV2 } from "./convertName.js";
 
 export function convertFernFilepathV1(
     fernFilepath: IrVersions.V5.commons.FernFilepath

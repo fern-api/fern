@@ -1,5 +1,5 @@
-import type { TaskStageLabels } from "./TaskStageLabels";
-import { TaskStatus } from "./TaskStatus";
+import type { TaskStageLabels } from "./TaskStageLabels.js";
+import { TaskStatus } from "./TaskStatus.js";
 
 /**
  * Defines a stage with labels for each possible status.

@@ -1,1 +1,1 @@
-export { NoNonComponentRefsRule } from "./no-non-component-refs";
+export { NoNonComponentRefsRule } from "./no-non-component-refs.js";

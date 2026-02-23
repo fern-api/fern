@@ -1,17 +1,16 @@
 import { assertNever } from "@fern-api/core-utils";
 import { go } from "@fern-api/go-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { HttpEndpoint, SseStreamChunk, StreamingResponse } from "@fern-fern/ir-sdk/api";
-
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace Streamer {
     export interface StreamArgs {
-        endpoint: HttpEndpoint;
+        endpoint: FernIr.HttpEndpoint;
         streamerVariable: go.AstNode;
         optionsReference: go.AstNode;
         url: go.AstNode;
-        streamingResponse: StreamingResponse;
+        streamingResponse: FernIr.StreamingResponse;
         request?: go.AstNode;
         errorCodes?: go.AstNode;
         /** The import path of the namespace where the endpoint is defined. Used to reference namespace-specific ErrorCodes. */
@@ -141,6 +140,13 @@ export class Streamer {
                 value: format
             });
         }
+        const eventDiscriminator = this.getEventDiscriminator(args.streamingResponse);
+        if (eventDiscriminator != null) {
+            arguments_.push({
+                name: "EventDiscriminator",
+                value: eventDiscriminator
+            });
+        }
         if (args.request != null) {
             arguments_.push({
                 name: "Request",
@@ -174,7 +180,7 @@ export class Streamer {
         });
     }
 
-    private getStreamPrefix(streamingResponse: StreamingResponse): go.TypeInstantiation | undefined {
+    private getStreamPrefix(streamingResponse: FernIr.StreamingResponse): go.TypeInstantiation | undefined {
         switch (streamingResponse.type) {
             case "sse":
                 return go.TypeInstantiation.reference(this.getDefaultSSEDataPrefixTypeReference());
@@ -186,7 +192,7 @@ export class Streamer {
         }
     }
 
-    private getStreamTerminator(streamingResponse: StreamingResponse): go.TypeInstantiation | undefined {
+    private getStreamTerminator(streamingResponse: FernIr.StreamingResponse): go.TypeInstantiation | undefined {
         switch (streamingResponse.type) {
             case "json":
                 return streamingResponse.terminator != null
@@ -201,7 +207,7 @@ export class Streamer {
         }
     }
 
-    private getStreamFormat(streamingResponse: StreamingResponse): go.TypeInstantiation | undefined {
+    private getStreamFormat(streamingResponse: FernIr.StreamingResponse): go.TypeInstantiation | undefined {
         switch (streamingResponse.type) {
             case "sse":
                 return go.TypeInstantiation.reference(this.getStreamFormatSseTypeReference());
@@ -213,7 +219,7 @@ export class Streamer {
         }
     }
 
-    private getSSETerminatorTypeReference(sse: SseStreamChunk): go.TypeInstantiation {
+    private getSSETerminatorTypeReference(sse: FernIr.SseStreamChunk): go.TypeInstantiation {
         if (sse.terminator != null) {
             return go.TypeInstantiation.string(sse.terminator);
         }
@@ -239,5 +245,27 @@ export class Streamer {
             name: "StreamFormatSSE",
             importPath: this.context.getCoreImportPath()
         });
+    }
+
+    private getEventDiscriminator(streamingResponse: FernIr.StreamingResponse): go.TypeInstantiation | undefined {
+        if (streamingResponse.type !== "sse") {
+            return undefined;
+        }
+        const payload = streamingResponse.payload;
+        if (payload.type !== "named") {
+            return undefined;
+        }
+        const typeDeclaration = this.context.getTypeDeclarationOrThrow(payload.typeId);
+        if (typeDeclaration.shape.type !== "union") {
+            return undefined;
+        }
+        const union = typeDeclaration.shape;
+        if (
+            !("discriminatorContext" in union) ||
+            (union as { discriminatorContext?: string }).discriminatorContext !== "protocol"
+        ) {
+            return undefined;
+        }
+        return go.TypeInstantiation.string(union.discriminant.wireValue);
     }
 }

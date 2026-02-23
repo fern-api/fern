@@ -1,7 +1,7 @@
 import { noop } from "@fern-api/core-utils";
 import { BaseSwiftCustomConfigSchema, EnumWithAssociatedValues, NameRegistry, swift } from "@fern-api/swift-codegen";
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import type { AbstractSwiftGeneratorContext } from ".";
+import { FernIr } from "@fern-fern/ir-sdk";
+import type { AbstractSwiftGeneratorContext } from "./index.js";
 
 export function registerDiscriminatedUnionVariants({
     parentSymbol,
@@ -10,7 +10,7 @@ export function registerDiscriminatedUnionVariants({
 }: {
     parentSymbol: swift.Symbol;
     registry: NameRegistry;
-    typeDeclaration: TypeDeclaration;
+    typeDeclaration: FernIr.TypeDeclaration;
     context: AbstractSwiftGeneratorContext<BaseSwiftCustomConfigSchema>;
 }) {
     typeDeclaration.shape._visit({

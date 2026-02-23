@@ -3,13 +3,13 @@ import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
 export class GoGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
-    private publishConfig: PublishingConfig | undefined;
+    private publishConfig: FernIr.PublishingConfig | undefined;
 
     public constructor({
         logger,
@@ -21,8 +21,8 @@ export class GoGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
-        publishConfig: PublishingConfig | undefined;
-        ir: IntermediateRepresentation;
+        publishConfig: FernIr.PublishingConfig | undefined;
+        ir: FernIr.IntermediateRepresentation;
     }) {
         super({ logger, config, selfHosted: ir.selfHosted });
         this.readmeConfigBuilder = readmeConfigBuilder;

@@ -81,6 +81,10 @@ public final class FilteredType {
     public interface _FinalStage {
         FilteredType build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage publicProperty(Optional<String> publicProperty);
 
         _FinalStage publicProperty(String publicProperty);
@@ -127,6 +131,18 @@ public final class FilteredType {
         @java.lang.Override
         public FilteredType build() {
             return new FilteredType(publicProperty, privateProperty, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

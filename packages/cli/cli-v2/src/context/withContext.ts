@@ -1,11 +1,17 @@
 import { LogLevel } from "@fern-api/logger";
 import chalk from "chalk";
-import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError";
-import { CliError } from "../errors/CliError";
-import { ValidationError } from "../errors/ValidationError";
-import { Icons } from "../ui/format";
-import { Context } from "./Context";
-import type { GlobalArgs } from "./GlobalArgs";
+import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
+import { CliError } from "../errors/CliError.js";
+import { ValidationError } from "../errors/ValidationError.js";
+import { Icons } from "../ui/format.js";
+import { Context } from "./Context.js";
+import type { GlobalArgs } from "./GlobalArgs.js";
+
+// It's standard to use 128 as the base exit code for signals.
+// https://en.wikipedia.org/wiki/Signal_(IPC)
+const SIGNAL_EXIT_CODE_BASE = 128;
+const SIGINT_EXIT_CODE = SIGNAL_EXIT_CODE_BASE + 2;
+const SIGTERM_EXIT_CODE = SIGNAL_EXIT_CODE_BASE + 15;
 
 /**
  * Wraps a command handler with context creation and error handling.
@@ -18,11 +24,27 @@ export function withContext<T extends GlobalArgs>(
 ): (args: T) => Promise<void> {
     return async (args: T) => {
         const context = createContext(args);
+        const startTime = Date.now();
+        setupSignalHandler(context);
+
         try {
             await handler(context, args);
+            await context.telemetry.sendLifecycleEvent({
+                command: context.info.command,
+                status: "success",
+                durationMs: Date.now() - startTime
+            });
+            await context.telemetry.flush();
             context.finish();
             process.exit(0);
         } catch (error) {
+            await context.telemetry.sendLifecycleEvent({
+                command: context.info.command,
+                status: "error",
+                durationMs: Date.now() - startTime,
+                errorCode: extractErrorCode(error)
+            });
+            await context.telemetry.flush();
             handleError(context, error);
             context.finish();
             process.exit(1);
@@ -71,6 +93,29 @@ function handleError(context: Context, error: unknown): void {
     }
 
     process.stderr.write(`${chalk.red(String(error))}\n`);
+}
+
+function extractErrorCode(error: unknown): CliError.Code {
+    if (error instanceof CliError && error.code != null) {
+        return error.code;
+    }
+    if (error instanceof ValidationError) {
+        return "VALIDATION_ERROR";
+    }
+    if (error instanceof KeyringUnavailableError) {
+        return "UNAUTHORIZED_ERROR";
+    }
+    return "INTERNAL_ERROR";
+}
+
+function setupSignalHandler(context: Context): void {
+    const onSignal = (exitCode: number): void => {
+        context.shutdown();
+        context.printLogFilePath(process.stderr);
+        process.exit(exitCode);
+    };
+    process.on("SIGINT", () => onSignal(SIGINT_EXIT_CODE));
+    process.on("SIGTERM", () => onSignal(SIGTERM_EXIT_CODE));
 }
 
 function parseLogLevel(level: string): LogLevel {

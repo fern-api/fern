@@ -1,4 +1,4 @@
-import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
@@ -7,9 +7,9 @@ export declare namespace AbstractGeneratedType {
     export interface Init<Shape, Context> {
         typeName: string;
         shape: Shape;
-        examples: ExampleType[];
+        examples: FernIr.ExampleType[];
         docs: string | undefined;
-        fernFilepath: FernFilepath;
+        fernFilepath: FernIr.FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
@@ -34,8 +34,8 @@ const EXAMPLE_PREFIX = "    ";
 export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> implements BaseGeneratedType<Context> {
     protected readonly typeName: string;
     protected readonly shape: Shape;
-    protected readonly examples: ExampleType[];
-    protected readonly fernFilepath: FernFilepath;
+    protected readonly examples: FernIr.ExampleType[];
+    protected readonly fernFilepath: FernIr.FernFilepath;
     protected readonly getReferenceToSelf: (context: Context) => Reference;
     protected readonly includeSerdeLayer: boolean;
     protected readonly noOptionalProperties: boolean;
@@ -108,5 +108,9 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         responseTypeNode: ts.TypeNode | undefined;
     };
     public abstract generateModule(context: Context): ModuleDeclarationStructure | undefined;
-    public abstract buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression;
+    public abstract buildExample(
+        example: FernIr.ExampleTypeShape,
+        context: Context,
+        opts: GetReferenceOpts
+    ): ts.Expression;
 }

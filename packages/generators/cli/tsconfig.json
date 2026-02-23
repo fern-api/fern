@@ -1,12 +1,8 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"],
-  "references": [
-    { "path": "../../cli/logger" },
-    { "path": "../../commons/fs-utils" },
-    { "path": "../../commons/logging-execa" },
-    { "path": "../../ir-sdk" },
-    { "path": "../commons" }
-  ]
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "include": ["./src"]
 }

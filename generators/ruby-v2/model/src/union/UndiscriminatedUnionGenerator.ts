@@ -2,9 +2,8 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { TypeDeclaration, UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "../ModelCustomConfig.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 interface UnionMember {
     typeReference: ruby.ClassReference | ruby.Type;
@@ -15,14 +14,14 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<
     ModelCustomConfigSchema,
     ModelGeneratorContext
 > {
-    private readonly typeDeclaration: TypeDeclaration;
+    private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly classReference: ruby.ClassReference;
     private readonly unionMembers: UnionMember[];
 
     constructor(
         context: ModelGeneratorContext,
-        typeDeclaration: TypeDeclaration,
-        private readonly unionDeclaration: UndiscriminatedUnionTypeDeclaration
+        typeDeclaration: FernIr.TypeDeclaration,
+        private readonly unionDeclaration: FernIr.UndiscriminatedUnionTypeDeclaration
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;

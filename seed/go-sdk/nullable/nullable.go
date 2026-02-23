@@ -260,6 +260,9 @@ func (m *Metadata) GetValues() map[string]*string {
 }
 
 func (m *Metadata) GetExtraProperties() map[string]interface{} {
+	if m == nil {
+		return nil
+	}
 	return m.extraProperties
 }
 
@@ -352,6 +355,9 @@ func (m *Metadata) MarshalJSON() ([]byte, error) {
 }
 
 func (m *Metadata) String() string {
+	if m == nil {
+		return "<nil>"
+	}
 	if len(m.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(m.rawJSON); err == nil {
 			return value
@@ -614,6 +620,9 @@ func (u *User) GetStrings() map[string]interface{} {
 }
 
 func (u *User) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
 	return u.extraProperties
 }
 
@@ -708,6 +717,9 @@ func (u *User) MarshalJSON() ([]byte, error) {
 }
 
 func (u *User) String() string {
+	if u == nil {
+		return "<nil>"
+	}
 	if len(u.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
 			return value

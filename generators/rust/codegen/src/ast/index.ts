@@ -1,34 +1,34 @@
-export { AstNode } from "./AstNode";
-export { Attribute } from "./Attribute";
-export { Client } from "./Client";
-export { CodeBlock } from "./CodeBlock";
-export { DocComment } from "./DocComment";
-export { Enum } from "./Enum";
-export { EnumVariant } from "./EnumVariant";
-export { Expression } from "./Expression";
-export { Field } from "./Field";
-export { ImplBlock } from "./ImplBlock";
-export { MatchArm } from "./MatchArm";
-export type { FunctionParameter } from "./Method";
-export { Method } from "./Method";
-export { Module } from "./Module";
-export { ModuleDeclaration } from "./ModuleDeclaration";
-export { NewtypeStruct } from "./NewtypeStruct";
-export { PaginatedMethod } from "./PaginatedMethod";
-export { Pattern } from "./Pattern";
-export { Reference } from "./Reference";
-export { StandaloneFunction } from "./StandaloneFunction";
-export { Statement } from "./Statement";
-export { Struct } from "./Struct";
-export { Type } from "./Type";
+export { AstNode } from "./AstNode.js";
+export { Attribute } from "./Attribute.js";
+export { Client } from "./Client.js";
+export { CodeBlock } from "./CodeBlock.js";
+export { DocComment } from "./DocComment.js";
+export { Enum } from "./Enum.js";
+export { EnumVariant } from "./EnumVariant.js";
+export { Expression } from "./Expression.js";
+export { Field } from "./Field.js";
+export { ImplBlock } from "./ImplBlock.js";
+export { MatchArm } from "./MatchArm.js";
+export type { FunctionParameter } from "./Method.js";
+export { Method } from "./Method.js";
+export { Module } from "./Module.js";
+export { ModuleDeclaration } from "./ModuleDeclaration.js";
+export { NewtypeStruct } from "./NewtypeStruct.js";
+export { PaginatedMethod } from "./PaginatedMethod.js";
+export { Pattern } from "./Pattern.js";
+export { Reference } from "./Reference.js";
+export { StandaloneFunction } from "./StandaloneFunction.js";
+export { Statement } from "./Statement.js";
+export { Struct } from "./Struct.js";
+export { Type } from "./Type.js";
 export type {
     RustTypeOptions,
     Visibility
-} from "./types";
+} from "./types.js";
 export {
     PRIVATE,
     PrimitiveType,
     PUBLIC
-} from "./types";
-export { UseStatement } from "./UseStatement";
-export { Writer } from "./Writer";
+} from "./types.js";
+export { UseStatement } from "./UseStatement.js";
+export { Writer } from "./Writer.js";

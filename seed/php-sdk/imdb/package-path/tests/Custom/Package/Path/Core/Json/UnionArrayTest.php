@@ -4,6 +4,7 @@ namespace Custom\Package\Path\Tests\Core\Json;
 
 use DateTime;
 use PHPUnit\Framework\TestCase;
+use Custom\Package\Path\Core\Json\JsonEncoder;
 use Custom\Package\Path\Core\Json\JsonProperty;
 use Custom\Package\Path\Core\Json\JsonSerializableType;
 use Custom\Package\Path\Core\Types\ArrayType;
@@ -34,7 +35,7 @@ class UnionArrayTest extends TestCase
 {
     public function testUnionArray(): void
     {
-        $expectedJson = json_encode(
+        $expectedJson = JsonEncoder::encode(
             [
                 'mixed_dates' => [
                     1 => '2023-01-01T12:00:00Z',
@@ -42,7 +43,6 @@ class UnionArrayTest extends TestCase
                     3 => 'Some String'
                 ]
             ],
-            JSON_THROW_ON_ERROR
         );
 
         $object = UnionArray::fromJson($expectedJson);

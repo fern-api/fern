@@ -6,7 +6,7 @@ import { join } from "path";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import YAML from "yaml";
 
-import { loadAndUpdateGenerators } from "../upgradeGenerator";
+import { loadAndUpdateGenerators } from "../upgradeGenerator.js";
 
 vi.mock("@fern-api/configuration-loader", () => ({
     getPathToGeneratorsConfiguration: vi.fn(),
@@ -122,6 +122,7 @@ groups:
             generatorFilter: undefined,
             groupFilter: undefined,
             includeMajor: false,
+            skipAutoreleaseDisabled: false,
             channel: undefined,
             cliVersion: "1.0.0"
         });
@@ -203,6 +204,7 @@ groups:
             generatorFilter: undefined,
             groupFilter: undefined,
             includeMajor: false,
+            skipAutoreleaseDisabled: false,
             channel: undefined,
             cliVersion: "1.0.0"
         });
@@ -256,6 +258,7 @@ groups:
             generatorFilter: undefined,
             groupFilter: undefined,
             includeMajor: false,
+            skipAutoreleaseDisabled: false,
             channel: undefined,
             cliVersion: "1.0.0"
         });
@@ -318,13 +321,14 @@ groups:
             generatorFilter: undefined,
             groupFilter: undefined,
             includeMajor: false,
+            skipAutoreleaseDisabled: false,
             channel: undefined,
             cliVersion: "1.0.0"
         });
 
         expect(result.updatedConfiguration).toBeDefined();
 
-        // Verify the order is maintained (name, version, output, config)
+        // Verify the order is maintained(name, version, output, config)
         const lines = (result.updatedConfiguration as string).split("\n");
         const nameIndex = lines.findIndex((line) => line.includes("name:"));
         const versionIndex = lines.findIndex((line) => line.includes("version:"));

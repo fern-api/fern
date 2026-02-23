@@ -10,7 +10,7 @@ import {
     InvalidSemVerError,
     isValidSemVerChange,
     SemVer
-} from "../commands/validate/semVerUtils";
+} from "../commands/validate/semVerUtils.js";
 
 describe("SemVer.fromString", () => {
     it("should parse valid semver without prerelease", () => {

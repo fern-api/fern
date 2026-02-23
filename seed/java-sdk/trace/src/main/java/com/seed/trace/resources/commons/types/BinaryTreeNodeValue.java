@@ -106,6 +106,10 @@ public final class BinaryTreeNodeValue {
     public interface _FinalStage {
         BinaryTreeNodeValue build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage right(Optional<String> right);
 
         _FinalStage right(String right);
@@ -182,6 +186,18 @@ public final class BinaryTreeNodeValue {
         @java.lang.Override
         public BinaryTreeNodeValue build() {
             return new BinaryTreeNodeValue(nodeId, val, right, left, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

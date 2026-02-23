@@ -2,13 +2,13 @@ import { GeneratorName } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import { mapValues } from "lodash-es";
 
-import { IrSerialization } from "../../ir-serialization";
-import { IrVersions } from "../../ir-versions";
+import { IrSerialization } from "../../ir-serialization/index.js";
+import { IrVersions } from "../../ir-versions/index.js";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
     IrMigration
-} from "../../types/IrMigration";
+} from "../../types/IrMigration.js";
 
 export const V56_TO_V55_MIGRATION: IrMigration<
     IrVersions.V56.ir.IntermediateRepresentation,
@@ -33,10 +33,8 @@ export const V56_TO_V55_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: "0.0.2",
         [GeneratorName.CSHARP_SDK]: "1.12.0-rc0",

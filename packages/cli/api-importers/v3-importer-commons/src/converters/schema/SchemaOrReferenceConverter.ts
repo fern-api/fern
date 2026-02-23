@@ -1,8 +1,8 @@
 import { Availability, ContainerType, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { SchemaConverter } from "./SchemaConverter";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { SchemaConverter } from "./SchemaConverter.js";
 
 export declare namespace SchemaOrReferenceConverter {
     export interface Args extends AbstractConverter.AbstractArgs {

@@ -1,6 +1,6 @@
-import { Rule } from "./Rule";
-import { CompatibleIrVersionsRule } from "./rules/compatible-ir-versions";
-import { ValidAliasGroupReferencesRule } from "./rules/valid-alias-group-references";
+import { Rule } from "./Rule.js";
+import { CompatibleIrVersionsRule } from "./rules/compatible-ir-versions/index.js";
+import { ValidAliasGroupReferencesRule } from "./rules/valid-alias-group-references/index.js";
 
 export function getAllRules(): Rule[] {
     return [CompatibleIrVersionsRule, ValidAliasGroupReferencesRule];

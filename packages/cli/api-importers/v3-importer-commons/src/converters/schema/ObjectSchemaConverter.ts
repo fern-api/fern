@@ -2,9 +2,9 @@ import { isNonNullish } from "@fern-api/core-utils";
 import { Type, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { convertProperties } from "../../utils/ConvertProperties";
-import { SchemaConverter } from "./SchemaConverter";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
+import { convertProperties } from "../../utils/ConvertProperties.js";
+import { SchemaConverter } from "./SchemaConverter.js";
 
 export declare namespace ObjectSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {

@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.get_users();
+client.get_users
 ```
 </dd>
 </dl>
@@ -52,7 +52,7 @@ client.get_users();
 <dd>
 
 ```ruby
-client.get_user(user_id: 'userId');
+client.get_user(user_id: "userId")
 ```
 </dd>
 </dl>
@@ -101,9 +101,9 @@ client.get_user(user_id: 'userId');
 
 ```ruby
 client.get_token(
-  client_id: 'client_id',
-  client_secret: 'client_secret'
-);
+  client_id: "client_id",
+  client_secret: "client_secret"
+)
 ```
 </dd>
 </dl>

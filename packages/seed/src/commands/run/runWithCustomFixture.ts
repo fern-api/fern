@@ -6,13 +6,13 @@ import {
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
-import { FixtureConfigurations } from "../../config/api";
-import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
-import { Semaphore } from "../../Semaphore";
-import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
-import { LocalScriptRunner, ScriptRunner } from "../test";
-import { TaskContextFactory } from "../test/TaskContextFactory";
-import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner";
+import { FixtureConfigurations } from "../../config/api/index.js";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
+import { Semaphore } from "../../Semaphore.js";
+import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace.js";
+import { LocalScriptRunner, ScriptRunner } from "../test/index.js";
+import { TaskContextFactory } from "../test/TaskContextFactory.js";
+import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner/index.js";
 
 export async function runWithCustomFixture({
     pathToFixture,

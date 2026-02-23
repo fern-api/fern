@@ -1,9 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ast, lazy, WithGeneration } from "@fern-api/csharp-codegen";
+import { ast, type LazyResult, lazy, WithGeneration } from "@fern-api/csharp-codegen";
 
-import { HttpHeader, Literal } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+type HttpHeader = FernIr.HttpHeader;
+type Literal = FernIr.Literal;
+
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export interface OptionArgs {
     optional: boolean;
@@ -20,7 +23,9 @@ export class BaseOptionsGenerator extends WithGeneration {
         super(context.generation);
     }
 
-    public readonly members = lazy({
+    public readonly members: LazyResult<{
+        baseUrlSummary: () => string;
+    }> = lazy({
         baseUrlSummary: () => "The Base URL for the API."
     });
 

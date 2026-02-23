@@ -411,14 +411,14 @@ public partial class ServiceClient : IServiceClient
     ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = null,
+    ///                             Trees = null,
     ///                         },
     ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = null,
+    ///                             Trees = null,
     ///                         },
     ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
@@ -435,14 +435,14 @@ public partial class ServiceClient : IServiceClient
     ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = null,
+    ///                             Trees = null,
     ///                         },
     ///                         new Node
     ///                         {
     ///                             Name = "name",
-    ///                             Nodes = new List&lt;Node&gt;() { },
-    ///                             Trees = new List&lt;Tree&gt;() { },
+    ///                             Nodes = null,
+    ///                             Trees = null,
     ///                         },
     ///                     },
     ///                     Trees = new List&lt;Tree&gt;()
@@ -515,14 +515,14 @@ public partial class ServiceClient : IServiceClient
     ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Files = null,
+    ///                             Directories = null,
     ///                         },
     ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Files = null,
+    ///                             Directories = null,
     ///                         },
     ///                     },
     ///                 },
@@ -539,14 +539,14 @@ public partial class ServiceClient : IServiceClient
     ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Files = null,
+    ///                             Directories = null,
     ///                         },
     ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
-    ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
+    ///                             Files = null,
+    ///                             Directories = null,
     ///                         },
     ///                     },
     ///                 },

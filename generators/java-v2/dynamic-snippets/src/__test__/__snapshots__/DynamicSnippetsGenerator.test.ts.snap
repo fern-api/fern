@@ -313,6 +313,32 @@ client.endpoints().container().getAndReturnListOfPrimitives(
 "
 `;
 
+exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.types.MixedType;
+import java.util.Arrays;
+import java.util.HashMap;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .build();
+
+client.endpoints().container().getAndReturnMapOfPrimToUndiscriminatedUnion(
+    new HashMap<String, MixedType>() {{
+        put("test", MixedType.of(0.0));
+        put("test2", MixedType.of(true));
+        put("test3", MixedType.of("Test"));
+        put("test4", MixedType.of(
+            Arrays.asList("1", "1", "1", "1")
+        ));
+    }}
+);
+"
+`;
+
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "package com.example.usage;
 

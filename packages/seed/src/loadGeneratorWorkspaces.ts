@@ -3,7 +3,7 @@ import { findUp } from "find-up";
 import { readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-import { FernSeedConfig } from "./config";
+import { FernSeedConfig } from "./config/index.js";
 
 export interface GeneratorWorkspace {
     workspaceName: string;

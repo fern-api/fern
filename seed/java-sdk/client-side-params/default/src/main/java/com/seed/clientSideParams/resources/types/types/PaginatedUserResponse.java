@@ -124,6 +124,10 @@ public final class PaginatedUserResponse {
     public interface _FinalStage {
         PaginatedUserResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage users(List<User> users);
 
         _FinalStage addUsers(User users);
@@ -223,6 +227,18 @@ public final class PaginatedUserResponse {
         @java.lang.Override
         public PaginatedUserResponse build() {
             return new PaginatedUserResponse(users, start, limit, length, total, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

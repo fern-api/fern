@@ -1,7 +1,10 @@
 import { File } from "@fern-api/base-generator";
 import { ast, Generation } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type FernFilepath = FernIr.FernFilepath;
+
 import path from "path";
 
 export type Namespace = string;

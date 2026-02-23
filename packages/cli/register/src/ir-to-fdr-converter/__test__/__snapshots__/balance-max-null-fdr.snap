@@ -14,6 +14,7 @@
         "description": "Returns tiered rate information with nullable balance_max",
         "environments": [
           {
+            "audiences": undefined,
             "baseUrl": "https://api.example.com/v1",
             "id": "Production server",
           },

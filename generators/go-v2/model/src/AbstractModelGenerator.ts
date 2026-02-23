@@ -1,11 +1,11 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { join } from "path";
-import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-import { ModelGeneratorContext } from "./ModelGeneratorContext";
+import { ModelCustomConfigSchema } from "./ModelCustomConfig.js";
+import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 export abstract class AbstractModelGenerator extends FileGenerator<
     GoFile,
@@ -16,7 +16,7 @@ export abstract class AbstractModelGenerator extends FileGenerator<
 
     constructor(
         context: ModelGeneratorContext,
-        protected readonly typeDeclaration: TypeDeclaration
+        protected readonly typeDeclaration: FernIr.TypeDeclaration
     ) {
         super(context);
         this.typeReference = this.context.goTypeMapper.convertToTypeReference(this.typeDeclaration.name);

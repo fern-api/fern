@@ -1059,6 +1059,88 @@
       ],
       "additionalProperties": false
     },
+    "docs.ApiReferenceOperationConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "additionalProperties": false
+    },
     "docs.LinkConfiguration": {
       "type": "object",
       "properties": {
@@ -1113,6 +1195,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceEndpointConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.ApiReferenceOperationConfiguration"
         },
         {
           "$ref": "#/definitions/docs.PageConfiguration"
@@ -1354,38 +1439,6 @@
       },
       "required": [
         "api"
-      ],
-      "additionalProperties": false
-    },
-    "docs.PythonDocsConfiguration": {
-      "type": "object",
-      "properties": {
-        "python-docs": {
-          "type": "string"
-        },
-        "title": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "slug": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "python-docs"
       ],
       "additionalProperties": false
     },
@@ -1675,9 +1728,6 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
-        },
-        {
-          "$ref": "#/definitions/docs.PythonDocsConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LibraryReferenceConfiguration"

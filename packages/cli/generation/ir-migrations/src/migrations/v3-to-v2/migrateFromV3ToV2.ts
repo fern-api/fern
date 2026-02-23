@@ -1,12 +1,12 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
 
-import { IrVersions } from "../../ir-versions";
+import { IrVersions } from "../../ir-versions/index.js";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
     IrMigration
-} from "../../types/IrMigration";
-import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest";
+} from "../../types/IrMigration.js";
+import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest.js";
 
 export const V3_TO_V2_MIGRATION: IrMigration<
     IrVersions.V3.ir.IntermediateRepresentation,
@@ -31,10 +31,8 @@ export const V3_TO_V2_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.STOPLIGHT]: GeneratorWasNotCreatedYet,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
-        [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
-        [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet,

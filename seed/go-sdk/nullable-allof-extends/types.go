@@ -32,6 +32,9 @@ func (n *NormalObject) GetNormalField() *string {
 }
 
 func (n *NormalObject) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -77,6 +80,9 @@ func (n *NormalObject) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NormalObject) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -111,6 +117,9 @@ func (n *NullableObject) GetNullableField() *string {
 }
 
 func (n *NullableObject) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -156,6 +165,9 @@ func (n *NullableObject) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NullableObject) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -199,6 +211,9 @@ func (r *RootObject) GetNullableField() *string {
 }
 
 func (r *RootObject) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -251,6 +266,9 @@ func (r *RootObject) MarshalJSON() ([]byte, error) {
 }
 
 func (r *RootObject) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value

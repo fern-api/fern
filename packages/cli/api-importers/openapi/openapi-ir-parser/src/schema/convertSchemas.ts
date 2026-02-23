@@ -14,36 +14,41 @@ import {
 import { size } from "lodash-es";
 import type { OpenAPIV3 } from "openapi-types";
 
-import { getExtension } from "../getExtension";
-import { OpenAPIExtension } from "../openapi/v3/extensions/extensions";
-import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
-import { getExamples } from "../openapi/v3/extensions/getExamples";
-import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding";
-import { getFernEnum } from "../openapi/v3/extensions/getFernEnum";
-import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension";
-import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension";
-import { getValueIfBoolean } from "../utils/getValue";
-import { createSchemaCollisionTracker } from "../utils/schemaCollision";
-import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties";
-import { convertArray } from "./convertArray";
-import { convertAvailability } from "./convertAvailability";
-import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf";
-import { convertEncoding } from "./convertEncoding";
-import { convertEnum } from "./convertEnum";
-import { convertInteger } from "./convertInteger";
-import { convertLiteral } from "./convertLiteral";
-import { convertNumber } from "./convertNumber";
-import { convertObject } from "./convertObject";
+import { getExtension } from "../getExtension.js";
+import { OpenAPIExtension } from "../openapi/v3/extensions/extensions.js";
+import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions.js";
+import { getExamples } from "../openapi/v3/extensions/getExamples.js";
+import { getFernEncoding } from "../openapi/v3/extensions/getFernEncoding.js";
+import { getFernEnum } from "../openapi/v3/extensions/getFernEnum.js";
+import { getFernTypeExtension } from "../openapi/v3/extensions/getFernTypeExtension.js";
+import { getSourceExtension } from "../openapi/v3/extensions/getSourceExtension.js";
+import { getValueIfBoolean } from "../utils/getValue.js";
+import { createSchemaCollisionTracker } from "../utils/schemaCollision.js";
+import { convertAdditionalProperties, wrapMap } from "./convertAdditionalProperties.js";
+import { convertArray } from "./convertArray.js";
+import { convertAvailability } from "./convertAvailability.js";
+import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./convertDiscriminatedOneOf.js";
+import { convertEncoding } from "./convertEncoding.js";
+import { convertEnum } from "./convertEnum.js";
+import { convertInteger } from "./convertInteger.js";
+import { convertLiteral } from "./convertLiteral.js";
+import { convertNumber } from "./convertNumber.js";
+import { convertObject } from "./convertObject.js";
 import {
     convertUndiscriminatedOneOf,
     convertUndiscriminatedOneOfWithDiscriminant
-} from "./convertUndiscriminatedOneOf";
-import { getDefaultAsString } from "./defaults/getDefault";
-import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
-import type { SchemaParserContext } from "./SchemaParserContext";
-import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
-import { getGeneratedTypeName } from "./utils/getSchemaName";
-import { isReferenceObject } from "./utils/isReferenceObject";
+} from "./convertUndiscriminatedOneOf.js";
+import { getDefaultAsString } from "./defaults/getDefault.js";
+import {
+    getExampleAsArray,
+    getExampleAsBoolean,
+    getExampleAsNumber,
+    getExamplesString
+} from "./examples/getExample.js";
+import type { SchemaParserContext } from "./SchemaParserContext.js";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference.js";
+import { getGeneratedTypeName } from "./utils/getSchemaName.js";
+import { isReferenceObject } from "./utils/isReferenceObject.js";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";

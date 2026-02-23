@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users/uri",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithUriPagination"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPaginationUriPath\n\nclient = SeedPaginationUriPath(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.users.list_with_uri_pagination()\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPaginationUriPath\n\nclient = AsyncSeedPaginationUriPath(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.users.list_with_uri_pagination()\n    async for item in response:\n        yield item\n\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users/path",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithPathPagination"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPaginationUriPath\n\nclient = SeedPaginationUriPath(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.users.list_with_path_pagination()\nfor item in response:\n    yield item\n# alternatively, you can paginate page-by-page\nfor page in response.iter_pages():\n    yield page\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPaginationUriPath\n\nclient = AsyncSeedPaginationUriPath(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    response = await client.users.list_with_path_pagination()\n    async for item in response:\n        yield item\n\n    # alternatively, you can paginate page-by-page\n    async for page in response.iter_pages():\n        yield page\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

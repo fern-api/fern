@@ -3,12 +3,12 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules";
-import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst";
-import { getAllRules } from "./getAllRules";
-import { Rule } from "./Rule";
-import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
-import { ValidationViolation } from "./ValidationViolation";
+import { createDocsConfigFileAstVisitorForRules } from "./createDocsConfigFileAstVisitorForRules.js";
+import { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
+import { getAllRules } from "./getAllRules.js";
+import { Rule } from "./Rule.js";
+import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
+import { ValidationViolation } from "./ValidationViolation.js";
 
 export async function validateDocsWorkspace(
     workspace: DocsWorkspace,

@@ -7,10 +7,10 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 
-import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { convertColorsConfiguration } from "./convertColorsConfiguration";
-import { getAllPages, loadAllPages } from "./getAllPages";
-import { buildNavigationForDirectory, getFrontmatterTitle, nameToSlug, nameToTitle } from "./navigationUtils";
+import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks.js";
+import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
+import { getAllPages, loadAllPages } from "./getAllPages.js";
+import { buildNavigationForDirectory, getFrontmatterTitle, nameToSlug, nameToTitle } from "./navigationUtils.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -1158,14 +1158,6 @@ async function convertNavigationItem({
             folderTitleSource
         });
     }
-    if (isRawPythonDocsSectionConfig(rawConfig)) {
-        return {
-            type: "pythonDocsSection",
-            githubUrl: rawConfig.pythonDocs,
-            title: rawConfig.title ?? undefined,
-            slug: rawConfig.slug ?? undefined
-        };
-    }
     if (isRawLibraryReferenceConfig(rawConfig)) {
         return {
             type: "librarySection",
@@ -1266,6 +1258,20 @@ function parseApiReferenceLayoutItem(
                 featureFlags: convertFeatureFlag(item.featureFlag)
             }
         ];
+    } else if (isRawApiRefOperationConfiguration(item)) {
+        return [
+            {
+                type: "operation",
+                operation: item.operation,
+                title: item.title,
+                slug: item.slug,
+                hidden: item.hidden,
+                availability: item.availability,
+                viewers: parseRoles(item.viewers),
+                orphaned: item.orphaned,
+                featureFlags: convertFeatureFlag(item.featureFlag)
+            }
+        ];
     }
     return Object.entries(item).map(([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
         if (isRawApiRefPackageConfiguration(value)) {
@@ -1353,10 +1359,6 @@ function isRawFolderConfig(item: unknown): item is docsYml.RawSchemas.FolderConf
     return isPlainObject(item) && typeof item.folder === "string";
 }
 
-function isRawPythonDocsSectionConfig(item: unknown): item is docsYml.RawSchemas.PythonDocsConfiguration {
-    return isPlainObject(item) && typeof item.pythonDocs === "string";
-}
-
 function isRawLibraryReferenceConfig(item: unknown): item is docsYml.RawSchemas.LibraryReferenceConfiguration {
     return isPlainObject(item) && typeof item.library === "string";
 }
@@ -1398,6 +1400,12 @@ function isRawApiRefSectionConfiguration(item: unknown): item is docsYml.RawSche
 
 function isRawApiRefEndpointConfiguration(item: unknown): item is docsYml.RawSchemas.ApiReferenceEndpointConfiguration {
     return isPlainObject(item) && typeof item.endpoint === "string";
+}
+
+function isRawApiRefOperationConfiguration(
+    item: unknown
+): item is docsYml.RawSchemas.ApiReferenceOperationConfiguration {
+    return isPlainObject(item) && typeof item.operation === "string";
 }
 
 function isRawApiRefPackageConfiguration(

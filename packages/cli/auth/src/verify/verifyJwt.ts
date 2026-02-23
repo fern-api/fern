@@ -1,7 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
 
-import { FernUserToken } from "../FernToken";
+import { FernUserToken } from "../FernToken.js";
 
 const client = jwksClient({
     jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`

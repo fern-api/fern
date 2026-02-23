@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
 /**
  * Schema for configuring output paths for generated C# SDK files.
@@ -50,6 +50,7 @@ export const CsharpConfigSchema = z.object({
     "experimental-readonly-constants": z.boolean().optional(),
     "experimental-explicit-nullable-optional": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
+    "redact-response-body-on-error": z.boolean().optional(),
 
     // temporary options to unblock websocket URIs generation
     //

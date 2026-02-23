@@ -114,6 +114,9 @@ class AbstractServiceService(AbstractFernService):
     def with_inline_type(self, *, file: fastapi.UploadFile, request: MyInlineType) -> str: ...
 
     @abc.abstractmethod
+    def with_json_property(self, *, file: fastapi.UploadFile, json: typing.Optional[MyObject] = None) -> str: ...
+
+    @abc.abstractmethod
     def simple(self) -> None: ...
 
     @abc.abstractmethod
@@ -142,6 +145,7 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_with_form_encoded_containers(router=router)
         cls.__init_optional_args(router=router)
         cls.__init_with_inline_type(router=router)
+        cls.__init_with_json_property(router=router)
         cls.__init_simple(router=router)
         cls.__init_with_literal_and_enum_types(router=router)
 
@@ -695,6 +699,49 @@ class AbstractServiceService(AbstractFernService):
             response_model=None,
             description=AbstractServiceService.with_inline_type.__doc__,
             **get_route_args(cls.with_inline_type, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_with_json_property(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.with_json_property)
+        type_hints = typing.get_type_hints(cls.with_json_property)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "file":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.File()])
+                )
+            elif parameter_name == "json":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.with_json_property, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.with_json_property)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> str:
+            try:
+                return cls.with_json_property(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'with_json_property' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(
+            path="/with-json-property",
+            response_model=None,
+            description=AbstractServiceService.with_json_property.__doc__,
+            **get_route_args(cls.with_json_property, default_tag="service"),
         )(wrapper)
 
     @classmethod

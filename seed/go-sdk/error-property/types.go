@@ -31,6 +31,9 @@ func (p *PropertyBasedErrorTestBody) GetMessage() string {
 }
 
 func (p *PropertyBasedErrorTestBody) GetExtraProperties() map[string]interface{} {
+	if p == nil {
+		return nil
+	}
 	return p.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (p *PropertyBasedErrorTestBody) MarshalJSON() ([]byte, error) {
 }
 
 func (p *PropertyBasedErrorTestBody) String() string {
+	if p == nil {
+		return "<nil>"
+	}
 	if len(p.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
 			return value

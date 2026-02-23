@@ -74,6 +74,7 @@
           "SampleUnion": {
             "availability": undefined,
             "base-properties": {},
+            "context": "data",
             "discriminant": "type",
             "docs": undefined,
             "encoding": undefined,
@@ -141,6 +142,7 @@ types:
         type: Response
     source:
       openapi: ../openapi.yml
+    context: data
 ",
     },
   },
