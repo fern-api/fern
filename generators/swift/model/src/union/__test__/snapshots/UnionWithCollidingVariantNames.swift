@@ -1,18 +1,21 @@
-public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
-    case variantA(VariantA)
-    case variantB(VariantB)
-    case variantC(VariantC)
+public enum UnionWithCollidingVariantNames: Codable, Hashable, Sendable {
+    case date(Date)
+    case odds(Odds)
+    case score(Score)
+    case string(String)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
+        let discriminant = try container.decode(Swift.String.self, forKey: .type)
         switch discriminant {
-        case "variantA":
-            self = .variantA(try VariantA(from: decoder))
-        case "variantB":
-            self = .variantB(try VariantB(from: decoder))
-        case "variantC":
-            self = .variantC(try VariantC(from: decoder))
+        case "date":
+            self = .date(try Date(from: decoder))
+        case "odds":
+            self = .odds(try Odds(from: decoder))
+        case "score":
+            self = .score(try Score(from: decoder))
+        case "string":
+            self = .string(try String(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -25,32 +28,42 @@ public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
 
     public func encode(to encoder: Encoder) throws -> Void {
         switch self {
-        case .variantA(let data):
+        case .date(let data):
             try data.encode(to: encoder)
-        case .variantB(let data):
+        case .odds(let data):
             try data.encode(to: encoder)
-        case .variantC(let data):
+        case .score(let data):
+            try data.encode(to: encoder)
+        case .string(let data):
             try data.encode(to: encoder)
         }
     }
 
-    public struct VariantA: Codable, Hashable, Sendable {
-        public let type: String = "variantA"
-        public let propertyA: String
+    public struct Date: Codable, Hashable, Sendable {
+        public let type: Swift.String = "date"
+        public let day: Int
+        public let month: Int
+        public let year: Int
         /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
+        public let additionalProperties: [Swift.String: JSONValue]
 
         public init(
-            propertyA: String,
-            additionalProperties: [String: JSONValue] = .init()
+            day: Int,
+            month: Int,
+            year: Int,
+            additionalProperties: [Swift.String: JSONValue] = .init()
         ) {
-            self.propertyA = propertyA
+            self.day = day
+            self.month = month
+            self.year = year
             self.additionalProperties = additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.propertyA = try container.decode(String.self, forKey: .propertyA)
+            self.day = try container.decode(Int.self, forKey: .day)
+            self.month = try container.decode(Int.self, forKey: .month)
+            self.year = try container.decode(Int.self, forKey: .year)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -58,33 +71,37 @@ public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
-            try container.encode(self.propertyA, forKey: .propertyA)
+            try container.encode(self.day, forKey: .day)
+            try container.encode(self.month, forKey: .month)
+            try container.encode(self.year, forKey: .year)
         }
 
         /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
-            case propertyA
+            case day
+            case month
+            case year
         }
     }
 
-    public struct VariantC: Codable, Hashable, Sendable {
-        public let type: String = "variantC"
-        public let propertyC: String
+    public struct Score: Codable, Hashable, Sendable {
+        public let type: Swift.String = "score"
+        public let points: Int
         /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
+        public let additionalProperties: [Swift.String: JSONValue]
 
         public init(
-            propertyC: String,
-            additionalProperties: [String: JSONValue] = .init()
+            points: Int,
+            additionalProperties: [Swift.String: JSONValue] = .init()
         ) {
-            self.propertyC = propertyC
+            self.points = points
             self.additionalProperties = additionalProperties
         }
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.propertyC = try container.decode(String.self, forKey: .propertyC)
+            self.points = try container.decode(Int.self, forKey: .points)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -92,13 +109,13 @@ public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try encoder.encodeAdditionalProperties(self.additionalProperties)
             try container.encode(self.type, forKey: .type)
-            try container.encode(self.propertyC, forKey: .propertyC)
+            try container.encode(self.points, forKey: .points)
         }
 
         /// Keys for encoding/decoding struct properties.
         enum CodingKeys: String, CodingKey, CaseIterable {
             case type
-            case propertyC
+            case points
         }
     }
 
