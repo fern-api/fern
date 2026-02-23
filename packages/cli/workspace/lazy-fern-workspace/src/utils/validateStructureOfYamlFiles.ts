@@ -133,8 +133,7 @@ export function validateStructureOfYamlFiles({
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 const result = validateAgainstJsonSchema(parsedFileContents, PackageMarkerFileJsonSchema as any);
                 if (result.success) {
-                    const contents =
-                        RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
+                    const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
                     packageMarkerParsedCache.set(file.rawContents, contents);
                     packageMarkers[relativeFilepath] = {
                         defaultUrl: typeof contents.export === "object" ? contents.export.url : undefined,
@@ -168,8 +167,7 @@ export function validateStructureOfYamlFiles({
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 const result = validateAgainstJsonSchema(parsedFileContents, DefinitionFileJsonSchema as any);
                 if (result.success) {
-                    const contents =
-                        RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
+                    const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
                     definitionParsedCache.set(file.rawContents, contents);
                     namesDefinitionFiles[relativeFilepath] = {
                         defaultUrl: undefined,
