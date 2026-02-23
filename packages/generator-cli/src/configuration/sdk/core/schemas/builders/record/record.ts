@@ -3,7 +3,7 @@ import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForI
 import { isPlainObject } from "../../utils/isPlainObject.js";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
-import type { BaseRecordSchema, RecordSchema } from "./types";
+import type { BaseRecordSchema, RecordSchema } from "./types.js";
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,

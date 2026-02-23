@@ -3,7 +3,7 @@ import { filterObject } from "../../utils/filterObject.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 import { isPlainObject } from "../../utils/isPlainObject.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
-import type { ObjectLikeSchema, ObjectLikeUtils } from "./types";
+import type { ObjectLikeSchema, ObjectLikeUtils } from "./types.js";
 
 export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed> {
     return {

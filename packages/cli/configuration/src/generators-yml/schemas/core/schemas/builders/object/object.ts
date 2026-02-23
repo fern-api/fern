@@ -8,7 +8,7 @@ import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { partition } from "../../utils/partition.js";
 import { getObjectLikeUtils } from "../object-like/index.js";
 import { getSchemaUtils } from "../schema-utils/index.js";
-import { isProperty } from "./property";
+import { isProperty } from "./property.js";
 import type {
     BaseObjectSchema,
     inferObjectSchemaFromPropertySchemas,
@@ -17,7 +17,7 @@ import type {
     ObjectSchema,
     ObjectUtils,
     PropertySchemas,
-} from "./types";
+} from "./types.js";
 
 interface ObjectPropertyWithRawKey {
     rawKey: string;
