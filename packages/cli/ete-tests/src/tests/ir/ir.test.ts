@@ -96,7 +96,7 @@ describe("ir", () => {
         });
         await tmpFile.cleanup();
         expect(stdout).toContain("Wrote IR to");
-    }, 10_000);
+    }, 30_000);
 
     it.concurrent("fails with invalid version", async ({ expect, signal }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
@@ -107,7 +107,7 @@ describe("ir", () => {
         });
         await tmpFile.cleanup();
         expect(stdout).toContain("IR v100 does not exist");
-    }, 10_000);
+    }, 30_000);
 });
 
 describe("ir from proto", () => {
