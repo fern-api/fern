@@ -148,7 +148,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         }
 
         for (const server of Object.values(servers)) {
-            if ((server as AsyncAPIV2.ServerV2).security && (server as AsyncAPIV2.ServerV2).security!.length > 0) {
+            const serverV2 = server as AsyncAPIV2.ServerV2;
+            if (serverV2.security && serverV2.security.length > 0) {
                 return true;
             }
         }
