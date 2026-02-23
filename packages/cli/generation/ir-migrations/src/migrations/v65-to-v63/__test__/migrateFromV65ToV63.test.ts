@@ -57,10 +57,8 @@ describe("migrateFromV65ToV63", () => {
         const migratedIR = V65_TO_V63_MIGRATION.migrateBackwards(v65IR, mockContext);
 
         const migratedEndpoint = migratedIR.services["service_test"]?.endpoints[0];
-        expect(migratedEndpoint?.pagination?.type).toBe("cursor");
-        if (migratedEndpoint?.pagination?.type === "cursor") {
-            expect(migratedEndpoint.pagination.page.property.type).toBe("query");
-        }
+        expect.assert(migratedEndpoint?.pagination?.type === "cursor");
+        expect(migratedEndpoint.pagination.page.property.type).toBe("query");
     });
 
     it("removes nextUri pagination", () => {

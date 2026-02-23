@@ -35,32 +35,27 @@
                 {
                   "key": "usernames",
                   "description": null,
-                  "value": "usernames",
-                  "disabled": true
+                  "value": "usernames"
                 },
                 {
                   "key": "avatar",
                   "description": null,
-                  "value": "avatar",
-                  "disabled": true
+                  "value": "avatar"
                 },
                 {
                   "key": "activated",
                   "description": null,
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 },
                 {
                   "key": "tags",
                   "description": null,
-                  "value": "tags",
-                  "disabled": true
+                  "value": "tags"
                 },
                 {
                   "key": "extra",
                   "description": null,
-                  "value": "true",
-                  "disabled": true
+                  "value": "true"
                 }
               ],
               "variable": []
@@ -95,32 +90,27 @@
                     {
                       "key": "usernames",
                       "description": null,
-                      "value": "usernames",
-                      "disabled": true
+                      "value": "usernames"
                     },
                     {
                       "key": "avatar",
                       "description": null,
-                      "value": "avatar",
-                      "disabled": true
+                      "value": "avatar"
                     },
                     {
                       "key": "activated",
                       "description": null,
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     },
                     {
                       "key": "tags",
                       "description": null,
-                      "value": "tags",
-                      "disabled": true
+                      "value": "tags"
                     },
                     {
                       "key": "extra",
                       "description": null,
-                      "value": "true",
-                      "disabled": true
+                      "value": "true"
                     }
                   ],
                   "variable": []

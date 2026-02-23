@@ -127,14 +127,12 @@
                     {
                       "key": "query_param_object",
                       "description": null,
-                      "value": "{\"id\":\"id\",\"name\":\"name\"}",
-                      "disabled": true
+                      "value": "{\"id\":\"id\",\"name\":\"name\"}"
                     },
                     {
                       "key": "query_param_integer",
                       "description": null,
-                      "value": "1",
-                      "disabled": true
+                      "value": "1"
                     }
                   ],
                   "variable": [
@@ -187,14 +185,12 @@
                     {
                       "key": "query_param_object",
                       "description": null,
-                      "value": "{\"id\":\"id\",\"name\":\"name\"}",
-                      "disabled": true
+                      "value": "{\"id\":\"id\",\"name\":\"name\"}"
                     },
                     {
                       "key": "query_param_integer",
                       "description": null,
-                      "value": "1",
-                      "disabled": true
+                      "value": "1"
                     }
                   ],
                   "variable": [
