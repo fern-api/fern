@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.48.6
+- version: 3.49.0
   changelogEntry:
     - summary: |
         Optimize schema serialization layer performance with 7.2x geometric mean speedup.
