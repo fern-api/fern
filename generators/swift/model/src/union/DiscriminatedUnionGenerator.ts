@@ -19,6 +19,7 @@ export class DiscriminatedUnionGenerator {
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
     private readonly referencer: Referencer;
+    private readonly standaloneSymbolByDiscriminantWireValue: Map<string, swift.Symbol>;
 
     public constructor({ symbol, unionTypeDeclaration, docsContent, context }: DiscriminatedUnionGenerator.Args) {
         this.symbol = symbol;
@@ -26,6 +27,36 @@ export class DiscriminatedUnionGenerator {
         this.docsContent = docsContent;
         this.context = context;
         this.referencer = context.createReferencer(symbol);
+        this.standaloneSymbolByDiscriminantWireValue = this.computeStandaloneTypeRefs();
+    }
+
+    /**
+     * For `samePropertiesAsObject` variants where the referenced standalone type already
+     * declares the discriminant property, we can skip generating a nested variant struct
+     * and instead use the standalone type directly as the enum case payload.
+     *
+     * Returns a map from discriminant wire value to the standalone type's Symbol,
+     * which is then resolved through the referencer at the point of use for proper
+     * graph-based name resolution (e.g. module-qualifying names that collide with
+     * Swift/Foundation built-ins).
+     */
+    private computeStandaloneTypeRefs(): Map<string, swift.Symbol> {
+        const result = new Map<string, swift.Symbol>();
+        for (const singleUnionType of this.unionTypeDeclaration.types) {
+            if (singleUnionType.shape.propertiesType !== "samePropertiesAsObject") {
+                continue;
+            }
+            const typeId = singleUnionType.shape.typeId;
+            const variantProperties = this.context.getPropertiesOfDiscriminatedUnionVariant(typeId);
+            const standaloneTypeIncludesDiscriminant = variantProperties.some(
+                (p) => p.name.wireValue === this.unionTypeDeclaration.discriminant.wireValue
+            );
+            if (standaloneTypeIncludesDiscriminant) {
+                const standaloneSymbol = this.context.project.nameRegistry.getSchemaTypeSymbolOrThrow(typeId);
+                result.set(singleUnionType.discriminantValue.wireValue, standaloneSymbol);
+            }
+        }
+        return result;
     }
 
     public generate(): swift.EnumWithAssociatedValues {
@@ -52,9 +83,14 @@ export class DiscriminatedUnionGenerator {
 
     private generateCasesForTypeDeclaration(): swift.EnumWithAssociatedValues.Case[] {
         return this.getAllVariants().map((variant) => {
+            const standaloneSymbol = this.standaloneSymbolByDiscriminantWireValue.get(variant.discriminantWireValue);
+            const associatedValueType =
+                standaloneSymbol != null
+                    ? this.referencer.referenceType(standaloneSymbol)
+                    : swift.TypeReference.symbol(variant.symbolName);
             return {
                 unsafeName: variant.caseName,
-                associatedValue: [swift.TypeReference.symbol(variant.symbolName)],
+                associatedValue: [associatedValueType],
                 docs: variant.docsContent ? swift.docComment({ summary: variant.docsContent }) : undefined
             };
         });
@@ -107,6 +143,16 @@ export class DiscriminatedUnionGenerator {
             swift.Statement.switch({
                 target: swift.Expression.reference("discriminant"),
                 cases: this.getAllVariants().map((variant) => {
+                    const standaloneSymbol = this.standaloneSymbolByDiscriminantWireValue.get(
+                        variant.discriminantWireValue
+                    );
+                    const resolvedName =
+                        standaloneSymbol != null
+                            ? this.context.project.nameRegistry.reference({
+                                  fromSymbol: this.symbol,
+                                  toSymbol: standaloneSymbol
+                              })
+                            : variant.symbolName;
                     return {
                         pattern: swift.Expression.stringLiteral(variant.discriminantWireValue),
                         body: [
@@ -117,7 +163,7 @@ export class DiscriminatedUnionGenerator {
                                         swift.functionArgument({
                                             value: swift.Expression.try(
                                                 swift.Expression.structInitialization({
-                                                    unsafeName: variant.symbolName,
+                                                    unsafeName: resolvedName,
                                                     arguments_: [
                                                         swift.functionArgument({
                                                             label: "from",
@@ -233,64 +279,69 @@ export class DiscriminatedUnionGenerator {
     }
 
     private generateNestedTypesForTypeDeclaration(): (swift.Struct | swift.EnumWithRawValues)[] {
-        const variantStructs = this.unionTypeDeclaration.types.map((singleUnionType) => {
-            const constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[] = [];
-            const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
-            const variantSymbol = this.context.project.nameRegistry.getDiscriminatedUnionVariantSymbolOrThrow(
-                this.symbol,
-                singleUnionType.discriminantValue.wireValue
-            );
-            const referencer = this.context.createReferencer(variantSymbol);
+        const variantStructs = this.unionTypeDeclaration.types
+            .filter(
+                (singleUnionType) =>
+                    !this.standaloneSymbolByDiscriminantWireValue.has(singleUnionType.discriminantValue.wireValue)
+            )
+            .map((singleUnionType) => {
+                const constantPropertyDefinitions: StructGenerator.ConstantPropertyDefinition[] = [];
+                const dataPropertyDefinitions: StructGenerator.DataPropertyDefinition[] = [];
+                const variantSymbol = this.context.project.nameRegistry.getDiscriminatedUnionVariantSymbolOrThrow(
+                    this.symbol,
+                    singleUnionType.discriminantValue.wireValue
+                );
+                const referencer = this.context.createReferencer(variantSymbol);
 
-            if (singleUnionType.shape.propertiesType === "singleProperty") {
-                constantPropertyDefinitions.push({
-                    unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
-                    rawName: this.unionTypeDeclaration.discriminant.wireValue,
-                    type: referencer.referenceSwiftType("String"),
-                    value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
-                });
-                if (this.unionTypeDeclaration.discriminant.wireValue !== singleUnionType.shape.name.wireValue) {
-                    dataPropertyDefinitions.push({
-                        unsafeName: sanitizeSelf(singleUnionType.shape.name.name.camelCase.unsafeName),
-                        rawName: singleUnionType.shape.name.wireValue,
-                        type: singleUnionType.shape.type
+                if (singleUnionType.shape.propertiesType === "singleProperty") {
+                    constantPropertyDefinitions.push({
+                        unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
+                        rawName: this.unionTypeDeclaration.discriminant.wireValue,
+                        type: referencer.referenceSwiftType("String"),
+                        value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                     });
+                    if (this.unionTypeDeclaration.discriminant.wireValue !== singleUnionType.shape.name.wireValue) {
+                        dataPropertyDefinitions.push({
+                            unsafeName: sanitizeSelf(singleUnionType.shape.name.name.camelCase.unsafeName),
+                            rawName: singleUnionType.shape.name.wireValue,
+                            type: singleUnionType.shape.type
+                        });
+                    }
+                } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
+                    const variantProperties = this.context.getPropertiesOfDiscriminatedUnionVariant(
+                        singleUnionType.shape.typeId
+                    );
+                    constantPropertyDefinitions.push({
+                        unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
+                        rawName: this.unionTypeDeclaration.discriminant.wireValue,
+                        type: referencer.referenceSwiftType("String"),
+                        value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
+                    });
+                    dataPropertyDefinitions.push(
+                        ...variantProperties
+                            .filter((p) => this.unionTypeDeclaration.discriminant.wireValue !== p.name.wireValue)
+                            .map((p) => ({
+                                unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
+                                rawName: p.name.wireValue,
+                                type: p.valueType,
+                                docsContent: p.docs
+                            }))
+                    );
+                } else if (singleUnionType.shape.propertiesType === "noProperties") {
+                    noop();
+                } else {
+                    assertNever(singleUnionType.shape);
                 }
-            } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
-                const variantProperties = this.context.getPropertiesOfDiscriminatedUnionVariant(
-                    singleUnionType.shape.typeId
-                );
-                constantPropertyDefinitions.push({
-                    unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
-                    rawName: this.unionTypeDeclaration.discriminant.wireValue,
-                    type: referencer.referenceSwiftType("String"),
-                    value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
-                });
-                dataPropertyDefinitions.push(
-                    ...variantProperties
-                        .filter((p) => this.unionTypeDeclaration.discriminant.wireValue !== p.name.wireValue)
-                        .map((p) => ({
-                            unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
-                            rawName: p.name.wireValue,
-                            type: p.valueType,
-                            docsContent: p.docs
-                        }))
-                );
-            } else if (singleUnionType.shape.propertiesType === "noProperties") {
-                noop();
-            } else {
-                assertNever(singleUnionType.shape);
-            }
 
-            return new StructGenerator({
-                symbol: variantSymbol,
-                constantPropertyDefinitions,
-                dataPropertyDefinitions,
-                additionalProperties: true,
-                docsContent: singleUnionType.docs,
-                context: this.context
-            }).generate();
-        });
+                return new StructGenerator({
+                    symbol: variantSymbol,
+                    constantPropertyDefinitions,
+                    dataPropertyDefinitions,
+                    additionalProperties: true,
+                    docsContent: singleUnionType.docs,
+                    context: this.context
+                }).generate();
+            });
 
         return [...variantStructs, this.generateCodingKeysEnum()];
     }
