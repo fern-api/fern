@@ -168,7 +168,6 @@ function convertAuthScheme(scheme: IrVersions.V63.AuthScheme): IrVersions.V62.Au
 function convertTypeDeclaration(typeDeclaration: IrVersions.V63.TypeDeclaration): IrVersions.V62.types.TypeDeclaration {
     return {
         ...typeDeclaration,
-        availability: convertAvailability(typeDeclaration.availability),
         shape: convertType(typeDeclaration.shape),
         // Examples contain TypeReferences that need conversion, but since skipValidation is true
         // in the serializer, we can pass them through and let the serializer handle it
@@ -185,28 +184,16 @@ function convertType(type: IrVersions.V63.Type): IrVersions.V62.types.Type {
                 resolvedType: convertResolvedTypeReference(type.resolvedType)
             });
         case "enum":
-            return IrVersions.V62.types.Type.enum({
-                ...type,
-                default:
-                    type.default != null
-                        ? { ...type.default, availability: convertAvailability(type.default.availability) }
-                        : undefined,
-                values: type.values.map((v) => ({
-                    ...v,
-                    availability: convertAvailability(v.availability)
-                }))
-            });
+            return IrVersions.V62.types.Type.enum(type);
         case "object":
             return IrVersions.V62.types.Type.object({
                 ...type,
                 properties: type.properties.map((prop) => ({
                     ...prop,
-                    availability: convertAvailability(prop.availability),
                     valueType: convertTypeReference(prop.valueType)
                 })),
                 extendedProperties: type.extendedProperties?.map((prop) => ({
                     ...prop,
-                    availability: convertAvailability(prop.availability),
                     valueType: convertTypeReference(prop.valueType)
                 }))
             });
@@ -215,7 +202,6 @@ function convertType(type: IrVersions.V63.Type): IrVersions.V62.types.Type {
                 ...type,
                 baseProperties: type.baseProperties.map((prop) => ({
                     ...prop,
-                    availability: convertAvailability(prop.availability),
                     valueType: convertTypeReference(prop.valueType)
                 })),
                 types: type.types.map((singleUnionType) => convertSingleUnionType(singleUnionType))
@@ -233,7 +219,6 @@ function convertType(type: IrVersions.V63.Type): IrVersions.V62.types.Type {
 function convertSingleUnionType(singleUnionType: IrVersions.V63.SingleUnionType): IrVersions.V62.types.SingleUnionType {
     return {
         ...singleUnionType,
-        availability: convertAvailability(singleUnionType.availability),
         shape: convertSingleUnionTypeProperties(singleUnionType.shape)
     };
 }
@@ -274,28 +259,11 @@ function convertTypeReference(typeReference: IrVersions.V63.TypeReference): IrVe
         case "container":
             return IrVersions.V62.types.TypeReference.container(convertContainerType(typeReference.container));
         case "named":
-            return IrVersions.V62.types.TypeReference.named(convertNamedType(typeReference));
+            return IrVersions.V62.types.TypeReference.named(typeReference);
         case "primitive":
             return IrVersions.V62.types.TypeReference.primitive(convertPrimitiveType(typeReference.primitive));
         case "unknown":
             return IrVersions.V62.types.TypeReference.unknown();
-    }
-}
-
-function convertNamedType(named: IrVersions.V63.NamedType): IrVersions.V62.types.NamedType {
-    return {
-        ...named,
-        default: named.default != null ? convertNamedTypeDefault(named.default) : undefined
-    };
-}
-
-function convertNamedTypeDefault(defaultValue: IrVersions.V63.NamedTypeDefault): IrVersions.V62.types.NamedTypeDefault {
-    switch (defaultValue.type) {
-        case "enum":
-            return IrVersions.V62.types.NamedTypeDefault.enum({
-                ...defaultValue,
-                availability: convertAvailability(defaultValue.availability)
-            });
     }
 }
 
@@ -408,7 +376,6 @@ function convertPrimitiveType(primitive: IrVersions.V63.PrimitiveType): IrVersio
 function convertHttpService(service: IrVersions.V63.HttpService): IrVersions.V62.http.HttpService {
     return {
         ...service,
-        availability: convertAvailability(service.availability),
         pathParameters: service.pathParameters.map((p) => convertPathParameter(p)),
         headers: service.headers.map((h) => convertHttpHeader(h)),
         endpoints: service.endpoints.map((e) => convertHttpEndpoint(e))
@@ -418,7 +385,6 @@ function convertHttpService(service: IrVersions.V63.HttpService): IrVersions.V62
 function convertHttpEndpoint(endpoint: IrVersions.V63.HttpEndpoint): IrVersions.V62.http.HttpEndpoint {
     return {
         ...endpoint,
-        availability: convertAvailability(endpoint.availability),
         allPathParameters: endpoint.allPathParameters.map((p) => convertPathParameter(p)),
         pathParameters: endpoint.pathParameters.map((p) => convertPathParameter(p)),
         headers: endpoint.headers.map((h) => convertHttpHeader(h)),
@@ -457,7 +423,6 @@ function convertHttpEndpoint(endpoint: IrVersions.V63.HttpEndpoint): IrVersions.
 function convertHttpHeader(header: IrVersions.V63.HttpHeader): IrVersions.V62.http.HttpHeader {
     return {
         ...header,
-        availability: convertAvailability(header.availability),
         valueType: convertTypeReference(header.valueType)
     };
 }
@@ -472,7 +437,6 @@ function convertPathParameter(pathParameter: IrVersions.V63.PathParameter): IrVe
 function convertQueryParameter(queryParameter: IrVersions.V63.QueryParameter): IrVersions.V62.http.QueryParameter {
     return {
         ...queryParameter,
-        availability: convertAvailability(queryParameter.availability),
         valueType: convertTypeReference(queryParameter.valueType)
     };
 }
@@ -491,12 +455,10 @@ function convertRequestBody(requestBody: IrVersions.V63.HttpRequestBody): IrVers
                 ...requestBody,
                 properties: requestBody.properties.map((prop) => ({
                     ...prop,
-                    availability: convertAvailability(prop.availability),
                     valueType: convertTypeReference(prop.valueType)
                 })),
                 extendedProperties: requestBody.extendedProperties?.map((prop) => ({
                     ...prop,
-                    availability: convertAvailability(prop.availability),
                     valueType: convertTypeReference(prop.valueType)
                 }))
             });
@@ -524,7 +486,6 @@ function convertFileUploadRequestProperty(
         case "bodyProperty":
             return IrVersions.V62.http.FileUploadRequestProperty.bodyProperty({
                 ...prop,
-                availability: convertAvailability(prop.availability),
                 valueType: convertTypeReference(prop.valueType)
             });
     }
@@ -567,7 +528,6 @@ function convertRequestPropertyValue(
         case "body":
             return IrVersions.V62.RequestPropertyValue.body({
                 ...requestPropertyValue,
-                availability: convertAvailability(requestPropertyValue.availability),
                 valueType: convertTypeReference(requestPropertyValue.valueType)
             });
     }
@@ -639,7 +599,6 @@ function convertJsonResponse(json: IrVersions.V63.JsonResponse): IrVersions.V62.
                     json.responseProperty != null
                         ? {
                               ...json.responseProperty,
-                              availability: convertAvailability(json.responseProperty.availability),
                               valueType: convertTypeReference(json.responseProperty.valueType)
                           }
                         : undefined
@@ -707,7 +666,6 @@ function convertWebhook(webhook: IrVersions.V63.Webhook): IrVersions.V62.webhook
     const { fileUploadPayload: _, ...webhookWithoutFileUpload } = webhook;
     return {
         ...webhookWithoutFileUpload,
-        availability: convertAvailability(webhook.availability),
         headers: webhook.headers.map((h) => convertHttpHeader(h)),
         payload: convertWebhookPayload(webhook.payload),
         // Responses contain TypeReferences that need conversion, but since skipValidation is true
@@ -726,7 +684,6 @@ function convertWebhookPayload(payload: IrVersions.V63.WebhookPayload): IrVersio
                 ...payload,
                 properties: payload.properties.map((prop) => ({
                     ...prop,
-                    availability: convertAvailability(prop.availability),
                     valueType: convertTypeReference(prop.valueType)
                 }))
             });
@@ -741,7 +698,6 @@ function convertWebhookPayload(payload: IrVersions.V63.WebhookPayload): IrVersio
 function convertWebsocketChannel(channel: IrVersions.V63.WebSocketChannel): IrVersions.V62.websocket.WebSocketChannel {
     return {
         ...channel,
-        availability: convertAvailability(channel.availability),
         headers: channel.headers.map((h) => convertHttpHeader(h)),
         queryParameters: channel.queryParameters.map((q) => convertQueryParameter(q)),
         pathParameters: channel.pathParameters.map((p) => convertPathParameter(p)),
@@ -755,7 +711,6 @@ function convertWebsocketChannel(channel: IrVersions.V63.WebSocketChannel): IrVe
 function convertWebsocketMessage(message: IrVersions.V63.WebSocketMessage): IrVersions.V62.websocket.WebSocketMessage {
     return {
         ...message,
-        availability: convertAvailability(message.availability),
         body: convertWebsocketMessageBody(message.body)
     };
 }
@@ -769,7 +724,6 @@ function convertWebsocketMessageBody(
                 ...body,
                 properties: body.properties.map((prop) => ({
                     ...prop,
-                    availability: convertAvailability(prop.availability),
                     valueType: convertTypeReference(prop.valueType)
                 }))
             });
@@ -778,34 +732,5 @@ function convertWebsocketMessageBody(
                 ...body,
                 bodyType: convertTypeReference(body.bodyType)
             });
-    }
-}
-
-function convertAvailability(
-    availability: IrVersions.V63.Availability | undefined
-): IrVersions.V62.commons.Availability | undefined {
-    if (availability == null) {
-        return undefined;
-    }
-    return {
-        status: convertAvailabilityStatus(availability.status),
-        message: availability.message
-    };
-}
-
-function convertAvailabilityStatus(
-    status: IrVersions.V63.AvailabilityStatus
-): IrVersions.V62.commons.AvailabilityStatus {
-    switch (status) {
-        case "IN_DEVELOPMENT":
-            return IrVersions.V62.commons.AvailabilityStatus.InDevelopment;
-        case "PRE_RELEASE":
-            return IrVersions.V62.commons.AvailabilityStatus.PreRelease;
-        case "GENERAL_AVAILABILITY":
-            return IrVersions.V62.commons.AvailabilityStatus.GeneralAvailability;
-        case "DEPRECATED":
-            return IrVersions.V62.commons.AvailabilityStatus.Deprecated;
-        default:
-            return IrVersions.V62.commons.AvailabilityStatus.GeneralAvailability;
     }
 }
