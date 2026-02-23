@@ -174,23 +174,12 @@
             "with": ["dist", "dist:cli", "dist:cli:dev", "dist:cli:local", "dist:cli:prod"]
         },
         "dockerTagLatest": {
-            "outputs": [],
-            "dependsOn": ["dist:cli"],
-            "inputs": ["dist/**", "Dockerfile", "Dockerfile.*"]
+            "cache": false,
+            "dependsOn": ["dist:cli"]
         },
         "podmanTagLatest": {
-            "outputs": [],
-            "dependsOn": ["dist:cli"],
-            "inputs": [
-                "Dockerfile",
-                "$TURBO_ROOT$/shared/.prettierignore",
-                "$TURBO_ROOT$/shared/stylelintrc.shared.json",
-                "$TURBO_ROOT$/packages/configs/**",
-                "src/**",
-                "tests/**",
-                "package.json",
-                "tsconfig.json"
-            ]
+            "cache": false,
+            "dependsOn": ["dist:cli"]
         }
     }
 }
