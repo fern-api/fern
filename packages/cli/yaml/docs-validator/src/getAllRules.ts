@@ -3,9 +3,9 @@ import { AccentColorContrastRule } from "./rules/accent-color-contrast/index.js"
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared/index.js";
 import { FilepathsExistRule } from "./rules/filepaths-exist/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
-import { NoSlugCollisionsRule } from "./rules/no-slug-collisions/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
+import { NoSlugCollisionsRule } from "./rules/no-slug-collisions/index.js";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
