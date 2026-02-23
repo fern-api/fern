@@ -7,6 +7,8 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export class WebSocketChannelGenerator {
     private readonly context: SdkGeneratorContext;
+    private channelNameMap: Map<string, { moduleName: string; clientName: string; enumPrefix: string }> =
+        new Map();
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
@@ -19,6 +21,8 @@ export class WebSocketChannelGenerator {
             return files;
         }
 
+        this.buildChannelNameMap(websocketChannels);
+
         for (const [channelId, channel] of Object.entries(websocketChannels)) {
             files.push(this.generateChannelFile(channelId, channel));
         }
@@ -30,17 +34,84 @@ export class WebSocketChannelGenerator {
         return files;
     }
 
+    /**
+     * Pre-computes unique module/client/enum names for all channels.
+     * When multiple channels share the same `channel.name`, we derive
+     * unique names from the channel ID (e.g. "channel_speak/v1" → "speak_v1").
+     */
+    private buildChannelNameMap(
+        websocketChannels: Record<FernIr.WebSocketChannelId, FernIr.WebSocketChannel>
+    ): void {
+        this.channelNameMap.clear();
+
+        // Detect name collisions
+        const nameCount = new Map<string, number>();
+        for (const channel of Object.values(websocketChannels)) {
+            const baseName = channel.name.snakeCase.safeName;
+            nameCount.set(baseName, (nameCount.get(baseName) ?? 0) + 1);
+        }
+
+        for (const [channelId, channel] of Object.entries(websocketChannels)) {
+            const baseName = channel.name.snakeCase.safeName;
+
+            if ((nameCount.get(baseName) ?? 0) > 1) {
+                // Derive unique name from channel ID: "channel_speak/v1" → "speak_v1"
+                const uniqueName = this.deriveNameFromChannelId(channelId);
+                this.channelNameMap.set(channelId, {
+                    moduleName: uniqueName.snakeCase,
+                    clientName: `${uniqueName.pascalCase}Client`,
+                    enumPrefix: uniqueName.pascalCase
+                });
+            } else {
+                this.channelNameMap.set(channelId, {
+                    moduleName: channel.name.snakeCase.safeName,
+                    clientName: `${channel.name.pascalCase.safeName}Client`,
+                    enumPrefix: channel.name.pascalCase.safeName
+                });
+            }
+        }
+    }
+
+    private deriveNameFromChannelId(channelId: string): { snakeCase: string; pascalCase: string } {
+        // "channel_speak/v1" → strip "channel_" prefix, replace "/" with "_"
+        const cleaned = channelId
+            .replace(/^channel_/, "")
+            .replace(/\//g, "_");
+        const snakeCase = cleaned;
+        const pascalCase = cleaned
+            .split("_")
+            .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+            .join("");
+        return { snakeCase, pascalCase };
+    }
+
     private generateWebSocketModFile(
         websocketChannels: Record<FernIr.WebSocketChannelId, FernIr.WebSocketChannel>
     ): RustFile {
         const moduleDeclarations: string[] = [];
         const reExports: string[] = [];
 
-        for (const [, channel] of Object.entries(websocketChannels)) {
-            const moduleName = this.getChannelModuleName(channel);
-            const clientName = this.getChannelClientName(channel);
-            moduleDeclarations.push(`pub mod ${moduleName};`);
-            reExports.push(`pub use ${moduleName}::${clientName};`);
+        for (const [channelId, channel] of Object.entries(websocketChannels)) {
+            const names = this.channelNameMap.get(channelId);
+            if (names == null) {
+                continue;
+            }
+            moduleDeclarations.push(`pub mod ${names.moduleName};`);
+            reExports.push(`pub use ${names.moduleName}::${names.clientName};`);
+
+            const serverMessages = channel.messages.filter((m) => m.origin === "server");
+            const jsonServerMessages = serverMessages.filter((m) => !this.isBinaryMessage(m));
+            const hasBinaryServerMessages = serverMessages.some((m) => this.isBinaryMessage(m));
+
+            // Export ServerMessage enum if channel has JSON server messages
+            if (jsonServerMessages.length > 0) {
+                reExports.push(`pub use ${names.moduleName}::${names.enumPrefix}ServerMessage;`);
+            }
+
+            // Export Event enum if channel has binary server messages
+            if (hasBinaryServerMessages) {
+                reExports.push(`pub use ${names.moduleName}::${names.enumPrefix}Event;`);
+            }
         }
 
         const module = rust.module({
@@ -57,23 +128,40 @@ export class WebSocketChannelGenerator {
     }
 
     private generateChannelFile(channelId: string, channel: FernIr.WebSocketChannel): RustFile {
-        const clientName = this.getChannelClientName(channel);
-        const moduleName = this.getChannelModuleName(channel);
+        const names = this.channelNameMap.get(channelId);
+        if (names == null) {
+            throw new Error(`No name mapping found for channel ${channelId}`);
+        }
+        const { clientName, moduleName, enumPrefix } = names;
 
         const clientMessages = channel.messages.filter((m) => m.origin === "client");
         const serverMessages = channel.messages.filter((m) => m.origin === "server");
+        const jsonServerMessages = serverMessages.filter((m) => !this.isBinaryMessage(m));
+        const hasBinaryServerMessages = serverMessages.some((m) => this.isBinaryMessage(m));
 
         const rawDeclarations: string[] = [];
 
-        const serverEnum = this.generateServerMessageEnum(channel, serverMessages);
+        // The IR message type IDs always use the full channel-derived prefix
+        // (e.g. "ListenV2Connected"), even when collision resolution shortens the
+        // Rust enum prefix (e.g. "V2"). Derive wirePrefix from the channel ID
+        // so we can strip it correctly.
+        const wirePrefix = this.deriveNameFromChannelId(channelId).pascalCase;
+        const serverEnum = this.generateServerMessageEnum(enumPrefix, jsonServerMessages, wirePrefix);
         if (serverEnum) {
             rawDeclarations.push(serverEnum);
         }
-        rawDeclarations.push(this.generateClientStruct(clientName));
-        rawDeclarations.push(this.generateImplBlock(clientName, channel, clientMessages, serverMessages));
 
-        const hasMessages = clientMessages.length > 0 || serverMessages.length > 0;
-        const useStatements = this.generateImports(hasMessages);
+        if (hasBinaryServerMessages && jsonServerMessages.length > 0) {
+            rawDeclarations.push(this.generateEventEnum(enumPrefix));
+        }
+
+        rawDeclarations.push(this.generateClientStruct(clientName));
+        rawDeclarations.push(
+            this.generateImplBlock(clientName, enumPrefix, channel, clientMessages, jsonServerMessages, hasBinaryServerMessages)
+        );
+
+        const hasJsonServerMessages = jsonServerMessages.length > 0;
+        const useStatements = this.generateImports(hasJsonServerMessages);
 
         const module = rust.module({
             useStatements,
@@ -87,18 +175,18 @@ export class WebSocketChannelGenerator {
         });
     }
 
-    private generateImports(hasServerMessages: boolean): UseStatement[] {
+    private generateImports(hasJsonServerMessages: boolean): UseStatement[] {
         const imports: UseStatement[] = [
             new UseStatement({
                 path: "crate",
-                items: ["ApiError", "WebSocketClient", "WebSocketOptions"]
+                items: ["ApiError", "WebSocketClient", "WebSocketMessage", "WebSocketOptions"]
             }),
             new UseStatement({
                 path: "tokio::sync",
                 items: ["mpsc"]
             })
         ];
-        if (hasServerMessages) {
+        if (hasJsonServerMessages) {
             imports.push(
                 new UseStatement({
                     path: "crate::prelude",
@@ -113,23 +201,37 @@ export class WebSocketChannelGenerator {
         return imports;
     }
 
+    /**
+     * Generates the server message enum containing only JSON (non-binary) server messages.
+     * Binary messages are handled separately via the Event enum.
+     */
     private generateServerMessageEnum(
-        channel: FernIr.WebSocketChannel,
-        serverMessages: FernIr.WebSocketMessage[]
+        enumPrefix: string,
+        jsonServerMessages: FernIr.WebSocketMessage[],
+        wirePrefix: string
     ): string | undefined {
-        if (serverMessages.length === 0) {
+        if (jsonServerMessages.length === 0) {
             return undefined;
         }
 
-        const channelName = channel.name.pascalCase.safeName;
-        const enumName = `${channelName}ServerMessage`;
+        const enumName = `${enumPrefix}ServerMessage`;
 
-        const variants = serverMessages
+        const variants = jsonServerMessages
             .map((msg) => {
                 const variantName = this.getMessageVariantName(msg);
-                const wireValue = msg.type;
+                // The IR msg.type (from AsyncAPI operationId) includes the channel name
+                // as a prefix (e.g. "ListenV2Connected"), but the actual API sends just
+                // the short discriminant (e.g. "Connected"). Strip the wire prefix.
+                // wirePrefix comes from channel.displayName (the original channel name),
+                // which may differ from enumPrefix when collision resolution renames it.
+                let wireValue = msg.type;
+                if (wireValue.startsWith(wirePrefix)) {
+                    wireValue = wireValue.slice(wirePrefix.length);
+                } else if (wireValue.startsWith(enumPrefix)) {
+                    wireValue = wireValue.slice(enumPrefix.length);
+                }
                 const bodyType = this.getMessageBodyType(msg);
-                const renameAttr = variantName !== wireValue ? `    #[serde(rename = "${wireValue}")]\n` : "";
+                const renameAttr = `    #[serde(rename = "${wireValue}")]\n`;
                 if (bodyType) {
                     return `${renameAttr}    ${variantName}(${bodyType}),`;
                 }
@@ -144,25 +246,40 @@ ${variants}
 }`;
     }
 
+    /**
+     * Generates the Event enum for channels with both JSON and binary server messages.
+     * Wraps the ServerMessage enum for JSON frames and Vec<u8> for binary frames.
+     */
+    private generateEventEnum(enumPrefix: string): string {
+        const enumName = `${enumPrefix}Event`;
+        const serverMessageName = `${enumPrefix}ServerMessage`;
+        return `#[derive(Debug, Clone)]
+pub enum ${enumName} {
+    Message(${serverMessageName}),
+    Audio(Vec<u8>),
+}`;
+    }
+
     private generateClientStruct(clientName: string): string {
         return `pub struct ${clientName} {
     ws: WebSocketClient,
-    incoming_rx: mpsc::UnboundedReceiver<Result<String, ApiError>>,
+    incoming_rx: mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>,
 }`;
     }
 
     private generateImplBlock(
         clientName: string,
+        enumPrefix: string,
         channel: FernIr.WebSocketChannel,
         clientMessages: FernIr.WebSocketMessage[],
-        serverMessages: FernIr.WebSocketMessage[]
+        jsonServerMessages: FernIr.WebSocketMessage[],
+        hasBinaryServerMessages: boolean
     ): string {
-        const channelName = channel.name.pascalCase.safeName;
         const pathExpression = this.buildPathExpression(channel);
 
         const connectMethod = this.generateConnectMethod(clientName, channel, pathExpression);
         const sendMethods = clientMessages.map((msg) => this.generateSendMethod(msg)).join("\n\n");
-        const receiveMethod = this.generateReceiveMethod(channelName, serverMessages);
+        const receiveMethod = this.generateReceiveMethod(enumPrefix, jsonServerMessages, hasBinaryServerMessages);
         const closeMethod = this.generateCloseMethod();
 
         const methods = [connectMethod];
@@ -202,21 +319,22 @@ ${methods.join("\n\n")}
             })
             .join("\n");
 
-        const queryInserts = channel.queryParameters
-            .map((qp) => {
-                const paramName = qp.name.name.snakeCase.safeName;
-                const wireValue = qp.name.wireValue;
-                return `        options.query_params.push(("${wireValue}".to_string(), ${paramName}.to_string()));`;
-            })
-            .join("\n");
-
-        let queryParams = "";
+        const queryLines: string[] = [];
         if (channel.queryParameters.length > 0) {
             for (const qp of channel.queryParameters) {
                 const paramName = qp.name.name.snakeCase.safeName;
-                params.push(`${paramName}: &str`);
+                const wireValue = qp.name.wireValue;
+                const isOptional = this.isOptionalType(qp.valueType);
+                if (isOptional) {
+                    params.push(`${paramName}: Option<&str>`);
+                    queryLines.push(`        if let Some(v) = ${paramName} {`);
+                    queryLines.push(`            options.query_params.push(("${wireValue}".to_string(), v.to_string()));`);
+                    queryLines.push(`        }`);
+                } else {
+                    params.push(`${paramName}: &str`);
+                    queryLines.push(`        options.query_params.push(("${wireValue}".to_string(), ${paramName}.to_string()));`);
+                }
             }
-            queryParams = queryInserts;
         }
 
         const needsMut = channel.headers.length > 0 || channel.queryParameters.length > 0;
@@ -226,7 +344,7 @@ ${methods.join("\n\n")}
         let full_url = format!("{}${pathExpression}", url);
         ${optionsBinding} = WebSocketOptions::default();
 ${headerInserts}
-${queryParams}
+${queryLines.join("\n")}
         let (ws, incoming_rx) = WebSocketClient::connect(&full_url, options).await?;
         Ok(Self { ws, incoming_rx })
     }`;
@@ -234,8 +352,14 @@ ${queryParams}
 
     private generateSendMethod(msg: FernIr.WebSocketMessage): string {
         const methodName = this.getMessageMethodName(msg, "send");
-        const bodyType = this.getMessageBodyType(msg);
 
+        if (this.isBinaryMessage(msg)) {
+            return `    pub async fn ${methodName}(&self, data: &[u8]) -> Result<(), ApiError> {
+        self.ws.send_binary(data).await
+    }`;
+        }
+
+        const bodyType = this.getMessageBodyType(msg);
         if (bodyType) {
             return `    pub async fn ${methodName}(&self, message: &${bodyType}) -> Result<(), ApiError> {
         self.ws.send_json(message).await
@@ -249,22 +373,45 @@ ${queryParams}
 
     private generateReceiveMethod(
         channelName: string,
-        serverMessages: FernIr.WebSocketMessage[]
+        jsonServerMessages: FernIr.WebSocketMessage[],
+        hasBinaryServerMessages: boolean
     ): string {
-        if (serverMessages.length === 0) {
-            return `    pub async fn recv(&mut self) -> Option<Result<String, ApiError>> {
+        if (jsonServerMessages.length === 0 && !hasBinaryServerMessages) {
+            return `    pub async fn recv(&mut self) -> Option<Result<WebSocketMessage, ApiError>> {
         self.incoming_rx.recv().await
     }`;
         }
 
         const enumName = `${channelName}ServerMessage`;
-        return `    pub async fn recv(&mut self) -> Option<Result<${enumName}, ApiError>> {
+
+        if (hasBinaryServerMessages && jsonServerMessages.length > 0) {
+            const eventName = `${channelName}Event`;
+            return `    pub async fn recv(&mut self) -> Option<Result<${eventName}, ApiError>> {
         match self.incoming_rx.recv().await {
-            Some(Ok(raw)) => {
-                Some(serde_json::from_str::<${enumName}>(&raw).map_err(ApiError::Serialization))
+            Some(Ok(WebSocketMessage::Text(raw))) => {
+                Some(serde_json::from_str::<${enumName}>(&raw).map(${eventName}::Message).map_err(ApiError::Serialization))
+            }
+            Some(Ok(WebSocketMessage::Binary(data))) => {
+                Some(Ok(${eventName}::Audio(data)))
             }
             Some(Err(e)) => Some(Err(e)),
             None => None,
+        }
+    }`;
+        }
+
+        return `    pub async fn recv(&mut self) -> Option<Result<${enumName}, ApiError>> {
+        loop {
+            match self.incoming_rx.recv().await {
+                Some(Ok(WebSocketMessage::Text(raw))) => {
+                    return Some(serde_json::from_str::<${enumName}>(&raw).map_err(ApiError::Serialization));
+                }
+                Some(Ok(WebSocketMessage::Binary(_))) => {
+                    continue;
+                }
+                Some(Err(e)) => return Some(Err(e)),
+                None => return None,
+            }
         }
     }`;
     }
@@ -286,12 +433,19 @@ ${queryParams}
         return path;
     }
 
-    private getChannelClientName(channel: FernIr.WebSocketChannel): string {
-        return `${channel.name.pascalCase.safeName}Client`;
+    /**
+     * Detects binary messages. Binary messages have a primitive body type (e.g., string
+     * with format: binary from AsyncAPI). JSON messages always reference named types (structs).
+     */
+    private isBinaryMessage(msg: FernIr.WebSocketMessage): boolean {
+        if (msg.body.type === "reference") {
+            return msg.body.bodyType.type === "primitive";
+        }
+        return false;
     }
 
-    private getChannelModuleName(channel: FernIr.WebSocketChannel): string {
-        return channel.name.snakeCase.safeName;
+    private isOptionalType(typeRef: FernIr.TypeReference): boolean {
+        return typeRef.type === "container" && typeRef.container.type === "optional";
     }
 
     private getMessageVariantName(msg: FernIr.WebSocketMessage): string {
@@ -312,8 +466,15 @@ ${queryParams}
     private getMessageMethodName(msg: FernIr.WebSocketMessage, prefix: string): string {
         const name = msg.body.type === "inlinedBody"
             ? msg.body.name.snakeCase.safeName
-            : msg.type;
+            : this.toSnakeCase(msg.type);
         return `${prefix}_${name}`;
+    }
+
+    private toSnakeCase(value: string): string {
+        return value
+            .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+            .replace(/([A-Z])([A-Z][a-z])/g, "$1_$2")
+            .toLowerCase();
     }
 
     private getMessageBodyType(msg: FernIr.WebSocketMessage): string | undefined {

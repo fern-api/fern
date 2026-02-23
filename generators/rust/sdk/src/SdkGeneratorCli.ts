@@ -230,9 +230,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const files: RustFile[] = [];
 
         // Core files
-        context.logger.debug("Generating core files (lib.rs, error.rs, api/mod.rs)...");
+        context.logger.debug("Generating core files (lib.rs, error.rs, core/mod.rs, api/mod.rs)...");
         files.push(this.generateLibFile(context));
         files.push(this.generateErrorFile(context));
+        files.push(this.generateCoreModFile(context));
         files.push(this.generateApiModFile(context));
 
         // Environment.rs (if environments are defined)
@@ -304,6 +305,61 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
     }
 
+    /**
+     * Generates core/mod.rs dynamically based on which features are active.
+     *
+     * The static asIs mod.rs always declares `mod sse_stream` and `mod websocket` behind
+     * cfg feature gates. While this works for compilation (the compiler respects #[cfg]),
+     * cargo fmt does NOT evaluate feature flags — it tries to parse all declared modules
+     * and fails when the corresponding .rs file doesn't exist. Generating this file
+     * dynamically ensures we only declare modules for files that are actually present.
+     */
+    private generateCoreModFile(context: SdkGeneratorContext): RustFile {
+        const hasStreaming = context.hasStreamingEndpoints();
+        const hasWebSocket = context.hasWebSocketChannels();
+
+        const lines: string[] = [];
+        lines.push("//! Core client infrastructure");
+        lines.push("");
+        lines.push("mod http_client;");
+        lines.push("mod oauth_token_provider;");
+        lines.push("mod request_options;");
+        lines.push("mod query_parameter_builder;");
+        if (hasStreaming) {
+            lines.push('#[cfg(feature = "sse")]');
+            lines.push("mod sse_stream;");
+        }
+        if (hasWebSocket) {
+            lines.push('#[cfg(feature = "websocket")]');
+            lines.push("mod websocket;");
+        }
+        lines.push("mod utils;");
+        lines.push("pub mod flexible_datetime;");
+        lines.push("pub mod base64_bytes;");
+        lines.push("pub mod bigint_string;");
+        lines.push("");
+        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
+        lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
+        lines.push("pub use request_options::RequestOptions;");
+        lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
+        if (hasStreaming) {
+            lines.push('#[cfg(feature = "sse")]');
+            lines.push("pub use sse_stream::SseStream;");
+        }
+        if (hasWebSocket) {
+            lines.push('#[cfg(feature = "websocket")]');
+            lines.push("pub use websocket::{WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState, parse_websocket_message};");
+        }
+        lines.push("pub use utils::join_url;");
+        lines.push("");
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of("src/core"),
+            fileContents: lines.join("\n")
+        });
+    }
+
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
         const hasTypes = this.hasTypes(context);
         const moduleDeclarations: ModuleDeclaration[] = [];
@@ -364,10 +420,11 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
 
-        // Add named re-exports for websocket
-        if (this.hasWebSocketChannels(context)) {
-            useStatements.push(new UseStatement({ path: "websocket", items: ["*"], isPublic: true }));
-        }
+        // WebSocket channel clients are accessible via the `websocket` submodule
+        // (e.g. `crate::websocket::RealtimeClient`). We intentionally do NOT
+        // glob re-export them here to avoid name collisions with HTTP resource
+        // clients that share the same subpackage name (e.g. both resources and
+        // websocket may define a `RealtimeClient`).
 
         const apiModule = new Module({
             moduleDoc,

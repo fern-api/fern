@@ -24,6 +24,12 @@ type WsStream = WebSocketStream<MaybeTlsStream<tokio::net::TcpStream>>;
 type WsSink = SplitSink<WsStream, Message>;
 type WsSource = SplitStream<WsStream>;
 
+#[derive(Debug, Clone)]
+pub enum WebSocketMessage {
+    Text(String),
+    Binary(Vec<u8>),
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum WebSocketState {
     Connecting,
@@ -64,7 +70,7 @@ pub struct WebSocketClient {
 }
 
 impl WebSocketClient {
-    pub async fn connect(url: &str, options: WebSocketOptions) -> Result<(Self, mpsc::UnboundedReceiver<Result<String, ApiError>>), ApiError> {
+    pub async fn connect(url: &str, options: WebSocketOptions) -> Result<(Self, mpsc::UnboundedReceiver<Result<WebSocketMessage, ApiError>>), ApiError> {
         let (incoming_tx, incoming_rx) = mpsc::unbounded_channel();
 
         let client = Self {
@@ -177,6 +183,20 @@ impl WebSocketClient {
         }
     }
 
+    pub async fn send_binary(&self, data: &[u8]) -> Result<(), ApiError> {
+        let mut sink_guard = self.sink.lock().await;
+        match sink_guard.as_mut() {
+            Some(sink) => {
+                sink.send(Message::Binary(data.to_vec()))
+                    .await
+                    .map_err(|e| ApiError::WebSocketError(format!("Send failed: {}", e)))
+            }
+            None => Err(ApiError::WebSocketError(
+                "WebSocket is not connected".to_string(),
+            )),
+        }
+    }
+
     pub async fn close(&self) -> Result<(), ApiError> {
         {
             let mut state = self.state.lock().await;
@@ -206,7 +226,7 @@ impl WebSocketClient {
         sink: Arc<Mutex<Option<WsSink>>>,
         state: Arc<Mutex<WebSocketState>>,
         close_notify: Arc<Notify>,
-        incoming_tx: mpsc::UnboundedSender<Result<String, ApiError>>,
+        incoming_tx: mpsc::UnboundedSender<Result<WebSocketMessage, ApiError>>,
         url: String,
         options: WebSocketOptions,
     ) {
@@ -221,7 +241,13 @@ impl WebSocketClient {
                     match msg {
                         Some(Ok(Message::Text(text))) => {
                             reconnect_attempts = 0;
-                            if incoming_tx.send(Ok(text)).is_err() {
+                            if incoming_tx.send(Ok(WebSocketMessage::Text(text))).is_err() {
+                                break;
+                            }
+                        }
+                        Some(Ok(Message::Binary(data))) => {
+                            reconnect_attempts = 0;
+                            if incoming_tx.send(Ok(WebSocketMessage::Binary(data))).is_err() {
                                 break;
                             }
                         }
@@ -232,9 +258,6 @@ impl WebSocketClient {
                         }
                         Some(Ok(Message::Ping(_))) | Some(Ok(Message::Pong(_))) | Some(Ok(Message::Frame(_))) => {
                             // Protocol frames handled automatically by tungstenite
-                        }
-                        Some(Ok(Message::Binary(_))) => {
-                            // Binary frames ignored for JSON-based channels
                         }
                         Some(Err(e)) => {
                             let error = ApiError::WebSocketError(format!("Read error: {}", e));
