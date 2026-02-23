@@ -12,8 +12,8 @@ import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
-import { execSync } from "child_process";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { execSync } from "child_process";
 import { createAndStartJob } from "./createAndStartJob.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
@@ -425,11 +425,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     exampleStyle: undefined
 };
 
-/**
- * Uploads dynamic IR for SDK generation to enable dynamic snippets.
- * This calls the getSdkDynamicIrUploadUrls endpoint to get presigned S3 URLs,
- * generates the dynamic IR, and uploads it.
- */
 /**
  * Resolves the current git commit hash of the working directory.
  * Returns undefined if not in a git repo or if git is not available.
