@@ -1,7 +1,6 @@
 import { ContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { runExeca } from "@fern-api/logging-execa";
-import { ExecaChildProcess } from "execa";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
@@ -95,7 +94,9 @@ export const runDocker = runContainer;
  * When the signal aborts (e.g. on test timeout or Ctrl+C), the child
  * process is terminated so it doesn't leak.
  */
-function wireSignal(childProcess: ExecaChildProcess, signal?: AbortSignal): void {
+type ChildProcess = ReturnType<typeof runExeca>;
+
+function wireSignal(childProcess: ChildProcess, signal?: AbortSignal): void {
     if (!signal) {
         return;
     }
