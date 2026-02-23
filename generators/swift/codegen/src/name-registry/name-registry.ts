@@ -436,20 +436,24 @@ export class NameRegistry {
 
     public registerDiscriminatedUnionVariants({
         parentSymbol,
-        variants
+        variants,
+        standaloneVariantDiscriminantWireValues
     }: {
         parentSymbol: swift.Symbol | string;
         variants: DiscriminatedUnionVariant[];
+        standaloneVariantDiscriminantWireValues?: Set<string>;
     }) {
         const parentSymbolId = typeof parentSymbol === "string" ? parentSymbol : parentSymbol.id;
         const sortedVariants = [...variants].sort((a, b) => a.caseName.localeCompare(b.caseName));
         this.discriminatedUnionVariantsByParentSymbolId.set(parentSymbolId, sortedVariants);
         sortedVariants.forEach((variant) => {
-            this.symbolRegistry.registerNestedType({
-                parentSymbol,
-                symbolName: variant.symbolName,
-                shape: { type: "struct" }
-            });
+            if (!standaloneVariantDiscriminantWireValues?.has(variant.discriminantWireValue)) {
+                this.symbolRegistry.registerNestedType({
+                    parentSymbol,
+                    symbolName: variant.symbolName,
+                    shape: { type: "struct" }
+                });
+            }
         });
         return sortedVariants;
     }
