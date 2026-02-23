@@ -19,7 +19,6 @@ generators=(
     java-spring
     ts-sdk
     ts-express
-    go-fiber
     go-model
     go-sdk
     csharp-model

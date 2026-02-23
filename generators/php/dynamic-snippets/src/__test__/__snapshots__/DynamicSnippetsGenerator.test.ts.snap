@@ -276,6 +276,32 @@ $client->endpoints->container->getAndReturnListOfPrimitives(
 "
 `;
 
+exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+);
+$client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
+    [
+        'test' => 0,
+        'test2' => true,
+        'test3' => 'Test',
+        'test4' => [
+            '1',
+            '1',
+            '1',
+            '1',
+        ],
+    ],
+);
+"
+`;
+
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "<?php
 

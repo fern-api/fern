@@ -27,7 +27,6 @@ export const V60_TO_V59_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "4.30.0",
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: "0.23.8",
         [GeneratorName.GO_MODEL]: "0.23.8",
         [GeneratorName.GO_SDK]: "1.12.4",
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,

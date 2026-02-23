@@ -11,7 +11,7 @@ async fn main() {
     client
         .endpoints
         .content_type
-        .post_json_patch_content_with_charset_type(
+        .post_json_patch_content_type(
             &ObjectWithOptionalField {
                 string: Some("string".to_string()),
                 integer: Some(1),

@@ -1344,6 +1344,7 @@ paths:
         - public
       x-fern-streaming:
         format: sse
+        terminator: "[DONE]"
   /sessions/{sessionId}/windows/{windowId}/get-window-info:
     get:
       operationId: get-window-info

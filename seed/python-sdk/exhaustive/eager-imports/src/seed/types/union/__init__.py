@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from .types import Animal, Animal_Cat, Animal_Dog, Cat, Dog
+from .types import Animal, Animal_Cat, Animal_Dog, Cat, Dog, MixedType
 from .errors import ErrorWithUnionBody
 
-__all__ = ["Animal", "Animal_Cat", "Animal_Dog", "Cat", "Dog", "ErrorWithUnionBody"]
+__all__ = ["Animal", "Animal_Cat", "Animal_Dog", "Cat", "Dog", "ErrorWithUnionBody", "MixedType"]

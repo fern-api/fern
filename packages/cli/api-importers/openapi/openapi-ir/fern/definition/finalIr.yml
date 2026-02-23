@@ -616,6 +616,7 @@ types:
     properties:
       schema: Schema
       responseProperty: optional<string>
+      terminator: optional<string>
 
   Schema:
     union:

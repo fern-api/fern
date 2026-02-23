@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update @biomejs/biome from 2.3.11 to 2.4.3.
+      type: chore
+  irVersion: 61
+  createdAt: "2026-02-20"
+  version: 0.19.2
+
+- changelogEntry:
+    - summary: |
         Fix `outputSrcOnly` to take priority over `shouldGenerateFullProject` so that organizations
         with self-hosted SDKs correctly receive only source files instead of the full project.
       type: fix
