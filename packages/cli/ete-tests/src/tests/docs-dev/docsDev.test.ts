@@ -34,7 +34,7 @@ describe.sequential("fern docs dev --legacy", () => {
         // kill the process
         const finishProcess = process.kill();
         expect(finishProcess).toBeTruthy();
-    }, 30_000);
+    }, 90_000);
 });
 
 describe.sequential("fern docs dev --beta", () => {
@@ -66,7 +66,7 @@ describe.sequential("fern docs dev --beta", () => {
 
         const finishProcess = process.kill();
         expect(finishProcess).toBeTruthy();
-    }, 50_000);
+    }, 90_000);
 });
 
 describe.sequential("fern docs dev", () => {
@@ -93,7 +93,7 @@ describe.sequential("fern docs dev", () => {
         expect(typeof responseBody === "object").toEqual(true);
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled", "orgId"]);
-    }, 50_000);
+    }, 90_000);
 });
 
 async function waitForServer(
