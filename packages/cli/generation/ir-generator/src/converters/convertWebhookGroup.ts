@@ -432,7 +432,7 @@ function convertAsymmetricSignature({
         algorithm: convertAsymmetricAlgorithm(asymmetric["asymmetric-algorithm"]),
         encoding: convertSignatureEncoding(asymmetric.encoding),
         signaturePrefix: asymmetric["signature-prefix"],
-        keySource: convertKeySource(asymmetric),
+        keySource: convertKeySource({ asymmetric, file }),
         timestamp: convertTimestampConfig({ timestamp: asymmetric.timestamp, file })
     };
 }
@@ -482,34 +482,22 @@ function convertAsymmetricAlgorithm(algorithm: RawSchemas.AsymmetricAlgorithmSch
     }
 }
 
-function convertKeySource(asymmetric: RawSchemas.AsymmetricSignatureSchema): AsymmetricKeySource {
+function convertKeySource({
+    asymmetric,
+    file
+}: {
+    asymmetric: RawSchemas.AsymmetricSignatureSchema;
+    file: FernFileContext;
+}): AsymmetricKeySource {
     if (asymmetric["jwks-url"] != null) {
         return AsymmetricKeySource.jwks({
             url: asymmetric["jwks-url"],
             keyIdHeader:
                 asymmetric["key-id-header"] != null
-                    ? {
+                    ? file.casingsGenerator.generateNameAndWireValue({
                           wireValue: asymmetric["key-id-header"],
-                          name: {
-                              originalName: asymmetric["key-id-header"],
-                              camelCase: {
-                                  safeName: asymmetric["key-id-header"],
-                                  unsafeName: asymmetric["key-id-header"]
-                              },
-                              snakeCase: {
-                                  safeName: asymmetric["key-id-header"],
-                                  unsafeName: asymmetric["key-id-header"]
-                              },
-                              screamingSnakeCase: {
-                                  safeName: asymmetric["key-id-header"],
-                                  unsafeName: asymmetric["key-id-header"]
-                              },
-                              pascalCase: {
-                                  safeName: asymmetric["key-id-header"],
-                                  unsafeName: asymmetric["key-id-header"]
-                              }
-                          }
-                      }
+                          name: asymmetric["key-id-header"]
+                      })
                     : undefined
         });
     }
