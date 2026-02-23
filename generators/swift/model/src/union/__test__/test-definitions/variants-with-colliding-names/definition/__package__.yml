@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UnionWithCollidingVariantNames:
+    union:
+      string: String
+      odds: Odds
+      date: Date
+      score: Score
+
+  String:
+    properties:
+      content: string
+      type: literal<"string">
+
+  Odds:
+    properties:
+      value: double
+      type: literal<"odds">
+
+  Date:
+    properties:
+      day: integer
+      month: integer
+      year: integer
+
+  Score:
+    properties:
+      points: integer

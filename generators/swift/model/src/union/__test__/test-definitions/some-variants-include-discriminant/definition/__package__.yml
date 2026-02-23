@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UnionSomeVariantsIncludeDiscriminant:
+    union:
+      alpha: Alpha
+      beta: Beta
+
+  Alpha:
+    properties:
+      name: string
+      type: literal<"alpha">
+
+  Beta:
+    properties:
+      value: integer
