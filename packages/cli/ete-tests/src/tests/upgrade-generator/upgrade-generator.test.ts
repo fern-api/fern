@@ -9,8 +9,8 @@ import { runFernCli } from "../../utils/runFernCli.js";
 
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
-describe.concurrent("fern generator upgrade", () => {
-    it("fern generator upgrade", async () => {
+describe("fern generator upgrade", () => {
+    it.concurrent("fern generator upgrade", async () => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
@@ -42,7 +42,7 @@ describe.concurrent("fern generator upgrade", () => {
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
     }, 60_000);
 
-    it("fern generator upgrade with filters", async () => {
+    it.concurrent("fern generator upgrade with filters", async () => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
@@ -111,7 +111,7 @@ describe.concurrent("fern generator upgrade", () => {
         ).toMatchSnapshot();
     }, 60_000);
 
-    it("fern generator upgrade majors", async () => {
+    it.concurrent("fern generator upgrade majors", async () => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
@@ -211,7 +211,7 @@ describe.concurrent("fern generator upgrade", () => {
         ).toMatchSnapshot();
     }, 60_000);
 
-    it("fern generator upgrade --skip-autorelease-disabled skips autorelease false generators", async () => {
+    it.concurrent("fern generator upgrade --skip-autorelease-disabled skips autorelease false generators", async () => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
 
@@ -277,7 +277,7 @@ describe.concurrent("fern generator upgrade", () => {
         expect(JSON.parse((await readFile(outputFileJava)).toString()).version).not.toEqual("0.0.1");
     }, 60_000);
 
-    it("fern generator upgrade without --skip-autorelease-disabled upgrades all generators", async () => {
+    it.concurrent("fern generator upgrade without --skip-autorelease-disabled upgrades all generators", async () => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
 
@@ -308,7 +308,7 @@ describe.concurrent("fern generator upgrade", () => {
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
     }, 60_000);
 
-    it("fern generator upgrade shows major version message", async () => {
+    it.concurrent("fern generator upgrade shows major version message", async () => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
 
