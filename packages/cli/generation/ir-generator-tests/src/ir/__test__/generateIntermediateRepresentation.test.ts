@@ -73,7 +73,7 @@ describe("test definitions", async () => {
     });
 
     apiWorkspaces.forEach((workspace) => {
-        it(`${workspace.workspaceName}`, async () => {
+        it.concurrent(`${workspace.workspaceName}`, async () => {
             await generateAndSnapshotIR({
                 absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
                 workspace,
@@ -96,7 +96,7 @@ describe("test definitions openapi", async () => {
     });
 
     apiWorkspaces.forEach((workspace) => {
-        it(`${workspace.workspaceName}`, async () => {
+        it.concurrent(`${workspace.workspaceName}`, async () => {
             await generateAndSnapshotIR({
                 absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions-openapi")),
                 workspace,
