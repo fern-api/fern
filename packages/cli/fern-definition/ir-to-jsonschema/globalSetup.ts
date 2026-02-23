@@ -3,6 +3,7 @@ export async function setup(): Promise<void> {
     generate();
 }
 
-export function onTestsRerun(): void {
-    import("./generateTests.mjs").then(({ generate }) => generate());
+export async function onTestsRerun(): Promise<void> {
+    const { generate } = await import("./generateTests.mjs");
+    generate();
 }
