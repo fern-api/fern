@@ -19,6 +19,9 @@ describe("fern generate", () => {
     }, 180_000);
 
     it.concurrent("ir contains fdr definitionid", async () => {
+        if (globalThis.process.env.FERN_ORG_TOKEN_DEV == null) {
+            throw new Error("FERN_ORG_TOKEN_DEV is not set");
+        }
         const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
             cwd: join(fixturesDir, RelativeFilePath.of("basic")),
             reject: false
@@ -32,21 +35,17 @@ describe("fern generate", () => {
             throw new Error(`Failed to get path to IR:\n${stdout}`);
         }
 
-        const process = exec(
-            `./ir-contains-fdr-definition-id.sh ${filepath}`,
-            { cwd: __dirname },
-            (error, stdout, stderr) => {
-                if (error) {
-                    console.error(`Error: ${error.message}`);
-                    return;
-                }
-                if (stderr) {
-                    console.error(`stderr: ${stderr}`);
-                    return;
-                }
-                console.log(`stdout: ${stdout}`);
+        exec(`./ir-contains-fdr-definition-id.sh ${filepath}`, { cwd: __dirname }, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error: ${error.message}`);
+                return;
             }
-        );
+            if (stderr) {
+                console.error(`stderr: ${stderr}`);
+                return;
+            }
+            console.log(`stdout: ${stdout}`);
+        });
     }, 180_000);
 
     // TODO: Re-enable this test if and when it doesn't require the user to be logged in.
@@ -67,7 +66,7 @@ describe("fern generate", () => {
     }, 180_000);
 
     it.concurrent("generate docs with no auth requires login", async () => {
-        const { stdout, stderr } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+        const { stdout, stderr } = await runFernCliWithoutAuthToken(["generate", "--docs", "--no-prompt"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
@@ -81,7 +80,7 @@ describe("fern generate", () => {
     }, 180_000);
 
     it.concurrent("generate docs with auth bypass fails", async () => {
-        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs", "--no-prompt"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
@@ -93,7 +92,7 @@ describe("fern generate", () => {
     }, 180_000);
 
     it.concurrent("generate docs with auth bypass succeeds", async () => {
-        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs"], {
+        const { stdout } = await runFernCliWithoutAuthToken(["generate", "--docs", "--no-prompt"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {

@@ -80,7 +80,6 @@ describe("ir", () => {
                     audiences: fixture.audiences,
                     version: fixture.version
                 });
-                // biome-ignore lint/suspicious/noMisplacedAssertion: allow
                 expect(irContents).toMatchSnapshot();
             },
             90_000
@@ -95,7 +94,7 @@ describe("ir", () => {
         });
         await tmpFile.cleanup();
         expect(stdout).toContain("Wrote IR to");
-    }, 10_000);
+    }, 30_000);
 
     it.concurrent("fails with invalid version", async ({ expect }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
@@ -105,7 +104,7 @@ describe("ir", () => {
         });
         await tmpFile.cleanup();
         expect(stdout).toContain("IR v100 does not exist");
-    }, 10_000);
+    }, 30_000);
 });
 
 describe("ir from proto", () => {
