@@ -131,9 +131,7 @@ describe("formatEndpointPathForSwift", () => {
         const endpoint = makeEndpoint({
             head: undefined,
             rawParts: [{ pathParameter: "id", tail: "/details" }],
-            rawAllPathParameters: [
-                { name: { originalName: "id", camelCase: { unsafeName: "id" } }, docs: undefined }
-            ]
+            rawAllPathParameters: [{ name: { originalName: "id", camelCase: { unsafeName: "id" } }, docs: undefined }]
         });
         expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)/details");
     });
