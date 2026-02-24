@@ -145,7 +145,7 @@ export class LocalTaskHandler {
                 this.context.logger.info(
                     "No previous version found (new SDK repository). Using 0.0.1 as initial version."
                 );
-                const initialVersion = "0.0.1";
+                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
                 const commitMessage = this.isWhitelabel
                     ? "Initial SDK generation"
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
