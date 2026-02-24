@@ -53,6 +53,11 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             });
         }
 
+        if (this.channel.bindings?.ws != null) {
+            this.convertBindingHeaders({ headers });
+            this.convertBindingQueryParameters({ queryParameters });
+        }
+
         const channelOperations = Object.entries(this.operations).reduce<Record<string, AsyncAPIV3.Operation>>(
             (acc, [operationId, operation]) => {
                 try {
@@ -225,6 +230,71 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                 path: this.breadcrumbs
             });
             return undefined;
+        }
+    }
+
+    private convertBindingHeaders({ headers }: { headers: HttpHeader[] }): void {
+        if (this.channel.bindings?.ws?.headers == null) {
+            return;
+        }
+        const required = this.channel.bindings.ws.headers.required ?? [];
+        for (const [name, schema] of Object.entries(this.channel.bindings.ws.headers.properties ?? {})) {
+            const resolvedHeader = this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                schemaOrReference: schema,
+                breadcrumbs: [...this.breadcrumbs, "bindings", "ws", "headers", name]
+            });
+            if (resolvedHeader == null) {
+                continue;
+            }
+            const parameterConverter = new ParameterConverter({
+                context: this.context,
+                breadcrumbs: [...this.breadcrumbs, "bindings", "ws", "headers", name],
+                parameter: {
+                    name,
+                    in: "header",
+                    required: required.includes(name),
+                    schema: resolvedHeader,
+                    description: "description" in resolvedHeader ? resolvedHeader.description : undefined
+                }
+            });
+            const convertedParameter = parameterConverter.convert();
+            if (convertedParameter != null && convertedParameter.type === "header") {
+                this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
+                headers.push(convertedParameter.parameter);
+            }
+        }
+    }
+
+    private convertBindingQueryParameters({ queryParameters }: { queryParameters: QueryParameter[] }): void {
+        if (this.channel.bindings?.ws?.query == null) {
+            return;
+        }
+        const required = this.channel.bindings.ws.query.required ?? [];
+        for (const [name, schema] of Object.entries(this.channel.bindings.ws.query.properties ?? {})) {
+            const resolvedQuery = this.context.resolveMaybeReference<OpenAPIV3.SchemaObject>({
+                schemaOrReference: schema,
+                breadcrumbs: [...this.breadcrumbs, "bindings", "ws", "query", name]
+            });
+            if (resolvedQuery == null) {
+                continue;
+            }
+            const parameterConverter = new ParameterConverter({
+                context: this.context,
+                breadcrumbs: [...this.breadcrumbs, "bindings", "ws", "query", name],
+                parameter: {
+                    name,
+                    in: "query",
+                    required: required.includes(name),
+                    schema: resolvedQuery,
+                    description: "description" in resolvedQuery ? resolvedQuery.description : undefined,
+                    deprecated: resolvedQuery.deprecated ?? false
+                }
+            });
+            const convertedParameter = parameterConverter.convert();
+            if (convertedParameter != null && convertedParameter.type === "query") {
+                this.inlinedTypes = { ...this.inlinedTypes, ...convertedParameter.inlinedTypes };
+                queryParameters.push(convertedParameter.parameter);
+            }
         }
     }
 
