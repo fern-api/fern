@@ -1257,10 +1257,8 @@ describe("${serviceName}", () => {
         // hasPagination determines if we need { once: false } for multiple mock requests
         // This is set after isCursorMissing is computed to ensure we don't allow multiple
         // requests when cursor is missing (since there's no next page to request)
-        // Only cursor and offset pagination generate Page objects with hasNextPage()/getNextPage()
         const supportsPaginatedResponse =
-            endpoint.pagination !== undefined &&
-            (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset");
+            endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination);
         let hasPagination = supportsPaginatedResponse;
         const expectedName =
             endpoint.pagination !== undefined
@@ -1298,10 +1296,8 @@ describe("${serviceName}", () => {
         const paginationIgnoredFields: string[] = [];
         if (endpoint.pagination !== undefined) {
             // Both cursor and offset pagination have a "page" property that changes between requests
-            if (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset") {
+            if (paginationGeneratesPageObject(endpoint.pagination)) {
                 const pageProperty = endpoint.pagination.page;
-                // Build the full path to the page field (e.g., "pagination.cursor" or just "cursor" or "pagination.offset")
-                // PropertyPathItem.name is of type FernIr.Name (use originalName), while property.name is NameAndWireValue (use wireValue)
                 const pathParts = [
                     ...(pageProperty.propertyPath ?? []).map((p) => p.name.originalName),
                     pageProperty.property.name.wireValue
@@ -1323,7 +1319,7 @@ describe("${serviceName}", () => {
                 ${expectedDeclaration}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
-                    endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset"
+                    endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination)
                         ? isCursorMissing
                             ? code`
                             expect(${expectedName}).toEqual(${pageName}.data);
@@ -2105,6 +2101,22 @@ function getResponseBodyJsonExample(response: FernIr.ExampleResponse): unknown |
     });
 }
 
+function paginationGeneratesPageObject(
+    pagination: FernIr.Pagination
+): pagination is FernIr.Pagination.Cursor | FernIr.Pagination.Offset {
+    switch (pagination.type) {
+        case "cursor":
+        case "offset":
+            return true;
+        case "custom":
+        case "uri":
+        case "path":
+            return false;
+        default:
+            assertNever(pagination);
+    }
+}
+
 function isPaginationResultsPathMissingInExample({
     example,
     endpoint
@@ -2168,19 +2180,23 @@ function isPaginationCursorMissingInExample({
         return true;
     }
 
-    // Get the cursor property based on pagination type
     let cursorProperty;
-    if (pagination.type === "cursor") {
-        cursorProperty = pagination.next;
-    } else if (pagination.type === "offset") {
-        cursorProperty = pagination.hasNextPage;
-        // For offset pagination, hasNextPage is optional - if not defined, the SDK calculates it differently
-        if (cursorProperty == null) {
+    switch (pagination.type) {
+        case "cursor":
+            cursorProperty = pagination.next;
+            break;
+        case "offset":
+            cursorProperty = pagination.hasNextPage;
+            if (cursorProperty == null) {
+                return false;
+            }
+            break;
+        case "custom":
+        case "uri":
+        case "path":
             return false;
-        }
-    } else {
-        // Custom pagination - skip this check
-        return false;
+        default:
+            assertNever(pagination);
     }
 
     if (cursorProperty == null) {
