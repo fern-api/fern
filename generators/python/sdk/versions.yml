@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.59.4
+  changelogEntry:
+    - summary: |
+        Fix `explode: false` query parameter serialization for array types. When an OpenAPI spec
+        sets `explode: false` on an array query parameter, the generated SDK now serializes values
+        as comma-separated strings (e.g. `tags=A,B,C`) instead of repeated keys (e.g. `tags=A&tags=B&tags=C`).
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+
 - version: 4.59.3
   changelogEntry:
     - summary: Fix bytes body snippet generation to use `request` parameter name instead of dynamic IR body key.
