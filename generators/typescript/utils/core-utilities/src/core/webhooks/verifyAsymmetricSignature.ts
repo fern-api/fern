@@ -111,28 +111,47 @@ function pemToArrayBuffer(pem: string): ArrayBuffer {
     return bytes.buffer;
 }
 
+function getImportAlgorithm(
+    descriptor: SubtleAlgorithmDescriptor
+): AlgorithmIdentifier | RsaHashedImportParams | EcKeyImportParams {
+    if (descriptor.namedCurve != null) {
+        return { name: descriptor.name, namedCurve: descriptor.namedCurve };
+    }
+    if (descriptor.hash != null) {
+        return { name: descriptor.name, hash: descriptor.hash };
+    }
+    return { name: descriptor.name };
+}
+
+function getVerifyAlgorithm(
+    descriptor: SubtleAlgorithmDescriptor
+): AlgorithmIdentifier | EcdsaParams {
+    if (descriptor.name === "ECDSA" && descriptor.hash != null) {
+        return { name: descriptor.name, hash: { name: descriptor.hash } };
+    }
+    return { name: descriptor.name };
+}
+
 async function verifyWithSubtleCrypto(args: VerifyAsymmetricSignatureArgs): Promise<boolean> {
     const encoder = new TextEncoder();
     const signatureBytes = decodeSignature(args.signature, args.encoding);
     const descriptor = getSubtleAlgorithmDescriptor(args.algorithm);
     const keyData = pemToArrayBuffer(args.publicKey);
 
-    const importAlgorithm: Record<string, unknown> = { name: descriptor.name };
-    if (descriptor.hash != null) {
-        importAlgorithm.hash = descriptor.hash;
-    }
-    if (descriptor.namedCurve != null) {
-        importAlgorithm.namedCurve = descriptor.namedCurve;
-    }
+    const key = await globalThis.crypto.subtle.importKey(
+        "spki",
+        keyData,
+        getImportAlgorithm(descriptor),
+        false,
+        ["verify"]
+    );
 
-    const key = await globalThis.crypto.subtle.importKey("spki", keyData, importAlgorithm, false, ["verify"]);
-
-    const verifyAlgorithm: Record<string, unknown> = { name: descriptor.name };
-    if (descriptor.name === "ECDSA" && descriptor.hash != null) {
-        verifyAlgorithm.hash = descriptor.hash;
-    }
-
-    return globalThis.crypto.subtle.verify(verifyAlgorithm, key, signatureBytes, encoder.encode(args.payload));
+    return globalThis.crypto.subtle.verify(
+        getVerifyAlgorithm(descriptor),
+        key,
+        signatureBytes,
+        encoder.encode(args.payload)
+    );
 }
 
 export async function verifyAsymmetricSignature(args: VerifyAsymmetricSignatureArgs): Promise<boolean> {
