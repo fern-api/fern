@@ -6,6 +6,7 @@ import { readFile, writeFile } from "fs/promises";
 import inquirer from "inquirer";
 import { type Document, parseDocument } from "yaml";
 import type { Argv } from "yargs";
+import { FERN_YML_FILENAME, REF_KEY } from "../../../config/fern-yml/constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
@@ -14,10 +15,8 @@ import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, LANGUAGES, type Language } from
 import { Icons } from "../../../ui/format.js";
 import { Version } from "../../../version.js";
 import { command } from "../../_internal/command.js";
-import { isGitUrl, looksLikeRemoteReference } from "../utils/gitUrl.js";
-
-const FERN_YML_FILENAME = "fern.yml";
-const REF_KEY = "$ref";
+import { isGitUrl } from "../utils/gitUrl.js";
+import { isRemoteReference } from "../utils/isRemoteReference.js";
 
 export declare namespace AddCommand {
     export interface Args extends GlobalArgs {
@@ -48,8 +47,30 @@ export class AddCommand {
             });
         }
 
-        const language = await this.resolveLanguage(context, args);
-        const output = await this.resolveOutput(context, args, language);
+        if (!context.isTTY || args.yes) {
+            return this.handleWithFlags(context, args, fernYmlPath);
+        }
+
+        return this.handleInteractive(context, args, fernYmlPath);
+    }
+
+    private async handleWithFlags(
+        context: Context,
+        args: AddCommand.Args,
+        fernYmlPath: AbsoluteFilePath
+    ): Promise<void> {
+        const missingFlags: string[] = [];
+        if (args.target == null) {
+            missingFlags.push("--target <language>    SDK language (e.g. typescript, python, go)");
+        }
+        if (missingFlags.length > 0) {
+            throw new CliError({
+                message: `Missing required flags:\n\n` + missingFlags.map((flag) => `  ${flag}`).join("\n")
+            });
+        }
+
+        const language = this.parseLanguage(args.target as string);
+        const output = args.output != null ? this.parseOutput(args.output) : { path: `./sdks/${language}` };
         const version = args.stable ? await this.resolveStableVersion(context, language) : undefined;
 
         await this.addTargetToFernYml({
@@ -64,28 +85,28 @@ export class AddCommand {
         context.stderr.info(`\n  ${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
     }
 
-    private async resolveLanguage(context: Context, args: AddCommand.Args): Promise<Language> {
-        if (args.target != null) {
-            return this.parseLanguage(args.target);
-        }
+    private async handleInteractive(
+        context: Context,
+        args: AddCommand.Args,
+        fernYmlPath: AbsoluteFilePath
+    ): Promise<void> {
+        const language = args.target != null ? this.parseLanguage(args.target) : await this.promptLanguage();
+        const output = args.output != null ? this.parseOutput(args.output) : await this.promptOutput(language);
+        const version = args.stable ? await this.resolveStableVersion(context, language) : undefined;
 
-        if (args.yes) {
-            throw new CliError({
-                message:
-                    `The --target flag is required. Specify the SDK language to add:\n\n` +
-                    `  --target <language>    SDK language (e.g. typescript, python, go)`
-            });
-        }
+        await this.addTargetToFernYml({
+            context,
+            fernYmlPath,
+            language,
+            output,
+            version,
+            group: args.group
+        });
 
-        if (!context.isTTY) {
-            throw new CliError({
-                message:
-                    `Please use the \`-y\` flag to accept all default inputs or specify all of the required flags:\n\n` +
-                    `  --target <language>    SDK language (e.g. typescript, python, go)\n` +
-                    `  --output <path|url>    Output path or git URL (e.g. ./my-sdk)`
-            });
-        }
+        context.stderr.info(`\n  ${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
+    }
 
+    private async promptLanguage(): Promise<Language> {
         const { language } = await inquirer.prompt<{ language: Language }>([
             {
                 type: "list",
@@ -98,33 +119,11 @@ export class AddCommand {
                 }))
             }
         ]);
-
         return language;
     }
 
-    private async resolveOutput(
-        context: Context,
-        args: AddCommand.Args,
-        language: Language
-    ): Promise<schemas.OutputSchema> {
+    private async promptOutput(language: Language): Promise<schemas.OutputSchema> {
         const defaultPath = `./sdks/${language}`;
-
-        if (args.output != null) {
-            return this.parseOutput(args.output);
-        }
-
-        if (args.yes) {
-            return { path: defaultPath };
-        }
-
-        if (!context.isTTY) {
-            throw new CliError({
-                message:
-                    `Please use the \`-y\` flag to accept all default inputs or specify all of the required flags:\n\n` +
-                    `  --output <path|url>    Output path or git URL (e.g. ./my-sdk)`
-            });
-        }
-
         const { outputValue } = await inquirer.prompt<{ outputValue: string }>([
             {
                 type: "input",
@@ -139,7 +138,6 @@ export class AddCommand {
                 }
             }
         ]);
-
         return this.parseOutput(outputValue);
     }
 
@@ -152,13 +150,12 @@ export class AddCommand {
             };
         }
 
-        if (looksLikeRemoteReference(value)) {
+        if (isRemoteReference(value)) {
             throw new CliError({
                 message:
                     `"${value}" looks like a remote reference but is not a recognized git URL.\n\n` +
                     `  Please specify a local path (e.g. ./sdks/my-sdk) or a git URL:\n` +
-                    `    https://github.com/owner/repo\n` +
-                    `    git@github.com:owner/repo.git`
+                    `    https://github.com/owner/repo`
             });
         }
 
@@ -206,8 +203,6 @@ export class AddCommand {
         group: string | undefined;
     }): Promise<void> {
         const { filePath, document } = await this.resolveTargetsFile(fernYmlPath);
-
-        const doc = document.toJS() as Record<string, unknown>;
 
         // Find the targets map. If we followed a $ref from `sdks`, the resolved
         // file's root IS the sdks object; otherwise it's `doc.sdks.targets`.

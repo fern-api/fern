@@ -7,6 +7,7 @@ import type { Argv } from "yargs";
 import { FernYmlBuilder } from "../../config/fern-yml/FernYmlBuilder";
 import type { Context } from "../../context/Context";
 import type { GlobalArgs } from "../../context/GlobalArgs";
+import { FERN_YML_FILENAME } from "../../config/fern-yml/constants";
 import { CliError } from "../../errors/CliError";
 import { PETSTORE_OPENAPI_YML } from "../../init/templates/openapi.yml";
 import { Wizard } from "../../init/Wizard";
@@ -21,7 +22,6 @@ export declare namespace InitCommand {
     }
 }
 
-const FERN_YML_FILENAME = "fern.yml";
 const SPECS_DIR = "openapi";
 
 export class InitCommand {

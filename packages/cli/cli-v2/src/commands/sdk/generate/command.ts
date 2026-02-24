@@ -388,7 +388,7 @@ export class GenerateCommand {
      * - Anything else is treated as a local path.
      */
     private parseTargetOutput(args: GenerateCommand.Args): schemas.OutputSchema {
-        if (args.output != null && this.isGitUrl(args.output)) {
+        if (args.output != null && isGitUrl(args.output)) {
             if (!args.local) {
                 throw new CliError({
                     message:
@@ -538,10 +538,6 @@ export class GenerateCommand {
      */
     private isTokenRequired({ targets, args }: { targets: Target[]; args: GenerateCommand.Args }): boolean {
         return !args.local || targets.some((t) => t.output.git != null && schemas.isGitOutputSelfHosted(t.output.git));
-    }
-
-    private isGitUrl(value: string): boolean {
-        return isGitUrl(value);
     }
 
     private maybePluralSdks(targets: Target[]): string {
