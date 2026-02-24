@@ -2,21 +2,13 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 
 import { Rule, RuleViolation } from "../../Rule.js";
 
-const VALID_HMAC_ALGORITHMS = new Set<string>(
-    Object.values(RawSchemas.WebhookSignatureAlgorithmSchema)
-);
+const VALID_HMAC_ALGORITHMS = new Set<string>(Object.values(RawSchemas.WebhookSignatureAlgorithmSchema));
 
-const VALID_ASYMMETRIC_ALGORITHMS = new Set<string>(
-    Object.values(RawSchemas.AsymmetricAlgorithmSchema)
-);
+const VALID_ASYMMETRIC_ALGORITHMS = new Set<string>(Object.values(RawSchemas.AsymmetricAlgorithmSchema));
 
-const VALID_ENCODINGS = new Set<string>(
-    Object.values(RawSchemas.WebhookSignatureEncodingSchema)
-);
+const VALID_ENCODINGS = new Set<string>(Object.values(RawSchemas.WebhookSignatureEncodingSchema));
 
-const VALID_TIMESTAMP_FORMATS = new Set<string>(
-    Object.values(RawSchemas.WebhookTimestampFormatSchema)
-);
+const VALID_TIMESTAMP_FORMATS = new Set<string>(Object.values(RawSchemas.WebhookTimestampFormatSchema));
 
 export const ValidWebhookSignatureRule: Rule = {
     name: "valid-webhook-signature",
@@ -64,10 +56,7 @@ function validateSignature(signature: RawSchemas.WebhookSignatureSchema): RuleVi
     return violations;
 }
 
-function validateHmac(
-    signature: RawSchemas.WebhookSignatureSchema.Hmac,
-    violations: RuleViolation[]
-): void {
+function validateHmac(signature: RawSchemas.WebhookSignatureSchema.Hmac, violations: RuleViolation[]): void {
     if (signature.algorithm != null && !VALID_HMAC_ALGORITHMS.has(signature.algorithm)) {
         violations.push({
             severity: "error",
@@ -110,10 +99,7 @@ function validateAsymmetric(
     }
 }
 
-function validateTimestamp(
-    timestamp: RawSchemas.WebhookTimestampSchema,
-    violations: RuleViolation[]
-): void {
+function validateTimestamp(timestamp: RawSchemas.WebhookTimestampSchema, violations: RuleViolation[]): void {
     if (timestamp.header == null || timestamp.header.length === 0) {
         violations.push({
             severity: "error",
