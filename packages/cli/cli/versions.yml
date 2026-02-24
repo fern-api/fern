@@ -103,6 +103,22 @@
         extension (in OpenAPI) with algorithm, encoding, header name, and payload format.
         SDK generators can use this to produce signature verification utilities.
       type: feat
+    - summary: |
+        Add `terminator` field support for SSE streaming throughout the OpenAPI to Fern pipeline.
+        The field was already present in the Fern definition schema but missing from the OpenAPI
+        extension parsing, OpenAPI-IR schema, and the OpenAPI-IR to Fern conversion layers.
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 65
+- version: 3.81.1
+  changelogEntry:
+    - summary: |
+        Fix example object keys starting with `$` (e.g. `$ref`) not being unescaped when
+        generating the IR `jsonExample`. The Fern definition escapes `$`-prefixed keys with
+        a backslash to avoid collision with example references, but the backslash was not
+        removed when building the wire-format JSON example, causing generators to emit
+        invalid code (e.g. `"\$ref"` in Go).
+      type: fix
   createdAt: "2026-02-19"
   irVersion: 65
 - version: 3.81.0
