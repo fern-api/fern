@@ -150,6 +150,10 @@ public final class ExecutionSessionState {
     public interface _FinalStage {
         ExecutionSessionState build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage lastTimeContacted(Optional<String> lastTimeContacted);
 
         _FinalStage lastTimeContacted(String lastTimeContacted);
@@ -253,6 +257,18 @@ public final class ExecutionSessionState {
         public ExecutionSessionState build() {
             return new ExecutionSessionState(
                     lastTimeContacted, sessionId, isWarmInstance, awsTaskId, language, status, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

@@ -90,8 +90,8 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
 };
 
 describe("fern upgrade", () => {
-    it("upgrades generators", async () => {
-        const directory = await init();
+    it("upgrades generators", async ({ signal }) => {
+        const directory = await init({ signal });
         const generatorsConfigurationFilepath = join(
             directory,
             RelativeFilePath.of(FERN_DIRECTORY),
@@ -105,7 +105,8 @@ describe("fern upgrade", () => {
             env: {
                 // this env var needs to be defined so the CLI thinks we're mid-upgrade
                 FERN_PRE_UPGRADE_VERSION: "0.0.0"
-            }
+            },
+            signal
         });
         const generatorsConfiguration = (await readFile(generatorsConfigurationFilepath)).toString();
         expect(generatorsConfiguration).toMatchSnapshot();

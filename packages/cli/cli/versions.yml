@@ -1,9 +1,213 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.80.0
+- version: 3.86.0
   changelogEntry:
     - summary: |
         Add support for multiple override files in OpenAPI spec configuration. The `overrides` field now accepts either a single path or an array of paths. When multiple paths are provided, overrides are applied sequentially in order, allowing for layered customization of OpenAPI specs.
       type: feat
+  createdAt: "2026-02-18"
+  irVersion: 65
+- version: 3.85.6
+  changelogEntry:
+    - summary: |
+        Complete document-level `webhook-signature` configuration parsing. Adds validation for webhook
+        signature configs (algorithms, encodings, timestamp settings, JWKS consistency).
+      type: chore
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.5
+  changelogEntry:
+    - summary: |
+        Report broken AsyncAPI V3 message references as visible warnings instead
+        of silently dropping entire specs. When an operation references a
+        non-existent channel or message (e.g. `$ref: "#/channels/auth/messages/authenticate"`
+        when no `auth` channel exists), the parser now logs a warning with the
+        specific broken `$ref` and continues processing the remaining valid
+        messages and channels.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.4
+  changelogEntry:
+    - summary: |
+        Skip compatible IR version validation when running in local development
+        mode (CLI version 0.0.0). This prevents noisy 404 errors from the FDR
+        registry when the CLI version is not a real published release.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.3
+  changelogEntry:
+    - summary: |
+        Remove unhelpful "Unable to analyze changes with AI" fallback message from
+        changelog entries when AI analysis fails during AUTO versioning. The changelog
+        now shows just the version header with no body instead.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.2
+  changelogEntry:
+    - summary: |
+        Regenerate internal SDKs with the latest TypeScript SDK generator to pick up improvements and fixes.
+      type: chore
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.85.1
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning failing for new SDK repositories. When generating an SDK
+        into an empty or newly initialized repository, the version extraction would fail
+        because all files are new additions with no previous version lines in the diff.
+        Now returns 0.0.1 as the initial version instead of throwing an error.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.0
+  changelogEntry:
+    - summary: |
+        Auto-correct incorrect `fern-api/` Docker org prefix to `fernapi/` in generator names.
+        When a generator is specified with `fern-api/` (the GitHub/npm org) instead of `fernapi/`
+        (the Docker Hub org), the CLI now automatically corrects it and prints a warning.
+        This applies to CLI commands (`--generator` flag) and `generators.yml` configuration files.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.84.0
+  changelogEntry:
+    - summary: |
+        Add workspace validation caching and skipValidation flag to improve toFernWorkspace()
+        performance. A global validation cache eliminates redundant JSON schema validation and
+        Zod parsing when the same files are processed by multiple workspace instances. The
+        skipValidation option allows callers to bypass JSON schema validation for known-good files.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.3
+  changelogEntry:
+    - summary: |
+        Preserve existing README.md during local SDK generation when the generator
+        does not produce one. Previously, `copyGeneratedFiles` deleted all files
+        before copying generator output, so if README generation failed silently
+        the file was removed from the target repository. The file copy methods now
+        skip deleting README.md when the generated output directory does not
+        include it.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.2
+  changelogEntry:
+    - summary: |
+        Improve CLI startup performance by loading workspace files concurrently.
+      type: chore
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.1
+  changelogEntry:
+    - summary: |
+        Fix S3 signature mismatch for docs assets outside fern/ folder. Paths containing "../"
+        are now sanitized to prevent HTTP client URL normalization from breaking S3 presigned URLs.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification support. Webhooks can now declare a `signature`
+        configuration with `type: hmac` or `type: asymmetric`, including algorithm, encoding,
+        signature prefix parsing, payload format composition, and timestamp-based replay protection.
+        Supported via Fern Definition `signature` field, OpenAPI `x-fern-webhook-signature` extension,
+        and the IR `WebhookSignatureVerification` union.
+
+        **OpenAPI example** — set `x-fern-webhook-signature` at the document level so
+        all webhooks inherit the same signature configuration:
+
+        ```yaml
+        openapi: 3.1.0
+        info:
+          title: My API
+          version: 1.0.0
+        x-fern-webhook-signature:
+          type: hmac
+          header: x-webhook-signature
+          algorithm: sha256
+          encoding: hex
+          signature-prefix: "sha256="
+          payload-format:
+            components:
+              - timestamp
+              - body
+            delimiter: "."
+          timestamp:
+            header: x-webhook-timestamp
+            format: unix-seconds
+            tolerance: 300
+        webhooks:
+          orderCreated:
+            post:
+              operationId: orderCreated
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/OrderEvent'
+        ```
+
+        Individual webhook operations can also override the document-level default by
+        specifying their own `x-fern-webhook-signature` configuration inline.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.82.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification configuration to the IR. Webhooks can now
+        specify a `signature` block (in Fern Definition) or `x-fern-webhook-signature`
+        extension (in OpenAPI) with algorithm, encoding, header name, and payload format.
+        SDK generators can use this to produce signature verification utilities.
+      type: feat
+    - summary: |
+        Add `terminator` field support for SSE streaming throughout the OpenAPI to Fern pipeline.
+        The field was already present in the Fern definition schema but missing from the OpenAPI
+        extension parsing, OpenAPI-IR schema, and the OpenAPI-IR to Fern conversion layers.
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 65
+- version: 3.81.1
+  changelogEntry:
+    - summary: |
+        Fix example object keys starting with `$` (e.g. `$ref`) not being unescaped when
+        generating the IR `jsonExample`. The Fern definition escapes `$`-prefixed keys with
+        a backslash to avoid collision with example references, but the backslash was not
+        removed when building the wire-format JSON example, causing generators to emit
+        invalid code (e.g. `"\$ref"` in Go).
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 65
+- version: 3.81.0
+  changelogEntry:
+    - summary: |
+        Add `--skip-autorelease-disabled` flag to `fern generator upgrade`. When passed,
+        generators with `autorelease: false` in their configuration are skipped during
+        the upgrade. Skipped generators are reported in the output summary.
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 65
+- version: 3.80.0
+  changelogEntry:
+    - summary: |
+        Make `fern init` default to OpenAPI initialization with a sample Petstore spec.
+        Previously, `fern init` created a Fern Definition workspace by default, and
+        `fern init --openapi <path>` was needed for OpenAPI. Now `fern init` creates an
+        OpenAPI workspace by default. Use `fern init --fern-definition` to get the previous
+        Fern Definition initialization behavior.
+      type: feat
+  createdAt: "2026-02-18"
+  irVersion: 65
+- version: 3.79.3
+  changelogEntry:
+    - summary: |
+        Fix auto-generated examples for recursive types to include required non-leaf properties (e.g. nested objects) and empty containers in minimal stubs, preventing deserialization failures in generated mock server tests.
+      type: fix
   createdAt: "2026-02-18"
   irVersion: 65
 - version: 3.79.2

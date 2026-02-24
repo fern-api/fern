@@ -127,6 +127,10 @@ public final class User {
     public interface _FinalStage {
         User build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage age(Optional<Integer> age);
 
         _FinalStage age(Integer age);
@@ -203,6 +207,18 @@ public final class User {
         @java.lang.Override
         public User build() {
             return new User(id, name, email, age, createdAt, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

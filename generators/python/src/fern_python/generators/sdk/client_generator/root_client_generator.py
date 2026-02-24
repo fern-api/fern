@@ -181,6 +181,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             # like os.getenv("...").
             use_kwargs_snippets=(has_inferred_auth or is_oauth_client_credentials),
             base_url_example_value=base_url_example_value,
+            sync_init_parameters=self._get_constructor_parameters(is_async=False),
+            async_init_parameters=self._get_constructor_parameters(is_async=True),
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -1565,11 +1567,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             oauth_token_override: bool = False,
             use_kwargs_snippets: bool = False,
             base_url_example_value: Optional[AST.Expression] = None,
+            sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            async_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
         ):
             self._module_path = module_path
             self._class_name = class_name
             self._async_class_name = async_class_name
             self._constructor_parameters: List[ConstructorParameter] = list(constructor_parameters)
+            self._sync_init_parameters: Optional[List[ConstructorParameter]] = (
+                list(sync_init_parameters) if sync_init_parameters is not None else None
+            )
+            self._async_init_parameters: Optional[List[ConstructorParameter]] = (
+                list(async_init_parameters) if async_init_parameters is not None else None
+            )
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
@@ -1726,7 +1736,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             return GeneratedRootClient(
                 async_instantiations=async_instantiations,
-                async_client=RootClient(class_reference=async_class_reference, parameters=self._constructor_parameters),
+                async_client=RootClient(
+                    class_reference=async_class_reference,
+                    parameters=self._constructor_parameters,
+                    init_parameters=self._async_init_parameters,
+                ),
                 sync_instantiations=sync_instantiations,
-                sync_client=RootClient(class_reference=sync_class_reference, parameters=self._constructor_parameters),
+                sync_client=RootClient(
+                    class_reference=sync_class_reference,
+                    parameters=self._constructor_parameters,
+                    init_parameters=self._sync_init_parameters,
+                ),
             )

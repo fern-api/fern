@@ -1,41 +1,8 @@
 {
   "extends": "@fern-api/configs/tsconfig/test.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../../commons/casings-generator"
-    },
-    {
-      "path": "../../../commons/fs-utils"
-    },
-    {
-      "path": "../../../commons/ir-utils"
-    },
-    {
-      "path": "../../../ir-sdk"
-    },
-    {
-      "path": "../../cli-source-resolver"
-    },
-    {
-      "path": "../../configuration-loader"
-    },
-    {
-      "path": "../../project-loader"
-    },
-    {
-      "path": "../../task-context"
-    },
-    {
-      "path": "../../workspace/loader"
-    },
-    {
-      "path": "../ir-generator"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

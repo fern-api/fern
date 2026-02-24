@@ -14,6 +14,7 @@ import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName.js"
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
+import { getFernWebhookSignatureExtension } from "../../extensions/getFernWebhookSignatureExtension.js";
 import { OperationContext } from "../contexts.js";
 import { convertParameters } from "../endpoint/convertParameters.js";
 import { convertRequest } from "../endpoint/convertRequest.js";
@@ -118,6 +119,8 @@ export function convertWebhookOperation({
                 payload = request.schema;
             }
 
+            const signatureVerification = getFernWebhookSignatureExtension(document, operation);
+
             const webhook: WebhookWithExample = {
                 summary: operation.summary,
                 audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
@@ -129,6 +132,7 @@ export function convertWebhookOperation({
                 headers: convertedParameters.headers,
                 generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs, context.options.preserveSchemaIds),
                 payload,
+                signatureVerification,
                 multipartFormData,
                 response: convertedResponse?.value,
                 description: operation.description,

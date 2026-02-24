@@ -3,5 +3,5 @@
 export interface ReadmeEndpointObject {
     method: string;
     path: string;
-    stream?: boolean;
+    stream?: boolean | undefined;
 }

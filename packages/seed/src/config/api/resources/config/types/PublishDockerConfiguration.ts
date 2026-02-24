@@ -3,6 +3,6 @@
 export interface PublishDockerConfiguration {
     context: string;
     image: string;
-    aliases?: string[];
+    aliases?: string[] | undefined;
     file: string;
 }

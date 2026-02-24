@@ -15,6 +15,8 @@ export declare namespace runContainer {
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
+        /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
+        signal?: AbortSignal;
     }
 
     export interface Result {
@@ -31,7 +33,8 @@ export async function runContainer({
     ports = {},
     writeLogsToFile = true,
     removeAfterCompletion = false,
-    runner
+    runner,
+    signal
 }: runContainer.Args): Promise<void> {
     const tryRun = () =>
         tryRunContainer({
@@ -43,13 +46,14 @@ export async function runContainer({
             ports,
             removeAfterCompletion,
             writeLogsToFile,
-            runner
+            runner,
+            signal
         });
     try {
         await tryRun();
     } catch (e) {
         if (e instanceof Error && e.message.includes("No such image")) {
-            await pullImage(imageName, runner);
+            await pullImage(imageName, runner, signal);
             await tryRun();
         } else {
             throw e;
@@ -71,6 +75,8 @@ export declare namespace runDocker {
         writeLogsToFile?: boolean;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
+        /** AbortSignal to kill the container process on timeout/bail/Ctrl+C */
+        signal?: AbortSignal;
     }
 
     export interface Result {
@@ -92,7 +98,8 @@ async function tryRunContainer({
     ports = {},
     removeAfterCompletion,
     writeLogsToFile,
-    runner
+    runner,
+    signal
 }: {
     logger: Logger;
     imageName: string;
@@ -103,6 +110,7 @@ async function tryRunContainer({
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
     runner?: ContainerRunner;
+    signal?: AbortSignal;
 }): Promise<void> {
     if (process.env["FERN_STACK_TRACK"]) {
         envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
@@ -123,7 +131,8 @@ async function tryRunContainer({
     const { stdout, stderr, exitCode } = await loggingExeca(logger, containerRunner, containerArgs, {
         reject: false,
         all: true,
-        doNotPipeOutput: true
+        doNotPipeOutput: true,
+        signal
     });
 
     const logs = stdout + stderr;
@@ -148,9 +157,10 @@ async function tryRunContainer({
     }
 }
 
-async function pullImage(imageName: string, runner?: ContainerRunner): Promise<void> {
+async function pullImage(imageName: string, runner?: ContainerRunner, signal?: AbortSignal): Promise<void> {
     await loggingExeca(undefined, runner ?? "docker", ["pull", imageName], {
         all: true,
-        doNotPipeOutput: true
+        doNotPipeOutput: true,
+        signal
     });
 }
