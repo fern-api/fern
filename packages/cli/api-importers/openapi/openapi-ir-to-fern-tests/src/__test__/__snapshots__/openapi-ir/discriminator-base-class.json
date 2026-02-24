@@ -136,7 +136,6 @@
           ],
           "description": "Base form field with discriminator",
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "FormFieldBase",
           "schemas": {
             "text": {

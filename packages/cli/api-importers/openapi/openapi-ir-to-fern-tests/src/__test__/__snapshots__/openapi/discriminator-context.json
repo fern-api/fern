@@ -72,7 +72,6 @@
           "DataLevelUnion": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
             "discriminant": "type",
             "docs": undefined,
             "encoding": undefined,
@@ -104,7 +103,6 @@
           "SseStreamEvent": {
             "availability": undefined,
             "base-properties": {},
-            "context": "protocol",
             "discriminant": "event",
             "docs": undefined,
             "encoding": undefined,
@@ -158,7 +156,6 @@ types:
       error: ErrorEvent
     source:
       openapi: ../openapi.yml
-    context: protocol
   CompletionEvent:
     properties:
       content:
@@ -184,7 +181,6 @@ types:
       admin: AdminData
     source:
       openapi: ../openapi.yml
-    context: data
   UserData:
     properties:
       username: optional<string>

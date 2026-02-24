@@ -1357,7 +1357,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": "data"
+                "discriminatorContext": null
             },
             "referencedTypes": [
                 "type_:Foo",

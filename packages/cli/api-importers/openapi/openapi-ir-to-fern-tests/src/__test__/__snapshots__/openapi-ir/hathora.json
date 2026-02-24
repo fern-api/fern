@@ -12205,7 +12205,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "status",
-          "discriminatorContext": "data",
           "generatedName": "ConnectionInfo",
           "schemas": {
             "starting": {

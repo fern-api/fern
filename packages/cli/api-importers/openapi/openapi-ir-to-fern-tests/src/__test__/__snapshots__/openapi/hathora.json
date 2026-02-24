@@ -234,7 +234,6 @@
           "ConnectionInfo": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
             "discriminant": "status",
             "docs": undefined,
             "encoding": undefined,
@@ -932,7 +931,6 @@ types:
       active: ActiveConnectionInfo
     source:
       openapi: ../openapi.json
-    context: data
 ",
     },
     "appV1.yml": {

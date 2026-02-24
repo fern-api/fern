@@ -120,7 +120,6 @@
           "Animal": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
             "discriminant": "animalType",
             "docs": undefined,
             "encoding": undefined,
@@ -227,7 +226,6 @@
           "Payment": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
             "discriminant": "paymentMethod",
             "docs": undefined,
             "encoding": undefined,
@@ -363,7 +361,6 @@ types:
       bird: Bird
     source:
       openapi: ../openapi.yml
-    context: data
   Circle:
     properties:
       shapeType: string
@@ -421,7 +418,6 @@ types:
       crypto: CryptoPayment
     source:
       openapi: ../openapi.yml
-    context: data
 ",
     },
   },

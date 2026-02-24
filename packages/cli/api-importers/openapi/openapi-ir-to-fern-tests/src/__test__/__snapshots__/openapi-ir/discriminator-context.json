@@ -101,7 +101,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "event",
-          "discriminatorContext": "protocol",
           "generatedName": "SseStreamEvent",
           "schemas": {
             "completion": {
@@ -227,7 +226,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "DataLevelUnion",
           "schemas": {
             "user": {

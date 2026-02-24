@@ -11237,7 +11237,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "TerminalNodeResultOutput",
           "schemas": {
             "STRING": {
@@ -12032,7 +12031,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "WorkflowNodeResultData",
           "schemas": {
             "PROMPT": {
@@ -12329,7 +12327,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "WorkflowRequestInputRequest",
           "schemas": {
             "STRING": {
@@ -12576,7 +12573,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "WorkflowResultEventOutputData",
           "schemas": {
             "STRING": {
@@ -12953,7 +12949,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "WorkflowStreamEvent",
           "schemas": {
             "WORKFLOW": {

@@ -186,7 +186,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "SampleUnion",
           "schemas": {
             "request": {

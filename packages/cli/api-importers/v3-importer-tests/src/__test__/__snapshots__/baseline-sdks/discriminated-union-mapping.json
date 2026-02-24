@@ -357,7 +357,6 @@
             }
           }
         ],
-        "discriminatorContext": "data",
         "type": "union"
       },
       "referencedTypes": {},

@@ -9,7 +9,6 @@
           "UnionJob": {
             "availability": undefined,
             "base-properties": {},
-            "context": "data",
             "discriminant": "type",
             "docs": undefined,
             "encoding": undefined,
@@ -36,7 +35,6 @@
       TRAINING: unknown
     source:
       openapi: ../openapi.yml
-    context: data
 ",
     },
   },

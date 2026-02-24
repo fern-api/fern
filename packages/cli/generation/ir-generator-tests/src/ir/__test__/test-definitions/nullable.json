@@ -1389,7 +1389,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": "data"
+                "discriminatorContext": null
             },
             "referencedTypes": [],
             "encoding": {

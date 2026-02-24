@@ -16,7 +16,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
-          "discriminatorContext": "data",
           "generatedName": "UnionJob",
           "schemas": {
             "EMBEDDING_GENERATION": {

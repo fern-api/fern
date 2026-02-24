@@ -613,7 +613,6 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "petType",
-          "discriminatorContext": "data",
           "generatedName": "Pet",
           "schemas": {
             "dog": {
