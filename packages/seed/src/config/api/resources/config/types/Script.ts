@@ -4,6 +4,6 @@ import type * as FernSeedConfig from "../../../index.js";
 
 export interface Script {
     /** The name of the script. If provided, this enables fixtures to skip certain scripts. */
-    name?: string;
+    name?: string | undefined;
     commands: FernSeedConfig.ScriptCommands;
 }

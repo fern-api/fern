@@ -4,7 +4,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 3.46.3
+        version: 3.49.0
         output:
           location: local-file-system
           path: ../../../src/sdk
@@ -20,7 +20,7 @@ groups:
       - dynamic
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 3.46.3
+        version: 3.49.0
         output:
           location: npm
           package-name: "@fern-api/dynamic-ir-sdk"
@@ -31,7 +31,7 @@ groups:
   node:
     generators:
       - name: fernapi/fern-typescript-sdk
-        version: 3.46.3
+        version: 3.49.0
         output:
           location: npm
           url: npm.buildwithfern.com

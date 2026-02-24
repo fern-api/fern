@@ -8,6 +8,9 @@ permissions:
   pull-requests: write
   contents: write
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   stale-prs:
     runs-on: ubuntu-latest
