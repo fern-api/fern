@@ -1,6 +1,7 @@
 import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketMessageBody } from "@fern-api/ir-sdk";
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
+import { camelCase, startCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter.js";
 import { ParameterConverter } from "../../converters/ParameterConverter.js";
@@ -78,7 +79,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     });
                     messages.push({
                         type: operationId,
-                        displayName: operationId,
+                        displayName: startCase(camelCase(operationId)),
                         origin: operation.action === "send" ? "client" : "server",
                         body: messageBody,
                         availability: this.context.getAvailability({

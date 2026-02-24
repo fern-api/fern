@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.3
+  changelogEntry:
+    - summary: |
+        Format AsyncAPI V3 WebSocket message `operationId` as human-readable display names.
+        Previously, `operationId` values like `lightningV31TtsRequest` were displayed verbatim
+        in the docs explorer. Now they are converted to title case (e.g., "Lightning V31 Tts Request")
+        using the same `startCase(camelCase())` pattern already used by the V2 converter.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.2
   changelogEntry:
     - summary: |
