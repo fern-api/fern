@@ -1,4 +1,4 @@
-import { fromJson, toJson } from "../json.js";
+import { fromJson } from "../json.js";
 import { RUNTIME } from "../runtime/index.js";
 
 export declare namespace Stream {
@@ -162,39 +162,21 @@ export class Stream<T> implements AsyncIterable<T> {
         if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
             return null;
         }
-        const data = this.injectDiscriminator(dataValue, eventType);
-        return this.parse(fromJson(data));
+        return this.parse(this.injectDiscriminator(fromJson(dataValue), eventType));
     }
 
-    private injectDiscriminator(data: string, eventType: string | undefined): string {
+    private injectDiscriminator(parsed: unknown, eventType: string | undefined): unknown {
         if (this.eventDiscriminator == null || eventType == null) {
-            return data;
+            return parsed;
         }
-        const trimmed = data.trim();
-        if (trimmed.length === 0 || trimmed[0] !== "{") {
-            return data;
+        if (parsed == null || typeof parsed !== "object" || Array.isArray(parsed)) {
+            return parsed;
         }
-        let parsed: Record<string, unknown>;
-        try {
-            const value = fromJson(data);
-            if (value == null || typeof value !== "object" || Array.isArray(value)) {
-                return data;
-            }
-            parsed = value as Record<string, unknown>;
-        } catch {
-            return data;
+        const obj = parsed as Record<string, unknown>;
+        if (Object.prototype.hasOwnProperty.call(obj, this.eventDiscriminator)) {
+            return parsed;
         }
-        if (Object.hasOwn(parsed, this.eventDiscriminator)) {
-            return data;
-        }
-        const injected = `${toJson(this.eventDiscriminator)}:${toJson(eventType)}`;
-        const openIdx = data.indexOf("{");
-        const after = data.slice(openIdx + 1);
-        const afterTrimmed = after.trim();
-        if (afterTrimmed.length === 0 || afterTrimmed[0] === "}") {
-            return `${data.slice(0, openIdx + 1)}${injected}${after}`;
-        }
-        return `${data.slice(0, openIdx + 1)}${injected},${after}`;
+        return { [this.eventDiscriminator]: eventType, ...obj };
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {
