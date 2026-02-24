@@ -11,14 +11,12 @@ export class GeneratorAgentClient {
     private skipInstall: boolean;
     private installAttempted: boolean;
     private selfHosted: boolean;
-    private resolvedCli: LoggingExecutable | undefined;
 
     constructor({ logger, skipInstall, selfHosted }: { logger: Logger; skipInstall?: boolean; selfHosted?: boolean }) {
         this.logger = logger;
         this.skipInstall = skipInstall ?? false;
         this.installAttempted = false;
         this.selfHosted = selfHosted ?? false;
-        this.resolvedCli = undefined;
     }
 
     public async generateReadme<ReadmeConfig>({ readmeConfig }: { readmeConfig: ReadmeConfig }): Promise<string> {
@@ -227,59 +225,18 @@ export class GeneratorAgentClient {
     }
 
     private async install(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
-        // Only attempt install once per instance
+        const cli = createLoggingExecutable("generator-cli", {
+            cwd: process.cwd(),
+            logger: this.logger,
+            ...options
+        });
+
         if (!this.installAttempted) {
             this.installAttempted = true;
-
-            // First, check if generator-cli is already available on PATH
-            const globalCli = createLoggingExecutable("generator-cli", {
-                cwd: process.cwd(),
-                logger: this.logger,
-                ...options
-            });
-            try {
-                const version = await globalCli(["--version"]);
-                this.logger.debug(
-                    `Found pre-installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout.trim()}`
-                );
-                this.resolvedCli = globalCli;
-                return globalCli;
-            } catch {
-                this.logger.debug(`${GENERATOR_AGENT_NPM_PACKAGE} not found on PATH, attempting install...`);
-            }
-
-            // Install globally via pnpm (uses ~/.local/share/pnpm/, avoids read-only npm global dirs)
-            const pnpm = createLoggingExecutable("pnpm", {
-                cwd: process.cwd(),
-                logger: this.logger,
-                ...options
-            });
-            try {
-                this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} globally via pnpm...`);
-                await pnpm(["add", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
-                const version = await globalCli(["--version"]);
-                this.logger.debug(
-                    `Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout.trim()}`
-                );
-                this.resolvedCli = globalCli;
-                return globalCli;
-            } catch (installError) {
-                this.logger.debug(
-                    `pnpm global install failed: ${installError instanceof Error ? installError.message : String(installError)}`
-                );
-                throw new Error(
-                    `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}. ` +
-                        `Ensure pnpm is available and network access is working.`
-                );
-            }
+            const version = await cli(["--version"]);
+            this.logger.debug(`Found ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout.trim()}`);
         }
 
-        if (this.resolvedCli != null) {
-            return this.resolvedCli;
-        }
-
-        throw new Error(
-            `${GENERATOR_AGENT_NPM_PACKAGE} install was attempted but no CLI was resolved. This should not happen.`
-        );
+        return cli;
     }
 }
