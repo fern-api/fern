@@ -4,7 +4,7 @@
     - summary: |
         Complete document-level `webhook-signature` configuration parsing. Adds validation for webhook
         signature configs (algorithms, encodings, timestamp settings, JWKS consistency).
-      type: feat
+      type: chore
   createdAt: "2026-02-24"
   irVersion: 65
 - version: 3.85.2
