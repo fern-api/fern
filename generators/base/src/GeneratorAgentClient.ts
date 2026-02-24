@@ -250,28 +250,12 @@ export class GeneratorAgentClient {
                 this.logger.debug(`${GENERATOR_AGENT_NPM_PACKAGE} not found on PATH, attempting install...`);
             }
 
-            // Try global npm install
+            // Install to a temp directory (avoids modifying the user's global node_modules)
             const npm = createLoggingExecutable("npm", {
                 cwd: process.cwd(),
                 logger: this.logger,
                 ...options
             });
-            try {
-                this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} globally...`);
-                await npm(["install", "-f", "-g", `${GENERATOR_AGENT_NPM_PACKAGE}@${GENERATOR_AGENT_NPM_VERSION}`]);
-                const version = await globalCli(["--version"]);
-                this.logger.debug(
-                    `Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} globally, version ${version.stdout.trim()}`
-                );
-                this.resolvedCli = globalCli;
-                return globalCli;
-            } catch (globalError) {
-                this.logger.debug(
-                    `Global install failed (${globalError instanceof Error ? globalError.message : String(globalError)}), falling back to local install...`
-                );
-            }
-
-            // Fall back to local install in a temp directory
             try {
                 const tmpDir = await tmp.dir({ unsafeCleanup: true });
                 this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} locally in ${tmpDir.path}...`);
@@ -298,7 +282,7 @@ export class GeneratorAgentClient {
                     `Local install also failed: ${localError instanceof Error ? localError.message : String(localError)}`
                 );
                 throw new Error(
-                    `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE} both globally and locally. ` +
+                    `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE} locally. ` +
                         `Ensure npm is available and network access is working.`
                 );
             }
