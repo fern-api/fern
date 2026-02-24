@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update oxfmt to 0.35.0, oxlint to 1.50.0, and oxlint-tsgolint to 0.14.2.
+      type: chore
+  irVersion: 61
+  createdAt: "2026-02-24"
+  version: 0.19.3
+
+- changelogEntry:
+    - summary: |
         Update @biomejs/biome from 2.3.11 to 2.4.3.
       type: chore
   irVersion: 61

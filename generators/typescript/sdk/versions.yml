@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.3
+  changelogEntry:
+    - summary: |
+        Update oxfmt to 0.35.0, oxlint to 1.50.0, and oxlint-tsgolint to 0.14.2.
+      type: chore
+  createdAt: "2026-02-24"
+  irVersion: 63
+
 - version: 3.49.2
   changelogEntry:
     - summary: |
