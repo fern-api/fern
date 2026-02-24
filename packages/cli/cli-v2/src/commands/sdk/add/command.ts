@@ -287,16 +287,15 @@ export class AddCommand {
      * so `targets` is at the root level. Otherwise `targets` is nested under
      * `sdks`.
      */
+
     private resolveTargetsPath(document: Document, isRefTarget: boolean): (string | number)[] {
         if (isRefTarget) {
-            const root = document.toJS();
-            if (root != null && typeof root === "object" && "targets" in root) {
-                return ["targets"];
-            }
-            return [];
+            // Referenced file should always have targets at root
+            return ["targets"];
         }
         return ["sdks", "targets"];
     }
+
 
     /**
      * Ensures that the map path exists in the document, creating intermediate
