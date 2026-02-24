@@ -1,22 +1,108 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.0
+  changelogEntry:
+    - summary: |
+        Auto-correct incorrect `fern-api/` Docker org prefix to `fernapi/` in generator names.
+        When a generator is specified with `fern-api/` (the GitHub/npm org) instead of `fernapi/`
+        (the Docker Hub org), the CLI now automatically corrects it and prints a warning.
+        This applies to CLI commands (`--generator` flag) and `generators.yml` configuration files.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.84.0
+  changelogEntry:
+    - summary: |
+        Add workspace validation caching and skipValidation flag to improve toFernWorkspace()
+        performance. A global validation cache eliminates redundant JSON schema validation and
+        Zod parsing when the same files are processed by multiple workspace instances. The
+        skipValidation option allows callers to bypass JSON schema validation for known-good files.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.3
+  changelogEntry:
+    - summary: |
+        Preserve existing README.md during local SDK generation when the generator
+        does not produce one. Previously, `copyGeneratedFiles` deleted all files
+        before copying generator output, so if README generation failed silently
+        the file was removed from the target repository. The file copy methods now
+        skip deleting README.md when the generated output directory does not
+        include it.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.2
+  changelogEntry:
+    - summary: |
+        Improve CLI startup performance by loading workspace files concurrently.
+      type: chore
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.1
+  changelogEntry:
+    - summary: |
+        Fix S3 signature mismatch for docs assets outside fern/ folder. Paths containing "../"
+        are now sanitized to prevent HTTP client URL normalization from breaking S3 presigned URLs.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification support. Webhooks can now declare a `signature`
+        configuration with `type: hmac` or `type: asymmetric`, including algorithm, encoding,
+        signature prefix parsing, payload format composition, and timestamp-based replay protection.
+        Supported via Fern Definition `signature` field, OpenAPI `x-fern-webhook-signature` extension,
+        and the IR `WebhookSignatureVerification` union.
+
+        **OpenAPI example** — set `x-fern-webhook-signature` at the document level so
+        all webhooks inherit the same signature configuration:
+
+        ```yaml
+        openapi: 3.1.0
+        info:
+          title: My API
+          version: 1.0.0
+        x-fern-webhook-signature:
+          type: hmac
+          header: x-webhook-signature
+          algorithm: sha256
+          encoding: hex
+          signature-prefix: "sha256="
+          payload-format:
+            components:
+              - timestamp
+              - body
+            delimiter: "."
+          timestamp:
+            header: x-webhook-timestamp
+            format: unix-seconds
+            tolerance: 300
+        webhooks:
+          orderCreated:
+            post:
+              operationId: orderCreated
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/OrderEvent'
+        ```
+
+        Individual webhook operations can also override the document-level default by
+        specifying their own `x-fern-webhook-signature` configuration inline.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
 - version: 3.82.0
   changelogEntry:
     - summary: |
-        Add `terminator` field support for SSE streaming throughout the OpenAPI to Fern pipeline.
-        The field was already present in the Fern definition schema but missing from the OpenAPI
-        extension parsing, OpenAPI-IR schema, and the OpenAPI-IR to Fern conversion layers.
+        Add webhook signature verification configuration to the IR. Webhooks can now
+        specify a `signature` block (in Fern Definition) or `x-fern-webhook-signature`
+        extension (in OpenAPI) with algorithm, encoding, header name, and payload format.
+        SDK generators can use this to produce signature verification utilities.
       type: feat
-  createdAt: "2026-02-20"
-  irVersion: 65
-- version: 3.81.1
-  changelogEntry:
-    - summary: |
-        Fix example object keys starting with `$` (e.g. `$ref`) not being unescaped when
-        generating the IR `jsonExample`. The Fern definition escapes `$`-prefixed keys with
-        a backslash to avoid collision with example references, but the backslash was not
-        removed when building the wire-format JSON example, causing generators to emit
-        invalid code (e.g. `"\$ref"` in Go).
-      type: fix
   createdAt: "2026-02-19"
   irVersion: 65
 - version: 3.81.0

@@ -1,7 +1,12 @@
 import { OnDiskNamedDefinitionFile, ParsedFernFile } from "@fern-api/api-workspace-commons";
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { entries, validateAgainstJsonSchema } from "@fern-api/core-utils";
-import { PackageMarkerFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/fern-definition-schema";
+import {
+    DefinitionFileSchema,
+    PackageMarkerFileSchema,
+    RawSchemas,
+    RootApiFileSchema
+} from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
 
@@ -9,6 +14,22 @@ import * as RootApiFileJsonSchema from "../api-yml.schema.json";
 import * as DefinitionFileJsonSchema from "../fern.schema.json";
 import * as PackageMarkerFileJsonSchema from "../package-yml.schema.json";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
+
+/** Cast a JSON schema import to the type expected by validateAgainstJsonSchema. */
+function asJsonSchema(schema: Record<string, unknown>): Parameters<typeof validateAgainstJsonSchema>[1] {
+    return schema as Parameters<typeof validateAgainstJsonSchema>[1];
+}
+
+/**
+ * Module-level caches for validated/parsed file contents.
+ * Keyed on the raw YAML string (file contents), these caches avoid redundant
+ * JSON schema validation and schema parseOrThrow calls when the same file
+ * is processed by multiple workspace instances (e.g., multiple generators
+ * in a group, or multiple test runs against the same fixtures).
+ */
+const rootApiParsedCache = new Map<string, RootApiFileSchema>();
+const definitionParsedCache = new Map<string, DefinitionFileSchema>();
+const packageMarkerParsedCache = new Map<string, PackageMarkerFileSchema>();
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;
@@ -31,10 +52,18 @@ export declare namespace validateStructureOfYamlFiles {
 
 export function validateStructureOfYamlFiles({
     files,
-    absolutePathToDefinition
+    absolutePathToDefinition,
+    skipValidation
 }: {
     files: Record<RelativeFilePath, ParsedFernFile<unknown>>;
     absolutePathToDefinition: AbsoluteFilePath;
+    /**
+     * When true, skips JSON schema validation (validateAgainstJsonSchema).
+     * Schema parsing (parseOrThrow) is still performed on cache miss to ensure
+     * type-safe output. Use this when files are known to be valid (e.g., test
+     * fixtures, or when re-generating IR for a second generator in the same group).
+     */
+    skipValidation?: boolean;
 }): validateStructureOfYamlFiles.Return {
     let rootApiFile: ParsedFernFile<RootApiFileSchema> | undefined = undefined;
     const namesDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile> = {};
@@ -56,36 +85,81 @@ export function validateStructureOfYamlFiles({
         };
 
         if (relativeFilepath === ROOT_API_FILENAME) {
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            const result = validateAgainstJsonSchema(parsedFileContents, RootApiFileJsonSchema as any);
-            if (result.success) {
+            // Check cache first
+            const cached = rootApiParsedCache.get(file.rawContents);
+            if (cached != null) {
+                rootApiFile = {
+                    defaultUrl: cached["default-url"],
+                    contents: cached,
+                    rawContents: file.rawContents
+                };
+            } else if (skipValidation) {
+                // Skip JSON schema validation, just run parseOrThrow
                 const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents);
+                rootApiParsedCache.set(file.rawContents, contents);
                 rootApiFile = {
                     defaultUrl: contents["default-url"],
                     contents,
                     rawContents: file.rawContents
                 };
             } else {
-                addFailure(result);
+                const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(RootApiFileJsonSchema));
+                if (result.success) {
+                    const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents);
+                    rootApiParsedCache.set(file.rawContents, contents);
+                    rootApiFile = {
+                        defaultUrl: contents["default-url"],
+                        contents,
+                        rawContents: file.rawContents
+                    };
+                } else {
+                    addFailure(result);
+                }
             }
         } else if (path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME) {
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            const result = validateAgainstJsonSchema(parsedFileContents, PackageMarkerFileJsonSchema as any);
-            if (result.success) {
+            // Check cache first
+            const cached = packageMarkerParsedCache.get(file.rawContents);
+            if (cached != null) {
+                packageMarkers[relativeFilepath] = {
+                    defaultUrl: typeof cached.export === "object" ? cached.export.url : undefined,
+                    contents: cached,
+                    rawContents: file.rawContents
+                };
+            } else if (skipValidation) {
                 const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
+                packageMarkerParsedCache.set(file.rawContents, contents);
                 packageMarkers[relativeFilepath] = {
                     defaultUrl: typeof contents.export === "object" ? contents.export.url : undefined,
                     contents,
                     rawContents: file.rawContents
                 };
             } else {
-                addFailure(result);
+                const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(PackageMarkerFileJsonSchema));
+                if (result.success) {
+                    const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
+                    packageMarkerParsedCache.set(file.rawContents, contents);
+                    packageMarkers[relativeFilepath] = {
+                        defaultUrl: typeof contents.export === "object" ? contents.export.url : undefined,
+                        contents,
+                        rawContents: file.rawContents
+                    };
+                } else {
+                    addFailure(result);
+                }
             }
         } else {
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            const result = validateAgainstJsonSchema(parsedFileContents, DefinitionFileJsonSchema as any);
-            if (result.success) {
+            // Check cache first
+            const cached = definitionParsedCache.get(file.rawContents);
+            if (cached != null) {
+                namesDefinitionFiles[relativeFilepath] = {
+                    defaultUrl: undefined,
+                    contents: cached,
+                    rawContents: file.rawContents,
+                    absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
+                };
+            } else if (skipValidation) {
                 const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
+                definitionParsedCache.set(file.rawContents, contents);
                 namesDefinitionFiles[relativeFilepath] = {
                     defaultUrl: undefined,
                     contents,
@@ -93,7 +167,19 @@ export function validateStructureOfYamlFiles({
                     absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
                 };
             } else {
-                addFailure(result);
+                const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(DefinitionFileJsonSchema));
+                if (result.success) {
+                    const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
+                    definitionParsedCache.set(file.rawContents, contents);
+                    namesDefinitionFiles[relativeFilepath] = {
+                        defaultUrl: undefined,
+                        contents,
+                        rawContents: file.rawContents,
+                        absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
+                    };
+                } else {
+                    addFailure(result);
+                }
             }
         }
     }

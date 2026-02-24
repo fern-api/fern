@@ -16,7 +16,7 @@ const NON_BREAKING_FIXTURES_DIR = join(
     RelativeFilePath.of("non-breaking")
 );
 
-it("breaking", async () => {
+it("breaking", async ({ signal }) => {
     const breakingChangeDirs = await readdir(BREAKING_FIXTURES_DIR, { withFileTypes: true });
     for (const dir of breakingChangeDirs) {
         if (!dir.isDirectory()) {
@@ -26,14 +26,15 @@ it("breaking", async () => {
         }
         const result = await diff({
             fixturePath: AbsoluteFilePath.of(path.join(BREAKING_FIXTURES_DIR, dir.name)),
-            fromVersion: "1.1.0"
+            fromVersion: "1.1.0",
+            signal
         });
         expect(result.stdout).toMatchSnapshot();
         expect(result.exitCode).toBe(1);
     }
 }, 20_000);
 
-it("non-breaking", async () => {
+it("non-breaking", async ({ signal }) => {
     const nonBreakingChangeDirs = await readdir(NON_BREAKING_FIXTURES_DIR, { withFileTypes: true });
     for (const dir of nonBreakingChangeDirs) {
         if (!dir.isDirectory()) {
@@ -43,7 +44,8 @@ it("non-breaking", async () => {
         }
         const result = await diff({
             fixturePath: AbsoluteFilePath.of(path.join(NON_BREAKING_FIXTURES_DIR, dir.name)),
-            fromVersion: "1.1.0"
+            fromVersion: "1.1.0",
+            signal
         });
         expect(result.stdout).toMatchSnapshot();
         expect(result.exitCode).toBe(0);

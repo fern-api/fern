@@ -9,7 +9,7 @@ import { setupOpenAPIServer } from "../../utils/setupOpenAPIServer.js";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("fern api update", () => {
-    it("fern api update", async () => {
+    it("fern api update", async ({ signal }) => {
         // Start express server that will respond with the OpenAPI spec.
         const { cleanup } = setupOpenAPIServer();
 
@@ -18,9 +18,7 @@ describe("fern api update", () => {
         const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
-        await runFernCli(["api", "update"], {
-            cwd: directory
-        });
+        await runFernCli(["api", "update"], { cwd: directory, signal });
 
         expect(await getDirectoryContentsForSnapshot(outputPath)).toMatchSnapshot();
 
@@ -28,7 +26,7 @@ describe("fern api update", () => {
         await cleanup();
     }, 60_000);
 
-    it("fern api update --indent 4", async () => {
+    it("fern api update --indent 4", async ({ signal }) => {
         // Start express server that will respond with the OpenAPI spec.
         const { cleanup } = setupOpenAPIServer();
 
@@ -37,9 +35,7 @@ describe("fern api update", () => {
         const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
-        await runFernCli(["api", "update", "--indent", "4"], {
-            cwd: directory
-        });
+        await runFernCli(["api", "update", "--indent", "4"], { cwd: directory, signal });
 
         expect(await getDirectoryContentsForSnapshot(outputPath)).toMatchSnapshot();
 

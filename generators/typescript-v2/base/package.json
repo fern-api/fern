@@ -22,7 +22,7 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib",
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../knip.json --no-config-hints",
@@ -33,7 +33,7 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@fern-api/typescript-browser-compatible-base": "workspace:*",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

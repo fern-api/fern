@@ -4,13 +4,11 @@ import { runFernCli } from "../../utils/runFernCli.js";
 import { init } from "../init/init.js";
 
 describe("fern add", () => {
-    it("fern add <generator>", async () => {
-        const pathOfDirectory = await init();
+    it("fern add <generator>", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
 
         const add = async (generator: string) => {
-            await runFernCli(["add", generator], {
-                cwd: pathOfDirectory
-            });
+            await runFernCli(["add", generator], { cwd: pathOfDirectory, signal });
         };
 
         await add("fernapi/fern-java-sdk");
@@ -19,13 +17,11 @@ describe("fern add", () => {
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).not.toBeNull();
     }, 60_000);
 
-    it("fern add <generator> --group sdk", async () => {
-        const pathOfDirectory = await init();
+    it("fern add <generator> --group sdk", async ({ signal }) => {
+        const pathOfDirectory = await init({ signal });
 
         const add = async (generator: string, groupName: string) => {
-            await runFernCli(["add", generator, "--group", groupName], {
-                cwd: pathOfDirectory
-            });
+            await runFernCli(["add", generator, "--group", groupName], { cwd: pathOfDirectory, signal });
         };
 
         await add("fern-typescript", "typescript");

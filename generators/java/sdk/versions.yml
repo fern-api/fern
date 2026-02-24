@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.38.1
+  changelogEntry:
+    - summary: |
+        Preserve existing README.md when the generator does not produce one. Previously,
+        `overwriteLocalContents` deleted all files before copying generator output, so if
+        README generation failed silently the file was removed from the target repository.
+        The method now skips deleting README.md when the source directory does not include it.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+
 - version: 3.38.0
   changelogEntry:
     - summary: |

@@ -81,7 +81,7 @@ export class PersistedTypescriptProject {
             logger.debug("Running npm pkg fix to normalize package.json");
             const startTime = Date.now();
             await npm(["pkg", "fix"]);
-            logger.info(`[TIMING] fixPackageJson took ${Date.now() - startTime}ms`);
+            logger.debug(`[TIMING] fixPackageJson took ${Date.now() - startTime}ms`);
         } catch (e) {
             logger.warn(`Failed to run npm pkg fix: ${e}`);
         }
@@ -111,7 +111,7 @@ export class PersistedTypescriptProject {
                       PNPM_FROZEN_LOCKFILE: "false"
                   }
               }));
-        logger.info(`[TIMING] generateLockfile took ${Date.now() - startTime}ms`);
+        logger.debug(`[TIMING] generateLockfile took ${Date.now() - startTime}ms`);
     }
 
     public async installDependencies(logger: Logger): Promise<void> {
@@ -138,7 +138,7 @@ export class PersistedTypescriptProject {
                       PNPM_FROZEN_LOCKFILE: "false"
                   }
               }));
-        logger.info(`[TIMING] installDependencies took ${Date.now() - startTime}ms`);
+        logger.debug(`[TIMING] installDependencies took ${Date.now() - startTime}ms`);
     }
 
     public async format(logger: Logger): Promise<void> {
@@ -153,7 +153,7 @@ export class PersistedTypescriptProject {
         try {
             const startTime = Date.now();
             await pm(this.formatCommand);
-            logger.info(`[TIMING] format took ${Date.now() - startTime}ms`);
+            logger.debug(`[TIMING] format took ${Date.now() - startTime}ms`);
         } catch (e) {
             logger.error(`Failed to format the generated project: ${e}`);
         }
@@ -172,7 +172,7 @@ export class PersistedTypescriptProject {
         try {
             const startTime = Date.now();
             await pm(this.checkFixCommand);
-            logger.info(`[TIMING] checkFix took ${Date.now() - startTime}ms`);
+            logger.debug(`[TIMING] checkFix took ${Date.now() - startTime}ms`);
         } catch (e) {
             logger.error(`Failed to format the generated project: ${e}`);
         }
@@ -189,7 +189,7 @@ export class PersistedTypescriptProject {
         });
         const startTime = Date.now();
         await pm(this.buildCommand);
-        logger.info(`[TIMING] build took ${Date.now() - startTime}ms`);
+        logger.debug(`[TIMING] build took ${Date.now() - startTime}ms`);
     }
 
     public async copyProjectTo({
@@ -370,7 +370,7 @@ export class PersistedTypescriptProject {
         await npm(publishCommand, {
             secrets: [publishInfo.registryUrl]
         });
-        logger.info(`[TIMING] publish took ${Date.now() - startTime}ms`);
+        logger.debug(`[TIMING] publish took ${Date.now() - startTime}ms`);
     }
 
     public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {

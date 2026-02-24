@@ -131,3 +131,10 @@ func (c *Cat) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+type MixedType struct {
+	Double     float64
+	Boolean    bool
+	String     string
+	StringList []string
+}
