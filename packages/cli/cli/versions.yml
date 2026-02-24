@@ -1,4 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.86.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-sdk-method-name` extension on AsyncAPI WebSocket channels
+        to customize the connection method name in generated SDKs. This field is now
+        available in both AsyncAPI v2 and v3 specifications.
+
+        **AsyncAPI example** — use `x-fern-sdk-method-name` to customize the WebSocket
+        connection method instead of the default "connect":
+
+        ```yaml
+        asyncapi: 3.0.0
+        info:
+          title: Chat API
+          version: 1.0.0
+        channels:
+          /chat:
+            x-fern-sdk-method-name: createChatConnection
+            messages:
+              userMessage:
+                payload:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+        ```
+
+        This generates `client.createChatConnection()` instead of `client.connect()`,
+        avoiding confusing APIs where both wrapper creation and actual connection use "connect".
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.6
   changelogEntry:
     - summary: |

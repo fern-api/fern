@@ -1308,6 +1308,7 @@
                 }
             },
             "displayName": null,
+            "connectMethodName": null,
             "headers": [],
             "pathParameters": [],
             "queryParameters": [],
@@ -1362,6 +1363,7 @@
                 }
             },
             "displayName": null,
+            "connectMethodName": null,
             "headers": [],
             "pathParameters": [
                 {

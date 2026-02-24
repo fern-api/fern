@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.59.3
+  changelogEntry:
+    - summary: Fix bytes body snippet generation to use `request` parameter name instead of dynamic IR body key.
+      type: fix
+    - summary: Skip wire test generation for bytes request body endpoints, which lack IR example support.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+
 - version: 4.59.2
   changelogEntry:
     - summary: |

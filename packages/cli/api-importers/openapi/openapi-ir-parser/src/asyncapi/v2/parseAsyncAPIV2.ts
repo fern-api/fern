@@ -367,6 +367,7 @@ export function parseAsyncAPIV2({
                         name: server.name as string
                     })),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
+                connectMethodName: getExtension<string>(channel, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME),
                 path,
                 description: channel.description,
                 examples,

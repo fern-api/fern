@@ -19,6 +19,7 @@ export const WebSocketChannelSchema: core.serialization.ObjectSchema<
         auth: core.serialization.boolean(),
         url: core.serialization.string().optional(),
         path: core.serialization.string(),
+        "connect-method-name": core.serialization.string().optional(),
         headers: core.serialization.record(core.serialization.string(), HttpHeaderSchema).optional(),
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
         "query-parameters": core.serialization.record(core.serialization.string(), HttpQueryParameterSchema).optional(),
@@ -33,6 +34,7 @@ export declare namespace WebSocketChannelSchema {
         auth: boolean;
         url?: string | null;
         path: string;
+        "connect-method-name"?: string | null;
         headers?: Record<string, HttpHeaderSchema.Raw> | null;
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
         "query-parameters"?: Record<string, HttpQueryParameterSchema.Raw> | null;
