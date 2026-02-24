@@ -76,7 +76,6 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     private async *iterDataMessages(): AsyncGenerator<T, void> {
-        this.controller.signal;
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let prefixSeen = false;
@@ -127,11 +126,10 @@ export class Stream<T> implements AsyncIterable<T> {
 
                 if (!line.trim()) {
                     if (dataValue != null) {
-                        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                        const message = await this.dispatchSseEvent(dataValue, eventType);
+                        if (message == null) {
                             return;
                         }
-                        const data = this.injectDiscriminator(dataValue, eventType);
-                        const message = await this.parse(JSON.parse(data));
                         yield message;
                     }
                     eventType = undefined;
@@ -149,13 +147,22 @@ export class Stream<T> implements AsyncIterable<T> {
         }
 
         if (dataValue != null) {
-            if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
-                return;
+            const message = await this.dispatchSseEvent(dataValue, eventType);
+            if (message != null) {
+                yield message;
             }
-            const data = this.injectDiscriminator(dataValue, eventType);
-            const message = await this.parse(JSON.parse(data));
-            yield message;
         }
+    }
+
+    /**
+     * Parses and returns a single SSE event, or returns null if the event is a stream terminator.
+     */
+    private async dispatchSseEvent(dataValue: string, eventType: string | undefined): Promise<T | null> {
+        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+            return null;
+        }
+        const data = this.injectDiscriminator(dataValue, eventType);
+        return this.parse(JSON.parse(data));
     }
 
     private injectDiscriminator(data: string, eventType: string | undefined): string {
@@ -175,9 +182,9 @@ export class Stream<T> implements AsyncIterable<T> {
         const after = data.slice(openIdx + 1);
         const afterTrimmed = after.trim();
         if (afterTrimmed.length === 0 || afterTrimmed[0] === "}") {
-            return data.slice(0, openIdx + 1) + injected + after;
+            return `${data.slice(0, openIdx + 1)}${injected}${after}`;
         }
-        return `${data.slice(0, openIdx + 1) + injected},${after}`;
+        return `${data.slice(0, openIdx + 1)}${injected},${after}`;
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {

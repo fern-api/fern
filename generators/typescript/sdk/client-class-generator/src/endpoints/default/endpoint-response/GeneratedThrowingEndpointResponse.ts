@@ -1070,7 +1070,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         if (typeDeclaration.shape.type !== "union") {
             return {};
         }
-        if (typeDeclaration.shape.discriminatorContext !== "protocol") {
+        if (typeDeclaration.shape.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
             return {};
         }
         return {
