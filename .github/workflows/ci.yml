@@ -188,11 +188,11 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Build CLI (dev)
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
 
       - name: Build seed CLI
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: pnpm seed:build
 
       - name: Run ETE tests
