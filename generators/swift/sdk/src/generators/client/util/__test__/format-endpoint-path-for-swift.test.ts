@@ -1,44 +1,14 @@
-import { FernIr } from "@fern-fern/ir-sdk";
-
 import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift.js";
+import { EndpointPathInput } from "../parse-endpoint-path.js";
 
-/**
- * Helper to build a minimal HttpEndpoint-like object for testing.
- * Only populates the fields that formatEndpointPathForSwift / parseEndpointPath actually read.
- *
- * For most cases, parts and allPathParameters are derived from the same input.
- * Use rawParts + rawAllPathParameters for edge cases where they need to differ
- * (e.g. missing path parameter declarations, null tails).
- */
-function makeEndpoint(
-    opts:
-        | {
-              head: string | undefined;
-              parts?: Array<{
-                  paramOriginalName: string;
-                  paramCamelCase: string;
-                  tail: string;
-                  docs?: string;
-              }>;
-          }
-        | {
-              head: string | undefined;
-              rawParts: Array<{ pathParameter: string; tail: string | undefined }>;
-              rawAllPathParameters: Array<{
-                  name: { originalName: string; camelCase: { unsafeName: string } };
-                  docs: string | undefined;
-              }>;
-          }
-): FernIr.HttpEndpoint {
-    if ("rawParts" in opts) {
-        return {
-            fullPath: {
-                head: opts.head,
-                parts: opts.rawParts
-            },
-            allPathParameters: opts.rawAllPathParameters
-        } as unknown as FernIr.HttpEndpoint;
-    }
+function makeEndpoint(opts: {
+    head: string;
+    parts?: Array<{
+        paramOriginalName: string;
+        paramCamelCase: string;
+        tail: string;
+    }>;
+}): EndpointPathInput {
     const parts = opts.parts ?? [];
     return {
         fullPath: {
@@ -53,9 +23,9 @@ function makeEndpoint(
                 originalName: p.paramOriginalName,
                 camelCase: { unsafeName: p.paramCamelCase }
             },
-            docs: p.docs
+            docs: undefined
         }))
-    } as unknown as FernIr.HttpEndpoint;
+    };
 }
 
 describe("formatEndpointPathForSwift", () => {
@@ -92,7 +62,7 @@ describe("formatEndpointPathForSwift", () => {
         expect(formatEndpointPathForSwift(endpoint)).toBe("/users");
     });
 
-    it("prepends a leading slash when head is missing and path parameter starts the path", () => {
+    it("prepends a leading slash when head is empty and path parameter starts the path", () => {
         const endpoint = makeEndpoint({
             head: "",
             parts: [{ paramOriginalName: "id", paramCamelCase: "id", tail: "" }]
@@ -130,12 +100,13 @@ describe("formatEndpointPathForSwift", () => {
     // --- Missing path parameter declaration ---
 
     it("skips path parameters not declared in allPathParameters but keeps surrounding literals", () => {
-        const endpoint = makeEndpoint({
-            head: "/items/",
-            rawParts: [{ pathParameter: "unknown_param", tail: "/details" }],
-            rawAllPathParameters: []
-        });
-        // The undeclared param is silently dropped; head trailing "/" and tail leading "/" remain
+        const endpoint: EndpointPathInput = {
+            fullPath: {
+                head: "/items/",
+                parts: [{ pathParameter: "unknown_param", tail: "/details" }]
+            },
+            allPathParameters: []
+        };
         expect(formatEndpointPathForSwift(endpoint)).toBe("/items//details");
     });
 
@@ -144,13 +115,9 @@ describe("formatEndpointPathForSwift", () => {
     it("handles consecutive path parameters with no separator", () => {
         const endpoint = makeEndpoint({
             head: "/",
-            rawParts: [
-                { pathParameter: "key", tail: "" },
-                { pathParameter: "value", tail: "" }
-            ],
-            rawAllPathParameters: [
-                { name: { originalName: "key", camelCase: { unsafeName: "key" } }, docs: undefined },
-                { name: { originalName: "value", camelCase: { unsafeName: "value" } }, docs: undefined }
+            parts: [
+                { paramOriginalName: "key", paramCamelCase: "key", tail: "" },
+                { paramOriginalName: "value", paramCamelCase: "value", tail: "" }
             ]
         });
         expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(key)\\(value)");
