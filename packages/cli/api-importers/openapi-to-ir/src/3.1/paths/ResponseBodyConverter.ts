@@ -222,7 +222,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 StreamingResponse.json({
                     docs: description,
                     payload: convertedStreamingSchema.type,
-                    terminator: undefined,
+                    terminator: this.streamingExtension?.terminator,
                     v2Examples: convertedStreamingSchema.schema?.typeDeclaration.v2Examples
                 })
             ),
@@ -253,7 +253,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         StreamingResponse.json({
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
-                            terminator: undefined,
+                            terminator: this.streamingExtension?.terminator,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,
@@ -273,7 +273,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         StreamingResponse.sse({
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
-                            terminator: undefined,
+                            terminator: this.streamingExtension?.terminator,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,

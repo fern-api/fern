@@ -381,17 +381,17 @@ export abstract class TypescriptProject {
             typescript: "~5.7.2"
         };
         if (this.linter === "biome" || this.formatter === "biome") {
-            deps["@biomejs/biome"] = "2.3.11";
+            deps["@biomejs/biome"] = "2.4.3";
         }
         if (this.linter === "oxlint") {
-            deps["oxlint"] = "1.42.0";
-            deps["oxlint-tsgolint"] = "0.11.4";
+            deps["oxlint"] = "1.50.0";
+            deps["oxlint-tsgolint"] = "0.14.2";
         }
         if (this.formatter === "prettier") {
             deps["prettier"] = "3.7.4";
         }
         if (this.formatter === "oxfmt") {
-            deps["oxfmt"] = "0.27.0";
+            deps["oxfmt"] = "0.35.0";
         }
         return deps;
     }

@@ -3661,6 +3661,133 @@
             ],
             "extends": null,
             "additionalProperties": false
+        },
+        "type_types/union:MixedType": {
+            "type": "undiscriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "MixedType",
+                    "camelCase": {
+                        "unsafeName": "mixedType",
+                        "safeName": "mixedType"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "mixed_type",
+                        "safeName": "mixed_type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MIXED_TYPE",
+                        "safeName": "MIXED_TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MixedType",
+                        "safeName": "MixedType"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        },
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "types": [
+                {
+                    "type": "primitive",
+                    "value": "DOUBLE"
+                },
+                {
+                    "type": "primitive",
+                    "value": "BOOLEAN"
+                },
+                {
+                    "type": "primitive",
+                    "value": "STRING"
+                },
+                {
+                    "type": "list",
+                    "value": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    }
+                }
+            ]
         }
     },
     "headers": [],
@@ -4558,6 +4685,159 @@
                         "value": {
                             "type": "named",
                             "value": "type_types/object:ObjectWithRequiredField"
+                        }
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getAndReturnMapOfPrimToUndiscriminatedUnion",
+                    "camelCase": {
+                        "unsafeName": "getAndReturnMapOfPrimToUndiscriminatedUnion",
+                        "safeName": "getAndReturnMapOfPrimToUndiscriminatedUnion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_and_return_map_of_prim_to_undiscriminated_union",
+                        "safeName": "get_and_return_map_of_prim_to_undiscriminated_union"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_AND_RETURN_MAP_OF_PRIM_TO_UNDISCRIMINATED_UNION",
+                        "safeName": "GET_AND_RETURN_MAP_OF_PRIM_TO_UNDISCRIMINATED_UNION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetAndReturnMapOfPrimToUndiscriminatedUnion",
+                        "safeName": "GetAndReturnMapOfPrimToUndiscriminatedUnion"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "container",
+                            "camelCase": {
+                                "unsafeName": "container",
+                                "safeName": "container"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "container",
+                                "safeName": "container"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CONTAINER",
+                                "safeName": "CONTAINER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Container",
+                                "safeName": "Container"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "container",
+                        "camelCase": {
+                            "unsafeName": "container",
+                            "safeName": "container"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "container",
+                            "safeName": "container"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONTAINER",
+                            "safeName": "CONTAINER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Container",
+                            "safeName": "Container"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/container/map-prim-to-union"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "map",
+                        "key": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "value": {
+                            "type": "named",
+                            "value": "type_types/union:MixedType"
                         }
                     }
                 }

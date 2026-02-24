@@ -1,43 +1,151 @@
-import { readdirSync } from "node:fs";
-import { resolve } from "node:path";
-
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { createSampleIr } from "@fern-api/test-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-v59-sdk/api";
 import { formatEndpointPathForSwift } from "../format-endpoint-path-for-swift.js";
+import { EndpointPathInput } from "../parse-endpoint-path.js";
 
-const pathToTestDefinitions = resolve(__dirname, "../../../../../../../../test-definitions/fern/apis");
-const testDefinitionNames = readdirSync(pathToTestDefinitions, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
-
-async function getIRForTestDefinition(testDefinitionName: string): Promise<IntermediateRepresentation> {
-    const absolutePathToWorkspace = AbsoluteFilePath.of(resolve(pathToTestDefinitions, testDefinitionName));
-    return (await createSampleIr(absolutePathToWorkspace, {
-        version: "v59" // make sure to upgrade this when the IR version is upgraded
-    })) as IntermediateRepresentation;
+function makeEndpoint(opts: {
+    head: string;
+    parts?: Array<{
+        paramOriginalName: string;
+        paramCamelCase: string;
+        tail: string;
+    }>;
+}): EndpointPathInput {
+    const parts = opts.parts ?? [];
+    return {
+        fullPath: {
+            head: opts.head,
+            parts: parts.map((p) => ({
+                pathParameter: p.paramOriginalName,
+                tail: p.tail
+            }))
+        },
+        allPathParameters: parts.map((p) => ({
+            name: {
+                originalName: p.paramOriginalName,
+                camelCase: { unsafeName: p.paramCamelCase }
+            },
+            docs: undefined
+        }))
+    };
 }
 
-describe.each(testDefinitionNames)("formatEndpointPathForSwift - %s", (testDefinitionName) => {
-    // This allows us to conveniently review the formatted endpoint paths for every test definition in a single location
+describe("formatEndpointPathForSwift", () => {
+    // --- Basic path formatting ---
 
-    it("correctly formats all endpoint paths for definition", async () => {
-        const ir = await getIRForTestDefinition(testDefinitionName);
-        const endpointPathsByService = Object.fromEntries(
-            Object.entries(ir.services).map(([serviceName, service]) => {
-                return [
-                    serviceName,
-                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                    service.endpoints.map((endpoint) => formatEndpointPathForSwift(endpoint as any))
-                ] as const;
-            })
+    it("formats a static path with no parameters", () => {
+        const endpoint = makeEndpoint({ head: "/users" });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/users");
+    });
+
+    it("formats a path with a single path parameter", () => {
+        const endpoint = makeEndpoint({
+            head: "/users/",
+            parts: [{ paramOriginalName: "user_id", paramCamelCase: "userId", tail: "" }]
+        });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/users/\\(userId)");
+    });
+
+    it("formats a path with multiple path parameters", () => {
+        const endpoint = makeEndpoint({
+            head: "/organizations/",
+            parts: [
+                { paramOriginalName: "org_id", paramCamelCase: "orgId", tail: "/users/" },
+                { paramOriginalName: "user_id", paramCamelCase: "userId", tail: "" }
+            ]
+        });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/organizations/\\(orgId)/users/\\(userId)");
+    });
+
+    // --- Leading slash handling ---
+
+    it("prepends a leading slash if missing", () => {
+        const endpoint = makeEndpoint({ head: "users" });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/users");
+    });
+
+    it("prepends a leading slash when head is empty and path parameter starts the path", () => {
+        const endpoint = makeEndpoint({
+            head: "",
+            parts: [{ paramOriginalName: "id", paramCamelCase: "id", tail: "" }]
+        });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)");
+    });
+
+    // --- Trailing slash handling ---
+
+    it("strips a trailing slash", () => {
+        const endpoint = makeEndpoint({ head: "/users/" });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/users");
+    });
+
+    it("preserves a single slash as the root path", () => {
+        const endpoint = makeEndpoint({ head: "/" });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/");
+    });
+
+    it("strips trailing slash after path parameter tail", () => {
+        const endpoint = makeEndpoint({
+            head: "/",
+            parts: [{ paramOriginalName: "id", paramCamelCase: "id", tail: "/details/" }]
+        });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)/details");
+    });
+
+    // --- Empty head handling ---
+
+    it("handles an empty head with no parts", () => {
+        const endpoint = makeEndpoint({ head: "" });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/");
+    });
+
+    // --- Missing path parameter declaration ---
+
+    it("skips path parameters not declared in allPathParameters but keeps surrounding literals", () => {
+        const endpoint: EndpointPathInput = {
+            fullPath: {
+                head: "/items/",
+                parts: [{ pathParameter: "unknown_param", tail: "/details" }]
+            },
+            allPathParameters: []
+        };
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/items//details");
+    });
+
+    // --- Consecutive path parameters ---
+
+    it("handles consecutive path parameters with no separator", () => {
+        const endpoint = makeEndpoint({
+            head: "/",
+            parts: [
+                { paramOriginalName: "key", paramCamelCase: "key", tail: "" },
+                { paramOriginalName: "value", paramCamelCase: "value", tail: "" }
+            ]
+        });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(key)\\(value)");
+    });
+
+    // --- Tail after path parameter ---
+
+    it("handles a path parameter followed by a tail segment", () => {
+        const endpoint = makeEndpoint({
+            head: "/",
+            parts: [{ paramOriginalName: "id", paramCamelCase: "id", tail: "/details" }]
+        });
+        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)/details");
+    });
+
+    // --- Complex / deeply nested ---
+
+    it("handles deeply nested paths with multiple segments and parameters", () => {
+        const endpoint = makeEndpoint({
+            head: "/api/v1/",
+            parts: [
+                { paramOriginalName: "tenant_id", paramCamelCase: "tenantId", tail: "/resources/" },
+                { paramOriginalName: "resource_id", paramCamelCase: "resourceId", tail: "/actions/" },
+                { paramOriginalName: "action_id", paramCamelCase: "actionId", tail: "" }
+            ]
+        });
+        expect(formatEndpointPathForSwift(endpoint)).toBe(
+            "/api/v1/\\(tenantId)/resources/\\(resourceId)/actions/\\(actionId)"
         );
-        const fileContents = Object.entries(endpointPathsByService)
-            .map(([serviceName, paths]) => ({ serviceName, serviceContent: paths.map((p) => `"${p}"`).join("\n") }))
-            .map(({ serviceName, serviceContent }) => `// ${serviceName}\n${serviceContent}`)
-            .join("\n\n");
-        await expect(fileContents).toMatchFileSnapshot(
-            `snapshots/formatted-endpoint-paths/${testDefinitionName}.swift`
-        );
-    }, 10_000);
+    });
 });

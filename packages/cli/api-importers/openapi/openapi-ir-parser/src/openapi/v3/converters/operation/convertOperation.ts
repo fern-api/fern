@@ -103,7 +103,7 @@ export function convertOperation({
     if (streamingExtension == null) {
         const hasItemSchemaStreaming = checkOperationForItemSchemaStreaming({ operation, context });
         if (hasItemSchemaStreaming) {
-            streamingExtension = { type: "stream", format: "sse" };
+            streamingExtension = { type: "stream", format: "sse", terminator: undefined };
         }
     }
 

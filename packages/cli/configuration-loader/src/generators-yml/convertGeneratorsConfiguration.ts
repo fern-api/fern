@@ -8,7 +8,7 @@ import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMeta
 import { readFile } from "fs/promises";
 import path from "path";
 
-import { addDefaultDockerOrgIfNotPresent } from "./getGeneratorName.js";
+import { addDefaultDockerOrgIfNotPresent, correctIncorrectDockerOrgWithWarning } from "./getGeneratorName.js";
 
 /**
  * Union type representing any spec-level settings schema.
@@ -82,7 +82,8 @@ export async function convertGeneratorsConfiguration({
                               group,
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
-                              readme
+                              readme,
+                              context
                           })
                       )
                   )
@@ -546,7 +547,8 @@ async function convertGroup({
     group,
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
-    readme
+    readme,
+    context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
@@ -554,6 +556,7 @@ async function convertGroup({
     maybeTopLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
+    context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
     const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
@@ -569,7 +572,8 @@ async function convertGroup({
                     maybeGroupLevelMetadata,
                     maybeTopLevelReviewers,
                     maybeGroupLevelReviewers: group.reviewers,
-                    readme
+                    readme,
+                    context
                 })
             )
         )
@@ -583,7 +587,8 @@ async function convertGenerator({
     maybeTopLevelMetadata,
     maybeGroupLevelReviewers,
     maybeTopLevelReviewers,
-    readme
+    readme,
+    context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: generatorsYml.GeneratorInvocationSchema;
@@ -592,9 +597,12 @@ async function convertGenerator({
     maybeGroupLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
+    context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
+    // Warn and correct incorrect "fern-api/" org prefix in generators.yml
+    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
     // Normalize the generator name by adding the default Docker org prefix if not present
-    const normalizedName = addDefaultDockerOrgIfNotPresent(generator.name);
+    const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
     return {
         raw: generator,
         name: normalizedName,

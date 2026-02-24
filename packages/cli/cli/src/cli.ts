@@ -4,9 +4,11 @@ import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
+    correctIncorrectDockerOrg,
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,
+    INCORRECT_DOCKER_ORG,
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
@@ -292,6 +294,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec"
                 })
+                .option("fern-definition", {
+                    boolean: true,
+                    description: "Initialize with a sample Fern Definition instead of an OpenAPI spec"
+                })
                 .option("mintlify", {
                     type: "string",
                     description: "Migrate docs from Mintlify provided a path to a mint.json file"
@@ -314,6 +320,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             } else if (argv.readme != null && argv.mintlify != null) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --readme and --mintlify. Please choose one."
+                );
+            } else if (argv.openapi != null && argv["fern-definition"] === true) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --openapi and --fern-definition. Please choose one."
                 );
             } else if (argv.readme != null) {
                 await cliContext.runTask(async (context) => {
@@ -366,7 +376,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         context,
-                        openApiPath: absoluteOpenApiPath
+                        openApiPath: absoluteOpenApiPath,
+                        useFernDefinition: argv["fern-definition"] === true
                     });
                 });
             }
@@ -541,12 +552,13 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Add the generator to the specified group"
                 }),
         async (argv) => {
+            const generatorName = warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext);
             await addGeneratorToWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false
                 }),
-                generatorName: argv.generator,
+                generatorName,
                 groupName: argv.group,
                 cliContext
             });
@@ -705,6 +717,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
             }
+            const correctedGeneratorFilter =
+                argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -714,7 +728,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     version: argv.version,
                     groupName: argv.group,
-                    generatorName: argv.generator,
+                    generatorName: correctedGeneratorFilter,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local || argv.runner != null,
@@ -767,7 +781,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
-                generatorName: argv.generator,
+                generatorName: correctedGeneratorFilter,
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
@@ -1982,6 +1996,20 @@ function readBytes(stream: ReadStream): Promise<Uint8Array> {
             reject(err);
         });
     });
+}
+
+/**
+ * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
+ * Used for CLI arguments that accept generator names.
+ */
+function warnAndCorrectIncorrectDockerOrg(generatorName: string, cliContext: CliContext): string {
+    const corrected = correctIncorrectDockerOrg(generatorName);
+    if (corrected !== generatorName) {
+        cliContext.logger.warn(
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "${INCORRECT_DOCKER_ORG}".`
+        );
+    }
+    return corrected;
 }
 
 function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {

@@ -1220,7 +1220,6 @@ func (t *typeVisitor) visitObjectProperties(
 		dates = append(dates, extendedObjectProperties.dates...)
 	}
 	for _, property := range object.Properties {
-		t.writer.WriteDocs(property.Docs)
 		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 			literals = append(literals, &literal{Name: property.Name, Value: property.ValueType.Container.Literal})
 			if !includeLiterals {
@@ -1229,6 +1228,7 @@ func (t *typeVisitor) visitObjectProperties(
 		} else {
 			names = append(names, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 		}
+		t.writer.WriteDocs(property.Docs)
 		if date := maybeDateProperty(property.ValueType, property.Name, false); date != nil {
 			dates = append(dates, date)
 		}

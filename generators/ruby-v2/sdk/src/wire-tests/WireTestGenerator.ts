@@ -174,7 +174,7 @@ export class WireTestGenerator {
 
         // Build auth parameters for the client constructor
         const authParams = this.buildAuthParamsForSetup();
-        const clientClassName = `${this.context.getRootModuleName()}::Client`;
+        const clientClassName = `${this.context.getRootModuleName()}::${this.context.getRootClientClassName()}`;
 
         // Generate client instantiation with auth and base_url
         if (authParams.length > 0) {

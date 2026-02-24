@@ -98,6 +98,10 @@ public final class Inlined implements IExampleType, IDocs {
 
     public interface _FinalStage {
         Inlined build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -145,6 +149,18 @@ public final class Inlined implements IExampleType, IDocs {
         @java.lang.Override
         public Inlined build() {
             return new Inlined(name, docs, unique, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

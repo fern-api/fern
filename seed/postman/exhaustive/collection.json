@@ -519,6 +519,86 @@
             },
             {
               "_type": "endpoint",
+              "name": "Get And Return Map Of Prim To Undiscriminated Union",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/map-prim-to-union",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "map-prim-to-union"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": 1.1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/map-prim-to-union",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "map-prim-to-union"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": 1.1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": 1.1\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
               "name": "Get And Return Optional",
               "request": {
                 "description": null,

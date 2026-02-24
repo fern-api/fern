@@ -33,6 +33,7 @@ export function convertHttpOperation({
     responseStatusCode,
     suffix,
     streamFormat,
+    streamTerminator,
     source
 }: {
     operationContext: OperationContext;
@@ -40,6 +41,7 @@ export function convertHttpOperation({
     responseStatusCode?: number;
     suffix?: string;
     streamFormat: "sse" | "json" | undefined;
+    streamTerminator?: string;
     source: Source;
 }): EndpointWithExample[] {
     const { document, operation, path, method, baseBreadcrumbs } = operationContext;
@@ -301,6 +303,7 @@ export function convertHttpOperation({
     const convertedResponse = convertResponse({
         operationContext,
         streamFormat,
+        streamTerminator,
         responses: operation.responses,
         context,
         responseBreadcrumbs,

@@ -176,6 +176,33 @@ describe("ContainerClient", () => {
         });
     });
 
+    test("getAndReturnMapOfPrimToUndiscriminatedUnion", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { string: 1.1 };
+        const rawResponseBody = { string: 1.1 };
+        server
+            .mockEndpoint()
+            .post("/container/map-prim-to-union")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+            string: 1.1,
+        });
+        expect(response).toEqual({
+            body: {
+                string: 1.1,
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
     test("getAndReturnOptional", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });

@@ -254,9 +254,16 @@ export class ClonedRepository {
             readdir(this.clonePath)
         ]);
 
+        // Build list of files to preserve: always preserve .git, .gitignore, .fernignore.
+        // Also preserve README.md if the source doesn't include one, to prevent accidental
+        // deletion when a generator fails to produce a README (e.g. silent try/catch failure).
+        const filesToPreserve = sourceContents.includes(README_FILEPATH)
+            ? DEFAULT_IGNORED_FILES
+            : [...DEFAULT_IGNORED_FILES, README_FILEPATH];
+
         await Promise.all(
             destContents
-                .filter((content) => !DEFAULT_IGNORED_FILES.includes(content))
+                .filter((content) => !filesToPreserve.includes(content))
                 .map(async (content) => {
                     await rm(resolve(this.clonePath, content), {
                         recursive: true,

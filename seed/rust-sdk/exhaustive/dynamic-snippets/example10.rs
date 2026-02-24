@@ -10,7 +10,7 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .http_methods
-        .test_get(&"id".to_string(), None)
+        .enum_
+        .get_and_return_enum(&WeatherReport::Sunny, None)
         .await;
 }

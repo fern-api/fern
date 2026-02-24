@@ -371,8 +371,8 @@ jobs:
 """
         if write_unit_tests:
             workflow_yaml += """
-      - name: Install Fern
-        run: npm install -g fern-api
+      - name: Install Fern CLI
+        uses: fern-api/setup-fern-cli@v1
       - name: Test
         run: fern test --command "poetry run pytest -rP -n auto ."
 """
@@ -458,8 +458,8 @@ jobs:
 """
         if write_unit_tests:
             workflow_yaml += """
-      - name: Install Fern
-        run: npm install -g fern-api
+      - name: Install Fern CLI
+        uses: fern-api/setup-fern-cli@v1
       - name: Test
         run: fern test --command "poetry run pytest -rP -n auto ."
 """

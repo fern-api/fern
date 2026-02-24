@@ -170,6 +170,10 @@ public final class SearchResponse {
     public interface _FinalStage {
         SearchResponse build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage results(List<String> results);
 
         _FinalStage addResults(String results);
@@ -414,6 +418,18 @@ public final class SearchResponse {
         public SearchResponse build() {
             return new SearchResponse(
                     results, totalCount, query, limit, includeArchived, sortOrder, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

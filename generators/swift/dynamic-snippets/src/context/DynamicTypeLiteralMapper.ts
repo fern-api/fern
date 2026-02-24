@@ -467,11 +467,13 @@ export class DynamicTypeLiteralMapper {
     }): swift.Expression | undefined {
         const variants = this.context.nameRegistry.getAllUndiscriminatedUnionVariantsOrThrow(unionSymbol);
         for (const typeReference of undiscriminatedUnion.types) {
+            const errorsBefore = this.context.errors.size();
             try {
                 const converted = this.convert({ fromSymbol, typeReference, value });
                 const swiftType = this.context.getSwiftTypeReferenceFromScope(typeReference, fromSymbol);
                 const matchingVariant = variants.find((v) => v.swiftType.equals(swiftType));
                 if (matchingVariant == null) {
+                    this.context.errors.truncate(errorsBefore);
                     continue;
                 }
                 return swift.Expression.methodCall({
@@ -485,6 +487,7 @@ export class DynamicTypeLiteralMapper {
                     multiline: true
                 });
             } catch (e) {
+                this.context.errors.truncate(errorsBefore);
                 continue;
             }
         }

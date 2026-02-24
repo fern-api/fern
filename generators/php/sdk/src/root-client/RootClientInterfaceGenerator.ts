@@ -1,6 +1,7 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FileGenerator, PhpFile } from "@fern-api/php-base";
 import { php } from "@fern-api/php-codegen";
+import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -29,11 +30,29 @@ export class RootClientInterfaceGenerator extends FileGenerator<PhpFile, SdkCust
             }
         }
 
+        for (const subpackage of this.getRootSubpackages()) {
+            interface_.addMethod(
+                php.method({
+                    name: this.context.getSubpackageGetterName(subpackage),
+                    access: "public",
+                    parameters: [],
+                    return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
+                    noBody: true
+                })
+            );
+        }
+
         return new PhpFile({
             clazz: interface_,
             directory: RelativeFilePath.of(""),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         });
+    }
+
+    private getRootSubpackages(): FernIr.Subpackage[] {
+        return this.context.ir.rootPackage.subpackages
+            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
+            .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 }

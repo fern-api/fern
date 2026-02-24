@@ -94,6 +94,10 @@ public final class Node {
     public interface _FinalStage {
         Node build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage nodes(Optional<List<Node>> nodes);
 
         _FinalStage nodes(List<Node> nodes);
@@ -160,6 +164,18 @@ public final class Node {
         @java.lang.Override
         public Node build() {
             return new Node(name, nodes, trees, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

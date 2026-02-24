@@ -19,5 +19,6 @@ export interface Webhook extends FernOpenapiIr.WithDescription, FernOpenapiIr.Wi
      */
     multipartFormData: FernOpenapiIr.MultipartFormDataWebhookPayload | undefined;
     response: FernOpenapiIr.Response | undefined;
+    signatureVerification: FernOpenapiIr.WebhookSignatureVerification | undefined;
     examples: FernOpenapiIr.WebhookExampleCall[];
 }

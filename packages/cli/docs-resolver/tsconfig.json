@@ -1,57 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../commons/core-utils"
-    },
-    {
-      "path": "../../commons/fs-utils"
-    },
-    {
-      "path": "../../ir-sdk"
-    },
-    {
-      "path": "../cli-source-resolver"
-    },
-    {
-      "path": "../configuration"
-    },
-    {
-      "path": "../configuration-loader"
-    },
-    {
-      "path": "../docs-markdown-utils"
-    },
-    {
-      "path": "../generation/ir-generator"
-    },
-    {
-      "path": "../project-loader"
-    },
-    {
-      "path": "../register"
-    },
-    {
-      "path": "../task-context"
-    },
-    {
-      "path": "../workspace/commons"
-    },
-    {
-      "path": "../workspace/lazy-fern-workspace"
-    },
-    {
-      "path": "../workspace/loader"
-    },
-    {
-      "path": "../api-importers/graphql"
-    }
-  ]
+  "include": ["./src/**/*"]
 }
