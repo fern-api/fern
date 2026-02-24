@@ -801,7 +801,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "protocol"
             },
             "referencedTypes": [
                 "type_completions:CompletionEvent",

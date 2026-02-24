@@ -1056,7 +1056,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {

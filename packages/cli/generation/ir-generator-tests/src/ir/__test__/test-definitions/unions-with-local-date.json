@@ -2978,7 +2978,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_bigunion:NormalSweet",
@@ -8882,7 +8882,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo",
@@ -9237,7 +9237,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo",
@@ -9476,7 +9476,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -10017,7 +10017,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -10672,7 +10672,7 @@
                         "docs": "This is a bar field."
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo",
@@ -11288,7 +11288,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo"
@@ -11823,7 +11823,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo"
@@ -12387,7 +12387,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -12894,7 +12894,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo"
@@ -13669,7 +13669,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -14175,7 +14175,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -14779,7 +14779,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo"
@@ -15269,7 +15269,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo"
@@ -15948,7 +15948,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_types:Foo",
@@ -18244,7 +18244,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -18814,7 +18814,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [],
             "encoding": {
@@ -19864,7 +19864,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_union:Circle",

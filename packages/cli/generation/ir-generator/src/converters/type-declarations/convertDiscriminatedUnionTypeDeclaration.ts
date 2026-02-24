@@ -1,5 +1,11 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
-import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-api/ir-sdk";
+import {
+    SingleUnionType,
+    SingleUnionTypeProperties,
+    Type,
+    TypeReference,
+    UnionDiscriminatorContext
+} from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { ResolvedType } from "../../resolvers/ResolvedType.js";
@@ -86,7 +92,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 availability: getAvailability(rawSingleUnionType)
             };
         }),
-        discriminatorContext: undefined
+        discriminatorContext: getDiscriminatorContext({ union })
     });
 }
 
@@ -228,4 +234,10 @@ function unwrapNullableAndOptional(resolvedType: ResolvedType): ResolvedType {
         }
     }
     return resolvedType;
+}
+
+function getDiscriminatorContext({ union }: { union: RawSchemas.DiscriminatedUnionSchema }): UnionDiscriminatorContext {
+    const discriminantContext = typeof union.discriminant === "object" && union.discriminant?.context;
+
+    return discriminantContext === "protocol" ? UnionDiscriminatorContext.Protocol : UnionDiscriminatorContext.Data;
 }

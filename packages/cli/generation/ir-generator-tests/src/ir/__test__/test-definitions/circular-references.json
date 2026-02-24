@@ -1492,7 +1492,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_ast:PrimitiveValue",
@@ -1861,7 +1861,7 @@
                         "docs": null
                     }
                 ],
-                "discriminatorContext": null
+                "discriminatorContext": "data"
             },
             "referencedTypes": [
                 "type_ast:FieldValue",

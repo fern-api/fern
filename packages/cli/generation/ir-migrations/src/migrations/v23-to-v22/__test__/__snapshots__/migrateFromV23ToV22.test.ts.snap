@@ -15482,7 +15482,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "wireValue": "animal",
         },
-        "discriminatorContext": undefined,
+        "discriminatorContext": "data",
         "extends": [],
         "type": "union",
         "types": [
