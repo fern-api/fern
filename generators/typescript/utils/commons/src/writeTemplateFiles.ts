@@ -1,5 +1,5 @@
+import ejs from "ejs";
 import * as fs from "fs/promises";
-import { template } from "lodash-es";
 import * as path from "path";
 
 export async function writeTemplateFiles(directory: string, templateVariables: Record<string, unknown>): Promise<void> {
@@ -36,8 +36,7 @@ async function processTemplateFile(
     templateVariables: Record<string, unknown>
 ): Promise<void> {
     const templateContent = await fs.readFile(templateFilePath, "utf8");
-    const compiledTemplate = template(templateContent);
-    const content = compiledTemplate(templateVariables);
+    const content = ejs.render(templateContent, templateVariables);
     const outputFilePath = templateFilePath.replace(/\.template\./, ".");
     await fs.writeFile(outputFilePath, content, "utf8");
     await fs.unlink(templateFilePath);

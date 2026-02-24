@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib",
     "compile": "tsc",
@@ -38,6 +40,7 @@
     "@fern-api/typescript-base": "workspace:*",
     "@fern-fern/ir-sdk": "^64.0.0",
     "decompress": "catalog:",
+    "ejs": "^4.0.1",
     "esutils": "catalog:",
     "glob": "catalog:",
     "immer": "^10.1.1",
@@ -49,6 +52,7 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/decompress": "catalog:",
+    "@types/ejs": "^3.1.5",
     "@types/esutils": "catalog:",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
