@@ -34,10 +34,37 @@ on:
         default: false
         type: boolean
       fixture:
-        description: 'Specific fixture to run'
+        description: 'Fixture(s) to run (space-separated for multiple, leave as "all" for all fixtures)'
         required: false
         default: "all"
         type: string
+      generator:
+        description: 'Specific generator to run (leave as "all" to run all generators for the selected language)'
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - ruby-sdk-v2
+          - pydantic
+          - python-sdk
+          - fastapi
+          - openapi
+          - postman
+          - java-sdk
+          - java-model
+          - java-spring
+          - ts-sdk
+          - ts-express
+          - go-model
+          - go-sdk
+          - csharp-model
+          - csharp-sdk
+          - php-model
+          - php-sdk
+          - swift-sdk
+          - rust-model
+          - rust-sdk
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -67,6 +94,7 @@ jobs:
       selected-language: ${{ steps.set-language-filter.outputs.selected-language }}
       commit-on-failure: ${{ steps.set-commit-on-failure.outputs.commit-on-failure }}
       selected-fixture: ${{ steps.set-fixture-filter.outputs.selected-fixture }}
+      selected-generator: ${{ steps.set-generator-filter.outputs.selected-generator }}
     steps:
       # Apply by direct push for workflow_dispatches that aren't on main, apply by PR if running against main
       - name: Set update options
@@ -133,6 +161,21 @@ jobs:
             echo "Push event detected, running all fixtures"
           fi
           echo "selected-fixture=$SELECTED_FIXTURE" >> $GITHUB_OUTPUT
+
+      - name: Set generator filter
+        id: set-generator-filter
+        shell: bash
+        run: |
+          # For workflow_dispatch events, use the input generator filter
+          # For push events, default to 'all' to maintain existing behavior
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            SELECTED_GENERATOR="${{ github.event.inputs.generator }}"
+            echo "Generator filter from workflow_dispatch input: $SELECTED_GENERATOR"
+          else
+            SELECTED_GENERATOR="all"
+            echo "Push event detected, running all generators"
+          fi
+          echo "selected-generator=$SELECTED_GENERATOR" >> $GITHUB_OUTPUT
 
   changes:
     if: github.repository == 'fern-api/fern'
@@ -314,16 +357,33 @@ jobs:
         shell: bash
         run: |
           SELECTED_FIXTURE="${{ needs.setup.outputs.selected-fixture }}"
+          SELECTED_GENERATOR="${{ needs.setup.outputs.selected-generator }}"
           
           # List of all generators
           GENERATORS="ruby-sdk-v2 pydantic python-sdk fastapi openapi postman java-sdk java-model java-spring ts-sdk ts-express go-model go-sdk csharp-model csharp-sdk php-model php-sdk swift-sdk rust-model rust-sdk"
           
           # Process each generator and set its output
           for GEN in $GENERATORS; do
-            # If a specific fixture is selected, use a single-item matrix with just that fixture
+            # Skip generators that don't match the selected generator filter
+            if [[ "$SELECTED_GENERATOR" != "all" && "$SELECTED_GENERATOR" != "$GEN" ]]; then
+              echo "Skipping $GEN (selected generator: $SELECTED_GENERATOR)"
+              echo "${GEN}-test-matrix=" >> $GITHUB_OUTPUT
+              continue
+            fi
+
+            # If specific fixture(s) are selected, use a single-item matrix with those fixtures
             if [[ "$SELECTED_FIXTURE" != "all" ]]; then
-              echo "Specific fixture selected: $SELECTED_FIXTURE"
-              MATRIX="[{\"fixtures\":[\"$SELECTED_FIXTURE\"]}]"
+              # Convert space-separated fixtures to JSON array
+              FIXTURES_JSON=""
+              for FIX in $SELECTED_FIXTURE; do
+                if [ -n "$FIXTURES_JSON" ]; then
+                  FIXTURES_JSON="${FIXTURES_JSON},\"${FIX}\""
+                else
+                  FIXTURES_JSON="\"${FIX}\""
+                fi
+              done
+              echo "Specific fixture(s) selected: $SELECTED_FIXTURE"
+              MATRIX="[{\"fixtures\":[${FIXTURES_JSON}]}]"
             else
               # Query fixtures with auto-grouping (seed CLI calculates optimal group count)
               MATRIX=$(node --enable-source-maps packages/seed/dist/cli.cjs list-test-fixtures --generator "$GEN" --groups auto)
@@ -345,6 +405,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'ruby-sdk-v2') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'ruby') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.ruby-v2 == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ruby-sdk-v2 != ''
@@ -379,6 +440,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'pydantic') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'python') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.pydantic != ''
@@ -413,6 +475,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'python-sdk') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'python') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.python-sdk != ''
@@ -447,6 +510,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'fastapi') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'python') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.python == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.fastapi != ''
@@ -481,6 +545,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'openapi') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'openapi') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.openapi == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.openapi != ''
@@ -515,6 +580,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'postman') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'postman') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.postman == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.postman != ''
@@ -549,6 +615,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'java-sdk') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'java') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.java-sdk != ''
@@ -583,6 +650,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'java-model') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'java') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.java-model != ''
@@ -617,6 +685,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'java-spring') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'java') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.java == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.java-spring != ''
@@ -651,6 +720,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'ts-sdk') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'typescript') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.typescript == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ts-sdk != ''
@@ -685,6 +755,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'ts-express') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'typescript') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.typescript == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.ts-express != ''
@@ -720,6 +791,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'go-model') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'go') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.go-model != ''
@@ -754,6 +826,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'go-sdk') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'go') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.go == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.go-sdk != ''
@@ -788,6 +861,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'csharp-model') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'csharp') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.csharp == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.csharp-model != ''
@@ -822,6 +896,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'csharp-sdk') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'csharp') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.csharp == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.csharp-sdk != ''
@@ -856,6 +931,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'php-model') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'php') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.php == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.php-model != ''
@@ -890,6 +966,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'php-sdk') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'php') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.php == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.php-sdk != ''
@@ -924,6 +1001,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'swift-sdk') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'swift') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.swift == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.swift-sdk != ''
@@ -958,6 +1036,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'rust-model') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'rust') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.rust-model != ''
@@ -992,6 +1071,7 @@ jobs:
     if: >-
       ${{ 
         always() && !cancelled() &&
+        (needs.setup.outputs.selected-generator == 'all' || needs.setup.outputs.selected-generator == 'rust-sdk') &&
         (needs.setup.outputs.selected-language == 'all' || needs.setup.outputs.selected-language == 'rust') &&
         (github.event_name == 'workflow_dispatch' || needs.changes.outputs.rust == 'true' || needs.changes.outputs.seed == 'true') &&
         needs.get-all-test-matrices.outputs.rust-sdk != ''
