@@ -2209,13 +2209,15 @@ export class DocsDefinitionResolver {
             "og:image": ogImage,
             "og:logo": ogLogo,
             "twitter:image": twitterImage,
+            "og:background-image": ogBackgroundImage,
             ...rest
         } = this.parsedDocsConfig.metadata;
         return {
             ...rest,
             "og:image": this.convertFileIdOrUrl(ogImage),
             "og:logo": this.convertFileIdOrUrl(ogLogo),
-            "twitter:image": this.convertFileIdOrUrl(twitterImage)
+            "twitter:image": this.convertFileIdOrUrl(twitterImage),
+            "og:background-image": this.convertFileIdOrUrl(ogBackgroundImage)
         };
     }
 
