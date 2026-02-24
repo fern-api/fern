@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.4
+  changelogEntry:
+    - summary: |
+        Skip compatible IR version validation when running in local development
+        mode (CLI version 0.0.0). This prevents noisy 404 errors from the FDR
+        registry when the CLI version is not a real published release.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.3
   changelogEntry:
     - summary: |
