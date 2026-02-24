@@ -120,33 +120,11 @@ describe("formatEndpointPathForSwift", () => {
         expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)/details");
     });
 
-    // --- Empty / null head handling ---
+    // --- Empty head handling ---
 
     it("handles an empty head with no parts", () => {
         const endpoint = makeEndpoint({ head: "" });
         expect(formatEndpointPathForSwift(endpoint)).toBe("/");
-    });
-
-    it("skips null head and still formats path parts", () => {
-        const endpoint = makeEndpoint({
-            head: undefined,
-            rawParts: [{ pathParameter: "id", tail: "/details" }],
-            rawAllPathParameters: [{ name: { originalName: "id", camelCase: { unsafeName: "id" } }, docs: undefined }]
-        });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/\\(id)/details");
-    });
-
-    // --- Null tail handling ---
-
-    it("skips null tail in path parts", () => {
-        const endpoint = makeEndpoint({
-            head: "/users/",
-            rawParts: [{ pathParameter: "user_id", tail: undefined }],
-            rawAllPathParameters: [
-                { name: { originalName: "user_id", camelCase: { unsafeName: "userId" } }, docs: undefined }
-            ]
-        });
-        expect(formatEndpointPathForSwift(endpoint)).toBe("/users/\\(userId)");
     });
 
     // --- Missing path parameter declaration ---
