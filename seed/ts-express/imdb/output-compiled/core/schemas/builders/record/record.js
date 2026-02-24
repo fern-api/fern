@@ -2,11 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.record = record;
 const Schema_1 = require("../../Schema");
-const entries_1 = require("../../utils/entries");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const isPlainObject_1 = require("../../utils/isPlainObject");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
 const index_1 = require("../schema-utils/index");
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
 function record(keySchema, valueSchema) {
     const baseSchema = {
         parse: (raw, opts) => {
@@ -55,11 +56,16 @@ function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transfo
             ],
         };
     }
-    return (0, entries_1.entries)(value).reduce((accPromise, [stringKey, value]) => {
-        if (value === undefined) {
-            return accPromise;
+    const result = {};
+    const errors = [];
+    for (const stringKey in value) {
+        if (!_hasOwn.call(value, stringKey)) {
+            continue;
         }
-        const acc = accPromise;
+        const entryValue = value[stringKey];
+        if (entryValue === undefined) {
+            continue;
+        }
         let key = stringKey;
         if (isKeyNumeric) {
             const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
@@ -68,26 +74,21 @@ function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transfo
             }
         }
         const transformedKey = transformKey(key);
-        const transformedValue = transformValue(value, key);
-        if (acc.ok && transformedKey.ok && transformedValue.ok) {
-            return {
-                ok: true,
-                value: Object.assign(Object.assign({}, acc.value), { [transformedKey.value]: transformedValue.value }),
-            };
+        const transformedValue = transformValue(entryValue, key);
+        if (transformedKey.ok && transformedValue.ok) {
+            result[transformedKey.value] = transformedValue.value;
         }
-        const errors = [];
-        if (!acc.ok) {
-            errors.push(...acc.errors);
+        else {
+            if (!transformedKey.ok) {
+                errors.push(...transformedKey.errors);
+            }
+            if (!transformedValue.ok) {
+                errors.push(...transformedValue.errors);
+            }
         }
-        if (!transformedKey.ok) {
-            errors.push(...transformedKey.errors);
-        }
-        if (!transformedValue.ok) {
-            errors.push(...transformedValue.errors);
-        }
-        return {
-            ok: false,
-            errors,
-        };
-    }, { ok: true, value: {} });
+    }
+    if (errors.length === 0) {
+        return { ok: true, value: result };
+    }
+    return { ok: false, errors };
 }

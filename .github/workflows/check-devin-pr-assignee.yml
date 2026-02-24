@@ -7,6 +7,9 @@ on:
 permissions:
   pull-requests: write
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   check-assignee:
     runs-on: ubuntu-latest

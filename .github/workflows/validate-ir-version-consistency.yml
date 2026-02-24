@@ -22,6 +22,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   validate-ir-versions:
     name: Validate IR Version Consistency

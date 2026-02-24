@@ -39,7 +39,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
     }
 
     public async toFernWorkspace(
-        { context }: { context?: TaskContext },
+        { context, skipValidation }: { context?: TaskContext; skipValidation?: boolean },
         settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
         const key = hash(settings ?? {});
@@ -63,7 +63,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
             const structuralValidationResult = validateStructureOfYamlFiles({
                 files: parseResult.files,
-                absolutePathToDefinition
+                absolutePathToDefinition,
+                skipValidation
             });
             if (!structuralValidationResult.didSucceed) {
                 handleFailedWorkspaceParserResultRaw(structuralValidationResult.failures, defaultedContext.logger);

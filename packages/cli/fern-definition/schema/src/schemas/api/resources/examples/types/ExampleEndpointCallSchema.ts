@@ -7,7 +7,7 @@ export interface ExampleEndpointCallSchema extends FernDefinition.WithName, Fern
     "path-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
     "query-parameters"?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
     headers?: Record<string, FernDefinition.ExampleTypeReferenceSchema | undefined>;
-    request?: FernDefinition.ExampleTypeReferenceSchema | undefined;
+    request?: FernDefinition.ExampleTypeReferenceSchema;
     response?: FernDefinition.ExampleResponseSchema;
     "code-samples"?: FernDefinition.ExampleCodeSampleSchema[];
 }

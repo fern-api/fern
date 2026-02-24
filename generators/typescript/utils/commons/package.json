@@ -39,6 +39,7 @@
     "@fern-fern/ir-sdk": "^64.0.0",
     "decompress": "catalog:",
     "esutils": "catalog:",
+    "eta": "^4.5.1",
     "glob": "catalog:",
     "immer": "^10.1.1",
     "lodash-es": "catalog:",

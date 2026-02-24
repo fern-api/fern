@@ -59,7 +59,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli {
     private async generate(context: ModelGeneratorContext): Promise<void> {
         const generateStartTime = Date.now();
         const generatedTypes = generateModels({ context });
-        context.logger.info(`[TIMING] generateModels took ${Date.now() - generateStartTime}ms`);
+        context.logger.debug(`[TIMING] generateModels took ${Date.now() - generateStartTime}ms`);
         for (const file of generatedTypes) {
             context.project.addSourceFiles(file);
         }
@@ -73,7 +73,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli {
             }
         }
 
-        context.logger.info(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
+        context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
         await context.project.persist();
     }
 }

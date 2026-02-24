@@ -152,28 +152,33 @@ export class ApiDefinitionConverter {
         if (isNullish(sourcedApis)) {
             return {};
         }
-        const result: Record<string, ApiDefinition> = {};
-        for (const [apiName, apiDef] of Object.entries(apis)) {
-            const sourcedApiDef = sourcedApis[apiName];
-            if (isNullish(sourcedApiDef)) {
-                continue;
-            }
-            const specs = await this.convertSpecs({
-                absoluteFernYmlPath,
-                specs: apiDef.specs,
-                sourced: sourcedApiDef.specs
-            });
-            result[apiName] = {
-                specs,
-                auth: apiDef.auth,
-                authSchemes: apiDef.authSchemes,
-                defaultUrl: apiDef.defaultUrl,
-                defaultEnvironment: apiDef.defaultEnvironment,
-                environments: apiDef.environments,
-                headers: apiDef.headers
-            };
-        }
-        return result;
+        const apiEntries = Object.entries(apis)
+            .filter(([apiName]) => !isNullish(sourcedApis[apiName]))
+            .map(([apiName, apiDef]) => ({ apiName, apiDef, sourcedApiDef: sourcedApis[apiName] }))
+            .filter(
+                (entry): entry is typeof entry & { sourcedApiDef: NonNullable<typeof entry.sourcedApiDef> } =>
+                    !isNullish(entry.sourcedApiDef)
+            );
+        const convertedEntries = await Promise.all(
+            apiEntries.map(async ({ apiName, apiDef, sourcedApiDef }) => {
+                const specs = await this.convertSpecs({
+                    absoluteFernYmlPath,
+                    specs: apiDef.specs,
+                    sourced: sourcedApiDef.specs
+                });
+                const definition: ApiDefinition = {
+                    specs,
+                    auth: apiDef.auth,
+                    authSchemes: apiDef.authSchemes,
+                    defaultUrl: apiDef.defaultUrl,
+                    defaultEnvironment: apiDef.defaultEnvironment,
+                    environments: apiDef.environments,
+                    headers: apiDef.headers
+                };
+                return [apiName, definition] as const;
+            })
+        );
+        return Object.fromEntries(convertedEntries);
     }
 
     private async convertSpecs({
@@ -188,16 +193,20 @@ export class ApiDefinitionConverter {
         // Validate spec combinations before conversion.
         this.validateSpecCombinations({ specs, sourced });
 
-        const results: ApiSpec[] = [];
+        const specEntries: { spec: schemas.ApiSpecSchema; sourced: Sourced<schemas.ApiSpecSchema> }[] = [];
         for (let i = 0; i < specs.length; i++) {
             const spec = specs[i];
             const sourcedSpec = sourced[i];
             if (spec == null || isNullish(sourcedSpec)) {
                 continue;
             }
-            results.push(await this.convertSpec({ absoluteFernYmlPath, spec, sourced: sourcedSpec }));
+            specEntries.push({ spec, sourced: sourcedSpec });
         }
-        return results;
+        return await Promise.all(
+            specEntries.map(({ spec, sourced: sourcedSpec }) =>
+                this.convertSpec({ absoluteFernYmlPath, spec, sourced: sourcedSpec })
+            )
+        );
     }
 
     private async convertSpec({

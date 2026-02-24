@@ -47,10 +47,10 @@ export class AutoVersioningService {
      *
      * @param diffContent The git diff content
      * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
-     * @return The previous version if found
-     * @throws AutoVersioningException if no previous version can be extracted from the diff
+     * @return The previous version if found, or undefined if all magic version occurrences are in new files
+     * @throws AutoVersioningException if the magic version is not found at all in the diff
      */
-    public extractPreviousVersion(diffContent: string, mappedMagicVersion: string): string {
+    public extractPreviousVersion(diffContent: string, mappedMagicVersion: string): string | undefined {
         const lines = diffContent.split("\n");
 
         let currentFile = "unknown";
@@ -89,10 +89,11 @@ export class AutoVersioningService {
         }
 
         if (magicVersionOccurrences > 0) {
-            throw new AutoVersioningException(
+            this.logger.info(
                 `Found placeholder version in the diff but no matching previous version lines were found in any hunk. ` +
-                    `This may indicate new files or a format change. occurrences=${magicVersionOccurrences}, pairsFound=0`
+                    `This indicates a new SDK repository with no previous version. occurrences=${magicVersionOccurrences}`
             );
+            return undefined;
         }
 
         throw new AutoVersioningException(

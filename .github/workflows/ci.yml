@@ -19,6 +19,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   TURBO_REMOTE_CACHE_TIMEOUT: 60
@@ -186,19 +187,29 @@ jobs:
       - name: Install protoc-gen-openapi
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
+      - name: Build CLI (dev)
+        timeout-minutes: 5
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
+
+      - name: Build seed CLI
+        timeout-minutes: 5
+        run: pnpm seed:build
+
       - name: Run ETE tests
         if: ${{ !github.event.inputs.update_snapshots }}
+        timeout-minutes: 10
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
-          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete
+          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm --filter @fern-api/ete-tests test
 
       - name: Run ETE tests with snapshot updates
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
+        timeout-minutes: 10
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
-          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete:update
+          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm --filter @fern-api/ete-tests test -- -u
 
       - name: Commit and push updated snapshots
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
