@@ -12,7 +12,6 @@ import { WithNamespace } from "../../commons/types/WithNamespace.js";
 import { WithSdkGroupName } from "../../commons/types/WithSdkGroupName.js";
 import { WithSource } from "../../commons/types/WithSource.js";
 import { WithTitle } from "../../commons/types/WithTitle.js";
-import { DiscriminatorContext } from "../../finalIr/types/DiscriminatorContext.js";
 
 export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchema<
     serializers.DiscriminatedOneOfSchemaWithExample.Raw,
@@ -21,7 +20,6 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
     .objectWithoutOptionalProperties({
         discriminantProperty: core.serialization.string(),
         discriminantPropertyNameOverride: core.serialization.string().optional(),
-        discriminatorContext: DiscriminatorContext.optional(),
         commonProperties: core.serialization.list(
             core.serialization.lazyObject(() => serializers.CommonPropertyWithExample),
         ),
@@ -53,7 +51,6 @@ export declare namespace DiscriminatedOneOfSchemaWithExample {
             WithInline.Raw {
         discriminantProperty: string;
         discriminantPropertyNameOverride?: string | null;
-        discriminatorContext?: DiscriminatorContext.Raw | null;
         commonProperties: serializers.CommonPropertyWithExample.Raw[];
         schemas: Record<string, serializers.SchemaWithExample.Raw>;
     }
