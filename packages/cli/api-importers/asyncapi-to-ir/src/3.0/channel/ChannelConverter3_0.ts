@@ -256,6 +256,11 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         if (!operation.channel.$ref.startsWith(CHANNEL_REFERENCE_PREFIX)) {
             throw new Error(`Failed to resolve channel path from operation ${operation.channel.$ref}`);
         }
-        return operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
+        const encoded = operation.channel.$ref.substring(CHANNEL_REFERENCE_PREFIX.length);
+        return this.decodeJsonPointer(encoded);
+    }
+
+    private decodeJsonPointer(encoded: string): string {
+        return encoded.replace(/~1/g, "/").replace(/~0/g, "~");
     }
 }

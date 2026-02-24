@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.3
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI V3 direct-to-IR converter failing to match operations to channels when
+        channel keys contain forward slashes. The `ChannelConverter3_0.getChannelPathFromOperation()`
+        method now decodes JSON Pointer escape sequences (`~1` to `/`, `~0` to `~`) per RFC 6901
+        when resolving operation `$ref` values to channel keys. This complements the earlier fix
+        in the OpenAPI-IR parser path (v3.70.2) by covering the OSS workspace / docs generation path.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.2
   changelogEntry:
     - summary: |
