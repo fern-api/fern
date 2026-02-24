@@ -453,8 +453,6 @@ export class ApiDefinitionConverter {
         sourced: Sourced<string> | Sourced<string[]>;
     }): Promise<AbsoluteFilePath | AbsoluteFilePath[]> {
         if (!Array.isArray(paths)) {
-            // When paths is a single string, sourced is Sourced<string> (SourcedString).
-            // TypeScript can't narrow sourced based on a check on paths.
             return await this.resolvePath({
                 absoluteFernYmlPath,
                 path: paths,
@@ -462,7 +460,6 @@ export class ApiDefinitionConverter {
             });
         }
         const resolved: AbsoluteFilePath[] = [];
-        // When paths is an array, sourced is Sourced<string[]> (SourcedArray<string>).
         const sourcedArray = sourced as Sourced<string[]>;
         for (let i = 0; i < paths.length; i++) {
             const path = paths[i];
