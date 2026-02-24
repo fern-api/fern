@@ -131,17 +131,8 @@ interface Uuid {
     value: string;
 }
 
-const POINTER_HELPER_TYPES = new Set<string>([
-    "bool",
-    "bytes",
-    "date",
-    "dateTime",
-    "float64",
-    "int",
-    "int64",
-    "string",
-    "uuid"
-]);
+const POINTER_HELPER_TYPES = new Set<string>(["bool", "bytes", "float64", "int", "int64", "string", "uuid"]);
+const DATE_TYPES = new Set<string>(["date", "dateTime"]);
 const ADDRESSABLE_TYPES = new Set<string>(["any", "map", "slice"]);
 
 export class TypeInstantiation extends AstNode {
@@ -482,6 +473,10 @@ export class TypeInstantiation extends AstNode {
             writer.writeNode(invokePointerHelper({ writer, type }));
             return;
         }
+        if (DATE_TYPES.has(type.internalType.type)) {
+            writer.writeNode(invokeDateConstructor({ writer, type: type.internalType as Date | DateTime }));
+            return;
+        }
         if (ADDRESSABLE_TYPES.has(type.internalType.type)) {
             type.write(writer);
             return;
@@ -572,9 +567,6 @@ function getPointerHelperFuncName({ type }: { type: TypeInstantiation }): string
             return "Bool";
         case "bytes":
             return "Bytes";
-        case "date":
-        case "dateTime":
-            return "Time";
         case "float64":
             return "Float64";
         case "int":
@@ -598,6 +590,24 @@ function invokeMustParseDate({ writer, type }: { writer: Writer; type: Date | Da
             importPath: writer.rootImportPath
         }),
         arguments_: [new CodeBlock(`"${type.value}"`)]
+    });
+}
+
+/**
+ * Wraps MustParseDate/MustParseDateTime in NewDate/NewDateTime to produce
+ * *internal.Date / *internal.DateTime instead of *time.Time.
+ *
+ * e.g. payabli.NewDate(payabli.MustParseDate("2025-07-01"))  → *Date
+ *      payabli.NewDateTime(payabli.MustParseDateTime("…"))    → *DateTime
+ */
+function invokeDateConstructor({ writer, type }: { writer: Writer; type: Date | DateTime }): FuncInvocation {
+    const constructorName = type.type === "date" ? "NewDate" : "NewDateTime";
+    return new FuncInvocation({
+        func: new GoTypeReference({
+            name: constructorName,
+            importPath: writer.rootImportPath
+        }),
+        arguments_: [invokeMustParseDate({ writer, type })]
     });
 }
 

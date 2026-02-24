@@ -871,15 +871,21 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.StructField[] {
         const args: go.StructField[] = [];
+        const values = snippet.pathParameters ?? {};
 
-        const pathParameters = this.context.associateByWireValue({
-            parameters: namedParameters,
-            values: snippet.pathParameters ?? {}
-        });
-        for (const parameter of pathParameters) {
+        // Iterate in parameter-definition order (not value-object order) so that
+        // positional path-parameter arguments are emitted in the correct order.
+        for (const param of namedParameters) {
+            const value = values[param.name.wireValue];
+            if (value === undefined) {
+                continue;
+            }
             args.push({
-                name: this.context.getTypeName(parameter.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible(parameter)
+                name: this.context.getTypeName(param.name.name),
+                value: this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible({
+                    typeReference: param.typeReference,
+                    value
+                })
             });
         }
 

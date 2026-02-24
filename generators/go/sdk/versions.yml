@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.25.0-rc3
+  changelogEntry:
+    - summary: |
+        Fix path parameter argument ordering in dynamic snippets and wire tests. Previously,
+        path parameters were emitted in the insertion order of the snippet values object rather
+        than the order defined by the endpoint's parameter definitions, causing positional arguments
+        to be swapped.
+      type: fix
+    - summary: |
+        Fix optional date and datetime fields in dynamic snippets and wire tests to use
+        NewDate(MustParseDate(...)) and NewDateTime(MustParseDateTime(...)) instead of
+        Time(MustParseDate(...)). The previous code generated *time.Time values, but the
+        Go SDK's Date and DateTime wrapper types require *internal.Date and *internal.DateTime.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
 - version: 1.25.0-rc2
   changelogEntry:
     - summary: |
