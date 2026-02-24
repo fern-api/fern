@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v65.3.0] - 2026-02-24
+- Feature: Add optional `connectMethodName` field to `WebSocketChannel` for custom WebSocket connection method naming.
+  Supports `x-fern-sdk-method-name` extension on AsyncAPI channels to customize the generated connection method name instead of using the default "connect".
+  This addresses confusing APIs where both the client wrapper creation and actual connection use "connect".
+
 ## [v65.2.1] - 2026-02-24
 - Feature: Add document-level `webhook-signature` configuration to Fern definition files.
   Allows specifying a default signature verification config that applies to all webhooks in a file,
