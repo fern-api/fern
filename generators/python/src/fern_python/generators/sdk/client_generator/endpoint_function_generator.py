@@ -1430,21 +1430,18 @@ class EndpointFunctionGenerator:
             container = value_type.container.get_as_union()
             if container.type in ("list", "set"):
                 return True
-            if container.type in ("optional", "nullable"):
-                inner = container.visit(
-                    list_=lambda _: None,
-                    set_=lambda _: None,
-                    optional=lambda t: t,
-                    nullable=lambda t: t,
-                    map_=lambda _: None,
-                    literal=lambda _: None,
-                )
-                if inner is not None:
-                    inner_union = inner.get_as_union()
-                    if inner_union.type == "container":
-                        inner_container = inner_union.container.get_as_union()
-                        if inner_container.type in ("list", "set"):
-                            return True
+            if container.type == "optional":
+                inner_union = container.optional.get_as_union()
+                if inner_union.type == "container":
+                    inner_container = inner_union.container.get_as_union()
+                    if inner_container.type in ("list", "set"):
+                        return True
+            if container.type == "nullable":
+                inner_union = container.nullable.get_as_union()
+                if inner_union.type == "container":
+                    inner_container = inner_union.container.get_as_union()
+                    if inner_container.type in ("list", "set"):
+                        return True
         return False
 
     def _wrap_with_comma_join(
