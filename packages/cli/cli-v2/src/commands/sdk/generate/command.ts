@@ -23,6 +23,7 @@ import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { WorkspaceBuilder } from "../../../workspace/WorkspaceBuilder.js";
 import { command } from "../../_internal/command.js";
+import { isGitUrl } from "../utils/gitUrl.js";
 
 export declare namespace GenerateCommand {
     export interface Args extends GlobalArgs {
@@ -540,12 +541,7 @@ export class GenerateCommand {
     }
 
     private isGitUrl(value: string): boolean {
-        return (
-            value.endsWith(".git") ||
-            value.startsWith("https://github.com/") ||
-            value.startsWith("https://gitlab.com/") ||
-            value.startsWith("git@")
-        );
+        return isGitUrl(value);
     }
 
     private maybePluralSdks(targets: Target[]): string {

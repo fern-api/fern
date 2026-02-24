@@ -1,35 +1,28 @@
 import { schemas } from "@fern-api/config";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import inquirer from "inquirer";
-import yaml from "js-yaml";
 import type { Argv } from "yargs";
+import { type Document, parseDocument } from "yaml";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
-import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
+import {
+    LANGUAGES,
+    LANGUAGE_DISPLAY_NAMES,
+    LANGUAGE_ORDER,
+    type Language
+} from "../../../sdk/config/Language.js";
 import { LANGUAGE_TO_DOCKER_IMAGE } from "../../../sdk/config/converter/constants.js";
 import { Icons } from "../../../ui/format.js";
 import { Version } from "../../../version.js";
 import { command } from "../../_internal/command.js";
+import { isGitUrl, looksLikeRemoteReference } from "../utils/gitUrl.js";
 
 const FERN_YML_FILENAME = "fern.yml";
-
-const LANGUAGE_DISPLAY_NAMES: Record<Language, string> = {
-    typescript: "TypeScript",
-    python: "Python",
-    go: "Go",
-    java: "Java",
-    csharp: "C#",
-    ruby: "Ruby",
-    php: "PHP",
-    rust: "Rust",
-    swift: "Swift"
-};
-
-const LANGUAGE_ORDER: Language[] = ["typescript", "python", "go", "java", "csharp", "ruby", "php", "rust", "swift"];
+const REF_KEY = "$ref";
 
 export declare namespace AddCommand {
     export interface Args extends GlobalArgs {
@@ -41,6 +34,9 @@ export declare namespace AddCommand {
 
         /** Output path or git URL */
         output?: string;
+
+        /** The group to add the target to */
+        group?: string;
 
         /** Accept all defaults (non-interactive mode) */
         yes: boolean;
@@ -62,10 +58,12 @@ export class AddCommand {
         const version = args.stable ? await this.resolveStableVersion(context, language) : undefined;
 
         await this.addTargetToFernYml({
+            context,
             fernYmlPath,
             language,
             output,
-            version
+            version,
+            group: args.group
         });
 
         context.stderr.info(`\n  ${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
@@ -76,25 +74,20 @@ export class AddCommand {
             return this.parseLanguage(args.target);
         }
 
+        if (args.yes) {
+            throw new CliError({
+                message:
+                    `The --target flag is required. Specify the SDK language to add:\n\n` +
+                    `  --target <language>    SDK language (e.g. typescript, python, go)`
+            });
+        }
+
         if (!context.isTTY) {
-            if (args.yes) {
-                throw new CliError({
-                    message: `The --target flag is required. Specify the SDK language to add:\n\n` +
-                        `  --target <language>    SDK language (e.g. typescript, python, go)`
-                });
-            }
             throw new CliError({
                 message:
                     `Please use the \`-y\` flag to accept all default inputs or specify all of the required flags:\n\n` +
                     `  --target <language>    SDK language (e.g. typescript, python, go)\n` +
                     `  --output <path|url>    Output path or git URL (e.g. ./my-sdk)`
-            });
-        }
-
-        if (args.yes) {
-            throw new CliError({
-                message: `The --target flag is required. Specify the SDK language to add:\n\n` +
-                    `  --target <language>    SDK language (e.g. typescript, python, go)`
             });
         }
 
@@ -156,7 +149,7 @@ export class AddCommand {
     }
 
     private parseOutput(value: string): schemas.OutputSchema {
-        if (this.isGitUrl(value)) {
+        if (isGitUrl(value)) {
             return {
                 git: {
                     repository: value
@@ -164,8 +157,7 @@ export class AddCommand {
             };
         }
 
-        // Check for remote-looking references that aren't recognized git URLs
-        if (this.looksLikeRemoteReference(value)) {
+        if (looksLikeRemoteReference(value)) {
             throw new CliError({
                 message:
                     `"${value}" looks like a remote reference but is not a recognized git URL.\n\n` +
@@ -196,77 +188,162 @@ export class AddCommand {
         }
     }
 
+    /**
+     * Adds a new SDK target to the fern.yml (or the file that actually
+     * contains the `targets` key, if the `sdks` section uses a `$ref`).
+     *
+     * Uses the `yaml` library's Document API so that in-line comments and
+     * formatting in the original file are preserved.
+     */
     private async addTargetToFernYml({
+        context,
         fernYmlPath,
         language,
         output,
-        version
+        version,
+        group
     }: {
+        context: Context;
         fernYmlPath: AbsoluteFilePath;
         language: Language;
         output: schemas.OutputSchema;
         version: string | undefined;
+        group: string | undefined;
     }): Promise<void> {
-        const content = await readFile(fernYmlPath, "utf-8");
-        const doc = yaml.load(content) as Record<string, unknown>;
+        const { filePath, document } = await this.resolveTargetsFile(fernYmlPath);
 
-        if (doc == null || typeof doc !== "object") {
-            throw new CliError({ message: `Invalid ${FERN_YML_FILENAME}: expected a YAML object` });
+        const doc = document.toJS() as Record<string, unknown>;
+
+        // Find the targets map. If we followed a $ref from `sdks`, the resolved
+        // file's root IS the sdks object; otherwise it's `doc.sdks.targets`.
+        const isRefTarget = filePath !== fernYmlPath;
+
+        // Determine the YAML path to the targets map inside the document.
+        const targetsPath = this.resolveTargetsPath(document, isRefTarget);
+
+        // Read the current targets to check for duplicates.
+        const existingTargets = document.getIn(targetsPath) as Record<string, unknown> | undefined;
+        if (existingTargets != null && typeof existingTargets === "object") {
+            const targetsJs = document.getIn(targetsPath, false) as Record<string, unknown> | undefined;
+            if (targetsJs != null && language in targetsJs) {
+                throw new CliError({
+                    message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`
+                });
+            }
         }
 
-        // Ensure sdks section exists
-        if (doc.sdks == null) {
-            doc.sdks = { targets: {} };
-        }
-
-        const sdks = doc.sdks as Record<string, unknown>;
-        if (sdks.targets == null) {
-            sdks.targets = {};
-        }
-
-        const targets = sdks.targets as Record<string, unknown>;
-
-        // Check for duplicates
-        if (targets[language] != null) {
-            throw new CliError({
-                message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`
-            });
-        }
-
-        // Build the new target
+        // Build the new target node.
         const newTarget: Record<string, unknown> = {};
         if (version != null) {
             newTarget.version = version;
         }
         newTarget.output = this.buildOutputForYaml(output);
+        if (group != null) {
+            newTarget.group = [group];
+        }
 
-        targets[language] = newTarget;
+        // Ensure the parent path exists in the document.
+        this.ensureMapPath(document, targetsPath);
 
-        // Preserve the schema comment if present
-        const schemaComment = content.split("\n").find((line) => line.startsWith("#"));
-        const yamlContent = yaml.dump(doc, {
-            indent: 2,
-            lineWidth: 120,
-            noRefs: true,
-            sortKeys: false,
-            quotingType: '"',
-            forceQuotes: false
-        });
+        // Add the new target using the Document API (preserves comments).
+        document.setIn([...targetsPath, language], document.createNode(newTarget));
 
-        const finalContent = schemaComment != null ? `${schemaComment}\n${yamlContent}` : yamlContent;
-        await writeFile(fernYmlPath, finalContent, "utf-8");
+        await writeFile(filePath, document.toString(), "utf-8");
+
+        if (isRefTarget) {
+            const relative = filePath.replace(dirname(fernYmlPath), ".");
+            context.stderr.info(chalk.dim(`  Updated ${relative}`));
+        }
+    }
+
+    /**
+     * Resolves the file that actually contains the `targets` key.
+     *
+     * If the `sdks` value in fern.yml is a `$ref`, we follow it and return
+     * the referenced file's Document instead.
+     */
+    private async resolveTargetsFile(
+        fernYmlPath: AbsoluteFilePath
+    ): Promise<{ filePath: AbsoluteFilePath; document: Document }> {
+        const content = await readFile(fernYmlPath, "utf-8");
+        const document = parseDocument(content);
+        const doc = document.toJS() as Record<string, unknown>;
+
+        if (doc == null || typeof doc !== "object") {
+            throw new CliError({ message: `Invalid ${FERN_YML_FILENAME}: expected a YAML object` });
+        }
+
+        // Check if sdks uses a $ref.
+        const sdksValue = doc.sdks;
+        if (sdksValue != null && typeof sdksValue === "object" && REF_KEY in sdksValue) {
+            const refPath = (sdksValue as Record<string, unknown>)[REF_KEY];
+            if (typeof refPath === "string") {
+                const resolvedPath = join(dirname(fernYmlPath), RelativeFilePath.of(refPath));
+                if (await doesPathExist(resolvedPath)) {
+                    const refContent = await readFile(resolvedPath, "utf-8");
+                    const refDocument = parseDocument(refContent);
+                    return { filePath: resolvedPath, document: refDocument };
+                }
+            }
+        }
+
+        return { filePath: fernYmlPath, document };
+    }
+
+    /**
+     * Determines the YAML path to the targets map within a document.
+     *
+     * If we resolved a `$ref`, the referenced file's root is the sdks config
+     * so `targets` is at the root level. Otherwise `targets` is nested under
+     * `sdks`.
+     */
+    private resolveTargetsPath(document: Document, isRefTarget: boolean): (string | number)[] {
+        if (isRefTarget) {
+            const root = document.toJS();
+            if (root != null && typeof root === "object" && "targets" in root) {
+                return ["targets"];
+            }
+            return [];
+        }
+        return ["sdks", "targets"];
+    }
+
+    /**
+     * Ensures that the map path exists in the document, creating intermediate
+     * maps as needed.
+     */
+    private ensureMapPath(document: Document, path: (string | number)[]): void {
+        for (let i = 1; i <= path.length; i++) {
+            const subPath = path.slice(0, i);
+            const existing = document.getIn(subPath);
+            if (existing == null) {
+                document.setIn(subPath, document.createNode({}));
+            }
+        }
     }
 
     private buildOutputForYaml(output: schemas.OutputSchema): Record<string, unknown> {
         if (output.git != null) {
             const git = output.git;
-            const gitConfig: Record<string, unknown> = {
-                repository: git.repository
-            };
-            if (git.mode != null) {
-                gitConfig.mode = git.mode;
+            if (schemas.isGitOutputGitHubRepository(git)) {
+                const gitConfig: Record<string, unknown> = {
+                    repository: git.repository
+                };
+                if (git.mode != null) {
+                    gitConfig.mode = git.mode;
+                }
+                return { git: gitConfig };
             }
-            return { git: gitConfig };
+            if (schemas.isGitOutputSelfHosted(git)) {
+                const gitConfig: Record<string, unknown> = {
+                    uri: git.uri,
+                    token: git.token
+                };
+                if (git.mode != null) {
+                    gitConfig.mode = git.mode;
+                }
+                return { git: gitConfig };
+            }
         }
         return { path: output.path };
     }
@@ -279,24 +356,6 @@ export class AddCommand {
         throw new CliError({
             message: `"${target}" is not a supported language. Supported: ${LANGUAGES.join(", ")}`
         });
-    }
-
-    private isGitUrl(value: string): boolean {
-        return (
-            value.endsWith(".git") ||
-            value.startsWith("https://github.com/") ||
-            value.startsWith("https://gitlab.com/") ||
-            value.startsWith("git@")
-        );
-    }
-
-    private looksLikeRemoteReference(value: string): boolean {
-        return (
-            value.startsWith("http://") ||
-            value.startsWith("https://") ||
-            value.startsWith("ssh://") ||
-            value.includes("@") && value.includes(":")
-        );
     }
 }
 
@@ -321,6 +380,10 @@ export function addAddCommand(cli: Argv<GlobalArgs>): void {
                 .option("output", {
                     type: "string",
                     description: "Output path or git URL (e.g. ./sdks/go)"
+                })
+                .option("group", {
+                    type: "string",
+                    description: "Add the target to a specific group"
                 })
                 .option("yes", {
                     type: "boolean",

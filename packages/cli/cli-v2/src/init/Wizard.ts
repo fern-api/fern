@@ -15,23 +15,9 @@ import path from "path";
 import type { FernYmlBuilder } from "../config/fern-yml/FernYmlBuilder";
 import { TaskContextAdapter } from "../context/adapter/TaskContextAdapter";
 import type { Context } from "../context/Context";
-import type { Language } from "../sdk/config/Language";
+import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, type Language } from "../sdk/config/Language";
 import { Icons } from "../ui/format";
 import { withSpinner } from "../ui/withSpinner";
-
-const LANGUAGE_DISPLAY_NAMES: Record<Language, string> = {
-    typescript: "TypeScript",
-    python: "Python",
-    go: "Go",
-    java: "Java",
-    csharp: "C#",
-    ruby: "Ruby",
-    php: "PHP",
-    rust: "Rust",
-    swift: "Swift"
-};
-
-const LANGUAGE_ORDER: Language[] = ["typescript", "python", "go", "java", "csharp", "ruby", "php", "rust", "swift"];
 
 const FERN_BANNER = [
     "███████╗███████╗██████╗ ███╗   ██╗",
