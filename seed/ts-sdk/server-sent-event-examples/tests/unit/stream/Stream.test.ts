@@ -330,6 +330,22 @@ describe("Stream", () => {
                 { type: "completion", content: "world" },
             ]);
         });
+
+        it("should inject empty string discriminator when event field is present but empty", async () => {
+            const mockStream = createReadableStream(['event: \ndata: {"content": "hello"}\n\n']);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "", content: "hello" }]);
+        });
     });
 
     describe("encoding and decoding", () => {

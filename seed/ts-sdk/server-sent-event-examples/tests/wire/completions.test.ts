@@ -9,7 +9,7 @@ describe("CompletionsClient", () => {
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "foo" };
         const rawResponseBody =
-            'event: discriminant-1\ndata: {"delta":"foo","tokens":1}\n\nevent: discriminant-2\ndata: {"delta":"bar","tokens":2}\n\n';
+            'event: completion\ndata: {"delta":"foo","tokens":1}\n\nevent: completion\ndata: {"delta":"bar","tokens":2}\n\n';
         server
             .mockEndpoint()
             .post("/stream")
@@ -33,7 +33,7 @@ describe("CompletionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "query" };
-        const rawResponseBody = 'event: \ndata: {"event":"completion","content":"content"}\n\n';
+        const rawResponseBody = 'event: completion\ndata: {"content":"content"}\n\n';
         server
             .mockEndpoint()
             .post("/stream-events")

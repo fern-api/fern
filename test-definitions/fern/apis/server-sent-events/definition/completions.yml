@@ -46,3 +46,13 @@ service:
       response-stream:
         type: StreamedCompletion
         format: sse
+      examples:
+        - name: "Stream without terminator"
+          request:
+            query: "query"
+          response:
+            stream:
+              - event: completion
+                data:
+                  delta: "delta"
+                  tokens: 1

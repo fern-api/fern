@@ -33,7 +33,7 @@ describe("CompletionsClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedServerSentEventsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "query" };
-        const rawResponseBody = 'event: \ndata: {"delta":"delta","tokens":1}\n\n';
+        const rawResponseBody = 'event: completion\ndata: {"delta":"delta","tokens":1}\n\n';
         server
             .mockEndpoint()
             .post("/stream-no-terminator")
