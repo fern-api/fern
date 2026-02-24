@@ -44,7 +44,7 @@ export class AddCommand {
         const fernYmlPath = workspace.absoluteFilePath;
         if (fernYmlPath == null) {
             throw new CliError({
-                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' first to initialize a project.`
+                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
             });
         }
 
@@ -64,7 +64,13 @@ export class AddCommand {
         args: AddCommand.Args;
         fernYmlPath: AbsoluteFilePath;
     }): Promise<void> {
-        const language = this.parseLanguage(args.target as string);
+        if (args.target == null) {
+            throw new CliError({
+                message: `Missing required flags:\n\n  --target <language>    SDK language (e.g. typescript, python, go)`
+            });
+        }
+
+        const language = this.parseLanguage(args.target);
         const output = args.output != null ? this.parseOutput(args.output) : { path: `./sdks/${language}` };
         const version = args.stable ? await this.resolveStableVersion({ context, language }) : undefined;
 
@@ -77,7 +83,7 @@ export class AddCommand {
             group: args.group
         });
 
-        context.stderr.info(`\n  ${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
+        context.stderr.info(`${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
     }
 
     private async handleInteractive({
@@ -90,6 +96,9 @@ export class AddCommand {
         fernYmlPath: AbsoluteFilePath;
     }): Promise<void> {
         const language = args.target != null ? this.parseLanguage(args.target) : await this.promptLanguage();
+
+        await this.checkForDuplicate({ fernYmlPath, language });
+
         const output = args.output != null ? this.parseOutput(args.output) : await this.promptOutput(language);
         const version = args.stable ? await this.resolveStableVersion({ context, language }) : undefined;
 
@@ -102,7 +111,7 @@ export class AddCommand {
             group: args.group
         });
 
-        context.stderr.info(`\n  ${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
+        context.stderr.info(`${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
     }
 
     private async promptLanguage(): Promise<Language> {
@@ -184,6 +193,22 @@ export class AddCommand {
         }
     }
 
+    private async checkForDuplicate({
+        fernYmlPath,
+        language
+    }: {
+        fernYmlPath: AbsoluteFilePath;
+        language: Language;
+    }): Promise<void> {
+        const { targetsFilePath, document } = await this.resolveTargetsFile(fernYmlPath);
+        const targetsPath = this.resolveTargetsPath({ document, isRefTarget: targetsFilePath !== fernYmlPath });
+        if (document.hasIn([...targetsPath, language])) {
+            throw new CliError({
+                message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`
+            });
+        }
+    }
+
     /**
      * Adds a new SDK target to the fern.yml (or the file that actually
      * contains the `targets` key, if the `sdks` section uses a `$ref`).
@@ -209,7 +234,7 @@ export class AddCommand {
         const { targetsFilePath, document } = await this.resolveTargetsFile(fernYmlPath);
 
         // Find the targets map. If we followed a $ref from `sdks`, the resolved
-        // file's root IS the sdks object; otherwise it's `doc.sdks.targets`.
+        // file's root IS the sdks object; otherwise it's `.sdks.targets`.
         const isRefTarget = targetsFilePath !== fernYmlPath;
 
         const targetsPath = this.resolveTargetsPath({ document, isRefTarget });

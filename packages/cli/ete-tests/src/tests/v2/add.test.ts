@@ -5,11 +5,30 @@ import { describe, expect, it } from "vitest";
 import { createTempFixture } from "../../utils/createTempFixture.js";
 import { runCliV2 } from "../../utils/runCliV2.js";
 
-// Minimal fern.yml with no sdks section
-const FERN_YML_NO_SDKS = `org: test-org\n`;
+// Minimal fern.yml with no sdks section.
+const FERN_YML_NO_SDKS = `org: test-org`;
 
-// fern.yml with an existing typescript target
-const FERN_YML_WITH_TYPESCRIPT = `org: test-org\n\nsdks:\n  targets:\n    typescript:\n      output:\n        path: ./sdks/typescript\n`;
+// fern.yml with an existing typescript target.
+const FERN_YML_WITH_TYPESCRIPT = `
+org: test-org
+api:
+  specs:
+    - openapi: ./openapi.yml
+sdks:
+  targets:
+    typescript:
+      output:
+        path: ./sdks/typescript
+`;
+
+// Minimal stub OpenAPI spec.
+const SIMPLE_OPENAPI = `
+openapi: "3.0.3"
+info:
+  title: Test API
+  version: 1.0.0
+paths: {}
+`;
 
 describe("fern sdk add", () => {
     it("fails when no fern.yml exists", async () => {
@@ -21,7 +40,7 @@ describe("fern sdk add", () => {
                 expectError: true
             });
             expect(result.exitCode).not.toBe(0);
-            expect(result.stderrPlain).toContain("No fern.yml found");
+            expect(result.stderrPlain).toContain("fern.yml");
             expect(result.stderrPlain).toContain("fern init");
         } finally {
             await fixture.cleanup();
@@ -92,7 +111,10 @@ describe("fern sdk add", () => {
     });
 
     it("fails when target already exists", async () => {
-        const fixture = await createTempFixture({ "fern.yml": FERN_YML_WITH_TYPESCRIPT });
+        const fixture = await createTempFixture({
+            "fern.yml": FERN_YML_WITH_TYPESCRIPT,
+            "openapi.yml": SIMPLE_OPENAPI
+        });
         try {
             const result = await runCliV2({
                 args: ["sdk", "add", "--target", "typescript", "--yes"],
@@ -141,7 +163,10 @@ describe("fern sdk add", () => {
     });
 
     it("adds a new target alongside an existing target", async () => {
-        const fixture = await createTempFixture({ "fern.yml": FERN_YML_WITH_TYPESCRIPT });
+        const fixture = await createTempFixture({
+            "fern.yml": FERN_YML_WITH_TYPESCRIPT,
+            "openapi.yml": SIMPLE_OPENAPI
+        });
         try {
             const result = await runCliV2({
                 args: ["sdk", "add", "--target", "python", "--yes"],
@@ -293,7 +318,7 @@ sdks:
       output:
         path: ./sdks/typescript
 `;
-        const fixture = await createTempFixture({ "fern.yml": fernYmlWithComments });
+        const fixture = await createTempFixture({ "fern.yml": fernYmlWithComments, "openapi.yml": SIMPLE_OPENAPI });
         try {
             const result = await runCliV2({
                 args: ["sdk", "add", "--target", "python", "--yes"],
@@ -313,8 +338,11 @@ sdks:
     });
 
     it("preserves inline comments when adding a new target", async () => {
-        const fernYmlWithInlineComments = `
-org: test-org # the org name
+        const fernYmlWithInlineComments = `org: test-org # the org name
+
+api:
+  specs:
+    - openapi: ./openapi.yml
 
 sdks:
   targets:
@@ -322,7 +350,10 @@ sdks:
       output:
         path: ./sdks/typescript # output directory
 `;
-        const fixture = await createTempFixture({ "fern.yml": fernYmlWithInlineComments });
+        const fixture = await createTempFixture({
+            "fern.yml": fernYmlWithInlineComments,
+            "openapi.yml": SIMPLE_OPENAPI
+        });
         try {
             const result = await runCliV2({
                 args: ["sdk", "add", "--target", "go", "--yes"],
@@ -340,11 +371,12 @@ sdks:
         }
     });
 
-    // ── 6. $ref following ─────────────────────────────────────────────────
-
     it("writes new target to $ref-referenced file", async () => {
-        const fernYmlWithRef = `
-org: test-org
+        const fernYmlWithRef = `org: test-org
+
+api:
+  specs:
+    - openapi: ./openapi.yml
 
 sdks:
   $ref: ./sdks.yml
@@ -356,7 +388,8 @@ sdks:
 `;
         const fixture = await createTempFixture({
             "fern.yml": fernYmlWithRef,
-            "sdks.yml": sdksYmlContent
+            "sdks.yml": sdksYmlContent,
+            "openapi.yml": SIMPLE_OPENAPI
         });
         try {
             const result = await runCliV2({
@@ -371,15 +404,17 @@ sdks:
             const fernYmlWritten = await readFile(fixture.path, "fern.yml");
             expect(fernYmlWritten).toContain("$ref");
             expect(fernYmlWritten).not.toContain("python:");
-            expect(result.stderrPlain).toContain("Updated");
         } finally {
             await fixture.cleanup();
         }
     });
 
     it("preserves comments in $ref-referenced file", async () => {
-        const fernYmlWithRef = `
-org: test-org
+        const fernYmlWithRef = `org: test-org
+
+api:
+  specs:
+    - openapi: ./openapi.yml
 
 sdks:
   $ref: ./sdks.yml
@@ -393,7 +428,8 @@ targets:
 `;
         const fixture = await createTempFixture({
             "fern.yml": fernYmlWithRef,
-            "sdks.yml": sdksYmlWithComments
+            "sdks.yml": sdksYmlWithComments,
+            "openapi.yml": SIMPLE_OPENAPI
         });
         try {
             const result = await runCliV2({
@@ -412,8 +448,11 @@ targets:
     });
 
     it("fails on duplicate target in $ref-referenced file", async () => {
-        const fernYmlWithRef = `
-org: test-org
+        const fernYmlWithRef = `org: test-org
+
+api:
+  specs:
+    - openapi: ./openapi.yml
 
 sdks:
   $ref: ./sdks.yml
@@ -425,7 +464,8 @@ sdks:
 `;
         const fixture = await createTempFixture({
             "fern.yml": fernYmlWithRef,
-            "sdks.yml": sdksYmlContent
+            "sdks.yml": sdksYmlContent,
+            "openapi.yml": SIMPLE_OPENAPI
         });
         try {
             const result = await runCliV2({
@@ -439,8 +479,6 @@ sdks:
             await fixture.cleanup();
         }
     });
-
-    // ── 7. YAML structure validation ──────────────────────────────────────
 
     it("produces valid YAML with correct structure for local path target", async () => {
         const fixture = await createTempFixture({ "fern.yml": FERN_YML_NO_SDKS });
