@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.25.0-rc3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet and wire test generation for endpoints with bytes body and path
+        parameters. Previously, the generator produced `nil` for the `io.Reader` body argument
+        instead of a valid `bytes.NewReader([]byte(...))` call, causing wire test failures.
+        Also fixed the nop request branch to include option arguments (e.g. test ID headers)
+        in the method invocation, fixed path parameter resolution to use
+        associateByWireValueOrDefault so missing path parameter values are synthesized, and
+        fixed WireMock stub response generation to return an empty JSON object `{}` instead
+        of a JSON string `""` when the example response body is null but the endpoint declares
+        a named (struct) response type.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
 - version: 1.25.0-rc2
   changelogEntry:
     - summary: |
