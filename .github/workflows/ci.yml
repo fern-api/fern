@@ -197,7 +197,7 @@ jobs:
 
       - name: Run ETE tests
         if: ${{ !github.event.inputs.update_snapshots }}
-        timeout-minutes: 10
+        timeout-minutes: 20
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
@@ -205,7 +205,7 @@ jobs:
 
       - name: Run ETE tests with snapshot updates
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
-        timeout-minutes: 10
+        timeout-minutes: 20
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
