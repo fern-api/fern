@@ -945,10 +945,6 @@ importers:
         version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
 
   generators/csharp/base:
-    dependencies:
-      eta:
-        specifier: ^4.5.1
-        version: 4.5.1
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
@@ -977,6 +973,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      eta:
+        specifier: ^4.5.1
+        version: 4.5.1
       lodash-es:
         specifier: 'catalog:'
         version: 4.17.23
