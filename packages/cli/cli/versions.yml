@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.2
+  changelogEntry:
+    - summary: |
+        Regenerate internal SDKs with the latest TypeScript SDK generator to pick up improvements and fixes.
+      type: chore
+  createdAt: "2026-02-23"
+  irVersion: 65
 - version: 3.85.1
   changelogEntry:
     - summary: |
@@ -17,7 +24,7 @@
         (the Docker Hub org), the CLI now automatically corrects it and prints a warning.
         This applies to CLI commands (`--generator` flag) and `generators.yml` configuration files.
       type: feat
-  createdAt: "2026-02-24"
+  createdAt: "2026-02-23"
   irVersion: 65
 - version: 3.84.0
   changelogEntry:

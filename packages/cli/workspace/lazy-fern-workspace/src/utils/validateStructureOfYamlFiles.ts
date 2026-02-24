@@ -21,15 +21,25 @@ function asJsonSchema(schema: Record<string, unknown>): Parameters<typeof valida
 }
 
 /**
+ * A cached parse result that tracks whether JSON schema validation was performed.
+ * Entries cached via skipValidation are only returned to callers that also skip
+ * validation, ensuring that callers requesting full validation always get it.
+ */
+interface CachedEntry<T> {
+    value: T;
+    validated: boolean;
+}
+
+/**
  * Module-level caches for validated/parsed file contents.
  * Keyed on the raw YAML string (file contents), these caches avoid redundant
  * JSON schema validation and schema parseOrThrow calls when the same file
  * is processed by multiple workspace instances (e.g., multiple generators
  * in a group, or multiple test runs against the same fixtures).
  */
-const rootApiParsedCache = new Map<string, RootApiFileSchema>();
-const definitionParsedCache = new Map<string, DefinitionFileSchema>();
-const packageMarkerParsedCache = new Map<string, PackageMarkerFileSchema>();
+const rootApiParsedCache = new Map<string, CachedEntry<RootApiFileSchema>>();
+const definitionParsedCache = new Map<string, CachedEntry<DefinitionFileSchema>>();
+const packageMarkerParsedCache = new Map<string, CachedEntry<PackageMarkerFileSchema>>();
 
 export declare namespace validateStructureOfYamlFiles {
     export type Return = SuccessfulResult | FailedResult;
@@ -85,18 +95,19 @@ export function validateStructureOfYamlFiles({
         };
 
         if (relativeFilepath === ROOT_API_FILENAME) {
-            // Check cache first
+            // Check cache: only use a cached entry if it was fully validated,
+            // or if the caller is skipping validation anyway.
             const cached = rootApiParsedCache.get(file.rawContents);
-            if (cached != null) {
+            if (cached != null && (cached.validated || skipValidation)) {
                 rootApiFile = {
-                    defaultUrl: cached["default-url"],
-                    contents: cached,
+                    defaultUrl: cached.value["default-url"],
+                    contents: cached.value,
                     rawContents: file.rawContents
                 };
             } else if (skipValidation) {
                 // Skip JSON schema validation, just run parseOrThrow
                 const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents);
-                rootApiParsedCache.set(file.rawContents, contents);
+                rootApiParsedCache.set(file.rawContents, { value: contents, validated: false });
                 rootApiFile = {
                     defaultUrl: contents["default-url"],
                     contents,
@@ -106,7 +117,7 @@ export function validateStructureOfYamlFiles({
                 const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(RootApiFileJsonSchema));
                 if (result.success) {
                     const contents = RawSchemas.serialization.RootApiFileSchema.parseOrThrow(parsedFileContents);
-                    rootApiParsedCache.set(file.rawContents, contents);
+                    rootApiParsedCache.set(file.rawContents, { value: contents, validated: true });
                     rootApiFile = {
                         defaultUrl: contents["default-url"],
                         contents,
@@ -117,17 +128,18 @@ export function validateStructureOfYamlFiles({
                 }
             }
         } else if (path.basename(relativeFilepath) === FERN_PACKAGE_MARKER_FILENAME) {
-            // Check cache first
+            // Check cache: only use a cached entry if it was fully validated,
+            // or if the caller is skipping validation anyway.
             const cached = packageMarkerParsedCache.get(file.rawContents);
-            if (cached != null) {
+            if (cached != null && (cached.validated || skipValidation)) {
                 packageMarkers[relativeFilepath] = {
-                    defaultUrl: typeof cached.export === "object" ? cached.export.url : undefined,
-                    contents: cached,
+                    defaultUrl: typeof cached.value.export === "object" ? cached.value.export.url : undefined,
+                    contents: cached.value,
                     rawContents: file.rawContents
                 };
             } else if (skipValidation) {
                 const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
-                packageMarkerParsedCache.set(file.rawContents, contents);
+                packageMarkerParsedCache.set(file.rawContents, { value: contents, validated: false });
                 packageMarkers[relativeFilepath] = {
                     defaultUrl: typeof contents.export === "object" ? contents.export.url : undefined,
                     contents,
@@ -137,7 +149,7 @@ export function validateStructureOfYamlFiles({
                 const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(PackageMarkerFileJsonSchema));
                 if (result.success) {
                     const contents = RawSchemas.serialization.PackageMarkerFileSchema.parseOrThrow(parsedFileContents);
-                    packageMarkerParsedCache.set(file.rawContents, contents);
+                    packageMarkerParsedCache.set(file.rawContents, { value: contents, validated: true });
                     packageMarkers[relativeFilepath] = {
                         defaultUrl: typeof contents.export === "object" ? contents.export.url : undefined,
                         contents,
@@ -148,18 +160,19 @@ export function validateStructureOfYamlFiles({
                 }
             }
         } else {
-            // Check cache first
+            // Check cache: only use a cached entry if it was fully validated,
+            // or if the caller is skipping validation anyway.
             const cached = definitionParsedCache.get(file.rawContents);
-            if (cached != null) {
+            if (cached != null && (cached.validated || skipValidation)) {
                 namesDefinitionFiles[relativeFilepath] = {
                     defaultUrl: undefined,
-                    contents: cached,
+                    contents: cached.value,
                     rawContents: file.rawContents,
                     absoluteFilePath: join(absolutePathToDefinition, relativeFilepath)
                 };
             } else if (skipValidation) {
                 const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
-                definitionParsedCache.set(file.rawContents, contents);
+                definitionParsedCache.set(file.rawContents, { value: contents, validated: false });
                 namesDefinitionFiles[relativeFilepath] = {
                     defaultUrl: undefined,
                     contents,
@@ -170,7 +183,7 @@ export function validateStructureOfYamlFiles({
                 const result = validateAgainstJsonSchema(parsedFileContents, asJsonSchema(DefinitionFileJsonSchema));
                 if (result.success) {
                     const contents = RawSchemas.serialization.DefinitionFileSchema.parseOrThrow(parsedFileContents);
-                    definitionParsedCache.set(file.rawContents, contents);
+                    definitionParsedCache.set(file.rawContents, { value: contents, validated: true });
                     namesDefinitionFiles[relativeFilepath] = {
                         defaultUrl: undefined,
                         contents,

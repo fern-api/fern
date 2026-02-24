@@ -16,6 +16,9 @@ concurrency:
   group: seed-pr-comment-${{ github.event.pull_request.number || github.event.issue.number }}
   cancel-in-progress: true
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   post-seed-selector:
     name: Post Seed Selector Comment
