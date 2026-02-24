@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.4
+  changelogEntry:
+    - summary: |
+        Report broken AsyncAPI V3 message references as visible warnings instead
+        of silently dropping entire specs. When an operation references a
+        non-existent channel or message (e.g. `$ref: "#/channels/auth/messages/authenticate"`
+        when no `auth` channel exists), the parser now logs a warning with the
+        specific broken `$ref` and continues processing the remaining valid
+        messages and channels.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.3
   changelogEntry:
     - summary: |
