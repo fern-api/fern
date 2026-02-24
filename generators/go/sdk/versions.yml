@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.25.0-rc3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet and wire test generation for endpoints with bytes body and path
+        parameters. Previously, the generator produced `nil` for the `io.Reader` body argument
+        instead of a valid `bytes.NewReader([]byte(...))` call, causing wire test failures.
+        Also fixed the nop request branch to include option arguments (e.g. test ID headers)
+        in the method invocation.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
 - version: 1.25.0-rc2
   changelogEntry:
     - summary: |
