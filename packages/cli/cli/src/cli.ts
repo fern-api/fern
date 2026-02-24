@@ -717,9 +717,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
             }
-            const correctedGeneratorFilter = argv.generator != null
-                ? warnAndCorrectDeprecatedDockerOrg(argv.generator, cliContext)
-                : undefined;
+            const correctedGeneratorFilter =
+                argv.generator != null ? warnAndCorrectDeprecatedDockerOrg(argv.generator, cliContext) : undefined;
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {

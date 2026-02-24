@@ -1,4 +1,8 @@
-import { correctDeprecatedDockerOrg, DEPRECATED_DOCKER_ORG, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import {
+    correctDeprecatedDockerOrg,
+    DEPRECATED_DOCKER_ORG,
+    GENERATORS_CONFIGURATION_FILENAME
+} from "@fern-api/configuration-loader";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { Argv } from "yargs";
@@ -191,9 +195,10 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         }
                     });
 
-                    const correctedGenerator = argv.generator != null
-                        ? warnAndCorrectDeprecatedDockerOrgV2(argv.generator, cliContext)
-                        : undefined;
+                    const correctedGenerator =
+                        argv.generator != null
+                            ? warnAndCorrectDeprecatedDockerOrgV2(argv.generator, cliContext)
+                            : undefined;
                     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: true
