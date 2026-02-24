@@ -60,15 +60,17 @@ export async function buildGenerator(dirname, options = {}) {
     // Bundle generator-cli binary alongside the generator for self-contained execution.
     // This allows the generator to find generator-cli via __dirname at runtime,
     // without relying on PATH or runtime package installation.
+    // Resolve from the generator's directory (dirname) to ensure pnpm can find the package.
     try {
-        const require = createRequire(import.meta.url);
-        const generatorCliPkg = require.resolve("@fern-api/generator-cli/package.json");
+        const generatorRequire = createRequire(path.join(dirname, "package.json"));
+        const generatorCliPkg = generatorRequire.resolve("@fern-api/generator-cli/package.json");
         const generatorCliJs = path.join(path.dirname(generatorCliPkg), "dist", "cli.js");
         if (existsSync(generatorCliJs)) {
             await cp(generatorCliJs, path.join(dirname, "dist", "generator-cli.cjs"));
+            console.log("Bundled generator-cli.cjs alongside generator output");
         }
-    } catch {
-        // generator-cli not available in this context, skip bundling
+    } catch (err) {
+        console.warn("Skipping generator-cli bundling:", err.message);
     }
 }
 
