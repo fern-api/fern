@@ -173,7 +173,7 @@ export class Stream<T> implements AsyncIterable<T> {
             return parsed;
         }
         const obj = parsed as Record<string, unknown>;
-        if (Object.prototype.hasOwnProperty.call(obj, this.eventDiscriminator)) {
+        if (this.eventDiscriminator in obj) {
             return parsed;
         }
         return { [this.eventDiscriminator]: eventType, ...obj };
