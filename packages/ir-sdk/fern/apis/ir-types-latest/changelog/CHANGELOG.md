@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v65.2.1] - 2026-02-24
+- Feature: Add document-level `webhook-signature` configuration to Fern definition files.
+  Allows specifying a default signature verification config that applies to all webhooks in a file,
+  with per-webhook `signature` overrides. The IR generator resolves defaults and stamps each webhook
+  with its final `signatureVerification` config.
+
 ## [v65.2.0] - 2026-02-23
 - Feature: Add `WebhookSignatureVerification` discriminated union to the `Webhook` type.
   Supports HMAC-based and asymmetric key signature verification with configurable algorithms,
