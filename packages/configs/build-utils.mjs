@@ -1,5 +1,7 @@
 import { exec } from "child_process";
+import { existsSync } from "fs";
 import { cp, mkdir, rm, writeFile } from "fs/promises";
+import { createRequire } from "module";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
@@ -53,6 +55,20 @@ export async function buildGenerator(dirname, options = {}) {
                 });
             }
         }
+    }
+
+    // Bundle generator-cli binary alongside the generator for self-contained execution.
+    // This allows the generator to find generator-cli via __dirname at runtime,
+    // without relying on PATH or runtime package installation.
+    try {
+        const require = createRequire(import.meta.url);
+        const generatorCliPkg = require.resolve("@fern-api/generator-cli/package.json");
+        const generatorCliJs = path.join(path.dirname(generatorCliPkg), "dist", "cli.js");
+        if (existsSync(generatorCliJs)) {
+            await cp(generatorCliJs, path.join(dirname, "dist", "generator-cli.cjs"));
+        }
+    } catch {
+        // generator-cli not available in this context, skip bundling
     }
 }
 

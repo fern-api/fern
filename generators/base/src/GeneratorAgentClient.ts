@@ -1,7 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, LoggingExecutable } from "@fern-api/logging-execa";
+import { existsSync } from "fs";
 import { writeFile } from "fs/promises";
+import path from "path";
 import tmp from "tmp-promise";
 
 const GENERATOR_AGENT_NPM_PACKAGE = "@fern-api/generator-cli";
@@ -214,22 +216,42 @@ export class GeneratorAgentClient {
     private async getOrInstall(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
         if (this.skipInstall) {
             this.logger.debug("GeneratorAgentClient.getOrInstall: skipInstall=true, using pre-installed generator-cli");
-            return createLoggingExecutable("generator-cli", {
-                cwd: process.cwd(),
-                logger: this.logger,
-                ...options
-            });
+            return this.createCli(options);
         }
         this.logger.debug("GeneratorAgentClient.getOrInstall: skipInstall=false, running install...");
         return this.install(options);
     }
 
-    private async install(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
-        const cli = createLoggingExecutable("generator-cli", {
+    /**
+     * Creates a LoggingExecutable for generator-cli.
+     *
+     * Resolution order:
+     * 1. Co-located binary at __dirname/generator-cli.js (bundled by build-utils.mjs)
+     * 2. generator-cli on PATH (e.g. installed globally in Docker or via pnpm)
+     */
+    private createCli(options: createLoggingExecutable.Options = {}): LoggingExecutable {
+        // Try co-located binary first (bundled alongside the generator CJS by build-utils.mjs)
+        const colocatedPath = path.join(__dirname, "generator-cli.cjs");
+        if (existsSync(colocatedPath)) {
+            this.logger.debug(`Using bundled ${GENERATOR_AGENT_NPM_PACKAGE} at ${colocatedPath}`);
+            const node = createLoggingExecutable("node", {
+                cwd: process.cwd(),
+                logger: this.logger,
+                ...options
+            });
+            return (args, opts) => node([colocatedPath, ...(args ?? [])], opts);
+        }
+
+        // Fall back to generator-cli on PATH
+        return createLoggingExecutable("generator-cli", {
             cwd: process.cwd(),
             logger: this.logger,
             ...options
         });
+    }
+
+    private async install(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
+        const cli = this.createCli(options);
 
         if (!this.installAttempted) {
             this.installAttempted = true;
