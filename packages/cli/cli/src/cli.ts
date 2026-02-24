@@ -5,10 +5,10 @@ import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbui
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
-    INCORRECT_DOCKER_ORG,
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,
+    INCORRECT_DOCKER_ORG,
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";

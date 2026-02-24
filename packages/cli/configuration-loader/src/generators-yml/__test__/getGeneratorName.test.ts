@@ -6,8 +6,8 @@ import {
     correctIncorrectDockerOrg,
     correctIncorrectDockerOrgWithWarning,
     DEFAULT_DOCKER_ORG,
-    INCORRECT_DOCKER_ORG,
     getGeneratorNameOrThrow,
+    INCORRECT_DOCKER_ORG,
     normalizeGeneratorName,
     removeDefaultDockerOrgIfPresent
 } from "../getGeneratorName.js";
