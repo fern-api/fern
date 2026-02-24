@@ -10,10 +10,10 @@ import {
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
-import path from "path";
 import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 
 import { SAMPLE_IMDB_API } from "./sampleImdbApi.js";
 import { SAMPLE_OPENAPI } from "./sampleOpenApi.js";
