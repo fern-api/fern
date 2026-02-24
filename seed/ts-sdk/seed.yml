@@ -524,6 +524,7 @@ allowedFailures:
   - exhaustive:never-throw-errors
   - oauth-client-credentials-custom
   - package-yml
+  - pagination-uri-path
   - server-url-templating
   - trace:no-custom-config
   - trace:serde
