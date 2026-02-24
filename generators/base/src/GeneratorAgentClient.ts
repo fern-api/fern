@@ -6,6 +6,7 @@ import path from "path";
 import tmp from "tmp-promise";
 
 const GENERATOR_AGENT_NPM_PACKAGE = "@fern-api/generator-cli";
+const GENERATOR_AGENT_NPM_VERSION = "0.5.3";
 
 export class GeneratorAgentClient {
     private logger: Logger;
@@ -257,7 +258,7 @@ export class GeneratorAgentClient {
             });
             try {
                 this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} globally...`);
-                await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
+                await npm(["install", "-f", "-g", `${GENERATOR_AGENT_NPM_PACKAGE}@${GENERATOR_AGENT_NPM_VERSION}`]);
                 const version = await globalCli(["--version"]);
                 this.logger.debug(
                     `Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} globally, version ${version.stdout.trim()}`
@@ -274,7 +275,12 @@ export class GeneratorAgentClient {
             try {
                 const tmpDir = await tmp.dir({ unsafeCleanup: true });
                 this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} locally in ${tmpDir.path}...`);
-                await npm(["install", "--prefix", tmpDir.path, GENERATOR_AGENT_NPM_PACKAGE]);
+                await npm([
+                    "install",
+                    "--prefix",
+                    tmpDir.path,
+                    `${GENERATOR_AGENT_NPM_PACKAGE}@${GENERATOR_AGENT_NPM_VERSION}`
+                ]);
                 const localBinPath = path.join(tmpDir.path, "node_modules", ".bin", "generator-cli");
                 const localCli = createLoggingExecutable(localBinPath, {
                     cwd: process.cwd(),
