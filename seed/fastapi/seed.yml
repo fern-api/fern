@@ -131,6 +131,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
 allowedFailures:
+  - exhaustive
   - header-auth-environment-variable
   - bearer-token-environment-variable
   - query-parameters

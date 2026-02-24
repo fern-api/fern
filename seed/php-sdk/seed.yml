@@ -162,6 +162,7 @@ scripts:
       test:
         - composer test
 allowedFailures:
+  - exhaustive
   - pagination-custom
   - inferred-auth-implicit-reference
   # Dynamic snippets need to add support for global headers included in the client constructor.

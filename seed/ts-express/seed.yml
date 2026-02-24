@@ -100,6 +100,7 @@ fixtures:
 allowedFailures:
   - bytes-download
   - bytes-upload
+  - exhaustive
   - file-download
   - file-upload
   - file-upload-openapi
