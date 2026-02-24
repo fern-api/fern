@@ -1,11 +1,10 @@
 import { cloneRepository, parseRepository } from "@fern-api/github";
 import { type BootstrapResult, bootstrap, FERN_BOT_EMAIL, FERN_BOT_NAME, GitClient } from "@fern-api/replay";
 import { Octokit } from "@octokit/rest";
-import { existsSync, readFileSync, writeFileSync } from "fs";
+import { existsSync } from "fs";
 import { join } from "path";
 import tmp from "tmp-promise";
-
-const REPLAY_FERNIGNORE_ENTRIES = [".fern/replay.lock", ".fern/replay.yml"];
+import { ensureReplayFernignoreEntriesSync } from "../utils/fernignore";
 
 export interface ReplayInitParams {
     /** GitHub repo URI (e.g., "fern-demo/fern-replay-testbed-java-sdk") */
@@ -97,7 +96,7 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
     }
 
     // 3. Ensure .fernignore has replay entries
-    ensureReplayFernignoreEntries(repoPath);
+    ensureReplayFernignoreEntriesSync(repoPath);
 
     const commitMessage = `[fern-replay] Initialize Replay\n\nTracked ${bootstrapResult.patchesCreated} customization patch(es).\nBase generation: ${bootstrapResult.generationCommit.sha.slice(0, 7)}`;
 
@@ -165,20 +164,6 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
         prUrl: pr.html_url,
         branch: branchName
     };
-}
-
-function ensureReplayFernignoreEntries(repoPath: string): void {
-    const fernignorePath = join(repoPath, ".fernignore");
-    let content = "";
-    if (existsSync(fernignorePath)) {
-        content = readFileSync(fernignorePath, "utf-8");
-    }
-    const lines = content.split("\n");
-    const toAdd = REPLAY_FERNIGNORE_ENTRIES.filter((entry) => !lines.some((line) => line.trim() === entry));
-    if (toAdd.length > 0) {
-        const suffix = content.length > 0 && !content.endsWith("\n") ? "\n" : "";
-        writeFileSync(fernignorePath, content + suffix + toAdd.join("\n") + "\n", "utf-8");
-    }
 }
 
 export interface BootstrapLogEntry {

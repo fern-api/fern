@@ -73,7 +73,8 @@ export class GithubStep extends BaseStep {
             this.logger.error(message);
             return {
                 executed: true,
-                success: false
+                success: false,
+                errorMessage: message
             };
         }
     }

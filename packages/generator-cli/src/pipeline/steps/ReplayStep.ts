@@ -24,7 +24,8 @@ export class ReplayStep extends BaseStep {
             generatorVersions: this.generatorVersions,
             stageOnly: this.config.stageOnly ?? false,
             generatorName: this.generatorName,
-            skipApplication: this.config.skipApplication
+            skipApplication: this.config.skipApplication,
+            logger: this.logger
         });
 
         if (result.report == null) {

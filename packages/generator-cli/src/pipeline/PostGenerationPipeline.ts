@@ -2,7 +2,14 @@ import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
 import { BaseStep } from "./steps/BaseStep";
 import { GithubStep } from "./steps/GithubStep";
 import { ReplayStep } from "./steps/ReplayStep";
-import type { PipelineConfig, PipelineContext, PipelineResult, ReplayStepResult } from "./types";
+import type {
+    FernignoreStepResult,
+    GithubStepResult,
+    PipelineConfig,
+    PipelineContext,
+    PipelineResult,
+    ReplayStepResult
+} from "./types";
 
 export class PostGenerationPipeline {
     private steps: BaseStep[] = [];
@@ -47,17 +54,20 @@ export class PostGenerationPipeline {
         for (const step of this.steps) {
             try {
                 const stepResult = await step.execute(pipelineContext);
-                (result.steps as Record<string, unknown>)[step.name] = stepResult;
 
-                // Accumulate results for downstream steps
                 if (step.name === "replay") {
+                    result.steps.replay = stepResult as ReplayStepResult;
                     pipelineContext.previousStepResults.replay = stepResult as ReplayStepResult;
+                } else if (step.name === "fernignore") {
+                    result.steps.fernignore = stepResult as FernignoreStepResult;
+                } else if (step.name === "github") {
+                    result.steps.github = stepResult as GithubStepResult;
                 }
 
                 if (!stepResult.success) {
                     result.success = false;
                     result.errors = result.errors ?? [];
-                    result.errors.push(`${step.name} step failed`);
+                    result.errors.push(stepResult.errorMessage ?? `${step.name} step failed`);
                 }
             } catch (error) {
                 result.success = false;

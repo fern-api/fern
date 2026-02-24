@@ -4,6 +4,10 @@ import type { PipelineLogger } from "../PipelineLogger";
 import { formatConflictReason, patchDescription } from "../replay-summary";
 import type { ReplayStepResult } from "../types";
 
+/**
+ * Resolve guidance for a conflict reason. Suggests whether the user likely wants
+ * to keep their customization, take the new generation, or combine both.
+ */
 function resolveGuidance(conflictReason: string | undefined): string {
     switch (conflictReason) {
         case "same-line-edit":
@@ -26,6 +30,10 @@ interface ConflictFileEntry {
     guidance: string;
 }
 
+/**
+ * Build the markdown body for the single conflict summary comment.
+ * Returns undefined if there are no conflict files to report.
+ */
 function buildConflictCommentBody(
     conflictDetails: NonNullable<ReplayStepResult["conflictDetails"]>
 ): string | undefined {
@@ -57,8 +65,8 @@ function buildConflictCommentBody(
             "Below is per-file guidance to help you resolve each conflict.\n"
     );
     parts.push(
-        "> In GitHub's conflict editor, `<<<<<<< HEAD` (\"Accept current\") = **new generated code**, " +
-            "`>>>>>>> main` (\"Accept incoming\") = **your customization**.\n"
+        '> In GitHub\'s conflict editor, `<<<<<<< HEAD` ("Accept current") = **new generated code**, ' +
+            '`>>>>>>> main` ("Accept incoming") = **your customization**.\n'
     );
 
     parts.push("| File | Your customization | Why it conflicted | Suggested resolution |");
@@ -73,6 +81,15 @@ function buildConflictCommentBody(
     return parts.join("\n");
 }
 
+/**
+ * Post a single summary comment on a PR listing all conflicting files with
+ * per-file context and resolution guidance.
+ *
+ * This uses issue comments (not review comments) to avoid fragility around
+ * specific line numbers and to consolidate all guidance into one notification.
+ *
+ * Should be called after PR creation/update, only when conflicts exist.
+ */
 export async function postConflictComments(
     octokit: Octokit,
     owner: string,

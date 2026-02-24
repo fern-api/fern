@@ -289,7 +289,7 @@ export async function runLocalGenerationForWorkspace({
                         debug: (msg) => interactiveTaskContext.logger.debug(msg),
                         info: (msg) => interactiveTaskContext.logger.info(msg),
                         warn: (msg) => interactiveTaskContext.logger.warn(msg),
-                        error: (msg) => interactiveTaskContext.logger.warn(msg)
+                        error: (msg) => interactiveTaskContext.logger.error(msg)
                     };
 
                     const pipeline = new PostGenerationPipeline(
@@ -323,7 +323,7 @@ export async function runLocalGenerationForWorkspace({
                             debug: (msg) => interactiveTaskContext.logger.debug(msg),
                             info: (msg) => interactiveTaskContext.logger.info(chalk.cyan(msg)),
                             warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
-                            error: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg))
+                            error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
                         });
                     }
 

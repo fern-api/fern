@@ -120,5 +120,5 @@ export interface GithubStepResult extends StepResult {
 export interface StepResult {
     executed: boolean;
     success: boolean;
-    [key: string]: unknown;
+    errorMessage?: string;
 }

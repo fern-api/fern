@@ -1,10 +1,9 @@
 import { LockfileManager, type ReplayReport, ReplayService } from "@fern-api/replay";
 import { execFileSync } from "child_process";
 import { existsSync } from "fs";
-import { readFile, writeFile } from "fs/promises";
 import { join } from "path";
-
-const REPLAY_FERNIGNORE_ENTRIES = [".fern/replay.lock", ".fern/replay.yml"];
+import type { PipelineLogger } from "../pipeline/PipelineLogger";
+import { ensureReplayFernignoreEntries } from "../utils/fernignore";
 
 export interface ReplayRunParams {
     outputDir: string;
@@ -16,6 +15,8 @@ export interface ReplayRunParams {
     generatorName?: string;
     /** Commit generation + update lockfile, skip patch detection/application */
     skipApplication?: boolean;
+    /** Optional logger for diagnostic output */
+    logger?: PipelineLogger;
 }
 
 export interface ReplayRunResult {
@@ -32,7 +33,15 @@ export interface ReplayRunResult {
 }
 
 export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResult> {
-    const { outputDir, cliVersion, generatorVersions, stageOnly = false, generatorName, skipApplication } = params;
+    const {
+        outputDir,
+        cliVersion,
+        generatorVersions,
+        stageOnly = false,
+        generatorName,
+        skipApplication,
+        logger
+    } = params;
     const lockfilePath = join(outputDir, ".fern", "replay.lock");
 
     if (!existsSync(lockfilePath)) {
@@ -78,7 +87,11 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             const tagParent = gitRevParse(outputDir, `${tagSha}^`);
             if (tagParent === prevBaseBranchHead || tagParent === previousGenerationSha) {
                 const tagDistance = gitDiffNameOnly(outputDir, tagSha, "HEAD").length;
-                const lockDistance = gitDiffNameOnly(outputDir, prevBaseBranchHead ?? previousGenerationSha, "HEAD").length;
+                const lockDistance = gitDiffNameOnly(
+                    outputDir,
+                    prevBaseBranchHead ?? previousGenerationSha,
+                    "HEAD"
+                ).length;
                 shouldSync = tagDistance < lockDistance;
             }
         }
@@ -115,8 +128,9 @@ export async function replayRun(params: ReplayRunParams): Promise<ReplayRunResul
             skipApplication,
             baseBranchHead: baseBranchHead ?? undefined
         });
-    } catch {
+    } catch (error) {
         // Don't fail generation because of replay errors
+        logger?.warn("Replay failed, continuing without replay: " + String(error));
         return {
             report: null,
             fernignoreUpdated: false,
@@ -176,22 +190,4 @@ function gitDiffNameOnly(cwd: string, from: string, to: string): string[] {
     } catch {
         return [];
     }
-}
-
-async function ensureReplayFernignoreEntries(outputDir: string): Promise<boolean> {
-    const fernignorePath = join(outputDir, ".fernignore");
-    let content = "";
-    try {
-        content = await readFile(fernignorePath, "utf-8");
-    } catch {
-        // .fernignore doesn't exist yet
-    }
-    const lines = content.split("\n");
-    const toAdd = REPLAY_FERNIGNORE_ENTRIES.filter((entry) => !lines.some((line) => line.trim() === entry));
-    if (toAdd.length > 0) {
-        const suffix = content.length > 0 && !content.endsWith("\n") ? "\n" : "";
-        await writeFile(fernignorePath, content + suffix + toAdd.join("\n") + "\n", "utf-8");
-        return true;
-    }
-    return false;
 }
