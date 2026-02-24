@@ -139,6 +139,22 @@ export class LocalTaskHandler {
 
             this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
             this.context.logger.debug(`Cleaned diff size: ${cleanedDiff.length} bytes`);
+
+            // Handle new SDK repository with no previous version
+            if (previousVersion == null) {
+                this.context.logger.info(
+                    "No previous version found (new SDK repository). Using 0.0.1 as initial version."
+                );
+                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const commitMessage = this.isWhitelabel
+                    ? "Initial SDK generation"
+                    : "Initial SDK generation\n\n🌿 Generated with Fern";
+                return {
+                    version: initialVersion,
+                    commitMessage
+                };
+            }
+
             this.context.logger.debug(`Previous version detected: ${previousVersion}`);
 
             // Call AI to analyze the diff

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.2
+  changelogEntry:
+    - summary: |
+        Change [TIMING] log statements from info to debug level so they are only
+        printed when debug logging is enabled.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 62
+
 - version: 2.22.1
   changelogEntry:
     - summary: |

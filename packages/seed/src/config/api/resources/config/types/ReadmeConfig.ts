@@ -3,10 +3,10 @@
 import type * as FernSeedConfig from "../../../index.js";
 
 export interface ReadmeConfig {
-    defaultEndpoint?: FernSeedConfig.ReadmeEndpoint;
-    bannerLink?: string;
-    apiReferenceLink?: string;
-    features?: Record<string, FernSeedConfig.ReadmeEndpoint[]>;
-    apiName?: string;
-    disabledSections?: string[];
+    defaultEndpoint?: FernSeedConfig.ReadmeEndpoint | undefined;
+    bannerLink?: string | undefined;
+    apiReferenceLink?: string | undefined;
+    features?: Record<string, FernSeedConfig.ReadmeEndpoint[]> | undefined;
+    apiName?: string | undefined;
+    disabledSections?: string[] | undefined;
 }

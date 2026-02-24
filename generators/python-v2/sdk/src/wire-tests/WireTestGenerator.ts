@@ -648,7 +648,7 @@ export class WireTestGenerator {
     private getClientModulePath(): string[] {
         // The client is imported from the root package module
         // e.g., "from seed import SeedExhaustive" -> modulePath is ["seed"]
-        return [this.context.config.organization];
+        return [this.context.getModulePath()];
     }
 
     private getClientClassName(): string {
