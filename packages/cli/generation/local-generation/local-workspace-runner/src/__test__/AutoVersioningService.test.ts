@@ -773,9 +773,9 @@ describe("AutoVersioningService", () => {
     });
 
     it("testExtractPreviousVersion_emptyDiff_throws", () => {
-        expect(() => new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion("", "505.503.4455")).toThrow(
-            AutoVersioningException
-        );
+        expect(() =>
+            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion("", "505.503.4455")
+        ).toThrow(AutoVersioningException);
     });
 
     it("testExtractPreviousVersion_magicVersionOnlyInContextLines_throws", () => {
@@ -818,7 +818,7 @@ describe("AutoVersioningService", () => {
             "+package sdk\n" +
             "+\n" +
             "+type Client struct {\n" +
-            '+    version string // v505.503.4455\n' +
+            "+    version string // v505.503.4455\n" +
             "+}\n";
 
         const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "v505.503.4455");
