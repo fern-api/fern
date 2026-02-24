@@ -47,9 +47,8 @@ export async function initializeAPI({
 
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     } else if (useFernDefinition) {
-        const apiName = directoryOfWorkspace !== absolutePathToFernDirectory
-            ? path.basename(directoryOfWorkspace)
-            : undefined;
+        const apiName =
+            directoryOfWorkspace !== absolutePathToFernDirectory ? path.basename(directoryOfWorkspace) : undefined;
         await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context, apiName });
 
         context.logger.info(chalk.green("Created new fern folder"));
