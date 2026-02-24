@@ -1,21 +1,16 @@
 import { schemas } from "@fern-api/config";
-import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import inquirer from "inquirer";
-import type { Argv } from "yargs";
 import { type Document, parseDocument } from "yaml";
+import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
-import {
-    LANGUAGES,
-    LANGUAGE_DISPLAY_NAMES,
-    LANGUAGE_ORDER,
-    type Language
-} from "../../../sdk/config/Language.js";
 import { LANGUAGE_TO_DOCKER_IMAGE } from "../../../sdk/config/converter/constants.js";
+import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import { Icons } from "../../../ui/format.js";
 import { Version } from "../../../version.js";
 import { command } from "../../_internal/command.js";
