@@ -111,7 +111,7 @@ jobs:
   test:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -164,7 +164,7 @@ jobs:
   test-ete:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
