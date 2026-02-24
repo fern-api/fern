@@ -8,6 +8,7 @@ on:
       - "packages/generator-cli/versions.yml"
 
 env:
+  DO_NOT_TRACK: "1"
   PACKAGE_NAME: "@fern-api/generator-cli"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"

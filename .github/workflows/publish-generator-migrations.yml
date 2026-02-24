@@ -15,6 +15,7 @@ on:
         type: string
 
 env:
+  DO_NOT_TRACK: "1"
   PACKAGE_NAME: "@fern-api/generator-migrations"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"

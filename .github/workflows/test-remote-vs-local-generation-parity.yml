@@ -32,6 +32,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   TURBO_REMOTE_CACHE_TIMEOUT: 60
