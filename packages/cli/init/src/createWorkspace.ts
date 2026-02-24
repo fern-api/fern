@@ -13,7 +13,6 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } fro
 import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import path from "path";
 
 import { SAMPLE_IMDB_API } from "./sampleImdbApi.js";
 import { SAMPLE_OPENAPI } from "./sampleOpenApi.js";
@@ -21,11 +20,13 @@ import { SAMPLE_OPENAPI } from "./sampleOpenApi.js";
 export async function createFernWorkspace({
     directoryOfWorkspace,
     cliVersion,
-    context
+    context,
+    apiName = "api"
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
+    apiName?: string;
 }): Promise<void> {
     if (!(await doesPathExist(directoryOfWorkspace))) {
         await mkdir(directoryOfWorkspace);
@@ -36,7 +37,6 @@ export async function createFernWorkspace({
         context
     });
     const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
-    const apiName = path.basename(directoryOfWorkspace);
     await writeSampleApiDefinition({
         directoryOfDefinition,
         apiName
