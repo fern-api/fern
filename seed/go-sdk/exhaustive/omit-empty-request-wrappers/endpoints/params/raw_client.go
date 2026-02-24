@@ -8,6 +8,7 @@ import (
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
+	types "github.com/exhaustive/fern/types"
 	io "io"
 	http "net/http"
 )
@@ -398,7 +399,7 @@ func (r *RawClient) UploadWithPath(
 	param string,
 	request io.Reader,
 	opts ...option.RequestOption,
-) (*core.Response[string], error) {
+) (*core.Response[*types.ObjectWithRequiredField], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -413,7 +414,7 @@ func (r *RawClient) UploadWithPath(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response string
+	var response *types.ObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -431,7 +432,7 @@ func (r *RawClient) UploadWithPath(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[string]{
+	return &core.Response[*types.ObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

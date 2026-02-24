@@ -2123,7 +2123,7 @@ client.Endpoints.Params.ModifyWithPath(
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.UploadWithPath(Param, request) -> string</code></summary>
+<details><summary><code>client.Endpoints.Params.UploadWithPath(Param, request) -> *types.ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -2135,7 +2135,7 @@ client.Endpoints.Params.ModifyWithPath(
 <dl>
 <dd>
 
-POST bytes with path param
+POST bytes with path param returning object
 </dd>
 </dl>
 </dd>
