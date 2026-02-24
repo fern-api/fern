@@ -3,6 +3,9 @@ name: Publish @fern-fern/docs-parsers-fern-definition
 on:
   workflow_dispatch:
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   publish:
     runs-on: ubuntu-latest
