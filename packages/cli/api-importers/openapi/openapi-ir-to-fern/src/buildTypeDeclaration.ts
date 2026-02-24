@@ -681,8 +681,7 @@ export function buildOneOfTypeDeclaration({
                 availability: schema.availability != null ? convertAvailability(schema.availability) : undefined,
                 union,
                 encoding,
-                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined,
-                ...(schema.discriminatorContext && { context: schema.discriminatorContext })
+                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
         };
     }
