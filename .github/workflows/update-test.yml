@@ -18,7 +18,7 @@ jobs:
   update-test:
     if: github.repository == 'fern-api/fern' && github.ref != 'refs/heads/main'
     runs-on: Test
-    timeout-minutes: 30
+    timeout-minutes: 90
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -47,15 +47,15 @@ jobs:
         run: pnpm test:update
 
       - name: Build CLI (dev)
-        timeout-minutes: 5
+        timeout-minutes: 15
         run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
 
       - name: Build seed CLI
-        timeout-minutes: 5
+        timeout-minutes: 15
         run: pnpm seed:build
 
       - name: Run test:ete:update
-        timeout-minutes: 10
+        timeout-minutes: 30
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
