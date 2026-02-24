@@ -1,5 +1,4 @@
 *
-!generators/rust/model/dist/cli.cjs
-!generators/rust/model/dist/generator-cli.cjs
+!generators/rust/model/dist/cli.cjs 
 !generators/rust/model/dist/asIs/
 **/.DS_Store
