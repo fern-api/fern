@@ -26,7 +26,10 @@ describe("CompletionsClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events.length).toBeGreaterThan(0);
+        expect(events).toEqual([
+            { delta: "foo", tokens: 1 },
+            { delta: "bar", tokens: 2 },
+        ]);
     });
 
     test("streamEvents", async () => {
@@ -50,6 +53,6 @@ describe("CompletionsClient", () => {
         for await (const event of response) {
             events.push(event);
         }
-        expect(events.length).toBeGreaterThan(0);
+        expect(events).toEqual([{ event: "completion", content: "content" }]);
     });
 });

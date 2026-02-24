@@ -1,3 +1,4 @@
+import { fromJson, toJson } from "../json.js";
 import { RUNTIME } from "../runtime/index.js";
 
 export declare namespace Stream {
@@ -103,7 +104,7 @@ export class Stream<T> implements AsyncIterable<T> {
                 if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
                     return;
                 }
-                const message = await this.parse(JSON.parse(line));
+                const message = await this.parse(fromJson(line));
                 yield message;
                 prefixSeen = false;
             }
@@ -162,7 +163,7 @@ export class Stream<T> implements AsyncIterable<T> {
             return null;
         }
         const data = this.injectDiscriminator(dataValue, eventType);
-        return this.parse(JSON.parse(data));
+        return this.parse(fromJson(data));
     }
 
     private injectDiscriminator(data: string, eventType: string | undefined): string {
@@ -173,11 +174,20 @@ export class Stream<T> implements AsyncIterable<T> {
         if (trimmed.length === 0 || trimmed[0] !== "{") {
             return data;
         }
-        const quotedField = JSON.stringify(this.eventDiscriminator);
-        if (data.includes(`${quotedField}:`) || data.includes(`${quotedField} :`)) {
+        let parsed: Record<string, unknown>;
+        try {
+            const value = fromJson(data);
+            if (value == null || typeof value !== "object" || Array.isArray(value)) {
+                return data;
+            }
+            parsed = value as Record<string, unknown>;
+        } catch {
             return data;
         }
-        const injected = `${quotedField}:${JSON.stringify(eventType)}`;
+        if (Object.hasOwn(parsed, this.eventDiscriminator)) {
+            return data;
+        }
+        const injected = `${toJson(this.eventDiscriminator)}:${toJson(eventType)}`;
         const openIdx = data.indexOf("{");
         const after = data.slice(openIdx + 1);
         const afterTrimmed = after.trim();

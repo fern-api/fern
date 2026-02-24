@@ -1095,14 +1095,17 @@ describe("${serviceName}", () => {
         }
 
         const rawRequestBody = this.getRequestExample(example.request);
-        const rawResponseBody = this.getResponseExample(example.response);
+        const isSSEStreaming =
+            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
+        const rawResponseBody = this.getResponseExample(
+            example.response,
+            isSSEStreaming ? { endpoint, context } : undefined
+        );
         const responseStatusCode = getExampleResponseStatusCode({
             response: example.response,
             ir: this.ir
         });
         const mockBodyMethod = this.getMockBodyMethod(endpoint);
-        const isSSEStreaming =
-            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
 
         const willThrowError = responseStatusCode >= 400 && this.neverThrowErrors === false;
 
@@ -1111,6 +1114,10 @@ describe("${serviceName}", () => {
             context,
             neverThrowErrors: this.neverThrowErrors
         });
+
+        const sseExpectedEvents: Code | undefined = isSSEStreaming
+            ? this.getSseExpectedEvents({ endpoint, example, context })
+            : undefined;
 
         const generateEnvironment = () => {
             if (!this.ir.environments) {
@@ -1378,16 +1385,20 @@ describe("${serviceName}", () => {
             for await (const event of response) {
                 events.push(event);
             }
-            expect(events.length).toBeGreaterThan(0);`
+            ${
+                sseExpectedEvents != null
+                    ? code`expect(events).toEqual(${sseExpectedEvents});`
+                    : code`expect(events.length).toBeGreaterThan(0);`
+            }`
                 : willThrowError
-                    ? code`
+                  ? code`
             await expect(async () => {
                 return ${getTextOfTsNode(generatedExample.endpointInvocation)}
             }).rejects.toThrow(${literalOf(expected)});`
-                    : isHeadersResponse
-                      ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                  : isHeadersResponse
+                    ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                      : code`
+                    : code`
                         ${
                             endpoint.pagination !== undefined
                                 ? paginationBlock
@@ -1412,6 +1423,57 @@ describe("${serviceName}", () => {
             return "formUrlEncodedBody";
         }
         return "jsonBody";
+    }
+
+    private getSseExpectedEvents({
+        endpoint,
+        example,
+        context
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.ExampleEndpointCall;
+        context: SdkContext;
+    }): Code | undefined {
+        const sseEvents = example.response._visit<FernIr.ExampleServerSideEvent[] | undefined>({
+            ok: (value) =>
+                value._visit({
+                    sse: (events) => events,
+                    body: () => undefined,
+                    stream: () => undefined,
+                    _other: () => undefined
+                }),
+            error: () => undefined,
+            _other: () => undefined
+        });
+        if (sseEvents == null || sseEvents.length === 0) {
+            return undefined;
+        }
+
+        // Determine the SSE protocol discriminant field, if any
+        let discriminantField: string | undefined;
+        const ssePayload =
+            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse"
+                ? endpoint.response.body.value.payload
+                : undefined;
+        if (ssePayload != null && ssePayload.type === "named") {
+            const typeDeclaration = context.type.getTypeDeclaration(ssePayload);
+            if (
+                typeDeclaration.shape.type === "union" &&
+                typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
+            ) {
+                discriminantField = typeDeclaration.shape.discriminant.wireValue;
+            }
+        }
+
+        const createRawJsonExample = this.createRawJsonExample.bind(this);
+        const eventCodes = sseEvents.map((event) => {
+            if (discriminantField != null) {
+                const merged = { [discriminantField]: event.event, ...((event.data.jsonExample ?? {}) as object) };
+                return code`${literalOf(merged)}`;
+            }
+            return createRawJsonExample({ example: event.data, isForRequest: false, isForResponse: true });
+        });
+        return code`${arrayOf(...eventCodes)}`;
     }
 
     private shouldBuildTest(endpoint: FernIr.HttpEndpoint): boolean {
@@ -1532,7 +1594,10 @@ describe("${serviceName}", () => {
         return requestExample;
     }
 
-    getResponseExample(response: FernIr.ExampleResponse | undefined): Code | undefined {
+    getResponseExample(
+        response: FernIr.ExampleResponse | undefined,
+        opts?: { endpoint: FernIr.HttpEndpoint; context: SdkContext }
+    ): Code | undefined {
         if (!response) {
             return undefined;
         }
@@ -1550,9 +1615,39 @@ describe("${serviceName}", () => {
                         throw new Error("Stream not supported in wire tests");
                     },
                     sse: (events) => {
+                        // For SSE endpoints with a protocol-discriminated union, the discriminant travels as
+                        // the SSE `event:` field and must be stripped from the data JSON.
+                        let discriminantField: string | undefined;
+                        if (opts != null) {
+                            const ssePayload =
+                                opts.endpoint.response?.body?.type === "streaming" &&
+                                opts.endpoint.response.body.value.type === "sse"
+                                    ? opts.endpoint.response.body.value.payload
+                                    : undefined;
+                            if (ssePayload != null && ssePayload.type === "named") {
+                                const typeDeclaration = opts.context.type.getTypeDeclaration(ssePayload);
+                                if (
+                                    typeDeclaration.shape.type === "union" &&
+                                    typeDeclaration.shape.discriminatorContext ===
+                                        FernIr.UnionDiscriminatorContext.Protocol
+                                ) {
+                                    discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                                }
+                            }
+                        }
                         const sseLines = events.map((event) => {
-                            const dataJson = JSON.stringify(event.data.jsonExample);
-                            return `event: ${event.event}\ndata: ${dataJson}\n`;
+                            let dataJson: unknown = event.data.jsonExample;
+                            if (
+                                discriminantField != null &&
+                                dataJson != null &&
+                                typeof dataJson === "object" &&
+                                !Array.isArray(dataJson)
+                            ) {
+                                const copy = { ...(dataJson as Record<string, unknown>) };
+                                delete copy[discriminantField];
+                                dataJson = copy;
+                            }
+                            return `event: ${event.event}\ndata: ${JSON.stringify(dataJson)}\n`;
                         });
                         return code`${literalOf(sseLines.join("\n") + "\n")}`;
                     },

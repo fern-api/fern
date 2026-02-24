@@ -219,6 +219,24 @@ describe("Stream", () => {
             expect(messages).toEqual([{ type: "existing", content: "hello" }]);
         });
 
+        it("should not false-positive when discriminator key appears inside a value", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\ndata: {"description": "type: foo", "content": "hello"}\n\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "completion", description: "type: foo", content: "hello" }]);
+        });
+
         it("should not inject if no event field is present", async () => {
             const mockStream = createReadableStream([
                 'data: {"content": "hello"}\n\n',
