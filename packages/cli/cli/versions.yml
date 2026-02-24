@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.4
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI V3 parser silently dropping entire specs when example or message
+        resolution fails. Example building errors (e.g. missing `channelId` in
+        `x-fern-examples`) and per-message reference resolution failures no longer
+        crash the entire channel parse. The parser now logs warnings and continues
+        processing the remaining channels and messages.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.3
   changelogEntry:
     - summary: |
