@@ -47,11 +47,11 @@ export abstract class AbstractGeneratorCli<
                 generatorConfig: config,
                 generatorNotificationService
             });
-            context.logger.info(`[TIMING] parseIntermediateRepresentation took ${irElapsed}ms`);
-            context.logger.info(`[TIMING] constructContext took ${Date.now() - contextStartTime}ms`);
+            context.logger.debug(`[TIMING] parseIntermediateRepresentation took ${irElapsed}ms`);
+            context.logger.debug(`[TIMING] constructContext took ${Date.now() - contextStartTime}ms`);
             const metadataStartTime = Date.now();
             await this.generateMetadata(context);
-            context.logger.info(`[TIMING] generateMetadata took ${Date.now() - metadataStartTime}ms`);
+            context.logger.debug(`[TIMING] generateMetadata took ${Date.now() - metadataStartTime}ms`);
             const outputStartTime = Date.now();
             switch (config.output.mode.type) {
                 case "publish":
@@ -66,7 +66,7 @@ export abstract class AbstractGeneratorCli<
                 default:
                     assertNever(config.output.mode);
             }
-            context.logger.info(`[TIMING] output (${config.output.mode.type}) took ${Date.now() - outputStartTime}ms`);
+            context.logger.debug(`[TIMING] output (${config.output.mode.type}) took ${Date.now() - outputStartTime}ms`);
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );

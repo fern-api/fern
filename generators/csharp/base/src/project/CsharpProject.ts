@@ -215,26 +215,26 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             libraryPath,
             solutionPath
         });
-        this.context.logger.info(`[TIMING] createProject took ${Date.now() - createProjectStartTime}ms`);
+        this.context.logger.debug(`[TIMING] createProject took ${Date.now() - createProjectStartTime}ms`);
         const createTestProjectStartTime = Date.now();
         const absolutePathToTestProjectDirectory = await this.createTestProject({
             absolutePathToTestDirectory,
             absolutePathToSolutionDirectory,
             absolutePathToProjectDirectory
         });
-        this.context.logger.info(`[TIMING] createTestProject took ${Date.now() - createTestProjectStartTime}ms`);
+        this.context.logger.debug(`[TIMING] createTestProject took ${Date.now() - createTestProjectStartTime}ms`);
 
         const writeSourceFilesStartTime = Date.now();
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
         }
-        this.context.logger.info(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
+        this.context.logger.debug(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
         const writeTestFilesStartTime = Date.now();
         for (const file of this.testFiles) {
             await file.write(absolutePathToTestProjectDirectory);
         }
-        this.context.logger.info(`[TIMING] writeTestFiles took ${Date.now() - writeTestFilesStartTime}ms`);
+        this.context.logger.debug(`[TIMING] writeTestFiles took ${Date.now() - writeTestFilesStartTime}ms`);
 
         await this.createRawFiles();
 
@@ -335,13 +335,13 @@ dotnet_diagnostic.IDE0005.severity = error
           `
             );
         }
-        this.context.logger.info(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
+        this.context.logger.debug(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
 
         // format the code cleanly using csharpier on the full output directory
         const csharpierStartTime = Date.now();
         await this.csharpier(this.absolutePathToOutputDirectory);
-        this.context.logger.info(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
-        this.context.logger.info(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
+        this.context.logger.debug(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
+        this.context.logger.debug(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
     }
 
     private async createProject({
