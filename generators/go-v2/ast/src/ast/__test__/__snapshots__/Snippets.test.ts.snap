@@ -173,7 +173,7 @@ var value = acmego.User{
             "123e4567-e89b-12d3-a456-426614174000",
         ),
         Street: "123 Main St.",
-        CreatedAt: acmego.NewDateTime(
+        CreatedAt: acmego.Time(
             acmego.MustParseDateTime(
                 "1994-01-01T00:00:00Z",
             ),

@@ -238,12 +238,12 @@ func do() {
 		Bool: acme.Bool(
 			true,
 		),
-		Datetime: acme.NewDateTime(
+		Datetime: acme.Time(
 			acme.MustParseDateTime(
 				"2024-01-15T09:30:00Z",
 			),
 		),
-		Date: acme.NewDate(
+		Date: acme.Time(
 			acme.MustParseDate(
 				"2023-01-15",
 			),
@@ -1140,12 +1140,12 @@ func do() {
 		Bool: acme.Bool(
 			true,
 		),
-		Datetime: acme.NewDateTime(
+		Datetime: acme.Time(
 			acme.MustParseDateTime(
 				"2024-01-15T09:30:00Z",
 			),
 		),
-		Date: acme.NewDate(
+		Date: acme.Time(
 			acme.MustParseDate(
 				"2023-01-15",
 			),
@@ -2042,12 +2042,12 @@ func do() {
 		Bool: acme.Bool(
 			true,
 		),
-		Datetime: acme.NewDateTime(
+		Datetime: acme.Time(
 			acme.MustParseDateTime(
 				"2024-01-15T09:30:00Z",
 			),
 		),
-		Date: acme.NewDate(
+		Date: acme.Time(
 			acme.MustParseDate(
 				"2023-01-15",
 			),
