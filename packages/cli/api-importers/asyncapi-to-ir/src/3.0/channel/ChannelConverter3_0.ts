@@ -79,7 +79,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
                     messages.push({
                         type: operationId,
                         displayName: operationId,
-                        origin: operation.action === "send" ? "client" : "server",
+                        origin: operation.action === "send" ? "server" : "client",
                         body: messageBody,
                         availability: this.context.getAvailability({
                             node: operation,

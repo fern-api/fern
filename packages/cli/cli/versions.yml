@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.3
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI V3 send/receive action mapping to match the 3.0.0 specification semantics.
+        In AsyncAPI 3.0.0, `action: send` means "this application sends" (server perspective for
+        API docs), so `send` now maps to `origin: "server"` and `receive` maps to `origin: "client"`.
+        Previously the mapping was reversed, causing send/receive messages to appear under the wrong
+        direction in the docs WebSocket explorer.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.2
   changelogEntry:
     - summary: |
