@@ -328,6 +328,27 @@ describe("Stream", () => {
 
             expect(messages).toEqual([{ type: "completion", content: "hi" }]);
         });
+
+        it("should handle CRLF line endings", async () => {
+            const mockStream = createReadableStream([
+                'event: completion\r\ndata: {"content": "hi"}\r\n\r\nevent: completion\r\ndata: {"content": "world"}\r\n\r\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val,
+                eventShape: { type: "sse", eventDiscriminator: "type" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([
+                { type: "completion", content: "hi" },
+                { type: "completion", content: "world" },
+            ]);
+        });
     });
 
     describe("encoding and decoding", () => {

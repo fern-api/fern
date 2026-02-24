@@ -1070,14 +1070,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         if (typeDeclaration.shape.type !== "union") {
             return {};
         }
-        const union = typeDeclaration.shape as FernIr.UnionTypeDeclaration & {
-            discriminatorContext?: string;
-        };
-        if (union.discriminatorContext !== "protocol") {
+        if (typeDeclaration.shape.discriminatorContext !== "protocol") {
             return {};
         }
         return {
-            eventDiscriminator: ts.factory.createStringLiteral(union.discriminant.wireValue)
+            eventDiscriminator: ts.factory.createStringLiteral(typeDeclaration.shape.discriminant.wireValue)
         };
     }
 }

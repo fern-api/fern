@@ -9,7 +9,7 @@
         multiline `data:` concatenation, and blank-line event boundaries per the SSE spec.
       type: feat
   createdAt: "2026-02-24"
-  irVersion: 63
+  irVersion: 65
 
 - version: 3.49.1
   changelogEntry:

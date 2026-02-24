@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade to IRv65
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-24"
+  version: 0.19.3
+
+- changelogEntry:
+    - summary: |
         Update @biomejs/biome from 2.3.11 to 2.4.3.
       type: chore
   irVersion: 61

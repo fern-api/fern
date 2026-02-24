@@ -112,7 +112,6 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     private async *iterSseEvents(): AsyncGenerator<T, void> {
-        this.controller.signal;
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let eventType: string | undefined;
@@ -123,7 +122,7 @@ export class Stream<T> implements AsyncIterable<T> {
 
             let terminatorIndex: number;
             while ((terminatorIndex = buf.indexOf("\n")) >= 0) {
-                const line = buf.slice(0, terminatorIndex);
+                const line = buf.slice(0, terminatorIndex).replace(/\r$/, "");
                 buf = buf.slice(terminatorIndex + 1);
 
                 if (!line.trim()) {
