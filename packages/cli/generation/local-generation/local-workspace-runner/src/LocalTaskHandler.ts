@@ -185,8 +185,8 @@ export class LocalTaskHandler {
                 this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
-                    ? "SDK regeneration\n\nUnable to analyze changes with AI, incrementing PATCH version."
-                    : "SDK regeneration\n\nUnable to analyze changes with AI, incrementing PATCH version.\n\n🌿 Generated with Fern";
+                    ? "SDK regeneration"
+                    : "SDK regeneration\n\n🌿 Generated with Fern";
                 return {
                     version: newVersion,
                     commitMessage: fallbackMessage
