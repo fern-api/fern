@@ -1118,6 +1118,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
                     default: false
+                })
+                .option("json", {
+                    boolean: true,
+                    description: "Output results as JSON to stdout (all other output goes to stderr).",
+                    default: false
                 }),
         async (argv) => {
             await validateWorkspaces({
@@ -1129,7 +1134,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 logWarnings: argv.warnings,
                 brokenLinks: argv.brokenLinks,
                 errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi
+                directFromOpenapi: argv.fromOpenapi,
+                outputJson: argv.json
             });
         }
     );
