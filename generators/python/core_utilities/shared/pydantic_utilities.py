@@ -105,7 +105,11 @@ if IS_PYDANTIC_V2:
     # lightweight placeholder so the ``PydanticField`` type alias and
     # any V1-only code paths still compile.
     class _ModelFieldPlaceholder:  # type: ignore[no-redef]
-        pass
+        alias: Optional[str] = None
+        default: Any = None
+
+        def get_default(self) -> Any:  # type: ignore[misc]
+            return self.default
 
     ModelField = _ModelFieldPlaceholder  # type: ignore[assignment, misc]
 else:
