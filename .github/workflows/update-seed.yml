@@ -51,9 +51,10 @@ permissions:
 
 env:
   DOCKER_BUILDKIT: 1
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 60
+  # TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  # TURBO_TEAM: "buildwithfern"
+  # TURBO_REMOTE_CACHE_TIMEOUT: 60
+  TURBO_CACHE: "local:rw"
 
 jobs:
   setup:
