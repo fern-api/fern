@@ -1257,7 +1257,11 @@ describe("${serviceName}", () => {
         // hasPagination determines if we need { once: false } for multiple mock requests
         // This is set after isCursorMissing is computed to ensure we don't allow multiple
         // requests when cursor is missing (since there's no next page to request)
-        let hasPagination = endpoint.pagination !== undefined;
+        // Only cursor and offset pagination generate Page objects with hasNextPage()/getNextPage()
+        const supportsPaginatedResponse =
+            endpoint.pagination !== undefined &&
+            (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset");
+        let hasPagination = supportsPaginatedResponse;
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
@@ -1319,7 +1323,7 @@ describe("${serviceName}", () => {
                 ${expectedDeclaration}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
-                    endpoint.pagination.type !== "custom"
+                    endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset"
                         ? isCursorMissing
                             ? code`
                             expect(${expectedName}).toEqual(${pageName}.data);
@@ -1400,7 +1404,7 @@ describe("${serviceName}", () => {
         expect(headers).toBeInstanceOf(Headers);`
                     : code`
                         ${
-                            endpoint.pagination !== undefined
+                            supportsPaginatedResponse
                                 ? paginationBlock
                                 : code`
                                 const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
