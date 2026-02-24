@@ -2212,13 +2212,15 @@ export class DocsDefinitionResolver {
             "og:background-image": ogBackgroundImage,
             ...rest
         } = this.parsedDocsConfig.metadata;
+        // Type assertion needed: og:dynamic and og:background-image are not yet in the
+        // published FDR SDK MetadataConfig type, but FDR accepts them at runtime.
         return {
             ...rest,
             "og:image": this.convertFileIdOrUrl(ogImage),
             "og:logo": this.convertFileIdOrUrl(ogLogo),
             "twitter:image": this.convertFileIdOrUrl(twitterImage),
             "og:background-image": this.convertFileIdOrUrl(ogBackgroundImage)
-        };
+        } as DocsV1Write.MetadataConfig;
     }
 
     private convertFileIdOrUrl(filepathOrUrl: docsYml.FilepathOrUrl | undefined): DocsV1Write.FileIdOrUrl | undefined {
