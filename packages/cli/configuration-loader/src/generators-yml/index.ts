@@ -8,6 +8,10 @@ export { GeneratorName } from "./GeneratorName.js";
 export { GENERATOR_INVOCATIONS } from "./generatorInvocations.js";
 export {
     addDefaultDockerOrgIfNotPresent,
+    correctDeprecatedDockerOrg,
+    correctDeprecatedDockerOrgWithWarning,
+    DEFAULT_DOCKER_ORG,
+    DEPRECATED_DOCKER_ORG,
     getGeneratorNameOrThrow,
     normalizeGeneratorName,
     removeDefaultDockerOrgIfPresent

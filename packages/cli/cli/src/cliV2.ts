@@ -1,4 +1,4 @@
-import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
+import { correctDeprecatedDockerOrg, DEPRECATED_DOCKER_ORG, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { Argv } from "yargs";
@@ -11,6 +11,20 @@ import { GenerationModeFilter, getGeneratorList } from "./commands/generator-lis
 import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata.js";
 import { getOrganization } from "./commands/organization/getOrganization.js";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator.js";
+
+/**
+ * Corrects the deprecated "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
+ * Used for CLI arguments that accept generator names.
+ */
+function warnAndCorrectDeprecatedDockerOrgV2(generatorName: string, cliContext: CliContext): string {
+    const corrected = correctDeprecatedDockerOrg(generatorName);
+    if (corrected !== generatorName) {
+        cliContext.logger.warn(
+            `"${generatorName}" is deprecated. Use "${corrected}" instead — the Docker org is "fernapi", not "${DEPRECATED_DOCKER_ORG}".`
+        );
+    }
+    return corrected;
+}
 
 export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
@@ -177,6 +191,9 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         }
                     });
 
+                    const correctedGenerator = argv.generator != null
+                        ? warnAndCorrectDeprecatedDockerOrgV2(argv.generator, cliContext)
+                        : undefined;
                     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: true
@@ -188,7 +205,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         const upgrades = await getProjectGeneratorUpgrades({
                             cliContext,
                             project,
-                            generatorFilter: argv.generator,
+                            generatorFilter: correctedGenerator,
                             groupFilter: argv.group,
                             includeMajor: argv.includeMajor,
                             channel: argv.channel
@@ -205,7 +222,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                     } else {
                         await upgradeGenerator({
                             cliContext,
-                            generator: argv.generator,
+                            generator: correctedGenerator,
                             group: argv.group,
                             project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                                 commandLineApiWorkspace: argv.api,
@@ -259,10 +276,11 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description: "Get repository for the generator invocation, if one is specified."
                         }),
                 async (argv) => {
+                    const correctedGetGenerator = warnAndCorrectDeprecatedDockerOrgV2(argv.generator, cliContext);
                     await cliContext.instrumentPostHogEvent({
                         command: "fern generator get",
                         properties: {
-                            generator: argv.generator,
+                            generator: correctedGetGenerator,
                             version: argv.version,
                             api: argv.api,
                             group: argv.group,
@@ -271,7 +289,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                     });
                     const generator = await getGeneratorMetadata({
                         cliContext,
-                        generatorFilter: argv.generator,
+                        generatorFilter: correctedGetGenerator,
                         groupFilter: argv.group,
                         apiFilter: argv.api,
                         project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {

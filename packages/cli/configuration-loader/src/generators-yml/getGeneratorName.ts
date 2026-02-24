@@ -3,6 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { GeneratorName } from "./GeneratorName.js";
 
 export const DEFAULT_DOCKER_ORG = "fernapi";
+export const DEPRECATED_DOCKER_ORG = "fern-api";
 
 /**
  * Adds the default Docker org prefix (fernapi/) to a generator name if no org is specified.
@@ -15,10 +16,46 @@ export const DEFAULT_DOCKER_ORG = "fernapi";
  * - "myorg/my-generator" -> "myorg/my-generator" (unchanged)
  */
 export function addDefaultDockerOrgIfNotPresent(generatorName: string): string {
+    // Correct deprecated "fern-api/" org to "fernapi/" silently
+    generatorName = correctDeprecatedDockerOrg(generatorName);
     if (generatorName.includes("/")) {
         return generatorName;
     }
     return `${DEFAULT_DOCKER_ORG}/${generatorName}`;
+}
+
+/**
+ * Corrects the deprecated Docker org prefix "fern-api/" to the correct "fernapi/".
+ * This handles a common user mistake where "fern-api" (the GitHub org) is used
+ * instead of "fernapi" (the Docker Hub org).
+ *
+ * Examples:
+ * - "fern-api/fern-typescript-sdk" -> "fernapi/fern-typescript-sdk"
+ * - "fernapi/fern-typescript-sdk" -> "fernapi/fern-typescript-sdk" (unchanged)
+ * - "myorg/my-generator" -> "myorg/my-generator" (unchanged)
+ */
+export function correctDeprecatedDockerOrg(generatorName: string): string {
+    const deprecatedPrefix = `${DEPRECATED_DOCKER_ORG}/`;
+    if (generatorName.startsWith(deprecatedPrefix)) {
+        return `${DEFAULT_DOCKER_ORG}/${generatorName.slice(deprecatedPrefix.length)}`;
+    }
+    return generatorName;
+}
+
+/**
+ * Corrects the deprecated Docker org prefix "fern-api/" to "fernapi/" and logs a warning.
+ * Use this variant when you have access to a TaskContext for user-visible warnings.
+ */
+export function correctDeprecatedDockerOrgWithWarning(generatorName: string, context: TaskContext): string {
+    const deprecatedPrefix = `${DEPRECATED_DOCKER_ORG}/`;
+    if (generatorName.startsWith(deprecatedPrefix)) {
+        const corrected = `${DEFAULT_DOCKER_ORG}/${generatorName.slice(deprecatedPrefix.length)}`;
+        context.logger.warn(
+            `"${generatorName}" is deprecated. Use "${corrected}" instead — the Docker org is "fernapi", not "fern-api".`
+        );
+        return corrected;
+    }
+    return generatorName;
 }
 
 /**
