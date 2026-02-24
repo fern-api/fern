@@ -879,7 +879,7 @@ export class EndpointSnippetGenerator {
     }): go.StructField[] {
         const args: go.StructField[] = [];
 
-        const pathParameters = this.context.associateByWireValue({
+        const pathParameters = this.context.associateByWireValueOrDefault({
             parameters: namedParameters,
             values: snippet.pathParameters ?? {}
         });
