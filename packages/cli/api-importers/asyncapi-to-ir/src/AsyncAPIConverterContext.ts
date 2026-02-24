@@ -17,6 +17,13 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         return msg != null && typeof msg === "object" && "payload" in msg;
     }
 
+    public getNamespacedTypeId(typeId: string): string {
+        if (this.namespace == null) {
+            return typeId;
+        }
+        return `${this.namespace}_${typeId}`;
+    }
+
     public getTypeIdFromMessageReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
         const messageMatch = reference.$ref.match(/\/messages\/(.+)$/);
         if (!messageMatch || !messageMatch[1]) {
@@ -43,7 +50,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         const simpleMessageMatch = reference.$ref.match(/^.*\/messages\/(.+)$/);
 
         if (schemaMatch && schemaMatch[1]) {
-            typeId = schemaMatch[1];
+            typeId = this.getNamespacedTypeId(schemaMatch[1]);
             return this.convertSchemaReferenceToTypeReference({
                 reference,
                 breadcrumbs,
@@ -54,7 +61,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
         } else if (messageMatch && messageMatch[2]) {
             const channelPath = messageMatch[1];
             const messageId = messageMatch[2];
-            typeId = `${channelPath}_${messageId}`;
+            typeId = this.getNamespacedTypeId(`${channelPath}_${messageId}`);
             return this.convertV3MessageReferenceToTypeReference({
                 reference,
                 breadcrumbs,
@@ -63,7 +70,7 @@ export class AsyncAPIConverterContext extends AbstractConverterContext<AsyncAPIV
                 typeId
             });
         } else if (simpleMessageMatch && simpleMessageMatch[1]) {
-            typeId = simpleMessageMatch[1];
+            typeId = this.getNamespacedTypeId(simpleMessageMatch[1]);
             return this.convertV2MessageReferenceToTypeReference({
                 reference,
                 breadcrumbs,

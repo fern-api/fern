@@ -74,7 +74,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                 if (messageSchema == null) {
                     continue;
                 }
-                const typeId = `${channelPath}_${messageId}`;
+                const typeId = this.context.getNamespacedTypeId(`${channelPath}_${messageId}`);
                 this.convertSchema({
                     id: typeId,
                     breadcrumbs: messageBreadcrumbs,
@@ -100,7 +100,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             }
 
             this.convertSchema({
-                id,
+                id: this.context.getNamespacedTypeId(id),
                 breadcrumbs: componentBreadcrumbs,
                 schema: payloadSchema
             });
@@ -110,7 +110,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
     private convertSchemas(): void {
         for (const [id, schema] of Object.entries(this.context.spec.components?.schemas ?? {})) {
             this.convertSchema({
-                id,
+                id: this.context.getNamespacedTypeId(id),
                 breadcrumbs: ["components", "schemas", id],
                 schema
             });

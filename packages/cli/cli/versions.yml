@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.86.0
+  changelogEntry:
+    - summary: |
+        Namespace AsyncAPI type IDs by spec file to prevent collisions when multiple
+        AsyncAPI specs define messages or schemas with identical keys. Type IDs are now
+        prefixed with the namespace (from generators.yml api configuration) when set,
+        ensuring that merging multiple specs no longer silently overwrites types.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.2
   changelogEntry:
     - summary: |
