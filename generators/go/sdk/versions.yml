@@ -6,7 +6,8 @@
         parameters. Previously, the generator produced `nil` for the `io.Reader` body argument
         instead of a valid `bytes.NewReader([]byte(...))` call, causing wire test failures.
         Also fixed the nop request branch to include option arguments (e.g. test ID headers)
-        in the method invocation.
+        in the method invocation, and fixed path parameter resolution to use
+        associateByWireValueOrDefault so missing path parameter values are synthesized.
       type: fix
   createdAt: "2026-02-24"
   irVersion: 61
