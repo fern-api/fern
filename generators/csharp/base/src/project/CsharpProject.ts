@@ -2,8 +2,8 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
 import { Eta } from "eta";
+import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
@@ -287,22 +287,24 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         }
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
-        const githubWorkflow = eta.renderString(githubWorkflowTemplate, {
-            projectName: this.name,
-            libraryPath: path.posix.join(libraryPath, this.name),
-            libraryProjectFilePath: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
-            testProjectFilePath: path.posix.join(
-                testPath,
-                this.names.files.testProject,
-                `${this.names.files.testProject}.csproj`
-            ),
-            shouldWritePublishBlock: this.context.publishConfig != null,
-            nugetTokenEnvvar:
-                this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
-                this.context.publishConfig?.apiKeyEnvironmentVariable === ""
-                    ? "NUGET_API_TOKEN"
-                    : this.context.publishConfig.apiKeyEnvironmentVariable
-        }).replaceAll("\\{", "{");
+        const githubWorkflow = eta
+            .renderString(githubWorkflowTemplate, {
+                projectName: this.name,
+                libraryPath: path.posix.join(libraryPath, this.name),
+                libraryProjectFilePath: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
+                testProjectFilePath: path.posix.join(
+                    testPath,
+                    this.names.files.testProject,
+                    `${this.names.files.testProject}.csproj`
+                ),
+                shouldWritePublishBlock: this.context.publishConfig != null,
+                nugetTokenEnvvar:
+                    this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
+                    this.context.publishConfig?.apiKeyEnvironmentVariable === ""
+                        ? "NUGET_API_TOKEN"
+                        : this.context.publishConfig.apiKeyEnvironmentVariable
+            })
+            .replaceAll("\\{", "{");
         const ghDir = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".github/workflows"));
         await mkdir(ghDir, { recursive: true });
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
