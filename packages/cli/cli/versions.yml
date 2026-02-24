@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.85.3
+  changelogEntry:
+    - summary: |
+        Remove unhelpful "Unable to analyze changes with AI" fallback message from
+        changelog entries when AI analysis fails during AUTO versioning. The changelog
+        now shows just the version header with no body instead.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.85.2
   changelogEntry:
     - summary: |
