@@ -87,3 +87,20 @@ service:
         path-parameters:
           param: string
       response: string
+
+    uploadWithPath:
+      docs: POST bytes with path param
+      path: /path/{param}
+      path-parameters:
+        param: string
+      method: POST
+      request:
+        name: UploadWithPath
+        body: bytes
+      response: string
+      examples:
+        - path-parameters:
+            param: "upload-path"
+          request: "bytes-content"
+          response:
+            body: "ok"

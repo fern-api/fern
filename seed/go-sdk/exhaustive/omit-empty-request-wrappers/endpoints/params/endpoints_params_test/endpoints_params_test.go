@@ -265,3 +265,24 @@ func TestEndpointsParamsModifyWithPathWithWireMock2(
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestEndpointsParamsModifyWithPathWithWireMock2", "PUT", "/params/path/param", nil, 1)
 }
+
+func TestEndpointsParamsUploadWithPathWithWireMock(
+	t *testing.T,
+) {
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	_, invocationErr := client.Endpoints.Params.UploadWithPath(
+		context.TODO(),
+		"upload-path",
+		nil,
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsParamsUploadWithPathWithWireMock", "POST", "/params/path/upload-path", nil, 1)
+}

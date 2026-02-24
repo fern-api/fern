@@ -15,9 +15,9 @@ func do() {
             "<token>",
         ),
     )
-    request := "string"
-    client.Endpoints.Primitive.GetAndReturnString(
+    client.Endpoints.Params.UploadWithPath(
         context.TODO(),
-        request,
+        "upload-path",
+        nil,
     )
 }
