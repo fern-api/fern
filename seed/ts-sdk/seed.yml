@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v63
+irVersion: v65
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -35,6 +35,9 @@ defaultOutputMode: github
 customFixtureConfig:
   customConfig: {}
 fixtures:
+  webhooks:
+    - outputFolder: no-custom-config
+      customConfig: null
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
