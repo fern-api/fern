@@ -9,26 +9,12 @@ import {
     generatorsYml,
     getFernDirectory,
     INCORRECT_DOCKER_ORG,
-    isGithubSelfhosted,
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
-import {
-    ContainerRunner,
-    haveSameNullishness,
-    replaceEnvVariables,
-    undefinedIfNullish,
-    undefinedIfSomeNullish
-} from "@fern-api/core-utils";
+import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import {
-    formatBootstrapSummary,
-    replayForget,
-    replayInit,
-    replayReset,
-    replayResetRemote,
-    replayStatusRemote
-} from "@fern-api/generator-cli";
+import { formatBootstrapSummary, replayInit } from "@fern-api/generator-cli";
 import {
     initializeAPI,
     initializeDocs,
@@ -85,6 +71,7 @@ import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/
 import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
+import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 
 void runCli();
@@ -700,6 +687,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("replay", {
                     boolean: true,
                     default: true,
+                    hidden: true,
                     description: "Run replay after generation (use --no-replay to skip)"
                 }),
         async (argv) => {
@@ -2048,78 +2036,23 @@ function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
 }
 
 function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command("replay", "Commands for managing SDK customizations", (yargs) => {
-        addReplayInitCommand(yargs, cliContext);
-        addReplayStatusCommand(yargs, cliContext);
-        addReplayForgetCommand(yargs, cliContext);
-        addReplayResetCommand(yargs, cliContext);
-        return yargs;
+    cli.command({
+        command: "replay",
+        describe: false, // hidden from --help
+        builder: (yargs) => {
+            addReplayInitCommand(yargs, cliContext);
+            return yargs;
+        },
+        handler: () => {
+            // parent command — subcommands handle execution
+        }
     });
-}
-
-interface ResolvedGithubConfig {
-    githubRepo: string;
-    token: string;
-    mode: "push" | "pull-request";
-    branch: string | undefined;
-}
-
-async function resolveGroupGithubConfig(
-    cliContext: CliContext,
-    groupName: string,
-    apiWorkspace: string | undefined
-): Promise<ResolvedGithubConfig> {
-    const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-        commandLineApiWorkspace: apiWorkspace,
-        defaultToAllApiWorkspaces: false
-    });
-
-    const workspace = project.apiWorkspaces[0];
-    if (workspace == null) {
-        return cliContext.failAndThrow("No API workspace found.");
-    }
-
-    const generatorsConfig = workspace.generatorsConfiguration;
-    if (generatorsConfig == null) {
-        return cliContext.failAndThrow("No generators.yml found in workspace.");
-    }
-
-    const group = generatorsConfig.groups.find((g) => g.groupName === groupName);
-    if (group == null) {
-        const available = generatorsConfig.groups.map((g) => g.groupName).join(", ");
-        return cliContext.failAndThrow(`Group "${groupName}" not found. Available groups: ${available}`);
-    }
-
-    const generatorWithGithub = group.generators.find((g) => g.raw?.github != null && isGithubSelfhosted(g.raw.github));
-
-    if (generatorWithGithub?.raw?.github == null || !isGithubSelfhosted(generatorWithGithub.raw.github)) {
-        return cliContext.failAndThrow(
-            `No generator in group "${groupName}" has a self-hosted github configuration (uri + token).`
-        );
-    }
-
-    const resolveEnv = <T>(value: T): T =>
-        replaceEnvVariables(value, {
-            onError: (message) => cliContext.failAndThrow(message)
-        });
-    const githubConfig = resolveEnv(generatorWithGithub.raw.github);
-
-    cliContext.logger.info(
-        `Using github config from group "${groupName}" generator "${generatorWithGithub.name}" (mode: ${githubConfig.mode ?? "pull-request"})`
-    );
-
-    return {
-        githubRepo: githubConfig.uri,
-        token: githubConfig.token,
-        mode: githubConfig.mode === "push" ? "push" : "pull-request",
-        branch: githubConfig.branch
-    };
 }
 
 function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "init",
-        "Initialize Replay for an existing SDK repository",
+        false, // hidden from --help
         (yargs) =>
             yargs
                 .option("group", {
@@ -2159,8 +2092,6 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 
             let githubRepo: string | undefined = argv.github;
             let token: string | undefined = argv.token;
-            let mode: "push" | "pull-request" = "pull-request";
-            let branch: string | undefined;
 
             // If --group is provided, load config from generators.yml
             if (argv.group != null) {
@@ -2168,8 +2099,6 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 // Use group config as defaults, allow --github/--token to override
                 githubRepo = githubRepo ?? resolved.githubRepo;
                 token = token ?? resolved.token;
-                mode = resolved.mode;
-                branch = resolved.branch;
             }
 
             if (githubRepo == null || token == null) {
@@ -2178,7 +2107,7 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 );
             }
 
-            cliContext.logger.info(`Initializing Replay for: ${githubRepo} (mode: ${mode})`);
+            cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
             if (argv.dryRun) {
                 cliContext.logger.info("(dry-run mode)");
             }
@@ -2189,8 +2118,6 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     token,
                     dryRun: argv.dryRun,
                     maxCommitsToScan: argv.maxCommits,
-                    mode,
-                    branch,
                     force: argv.force
                 });
 
@@ -2213,272 +2140,6 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             } catch (error) {
                 cliContext.failAndThrow(
                     `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
-                );
-            }
-        }
-    );
-}
-
-function addReplayStatusCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "status",
-        "Show tracked patches and generation info",
-        (yargs) =>
-            yargs
-                .option("group", {
-                    type: "string",
-                    demandOption: true,
-                    description: "Generator group from generators.yml (reads github config automatically)"
-                })
-                .option("api", {
-                    type: "string",
-                    description: "If multiple APIs, specify which API workspace to use"
-                }),
-        async (argv) => {
-            await cliContext.instrumentPostHogEvent({
-                command: "fern replay status"
-            });
-
-            const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api);
-
-            cliContext.logger.info(`Fetching Replay status from: ${resolved.githubRepo}`);
-
-            try {
-                const result = await replayStatusRemote({
-                    githubRepo: resolved.githubRepo,
-                    token: resolved.token,
-                    branch: resolved.branch
-                });
-
-                if (!result.initialized) {
-                    cliContext.logger.info("Replay is not initialized.");
-                    cliContext.logger.info("Run 'fern replay init' to initialize Replay for this repository.");
-                    return;
-                }
-
-                cliContext.logger.info(`Replay Status: ${resolved.githubRepo}\n`);
-                cliContext.logger.info(`Generations: ${result.generationsCount}`);
-
-                if (result.fullLock != null) {
-                    const lastGen = result.fullLock.generations.find(
-                        (g) => g.commit_sha === result.fullLock?.current_generation
-                    );
-                    if (lastGen) {
-                        cliContext.logger.info(
-                            `Last generation: ${lastGen.commit_sha.slice(0, 7)} (${lastGen.timestamp})`
-                        );
-                        cliContext.logger.info(`  CLI: ${lastGen.cli_version}`);
-                        if (Object.keys(lastGen.generator_versions).length > 0) {
-                            for (const [name, ver] of Object.entries(lastGen.generator_versions)) {
-                                cliContext.logger.info(`  ${name}: ${ver}`);
-                            }
-                        }
-                    }
-
-                    cliContext.logger.info(`\nPatches: ${result.fullLock.patches.length}`);
-                    if (result.fullLock.patches.length > 0) {
-                        for (const patch of result.fullLock.patches) {
-                            const type = patch.patch_content.includes("new file mode") ? "added" : "modified";
-                            cliContext.logger.info(`  ${patch.id} [${type}] "${patch.original_message.slice(0, 50)}"`);
-                            cliContext.logger.info(
-                                `    by ${patch.original_author} (${patch.original_commit.slice(0, 7)})`
-                            );
-                            for (const f of patch.files) {
-                                cliContext.logger.info(`    ${f}`);
-                            }
-                        }
-                    }
-                }
-            } catch (error) {
-                cliContext.failAndThrow(
-                    `Failed to fetch Replay status: ${error instanceof Error ? error.message : String(error)}`
-                );
-            }
-        }
-    );
-}
-
-function addReplayForgetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "forget <pattern>",
-        "Remove patches matching a file pattern",
-        (yargs) =>
-            yargs
-                .positional("pattern", {
-                    type: "string",
-                    description: "File pattern to match (e.g., 'src/utils/retry.ts' or 'src/legacy/**')",
-                    demandOption: true
-                })
-                .option("dry-run", {
-                    type: "boolean",
-                    default: false,
-                    description: "Report what would happen without modifying anything"
-                })
-                .option("path", {
-                    type: "string",
-                    description: "Path to the SDK repository (defaults to current directory)"
-                }),
-        async (argv) => {
-            await cliContext.instrumentPostHogEvent({
-                command: "fern replay forget"
-            });
-
-            const sdkPath = argv.path ?? process.cwd();
-            const pattern = argv.pattern;
-
-            if (!pattern) {
-                return cliContext.failAndThrow("Pattern is required");
-            }
-
-            cliContext.logger.info(`Forgetting patches matching: ${pattern}`);
-            if (argv.dryRun) {
-                cliContext.logger.info("(dry-run mode)");
-            }
-
-            try {
-                const result = replayForget({ outputDir: sdkPath, pattern, dryRun: argv.dryRun });
-
-                if (result.notFound) {
-                    cliContext.logger.info("No patches found matching that pattern.");
-                    return;
-                }
-
-                cliContext.logger.info(
-                    `\n${argv.dryRun ? "Would remove" : "Removed"} ${result.removed.length} patch(es):`
-                );
-                for (const patch of result.removed) {
-                    cliContext.logger.info(`  ${patch.id}: "${patch.message.slice(0, 50)}"`);
-                    for (const f of patch.files) {
-                        cliContext.logger.info(`    ${f}`);
-                    }
-                }
-
-                if (!argv.dryRun) {
-                    cliContext.logger.info("\nNext generation will restore pure generated code for these files.");
-                }
-            } catch (error) {
-                cliContext.failAndThrow(
-                    `Failed to forget patches: ${error instanceof Error ? error.message : String(error)}`
-                );
-            }
-        }
-    );
-}
-
-function addReplayResetCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "reset",
-        "Remove all Replay state (patches will no longer be preserved)",
-        (yargs) =>
-            yargs
-                .option("group", {
-                    type: "string",
-                    description: "Generator group from generators.yml (reads github config automatically)"
-                })
-                .option("api", {
-                    type: "string",
-                    description: "If multiple APIs, specify which API workspace to use"
-                })
-                .option("dry-run", {
-                    type: "boolean",
-                    default: false,
-                    description: "Report what would happen without modifying anything"
-                })
-                .option("path", {
-                    type: "string",
-                    description: "Path to the SDK repository (defaults to current directory)"
-                }),
-        async (argv) => {
-            await cliContext.instrumentPostHogEvent({
-                command: "fern replay reset"
-            });
-
-            // --group takes precedence over --path
-            if (argv.group != null) {
-                const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api);
-
-                cliContext.logger.info(`Resetting Replay for: ${resolved.githubRepo}`);
-                if (argv.dryRun) {
-                    cliContext.logger.info("(dry-run mode)");
-                }
-
-                if (!argv.dryRun) {
-                    const shouldContinue = await cliContext.confirmPrompt(
-                        "This will remove ALL tracked customizations. Your code changes will NOT be deleted, but they will no longer be automatically preserved across regenerations.\nAre you sure you want to continue?",
-                        false
-                    );
-                    if (!shouldContinue) {
-                        cliContext.logger.info("Reset cancelled.");
-                        return;
-                    }
-                }
-
-                try {
-                    const result = await replayResetRemote({
-                        githubRepo: resolved.githubRepo,
-                        token: resolved.token,
-                        branch: resolved.branch,
-                        dryRun: argv.dryRun
-                    });
-
-                    if (result.reset.nothingToReset) {
-                        cliContext.logger.info("Replay is not initialized. Nothing to reset.");
-                        return;
-                    }
-
-                    cliContext.logger.info(
-                        `${argv.dryRun ? "Would remove" : "Removed"} ${result.reset.patchesRemoved} patch(es).`
-                    );
-                    cliContext.logger.info(`${argv.dryRun ? "Would delete" : "Deleted"} replay.lock.`);
-
-                    if (result.branch != null) {
-                        cliContext.logger.info(`Pushed to branch: ${result.branch}`);
-                    }
-
-                    if (!argv.dryRun) {
-                        cliContext.logger.info("\nTo re-initialize, run: fern replay init");
-                    }
-                } catch (error) {
-                    cliContext.failAndThrow(
-                        `Failed to reset Replay: ${error instanceof Error ? error.message : String(error)}`
-                    );
-                }
-                return;
-            }
-
-            // Local path mode (existing behavior)
-            const sdkPath = argv.path ?? process.cwd();
-
-            if (!argv.dryRun) {
-                const shouldContinue = await cliContext.confirmPrompt(
-                    "This will remove ALL tracked customizations. Your code changes will NOT be deleted, but they will no longer be automatically preserved across regenerations.\nAre you sure you want to continue?",
-                    false
-                );
-                if (!shouldContinue) {
-                    cliContext.logger.info("Reset cancelled.");
-                    return;
-                }
-            }
-
-            try {
-                const result = replayReset({ outputDir: sdkPath, dryRun: argv.dryRun });
-
-                if (result.nothingToReset) {
-                    cliContext.logger.info("Replay is not initialized. Nothing to reset.");
-                    return;
-                }
-
-                cliContext.logger.info(
-                    `${argv.dryRun ? "Would remove" : "Removed"} ${result.patchesRemoved} patch(es).`
-                );
-                cliContext.logger.info(`${argv.dryRun ? "Would delete" : "Deleted"} replay.lock.`);
-
-                if (!argv.dryRun) {
-                    cliContext.logger.info("\nTo re-initialize, run: fern replay init");
-                }
-            } catch (error) {
-                cliContext.failAndThrow(
-                    `Failed to reset Replay: ${error instanceof Error ? error.message : String(error)}`
                 );
             }
         }

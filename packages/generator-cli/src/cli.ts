@@ -249,315 +249,190 @@ void yargs(hideBin(process.argv))
             )
             .demandCommand();
     })
-    .command("replay", "Manage SDK customization replay", (yargs) => {
-        return yargs
-            .command(
-                "init",
-                "Initialize Replay for an SDK repository by creating a PR",
-                (subYargs) => {
-                    return subYargs
-                        .option("github", {
-                            type: "string",
-                            required: true,
-                            description: "GitHub repository (e.g., owner/repo)"
-                        })
-                        .option("token", {
-                            type: "string",
-                            required: true,
-                            description: "GitHub token with push and PR permissions"
-                        })
-                        .option("dry-run", {
-                            type: "boolean",
-                            default: false,
-                            description: "Report what would happen without creating a PR"
-                        })
-                        .option("max-commits", {
-                            type: "number",
-                            description: "Max commits to scan for generation history"
-                        })
-                        .option("pr-title", {
-                            type: "string",
-                            description: "Custom title for the PR"
-                        })
-                        .option("pr-body", {
-                            type: "string",
-                            description: "Custom body for the PR"
-                        })
-                        .option("force", {
-                            type: "boolean",
-                            default: false,
-                            description: "Overwrite existing lockfile if Replay is already initialized"
-                        })
-                        .option("import-history", {
-                            type: "boolean",
-                            default: false,
-                            description: "Scan git history for existing patches (migration)"
-                        });
-                },
-                async (argv) => {
-                    if (argv.github == null || argv.token == null) {
-                        process.stderr.write("missing required arguments; please specify --github and --token flags\n");
-                        process.exit(1);
-                    }
-
-                    try {
-                        const result = await replayInit({
-                            githubRepo: argv.github,
-                            token: argv.token,
-                            dryRun: argv["dry-run"],
-                            maxCommitsToScan: argv["max-commits"],
-                            prTitle: argv["pr-title"],
-                            prBody: argv["pr-body"],
-                            force: argv.force,
-                            importHistory: argv["import-history"]
-                        });
-
-                        const logEntries = formatBootstrapSummary(result);
-                        for (const entry of logEntries) {
-                            process.stderr.write(`${entry.message}\n`);
-                        }
-
-                        if (!result.bootstrap.generationCommit) {
+    .command({
+        command: "replay",
+        describe: false,
+        builder: (yargs) => {
+            return yargs
+                .command(
+                    "init",
+                    false, // hidden from --help
+                    (subYargs) => {
+                        return subYargs
+                            .option("github", {
+                                type: "string",
+                                required: true,
+                                description: "GitHub repository (e.g., owner/repo)"
+                            })
+                            .option("token", {
+                                type: "string",
+                                required: true,
+                                description: "GitHub token with push and PR permissions"
+                            })
+                            .option("dry-run", {
+                                type: "boolean",
+                                default: false,
+                                description: "Report what would happen without creating a PR"
+                            })
+                            .option("max-commits", {
+                                type: "number",
+                                description: "Max commits to scan for generation history"
+                            })
+                            .option("pr-title", {
+                                type: "string",
+                                description: "Custom title for the PR"
+                            })
+                            .option("pr-body", {
+                                type: "string",
+                                description: "Custom body for the PR"
+                            })
+                            .option("force", {
+                                type: "boolean",
+                                default: false,
+                                description: "Overwrite existing lockfile if Replay is already initialized"
+                            })
+                            .option("import-history", {
+                                type: "boolean",
+                                default: false,
+                                description: "Scan git history for existing patches (migration)"
+                            });
+                    },
+                    async (argv) => {
+                        if (argv.github == null || argv.token == null) {
+                            process.stderr.write(
+                                "missing required arguments; please specify --github and --token flags\n"
+                            );
                             process.exit(1);
                         }
 
-                        if (argv["dry-run"]) {
-                            process.stderr.write("\nDry run complete. No PR created.\n");
+                        try {
+                            const result = await replayInit({
+                                githubRepo: argv.github,
+                                token: argv.token,
+                                dryRun: argv["dry-run"],
+                                maxCommitsToScan: argv["max-commits"],
+                                prTitle: argv["pr-title"],
+                                prBody: argv["pr-body"],
+                                force: argv.force,
+                                importHistory: argv["import-history"]
+                            });
+
+                            const logEntries = formatBootstrapSummary(result);
+                            for (const entry of logEntries) {
+                                process.stderr.write(`${entry.message}\n`);
+                            }
+
+                            if (!result.bootstrap.generationCommit) {
+                                process.exit(1);
+                            }
+
+                            if (argv["dry-run"]) {
+                                process.stderr.write("\nDry run complete. No PR created.\n");
+                            }
+
+                            // Write result as JSON to stdout for programmatic consumption
+                            process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+                            process.exit(0);
+                        } catch (error) {
+                            const errorMessage = error instanceof Error ? error.message : String(error);
+                            process.stderr.write(`Replay init failed: ${errorMessage}\n`);
+                            process.exit(1);
+                        }
+                    }
+                )
+                .command(
+                    "bootstrap <sdk-dir>",
+                    false, // hidden from --help
+                    (subYargs) => {
+                        return subYargs
+                            .positional("sdk-dir", {
+                                type: "string",
+                                description: "Path to the SDK output directory",
+                                demandOption: true
+                            })
+                            .option("dry-run", {
+                                type: "boolean",
+                                default: false,
+                                description: "Show what would happen without making changes"
+                            })
+                            .option("fernignore-action", {
+                                type: "string",
+                                choices: ["migrate", "delete", "skip"],
+                                default: "skip",
+                                description: "How to handle .fernignore: migrate, delete, or skip"
+                            })
+                            .option("import-history", {
+                                type: "boolean",
+                                default: false,
+                                description: "Scan git history for existing patches (migration)"
+                            });
+                    },
+                    async (argv) => {
+                        const sdkDir = argv["sdk-dir"];
+                        if (sdkDir == null) {
+                            process.stderr.write("Missing required argument: sdk-dir\n");
+                            process.exit(1);
                         }
 
-                        // Write result as JSON to stdout for programmatic consumption
-                        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
-                        process.exit(0);
-                    } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : String(error);
-                        process.stderr.write(`Replay init failed: ${errorMessage}\n`);
-                        process.exit(1);
-                    }
-                }
-            )
-            .command(
-                "bootstrap <sdk-dir>",
-                "Initialize Replay for an existing SDK repository",
-                (subYargs) => {
-                    return subYargs
-                        .positional("sdk-dir", {
-                            type: "string",
-                            description: "Path to the SDK output directory",
-                            demandOption: true
-                        })
-                        .option("dry-run", {
-                            type: "boolean",
-                            default: false,
-                            description: "Show what would happen without making changes"
-                        })
-                        .option("fernignore-action", {
-                            type: "string",
-                            choices: ["migrate", "delete", "skip"],
-                            default: "skip",
-                            description: "How to handle .fernignore: migrate, delete, or skip"
-                        })
-                        .option("import-history", {
-                            type: "boolean",
-                            default: false,
-                            description: "Scan git history for existing patches (migration)"
-                        });
-                },
-                async (argv) => {
-                    const sdkDir = argv["sdk-dir"];
-                    if (sdkDir == null) {
-                        process.stderr.write("Missing required argument: sdk-dir\n");
-                        process.exit(1);
-                    }
+                        try {
+                            const { bootstrap } = await import("@fern-api/replay");
+                            const outputDir = resolve(cwd(), sdkDir);
+                            const fernignoreAction = argv["fernignore-action"] as
+                                | "migrate"
+                                | "delete"
+                                | "skip"
+                                | undefined;
+                            const result = await bootstrap(outputDir, {
+                                dryRun: argv["dry-run"],
+                                fernignoreAction,
+                                importHistory: argv["import-history"]
+                            });
 
-                    try {
-                        const { bootstrap } = await import("@fern-api/replay");
-                        const outputDir = resolve(cwd(), sdkDir);
-                        const fernignoreAction = argv["fernignore-action"] as "migrate" | "delete" | "skip" | undefined;
-                        const result = await bootstrap(outputDir, {
-                            dryRun: argv["dry-run"],
-                            fernignoreAction,
-                            importHistory: argv["import-history"]
-                        });
-
-                        if (result.generationCommit) {
-                            process.stderr.write(
-                                `Found generation commit: ${result.generationCommit.sha.slice(0, 7)} "${result.generationCommit.message}"\n`
-                            );
-                            process.stderr.write(
-                                `Scanned commits since: ${result.scannedSinceGeneration.slice(0, 7)} (last generation)\n`
-                            );
-                            if (result.staleGenerationsSkipped > 0) {
+                            if (result.generationCommit) {
                                 process.stderr.write(
-                                    `Skipped ${result.staleGenerationsSkipped} older generation(s) — only tracking recent commits\n`
+                                    `Found generation commit: ${result.generationCommit.sha.slice(0, 7)} "${result.generationCommit.message}"\n`
+                                );
+                                process.stderr.write(
+                                    `Scanned commits since: ${result.scannedSinceGeneration.slice(0, 7)} (last generation)\n`
+                                );
+                                if (result.staleGenerationsSkipped > 0) {
+                                    process.stderr.write(
+                                        `Skipped ${result.staleGenerationsSkipped} older generation(s) — only tracking recent commits\n`
+                                    );
+                                }
+                            }
+
+                            process.stderr.write(
+                                `Patches detected: ${result.patchesDetected}, created: ${result.patchesCreated}\n`
+                            );
+
+                            if (result.warnings && result.warnings.length > 0) {
+                                for (const warning of result.warnings) {
+                                    process.stderr.write(`Warning: ${warning}\n`);
+                                }
+                            }
+
+                            if (argv["dry-run"]) {
+                                process.stderr.write("\nDry run complete. No changes made.\n");
+                            } else {
+                                process.stderr.write(
+                                    `\nBootstrap complete! Lockfile saved to ${outputDir}/.fern/replay.lock\n`
                                 );
                             }
-                        }
 
-                        process.stderr.write(
-                            `Patches detected: ${result.patchesDetected}, created: ${result.patchesCreated}\n`
-                        );
-
-                        if (result.warnings && result.warnings.length > 0) {
-                            for (const warning of result.warnings) {
-                                process.stderr.write(`Warning: ${warning}\n`);
-                            }
-                        }
-
-                        if (argv["dry-run"]) {
-                            process.stderr.write("\nDry run complete. No changes made.\n");
-                        } else {
-                            process.stderr.write(
-                                `\nBootstrap complete! Lockfile saved to ${outputDir}/.fern/replay.lock\n`
-                            );
-                        }
-
-                        process.exit(0);
-                    } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : String(error);
-                        process.stderr.write(`Bootstrap failed: ${errorMessage}\n`);
-                        process.exit(1);
-                    }
-                }
-            )
-            .command(
-                "status <sdk-dir>",
-                "Show replay status for an SDK repository",
-                (subYargs) => {
-                    return subYargs.positional("sdk-dir", {
-                        type: "string",
-                        description: "Path to the SDK output directory",
-                        demandOption: true
-                    });
-                },
-                async (argv) => {
-                    const sdkDir = argv["sdk-dir"];
-                    if (sdkDir == null) {
-                        process.stderr.write("Missing required argument: sdk-dir\n");
-                        process.exit(1);
-                    }
-
-                    try {
-                        const { status } = await import("@fern-api/replay");
-                        const outputDir = resolve(cwd(), sdkDir);
-                        const result = await status(outputDir);
-
-                        if (!result.initialized) {
-                            process.stderr.write(
-                                "Replay is not initialized. Run `generator-cli replay bootstrap` first.\n"
-                            );
+                            process.exit(0);
+                        } catch (error) {
+                            const errorMessage = error instanceof Error ? error.message : String(error);
+                            process.stderr.write(`Bootstrap failed: ${errorMessage}\n`);
                             process.exit(1);
                         }
-
-                        process.stderr.write(`Replay Status for ${outputDir}\n`);
-                        process.stderr.write(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
-                        process.stderr.write(`Patches: ${result.patches.length}\n`);
-
-                        if (result.lastGeneration) {
-                            process.stderr.write(`\nLast Generation:\n`);
-                            process.stderr.write(`  Commit: ${result.lastGeneration.sha.slice(0, 7)}\n`);
-                            process.stderr.write(`  Timestamp: ${result.lastGeneration.timestamp}\n`);
-                        }
-
-                        if (result.patches.length > 0) {
-                            process.stderr.write(`\nTracked Patches:\n`);
-                            for (const patch of result.patches) {
-                                const firstLine = patch.message.split("\n")[0];
-                                process.stderr.write(`  • ${patch.sha}: ${firstLine}\n`);
-                            }
-                        }
-
-                        process.exit(0);
-                    } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : String(error);
-                        process.stderr.write(`Status failed: ${errorMessage}\n`);
-                        process.exit(1);
                     }
-                }
-            )
-            .command(
-                "forget <sdk-dir> <patch-id>",
-                "Remove a patch from the lockfile",
-                (subYargs) => {
-                    return subYargs
-                        .positional("sdk-dir", {
-                            type: "string",
-                            description: "Path to the SDK output directory",
-                            demandOption: true
-                        })
-                        .positional("patch-id", {
-                            type: "string",
-                            description: "Patch ID to remove (use 'status' to see IDs)",
-                            demandOption: true
-                        });
-                },
-                async (argv) => {
-                    const sdkDir = argv["sdk-dir"];
-                    const patchId = argv["patch-id"];
-                    if (sdkDir == null || patchId == null) {
-                        process.stderr.write("Missing required arguments: sdk-dir and patch-id\n");
-                        process.exit(1);
-                    }
-
-                    try {
-                        const { forget } = await import("@fern-api/replay");
-                        const outputDir = resolve(cwd(), sdkDir);
-                        await forget(outputDir, patchId);
-
-                        process.stderr.write(`Removed patch ${patchId} from lockfile\n`);
-                        process.exit(0);
-                    } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : String(error);
-                        process.stderr.write(`Forget failed: ${errorMessage}\n`);
-                        process.exit(1);
-                    }
-                }
-            )
-            .command(
-                "reset <sdk-dir>",
-                "Reset replay (remove lockfile)",
-                (subYargs) => {
-                    return subYargs
-                        .positional("sdk-dir", {
-                            type: "string",
-                            description: "Path to the SDK output directory",
-                            demandOption: true
-                        })
-                        .option("force", {
-                            type: "boolean",
-                            default: false,
-                            description: "Skip confirmation prompt"
-                        });
-                },
-                async (argv) => {
-                    const sdkDir = argv["sdk-dir"];
-                    if (sdkDir == null) {
-                        process.stderr.write("Missing required argument: sdk-dir\n");
-                        process.exit(1);
-                    }
-
-                    try {
-                        const { reset } = await import("@fern-api/replay");
-                        const outputDir = resolve(cwd(), sdkDir);
-
-                        if (!argv.force) {
-                            process.stderr.write(
-                                "This will delete .fern/replay.lock and all tracked customizations.\n"
-                            );
-                            process.stderr.write("Use --force to confirm.\n");
-                            process.exit(1);
-                        }
-
-                        await reset(outputDir);
-                        process.stderr.write("Replay reset complete. Lockfile removed.\n");
-                        process.exit(0);
-                    } catch (error) {
-                        const errorMessage = error instanceof Error ? error.message : String(error);
-                        process.stderr.write(`Reset failed: ${errorMessage}\n`);
-                        process.exit(1);
-                    }
-                }
-            )
-            .demandCommand();
+                )
+                .demandCommand();
+        },
+        handler: () => {
+            // parent command — subcommands handle execution
+        }
     })
     .demandCommand()
     .showHelpOnFail(true)

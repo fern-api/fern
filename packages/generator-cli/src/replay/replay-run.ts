@@ -3,7 +3,7 @@ import { execFileSync } from "child_process";
 import { existsSync } from "fs";
 import { join } from "path";
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
-import { ensureReplayFernignoreEntries } from "../utils/fernignore";
+import { ensureReplayFernignoreEntries } from "./fernignore";
 
 export interface ReplayRunParams {
     outputDir: string;

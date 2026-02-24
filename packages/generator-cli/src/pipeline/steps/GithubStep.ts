@@ -62,7 +62,7 @@ export class GithubStep extends BaseStep {
                         replayResult
                     );
                 case "push":
-                    return await this.executePushMode(repository, skipCommit);
+                    return await this.executePushMode(repository);
                 default: {
                     const exhaustive: never = mode;
                     throw new Error(`Unexpected GitHub mode: ${String(exhaustive)}`);
@@ -263,20 +263,18 @@ export class GithubStep extends BaseStep {
         return result;
     }
 
-    private async executePushMode(repository: ClonedRepository, skipCommit: boolean): Promise<GithubStepResult> {
-        if (!skipCommit) {
-            if (this.config.branch != null) {
-                this.logger.debug(`Checking out branch ${this.config.branch}`);
-                await repository.checkout(this.config.branch);
-            }
-
-            await this.ensureFernignore();
-
-            this.logger.debug("Committing changes...");
-            const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
-            await repository.commitAllChanges(finalCommitMessage);
-            this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
+    private async executePushMode(repository: ClonedRepository): Promise<GithubStepResult> {
+        if (this.config.branch != null) {
+            this.logger.debug(`Checking out branch ${this.config.branch}`);
+            await repository.checkout(this.config.branch);
         }
+
+        await this.ensureFernignore();
+
+        this.logger.debug("Committing changes...");
+        const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
+        await repository.commitAllChanges(finalCommitMessage);
+        this.logger.debug(`Committed changes to local copy of GitHub repository at ${this.outputDir}`);
 
         const result: GithubStepResult = {
             executed: true,
@@ -284,11 +282,7 @@ export class GithubStep extends BaseStep {
         };
 
         if (!this.config.previewMode) {
-            if (skipCommit) {
-                await repository.forcePush();
-            } else {
-                await repository.pushWithRebasingRemote();
-            }
+            await repository.pushWithRebasingRemote();
 
             const pushedBranch = await repository.getCurrentBranch();
             result.branchUrl = `https://github.com/${this.config.uri}/tree/${pushedBranch}`;

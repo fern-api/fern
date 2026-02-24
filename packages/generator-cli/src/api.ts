@@ -14,33 +14,6 @@ export {
 export { type GithubPrParams, githubPr } from "./api/github-pr.js";
 export { type GithubPushParams, githubPush } from "./api/github-push.js";
 export { type GithubReleaseParams, githubRelease } from "./api/github-release.js";
-export { type ForgetResult, type ReplayForgetParams, replayForget } from "./api/replay-forget.js";
-export {
-    type BootstrapLogEntry,
-    formatBootstrapSummary,
-    type ReplayInitParams,
-    type ReplayInitResult,
-    replayInit
-} from "./api/replay-init.js";
-export { type ReplayResetParams, type ResetResult, replayReset } from "./api/replay-reset.js";
-export {
-    type ReplayResetRemoteParams,
-    type ReplayResetRemoteResult,
-    replayResetRemote
-} from "./api/replay-reset-remote.js";
-export { type ReplayRunParams, type ReplayRunResult, replayRun } from "./api/replay-run.js";
-export {
-    type ReplayStatusParams,
-    type ReplayStatusResult,
-    replayStatus,
-    type StatusGeneration,
-    type StatusPatch
-} from "./api/replay-status.js";
-export {
-    type ReplayStatusRemoteParams,
-    type ReplayStatusRemoteResult,
-    replayStatusRemote
-} from "./api/replay-status-remote.js";
 export {
     consolePipelineLogger,
     formatReplayPrBody,
@@ -54,3 +27,11 @@ export {
     PostGenerationPipeline,
     type ReplayStepResult
 } from "./pipeline/index.js";
+export {
+    type BootstrapLogEntry,
+    formatBootstrapSummary,
+    type ReplayInitParams,
+    type ReplayInitResult,
+    replayInit
+} from "./replay/replay-init.js";
+export { type ReplayRunParams, type ReplayRunResult, replayRun } from "./replay/replay-run.js";

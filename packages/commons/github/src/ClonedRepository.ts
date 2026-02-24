@@ -257,7 +257,7 @@ export class ClonedRepository {
     public async forcePush(): Promise<void> {
         await this.git.cwd(this.clonePath);
         const currentBranch = await this.getCurrentBranch();
-        await this.git.push("origin", currentBranch, ["--force"]);
+        await this.git.push("origin", currentBranch, ["--force-with-lease"]);
     }
 
     public async createBranchFromHead(branchName: string): Promise<void> {
@@ -297,7 +297,7 @@ export class ClonedRepository {
     public async createAndPushTag(tagName: string, commitSha: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         await this.git.tag(["-f", tagName, commitSha]);
-        await this.git.push("origin", `refs/tags/${tagName}`, ["--force"]);
+        await this.git.push("origin", `refs/tags/${tagName}`, ["--force-with-lease"]);
     }
 
     public async overwriteLocalContents(sourceDirectoryPath: string): Promise<void> {

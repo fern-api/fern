@@ -4,7 +4,7 @@ import { Octokit } from "@octokit/rest";
 import { existsSync } from "fs";
 import { join } from "path";
 import tmp from "tmp-promise";
-import { ensureReplayFernignoreEntriesSync } from "../utils/fernignore";
+import { ensureReplayFernignoreEntriesSync } from "./fernignore";
 
 export interface ReplayInitParams {
     /** GitHub repo URI (e.g., "fern-demo/fern-replay-testbed-java-sdk") */
@@ -15,10 +15,6 @@ export interface ReplayInitParams {
     dryRun?: boolean;
     /** Max commits to scan for generation history */
     maxCommitsToScan?: number;
-    /** GitHub mode: "pull-request" creates a PR (default), "push" commits directly */
-    mode?: "push" | "pull-request";
-    /** Target branch (used in push mode, defaults to default branch) */
-    branch?: string;
     /** Title for the PR */
     prTitle?: string;
     /** Body for the PR */
@@ -41,22 +37,20 @@ export interface ReplayInitResult {
 /**
  * Initialize Replay for an SDK repository.
  *
- * Supports two modes:
- * - "pull-request" (default): creates a branch and opens a PR
- * - "push": commits directly to the target branch
+ * Creates a branch and opens a PR with the replay lockfile.
  *
  * Flow:
  * 1. Clone the SDK repo
  * 2. Run bootstrap() to scan history and create lockfile
  * 3. Ensure .fernignore has replay entries
  * 4. Commit with [fern-replay] prefix (recognized by isGenerationCommit)
- * 5. Push (branch + PR in pull-request mode, direct push in push mode)
+ * 5. Push branch and open PR
  *
  * The [fern-replay] commit message prefix ensures the bootstrap commit
  * is NOT treated as a user customization patch by ReplayDetector.
  */
 export async function replayInit(params: ReplayInitParams): Promise<ReplayInitResult> {
-    const { githubRepo, token, dryRun, mode = "pull-request" } = params;
+    const { githubRepo, token, dryRun } = params;
 
     // 1. Clone the repo into a temp directory
     const tmpDir = await tmp.dir({ unsafeCleanup: true });
@@ -68,15 +62,6 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
     });
 
     const defaultBranch = await repository.getDefaultBranch();
-    const baseBranch = params.branch ?? defaultBranch;
-
-    // If a target branch is specified, check it out before bootstrap
-    if (params.branch != null) {
-        const branchExists = await repository.remoteBranchExists(params.branch);
-        if (branchExists) {
-            await repository.checkoutRemoteBranch(params.branch);
-        }
-    }
 
     // 2. Run bootstrap
     const bootstrapResult = await bootstrap(repoPath, {
@@ -105,28 +90,7 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
         existsSync(join(repoPath, f))
     );
 
-    if (mode === "push") {
-        // Push mode: commit on current branch and push directly
-        const git = new GitClient(repoPath);
-        await git.exec(["add", ...filesToAdd]);
-        await git.exec([
-            "-c",
-            `user.name=${FERN_BOT_NAME}`,
-            "-c",
-            `user.email=${FERN_BOT_EMAIL}`,
-            "commit",
-            "-m",
-            commitMessage
-        ]);
-        await repository.pushUpstream(baseBranch);
-
-        return {
-            bootstrap: bootstrapResult,
-            branch: baseBranch
-        };
-    }
-
-    // Pull-request mode: create branch, commit, push, create PR
+    // Create branch, commit, push, create PR
     const branchName = `fern-replay/init-${Date.now()}`;
     await repository.checkoutOrCreateLocal(branchName);
 
@@ -154,7 +118,7 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
         owner: parsed.owner,
         repo: parsed.repo,
         head: branchName,
-        base: baseBranch,
+        base: defaultBranch,
         title: prTitle,
         body: prBody
     });

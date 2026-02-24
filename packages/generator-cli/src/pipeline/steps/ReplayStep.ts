@@ -1,4 +1,4 @@
-import { replayRun } from "../../api/replay-run";
+import { replayRun } from "../../replay/replay-run";
 import type { PipelineLogger } from "../PipelineLogger";
 import type { PipelineContext, ReplayStepConfig, ReplayStepResult } from "../types";
 import { BaseStep } from "./BaseStep";

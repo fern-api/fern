@@ -13,7 +13,6 @@ export * from "./CustomCodeSampleLanguage.js";
 export * from "./CustomCodeSampleSdk.js";
 export * from "./CustomPagination.js";
 export * from "./DiscriminatedOneOfSchema.js";
-export * from "./DiscriminatorContext.js";
 export * from "./DoubleSchema.js";
 export * from "./Endpoint.js";
 export * from "./EndpointExample.js";

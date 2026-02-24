@@ -18,6 +18,15 @@ export class PostGenerationPipeline {
         private readonly config: PipelineConfig,
         private readonly logger: PipelineLogger = consolePipelineLogger
     ) {
+        // Disallow push mode + replay: push mode force-pushes to the base branch,
+        // which is incompatible with replay's 3-way merge workflow.
+        if (config.replay?.enabled && config.github?.mode === "push") {
+            this.logger.warn(
+                "Replay is not supported with GitHub push mode. Disabling replay to prevent force push to base branch."
+            );
+            config.replay.enabled = false;
+        }
+
         if (config.replay?.enabled) {
             this.steps.push(
                 new ReplayStep(
