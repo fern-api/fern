@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.2
+  changelogEntry:
+    - summary: |
+        Rename `Union#member?` to `Union#type_member?` to avoid rubocop-minitest's
+        `Minitest/AssertIncludes` cop incorrectly autocorrecting `assert obj.member?(x)`
+        to `assert_includes obj, x`. The autocorrected form calls `Module#include?` which
+        raises `TypeError: wrong argument type Class (expected Module)` on union type tests.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
 - version: 1.0.1
   changelogEntry:
     - summary: |
