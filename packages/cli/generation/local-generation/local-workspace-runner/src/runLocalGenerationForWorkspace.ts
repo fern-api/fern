@@ -50,8 +50,8 @@ export async function runLocalGenerationForWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     ai: generatorsYml.AiServicesSchema | undefined;
-    replay: generatorsYml.ReplayConfigSchema | undefined;
-    noReplay: boolean;
+    replay?: generatorsYml.ReplayConfigSchema | undefined;
+    noReplay?: boolean;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
