@@ -3,6 +3,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
+    getReplacedHref,
     isValidRelativeSlug,
     parseImagePaths,
     type ReferencedMarkdownFile,
@@ -249,6 +250,19 @@ export class DocsDefinitionResolver {
     private markdownFilesToAvailability: Map<AbsoluteFilePath, docsYml.RawSchemas.Availability> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     private referencedMarkdownFiles: ReferencedMarkdownFile[] = [];
+    private pendingApiRegistrations: Array<{
+        ir: IntermediateRepresentation;
+        snippetsConfig: APIV1Write.SnippetsConfig;
+        playgroundConfig?: PlaygroundConfig;
+        apiName?: string;
+        workspace?: FernWorkspace;
+        openApiSourceFilePath?: AbsoluteFilePath;
+        graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
+        graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+        tempApiDefinitionId: string;
+        apiReferenceNode: FernNavigation.V1.ApiReferenceNode;
+    }> = [];
+    private pendingApiCounter = 0;
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         const resolveStartTime = performance.now();
         const startMemory = process.memoryUsage();
@@ -436,6 +450,43 @@ export class DocsDefinitionResolver {
             await this.getMarkdownFilesToFullyQualifiedPathNames(root);
         const pathNameTime = performance.now() - pathNameStart;
         this.taskContext.logger.debug(`Got path names in ${pathNameTime.toFixed(0)}ms`);
+
+        // Process deferred API registrations: resolve .mdx/.md file path links in IR descriptions,
+        // then register APIs with FDR and update the navigation tree with real API definition IDs.
+        if (this.pendingApiRegistrations.length > 0) {
+            this.taskContext.logger.debug(
+                `Processing ${this.pendingApiRegistrations.length} deferred API registrations...`
+            );
+            const deferredStart = performance.now();
+            for (const pending of this.pendingApiRegistrations) {
+                // Resolve .mdx/.md file path links in all IR description (docs) fields
+                this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
+
+                // Register the API with resolved descriptions
+                const realApiDefinitionId = await this.registerApi({
+                    ir: pending.ir,
+                    snippetsConfig: pending.snippetsConfig,
+                    playgroundConfig: pending.playgroundConfig,
+                    apiName: pending.apiName,
+                    workspace: pending.workspace,
+                    openApiSourceFilePath: pending.openApiSourceFilePath,
+                    graphqlOperations: pending.graphqlOperations,
+                    graphqlTypes: pending.graphqlTypes
+                });
+
+                // Update all apiDefinitionId references in the navigation subtree
+                this.updateApiDefinitionIdInTree(
+                    pending.apiReferenceNode,
+                    pending.tempApiDefinitionId,
+                    realApiDefinitionId
+                );
+            }
+            const deferredTime = performance.now() - deferredStart;
+            this.taskContext.logger.debug(
+                `Processed deferred API registrations in ${deferredTime.toFixed(0)}ms`
+            );
+            this.pendingApiRegistrations = [];
+        }
 
         this.taskContext.logger.debug("Replacing image paths and URLs in markdown...");
         const replaceStart = performance.now();
@@ -1400,21 +1451,15 @@ export class DocsDefinitionResolver {
 
         const openApiSource = (openapiWorkspace ?? workspace)?.getSources().find((s) => s.type === "openapi");
 
-        const apiDefinitionId = await this.registerApi({
-            ir,
-            snippetsConfig,
-            playgroundConfig: { oauth: item.playground?.oauth },
-            apiName: apiNameForRegistration,
-            workspace,
-            openApiSourceFilePath: openApiSource?.absoluteFilePath,
-            graphqlOperations: graphqlData.operations,
-            graphqlTypes: graphqlData.types
-        });
+        // Use a temporary API definition ID for building the navigation tree.
+        // The real ID will be assigned after markdownFilesToPathName is available,
+        // at which point we resolve .mdx/.md file path links in descriptions before registering.
+        const tempApiDefinitionId = `__pending_api_${this.pendingApiCounter++}__`;
 
         // Create API definition WITH GraphQL operations (single full conversion)
         const api = convertIrToApiDefinition({
             ir,
-            apiDefinitionId,
+            apiDefinitionId: tempApiDefinitionId,
             playgroundConfig: { oauth: item.playground?.oauth },
             context: this.taskContext,
             graphqlOperations: graphqlData.operations,
@@ -1466,7 +1511,23 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[relativePath] = processedContent;
         }
 
-        return node.get();
+        const apiReferenceNode = node.get();
+
+        // Store pending registration for deferred processing after markdownFilesToPathName is available
+        this.pendingApiRegistrations.push({
+            ir,
+            snippetsConfig,
+            playgroundConfig: { oauth: item.playground?.oauth },
+            apiName: apiNameForRegistration,
+            workspace,
+            openApiSourceFilePath: openApiSource?.absoluteFilePath,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types,
+            tempApiDefinitionId,
+            apiReferenceNode
+        });
+
+        return apiReferenceNode;
     }
 
     private async toChangelogNode(
@@ -2168,6 +2229,97 @@ export class DocsDefinitionResolver {
             url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
             _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
         });
+    }
+
+    /**
+     * Recursively walks the IR object and resolves .mdx/.md file path links in all `docs` string fields.
+     * This ensures that OpenAPI descriptions containing markdown links to .mdx/.md pages
+     * are resolved to proper URL slugs before being sent to FDR.
+     */
+    private resolveLinksInIrDocs(
+        ir: IntermediateRepresentation,
+        markdownFilesToPathName: Record<AbsoluteFilePath, string>
+    ): void {
+        const metadata = {
+            absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
+            absolutePathToMarkdownFile: this.docsWorkspace.absoluteFilePath
+        };
+        this.resolveLinksInObject(ir, markdownFilesToPathName, metadata);
+    }
+
+    /**
+     * Recursively walks an object and resolves .mdx/.md file path links in all `docs` string fields.
+     */
+    private resolveLinksInObject(
+        obj: unknown,
+        markdownFilesToPathName: Record<AbsoluteFilePath, string>,
+        metadata: { absolutePathToFernFolder: AbsoluteFilePath; absolutePathToMarkdownFile: AbsoluteFilePath }
+    ): void {
+        if (obj == null || typeof obj !== "object") {
+            return;
+        }
+        if (Array.isArray(obj)) {
+            for (const item of obj) {
+                this.resolveLinksInObject(item, markdownFilesToPathName, metadata);
+            }
+            return;
+        }
+        const record = obj as Record<string, unknown>;
+        for (const [key, value] of Object.entries(record)) {
+            if (key === "docs" && typeof value === "string") {
+                record[key] = this.resolveLinksInMarkdownString(value, markdownFilesToPathName, metadata);
+            } else if (typeof value === "object") {
+                this.resolveLinksInObject(value, markdownFilesToPathName, metadata);
+            }
+        }
+    }
+
+    /**
+     * Resolves .mdx/.md file path links in a markdown string to URL slugs.
+     * For example, converts [Order](/docs/pages/objects/Order.mdx) to [Order](/objects/order).
+     */
+    private resolveLinksInMarkdownString(
+        markdown: string,
+        markdownFilesToPathName: Record<AbsoluteFilePath, string>,
+        metadata: { absolutePathToFernFolder: AbsoluteFilePath; absolutePathToMarkdownFile: AbsoluteFilePath }
+    ): string {
+        // Match markdown links ending in .md or .mdx, optionally with an anchor fragment
+        return markdown.replace(/\[([^\]]*)\]\(([^)]+\.mdx?(?:#[^)]*)?)\)/g, (match, text, fullHref) => {
+            const hashIndex = fullHref.indexOf("#");
+            const href = hashIndex >= 0 ? fullHref.substring(0, hashIndex) : fullHref;
+            const anchor = hashIndex >= 0 ? fullHref.substring(hashIndex) : "";
+
+            const replaced = getReplacedHref({ href, metadata, markdownFilesToPathName });
+            if (replaced != null && replaced.type === "replace") {
+                return `[${text}](${replaced.slug}${anchor})`;
+            }
+            return match;
+        });
+    }
+
+    /**
+     * Recursively walks a navigation node tree and replaces all occurrences of
+     * oldApiDefinitionId with newApiDefinitionId.
+     */
+    private updateApiDefinitionIdInTree(node: unknown, oldId: string, newId: string): void {
+        if (node == null || typeof node !== "object") {
+            return;
+        }
+        if (Array.isArray(node)) {
+            for (const item of node) {
+                this.updateApiDefinitionIdInTree(item, oldId, newId);
+            }
+            return;
+        }
+        const record = node as Record<string, unknown>;
+        if (record["apiDefinitionId"] === oldId) {
+            record["apiDefinitionId"] = newId;
+        }
+        for (const value of Object.values(record)) {
+            if (typeof value === "object") {
+                this.updateApiDefinitionIdInTree(value, oldId, newId);
+            }
+        }
     }
 }
 
