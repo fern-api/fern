@@ -30,6 +30,10 @@ on:
         default: true
         type: boolean
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 60
 
 jobs:
   create-dependabot-prs:
