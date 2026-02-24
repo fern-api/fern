@@ -2,7 +2,6 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, LoggingExecutable } from "@fern-api/logging-execa";
 import { writeFile } from "fs/promises";
-import path from "path";
 import tmp from "tmp-promise";
 
 const GENERATOR_AGENT_NPM_PACKAGE = "@fern-api/generator-cli";
@@ -249,35 +248,28 @@ export class GeneratorAgentClient {
                 this.logger.debug(`${GENERATOR_AGENT_NPM_PACKAGE} not found on PATH, attempting install...`);
             }
 
-            // Install to a temp directory (avoids modifying the user's global node_modules)
-            const npm = createLoggingExecutable("npm", {
+            // Install globally via pnpm (uses ~/.local/share/pnpm/, avoids read-only npm global dirs)
+            const pnpm = createLoggingExecutable("pnpm", {
                 cwd: process.cwd(),
                 logger: this.logger,
                 ...options
             });
             try {
-                const tmpDir = await tmp.dir({ unsafeCleanup: true });
-                this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} locally in ${tmpDir.path}...`);
-                await npm(["install", "--prefix", tmpDir.path, GENERATOR_AGENT_NPM_PACKAGE]);
-                const localBinPath = path.join(tmpDir.path, "node_modules", ".bin", "generator-cli");
-                const localCli = createLoggingExecutable(localBinPath, {
-                    cwd: process.cwd(),
-                    logger: this.logger,
-                    ...options
-                });
-                const version = await localCli(["--version"]);
+                this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} globally via pnpm...`);
+                await pnpm(["add", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
+                const version = await globalCli(["--version"]);
                 this.logger.debug(
-                    `Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} locally, version ${version.stdout.trim()}`
+                    `Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout.trim()}`
                 );
-                this.resolvedCli = localCli;
-                return localCli;
-            } catch (localError) {
+                this.resolvedCli = globalCli;
+                return globalCli;
+            } catch (installError) {
                 this.logger.debug(
-                    `Local install also failed: ${localError instanceof Error ? localError.message : String(localError)}`
+                    `pnpm global install failed: ${installError instanceof Error ? installError.message : String(installError)}`
                 );
                 throw new Error(
-                    `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE} locally. ` +
-                        `Ensure npm is available and network access is working.`
+                    `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}. ` +
+                        `Ensure pnpm is available and network access is working.`
                 );
             }
         }
