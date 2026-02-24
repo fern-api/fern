@@ -32,10 +32,12 @@ export declare namespace Stream {
     interface SseEvent {
         type: "sse";
         streamTerminator?: string;
+        eventDiscriminator?: string;
     }
 }
 
 const DATA_PREFIX = "data:";
+const EVENT_PREFIX = "event:";
 
 export class Stream<T> implements AsyncIterable<T> {
     <% if (streamType === "wrapper") { %>
@@ -51,6 +53,7 @@ export class Stream<T> implements AsyncIterable<T> {
     private prefix: string | undefined;
     private messageTerminator: string;
     private streamTerminator: string | undefined;
+    private eventDiscriminator: string | undefined;
     private controller: AbortController = new AbortController();
     private decoder: TextDecoder | undefined;
 
@@ -61,6 +64,7 @@ export class Stream<T> implements AsyncIterable<T> {
             this.prefix = DATA_PREFIX;
             this.messageTerminator = "\n";
             this.streamTerminator = eventShape.streamTerminator;
+            this.eventDiscriminator = eventShape.eventDiscriminator;
         } else {
             this.messageTerminator = eventShape.messageTerminator;
         }
@@ -73,6 +77,14 @@ export class Stream<T> implements AsyncIterable<T> {
     }
 
     private async *iterMessages(): AsyncGenerator<T, void> {
+        if (this.eventDiscriminator != null) {
+            yield* this.iterSseEvents();
+        } else {
+            yield* this.iterDataMessages();
+        }
+    }
+
+    private async *iterDataMessages(): AsyncGenerator<T, void> {
         this.controller.signal;
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
@@ -106,6 +118,76 @@ export class Stream<T> implements AsyncIterable<T> {
                 prefixSeen = false;
             }
         }
+    }
+
+    private async *iterSseEvents(): AsyncGenerator<T, void> {
+        this.controller.signal;
+        const stream = readableStreamAsyncIterable<any>(this.stream);
+        let buf = "";
+        let eventType: string | undefined;
+        let dataValue: string | undefined;
+
+        for await (const chunk of stream) {
+            buf += this.decodeChunk(chunk);
+
+            let terminatorIndex: number;
+            while ((terminatorIndex = buf.indexOf("\n")) >= 0) {
+                const line = buf.slice(0, terminatorIndex);
+                buf = buf.slice(terminatorIndex + 1);
+
+                if (!line.trim()) {
+                    if (dataValue != null) {
+                        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                            return;
+                        }
+                        const data = this.injectDiscriminator(dataValue, eventType);
+                        const message = await this.parse(JSON.parse(data));
+                        yield message;
+                    }
+                    eventType = undefined;
+                    dataValue = undefined;
+                    continue;
+                }
+
+                if (line.startsWith(EVENT_PREFIX)) {
+                    eventType = line.slice(EVENT_PREFIX.length).trim();
+                } else if (line.startsWith(DATA_PREFIX)) {
+                    const val = line.slice(DATA_PREFIX.length).trim();
+                    dataValue = dataValue != null ? dataValue + "\n" + val : val;
+                }
+            }
+        }
+
+        if (dataValue != null) {
+            if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                return;
+            }
+            const data = this.injectDiscriminator(dataValue, eventType);
+            const message = await this.parse(JSON.parse(data));
+            yield message;
+        }
+    }
+
+    private injectDiscriminator(data: string, eventType: string | undefined): string {
+        if (this.eventDiscriminator == null || eventType == null) {
+            return data;
+        }
+        const trimmed = data.trim();
+        if (trimmed.length === 0 || trimmed[0] !== "{") {
+            return data;
+        }
+        const quotedField = JSON.stringify(this.eventDiscriminator);
+        if (data.includes(quotedField + ":") || data.includes(quotedField + " :")) {
+            return data;
+        }
+        const injected = quotedField + ":" + JSON.stringify(eventType);
+        const openIdx = data.indexOf("{");
+        const after = data.slice(openIdx + 1);
+        const afterTrimmed = after.trim();
+        if (afterTrimmed.length === 0 || afterTrimmed[0] === "}") {
+            return data.slice(0, openIdx + 1) + injected + after;
+        }
+        return data.slice(0, openIdx + 1) + injected + "," + after;
     }
 
     async *[Symbol.asyncIterator](): AsyncIterator<T, void, unknown> {

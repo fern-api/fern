@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.2
+  changelogEntry:
+    - summary: |
+        Add event-level SSE discrimination support. When an SSE streaming endpoint returns a
+        discriminated union with `discriminatorContext: "protocol"`, the Stream class injects the
+        SSE `event:` field value into the JSON data as the discriminator key before deserialization.
+        This matches the Go SDK's approach and supports proper SSE event-level discrimination,
+        multiline `data:` concatenation, and blank-line event boundaries per the SSE spec.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 63
+
 - version: 3.49.1
   changelogEntry:
     - summary: |

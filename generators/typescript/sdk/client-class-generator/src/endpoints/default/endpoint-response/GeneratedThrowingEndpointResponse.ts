@@ -668,10 +668,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         } else if (this.response?.type === "streaming") {
             const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
                 sse: (sse) => ({
-                    type: "sse",
+                    type: "sse" as const,
                     ...(sse.terminator != null
                         ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
-                        : {})
+                        : {}),
+                    ...this.getEventDiscriminator(sse.payload, context)
                 }),
                 json: (json) => ({
                     type: "json",
@@ -1056,5 +1057,27 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             this.getReferenceToError(context),
             context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
         );
+    }
+
+    private getEventDiscriminator(
+        payload: FernIr.TypeReference,
+        context: SdkContext
+    ): { eventDiscriminator: ts.Expression } | Record<string, never> {
+        if (payload.type !== "named") {
+            return {};
+        }
+        const typeDeclaration = context.type.getTypeDeclaration(payload);
+        if (typeDeclaration.shape.type !== "union") {
+            return {};
+        }
+        const union = typeDeclaration.shape as FernIr.UnionTypeDeclaration & {
+            discriminatorContext?: string;
+        };
+        if (union.discriminatorContext !== "protocol") {
+            return {};
+        }
+        return {
+            eventDiscriminator: ts.factory.createStringLiteral(union.discriminant.wireValue)
+        };
     }
 }
