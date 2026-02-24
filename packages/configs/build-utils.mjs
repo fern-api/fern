@@ -67,10 +67,9 @@ export async function buildGenerator(dirname, options = {}) {
         const generatorCliJs = path.join(path.dirname(generatorCliPkg), "dist", "cli.js");
         if (existsSync(generatorCliJs)) {
             await cp(generatorCliJs, path.join(dirname, "dist", "generator-cli.cjs"));
-            console.log("Bundled generator-cli.cjs alongside generator output");
         }
-    } catch (err) {
-        console.warn("Skipping generator-cli bundling:", err.message);
+    } catch {
+        // generator-cli not available in this context, skip bundling
     }
 }
 
