@@ -3,12 +3,14 @@ import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
-import { template } from "lodash-es";
+import { Eta } from "eta";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
 import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
+
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 export const CORE_DIRECTORY_NAME = "Core";
 export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
@@ -285,7 +287,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         }
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
-        const githubWorkflow = template(githubWorkflowTemplate)({
+        const githubWorkflow = eta.renderString(githubWorkflowTemplate, {
             projectName: this.name,
             libraryPath: path.posix.join(libraryPath, this.name),
             libraryProjectFilePath: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
@@ -436,7 +438,7 @@ dotnet_diagnostic.IDE0005.severity = error
         const testCsProjTemplateContents = (
             await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
         ).toString();
-        const testCsProjContents = template(testCsProjTemplateContents)({
+        const testCsProjContents = eta.renderString(testCsProjTemplateContents, {
             projectName: this.name,
             testProjectName
         });
@@ -699,7 +701,7 @@ dotnet_diagnostic.IDE0005.severity = error
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
-    return template(contents)(variables);
+    return eta.renderString(contents, variables);
 }
 
 function getAsIsFilepath(filename: string): string {
