@@ -99,7 +99,7 @@ export class AddCommand {
 
         await this.checkForDuplicate({ fernYmlPath, language });
 
-        const output = args.output != null ? this.parseOutput(args.output) : await this.promptOutput(language);
+        const output = args.output != null ? this.parseOutput(args.output) : { path: `./sdks/${language}` };
         const version = args.stable ? await this.resolveStableVersion({ context, language }) : undefined;
 
         await this.addTargetToFernYml({
@@ -128,25 +128,6 @@ export class AddCommand {
             }
         ]);
         return language;
-    }
-
-    private async promptOutput(language: Language): Promise<schemas.OutputSchema> {
-        const defaultPath = `./sdks/${language}`;
-        const { outputValue } = await inquirer.prompt<{ outputValue: string }>([
-            {
-                type: "input",
-                name: "outputValue",
-                message: `Configure an output for ${language}`,
-                default: defaultPath,
-                validate: (input: string) => {
-                    if (input.trim().length === 0) {
-                        return "Output path cannot be empty.";
-                    }
-                    return true;
-                }
-            }
-        ]);
-        return this.parseOutput(outputValue);
     }
 
     private parseOutput(value: string): schemas.OutputSchema {
