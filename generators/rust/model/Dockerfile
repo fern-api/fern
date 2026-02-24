@@ -8,4 +8,4 @@ RUN rustfmt --version  # Verify rustfmt is available
 
 COPY generators/rust/model/dist /dist
 
-ENTRYPOINT["node", "--enable-source-maps", "/dist/cli.cjs", "rust-model"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "rust-model"]

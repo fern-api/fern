@@ -13,4 +13,4 @@ COPY generators/rust/sdk/dist /dist
 COPY generators/rust/sdk/dist/asIs /asIs
 COPY generators/rust/sdk/features.yml /assets/features.yml
 
-ENTRYPOINT["node", "--enable-source-maps", "/dist/cli.cjs", "rust-sdk"]
+ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "rust-sdk"]
