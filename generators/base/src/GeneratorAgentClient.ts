@@ -6,7 +6,6 @@ import path from "path";
 import tmp from "tmp-promise";
 
 const GENERATOR_AGENT_NPM_PACKAGE = "@fern-api/generator-cli";
-const GENERATOR_AGENT_NPM_VERSION = "0.5.3";
 
 export class GeneratorAgentClient {
     private logger: Logger;
@@ -259,12 +258,7 @@ export class GeneratorAgentClient {
             try {
                 const tmpDir = await tmp.dir({ unsafeCleanup: true });
                 this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} locally in ${tmpDir.path}...`);
-                await npm([
-                    "install",
-                    "--prefix",
-                    tmpDir.path,
-                    `${GENERATOR_AGENT_NPM_PACKAGE}@${GENERATOR_AGENT_NPM_VERSION}`
-                ]);
+                await npm(["install", "--prefix", tmpDir.path, GENERATOR_AGENT_NPM_PACKAGE]);
                 const localBinPath = path.join(tmpDir.path, "node_modules", ".bin", "generator-cli");
                 const localCli = createLoggingExecutable(localBinPath, {
                     cwd: process.cwd(),
@@ -292,11 +286,8 @@ export class GeneratorAgentClient {
             return this.resolvedCli;
         }
 
-        // Fallback: this shouldn't normally be reached
-        return createLoggingExecutable("generator-cli", {
-            cwd: process.cwd(),
-            logger: this.logger,
-            ...options
-        });
+        throw new Error(
+            `${GENERATOR_AGENT_NPM_PACKAGE} install was attempted but no CLI was resolved. This should not happen.`
+        );
     }
 }
