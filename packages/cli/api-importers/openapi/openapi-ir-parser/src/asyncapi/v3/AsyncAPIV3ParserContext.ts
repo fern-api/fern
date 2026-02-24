@@ -8,7 +8,9 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
     public getExampleMessageReference(message: WebsocketSessionExampleMessage): string {
         const channelId = message.channelId ?? this.getDefaultChannelId();
         if (channelId == null) {
-            throw new Error(`Cannot resolve example message reference: no channelId provided and no channels found in document`);
+            throw new Error(
+                `Cannot resolve example message reference: no channelId provided and no channels found in document`
+            );
         }
         return `#/channels/${channelId}/messages/${message.messageId}`;
     }
