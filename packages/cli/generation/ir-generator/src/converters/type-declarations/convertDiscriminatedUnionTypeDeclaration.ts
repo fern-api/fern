@@ -85,7 +85,8 @@ export function convertDiscriminatedUnionTypeDeclaration({
                 displayName: getDisplayName(rawSingleUnionType),
                 availability: getAvailability(rawSingleUnionType)
             };
-        })
+        }),
+        discriminatorContext: undefined
     });
 }
 
