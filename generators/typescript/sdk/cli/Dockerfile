@@ -16,7 +16,6 @@ RUN pnpm add -g typescript@~5.7.2 \
   @biomejs/biome@2.4.3 \
   oxlint@1.50.0 \
   oxlint-tsgolint@0.14.2 \
-  @fern-api/generator-cli@0.5.3 \
   @types/node@^18.19.70 \
   ts-loader@^9.5.1 \
   webpack@^5.97.1 \
