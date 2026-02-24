@@ -2,7 +2,7 @@ import { Eta } from "eta";
 import * as fs from "fs/promises";
 import * as path from "path";
 
-const eta = new Eta({ autoEscape: false, useWith: true });
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 export async function writeTemplateFiles(directory: string, templateVariables: Record<string, unknown>): Promise<void> {
     const templateFiles = await findTemplateFiles(directory);
