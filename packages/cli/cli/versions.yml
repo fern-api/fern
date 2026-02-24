@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.86.1
+  changelogEntry:
+    - summary: |
+        Fall back to initial version 0.0.1 when AUTO versioning cannot extract
+        the previous version instead of failing the entire generation. This
+        handles new SDK repositories where all files are additions and no
+        previous version lines exist in the diff.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
 - version: 3.86.0
   changelogEntry:
     - summary: |
