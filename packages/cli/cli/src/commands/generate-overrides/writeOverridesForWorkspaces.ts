@@ -53,7 +53,6 @@ async function readExistingOverrides(overridesFilepath: string, context: TaskCon
 
 function generateOverridesContent({
     ir,
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
     existingOverrides,
     includeModels,
     context
