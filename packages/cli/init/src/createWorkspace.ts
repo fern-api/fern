@@ -10,6 +10,7 @@ import {
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import path from "path";
 import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -35,8 +36,10 @@ export async function createFernWorkspace({
         context
     });
     const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
+    const apiName = path.basename(directoryOfWorkspace);
     await writeSampleApiDefinition({
-        directoryOfDefinition
+        directoryOfDefinition,
+        apiName
     });
 }
 
@@ -165,20 +168,21 @@ async function writeGeneratorsConfiguration({
     );
 }
 
-const ROOT_API: RootApiFileSchema = {
-    name: "api",
-    "error-discrimination": {
-        strategy: "status-code"
-    }
-};
-
 async function writeSampleApiDefinition({
-    directoryOfDefinition
+    directoryOfDefinition,
+    apiName
 }: {
     directoryOfDefinition: AbsoluteFilePath;
+    apiName: string;
 }): Promise<void> {
+    const rootApi: RootApiFileSchema = {
+        name: apiName,
+        "error-discrimination": {
+            strategy: "status-code"
+        }
+    };
     await mkdir(directoryOfDefinition);
-    await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(ROOT_API));
+    await writeFile(join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)), yaml.dump(rootApi));
 
     const absoluteFilepathToImdbYaml = join(directoryOfDefinition, RelativeFilePath.of("imdb.yml"));
     await writeFile(
