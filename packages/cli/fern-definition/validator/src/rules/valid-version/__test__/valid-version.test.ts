@@ -28,6 +28,7 @@ describe("valid-version", () => {
         const expectedViolations: ValidationViolation[] = [
             {
                 message: 'Default version "1.0" not found in version values',
+                name: "valid-version",
                 severity: "fatal",
                 nodePath: [],
                 relativeFilepath: RelativeFilePath.of("api.yml")

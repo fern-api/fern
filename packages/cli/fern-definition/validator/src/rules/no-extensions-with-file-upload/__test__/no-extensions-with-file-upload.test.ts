@@ -19,6 +19,7 @@ describe("no-extensions-with-file-upload", () => {
                 message: "Request body extensions are not supported for file-upload requests.",
                 nodePath: ["service", "endpoints", "extendsAndFile"],
                 relativeFilepath: RelativeFilePath.of("file-upload.yml"),
+                name: "no-extensions-with-file-upload",
                 severity: "fatal"
             }
         ];
