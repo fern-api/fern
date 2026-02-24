@@ -2,7 +2,7 @@ import { execSync } from "child_process";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
-import { AutoVersioningService } from "../AutoVersioningService.js";
+import { AutoVersioningException, AutoVersioningService } from "../AutoVersioningService.js";
 
 // Mock logger for tests
 const mockLogger = {
@@ -751,6 +751,374 @@ describe("AutoVersioningService", () => {
         } finally {
             await fs.rm(tempDir, { recursive: true, force: true });
         }
+    });
+
+    // --- Tests for extractPreviousVersion: exception path ---
+
+    it("testExtractPreviousVersion_noMagicVersionInDiff_throws", () => {
+        // When the magic version is not found at all in the diff, it should throw
+        const diff =
+            "diff --git a/README.md b/README.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/README.md\n" +
+            "+++ b/README.md\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " # My Project\n" +
+            "+Some new content\n" +
+            " ## Installation\n";
+
+        expect(() =>
+            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455")
+        ).toThrow(AutoVersioningException);
+    });
+
+    it("testExtractPreviousVersion_emptyDiff_throws", () => {
+        expect(() => new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion("", "505.503.4455")).toThrow(
+            AutoVersioningException
+        );
+    });
+
+    it("testExtractPreviousVersion_magicVersionOnlyInContextLines_throws", () => {
+        // Magic version appears in context lines (no + or - prefix), should not count
+        const diff =
+            "diff --git a/config.txt b/config.txt\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/config.txt\n" +
+            "+++ b/config.txt\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " version = 505.503.4455\n" +
+            "+new line added\n" +
+            " other content\n";
+
+        expect(() =>
+            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455")
+        ).toThrow(AutoVersioningException);
+    });
+
+    // --- Tests for extractPreviousVersion: new repo with v prefix ---
+
+    it("testExtractPreviousVersion_newRepoWithVPrefixMagicVersion_returnsUndefined", () => {
+        // Go SDK new repo: all files are new, magic version has v prefix
+        const diff =
+            "diff --git a/version.go b/version.go\n" +
+            "new file mode 100644\n" +
+            "index 0000000..abc123\n" +
+            "--- /dev/null\n" +
+            "+++ b/version.go\n" +
+            "@@ -0,0 +1,3 @@\n" +
+            "+package sdk\n" +
+            '+const Version = "v505.503.4455"\n' +
+            "+\n" +
+            "diff --git a/client.go b/client.go\n" +
+            "new file mode 100644\n" +
+            "index 0000000..def456\n" +
+            "--- /dev/null\n" +
+            "+++ b/client.go\n" +
+            "@@ -0,0 +1,5 @@\n" +
+            "+package sdk\n" +
+            "+\n" +
+            "+type Client struct {\n" +
+            '+    version string // v505.503.4455\n' +
+            "+}\n";
+
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "v505.503.4455");
+        expect(result).toBeUndefined();
+    });
+
+    it("testExtractPreviousVersion_singleNewFileWithVPrefix_returnsUndefined", () => {
+        const diff =
+            "diff --git a/version.go b/version.go\n" +
+            "new file mode 100644\n" +
+            "index 0000000..abc123\n" +
+            "--- /dev/null\n" +
+            "+++ b/version.go\n" +
+            "@@ -0,0 +1 @@\n" +
+            '+const Version = "v505.503.4455"\n';
+
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "v505.503.4455");
+        expect(result).toBeUndefined();
+    });
+
+    // --- Tests for extractPreviousVersion: mixed scenario ---
+
+    it("testExtractPreviousVersion_mixedNewAndExistingFiles_returnsVersionFromExisting", () => {
+        // Some files are new (no matching minus lines), but one existing file has a version pair
+        const diff =
+            "diff --git a/src/newFile.ts b/src/newFile.ts\n" +
+            "new file mode 100644\n" +
+            "index 0000000..abc123\n" +
+            "--- /dev/null\n" +
+            "+++ b/src/newFile.ts\n" +
+            "@@ -0,0 +1,3 @@\n" +
+            '+export const SDK_VERSION = "505.503.4455";\n' +
+            "+export const name = 'test';\n" +
+            "diff --git a/package.json b/package.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/package.json\n" +
+            "+++ b/package.json\n" +
+            "@@ -1,5 +1,5 @@\n" +
+            " {\n" +
+            '-  "version": "2.3.4",\n' +
+            '+  "version": "505.503.4455",\n' +
+            '   "name": "test"\n' +
+            " }\n";
+
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
+        expect(previousVersion).toBe("2.3.4");
+    });
+
+    it("testExtractPreviousVersion_mixedNewAndExistingFiles_newFileFirst_returnsVersionFromExisting", () => {
+        // New file appears first in the diff, followed by existing file with version pair.
+        // The new file's magic version occurrence should be skipped, then find match in existing file.
+        const diff =
+            "diff --git a/src/version.ts b/src/version.ts\n" +
+            "new file mode 100644\n" +
+            "index 0000000..abc123\n" +
+            "--- /dev/null\n" +
+            "+++ b/src/version.ts\n" +
+            "@@ -0,0 +1,1 @@\n" +
+            '+export const VERSION = "505.503.4455";\n' +
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "new file mode 100644\n" +
+            "index 0000000..def456\n" +
+            "--- /dev/null\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -0,0 +1,2 @@\n" +
+            '+import { VERSION } from "./version";\n' +
+            '+const v = "505.503.4455";\n' +
+            "diff --git a/package.json b/package.json\n" +
+            "index 111111..222222 100644\n" +
+            "--- a/package.json\n" +
+            "+++ b/package.json\n" +
+            "@@ -2,3 +2,3 @@\n" +
+            '   "name": "my-sdk",\n' +
+            '-  "version": "1.0.0",\n' +
+            '+  "version": "505.503.4455",\n' +
+            '   "private": false\n';
+
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
+        expect(previousVersion).toBe("1.0.0");
+    });
+
+    // --- Tests for cleanDiffForAI: new file scenarios ---
+
+    it("testCleanDiffForAI_allNewFiles_removesAllVersionLines", () => {
+        // Simulates a new SDK repo where all files are new (all + lines)
+        const diff =
+            "diff --git a/package.json b/package.json\n" +
+            "new file mode 100644\n" +
+            "index 0000000..abc123\n" +
+            "--- /dev/null\n" +
+            "+++ b/package.json\n" +
+            "@@ -0,0 +1,5 @@\n" +
+            "+{\n" +
+            '+    "name": "test-sdk",\n' +
+            '+    "version": "505.503.4455",\n' +
+            '+    "private": false\n' +
+            "+}\n" +
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "new file mode 100644\n" +
+            "index 0000000..def456\n" +
+            "--- /dev/null\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -0,0 +1,3 @@\n" +
+            "+export class Client {\n" +
+            "+    constructor() {}\n" +
+            "+}\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // The version line should be removed
+        expect(cleaned).not.toContain("505.503.4455");
+        // Other new file content should be preserved
+        expect(cleaned).toContain('+    "name": "test-sdk"');
+        expect(cleaned).toContain("+export class Client");
+    });
+
+    it("testCleanDiffForAI_newFileWithVPrefixMagicVersion", () => {
+        // Go SDK new file scenario with v-prefixed magic version
+        const diff =
+            "diff --git a/version.go b/version.go\n" +
+            "new file mode 100644\n" +
+            "index 0000000..abc123\n" +
+            "--- /dev/null\n" +
+            "+++ b/version.go\n" +
+            "@@ -0,0 +1,3 @@\n" +
+            "+package sdk\n" +
+            '+const Version = "v505.503.4455"\n' +
+            "+\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "v505.503.4455");
+
+        expect(cleaned).not.toContain("v505.503.4455");
+        expect(cleaned).toContain("+package sdk");
+    });
+
+    // --- Tests for replaceMagicVersion: initial version scenarios ---
+
+    it("testReplaceMagicVersion_withVPrefixInitialVersion", async () => {
+        // Simulates Go SDK initial generation: replacing v505.503.4455 with v0.0.1
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const versionFile = path.join(tempDir, "version.go");
+            await fs.writeFile(versionFile, 'package sdk\n\nconst Version = "v505.503.4455"\n');
+
+            const clientFile = path.join(tempDir, "client.go");
+            await fs.writeFile(clientFile, 'package sdk\n\nvar sdkVersion = "v505.503.4455"\n');
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "v505.503.4455",
+                "v0.0.1"
+            );
+
+            const versionContent = await fs.readFile(versionFile, "utf-8");
+            expect(versionContent).not.toContain("v505.503.4455");
+            expect(versionContent).toContain("v0.0.1");
+            expect(versionContent).toBe('package sdk\n\nconst Version = "v0.0.1"\n');
+
+            const clientContent = await fs.readFile(clientFile, "utf-8");
+            expect(clientContent).not.toContain("v505.503.4455");
+            expect(clientContent).toContain("v0.0.1");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testReplaceMagicVersion_withNonVPrefixInitialVersion", async () => {
+        // Simulates TS/Python SDK initial generation: replacing 505.503.4455 with 0.0.1
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            const packageJson = path.join(tempDir, "package.json");
+            await fs.writeFile(packageJson, '{\n  "name": "test-sdk",\n  "version": "505.503.4455"\n}');
+
+            const clientFile = path.join(tempDir, "src");
+            await fs.mkdir(clientFile, { recursive: true });
+            const versionTs = path.join(clientFile, "version.ts");
+            await fs.writeFile(versionTs, 'export const SDK_VERSION = "505.503.4455";\n');
+
+            await new AutoVersioningService({ logger: mockLogger }).replaceMagicVersion(
+                tempDir,
+                "505.503.4455",
+                "0.0.1"
+            );
+
+            const packageContent = await fs.readFile(packageJson, "utf-8");
+            expect(packageContent).not.toContain("505.503.4455");
+            expect(packageContent).toContain("0.0.1");
+            expect(packageContent).toBe('{\n  "name": "test-sdk",\n  "version": "0.0.1"\n}');
+
+            const versionContent = await fs.readFile(versionTs, "utf-8");
+            expect(versionContent).not.toContain("505.503.4455");
+            expect(versionContent).toContain("0.0.1");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    // --- Tests for extractPreviousVersion: edge cases ---
+
+    it("testExtractPreviousVersion_magicVersionInDeletedLine_throws", () => {
+        // Magic version appears only in a deleted line (not added), should not count
+        const diff =
+            "diff --git a/package.json b/package.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/package.json\n" +
+            "+++ b/package.json\n" +
+            "@@ -1,5 +1,4 @@\n" +
+            " {\n" +
+            '-  "version": "505.503.4455",\n' +
+            '   "name": "test"\n' +
+            " }\n";
+
+        expect(() =>
+            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455")
+        ).toThrow(AutoVersioningException);
+    });
+
+    it("testExtractPreviousVersion_multipleExistingFilesWithVersions_returnsFirst", () => {
+        // Multiple files with version pairs - should return the first match
+        const diff =
+            "diff --git a/package.json b/package.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/package.json\n" +
+            "+++ b/package.json\n" +
+            "@@ -1,5 +1,5 @@\n" +
+            " {\n" +
+            '-  "version": "3.2.1",\n' +
+            '+  "version": "505.503.4455",\n' +
+            '   "name": "test"\n' +
+            " }\n" +
+            "diff --git a/src/version.ts b/src/version.ts\n" +
+            "index 111111..222222 100644\n" +
+            "--- a/src/version.ts\n" +
+            "+++ b/src/version.ts\n" +
+            "@@ -1 +1 @@\n" +
+            '-export const VERSION = "3.2.1";\n' +
+            '+export const VERSION = "505.503.4455";\n';
+
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
+        expect(previousVersion).toBe("3.2.1");
+    });
+
+    it("testExtractPreviousVersion_versionWithBuildMetadata", () => {
+        const diff =
+            "diff --git a/setup.py b/setup.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/setup.py\n" +
+            "+++ b/setup.py\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            " setup(\n" +
+            "-    version='1.0.0+build.123',\n" +
+            "+    version='505.503.4455',\n" +
+            " )\n";
+
+        const previousVersion = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
+        expect(previousVersion).toBe("1.0.0+build.123");
+    });
+
+    // --- Tests for cleanDiffForAI: mixed new and existing files ---
+
+    it("testCleanDiffForAI_mixedNewAndExistingFiles_preservesNonVersionContent", () => {
+        const diff =
+            "diff --git a/src/newFile.ts b/src/newFile.ts\n" +
+            "new file mode 100644\n" +
+            "index 0000000..abc123\n" +
+            "--- /dev/null\n" +
+            "+++ b/src/newFile.ts\n" +
+            "@@ -0,0 +1,3 @@\n" +
+            "+export function hello() {\n" +
+            '+    return "505.503.4455";\n' +
+            "+}\n" +
+            "diff --git a/src/existing.ts b/src/existing.ts\n" +
+            "index 111111..222222 100644\n" +
+            "--- a/src/existing.ts\n" +
+            "+++ b/src/existing.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class Existing {\n" +
+            "+    newMethod() { return true; }\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // Version line removed from new file
+        expect(cleaned).not.toContain("505.503.4455");
+        // Non-version new file content preserved
+        expect(cleaned).toContain("+export function hello()");
+        // Existing file changes preserved
+        expect(cleaned).toContain("+    newMethod() { return true; }");
     });
 
     // TODO(tjb9dc): Reenable these tests, need to have them reference the LocalTaskHandler's gitDiff function (or refactor)
