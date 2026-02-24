@@ -2153,7 +2153,7 @@ POST bytes with path param
 client.Endpoints.Params.UploadWithPath(
         context.TODO(),
         "upload-path",
-        nil,
+        request,
     )
 }
 ```

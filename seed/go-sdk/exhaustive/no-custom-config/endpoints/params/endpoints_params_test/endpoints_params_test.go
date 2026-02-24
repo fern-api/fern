@@ -277,10 +277,16 @@ func TestEndpointsParamsUploadWithPathWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
+	request := bytes.NewReader(
+		[]byte(""),
+	)
 	_, invocationErr := client.Endpoints.Params.UploadWithPath(
 		context.TODO(),
 		"upload-path",
-		nil,
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsParamsUploadWithPathWithWireMock"}},
+		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
