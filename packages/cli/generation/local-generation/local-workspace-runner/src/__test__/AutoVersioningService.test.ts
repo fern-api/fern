@@ -109,10 +109,7 @@ describe("AutoVersioningService", () => {
             "@@ -0,0 +1 @@\n" +
             "+version = 505.503.4455\n";
 
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
-            diff,
-            "505.503.4455"
-        );
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
         expect(result).toBeUndefined();
     });
 
@@ -147,12 +144,9 @@ describe("AutoVersioningService", () => {
             "+++ b/src/core/index.ts\n" +
             "@@ -0,0 +1,3 @@\n" +
             '+export const SDK_VERSION = "505.503.4455";\n' +
-            "+export const SDK_NAME = \"test-sdk\";\n";
+            '+export const SDK_NAME = "test-sdk";\n';
 
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
-            diff,
-            "505.503.4455"
-        );
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
         expect(result).toBeUndefined();
     });
 
@@ -276,10 +270,7 @@ describe("AutoVersioningService", () => {
 
         // The minus line doesn't form a version pair, so no previous version can be extracted.
         // This is treated like a new file scenario - returns undefined instead of throwing.
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
-            diff,
-            "505.503.4455"
-        );
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
         expect(result).toBeUndefined();
     });
 
@@ -348,10 +339,7 @@ describe("AutoVersioningService", () => {
             " # Changelog\n" +
             "+## 505.503.4455\n";
 
-        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
-            diff,
-            "505.503.4455"
-        );
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
         expect(result).toBeUndefined();
     });
 
