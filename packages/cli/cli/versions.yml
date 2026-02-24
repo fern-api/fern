@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.0
+  changelogEntry:
+    - summary: |
+        Add Replay support for preserving SDK customizations across regenerations.
+        Replay detects user edits via `.fern/replay.lock`, applies them with 3-way
+        merge, and creates PRs with conflict resolution guidance when needed.
+
+        New CLI commands: `fern replay init`, `fern replay status`, `fern replay forget`,
+        `fern replay reset`. New `--no-replay` flag on `fern generate` to skip patch
+        application. Gated behind `replay: { enabled: true }` in `generators.yml`.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
 
 - version: 3.87.0
   changelogEntry:
