@@ -2,7 +2,7 @@ import { execSync } from "child_process";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
-import { AutoVersioningException, AutoVersioningService } from "../AutoVersioningService.js";
+import { AutoVersioningService } from "../AutoVersioningService.js";
 
 // Mock logger for tests
 const mockLogger = {
@@ -99,7 +99,7 @@ describe("AutoVersioningService", () => {
         expect(previousVersion).toBe("3.0.0-beta.2");
     });
 
-    it("testExtractPreviousVersion_noPreviousVersion", () => {
+    it("testExtractPreviousVersion_noPreviousVersion_returnsUndefined", () => {
         const diff =
             "diff --git a/new-file.txt b/new-file.txt\n" +
             "new file mode 100644\n" +
@@ -109,9 +109,51 @@ describe("AutoVersioningService", () => {
             "@@ -0,0 +1 @@\n" +
             "+version = 505.503.4455\n";
 
-        expect(() => {
-            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
-        }).toThrow(AutoVersioningException);
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
+        expect(result).toBeUndefined();
+    });
+
+    it("testExtractPreviousVersion_newRepoWithMultipleNewFiles_returnsUndefined", () => {
+        // Simulates a new SDK repo where all files are new (like immix-ts-sdk initial generation)
+        const diff =
+            "diff --git a/package.json b/package.json\n" +
+            "new file mode 100644\n" +
+            "index 0000000..abc123\n" +
+            "--- /dev/null\n" +
+            "+++ b/package.json\n" +
+            "@@ -0,0 +1,6 @@\n" +
+            "+{\n" +
+            '+    "name": "test-sdk",\n' +
+            '+    "version": "505.503.4455",\n' +
+            '+    "private": false\n' +
+            "+}\n" +
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "new file mode 100644\n" +
+            "index 0000000..def456\n" +
+            "--- /dev/null\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -0,0 +1,5 @@\n" +
+            "+export class Client {\n" +
+            '+    private readonly version = "505.503.4455";\n' +
+            "+    constructor() {}\n" +
+            "+}\n" +
+            "diff --git a/src/core/index.ts b/src/core/index.ts\n" +
+            "new file mode 100644\n" +
+            "index 0000000..789abc\n" +
+            "--- /dev/null\n" +
+            "+++ b/src/core/index.ts\n" +
+            "@@ -0,0 +1,3 @@\n" +
+            '+export const SDK_VERSION = "505.503.4455";\n' +
+            "+export const SDK_NAME = \"test-sdk\";\n";
+
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
+        expect(result).toBeUndefined();
     });
 
     it("testCleanDiffForAI_removesMagicVersionLines", () => {
@@ -222,7 +264,7 @@ describe("AutoVersioningService", () => {
         expect(cleaned).not.toContain("version.go");
     });
 
-    it("testExtractPreviousVersion_invalidVersionFormat", () => {
+    it("testExtractPreviousVersion_invalidVersionFormat_returnsUndefined", () => {
         const diff =
             "diff --git a/config.txt b/config.txt\n" +
             "index abc123..def456 100644\n" +
@@ -232,9 +274,13 @@ describe("AutoVersioningService", () => {
             "-some random text\n" +
             "+magic version is 505.503.4455\n";
 
-        expect(() => {
-            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
-        }).toThrow(AutoVersioningException);
+        // The minus line doesn't form a version pair, so no previous version can be extracted.
+        // This is treated like a new file scenario - returns undefined instead of throwing.
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
+        expect(result).toBeUndefined();
     });
 
     it("testExtractPreviousVersion_withNonVersionLinesInBetween", () => {
@@ -285,7 +331,7 @@ describe("AutoVersioningService", () => {
         expect(previousVersion).toBe("1.5.0");
     });
 
-    it("testExtractPreviousVersion_noMatchingMinusLines_throwsException", () => {
+    it("testExtractPreviousVersion_noMatchingMinusLines_returnsUndefined", () => {
         const diff =
             "diff --git a/README.md b/README.md\n" +
             "index abc123..def456 100644\n" +
@@ -302,14 +348,11 @@ describe("AutoVersioningService", () => {
             " # Changelog\n" +
             "+## 505.503.4455\n";
 
-        try {
-            new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(diff, "505.503.4455");
-            expect.fail("Should have thrown AutoVersioningException");
-        } catch (error) {
-            expect(error).toBeInstanceOf(AutoVersioningException);
-            expect((error as Error).message).toContain("no matching previous version lines were found");
-            expect((error as Error).message).toContain("occurrences=2");
-        }
+        const result = new AutoVersioningService({ logger: mockLogger }).extractPreviousVersion(
+            diff,
+            "505.503.4455"
+        );
+        expect(result).toBeUndefined();
     });
 
     it("testCleanDiffForAI_removesFileWithOnlyVersionChanges", () => {
