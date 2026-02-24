@@ -45,18 +45,18 @@ describe <%= gem_namespace %>::Internal::Types::Union do
     end
   end
 
-  describe "#member" do
+  describe "#type_member?" do
     it "defines Model members" do
-      assert Shape.member?(Rectangle)
-      assert Shape.member?(Circle)
-      refute Shape.member?(Pineapple)
+      assert Shape.type_member?(Rectangle)
+      assert Shape.type_member?(Circle)
+      refute Shape.type_member?(Pineapple)
     end
 
     it "defines other members" do
-      assert StringOrInteger.member?(String)
-      assert StringOrInteger.member?(Integer)
-      refute StringOrInteger.member?(Float)
-      refute StringOrInteger.member?(Pineapple)
+      assert StringOrInteger.type_member?(String)
+      assert StringOrInteger.type_member?(Integer)
+      refute StringOrInteger.type_member?(Float)
+      refute StringOrInteger.type_member?(Pineapple)
     end
   end
 end
