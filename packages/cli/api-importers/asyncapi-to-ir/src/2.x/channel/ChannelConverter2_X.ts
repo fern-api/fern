@@ -105,6 +105,7 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
             channel: {
                 name: this.context.casingsGenerator.generateName(groupName),
                 displayName,
+                connectMethodName: undefined, // AsyncAPI v2 doesn't support x-fern-sdk-method-name on channels
                 baseUrl,
                 path,
                 auth: false,

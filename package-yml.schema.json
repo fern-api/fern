@@ -3980,6 +3980,16 @@
         "path": {
           "type": "string"
         },
+        "connect-method-name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "headers": {
           "oneOf": [
             {
