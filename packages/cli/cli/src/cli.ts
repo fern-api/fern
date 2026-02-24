@@ -4,8 +4,8 @@ import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
-    correctDeprecatedDockerOrg,
-    DEPRECATED_DOCKER_ORG,
+    correctIncorrectDockerOrg,
+    INCORRECT_DOCKER_ORG,
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,
@@ -552,7 +552,7 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Add the generator to the specified group"
                 }),
         async (argv) => {
-            const generatorName = warnAndCorrectDeprecatedDockerOrg(argv.generator, cliContext);
+            const generatorName = warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext);
             await addGeneratorToWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
@@ -718,7 +718,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
             }
             const correctedGeneratorFilter =
-                argv.generator != null ? warnAndCorrectDeprecatedDockerOrg(argv.generator, cliContext) : undefined;
+                argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -1999,14 +1999,14 @@ function readBytes(stream: ReadStream): Promise<Uint8Array> {
 }
 
 /**
- * Corrects the deprecated "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
+ * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
  * Used for CLI arguments that accept generator names.
  */
-function warnAndCorrectDeprecatedDockerOrg(generatorName: string, cliContext: CliContext): string {
-    const corrected = correctDeprecatedDockerOrg(generatorName);
+function warnAndCorrectIncorrectDockerOrg(generatorName: string, cliContext: CliContext): string {
+    const corrected = correctIncorrectDockerOrg(generatorName);
     if (corrected !== generatorName) {
         cliContext.logger.warn(
-            `"${generatorName}" is deprecated. Use "${corrected}" instead — the Docker org is "fernapi", not "${DEPRECATED_DOCKER_ORG}".`
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "${INCORRECT_DOCKER_ORG}".`
         );
     }
     return corrected;

@@ -8,7 +8,7 @@ import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMeta
 import { readFile } from "fs/promises";
 import path from "path";
 
-import { addDefaultDockerOrgIfNotPresent, correctDeprecatedDockerOrgWithWarning } from "./getGeneratorName.js";
+import { addDefaultDockerOrgIfNotPresent, correctIncorrectDockerOrgWithWarning } from "./getGeneratorName.js";
 
 /**
  * Union type representing any spec-level settings schema.
@@ -599,8 +599,8 @@ async function convertGenerator({
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
-    // Warn and correct deprecated "fern-api/" org prefix in generators.yml
-    const correctedName = correctDeprecatedDockerOrgWithWarning(generator.name, context);
+    // Warn and correct incorrect "fern-api/" org prefix in generators.yml
+    const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
     // Normalize the generator name by adding the default Docker org prefix if not present
     const normalizedName = addDefaultDockerOrgIfNotPresent(correctedName);
     return {

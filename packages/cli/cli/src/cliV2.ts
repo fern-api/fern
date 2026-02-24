@@ -1,6 +1,6 @@
 import {
-    correctDeprecatedDockerOrg,
-    DEPRECATED_DOCKER_ORG,
+    correctIncorrectDockerOrg,
+    INCORRECT_DOCKER_ORG,
     GENERATORS_CONFIGURATION_FILENAME
 } from "@fern-api/configuration-loader";
 import { FernRegistry } from "@fern-fern/generators-sdk";
@@ -17,14 +17,14 @@ import { getOrganization } from "./commands/organization/getOrganization.js";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator.js";
 
 /**
- * Corrects the deprecated "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
+ * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
  * Used for CLI arguments that accept generator names.
  */
-function warnAndCorrectDeprecatedDockerOrgV2(generatorName: string, cliContext: CliContext): string {
-    const corrected = correctDeprecatedDockerOrg(generatorName);
+function warnAndCorrectIncorrectDockerOrgV2(generatorName: string, cliContext: CliContext): string {
+    const corrected = correctIncorrectDockerOrg(generatorName);
     if (corrected !== generatorName) {
         cliContext.logger.warn(
-            `"${generatorName}" is deprecated. Use "${corrected}" instead — the Docker org is "fernapi", not "${DEPRECATED_DOCKER_ORG}".`
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "${INCORRECT_DOCKER_ORG}".`
         );
     }
     return corrected;
@@ -197,7 +197,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
 
                     const correctedGenerator =
                         argv.generator != null
-                            ? warnAndCorrectDeprecatedDockerOrgV2(argv.generator, cliContext)
+                            ? warnAndCorrectIncorrectDockerOrgV2(argv.generator, cliContext)
                             : undefined;
                     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
@@ -281,7 +281,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description: "Get repository for the generator invocation, if one is specified."
                         }),
                 async (argv) => {
-                    const correctedGetGenerator = warnAndCorrectDeprecatedDockerOrgV2(argv.generator, cliContext);
+                    const correctedGetGenerator = warnAndCorrectIncorrectDockerOrgV2(argv.generator, cliContext);
                     await cliContext.instrumentPostHogEvent({
                         command: "fern generator get",
                         properties: {

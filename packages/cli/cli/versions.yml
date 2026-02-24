@@ -2,9 +2,9 @@
 - version: 3.85.0
   changelogEntry:
     - summary: |
-        Auto-correct deprecated `fern-api/` Docker org prefix to `fernapi/` in generator names.
-        When a generator is specified with the wrong prefix (e.g. `fern-api/fern-typescript-sdk`),
-        the CLI now automatically corrects it to `fernapi/fern-typescript-sdk` and prints a warning.
+        Auto-correct incorrect `fern-api/` Docker org prefix to `fernapi/` in generator names.
+        When a generator is specified with `fern-api/` (the GitHub/npm org) instead of `fernapi/`
+        (the Docker Hub org), the CLI now automatically corrects it and prints a warning.
         This applies to CLI commands (`--generator` flag) and `generators.yml` configuration files.
       type: feat
   createdAt: "2026-02-24"

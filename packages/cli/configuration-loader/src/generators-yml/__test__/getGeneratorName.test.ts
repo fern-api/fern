@@ -3,10 +3,10 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { GeneratorName } from "../GeneratorName.js";
 import {
     addDefaultDockerOrgIfNotPresent,
-    correctDeprecatedDockerOrg,
-    correctDeprecatedDockerOrgWithWarning,
+    correctIncorrectDockerOrg,
+    correctIncorrectDockerOrgWithWarning,
     DEFAULT_DOCKER_ORG,
-    DEPRECATED_DOCKER_ORG,
+    INCORRECT_DOCKER_ORG,
     getGeneratorNameOrThrow,
     normalizeGeneratorName,
     removeDefaultDockerOrgIfPresent
@@ -264,53 +264,53 @@ describe("real-world scenarios", () => {
     });
 });
 
-describe("correctDeprecatedDockerOrg", () => {
+describe("correctIncorrectDockerOrg", () => {
     it("corrects fern-api/ to fernapi/", () => {
-        expect(correctDeprecatedDockerOrg("fern-api/fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
-        expect(correctDeprecatedDockerOrg("fern-api/fern-python-sdk")).toBe("fernapi/fern-python-sdk");
-        expect(correctDeprecatedDockerOrg("fern-api/fern-java-sdk")).toBe("fernapi/fern-java-sdk");
+        expect(correctIncorrectDockerOrg("fern-api/fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
+        expect(correctIncorrectDockerOrg("fern-api/fern-python-sdk")).toBe("fernapi/fern-python-sdk");
+        expect(correctIncorrectDockerOrg("fern-api/fern-java-sdk")).toBe("fernapi/fern-java-sdk");
     });
 
     it("does not modify fernapi/ names", () => {
-        expect(correctDeprecatedDockerOrg("fernapi/fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
+        expect(correctIncorrectDockerOrg("fernapi/fern-typescript-sdk")).toBe("fernapi/fern-typescript-sdk");
     });
 
     it("does not modify shorthand names", () => {
-        expect(correctDeprecatedDockerOrg("fern-typescript-sdk")).toBe("fern-typescript-sdk");
+        expect(correctIncorrectDockerOrg("fern-typescript-sdk")).toBe("fern-typescript-sdk");
     });
 
     it("does not modify custom org names", () => {
-        expect(correctDeprecatedDockerOrg("myorg/my-generator")).toBe("myorg/my-generator");
+        expect(correctIncorrectDockerOrg("myorg/my-generator")).toBe("myorg/my-generator");
     });
 
     it("handles empty string", () => {
-        expect(correctDeprecatedDockerOrg("")).toBe("");
+        expect(correctIncorrectDockerOrg("")).toBe("");
     });
 });
 
-describe("correctDeprecatedDockerOrgWithWarning", () => {
+describe("correctIncorrectDockerOrgWithWarning", () => {
     it("corrects fern-api/ to fernapi/ and logs warning", () => {
         const context = createMockTaskContext();
-        const result = correctDeprecatedDockerOrgWithWarning("fern-api/fern-typescript-sdk", context);
+        const result = correctIncorrectDockerOrgWithWarning("fern-api/fern-typescript-sdk", context);
         expect(result).toBe("fernapi/fern-typescript-sdk");
     });
 
     it("does not log warning for correct names", () => {
         const context = createMockTaskContext();
-        const result = correctDeprecatedDockerOrgWithWarning("fernapi/fern-typescript-sdk", context);
+        const result = correctIncorrectDockerOrgWithWarning("fernapi/fern-typescript-sdk", context);
         expect(result).toBe("fernapi/fern-typescript-sdk");
     });
 
     it("does not log warning for shorthand names", () => {
         const context = createMockTaskContext();
-        const result = correctDeprecatedDockerOrgWithWarning("fern-typescript-sdk", context);
+        const result = correctIncorrectDockerOrgWithWarning("fern-typescript-sdk", context);
         expect(result).toBe("fern-typescript-sdk");
     });
 });
 
-describe("DEPRECATED_DOCKER_ORG constant", () => {
+describe("INCORRECT_DOCKER_ORG constant", () => {
     it("is set to 'fern-api'", () => {
-        expect(DEPRECATED_DOCKER_ORG).toBe("fern-api");
+        expect(INCORRECT_DOCKER_ORG).toBe("fern-api");
     });
 });
 
