@@ -73,6 +73,16 @@
         }
       ]
     },
+    "webhook-signature": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/webhooks.WebhookSignatureSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "channel": {
       "oneOf": [
         {

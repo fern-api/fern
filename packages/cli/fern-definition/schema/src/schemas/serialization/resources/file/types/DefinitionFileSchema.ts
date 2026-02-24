@@ -8,6 +8,7 @@ import { ErrorDeclarationSchema } from "../../errors/types/ErrorDeclarationSchem
 import { HttpServiceSchema } from "../../service/types/HttpServiceSchema.js";
 import { TypeDeclarationSchema } from "../../types/types/TypeDeclarationSchema.js";
 import { WebhookSchema } from "../../webhooks/types/WebhookSchema.js";
+import { WebhookSignatureSchema } from "../../webhooks/types/WebhookSignatureSchema.js";
 import { WebSocketChannelSchema } from "../../websocket/types/WebSocketChannelSchema.js";
 
 export const DefinitionFileSchema: core.serialization.ObjectSchema<
@@ -20,6 +21,7 @@ export const DefinitionFileSchema: core.serialization.ObjectSchema<
         service: HttpServiceSchema.optional(),
         errors: core.serialization.record(core.serialization.string(), ErrorDeclarationSchema).optional(),
         webhooks: core.serialization.record(core.serialization.string(), WebhookSchema).optional(),
+        "webhook-signature": WebhookSignatureSchema.optional(),
         channel: WebSocketChannelSchema.optional(),
     })
     .extend(WithDocsSchema);
@@ -31,6 +33,7 @@ export declare namespace DefinitionFileSchema {
         service?: HttpServiceSchema.Raw | null;
         errors?: Record<string, ErrorDeclarationSchema.Raw> | null;
         webhooks?: Record<string, WebhookSchema.Raw> | null;
+        "webhook-signature"?: WebhookSignatureSchema.Raw | null;
         channel?: WebSocketChannelSchema.Raw | null;
     }
 }
