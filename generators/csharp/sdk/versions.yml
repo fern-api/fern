@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.3
+  changelogEntry:
+    - summary: |
+        Replace lodash-es template engine with Eta for processing template files.
+        Eta is a modern, lightweight, TypeScript-native engine with zero dependencies
+        that uses the same `<% %>` / `<%= %>` syntax. This resolves crashes when
+        template files contain backticks (template literals).
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 62
+
 - version: 2.22.2
   changelogEntry:
     - summary: |

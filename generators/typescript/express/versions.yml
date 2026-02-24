@@ -5,6 +5,14 @@
       type: chore
   irVersion: 65
   createdAt: "2026-02-24"
+  version: 0.19.4
+
+- changelogEntry:
+    - summary: |
+        Update oxfmt to 0.35.0, oxlint to 1.50.0, and oxlint-tsgolint to 0.14.2.
+      type: chore
+  irVersion: 61
+  createdAt: "2026-02-24"
   version: 0.19.3
 
 - changelogEntry:
