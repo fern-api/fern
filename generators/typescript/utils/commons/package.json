@@ -38,8 +38,8 @@
     "@fern-api/typescript-base": "workspace:*",
     "@fern-fern/ir-sdk": "^64.0.0",
     "decompress": "catalog:",
-    "ejs": "^4.0.1",
     "esutils": "catalog:",
+    "eta": "^4.5.1",
     "glob": "catalog:",
     "immer": "^10.1.1",
     "lodash-es": "catalog:",
@@ -50,7 +50,6 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/decompress": "catalog:",
-    "@types/ejs": "^3.1.5",
     "@types/esutils": "catalog:",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",

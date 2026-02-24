@@ -2,10 +2,11 @@
 - version: 3.49.2
   changelogEntry:
     - summary: |
-        Replace lodash-es `template` with EJS for template file processing. The lodash
+        Replace lodash-es `template` with Eta for template file processing. The lodash
         templating engine crashes on backticks (template literals) because it uses
-        `new Function()` internally. EJS properly handles backticks and uses the same
-        `<% %>` syntax, requiring no changes to existing template files.
+        `new Function()` internally. Eta is a modern, lightweight, zero-dependency
+        templating engine that properly handles backticks and uses the same `<% %>`
+        syntax, requiring no changes to existing template files.
       type: fix
   createdAt: "2026-02-24"
   irVersion: 63

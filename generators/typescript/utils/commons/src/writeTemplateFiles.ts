@@ -1,6 +1,8 @@
-import ejs from "ejs";
+import { Eta } from "eta";
 import * as fs from "fs/promises";
 import * as path from "path";
+
+const eta = new Eta({ autoEscape: false });
 
 export async function writeTemplateFiles(directory: string, templateVariables: Record<string, unknown>): Promise<void> {
     const templateFiles = await findTemplateFiles(directory);
@@ -36,7 +38,7 @@ async function processTemplateFile(
     templateVariables: Record<string, unknown>
 ): Promise<void> {
     const templateContent = await fs.readFile(templateFilePath, "utf8");
-    const content = ejs.render(templateContent, templateVariables);
+    const content = eta.renderString(templateContent, templateVariables);
     const outputFilePath = templateFilePath.replace(/\.template\./, ".");
     await fs.writeFile(outputFilePath, content, "utf8");
     await fs.unlink(templateFilePath);
