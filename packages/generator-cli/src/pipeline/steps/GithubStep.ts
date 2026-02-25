@@ -2,7 +2,6 @@ import { ClonedRepository, parseRepository } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
 import { access, writeFile } from "fs/promises";
 import { join } from "path";
-import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "../github/constants";
 import { createReplayBranch } from "../github/createReplayBranch";
 import type { ExistingPullRequest } from "../github/findExistingUpdatablePR";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
@@ -41,15 +40,6 @@ export class GithubStep extends BaseStep {
                 .replace("Z", "")
                 .replace(".", "_");
             const newPrBranch = `fern-bot/${formattedDate}`;
-
-            try {
-                await repository.setUserAndEmail({
-                    name: FERN_BOT_NAME,
-                    email: FERN_BOT_EMAIL
-                });
-            } catch {
-                // pass
-            }
 
             const mode = this.config.mode;
             switch (mode) {
