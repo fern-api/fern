@@ -78,10 +78,9 @@ export function incrementVersion(currentVersion: string, versionBump: VersionBum
  * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
  *
  * @param lineWithMagicVersion A line from git diff containing the magic version
- * @return The inferred previous version if found
- * @throws AutoVersioningException if no valid version can be extracted
+ * @return The inferred previous version if found, or undefined if the version cannot be parsed
  */
-export function extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string {
+export function extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string | undefined {
     const prevVersionPattern = /[-].*?([v]?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?)/;
     const matcher = lineWithMagicVersion.match(prevVersionPattern);
 
@@ -90,5 +89,5 @@ export function extractPreviousVersionFromDiffLine(lineWithMagicVersion: string)
         return version;
     }
 
-    throw new AutoVersioningException("Could not extract previous version from diff line: " + lineWithMagicVersion);
+    return undefined;
 }

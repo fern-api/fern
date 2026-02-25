@@ -11,6 +11,7 @@ import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
+import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
@@ -23,6 +24,7 @@ import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { WorkspaceBuilder } from "../../../workspace/WorkspaceBuilder.js";
 import { command } from "../../_internal/command.js";
+import { isGitUrl } from "../utils/gitUrl.js";
 
 export declare namespace GenerateCommand {
     export interface Args extends GlobalArgs {
@@ -387,7 +389,7 @@ export class GenerateCommand {
      * - Anything else is treated as a local path.
      */
     private parseTargetOutput(args: GenerateCommand.Args): schemas.OutputSchema {
-        if (args.output != null && this.isGitUrl(args.output)) {
+        if (args.output != null && isGitUrl(args.output)) {
             if (!args.local) {
                 throw new CliError({
                     message:
@@ -539,15 +541,6 @@ export class GenerateCommand {
         return !args.local || targets.some((t) => t.output.git != null && schemas.isGitOutputSelfHosted(t.output.git));
     }
 
-    private isGitUrl(value: string): boolean {
-        return (
-            value.endsWith(".git") ||
-            value.startsWith("https://github.com/") ||
-            value.startsWith("https://gitlab.com/") ||
-            value.startsWith("git@")
-        );
-    }
-
     private maybePluralSdks(targets: Target[]): string {
         return targets.length === 1 ? "SDK" : "SDKs";
     }
@@ -561,13 +554,21 @@ export class GenerateCommand {
     }
 }
 
-export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
+export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new GenerateCommand();
     command(
         cli,
         "generate",
         "Generate SDKs from fern.yml or directly from an API spec",
-        (context, args) => cmd.handle(context, args as GenerateCommand.Args),
+        async (context, args) => {
+            const timeout = new Promise<never>((_, reject) => {
+                setTimeout(
+                    () => reject(new CliError({ message: "Generation timed out after 10 minutes." })),
+                    GENERATE_COMMAND_TIMEOUT_MS
+                ).unref();
+            });
+            await Promise.race([cmd.handle(context, args as GenerateCommand.Args), timeout]);
+        },
         (yargs) =>
             yargs
                 .option("api", {
@@ -626,6 +627,7 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     default: false,
                     description: "Ignore prompts to confirm generation"
-                })
+                }),
+        parentPath
     );
 }

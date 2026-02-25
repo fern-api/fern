@@ -2691,6 +2691,85 @@ client.endpoints.params.modify_with_inline_path(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py">upload_with_path</a>(...) -&gt; AsyncHttpResponse[ObjectWithRequiredField]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="YOUR_TOKEN",
+    base_url="https://yourhost.com/path/to/api",
+)
+client.endpoints.params.upload_with_path(
+    param="upload-path",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py">get_and_return_string</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
 <dl>

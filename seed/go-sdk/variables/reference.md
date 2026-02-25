@@ -15,6 +15,7 @@
 ```go
 client.Service.Post(
         context.TODO(),
+        "<endpointParam>",
     )
 }
 ```
