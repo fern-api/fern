@@ -1,7 +1,15 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Fix published package to use dist output instead of lib. Update files, types, exports, main, and bin fields to point to dist directory.
+        Update @fern-api/fern-replay to 0.6.1 which published as ESM and CJS.
+        As a result, the generator-cli can also be ESM and CJS.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.4
+
+- changelogEntry:
+    - summary: |
+        Publish package from dist directory with a generated package.json. Bundle all dependencies for the CLI binary, and keep published dependencies external for the JS API.
       type: fix
   createdAt: "2026-02-25"
   version: 0.6.3

@@ -37,8 +37,8 @@ catalogs:
       specifier: 0.0.6-2ee1b7e28
       version: 0.0.6-2ee1b7e28
     '@fern-api/generator-cli':
-      specifier: 0.5.3
-      version: 0.5.3
+      specifier: 0.6.4
+      version: 0.6.4
     '@fern-api/venus-api-sdk':
       specifier: 0.17.3-3-gf696595
       version: 0.17.3-3-gf696595
@@ -714,9 +714,6 @@ catalogs:
     tsx:
       specifier: ^4.21.0
       version: 4.21.0
-    turbo:
-      specifier: ^2.8.10
-      version: 2.8.10
     typescript:
       specifier: 5.9.3
       version: 5.9.3
@@ -849,8 +846,8 @@ importers:
         specifier: 'catalog:'
         version: 4.21.0
       turbo:
-        specifier: 'catalog:'
-        version: 2.8.10
+        specifier: ^2.8.11
+        version: 2.8.11
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
@@ -2641,7 +2638,7 @@ importers:
         version: link:../../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.5.3
+        version: 0.6.4
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
@@ -8157,6 +8154,19 @@ importers:
         version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
 
   packages/generator-cli:
+    dependencies:
+      '@fern-api/replay':
+        specifier: ^0.6.1
+        version: 0.6.1
+      '@octokit/rest':
+        specifier: 'catalog:'
+        version: 22.0.1
+      es-toolkit:
+        specifier: ^1.39.10
+        version: 1.44.0
+      tmp-promise:
+        specifier: 'catalog:'
+        version: 3.0.3
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -8167,12 +8177,6 @@ importers:
       '@fern-api/github':
         specifier: workspace:*
         version: link:../commons/github
-      '@fern-api/replay':
-        specifier: ^0.6.0
-        version: 0.6.0
-      '@octokit/rest':
-        specifier: 'catalog:'
-        version: 22.0.1
       '@types/jest':
         specifier: ^29.5.11
         version: 29.5.14
@@ -8182,18 +8186,12 @@ importers:
       '@types/yargs':
         specifier: ^17.0.32
         version: 17.0.35
-      es-toolkit:
-        specifier: ^1.39.10
-        version: 1.44.0
       esbuild:
         specifier: 'catalog:'
         version: 0.27.3
       execa:
         specifier: ^9.5.1
         version: 9.6.1
-      tmp-promise:
-        specifier: 'catalog:'
-        version: 3.0.3
       tsup:
         specifier: 'catalog:'
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)
@@ -9651,15 +9649,15 @@ packages:
   '@fern-api/fdr-sdk@0.145.12-b50d999d1':
     resolution: {integrity: sha512-qTHoosyHoHFqXM/ZcHjdiAw5tByBo1mxcfMLkId9qZ4LRSw/hJmybQEa00k7dstirNnG5DvBta6Kwq74F8NfjQ==}
 
-  '@fern-api/generator-cli@0.5.3':
-    resolution: {integrity: sha512-FSBup/KdN4id2vVFOjAr+4It7cbRzKUGIajlcbsNTMR12JoSyeNgK9zp0xnuqxMVccqKCMOosqSooq5F2cOM6A==}
+  '@fern-api/generator-cli@0.6.4':
+    resolution: {integrity: sha512-uBs0amN/dP5nQygxouHR8faJ1reW4PLIq7zYoH2Vayw0m9khKMOtLiJw5lpq/WhWVy9WAuYhq/3Zr7/xsf+LEw==}
     hasBin: true
 
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
 
-  '@fern-api/replay@0.6.0':
-    resolution: {integrity: sha512-tPiku+TkjrCd7Z3xwnwoCLaJWqFJSRUNzoujjk2Gqxnp5LQnsoG4sN+DPahSri+W5BYHW1SCC4dVOdtUtzYZIg==}
+  '@fern-api/replay@0.6.1':
+    resolution: {integrity: sha512-h3pRkz+i4IuWTR1usuRDNpCvk6Cv534VX76aXicE/L+u7ZcPbRAShNb08RLeFc9y3LeoEOK+s2JlvWqsvv1W/A==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -14620,38 +14618,38 @@ packages:
     engines: {node: '>=18.0.0'}
     hasBin: true
 
-  turbo-darwin-64@2.8.10:
-    resolution: {integrity: sha512-A03fXh+B7S8mL3PbdhTd+0UsaGrhfyPkODvzBDpKRY7bbeac4MDFpJ7I+Slf2oSkCEeSvHKR7Z4U71uKRUfX7g==}
+  turbo-darwin-64@2.8.11:
+    resolution: {integrity: sha512-XKaCWaz4OCt77oYYvGCIRpvYD4c/aNaKjRkUpv+e8rN3RZb+5Xsyew4yRO+gaHdMIUhQznXNXfHlhs+/p7lIhA==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.8.10:
-    resolution: {integrity: sha512-sidzowgWL3s5xCHLeqwC9M3s9M0i16W1nuQF3Mc7fPHpZ+YPohvcbVFBB2uoRRHYZg6yBnwD4gyUHKTeXfwtXA==}
+  turbo-darwin-arm64@2.8.11:
+    resolution: {integrity: sha512-VvynLHGUNvQ9k7GZjRPSsRcK4VkioTfFb7O7liAk4nHKjEcMdls7GqxzjVWgJiKz3hWmQGaP9hRa9UUnhVWCxA==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.8.10:
-    resolution: {integrity: sha512-YK9vcpL3TVtqonB021XwgaQhY9hJJbKKUhLv16osxV0HkcQASQWUqR56yMge7puh6nxU67rQlTq1b7ksR1T3KA==}
+  turbo-linux-64@2.8.11:
+    resolution: {integrity: sha512-cbSn37dcm+EmkQ7DD0euy7xV7o2el4GAOr1XujvkAyKjjNvQ+6QIUeDgQcwAx3D17zPpDvfDMJY2dLQadWnkmQ==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.8.10:
-    resolution: {integrity: sha512-3+j2tL0sG95iBJTm+6J8/45JsETQABPqtFyYjVjBbi6eVGdtNTiBmHNKrbvXRlQ3ZbUG75bKLaSSDHSEEN+btQ==}
+  turbo-linux-arm64@2.8.11:
+    resolution: {integrity: sha512-+trymp2s2aBrhS04l6qFxcExzZ8ffndevuUB9c5RCeqsVpZeiWuGQlWNm5XjOmzoMayxRARZ5ma7yiWbGMiLqQ==}
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.8.10:
-    resolution: {integrity: sha512-hdeF5qmVY/NFgiucf8FW0CWJWtyT2QPm5mIsX0W1DXAVzqKVXGq+Zf+dg4EUngAFKjDzoBeN6ec2Fhajwfztkw==}
+  turbo-windows-64@2.8.11:
+    resolution: {integrity: sha512-3kJjFSM4yw1n9Uzmi+XkAUgCae19l/bH6RJ442xo7mnZm0tpOjo33F+FYHoSVpIWVMd0HG0LDccyafPSdylQbA==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.8.10:
-    resolution: {integrity: sha512-QGdr/Q8LWmj+ITMkSvfiz2glf0d7JG0oXVzGL3jxkGqiBI1zXFj20oqVY0qWi+112LO9SVrYdpHS0E/oGFrMbQ==}
+  turbo-windows-arm64@2.8.11:
+    resolution: {integrity: sha512-JOM4uF2vuLsJUvibdR6X9QqdZr6BhC6Nhlrw4LKFPsXZZI/9HHLoqAiYRpE4MuzIwldCH/jVySnWXrI1SKto0g==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.8.10:
-    resolution: {integrity: sha512-OxbzDES66+x7nnKGg2MwBA1ypVsZoDTLHpeaP4giyiHSixbsiTaMyeJqbEyvBdp5Cm28fc+8GG6RdQtic0ijwQ==}
+  turbo@2.8.11:
+    resolution: {integrity: sha512-H+rwSHHPLoyPOSoHdmI1zY0zy0GGj1Dmr7SeJW+nZiWLz2nex8EJ+fkdVabxXFMNEux+aywI4Sae8EqhmnOv4A==}
     hasBin: true
 
   type-check@0.4.0:
@@ -16389,14 +16387,21 @@ snapshots:
       - encoding
       - typescript
 
-  '@fern-api/generator-cli@0.5.3': {}
+  '@fern-api/generator-cli@0.6.4':
+    dependencies:
+      '@fern-api/replay': 0.6.1
+      '@octokit/rest': 22.0.1
+      es-toolkit: 1.44.0
+      tmp-promise: 3.0.3
+    transitivePeerDependencies:
+      - supports-color
 
   '@fern-api/logger@0.4.24-rc1':
     dependencies:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.6.2
 
-  '@fern-api/replay@0.6.0':
+  '@fern-api/replay@0.6.1':
     dependencies:
       minimatch: 10.2.2
       node-diff3: 3.2.0
@@ -22123,32 +22128,32 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  turbo-darwin-64@2.8.10:
+  turbo-darwin-64@2.8.11:
     optional: true
 
-  turbo-darwin-arm64@2.8.10:
+  turbo-darwin-arm64@2.8.11:
     optional: true
 
-  turbo-linux-64@2.8.10:
+  turbo-linux-64@2.8.11:
     optional: true
 
-  turbo-linux-arm64@2.8.10:
+  turbo-linux-arm64@2.8.11:
     optional: true
 
-  turbo-windows-64@2.8.10:
+  turbo-windows-64@2.8.11:
     optional: true
 
-  turbo-windows-arm64@2.8.10:
+  turbo-windows-arm64@2.8.11:
     optional: true
 
-  turbo@2.8.10:
+  turbo@2.8.11:
     optionalDependencies:
-      turbo-darwin-64: 2.8.10
-      turbo-darwin-arm64: 2.8.10
-      turbo-linux-64: 2.8.10
-      turbo-linux-arm64: 2.8.10
-      turbo-windows-64: 2.8.10
-      turbo-windows-arm64: 2.8.10
+      turbo-darwin-64: 2.8.11
+      turbo-darwin-arm64: 2.8.11
+      turbo-linux-64: 2.8.11
+      turbo-linux-arm64: 2.8.11
+      turbo-windows-64: 2.8.11
+      turbo-windows-arm64: 2.8.11
 
   type-check@0.4.0:
     dependencies:
