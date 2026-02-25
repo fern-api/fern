@@ -388,7 +388,7 @@ export class GenerateCommand {
      *   produce a self-hosted git output with token from GITHUB_TOKEN or GIT_TOKEN env vars.
      * - Anything else is treated as a local path.
      */
-    private parseTargetOutput(args: GenerateCommand.Args): schemas.OutputSchema {
+    private parseTargetOutput(args: GenerateCommand.Args): schemas.OutputObjectSchema {
         if (args.output != null && isGitUrl(args.output)) {
             if (!args.local) {
                 throw new CliError({
