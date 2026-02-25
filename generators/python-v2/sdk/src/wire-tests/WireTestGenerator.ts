@@ -205,6 +205,12 @@ export class WireTestGenerator {
                 continue;
             }
 
+            // Skip bytes request body endpoints — the IR example system has no
+            // ExampleRequestBody variant for bytes, so we can't produce a proper example.
+            if (endpoint.requestBody?.type === "bytes") {
+                continue;
+            }
+
             // Always use static IR examples to match WireMock mappings
             // WireMock mappings are generated from static IR examples, so we must use the same examples
             const staticExample = this.getStaticIrExample(endpoint);

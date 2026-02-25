@@ -80,6 +80,7 @@ export interface DefinitionFileAstNodeTypes {
     pathParameter: { pathParameterKey: string; pathParameter: RawSchemas.HttpPathParameterSchema };
     queryParameter: { queryParameterKey: string; queryParameter: RawSchemas.HttpQueryParameterSchema };
     header: { headerKey: string; header: RawSchemas.HttpHeaderSchema };
+    webhookSignature: RawSchemas.WebhookSignatureSchema;
     errorDeclaration: { errorName: string; declaration: RawSchemas.ErrorDeclarationSchema };
     errorReference: string;
     variableReference: string;

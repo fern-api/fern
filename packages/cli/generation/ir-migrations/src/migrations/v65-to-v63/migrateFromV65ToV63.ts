@@ -51,7 +51,13 @@ export const V65_TO_V63_MIGRATION: IrMigration<
     ): IrVersions.V63.ir.IntermediateRepresentation => {
         return {
             ...v65,
-            services: mapValues(v65.services, (service) => convertHttpService(service, context))
+            services: mapValues(v65.services, (service) => convertHttpService(service, context)),
+            webhookGroups: mapValues(v65.webhookGroups, (webhookGroup) =>
+                webhookGroup.map((webhook) => {
+                    const { signatureVerification: _, ...rest } = webhook;
+                    return rest as IrVersions.V63.webhooks.Webhook;
+                })
+            )
         };
     }
 };
