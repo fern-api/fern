@@ -1,15 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.88.1
-  changelogEntry:
-    - summary: |
-        Replace global 10-minute process timeout with per-request HTTP timeouts.
-        Long-running commands like `fern docs dev` and interactive commands like
-        `fern init` are no longer killed after 10 minutes. Individual HTTP requests
-        now have a 60-second timeout instead.
-      type: fix
-  createdAt: "2026-02-25"
-  irVersion: 65
-
 - version: 3.88.0
   changelogEntry:
     - summary: |

@@ -22,6 +22,7 @@ import { SdkStageOverrides, SdkTaskGroup } from "../../../sdk/task/SdkTaskGroup.
 import type { TaskStageLabels } from "../../../ui/TaskStageLabels.js";
 import type { Workspace } from "../../../workspace/Workspace.js";
 import { WorkspaceBuilder } from "../../../workspace/WorkspaceBuilder.js";
+import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import { command } from "../../_internal/command.js";
 import { isGitUrl } from "../utils/gitUrl.js";
 
@@ -559,7 +560,15 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
         cli,
         "generate",
         "Generate SDKs from fern.yml or directly from an API spec",
-        (context, args) => cmd.handle(context, args as GenerateCommand.Args),
+        async (context, args) => {
+            const timeout = new Promise<never>((_, reject) => {
+                setTimeout(
+                    () => reject(new CliError("Generation timed out after 10 minutes.")),
+                    GENERATE_COMMAND_TIMEOUT_MS
+                ).unref();
+            });
+            await Promise.race([cmd.handle(context, args as GenerateCommand.Args), timeout]);
+        },
         (yargs) =>
             yargs
                 .option("api", {
