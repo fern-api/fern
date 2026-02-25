@@ -43,7 +43,7 @@ export class PaymentNotificationWebhooksHelper {
 
         const payload = requestBody;
 
-        const resolvedKey = await core.fetchJwks({
+        const resolvedKey = await await core.fetchJwks({
             url: "https://api.example.com/.well-known/jwks.json",
             keyId: keyIdHeader,
         });

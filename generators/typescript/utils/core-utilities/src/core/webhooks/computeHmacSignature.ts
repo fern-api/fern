@@ -1,3 +1,4 @@
+import { RUNTIME } from "../runtime";
 import { SignatureEncoding } from "./types";
 
 export type HmacAlgorithm = "sha256" | "sha1" | "sha384" | "sha512";
@@ -9,56 +10,47 @@ export interface ComputeHmacSignatureArgs {
     encoding: SignatureEncoding;
 }
 
-const SUBTLE_ALGORITHM_MAP: Record<HmacAlgorithm, string> = {
-    sha256: "SHA-256",
-    sha1: "SHA-1",
-    sha384: "SHA-384",
-    sha512: "SHA-512"
-};
-
-function hexEncode(buffer: ArrayBuffer): string {
-    return Array.from(new Uint8Array(buffer))
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-}
-
-function base64Encode(buffer: ArrayBuffer): string {
-    if (typeof Buffer !== "undefined") {
-        return Buffer.from(buffer).toString("base64");
+function hmacAlgorithmToSubtleName(algorithm: HmacAlgorithm): string {
+    switch (algorithm) {
+        case "sha1":
+            return "SHA-1";
+        case "sha256":
+            return "SHA-256";
+        case "sha384":
+            return "SHA-384";
+        case "sha512":
+            return "SHA-512";
     }
-    const bytes = new Uint8Array(buffer);
-    const binString = String.fromCodePoint(...bytes);
-    return btoa(binString);
-}
-
-function encodeResult(buffer: ArrayBuffer, encoding: SignatureEncoding): string {
-    return encoding === "hex" ? hexEncode(buffer) : base64Encode(buffer);
-}
-
-async function computeWithNode(args: ComputeHmacSignatureArgs): Promise<string> {
-    const crypto = await import("crypto");
-    const hmac = crypto.createHmac(args.algorithm, args.secret);
-    hmac.update(args.payload);
-    return hmac.digest(args.encoding);
-}
-
-async function computeWithSubtleCrypto(args: ComputeHmacSignatureArgs): Promise<string> {
-    const subtleAlgorithm = SUBTLE_ALGORITHM_MAP[args.algorithm];
-    const encoder = new TextEncoder();
-    const key = await globalThis.crypto.subtle.importKey(
-        "raw",
-        encoder.encode(args.secret),
-        { name: "HMAC", hash: subtleAlgorithm },
-        false,
-        ["sign"]
-    );
-    const signature = await globalThis.crypto.subtle.sign("HMAC", key, encoder.encode(args.payload));
-    return encodeResult(signature, args.encoding);
 }
 
 export async function computeHmacSignature(args: ComputeHmacSignatureArgs): Promise<string> {
-    if (typeof process !== "undefined" && process.versions?.node) {
-        return computeWithNode(args);
+    if (RUNTIME.type === "node") {
+        const crypto = await import("crypto");
+        const hmac = crypto.createHmac(args.algorithm, args.secret);
+        hmac.update(args.payload);
+        return hmac.digest(args.encoding);
     }
-    return computeWithSubtleCrypto(args);
+
+    const subtle = globalThis.crypto.subtle;
+    const enc = new TextEncoder();
+    const keyMaterial = await subtle.importKey(
+        "raw",
+        enc.encode(args.secret),
+        { name: "HMAC", hash: hmacAlgorithmToSubtleName(args.algorithm) },
+        false,
+        ["sign"]
+    );
+    const signatureBuffer = await subtle.sign("HMAC", keyMaterial, enc.encode(args.payload));
+    const bytes = new Uint8Array(signatureBuffer);
+    if (args.encoding === "hex") {
+        return Array.from(bytes)
+            .map((b) => b.toString(16).padStart(2, "0"))
+            .join("");
+    }
+    // base64
+    let binary = "";
+    for (const byte of bytes) {
+        binary += String.fromCharCode(byte);
+    }
+    return btoa(binary);
 }

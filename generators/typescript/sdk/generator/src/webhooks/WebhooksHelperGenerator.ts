@@ -233,7 +233,7 @@ export class WebhooksHelperGenerator {
             }
             const jwksArgsExpr = ts.factory.createObjectLiteralExpression(jwksArgs, false);
             const fetchCall = context.coreUtilities.webhookCrypto.fetchJwks._invoke(jwksArgsExpr);
-            lines.push(`const resolvedKey = ${getTextOfTsNode(fetchCall)};`);
+            lines.push(`const resolvedKey = await ${getTextOfTsNode(fetchCall)};`);
         }
 
         // Asymmetric verification
@@ -378,7 +378,7 @@ export class WebhooksHelperGenerator {
             case "SHA512":
                 return "sha512";
             default:
-                return "sha256";
+                throw new Error(`Unrecognized HMAC algorithm: ${algorithm}`);
         }
     }
 
@@ -399,7 +399,7 @@ export class WebhooksHelperGenerator {
             case "ED25519":
                 return "ED25519";
             default:
-                return "RSA_SHA256";
+                throw new Error(`Unrecognized asymmetric algorithm: ${algorithm}`);
         }
     }
 
@@ -410,7 +410,7 @@ export class WebhooksHelperGenerator {
             case "HEX":
                 return "hex";
             default:
-                return "base64";
+                throw new Error(`Unrecognized webhook signature encoding: ${encoding}`);
         }
     }
 
