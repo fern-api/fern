@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.86.2
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancer corrupting form data file array values. When the AI
+        returned a non-array value for file upload fields (filenames, filenamesWithData,
+        exploded), the enhancer would replace the original array with an object, causing
+        FDR registration to fail with "Expected array, received object" validation errors.
+        The enhancer now preserves the original wrapper when the AI returns an incompatible type.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
 - version: 3.86.1
   changelogEntry:
     - summary: |

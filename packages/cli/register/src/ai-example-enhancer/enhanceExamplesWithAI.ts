@@ -1204,7 +1204,19 @@ function applyEnhancementResults(
                             // Update each field's value while preserving the FDR typed value wrapper structure
                             for (const [key, wrapper] of Object.entries(originalValue)) {
                                 if (key in enhancedReq) {
-                                    updatedValue[key] = { ...wrapper, value: enhancedReq[key] };
+                                    const enhancedValue = enhancedReq[key];
+                                    // For FormValue types that require array values (filenames, filenamesWithData, exploded),
+                                    // only apply the enhanced value if it's actually an array. If the AI returned a non-array
+                                    // (e.g., an object), keep the original wrapper to avoid type validation errors.
+                                    const requiresArrayValue =
+                                        wrapper.type === "filenames" ||
+                                        wrapper.type === "filenamesWithData" ||
+                                        wrapper.type === "exploded";
+                                    if (requiresArrayValue && !Array.isArray(enhancedValue)) {
+                                        updatedValue[key] = wrapper;
+                                    } else {
+                                        updatedValue[key] = { ...wrapper, value: enhancedValue };
+                                    }
                                 } else {
                                     updatedValue[key] = wrapper;
                                 }
