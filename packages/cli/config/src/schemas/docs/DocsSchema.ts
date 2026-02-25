@@ -27,45 +27,23 @@ import { AnalyticsConfigSchema } from "./seo/AnalyticsConfigSchema.js";
 import { MetadataConfigSchema } from "./seo/MetadataConfigSchema.js";
 import { RedirectConfigSchema } from "./seo/RedirectConfigSchema.js";
 
-export const ProgrammingLanguageSchema = z.enum([
-    "typescript",
-    "javascript",
-    "python",
-    "java",
-    "go",
-    "ruby",
-    "csharp",
-    "php",
-    "swift",
-    "rust",
-    "nodets",
-    "nodejs",
-    "dotnet",
-    "curl",
-    "jvm",
-    "ts",
-    "js"
-]);
+/**
+ * Type alias for programming language values.
+ *
+ * Uses z.string() so that the underlying docs.yml shape (defined in
+ * @fern-api/configuration) can evolve without these schemas drifting.
+ */
+export const ProgrammingLanguageSchema = z.string();
 
 export type ProgrammingLanguageSchema = z.infer<typeof ProgrammingLanguageSchema>;
 
-export const LanguageSchema = z.enum([
-    "en",
-    "es",
-    "fr",
-    "de",
-    "it",
-    "pt",
-    "ja",
-    "zh",
-    "ko",
-    "el",
-    "no",
-    "pl",
-    "ru",
-    "sv",
-    "tr"
-]);
+/**
+ * Type alias for i18n language values.
+ *
+ * Uses z.string() so that the underlying docs.yml shape (defined in
+ * @fern-api/configuration) can evolve without these schemas drifting.
+ */
+export const LanguageSchema = z.string();
 
 export type LanguageSchema = z.infer<typeof LanguageSchema>;
 
