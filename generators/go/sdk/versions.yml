@@ -8,6 +8,7 @@
         to `http://localhost:8080` if the variable is not set.
       type: feat
   createdAt: "2026-02-25"
+  irVersion: 61
 - version: 1.25.0-rc3
   changelogEntry:
     - summary: |
