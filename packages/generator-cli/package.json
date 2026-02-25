@@ -19,9 +19,9 @@
   "source": "src/api.ts",
   "types": "dist/api.d.ts",
   "bin": {
-    "generator-cli": "dist/cli.js"
+    "generator-cli": "bin/cli"
   },
-  "files": ["dist"],
+  "files": ["bin", "dist"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
