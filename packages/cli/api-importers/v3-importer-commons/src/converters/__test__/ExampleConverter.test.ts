@@ -886,7 +886,9 @@ describe("ExampleConverter", () => {
     describe("anyOf unions", () => {
         const mockContextWithResolve = {
             ...mockContext,
-            resolveMaybeReference: vi.fn().mockImplementation(({ schemaOrReference }: { schemaOrReference: unknown }) => schemaOrReference)
+            resolveMaybeReference: vi
+                .fn()
+                .mockImplementation(({ schemaOrReference }: { schemaOrReference: unknown }) => schemaOrReference)
         } as unknown as AbstractConverterContext<object>;
 
         it("should select the correct variant when example matches a non-first anyOf variant", () => {
@@ -929,9 +931,7 @@ describe("ExampleConverter", () => {
 
             expect(result.isValid).toBe(true);
             expect(result.usedProvidedExample).toBe(true);
-            expect(result.validExample).toEqual(
-                expect.objectContaining({ status: "progress" })
-            );
+            expect(result.validExample).toEqual(expect.objectContaining({ status: "progress" }));
         });
 
         it("should select the last variant when example matches only the last anyOf variant", () => {
@@ -972,9 +972,7 @@ describe("ExampleConverter", () => {
 
             expect(result.isValid).toBe(true);
             expect(result.usedProvidedExample).toBe(true);
-            expect(result.validExample).toEqual(
-                expect.objectContaining({ status: "unknown" })
-            );
+            expect(result.validExample).toEqual(expect.objectContaining({ status: "unknown" }));
         });
 
         it("should fall back to first valid variant when example matches no variant", () => {
