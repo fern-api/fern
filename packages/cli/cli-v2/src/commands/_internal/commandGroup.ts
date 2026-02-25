@@ -1,22 +1,8 @@
 import type { Argv } from "yargs";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { setParentPath } from "./getParentPath.js";
 
 type CommandAdder = (cli: Argv<GlobalArgs>) => void;
-
-/**
- * WeakMap that stores the parent command path for a given yargs instance.
- * This allows leaf commands registered via {@link command} to display
- * the full command path (e.g. `fern sdk add`) in their usage text.
- */
-const parentPaths = new WeakMap<object, string>();
-
-/**
- * Returns the parent command path stored for the given yargs instance,
- * or `undefined` if the instance is a top-level command.
- */
-export function getParentPath(cli: Argv<GlobalArgs>): string | undefined {
-    return parentPaths.get(cli);
-}
 
 /**
  * Registers a command group with subcommands.
@@ -36,10 +22,11 @@ export function commandGroup(
     subcommands: CommandAdder[]
 ): void {
     cli.command(name, description, (yargs) => {
-        parentPaths.set(yargs, name);
+        setParentPath(name);
         for (const add of subcommands) {
             add(yargs);
         }
+        setParentPath(undefined);
         return yargs
             .usage(`$0 ${name}\n\n${description}`)
             .demandCommand(1)

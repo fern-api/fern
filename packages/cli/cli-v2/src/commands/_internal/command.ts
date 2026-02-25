@@ -2,7 +2,7 @@ import type { Argv, BuilderCallback } from "yargs";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { withContext } from "../../context/withContext.js";
-import { getParentPath } from "./commandGroup.js";
+import { getParentPath } from "./getParentPath.js";
 
 type CommandHandler<T extends GlobalArgs = GlobalArgs> = (context: Context, args: T) => Promise<void>;
 
@@ -25,7 +25,7 @@ export function command<T extends GlobalArgs = GlobalArgs>(
     handler: CommandHandler<T>,
     builder?: BuilderCallback<GlobalArgs, T>
 ): void {
-    const parentPath = getParentPath(cli);
+    const parentPath = getParentPath();
     const fullName = parentPath != null ? `${parentPath} ${name}` : name;
     cli.command(
         name,
