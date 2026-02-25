@@ -10,7 +10,11 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .primitive
-        .get_and_return_string(&"string".to_string(), None)
+        .params
+        .upload_with_path(
+            &"upload-path".to_string(),
+            &todo!("Invalid bytes value"),
+            None,
+        )
         .await;
 }

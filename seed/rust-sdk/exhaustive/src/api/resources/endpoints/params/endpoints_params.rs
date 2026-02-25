@@ -169,5 +169,24 @@ impl ParamsClient {
         ).await
     }
 
+    /// POST bytes with path param returning object
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
+    pub async fn upload_with_path(&self, param: &String, request: &Vec<u8>, options: Option<RequestOptions>) -> Result<ObjectWithRequiredField, ApiError> {
+        self.http_client.execute_request(
+            Method::POST,
+            &format!("/params/path/{}", param),
+            Some(serde_json::to_value(request).unwrap_or_default()),
+            None,
+            options,
+        ).await
+    }
+
 }
 
