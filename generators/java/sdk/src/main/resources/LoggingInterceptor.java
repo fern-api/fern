@@ -20,12 +20,17 @@ public final class LoggingInterceptor implements Interceptor {
             "www-authenticate",
             "x-api-key",
             "api-key",
+            "apikey",
+            "x-api-token",
+            "x-auth-token",
+            "auth-token",
             "proxy-authenticate",
             "proxy-authorization",
             "cookie",
             "set-cookie",
             "x-csrf-token",
             "x-xsrf-token",
+            "x-session-token",
             "x-access-token"
     ));
 
