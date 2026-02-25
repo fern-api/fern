@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
+client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
 ```
 </dd>
 </dl>

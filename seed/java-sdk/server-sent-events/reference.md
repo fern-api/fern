@@ -16,7 +16,7 @@
 client.completions().stream(
     StreamCompletionRequest
         .builder()
-        .query("query")
+        .query("foo")
         .build()
 );
 ```
