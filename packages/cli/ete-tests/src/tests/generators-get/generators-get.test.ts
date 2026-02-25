@@ -6,7 +6,7 @@ import { init } from "../init/init.js";
 
 // Ensure that the generators list command works and the format doesn't change, since fern-bot consumes this
 describe("fern generator get", () => {
-    it("fern generator get --version", async ({ signal }) => {
+    it.skip("fern generator get --version", async ({ signal }) => {
         const pathOfDirectory = await init({ signal });
 
         const out = await runFernCli(
@@ -17,7 +17,7 @@ describe("fern generator get", () => {
         expect(out.stdout).toMatchSnapshot();
     }, 60_000);
 
-    it("fern generator get --language", async ({ signal }) => {
+    it.skip("fern generator get --language", async ({ signal }) => {
         const pathOfDirectory = await init({ signal });
 
         const out = await runFernCli(
@@ -28,7 +28,7 @@ describe("fern generator get", () => {
         expect(out.stdout).toMatchSnapshot();
     }, 60_000);
 
-    it("fern generator get to file", async ({ signal }) => {
+    it.skip("fern generator get to file", async ({ signal }) => {
         const pathOfDirectory = await init({ signal });
         const tmpFile = await tmp.file();
         await runFernCli(

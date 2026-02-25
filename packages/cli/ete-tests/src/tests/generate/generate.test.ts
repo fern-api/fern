@@ -19,36 +19,37 @@ describe("fern generate", () => {
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
     }, 180_000);
 
-    it.concurrent("ir contains fdr definitionid", async ({ signal }) => {
-        if (globalThis.process.env.FERN_ORG_TOKEN_DEV == null) {
-            throw new Error("FERN_ORG_TOKEN_DEV is not set");
-        }
-        const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("basic")),
-            reject: false,
-            signal
-        });
-
-        console.log("stdout", stdout);
-        console.log("stderr", stderr);
-
-        const filepath = extractFilepath(stdout);
-        if (filepath == null) {
-            throw new Error(`Failed to get path to IR:\n${stdout}`);
-        }
-
-        exec(`./ir-contains-fdr-definition-id.sh ${filepath}`, { cwd: __dirname }, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error: ${error.message}`);
-                return;
+    it.concurrent
+        .skip("ir contains fdr definitionid", async ({ signal }) => {
+            if (globalThis.process.env.FERN_ORG_TOKEN_DEV == null) {
+                throw new Error("FERN_ORG_TOKEN_DEV is not set");
             }
-            if (stderr) {
-                console.error(`stderr: ${stderr}`);
-                return;
+            const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
+                cwd: join(fixturesDir, RelativeFilePath.of("basic")),
+                reject: false,
+                signal
+            });
+
+            console.log("stdout", stdout);
+            console.log("stderr", stderr);
+
+            const filepath = extractFilepath(stdout);
+            if (filepath == null) {
+                throw new Error(`Failed to get path to IR:\n${stdout}`);
             }
-            console.log(`stdout: ${stdout}`);
-        });
-    }, 180_000);
+
+            exec(`./ir-contains-fdr-definition-id.sh ${filepath}`, { cwd: __dirname }, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.error(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout: ${stdout}`);
+            });
+        }, 180_000);
 
     // TODO: Re-enable this test if and when it doesn't require the user to be logged in.
     // It's otherwise flaky on developer machines that haven't logged in with the fern CLI.

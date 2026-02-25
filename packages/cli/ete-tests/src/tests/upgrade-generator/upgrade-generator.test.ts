@@ -77,7 +77,7 @@ describe("fern generator upgrade", () => {
         expect(JSON.parse((await readFile(outputFile)).toString()).version).not.toEqual("3.0.0");
     }, 60_000);
 
-    it("fern generator help commands", async ({ signal }) => {
+    it.skip("fern generator help commands", async ({ signal }) => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);

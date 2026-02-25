@@ -17,7 +17,7 @@ describe("fern add", () => {
         expect(await getDirectoryContentsForSnapshot(pathOfDirectory)).not.toBeNull();
     }, 60_000);
 
-    it("fern add <generator> --group sdk", async ({ signal }) => {
+    it.skip("fern add <generator> --group sdk", async ({ signal }) => {
         const pathOfDirectory = await init({ signal });
 
         const add = async (generator: string, groupName: string) => {

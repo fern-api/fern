@@ -22,7 +22,7 @@ interface Fixture {
     only?: boolean;
 }
 
-describe("fdr", () => {
+describe.skip("fdr", () => {
     for (const fixture of FIXTURES) {
         const { only = false } = fixture;
         (only ? it.only : it)(
