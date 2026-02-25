@@ -43,11 +43,11 @@ service:
             query: "foo"
           response:
             stream:
-              - event: discriminant-1
+              - event: completion
                 data:
                   delta: "foo"
                   tokens: 1
-              - event: discriminant-2
+              - event: completion
                 data:
                   delta: "bar"
                   tokens: 2
@@ -64,3 +64,12 @@ service:
         type: StreamEvent
         format: sse
         terminator: "[DONE]"
+      examples:
+        - name: "Stream events"
+          request:
+            query: "query"
+          response:
+            stream:
+              - event: completion
+                data:
+                  content: "content"
