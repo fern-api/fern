@@ -35,7 +35,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/github": "workspace:*",
     "@fern-api/replay": "^0.6.0",
-    "@octokit/rest": "^20.1.2",
+    "@octokit/rest": "catalog:",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",

@@ -80,9 +80,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Update npm
-        run: npm install -g npm@latest
-
       - name: Build CLI
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
@@ -92,13 +89,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
         run: pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
-
-      - name: Setup Node for npm publish
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
-          scope: "@fern-api"
 
       - name: Publish generator-cli
         env:
@@ -110,7 +100,7 @@ jobs:
           version_replace="s/0.0.0/${NEW_VERSION}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
           rm -rf package.json.tmp
-          npx -y npm@latest publish --access public --tag latest
+          pnpm publish --access public --tag latest --no-git-checks
 
   publish-sdks:
     needs: check-version
