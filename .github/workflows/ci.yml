@@ -197,13 +197,10 @@ jobs:
       - name: Stop any stale turbo daemon
         run: pnpm turbo daemon stop || true
 
-      - name: Build CLI (dev)
+      - name: Build CLIs (dev + seed)
         timeout-minutes: 10
-        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
-
-      - name: Build seed CLI
-        timeout-minutes: 10
-        run: pnpm seed:build
+        run: |
+          pnpm turbo run dist:cli:dev dist:cli --filter=@fern-api/cli --filter=@fern-api/cli-v2 --filter=@fern-api/seed-cli
 
       - name: Run ETE tests
         if: ${{ !github.event.inputs.update_snapshots }}
