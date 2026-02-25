@@ -1,3 +1,6 @@
+imports:
+  objects: ../types/object.yml
+
 service:
   auth: true
   base-path: /params
@@ -87,3 +90,21 @@ service:
         path-parameters:
           param: string
       response: string
+
+    uploadWithPath:
+      docs: POST bytes with path param returning object
+      path: /path/{param}
+      path-parameters:
+        param: string
+      method: POST
+      request:
+        name: UploadWithPath
+        body: bytes
+      response: objects.ObjectWithRequiredField
+      examples:
+        - path-parameters:
+            param: "upload-path"
+          request: "bytes-content"
+          response:
+            body:
+              string: "uploaded"

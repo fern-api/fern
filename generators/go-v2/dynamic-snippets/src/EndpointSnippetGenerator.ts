@@ -244,7 +244,12 @@ export class EndpointSnippetGenerator {
                     go.invokeMethod({
                         on: go.codeblock(CLIENT_VAR_NAME),
                         method: this.getMethod({ endpoint }),
-                        arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs, go.codeblock("nil")]
+                        arguments_: [
+                            this.context.getContextTodoFunctionInvocation(),
+                            ...otherArgs,
+                            go.codeblock("nil"),
+                            ...optionArgsInvocation
+                        ]
                     })
                 );
             } else {
@@ -636,14 +641,16 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): go.TypeInstantiation {
-        if (typeof value !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected bytes value to be a string, got ${typeof value}`
-            });
-            return go.TypeInstantiation.nop();
-        }
-        return go.TypeInstantiation.bytes(value as string);
+        const bytesValue = typeof value === "string" ? (value as string) : "";
+        return go.TypeInstantiation.reference(
+            go.invokeFunc({
+                func: go.typeReference({
+                    name: "NewReader",
+                    importPath: "bytes"
+                }),
+                arguments_: [go.TypeInstantiation.bytes(bytesValue)]
+            })
+        );
     }
 
     private getMethodArgsForInlinedRequest({
@@ -871,20 +878,16 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.StructField[] {
         const args: go.StructField[] = [];
-        const values = snippet.pathParameters ?? {};
-
-        // Iterate in parameter-definition order (not value-object order) so that
-        // positional path-parameter arguments are emitted in the correct order.
-        for (const param of namedParameters) {
-            const value = values[param.name.wireValue];
-            if (value === undefined) {
-                continue;
-            }
+        const pathParameters = this.context.associateByWireValueOrDefault({
+            parameters: namedParameters,
+            values: snippet.pathParameters ?? {}
+        });
+        for (const parameter of pathParameters) {
             args.push({
-                name: this.context.getTypeName(param.name.name),
+                name: this.context.getTypeName(parameter.name.name),
                 value: this.context.dynamicTypeInstantiationMapper.convertToPointerIfPossible({
-                    typeReference: param.typeReference,
-                    value
+                    typeReference: parameter.typeReference,
+                    value: parameter.value
                 })
             });
         }

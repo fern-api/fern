@@ -185,6 +185,20 @@ export class WireMock {
             }
         }
 
+        // If the response body example is missing/null but the endpoint declares a JSON response
+        // with a non-primitive type (e.g., an object or named type), default to an empty JSON object.
+        // This prevents WireMock from returning a JSON string (e.g., `""`) that cannot be
+        // unmarshaled into a complex struct in strongly-typed languages like Go.
+        if (bodyObj === "" && endpoint.response?.body?.type === "json") {
+            const responseValue = endpoint.response.body.value;
+            if (responseValue.type === "response") {
+                const responseBodyType = responseValue.responseBodyType;
+                if (responseBodyType.type === "named") {
+                    bodyObj = {};
+                }
+            }
+        }
+
         // Format response body with validation and fallback
         let body = "";
         if (bodyObj !== null && bodyObj !== undefined) {
