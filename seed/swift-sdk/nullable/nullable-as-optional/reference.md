@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">getUsers</a>(usernames: String?, avatar: String?, activated: Bool?, tags: Nullable<String>?, extra: Nullable<Bool>?, requestOptions: RequestOptions?) -> [User]</code></summary>
+<details><summary><code>client.nullable.<a href="/Sources/Resources/Nullable/NullableClient_.swift">getUsers</a>(usernames: String?, avatar: String?, activated: Bool?, tags: Nullable&lt;String&gt;?, extra: Nullable&lt;Bool&gt;?, requestOptions: RequestOptions?) -> [User]</code></summary>
 <dl>
 <dd>
 
