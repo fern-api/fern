@@ -82,7 +82,6 @@
     "inquirer": "^9.2.15",
     "is-ci": "catalog:",
     "js-yaml": "catalog:",
-    "yaml": "catalog:",
     "jsonwebtoken": "catalog:",
     "ora": "catalog:",
     "posthog-node": "^5.14.0",
@@ -90,6 +89,7 @@
     "typescript": "catalog:",
     "uuid": "catalog:",
     "vitest": "catalog:",
+    "yaml": "catalog:",
     "yargs": "^17.4.1"
   }
 }

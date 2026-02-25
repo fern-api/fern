@@ -10,6 +10,7 @@ packages:
   - "!packages/cli/cli-v2/dist/local"
   - "!packages/cli/cli-v2/dist/dev"
   - "!packages/cli/cli-v2/dist/prod"
+
 catalog:
   "@babel/core": ^7.29.0
   "@babel/preset-env": ^7.29.0
@@ -23,7 +24,7 @@ catalog:
   "@fern-api/docs-parsers": 0.0.65
   "@fern-api/fai-sdk": 0.0.6-2ee1b7e28
   "@fern-api/fdr-sdk": 0.145.12-b50d999d1
-  "@fern-api/generator-cli": 0.3.0
+  "@fern-api/generator-cli": 0.5.3
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
   "@fern-api/venus-api-sdk": 0.17.3-3-gf696595
   "@fern-fern/docs-config": 0.0.80
@@ -97,7 +98,7 @@ catalog:
   "@fern-fern/legacy-docs-config": 0.0.58
   "@fern-fern/postman-sdk": 0.1.1
   "@inquirer/prompts": ^7.1.0
-  "@octokit/rest": ^20.1.2
+  "@octokit/rest": ^22.0.1
   "@open-rpc/meta-schema": ^1.14.9
   "@redocly/openapi-core": ^1.4.1
   "@rolldown/binding-darwin-arm64": 1.0.0-rc.5

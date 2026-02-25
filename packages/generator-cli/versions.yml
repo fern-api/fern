@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump @octokit/rest to ^22.0.1 to pull in @octokit/request@10.0.7, which fixes CVE-2025-25290 (ReDoS vulnerability).
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.5.5
+
+- changelogEntry:
+    - summary: |
         Regenerate generator-cli types with latest version of the TypeScript SDK generator.
       type: internal
   createdAt: "2026-01-29"
