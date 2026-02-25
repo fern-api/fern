@@ -3,8 +3,16 @@
     - summary: |
         Upgrade Docker base image from Node.js 22 to Node.js 24 LTS.
       type: chore
-  irVersion: 61
+  irVersion: 65
   createdAt: "2026-02-25"
+  version: 0.19.5
+
+- changelogEntry:
+    - summary: |
+        Upgrade to IRv65
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-24"
   version: 0.19.4
 
 - changelogEntry:

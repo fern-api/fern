@@ -1,10 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.50.2
+- version: 3.51.1
   changelogEntry:
     - summary: |
         Upgrade Docker base image from Node.js 22 to Node.js 24 LTS.
       type: chore
   createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.51.0
+  changelogEntry:
+    - summary: |
+        Add event-level SSE discrimination support. When an SSE streaming endpoint returns a
+        discriminated union with `discriminatorContext: "protocol"`, the Stream class injects the
+        SSE `event:` field value into the JSON data as the discriminator key before deserialization.
+        This matches the Go SDK's approach and supports proper SSE event-level discrimination,
+        multiline `data:` concatenation, and blank-line event boundaries per the SSE spec.
+        Also adds wire test generation support for SSE streaming endpoints.
+      type: feat
+  createdAt: "2026-02-24"
   irVersion: 65
 
 - version: 3.50.1
@@ -39,7 +52,6 @@
       type: chore
   createdAt: "2026-02-24"
   irVersion: 63
-
 - version: 3.49.2
   changelogEntry:
     - summary: |
