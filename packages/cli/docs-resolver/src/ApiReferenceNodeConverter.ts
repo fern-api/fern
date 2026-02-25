@@ -435,7 +435,7 @@ export class ApiReferenceNodeConverter {
             slug,
             sectionAvailability
         );
-        return {
+        const node: FernNavigation.V1.ApiPackageNode = {
             id: nodeId,
             type: "apiPackage",
             children: convertedItems,
@@ -454,6 +454,21 @@ export class ApiReferenceNodeConverter {
             orphaned: section.orphaned,
             featureFlags: section.featureFlags
         };
+
+        // `ApiPackageNode` (from `@fern-api/fdr-sdk`) may not yet include these properties at the type level.
+        // Assign via an intersection type to avoid excess-property errors while still emitting them in JSON.
+        const nodeWithCollapsing = node as FernNavigation.V1.ApiPackageNode & {
+            collapsible?: boolean;
+            collapsedByDefault?: boolean;
+        };
+        if (section.collapsible !== undefined) {
+            nodeWithCollapsing.collapsible = section.collapsible;
+        }
+        if (section.collapsedByDefault !== undefined) {
+            nodeWithCollapsing.collapsedByDefault = section.collapsedByDefault;
+        }
+
+        return node;
     }
 
     #convertUnknownIdentifier(

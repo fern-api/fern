@@ -1253,6 +1253,8 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                collapsible: item.collapsible,
+                collapsedByDefault: item.collapsedByDefault,
                 availability: item.availability,
                 icon: resolveIconPath(item.icon, absolutePathToConfig),
                 playground: item.playground,
