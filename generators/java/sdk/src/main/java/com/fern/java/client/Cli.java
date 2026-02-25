@@ -44,6 +44,12 @@ import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
 import com.fern.java.client.generators.ResponseBodyReaderGenerator;
+import com.fern.java.client.generators.ConsoleLoggerGenerator;
+import com.fern.java.client.generators.ILoggerGenerator;
+import com.fern.java.client.generators.LogConfigGenerator;
+import com.fern.java.client.generators.LogLevelGenerator;
+import com.fern.java.client.generators.LoggerGenerator;
+import com.fern.java.client.generators.LoggingInterceptorGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.client.generators.StreamTestGenerator;
@@ -322,6 +328,24 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         RetryInterceptorGenerator retryInterceptorGenerator = new RetryInterceptorGenerator(context);
         this.addGeneratedFile(retryInterceptorGenerator.generateFile());
+
+        LogLevelGenerator logLevelGenerator = new LogLevelGenerator(context);
+        this.addGeneratedFile(logLevelGenerator.generateFile());
+
+        ILoggerGenerator iLoggerGenerator = new ILoggerGenerator(context);
+        this.addGeneratedFile(iLoggerGenerator.generateFile());
+
+        ConsoleLoggerGenerator consoleLoggerGenerator = new ConsoleLoggerGenerator(context);
+        this.addGeneratedFile(consoleLoggerGenerator.generateFile());
+
+        LogConfigGenerator logConfigGenerator = new LogConfigGenerator(context);
+        this.addGeneratedFile(logConfigGenerator.generateFile());
+
+        LoggerGenerator loggerGenerator = new LoggerGenerator(context);
+        this.addGeneratedFile(loggerGenerator.generateFile());
+
+        LoggingInterceptorGenerator loggingInterceptorGenerator = new LoggingInterceptorGenerator(context);
+        this.addGeneratedFile(loggingInterceptorGenerator.generateFile());
 
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);

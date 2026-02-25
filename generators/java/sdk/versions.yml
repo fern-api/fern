@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.39.0
+  changelogEntry:
+    - summary: |
+        Add configurable logging support to generated Java SDKs. The SDK now includes a
+        logging system with LogLevel, ILogger, ConsoleLogger, LogConfig, and Logger classes.
+        HTTP request/response logging is handled via a LoggingInterceptor that redacts
+        sensitive headers (authorization, cookies, API keys, CSRF tokens). Logging is
+        silent by default and can be enabled via `ClientOptions.builder().logging(...)` or
+        the root client builder's `.logging(...)` method.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.38.1
   changelogEntry:
     - summary: |
