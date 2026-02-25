@@ -4,14 +4,17 @@ import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
+    correctIncorrectDockerOrg,
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,
+    INCORRECT_DOCKER_ORG,
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
+import { formatBootstrapSummary, replayInit } from "@fern-api/generator-cli";
 import {
     initializeAPI,
     initializeDocs,
@@ -68,6 +71,7 @@ import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/
 import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
+import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 
 void runCli();
@@ -225,6 +229,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
@@ -550,12 +555,13 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Add the generator to the specified group"
                 }),
         async (argv) => {
+            const generatorName = warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext);
             await addGeneratorToWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false
                 }),
-                generatorName: argv.generator,
+                generatorName,
                 groupName: argv.group,
                 cliContext
             });
@@ -677,6 +683,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("output", {
                     type: "string",
                     description: "Custom output directory (currently only supported with --preview for SDK generation)"
+                })
+                .option("replay", {
+                    boolean: true,
+                    default: true,
+                    hidden: true,
+                    description: "Run replay after generation (use --no-replay to skip)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -714,6 +726,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
             }
+            const correctedGeneratorFilter =
+                argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -723,7 +737,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     version: argv.version,
                     groupName: argv.group,
-                    generatorName: argv.generator,
+                    generatorName: correctedGeneratorFilter,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local || argv.runner != null,
@@ -735,7 +749,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
                     dynamicIrOnly: argv["dynamic-ir-only"],
-                    outputDir: argv.output
+                    outputDir: argv.output,
+                    noReplay: !argv.replay
                 });
             }
             if (argv.docs != null) {
@@ -776,7 +791,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
-                generatorName: argv.generator,
+                generatorName: correctedGeneratorFilter,
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
@@ -788,7 +803,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
                 dynamicIrOnly: argv["dynamic-ir-only"],
-                outputDir: argv.output
+                outputDir: argv.output,
+                noReplay: !argv.replay
             });
         }
     );
@@ -1993,6 +2009,20 @@ function readBytes(stream: ReadStream): Promise<Uint8Array> {
     });
 }
 
+/**
+ * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
+ * Used for CLI arguments that accept generator names.
+ */
+function warnAndCorrectIncorrectDockerOrg(generatorName: string, cliContext: CliContext): string {
+    const corrected = correctIncorrectDockerOrg(generatorName);
+    if (corrected !== generatorName) {
+        cliContext.logger.warn(
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "${INCORRECT_DOCKER_ORG}".`
+        );
+    }
+    return corrected;
+}
+
 function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         stream.write(data, (err) => {
@@ -2003,4 +2033,115 @@ function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
             }
         });
     });
+}
+
+function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command({
+        command: "replay",
+        describe: false, // hidden from --help
+        builder: (yargs) => {
+            addReplayInitCommand(yargs, cliContext);
+            return yargs;
+        },
+        handler: () => {
+            // parent command — subcommands handle execution
+        }
+    });
+}
+
+function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "init",
+        false, // hidden from --help
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description: "Generator group from generators.yml (reads github config automatically)"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "If multiple APIs, specify which API workspace to use"
+                })
+                .option("github", {
+                    type: "string",
+                    description: "GitHub repository (e.g., owner/repo). Overrides --group config."
+                })
+                .option("token", {
+                    type: "string",
+                    description: "GitHub token. Overrides --group config."
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    default: false,
+                    description: "Report what would happen without making changes"
+                })
+                .option("max-commits", {
+                    type: "number",
+                    description: "Max commits to scan for generation history"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite existing lockfile if Replay is already initialized"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern replay init"
+            });
+
+            let githubRepo: string | undefined = argv.github;
+            let token: string | undefined = argv.token;
+
+            // If --group is provided, load config from generators.yml
+            if (argv.group != null) {
+                const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api);
+                // Use group config as defaults, allow --github/--token to override
+                githubRepo = githubRepo ?? resolved.githubRepo;
+                token = token ?? resolved.token;
+            }
+
+            if (githubRepo == null || token == null) {
+                return cliContext.failAndThrow(
+                    "Missing required github config. Either use --group to read from generators.yml, or provide --github and --token directly."
+                );
+            }
+
+            cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
+            if (argv.dryRun) {
+                cliContext.logger.info("(dry-run mode)");
+            }
+
+            try {
+                const result = await replayInit({
+                    githubRepo,
+                    token,
+                    dryRun: argv.dryRun,
+                    maxCommitsToScan: argv.maxCommits,
+                    force: argv.force
+                });
+
+                const logEntries = formatBootstrapSummary(result);
+                for (const entry of logEntries) {
+                    if (entry.level === "warn") {
+                        cliContext.logger.warn(entry.message);
+                    } else {
+                        cliContext.logger.info(entry.message);
+                    }
+                }
+
+                if (!result.bootstrap.generationCommit) {
+                    return;
+                }
+
+                if (argv.dryRun) {
+                    cliContext.logger.info("\nDry run complete. No changes made.");
+                }
+            } catch (error) {
+                cliContext.failAndThrow(
+                    `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+        }
+    );
 }

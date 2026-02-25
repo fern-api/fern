@@ -11,6 +11,9 @@ on:
 permissions:
   pull-requests: read
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   run:
     name: Lint PR title

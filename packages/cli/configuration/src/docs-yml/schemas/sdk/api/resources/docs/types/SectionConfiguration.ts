@@ -7,7 +7,12 @@ export interface SectionConfiguration extends FernDocsConfig.WithPermissions, Fe
     /** The relative path to the markdown file that will be displayed when the section is clicked. */
     path?: string;
     contents: FernDocsConfig.NavigationItem[];
+    /** Deprecated. Use `collapsible` and `collapsed-by-default` instead. */
     collapsed?: boolean;
+    /** Whether the section can be expanded/collapsed by the user. */
+    collapsible?: boolean;
+    /** Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open). */
+    collapsedByDefault?: boolean;
     slug?: string;
     icon?: string;
     hidden?: boolean;

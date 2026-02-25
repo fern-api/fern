@@ -430,6 +430,19 @@
             }
         },
         {
+            "example_identifier": "b305eac1",
+            "id": {
+                "method": "POST",
+                "path": "/params/path/{param}",
+                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().uploadWithPath(\"upload-path\", \"\".getBytes());\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.fern.sdk.SeedExhaustiveClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExhaustiveClient client = SeedExhaustiveClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().params().uploadWithPath(\"upload-path\", \"\".getBytes());\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "d8492cb1",
             "id": {
                 "method": "POST",

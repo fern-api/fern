@@ -13,6 +13,7 @@ permissions:
   pull-requests: write
 
 env:
+  DO_NOT_TRACK: "1"
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:

@@ -1,3 +1,4 @@
+export { type ConflictDetail, type ReplayReport } from "@fern-api/replay";
 export {
     type GenerateReadmeParams,
     type GenerateReadmeToStreamParams,
@@ -13,3 +14,24 @@ export {
 export { type GithubPrParams, githubPr } from "./api/github-pr.js";
 export { type GithubPushParams, githubPush } from "./api/github-push.js";
 export { type GithubReleaseParams, githubRelease } from "./api/github-release.js";
+export {
+    consolePipelineLogger,
+    formatReplayPrBody,
+    type GithubStepConfig,
+    type GithubStepResult,
+    logReplaySummary,
+    type PipelineConfig,
+    type PipelineContext,
+    type PipelineLogger,
+    type PipelineResult,
+    PostGenerationPipeline,
+    type ReplayStepResult
+} from "./pipeline/index.js";
+export {
+    type BootstrapLogEntry,
+    formatBootstrapSummary,
+    type ReplayInitParams,
+    type ReplayInitResult,
+    replayInit
+} from "./replay/replay-init.js";
+export { type ReplayRunParams, type ReplayRunResult, replayRun } from "./replay/replay-run.js";

@@ -676,6 +676,15 @@ export function convertSchemaObject(
         }
 
         if (schema.type === "string") {
+            // If the schema has contentMediaType: application/octet-stream (used by FastAPI >= 0.129.1
+            // for UploadFile fields), normalize it to format: binary for file upload detection.
+            if (
+                schema.format == null &&
+                (schema as Record<string, unknown>).contentMediaType === "application/octet-stream"
+            ) {
+                schema = { ...schema, format: "binary" };
+            }
+
             if (schema.format === "date-time") {
                 return wrapPrimitive({
                     nameOverride,

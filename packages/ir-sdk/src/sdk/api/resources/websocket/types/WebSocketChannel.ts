@@ -5,6 +5,7 @@ import type * as FernIr from "../../../index.js";
 export interface WebSocketChannel extends FernIr.Declaration {
     name: FernIr.WebSocketName;
     displayName: string | undefined;
+    connectMethodName: string | undefined;
     baseUrl: FernIr.EnvironmentBaseUrlId | undefined;
     path: FernIr.HttpPath;
     auth: boolean;

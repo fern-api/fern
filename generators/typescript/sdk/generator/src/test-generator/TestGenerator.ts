@@ -1095,7 +1095,12 @@ describe("${serviceName}", () => {
         }
 
         const rawRequestBody = this.getRequestExample(example.request);
-        const rawResponseBody = this.getResponseExample(example.response);
+        const isSSEStreaming =
+            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse";
+        const rawResponseBody = this.getResponseExample(
+            example.response,
+            isSSEStreaming ? { endpoint, context } : undefined
+        );
         const responseStatusCode = getExampleResponseStatusCode({
             response: example.response,
             ir: this.ir
@@ -1109,6 +1114,10 @@ describe("${serviceName}", () => {
             context,
             neverThrowErrors: this.neverThrowErrors
         });
+
+        const sseExpectedEvents: Code | undefined = isSSEStreaming
+            ? this.getSseExpectedEvents({ endpoint, example, context })
+            : undefined;
 
         const generateEnvironment = () => {
             if (!this.ir.environments) {
@@ -1248,7 +1257,9 @@ describe("${serviceName}", () => {
         // hasPagination determines if we need { once: false } for multiple mock requests
         // This is set after isCursorMissing is computed to ensure we don't allow multiple
         // requests when cursor is missing (since there's no next page to request)
-        let hasPagination = endpoint.pagination !== undefined;
+        const supportsPaginatedResponse =
+            endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination);
+        let hasPagination = supportsPaginatedResponse;
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
@@ -1285,10 +1296,8 @@ describe("${serviceName}", () => {
         const paginationIgnoredFields: string[] = [];
         if (endpoint.pagination !== undefined) {
             // Both cursor and offset pagination have a "page" property that changes between requests
-            if (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset") {
+            if (paginationGeneratesPageObject(endpoint.pagination)) {
                 const pageProperty = endpoint.pagination.page;
-                // Build the full path to the page field (e.g., "pagination.cursor" or just "cursor" or "pagination.offset")
-                // PropertyPathItem.name is of type FernIr.Name (use originalName), while property.name is NameAndWireValue (use wireValue)
                 const pathParts = [
                     ...(pageProperty.propertyPath ?? []).map((p) => p.name.originalName),
                     pageProperty.property.name.wireValue
@@ -1310,7 +1319,7 @@ describe("${serviceName}", () => {
                 ${expectedDeclaration}
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
-                    endpoint.pagination.type !== "custom"
+                    endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination)
                         ? isCursorMissing
                             ? code`
                             expect(${expectedName}).toEqual(${pageName}.data);
@@ -1360,30 +1369,45 @@ describe("${serviceName}", () => {
             }.respondWith()
             .statusCode(${responseStatusCode})${
                 rawResponseBody
-                    ? code`.jsonBody(rawResponseBody)
+                    ? isSSEStreaming
+                        ? code`.sseBody(rawResponseBody)
+                `
+                        : code`.jsonBody(rawResponseBody)
                 `
                     : ""
             }.build();
 
         ${
-            willThrowError
+            isSSEStreaming
                 ? code`
+            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+            const events: unknown[] = [];
+            for await (const event of response) {
+                events.push(event);
+            }
+            ${
+                sseExpectedEvents != null
+                    ? code`expect(events).toEqual(${sseExpectedEvents});`
+                    : code`expect(events.length).toBeGreaterThan(0);`
+            }`
+                : willThrowError
+                  ? code`
             await expect(async () => {
                 return ${getTextOfTsNode(generatedExample.endpointInvocation)}
             }).rejects.toThrow(${literalOf(expected)});`
-                : isHeadersResponse
-                  ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                  : isHeadersResponse
+                    ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`
-                  : code`
-                    ${
-                        endpoint.pagination !== undefined
-                            ? paginationBlock
-                            : code`
-                            const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
-                            expect(response).toEqual(${expected});
-                          `
-                    }
-                `
+                    : code`
+                        ${
+                            supportsPaginatedResponse
+                                ? paginationBlock
+                                : code`
+                                const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
+                                expect(response).toEqual(${expected});
+                              `
+                        }
+                    `
         }
     });
           `;
@@ -1399,6 +1423,57 @@ describe("${serviceName}", () => {
             return "formUrlEncodedBody";
         }
         return "jsonBody";
+    }
+
+    private getSseExpectedEvents({
+        endpoint,
+        example,
+        context
+    }: {
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.ExampleEndpointCall;
+        context: SdkContext;
+    }): Code | undefined {
+        const sseEvents = example.response._visit<FernIr.ExampleServerSideEvent[] | undefined>({
+            ok: (value) =>
+                value._visit({
+                    sse: (events) => events,
+                    body: () => undefined,
+                    stream: () => undefined,
+                    _other: () => undefined
+                }),
+            error: () => undefined,
+            _other: () => undefined
+        });
+        if (sseEvents == null || sseEvents.length === 0) {
+            return undefined;
+        }
+
+        // Determine the SSE protocol discriminant field, if any
+        let discriminantField: string | undefined;
+        const ssePayload =
+            endpoint.response?.body?.type === "streaming" && endpoint.response.body.value.type === "sse"
+                ? endpoint.response.body.value.payload
+                : undefined;
+        if (ssePayload != null && ssePayload.type === "named") {
+            const typeDeclaration = context.type.getTypeDeclaration(ssePayload);
+            if (
+                typeDeclaration.shape.type === "union" &&
+                typeDeclaration.shape.discriminatorContext === FernIr.UnionDiscriminatorContext.Protocol
+            ) {
+                discriminantField = typeDeclaration.shape.discriminant.wireValue;
+            }
+        }
+
+        const createRawJsonExample = this.createRawJsonExample.bind(this);
+        const eventCodes = sseEvents.map((event) => {
+            if (discriminantField != null) {
+                const merged = { [discriminantField]: event.event, ...((event.data.jsonExample ?? {}) as object) };
+                return code`${literalOf(merged)}`;
+            }
+            return createRawJsonExample({ example: event.data, isForRequest: false, isForResponse: true });
+        });
+        return code`${arrayOf(...eventCodes)}`;
     }
 
     private shouldBuildTest(endpoint: FernIr.HttpEndpoint): boolean {
@@ -1438,9 +1513,15 @@ describe("${serviceName}", () => {
             case "fileDownload":
             case "text":
             case "bytes":
-            case "streaming":
             case "streamParameter":
                 return false; // not supported
+            case "streaming": {
+                const body = endpoint.response?.body;
+                if (body != null && body.type === "streaming" && body.value.type === "sse") {
+                    break; // SSE streaming is supported
+                }
+                return false;
+            }
             case "json":
             case "undefined":
                 break; // supported
@@ -1513,7 +1594,10 @@ describe("${serviceName}", () => {
         return requestExample;
     }
 
-    getResponseExample(response: FernIr.ExampleResponse | undefined): Code | undefined {
+    getResponseExample(
+        response: FernIr.ExampleResponse | undefined,
+        opts?: { endpoint: FernIr.HttpEndpoint; context: SdkContext }
+    ): Code | undefined {
         if (!response) {
             return undefined;
         }
@@ -1530,8 +1614,42 @@ describe("${serviceName}", () => {
                     stream: () => {
                         throw new Error("Stream not supported in wire tests");
                     },
-                    sse: () => {
-                        throw new Error("SSE not supported in wire tests");
+                    sse: (events) => {
+                        // For SSE endpoints with a protocol-discriminated union, the discriminant travels as
+                        // the SSE `event:` field and must be stripped from the data JSON.
+                        let discriminantField: string | undefined;
+                        if (opts != null) {
+                            const ssePayload =
+                                opts.endpoint.response?.body?.type === "streaming" &&
+                                opts.endpoint.response.body.value.type === "sse"
+                                    ? opts.endpoint.response.body.value.payload
+                                    : undefined;
+                            if (ssePayload != null && ssePayload.type === "named") {
+                                const typeDeclaration = opts.context.type.getTypeDeclaration(ssePayload);
+                                if (
+                                    typeDeclaration.shape.type === "union" &&
+                                    typeDeclaration.shape.discriminatorContext ===
+                                        FernIr.UnionDiscriminatorContext.Protocol
+                                ) {
+                                    discriminantField = typeDeclaration.shape.discriminant.wireValue;
+                                }
+                            }
+                        }
+                        const sseLines = events.map((event) => {
+                            let dataJson: unknown = event.data.jsonExample;
+                            if (
+                                discriminantField != null &&
+                                dataJson != null &&
+                                typeof dataJson === "object" &&
+                                !Array.isArray(dataJson)
+                            ) {
+                                const copy = { ...(dataJson as Record<string, unknown>) };
+                                delete copy[discriminantField];
+                                dataJson = copy;
+                            }
+                            return `event: ${event.event}\ndata: ${JSON.stringify(dataJson)}\n`;
+                        });
+                        return code`${literalOf(sseLines.join("\n") + "\n")}`;
                     },
                     _other: () => {
                         throw new Error("Unsupported response type");
@@ -1897,12 +2015,15 @@ function getExpectedResponse({
                     throw new Error("Stream not supported in wire tests");
                 },
                 sse: () => {
-                    throw new Error("SSE not supported in wire tests");
+                    return undefined;
                 },
                 _other: () => {
                     throw new Error("Unsupported response type");
                 }
             });
+            if (result === undefined) {
+                return code`undefined`;
+            }
             if (neverThrowErrors) {
                 return code`{
                     body: ${result},
@@ -1980,6 +2101,22 @@ function getResponseBodyJsonExample(response: FernIr.ExampleResponse): unknown |
     });
 }
 
+function paginationGeneratesPageObject(
+    pagination: FernIr.Pagination
+): pagination is FernIr.Pagination.Cursor | FernIr.Pagination.Offset {
+    switch (pagination.type) {
+        case "cursor":
+        case "offset":
+            return true;
+        case "custom":
+        case "uri":
+        case "path":
+            return false;
+        default:
+            assertNever(pagination);
+    }
+}
+
 function isPaginationResultsPathMissingInExample({
     example,
     endpoint
@@ -2043,19 +2180,23 @@ function isPaginationCursorMissingInExample({
         return true;
     }
 
-    // Get the cursor property based on pagination type
     let cursorProperty;
-    if (pagination.type === "cursor") {
-        cursorProperty = pagination.next;
-    } else if (pagination.type === "offset") {
-        cursorProperty = pagination.hasNextPage;
-        // For offset pagination, hasNextPage is optional - if not defined, the SDK calculates it differently
-        if (cursorProperty == null) {
+    switch (pagination.type) {
+        case "cursor":
+            cursorProperty = pagination.next;
+            break;
+        case "offset":
+            cursorProperty = pagination.hasNextPage;
+            if (cursorProperty == null) {
+                return false;
+            }
+            break;
+        case "custom":
+        case "uri":
+        case "path":
             return false;
-        }
-    } else {
-        // Custom pagination - skip this check
-        return false;
+        default:
+            assertNever(pagination);
     }
 
     if (cursorProperty == null) {

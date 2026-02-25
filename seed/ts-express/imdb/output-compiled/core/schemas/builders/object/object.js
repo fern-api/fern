@@ -13,63 +13,113 @@ const partition_1 = require("../../utils/partition");
 const index_1 = require("../object-like/index");
 const index_2 = require("../schema-utils/index");
 const property_1 = require("./property");
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
 function object(schemas) {
-    const baseSchema = {
-        _getRawProperties: () => Object.entries(schemas).map(([parsedKey, propertySchema]) => (0, property_1.isProperty)(propertySchema) ? propertySchema.rawKey : parsedKey),
-        _getParsedProperties: () => (0, keys_1.keys)(schemas),
-        parse: (raw, opts) => {
-            const rawKeyToProperty = {};
-            const requiredKeys = [];
+    // All property metadata is lazily computed on first use.
+    // This keeps schema construction free of iteration, which matters when
+    // many schemas are defined but only some are exercised at runtime.
+    // Required-key computation is also deferred because lazy() schemas may
+    // not be resolved at construction time.
+    let _rawKeyToProperty;
+    function getRawKeyToProperty() {
+        if (_rawKeyToProperty == null) {
+            _rawKeyToProperty = {};
             for (const [parsedKey, schemaOrObjectProperty] of (0, entries_1.entries)(schemas)) {
-                const rawKey = (0, property_1.isProperty)(schemaOrObjectProperty) ? schemaOrObjectProperty.rawKey : parsedKey;
+                const rawKey = (0, property_1.isProperty)(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.rawKey
+                    : parsedKey;
                 const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
                     ? schemaOrObjectProperty.valueSchema
                     : schemaOrObjectProperty;
-                const property = {
+                _rawKeyToProperty[rawKey] = {
                     rawKey,
                     parsedKey: parsedKey,
                     valueSchema,
                 };
-                rawKeyToProperty[rawKey] = property;
+            }
+        }
+        return _rawKeyToProperty;
+    }
+    let _parseRequiredKeys;
+    let _jsonRequiredKeys;
+    let _parseRequiredKeysSet;
+    let _jsonRequiredKeysSet;
+    function getParseRequiredKeys() {
+        if (_parseRequiredKeys == null) {
+            _parseRequiredKeys = [];
+            _jsonRequiredKeys = [];
+            for (const [parsedKey, schemaOrObjectProperty] of (0, entries_1.entries)(schemas)) {
+                const rawKey = (0, property_1.isProperty)(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.rawKey
+                    : parsedKey;
+                const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
+                    ? schemaOrObjectProperty.valueSchema
+                    : schemaOrObjectProperty;
                 if (isSchemaRequired(valueSchema)) {
-                    requiredKeys.push(rawKey);
+                    _parseRequiredKeys.push(rawKey);
+                    _jsonRequiredKeys.push(parsedKey);
                 }
             }
+            _parseRequiredKeysSet = new Set(_parseRequiredKeys);
+            _jsonRequiredKeysSet = new Set(_jsonRequiredKeys);
+        }
+        return _parseRequiredKeys;
+    }
+    function getJsonRequiredKeys() {
+        if (_jsonRequiredKeys == null) {
+            getParseRequiredKeys();
+        }
+        return _jsonRequiredKeys;
+    }
+    function getParseRequiredKeysSet() {
+        if (_parseRequiredKeysSet == null) {
+            getParseRequiredKeys();
+        }
+        return _parseRequiredKeysSet;
+    }
+    function getJsonRequiredKeysSet() {
+        if (_jsonRequiredKeysSet == null) {
+            getParseRequiredKeys();
+        }
+        return _jsonRequiredKeysSet;
+    }
+    const baseSchema = {
+        _getRawProperties: () => Object.entries(schemas).map(([parsedKey, propertySchema]) => (0, property_1.isProperty)(propertySchema) ? propertySchema.rawKey : parsedKey),
+        _getParsedProperties: () => (0, keys_1.keys)(schemas),
+        parse: (raw, opts) => {
+            var _a;
+            const breadcrumbsPrefix = (_a = opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix) !== null && _a !== void 0 ? _a : [];
             return validateAndTransformObject({
                 value: raw,
-                requiredKeys,
+                requiredKeys: getParseRequiredKeys(),
+                requiredKeysSet: getParseRequiredKeysSet(),
                 getProperty: (rawKey) => {
-                    const property = rawKeyToProperty[rawKey];
+                    const property = getRawKeyToProperty()[rawKey];
                     if (property == null) {
                         return undefined;
                     }
                     return {
                         transformedKey: property.parsedKey,
                         transform: (propertyValue) => {
-                            var _a;
-                            return property.valueSchema.parse(propertyValue, Object.assign(Object.assign({}, opts), { breadcrumbsPrefix: [...((_a = opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix) !== null && _a !== void 0 ? _a : []), rawKey] }));
+                            const childBreadcrumbs = [...breadcrumbsPrefix, rawKey];
+                            return property.valueSchema.parse(propertyValue, Object.assign(Object.assign({}, opts), { breadcrumbsPrefix: childBreadcrumbs }));
                         },
                     };
                 },
                 unrecognizedObjectKeys: opts === null || opts === void 0 ? void 0 : opts.unrecognizedObjectKeys,
                 skipValidation: opts === null || opts === void 0 ? void 0 : opts.skipValidation,
-                breadcrumbsPrefix: opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix,
+                breadcrumbsPrefix,
                 omitUndefined: opts === null || opts === void 0 ? void 0 : opts.omitUndefined,
             });
         },
         json: (parsed, opts) => {
-            const requiredKeys = [];
-            for (const [parsedKey, schemaOrObjectProperty] of (0, entries_1.entries)(schemas)) {
-                const valueSchema = (0, property_1.isProperty)(schemaOrObjectProperty)
-                    ? schemaOrObjectProperty.valueSchema
-                    : schemaOrObjectProperty;
-                if (isSchemaRequired(valueSchema)) {
-                    requiredKeys.push(parsedKey);
-                }
-            }
+            var _a;
+            const breadcrumbsPrefix = (_a = opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix) !== null && _a !== void 0 ? _a : [];
             return validateAndTransformObject({
                 value: parsed,
-                requiredKeys,
+                requiredKeys: getJsonRequiredKeys(),
+                requiredKeysSet: getJsonRequiredKeysSet(),
                 getProperty: (parsedKey) => {
                     const property = schemas[parsedKey];
                     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -80,8 +130,8 @@ function object(schemas) {
                         return {
                             transformedKey: property.rawKey,
                             transform: (propertyValue) => {
-                                var _a;
-                                return property.valueSchema.json(propertyValue, Object.assign(Object.assign({}, opts), { breadcrumbsPrefix: [...((_a = opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix) !== null && _a !== void 0 ? _a : []), parsedKey] }));
+                                const childBreadcrumbs = [...breadcrumbsPrefix, parsedKey];
+                                return property.valueSchema.json(propertyValue, Object.assign(Object.assign({}, opts), { breadcrumbsPrefix: childBreadcrumbs }));
                             },
                         };
                     }
@@ -89,15 +139,15 @@ function object(schemas) {
                         return {
                             transformedKey: parsedKey,
                             transform: (propertyValue) => {
-                                var _a;
-                                return property.json(propertyValue, Object.assign(Object.assign({}, opts), { breadcrumbsPrefix: [...((_a = opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix) !== null && _a !== void 0 ? _a : []), parsedKey] }));
+                                const childBreadcrumbs = [...breadcrumbsPrefix, parsedKey];
+                                return property.json(propertyValue, Object.assign(Object.assign({}, opts), { breadcrumbsPrefix: childBreadcrumbs }));
                             },
                         };
                     }
                 },
                 unrecognizedObjectKeys: opts === null || opts === void 0 ? void 0 : opts.unrecognizedObjectKeys,
                 skipValidation: opts === null || opts === void 0 ? void 0 : opts.skipValidation,
-                breadcrumbsPrefix: opts === null || opts === void 0 ? void 0 : opts.breadcrumbsPrefix,
+                breadcrumbsPrefix,
                 omitUndefined: opts === null || opts === void 0 ? void 0 : opts.omitUndefined,
             });
         },
@@ -105,7 +155,7 @@ function object(schemas) {
     };
     return Object.assign(Object.assign(Object.assign(Object.assign({}, (0, maybeSkipValidation_1.maybeSkipValidation)(baseSchema)), (0, index_2.getSchemaUtils)(baseSchema)), (0, index_1.getObjectLikeUtils)(baseSchema)), getObjectUtils(baseSchema));
 }
-function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = "fail", skipValidation = false, breadcrumbsPrefix = [], }) {
+function validateAndTransformObject({ value, requiredKeys, requiredKeysSet, getProperty, unrecognizedObjectKeys = "fail", skipValidation = false, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
@@ -117,13 +167,21 @@ function validateAndTransformObject({ value, requiredKeys, getProperty, unrecogn
             ],
         };
     }
-    const missingRequiredKeys = new Set(requiredKeys);
+    // Track which required keys have been seen.
+    // Use a counter instead of copying the Set to avoid per-call allocation.
+    let missingRequiredCount = requiredKeys.length;
     const errors = [];
     const transformed = {};
-    for (const [preTransformedKey, preTransformedItemValue] of Object.entries(value)) {
+    for (const preTransformedKey in value) {
+        if (!_hasOwn.call(value, preTransformedKey)) {
+            continue;
+        }
+        const preTransformedItemValue = value[preTransformedKey];
         const property = getProperty(preTransformedKey);
         if (property != null) {
-            missingRequiredKeys.delete(preTransformedKey);
+            if (missingRequiredCount > 0 && requiredKeysSet.has(preTransformedKey)) {
+                missingRequiredCount--;
+            }
             const value = property.transform(preTransformedItemValue);
             if (value.ok) {
                 transformed[property.transformedKey] = value.value;
@@ -149,12 +207,16 @@ function validateAndTransformObject({ value, requiredKeys, getProperty, unrecogn
             }
         }
     }
-    errors.push(...requiredKeys
-        .filter((key) => missingRequiredKeys.has(key))
-        .map((key) => ({
-        path: breadcrumbsPrefix,
-        message: `Missing required key "${key}"`,
-    })));
+    if (missingRequiredCount > 0) {
+        for (const key of requiredKeys) {
+            if (!(key in value)) {
+                errors.push({
+                    path: breadcrumbsPrefix,
+                    message: `Missing required key "${key}"`,
+                });
+            }
+        }
+    }
     if (errors.length === 0 || skipValidation) {
         return {
             ok: true,

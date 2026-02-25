@@ -4,5 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface ExampleSseEventSchema {
     event: string;
-    data?: FernDefinition.ExampleTypeReferenceSchema | undefined;
+    data?: FernDefinition.ExampleTypeReferenceSchema;
 }

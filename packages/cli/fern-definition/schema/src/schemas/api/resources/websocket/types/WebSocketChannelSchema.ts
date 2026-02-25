@@ -6,6 +6,7 @@ export interface WebSocketChannelSchema extends FernDefinition.DeclarationSchema
     auth: boolean;
     url?: string;
     path: string;
+    "connect-method-name"?: string;
     headers?: Record<string, FernDefinition.HttpHeaderSchema>;
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
     "query-parameters"?: Record<string, FernDefinition.HttpQueryParameterSchema>;

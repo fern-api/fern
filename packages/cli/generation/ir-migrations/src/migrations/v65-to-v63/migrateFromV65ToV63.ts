@@ -12,11 +12,11 @@ export const V65_TO_V63_MIGRATION: IrMigration<
     laterVersion: "v65",
     earlierVersion: "v63",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "3.50.0",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "3.50.0",
+        [GeneratorName.TYPESCRIPT]: "3.50.0",
+        [GeneratorName.TYPESCRIPT_SDK]: "3.50.0",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.19.4",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_SDK]: "3.36.0",
@@ -54,7 +54,13 @@ export const V65_TO_V63_MIGRATION: IrMigration<
         return {
             ...v65,
             generationMetadata: v65.generationMetadata != null ? generationMetadataWithoutOriginGitCommit : undefined,
-            services: mapValues(v65.services, (service) => convertHttpService(service, context))
+            services: mapValues(v65.services, (service) => convertHttpService(service, context)),
+            webhookGroups: mapValues(v65.webhookGroups, (webhookGroup) =>
+                webhookGroup.map((webhook) => {
+                    const { signatureVerification: _, ...rest } = webhook;
+                    return rest as IrVersions.V63.webhooks.Webhook;
+                })
+            )
         };
     }
 };

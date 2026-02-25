@@ -355,45 +355,54 @@ export function parseAsyncAPIV3({
             const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel);
             const messages: WebsocketMessageSchema[] = channelEvents[channelPath]?.__parsedMessages ?? [];
             let examples: WebsocketSessionExample[] = [];
-            if (fernExamples.length > 0) {
-                examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
-                    context,
-                    extensionExamples: fernExamples,
-                    handshake: {
-                        headers,
-                        queryParameters
-                    },
-                    source,
-                    namespace: context.namespace
-                });
-            } else {
-                const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
-                const { examplePublishMessage, exampleSubscribeMessage } = getExampleSchemas({
-                    messages,
-                    messageSchemas: messageSchemas[channelPath] ?? {}
-                });
-                if (examplePublishMessage != null) {
-                    exampleBuilderInputs.push(examplePublishMessage);
+            try {
+                if (fernExamples.length > 0) {
+                    examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
+                        context,
+                        extensionExamples: fernExamples,
+                        handshake: {
+                            headers,
+                            queryParameters
+                        },
+                        source,
+                        namespace: context.namespace
+                    });
+                } else {
+                    const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
+                    const { examplePublishMessage, exampleSubscribeMessage } = getExampleSchemas({
+                        messages,
+                        messageSchemas: messageSchemas[channelPath] ?? {}
+                    });
+                    if (examplePublishMessage != null) {
+                        exampleBuilderInputs.push(examplePublishMessage);
+                    }
+                    if (exampleSubscribeMessage != null) {
+                        exampleBuilderInputs.push(exampleSubscribeMessage);
+                    }
+                    const autogenExample = exampleFactory.buildWebsocketSessionExample({
+                        handshake: {
+                            headers,
+                            queryParameters
+                        },
+                        messages: exampleBuilderInputs
+                    });
+                    if (autogenExample != null) {
+                        examples.push(autogenExample);
+                    }
                 }
-                if (exampleSubscribeMessage != null) {
-                    exampleBuilderInputs.push(exampleSubscribeMessage);
-                }
-                const autogenExample = exampleFactory.buildWebsocketSessionExample({
-                    handshake: {
-                        headers,
-                        queryParameters
-                    },
-                    messages: exampleBuilderInputs
-                });
-                if (autogenExample != null) {
-                    examples.push(autogenExample);
-                }
+            } catch (error) {
+                context.logger.warn(
+                    `Failed to build examples for channel ${channelPath}: ${error instanceof Error ? error.message : String(error)}`
+                );
             }
 
             const groupName = getExtension<string | string[] | undefined>(
                 channel,
                 FernAsyncAPIExtension.FERN_SDK_GROUP_NAME
             );
+
+            // Extract connect method name from x-fern-sdk-method-name extension
+            const connectMethodName = getExtension<string>(channel, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME);
 
             const channelServers = (
                 channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
@@ -429,6 +438,7 @@ export function parseAsyncAPIV3({
                 ),
                 messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
+                connectMethodName,
                 servers: channelServers,
                 path: parsedChannelPath,
                 description: channel.description,
@@ -546,21 +556,27 @@ function convertMessageReferencesToWebsocketSchemas({
     const results: WebsocketMessageSchema[] = [];
 
     messages.forEach((message, i) => {
-        const channelMessage = context.resolveMessageReference(message.ref, true);
-        let schemaId = channelMessage.name as string;
+        try {
+            const channelMessage = context.resolveMessageReference(message.ref, true);
+            let schemaId = channelMessage.name as string;
 
-        if (duplicatedMessageIds.includes(schemaId)) {
-            schemaId = `${channelPath}_${schemaId}`;
-        }
+            if (duplicatedMessageIds.includes(schemaId)) {
+                schemaId = `${channelPath}_${schemaId}`;
+            }
 
-        const schema = messageSchemas[schemaId];
-        if (schema != null) {
-            results.push({
-                origin,
-                name: schemaId ?? `${origin}Message${i + 1}`,
-                body: convertSchemaWithExampleToSchema(schema),
-                methodName: message.methodName
-            });
+            const schema = messageSchemas[schemaId];
+            if (schema != null) {
+                results.push({
+                    origin,
+                    name: schemaId ?? `${origin}Message${i + 1}`,
+                    body: convertSchemaWithExampleToSchema(schema),
+                    methodName: message.methodName
+                });
+            }
+        } catch (error) {
+            context.logger.warn(
+                `Skipping message reference ${message.ref.$ref} in channel ${channelPath}: ${error instanceof Error ? error.message : String(error)}`
+            );
         }
     });
 

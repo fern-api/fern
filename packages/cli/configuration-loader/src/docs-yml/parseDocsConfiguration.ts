@@ -1007,6 +1007,14 @@ async function expandFolderConfiguration({
         context.failAndThrow(`Folder not found: ${rawConfig.folder}`);
     }
 
+    validateCollapsibleConfig({
+        context,
+        sectionTitle: rawConfig.folder,
+        collapsed: rawConfig.collapsed ?? undefined,
+        collapsible: rawConfig.collapsible ?? undefined,
+        collapsedByDefault: rawConfig.collapsedByDefault ?? undefined
+    });
+
     const effectiveTitleSource = rawConfig.titleSource ?? folderTitleSource;
 
     const contents = await buildNavigationForDirectory({
@@ -1039,6 +1047,8 @@ async function expandFolderConfiguration({
         contents: filteredContents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
+        collapsible: rawConfig.collapsible ?? undefined,
+        collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
         hidden: rawConfig.hidden ?? undefined,
         skipUrlSlug: rawConfig.skipSlug ?? false,
         overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
@@ -1066,6 +1076,13 @@ async function convertNavigationItem({
         return parsePageConfig(rawConfig, absolutePathToConfig);
     }
     if (isRawSectionConfig(rawConfig)) {
+        validateCollapsibleConfig({
+            context,
+            sectionTitle: rawConfig.section,
+            collapsed: rawConfig.collapsed ?? undefined,
+            collapsible: rawConfig.collapsible ?? undefined,
+            collapsedByDefault: rawConfig.collapsedByDefault ?? undefined
+        });
         return {
             type: "section",
             title: rawConfig.section,
@@ -1083,6 +1100,8 @@ async function convertNavigationItem({
             ),
             slug: rawConfig.slug ?? undefined,
             collapsed: rawConfig.collapsed ?? undefined,
+            collapsible: rawConfig.collapsible ?? undefined,
+            collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
             skipUrlSlug: rawConfig.skipSlug ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
@@ -1635,4 +1654,32 @@ export function parseAudiences(raw: string | string[] | undefined): string[] | u
     }
 
     return raw;
+}
+
+function validateCollapsibleConfig({
+    context,
+    sectionTitle,
+    collapsed,
+    collapsible,
+    collapsedByDefault
+}: {
+    context: TaskContext;
+    sectionTitle: string;
+    collapsed: boolean | undefined;
+    collapsible: boolean | undefined;
+    collapsedByDefault: boolean | undefined;
+}): void {
+    if (collapsible != null && collapsed != null) {
+        context.failAndThrow(
+            `Section "${sectionTitle}": cannot use both "collapsible" and the deprecated "collapsed" property. ` +
+                `Please use "collapsible" and "collapsed-by-default" instead.`
+        );
+    }
+
+    if (collapsedByDefault != null && collapsible !== true) {
+        context.failAndThrow(
+            `Section "${sectionTitle}": "collapsed-by-default" requires "collapsible: true". ` +
+                `"collapsed-by-default" has no effect on a non-collapsible section.`
+        );
+    }
 }

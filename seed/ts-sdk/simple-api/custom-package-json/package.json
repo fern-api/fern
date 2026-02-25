@@ -74,6 +74,7 @@
         "os": false,
         "path": false,
         "stream": false,
+        "crypto": false,
         "command-exists": false,
         "execa": false
     },

@@ -109,6 +109,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             channel: {
                 name: this.context.casingsGenerator.generateName(displayName),
                 displayName,
+                connectMethodName: undefined, // This will be populated from OpenAPI IR layer
                 baseUrl,
                 path,
                 auth: false,
