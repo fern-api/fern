@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.1
+  changelogEntry:
+    - summary: |
+        Fix multipart file upload detection for OpenAPI 3.1 specs that use
+        `contentMediaType: "application/octet-stream"` instead of `format: "binary"`.
+        Previously, file fields declared with `contentMediaType` (the standard
+        OpenAPI 3.1 / JSON Schema way) were treated as string body properties,
+        causing generated SDKs to call `append()` (which stringifies the value)
+        instead of `appendFile()` (which handles binary data correctly).
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.88.0
   changelogEntry:
     - summary: |

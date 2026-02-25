@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: Test file upload
   version: 1.0.0
@@ -79,3 +79,18 @@ paths:
                 contentType: "application/json"
               data:
                 explode: true
+  /upload-content-media-type:
+    post:
+      summary: Upload a file using contentMediaType (OpenAPI 3.1)
+      operationId: upload-content-media-type
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  contentMediaType: application/octet-stream
+                  description: The file to upload using contentMediaType
+              required: [file]
