@@ -8,8 +8,9 @@ import chalk from "chalk";
 import cors from "cors";
 import express from "express";
 import { readFile, rm } from "fs/promises";
-import http from "http";
+import http, { type IncomingMessage } from "http";
 import path from "path";
+import { type Duplex } from "stream";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
@@ -449,13 +450,28 @@ export async function runAppPreviewServer({
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
     }
 
+    // Detect if running under Bun (bun's http.createServer does not properly
+    // emit the 'upgrade' event that the ws package relies on).
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    const isBun = typeof globalThis !== "undefined" && "Bun" in globalThis;
+
     // Set up backend server first (before Next.js) so it's ready to serve requests
     const app = express();
     const httpServer = http.createServer(app);
+
+    // Use noServer mode so we can handle upgrades explicitly.
+    // This ensures compatibility with both Node.js and Bun runtimes.
     const wss = new WebSocketServer({
-        server: httpServer,
+        noServer: true,
         clientTracking: true,
         perMessageDeflate: false
+    });
+
+    // Primary upgrade handler — works in Node.js where http.Server emits 'upgrade'.
+    httpServer.on("upgrade", (request: IncomingMessage, socket: Duplex, head: Buffer) => {
+        wss.handleUpgrade(request, socket, head, (ws) => {
+            wss.emit("connection", ws, request);
+        });
     });
 
     const connections = new Map<
@@ -556,6 +572,24 @@ export async function runAppPreviewServer({
             context.logger.debug(`Failed to send connection confirmation: ${error}`);
         }
     });
+
+    // Bun compatibility: Bun's http.createServer does not emit the 'upgrade'
+    // event for WebSocket connections (see https://github.com/oven-sh/bun/issues/5951).
+    // When running under Bun, WebSocket upgrade requests fall through to Express
+    // as regular HTTP requests.  We intercept them here before any other middleware
+    // and manually perform the upgrade via ws's handleUpgrade.
+    if (isBun) {
+        app.use((req, res, next) => {
+            if (req.headers.upgrade?.toLowerCase() === "websocket") {
+                // Prevent Express from sending a response — we are taking over the socket.
+                wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
+                    wss.emit("connection", ws, req);
+                });
+                return;
+            }
+            next();
+        });
+    }
 
     app.use(cors());
 

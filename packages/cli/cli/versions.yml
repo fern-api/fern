@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` WebSocket connection failure when the CLI is compiled
+        as a Bun single-file executable. Bun's `http.createServer` does not emit
+        the `upgrade` event that the `ws` package relies on, so the live-reload
+        WebSocket could never establish. The preview server now uses explicit
+        upgrade handling with an Express middleware fallback for Bun compatibility.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.88.0
   changelogEntry:
     - summary: |
