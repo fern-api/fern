@@ -3,15 +3,15 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Completions\Requests\StreamCompletionRequest;
+use Seed\Completions\Requests\StreamCompletionRequestWithoutTerminator;
 
 $client = new SeedClient(
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->completions->stream(
-    new StreamCompletionRequest([
+$client->completions->streamWithoutTerminator(
+    new StreamCompletionRequestWithoutTerminator([
         'query' => 'query',
     ]),
 );
