@@ -22,7 +22,8 @@ export interface TabbedNavigation {
 /**
  * Navigation item discriminated union. Unlike the raw YAML which uses
  * key-presence discrimination (e.g., `page:` vs `section:`), these
- * use an explicit `type` field.
+ * use an explicit `type` field while preserving the original schema
+ * property names (kebab-case).
  */
 export type NavigationItem =
     | NavigationItem.Page
@@ -36,9 +37,8 @@ export type NavigationItem =
 export declare namespace NavigationItem {
     interface Page {
         type: "page";
-        /** Relative path to the page file */
+        page: string;
         path: string;
-        title?: string;
         slug?: string;
         icon?: string;
         hidden?: boolean;
@@ -47,48 +47,43 @@ export declare namespace NavigationItem {
 
     interface Section {
         type: "section";
-        title: string;
+        section: string;
+        path?: string;
         contents: NavigationItem[];
         collapsed?: boolean;
         slug?: string;
         icon?: string;
         hidden?: boolean;
-        skipSlug?: boolean;
-        /** Relative path to section overview page */
-        overview?: string;
+        "skip-slug"?: boolean;
     }
 
     interface ApiReference {
         type: "apiReference";
-        title?: string;
-        api?: string;
-        apiName?: string;
+        api: string;
+        "api-name"?: string;
         slug?: string;
         icon?: string;
         hidden?: boolean;
-        audiences?: string[];
-        showErrors?: boolean;
+        audiences?: string | string[];
+        "display-errors"?: boolean;
         snippets?: schemas.SnippetsConfigurationSchema;
         playground?: schemas.PlaygroundSettingsSchema;
         collapsed?: boolean;
         alphabetized?: boolean;
         flattened?: boolean;
         paginated?: boolean;
-        /** Relative path to overview page */
-        overview?: string;
     }
 
     interface Link {
         type: "link";
-        text: string;
+        link: string;
         href: string;
         icon?: string;
     }
 
     interface Changelog {
         type: "changelog";
-        /** Relative path(s) to changelog directory */
-        path: string | string[];
+        changelog: string;
         title?: string;
         slug?: string;
         icon?: string;
@@ -97,15 +92,15 @@ export declare namespace NavigationItem {
 
     interface Library {
         type: "library";
-        name: string;
+        library: string;
         title?: string;
         slug?: string;
     }
 
     interface Folder {
         type: "folder";
-        title: string;
-        contents: NavigationItem[];
+        folder: string;
+        title?: string;
         collapsed?: boolean;
         slug?: string;
         icon?: string;

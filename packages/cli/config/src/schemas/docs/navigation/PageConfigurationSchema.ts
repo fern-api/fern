@@ -5,7 +5,7 @@ import { RoleSchema } from "../RoleSchema.js";
 
 export const PageConfigurationSchema = z.object({
     page: z.string(),
-    path: z.string().optional(),
+    path: z.string(),
     slug: z.string().optional(),
     icon: z.string().optional(),
     hidden: z.boolean().optional(),
@@ -15,7 +15,7 @@ export const PageConfigurationSchema = z.object({
     viewers: RoleSchema.optional(),
     orphaned: z.boolean().optional(),
     // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
 });
 
 export type PageConfigurationSchema = z.infer<typeof PageConfigurationSchema>;

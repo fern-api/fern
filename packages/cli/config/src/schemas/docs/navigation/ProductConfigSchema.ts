@@ -1,35 +1,37 @@
 import { z } from "zod";
+import { AnnouncementConfigSchema } from "../AnnouncementConfigSchema.js";
 import { FeatureFlagSchema } from "../FeatureFlagSchema.js";
 import { RoleSchema } from "../RoleSchema.js";
-import { NavigationConfigSchema } from "./NavigationConfigSchema.js";
 import { VersionConfigSchema } from "./VersionConfigSchema.js";
 
-export const InternalProductConfigSchema = z.object({
-    displayName: z.string(),
+/**
+ * ProductConfigBase fields shared by InternalProduct and ExternalProduct.
+ */
+const ProductConfigBaseSchema = z.object({
+    "display-name": z.string(),
+    subtitle: z.string().optional(),
     icon: z.string().optional(),
-    slug: z.string().optional(),
-    path: z.string().optional(),
-    default: z.boolean().optional(),
-    navigation: NavigationConfigSchema.optional(),
+    image: z.string().optional(),
     versions: z.array(VersionConfigSchema).optional(),
+    audiences: z.union([z.string(), z.array(z.string())]).optional(),
     // WithPermissions
     viewers: RoleSchema.optional(),
     orphaned: z.boolean().optional(),
     // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
+});
+
+export const InternalProductConfigSchema = ProductConfigBaseSchema.extend({
+    path: z.string(),
+    slug: z.string().optional(),
+    announcement: AnnouncementConfigSchema.optional()
 });
 
 export type InternalProductConfigSchema = z.infer<typeof InternalProductConfigSchema>;
 
-export const ExternalProductConfigSchema = z.object({
-    displayName: z.string(),
-    icon: z.string().optional(),
+export const ExternalProductConfigSchema = ProductConfigBaseSchema.extend({
     href: z.string(),
-    // WithPermissions
-    viewers: RoleSchema.optional(),
-    orphaned: z.boolean().optional(),
-    // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    target: z.enum(["_blank", "_self"]).optional()
 });
 
 export type ExternalProductConfigSchema = z.infer<typeof ExternalProductConfigSchema>;

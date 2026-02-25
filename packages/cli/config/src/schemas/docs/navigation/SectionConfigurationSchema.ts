@@ -24,22 +24,21 @@ export function _injectNavigationItemSchema(schema: z.ZodTypeAny): void {
  */
 export const SectionConfigurationSchema = z.object({
     section: z.string(),
+    path: z.string().optional(),
+    contents: z.lazy(() => z.array(_navigationItemSchema)),
+    collapsed: z.boolean().optional(),
+    collapsible: z.boolean().optional(),
+    "collapsed-by-default": z.boolean().optional(),
     slug: z.string().optional(),
     icon: z.string().optional(),
     hidden: z.boolean().optional(),
-    skipSlug: z.boolean().optional(),
-    collapsed: z.boolean().optional(),
-    collapsible: z.boolean().optional(),
-    collapsedByDefault: z.boolean().optional(),
-    flattened: z.boolean().optional(),
-    path: z.string().optional(),
+    "skip-slug": z.boolean().optional(),
     availability: AvailabilitySchema.optional(),
-    contents: z.lazy(() => z.array(_navigationItemSchema)),
     // WithPermissions
     viewers: RoleSchema.optional(),
     orphaned: z.boolean().optional(),
     // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
 });
 
 export type SectionConfigurationSchema = z.infer<typeof SectionConfigurationSchema>;

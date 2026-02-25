@@ -1,9 +1,8 @@
-import type { Navigation } from "./Navigation.js";
+import type { schemas } from "@fern-api/config";
 
 export interface Version {
-    displayName: string;
+    "display-name": string;
     path: string;
     slug?: string;
-    availability?: string;
-    navigation: Navigation;
+    availability?: schemas.AvailabilitySchema;
 }

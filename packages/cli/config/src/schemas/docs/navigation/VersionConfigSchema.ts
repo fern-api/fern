@@ -1,20 +1,22 @@
 import { z } from "zod";
+import { AnnouncementConfigSchema } from "../AnnouncementConfigSchema.js";
 import { AvailabilitySchema } from "../AvailabilitySchema.js";
 import { FeatureFlagSchema } from "../FeatureFlagSchema.js";
 import { RoleSchema } from "../RoleSchema.js";
-import { NavigationConfigSchema } from "./NavigationConfigSchema.js";
 
 export const VersionConfigSchema = z.object({
-    displayName: z.string(),
+    "display-name": z.string(),
     path: z.string(),
     slug: z.string().optional(),
     availability: AvailabilitySchema.optional(),
-    navigation: NavigationConfigSchema,
+    audiences: z.union([z.string(), z.array(z.string())]).optional(),
+    hidden: z.boolean().optional(),
+    announcement: AnnouncementConfigSchema.optional(),
     // WithPermissions
     viewers: RoleSchema.optional(),
     orphaned: z.boolean().optional(),
     // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
 });
 
 export type VersionConfigSchema = z.infer<typeof VersionConfigSchema>;

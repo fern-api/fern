@@ -23,13 +23,11 @@ export namespace DocsConfigConverter {
 /**
  * Converts a fern.yml schema to the DocsConfig domain model.
  *
- * Performs:
- *  - Domain-specific validation (instances, navigation structure)
+ * The schema now matches the original docs.yml shape, so most fields
+ * are a direct passthrough. The converter still performs:
+ *  - Domain-specific validation (instances)
  *  - Navigation key-presence -> discriminated union conversion
  *  - Version/product structural conversion (contain Navigation)
- *
- * Pass-through fields (branding, layout, SEO, etc.) are assigned directly
- * from the schema without conversion.
  *
  * The raw schema is retained on the output for the legacy adapter bridge.
  */
@@ -57,53 +55,45 @@ export class DocsConfigConverter {
         return {
             success: true,
             config: {
+                // Passthrough fields directly from schema
                 instances: docs.instances,
                 title: docs.title,
-
-                navigation: docs.navigation != null ? this.convertNavigation(docs.navigation) : undefined,
-                landingPage: docs.landingPage != null ? this.convertPage(docs.landingPage) : undefined,
-
                 tabs: docs.tabs,
-                versions: docs.versions != null ? this.convertVersions(docs.versions) : undefined,
-                products: docs.products != null ? this.convertProducts(docs.products) : undefined,
-
                 logo: docs.logo,
                 favicon: docs.favicon,
-                backgroundImage: docs.backgroundImage,
+                "background-image": docs["background-image"],
                 colors: docs.colors,
                 typography: docs.typography,
-
                 layout: docs.layout,
                 settings: docs.settings,
                 theme: docs.theme,
-
-                navbarLinks: docs.navbarLinks ?? [],
-                footerLinks: docs.footerLinks,
-                pageActions: docs.pageActions,
-
+                "navbar-links": docs["navbar-links"] ?? [],
+                "footer-links": docs["footer-links"],
+                "page-actions": docs["page-actions"],
                 metadata: docs.metadata,
                 redirects: docs.redirects ?? [],
                 analytics: docs.analytics,
-
                 announcement: docs.announcement,
                 roles: docs.roles,
                 libraries: docs.libraries,
-
-                defaultLanguage: docs.defaultLanguage,
+                "default-language": docs["default-language"],
                 languages: docs.languages,
-
                 css: docs.css,
                 js: docs.js,
-
-                aiChat: docs.aiChat,
-                aiSearch: docs.aiSearch,
-                aiExamples: docs.aiExamples,
-
+                "ai-chat": docs["ai-chat"],
+                "ai-search": docs["ai-search"],
+                "ai-examples": docs["ai-examples"],
                 integrations: docs.integrations,
                 experimental: docs.experimental,
-
                 header: docs.header,
                 footer: docs.footer,
+
+                // Converted fields (navigation requires discriminated union conversion)
+                navigation: docs.navigation != null ? this.convertNavigation(docs.navigation) : undefined,
+                "landing-page":
+                    docs["landing-page"] != null ? this.convertPage(docs["landing-page"]) : undefined,
+                versions: docs.versions != null ? this.convertVersions(docs.versions) : undefined,
+                products: docs.products != null ? this.convertProducts(docs.products) : undefined,
 
                 _rawSchema: docs
             }
@@ -126,6 +116,10 @@ export class DocsConfigConverter {
             );
         }
     }
+
+    // ================================================================
+    // Navigation conversion (key-presence -> discriminated union)
+    // ================================================================
 
     private convertNavigation(raw: schemas.NavigationConfigSchema): Navigation {
         if (raw.length === 0) {
@@ -174,8 +168,8 @@ export class DocsConfigConverter {
     private convertPage(raw: schemas.PageConfigurationSchema): NavigationItem.Page {
         return {
             type: "page",
-            path: raw.path ?? raw.page,
-            title: raw.path != null ? raw.page : undefined,
+            page: raw.page,
+            path: raw.path,
             slug: raw.slug,
             icon: raw.icon,
             hidden: raw.hidden,
@@ -186,30 +180,30 @@ export class DocsConfigConverter {
     private convertSection(raw: schemas.SectionConfigurationSchema): NavigationItem.Section {
         return {
             type: "section",
-            title: raw.section,
+            section: raw.section,
+            path: raw.path,
             contents: (raw.contents as schemas.NavigationItem[]).map((item) => this.convertNavigationItem(item)),
             collapsed: raw.collapsed,
             slug: raw.slug,
             icon: raw.icon,
             hidden: raw.hidden,
-            skipSlug: raw.skipSlug,
-            overview: raw.path
+            "skip-slug": raw["skip-slug"]
         };
     }
 
     private convertApiReference(raw: schemas.ApiReferenceConfigurationSchema): NavigationItem.ApiReference {
         return {
             type: "apiReference",
-            title: raw.title,
             api: raw.api,
-            apiName: raw.apiName,
+            "api-name": raw["api-name"],
             slug: raw.slug,
             icon: raw.icon,
             hidden: raw.hidden,
             audiences: raw.audiences,
-            showErrors: raw.showErrors,
+            "display-errors": raw["display-errors"],
             snippets: raw.snippets,
             playground: raw.playground,
+            collapsed: raw.collapsed,
             alphabetized: raw.alphabetized,
             flattened: raw.flattened,
             paginated: raw.paginated
@@ -219,7 +213,7 @@ export class DocsConfigConverter {
     private convertLink(raw: schemas.LinkConfigurationSchema): NavigationItem.Link {
         return {
             type: "link",
-            text: raw.link,
+            link: raw.link,
             href: raw.href,
             icon: raw.icon
         };
@@ -228,7 +222,7 @@ export class DocsConfigConverter {
     private convertChangelog(raw: schemas.ChangelogConfigurationSchema): NavigationItem.Changelog {
         return {
             type: "changelog",
-            path: raw.changelog,
+            changelog: raw.changelog,
             title: raw.title,
             slug: raw.slug,
             icon: raw.icon,
@@ -239,7 +233,7 @@ export class DocsConfigConverter {
     private convertLibrary(raw: schemas.LibraryReferenceConfigurationSchema): NavigationItem.Library {
         return {
             type: "library",
-            name: raw.library,
+            library: raw.library,
             title: raw.title,
             slug: raw.slug
         };
@@ -248,8 +242,8 @@ export class DocsConfigConverter {
     private convertFolder(raw: schemas.FolderConfigurationSchema): NavigationItem.Folder {
         return {
             type: "folder",
-            title: raw.folder,
-            contents: [],
+            folder: raw.folder,
+            title: raw.title,
             collapsed: raw.collapsed,
             slug: raw.slug,
             icon: raw.icon,
@@ -289,11 +283,10 @@ export class DocsConfigConverter {
 
     private convertVersion(raw: schemas.VersionConfigSchema): Version {
         return {
-            displayName: raw.displayName,
+            "display-name": raw["display-name"],
             path: raw.path,
             slug: raw.slug,
-            availability: raw.availability,
-            navigation: this.convertNavigation(raw.navigation)
+            availability: raw.availability
         };
     }
 
@@ -305,19 +298,17 @@ export class DocsConfigConverter {
         if ("href" in raw) {
             return {
                 type: "external",
-                displayName: raw.displayName,
+                "display-name": raw["display-name"],
                 href: raw.href as string,
                 icon: raw.icon
             };
         }
         return {
             type: "internal",
-            displayName: raw.displayName,
-            path: raw.path,
+            "display-name": raw["display-name"],
+            path: (raw as schemas.InternalProductConfigSchema).path,
             icon: raw.icon,
-            slug: raw.slug,
-            default: raw.default,
-            navigation: raw.navigation != null ? this.convertNavigation(raw.navigation) : undefined,
+            slug: (raw as schemas.InternalProductConfigSchema).slug,
             versions: raw.versions != null ? this.convertVersions(raw.versions) : undefined
         };
     }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AvailabilitySchema } from "../AvailabilitySchema.js";
 import { FeatureFlagSchema } from "../FeatureFlagSchema.js";
 import { RoleSchema } from "../RoleSchema.js";
 
@@ -12,18 +13,20 @@ import { RoleSchema } from "../RoleSchema.js";
 export const FolderConfigurationSchema = z.object({
     folder: z.string(),
     title: z.string().optional(),
+    "title-source": z.enum(["title", "filename"]).optional(),
     slug: z.string().optional(),
     icon: z.string().optional(),
     hidden: z.boolean().optional(),
+    "skip-slug": z.boolean().optional(),
     collapsed: z.boolean().optional(),
     collapsible: z.boolean().optional(),
-    collapsedByDefault: z.boolean().optional(),
-    path: z.string().optional(),
+    "collapsed-by-default": z.boolean().optional(),
+    availability: AvailabilitySchema.optional(),
     // WithPermissions
     viewers: RoleSchema.optional(),
     orphaned: z.boolean().optional(),
     // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
 });
 
 export type FolderConfigurationSchema = z.infer<typeof FolderConfigurationSchema>;

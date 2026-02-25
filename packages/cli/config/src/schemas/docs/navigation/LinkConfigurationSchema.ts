@@ -11,7 +11,7 @@ export const LinkConfigurationSchema = z.object({
     viewers: RoleSchema.optional(),
     orphaned: z.boolean().optional(),
     // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
 });
 
 export type LinkConfigurationSchema = z.infer<typeof LinkConfigurationSchema>;

@@ -16,10 +16,10 @@ export type EditThisPageConfigSchema = z.infer<typeof EditThisPageConfigSchema>;
 
 export const DocsInstanceSchema = z.object({
     url: z.string(),
-    customDomain: z.union([z.string(), z.array(z.string())]).optional(),
-    audiences: z.array(z.string()).optional(),
-    editThisPage: EditThisPageConfigSchema.optional(),
-    private: z.boolean().optional()
+    "custom-domain": z.union([z.string(), z.array(z.string())]).optional(),
+    private: z.boolean().optional(),
+    "edit-this-page": EditThisPageConfigSchema.optional(),
+    audiences: z.union([z.string(), z.array(z.string())]).optional()
 });
 
 export type DocsInstanceSchema = z.infer<typeof DocsInstanceSchema>;

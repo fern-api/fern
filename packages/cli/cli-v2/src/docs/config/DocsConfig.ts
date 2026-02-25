@@ -1,12 +1,12 @@
 import type { schemas } from "@fern-api/config";
 import type { Navigation, NavigationItem } from "./Navigation.js";
 import type { Product } from "./Product.js";
-import type { SnippetLanguage } from "./SnippetLanguage.js";
 import type { Version } from "./Version.js";
 
 /**
  * Rich docs configuration derived from fern.yml.
  *
+ * The schema now matches the original docs.yml shape (kebab-case keys).
  * Pass-through fields use schema types (`schemas.X`) directly from
  * @fern-api/config. Custom interfaces are only defined for shapes
  * that have post-validation transformations (e.g., discriminated unions).
@@ -16,7 +16,7 @@ export interface DocsConfig {
     title?: string;
 
     navigation?: Navigation;
-    landingPage?: NavigationItem.Page;
+    "landing-page"?: NavigationItem.Page;
 
     tabs?: Record<string, schemas.TabConfigSchema>;
     versions?: Version[];
@@ -24,7 +24,7 @@ export interface DocsConfig {
 
     logo?: schemas.LogoConfigurationSchema;
     favicon?: string;
-    backgroundImage?: schemas.BackgroundImageConfigurationSchema;
+    "background-image"?: schemas.BackgroundImageConfigurationSchema;
     colors?: schemas.ColorsConfigurationSchema;
     typography?: schemas.TypographyConfigSchema;
 
@@ -32,9 +32,9 @@ export interface DocsConfig {
     settings?: schemas.DocsSettingsConfigSchema;
     theme?: schemas.ThemeConfigSchema;
 
-    navbarLinks: schemas.NavbarLinkSchema[];
-    footerLinks?: schemas.FooterLinksConfigSchema;
-    pageActions?: schemas.PageActionsConfigSchema;
+    "navbar-links": schemas.NavbarLinkSchema[];
+    "footer-links"?: schemas.FooterLinksConfigSchema;
+    "page-actions"?: schemas.PageActionsConfigSchema;
 
     metadata?: schemas.MetadataConfigSchema;
     redirects: schemas.RedirectConfigSchema[];
@@ -44,15 +44,15 @@ export interface DocsConfig {
     roles?: string[];
     libraries?: Record<string, schemas.LibraryConfigurationSchema>;
 
-    defaultLanguage?: SnippetLanguage;
-    languages?: string[];
+    "default-language"?: schemas.ProgrammingLanguageSchema;
+    languages?: schemas.LanguageSchema[];
 
     css?: schemas.CssConfigSchema;
     js?: schemas.JsConfigSchema;
 
-    aiChat?: schemas.AiChatConfigSchema;
-    aiSearch?: schemas.AiChatConfigSchema;
-    aiExamples?: schemas.AiExamplesConfigSchema;
+    "ai-chat"?: schemas.AiChatConfigSchema;
+    "ai-search"?: schemas.AiChatConfigSchema;
+    "ai-examples"?: schemas.AiExamplesConfigSchema;
 
     integrations?: schemas.IntegrationsConfigSchema;
     experimental?: Record<string, unknown>;

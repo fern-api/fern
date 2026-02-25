@@ -12,7 +12,7 @@ export const ChangelogConfigurationSchema = z.object({
     viewers: RoleSchema.optional(),
     orphaned: z.boolean().optional(),
     // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
 });
 
 export type ChangelogConfigurationSchema = z.infer<typeof ChangelogConfigurationSchema>;

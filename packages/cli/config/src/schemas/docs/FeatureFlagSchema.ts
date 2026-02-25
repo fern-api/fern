@@ -8,6 +8,10 @@ export const FeatureFlagConfigurationSchema = z.object({
 
 export type FeatureFlagConfigurationSchema = z.infer<typeof FeatureFlagConfigurationSchema>;
 
-export const FeatureFlagSchema = z.union([z.string(), FeatureFlagConfigurationSchema]);
+export const FeatureFlagSchema = z.union([
+    z.string(),
+    FeatureFlagConfigurationSchema,
+    z.array(FeatureFlagConfigurationSchema)
+]);
 
 export type FeatureFlagSchema = z.infer<typeof FeatureFlagSchema>;

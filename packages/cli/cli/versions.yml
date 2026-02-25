@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.89.0
+  changelogEntry:
+    - summary: |
+        Update `@fern-api/cli-v2` DocsSchema to use the original `docs.yml` schema shape
+        from `@fern-api/cli`. All zod schemas now match the original serialization types
+        with kebab-case property names, correct enum values, WithPermissions/WithFeatureFlags
+        mixins, and full field parity. The DocsConfigConverter and LegacyDocsWorkspaceAdapter
+        are simplified to passthrough where possible.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.88.0
   changelogEntry:
     - summary: |

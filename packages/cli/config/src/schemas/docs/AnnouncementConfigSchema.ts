@@ -6,7 +6,7 @@ export const AnnouncementConfigSchema = z.object({
     message: z.string().optional(),
     style: z.enum(["info", "warning", "success", "error"]).optional(),
     dismissible: z.boolean().optional(),
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
 });
 
 export type AnnouncementConfigSchema = z.infer<typeof AnnouncementConfigSchema>;

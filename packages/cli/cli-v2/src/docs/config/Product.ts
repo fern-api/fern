@@ -1,22 +1,19 @@
-import type { Navigation } from "./Navigation.js";
 import type { Version } from "./Version.js";
 
 export type Product = InternalProduct | ExternalProduct;
 
 export interface InternalProduct {
     type: "internal";
-    displayName: string;
+    "display-name": string;
     icon?: string;
     slug?: string;
-    path?: string;
-    default?: boolean;
-    navigation?: Navigation;
+    path: string;
     versions?: Version[];
 }
 
 export interface ExternalProduct {
     type: "external";
-    displayName: string;
+    "display-name": string;
     href: string;
     icon?: string;
 }

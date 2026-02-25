@@ -8,28 +8,30 @@ import { SnippetsConfigurationSchema } from "./SnippetsConfigurationSchema.js";
 
 export const ApiReferenceConfigurationSchema = z.object({
     api: z.string(),
-    apiName: z.string().optional(),
-    audiences: z.array(z.string()).optional(),
-    displayErrors: z.boolean().optional(),
-    title: z.string().optional(),
-    slug: z.string().optional(),
-    icon: z.string().optional(),
-    hidden: z.boolean().optional(),
-    skipSlug: z.boolean().optional(),
-    flattened: z.boolean().optional(),
-    alphabetized: z.boolean().optional(),
-    showErrors: z.boolean().optional(),
+    "api-name": z.string().optional(),
+    openrpc: z.string().optional(),
+    audiences: z.union([z.string(), z.array(z.string())]).optional(),
+    "display-errors": z.boolean().optional(),
+    "tag-description-pages": z.boolean().optional(),
     snippets: SnippetsConfigurationSchema.optional(),
+    postman: z.string().optional(),
     summary: z.string().optional(),
     layout: z.array(ApiReferenceLayoutItemSchema).optional(),
-    playground: PlaygroundSettingsSchema.optional(),
+    collapsed: z.boolean().optional(),
+    icon: z.string().optional(),
+    slug: z.string().optional(),
+    hidden: z.boolean().optional(),
     availability: AvailabilitySchema.optional(),
+    "skip-slug": z.boolean().optional(),
+    alphabetized: z.boolean().optional(),
+    flattened: z.boolean().optional(),
     paginated: z.boolean().optional(),
+    playground: PlaygroundSettingsSchema.optional(),
     // WithPermissions
     viewers: RoleSchema.optional(),
     orphaned: z.boolean().optional(),
     // WithFeatureFlags
-    featureFlag: FeatureFlagSchema.optional()
+    "feature-flag": FeatureFlagSchema.optional()
 });
 
 export type ApiReferenceConfigurationSchema = z.infer<typeof ApiReferenceConfigurationSchema>;

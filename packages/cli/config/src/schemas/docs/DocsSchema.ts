@@ -27,6 +27,48 @@ import { AnalyticsConfigSchema } from "./seo/AnalyticsConfigSchema.js";
 import { MetadataConfigSchema } from "./seo/MetadataConfigSchema.js";
 import { RedirectConfigSchema } from "./seo/RedirectConfigSchema.js";
 
+export const ProgrammingLanguageSchema = z.enum([
+    "typescript",
+    "javascript",
+    "python",
+    "java",
+    "go",
+    "ruby",
+    "csharp",
+    "php",
+    "swift",
+    "rust",
+    "nodets",
+    "nodejs",
+    "dotnet",
+    "curl",
+    "jvm",
+    "ts",
+    "js"
+]);
+
+export type ProgrammingLanguageSchema = z.infer<typeof ProgrammingLanguageSchema>;
+
+export const LanguageSchema = z.enum([
+    "en",
+    "es",
+    "fr",
+    "de",
+    "it",
+    "pt",
+    "ja",
+    "zh",
+    "ko",
+    "el",
+    "no",
+    "pl",
+    "ru",
+    "sv",
+    "tr"
+]);
+
+export type LanguageSchema = z.infer<typeof LanguageSchema>;
+
 export const DocsSchema = z.object({
     instances: z.array(DocsInstanceSchema),
     title: z.string().optional(),
@@ -37,24 +79,22 @@ export const DocsSchema = z.object({
     tabs: z.record(z.string(), TabConfigSchema).optional(),
     versions: z.array(VersionConfigSchema).optional(),
     products: z.array(ProductConfigSchema).optional(),
-    landingPage: PageConfigurationSchema.optional(),
+    "landing-page": PageConfigurationSchema.optional(),
     navigation: NavigationConfigSchema.optional(),
-    navbarLinks: z.array(NavbarLinkSchema).optional(),
-    footerLinks: FooterLinksConfigSchema.optional(),
-    pageActions: PageActionsConfigSchema.optional(),
+    "navbar-links": z.array(NavbarLinkSchema).optional(),
+    "footer-links": FooterLinksConfigSchema.optional(),
+    "page-actions": PageActionsConfigSchema.optional(),
     experimental: ExperimentalConfigSchema.optional(),
-    defaultLanguage: z
-        .enum(["typescript", "python", "java", "go", "ruby", "csharp", "php", "swift", "curl"])
-        .optional(),
-    languages: z.array(z.string()).optional(),
-    aiChat: AiChatConfigSchema.optional(),
-    aiSearch: AiChatConfigSchema.optional(),
-    aiExamples: AiExamplesConfigSchema.optional(),
+    "default-language": ProgrammingLanguageSchema.optional(),
+    languages: z.array(LanguageSchema).optional(),
+    "ai-chat": AiChatConfigSchema.optional(),
+    "ai-search": AiChatConfigSchema.optional(),
+    "ai-examples": AiExamplesConfigSchema.optional(),
     metadata: MetadataConfigSchema.optional(),
     redirects: z.array(RedirectConfigSchema).optional(),
     logo: LogoConfigurationSchema.optional(),
     favicon: z.string().optional(),
-    backgroundImage: BackgroundImageConfigurationSchema.optional(),
+    "background-image": BackgroundImageConfigurationSchema.optional(),
     colors: ColorsConfigurationSchema.optional(),
     typography: TypographyConfigSchema.optional(),
     layout: LayoutConfigSchema.optional(),
