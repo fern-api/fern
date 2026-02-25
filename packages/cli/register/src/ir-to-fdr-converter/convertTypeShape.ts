@@ -270,6 +270,12 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                     uint64: () => {
                         return convertUint64(primitive.v2);
                     },
+                    dateTimeRfc2822: () => {
+                        return {
+                            type: "datetime",
+                            default: undefined
+                        };
+                    },
                     _other: () => {
                         throw new Error("Unknown primitive: " + primitive.v1);
                     }
