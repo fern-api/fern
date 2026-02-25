@@ -1,4 +1,4 @@
-import type { schemas } from "@fern-api/config";
+import { schemas } from "@fern-api/config";
 import { RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { SourceLocation } from "@fern-api/source";
 import { DEFAULT_API_NAME } from "../api/config/converter/ApiDefinitionConverter.js";
@@ -15,7 +15,7 @@ export namespace WorkspaceBuilder {
         org: string;
         lang: Language;
         resolvedSpec: ApiSpecResolver.Result;
-        output: schemas.OutputSchema;
+        output: schemas.OutputObjectSchema;
         targetVersion?: string;
     }
 }
@@ -45,7 +45,7 @@ export class WorkspaceBuilder {
             lang,
             version: imageRef.tag,
             sourceLocation,
-            output
+            output: schemas.resolveOutputObjectSchema(output)
         };
 
         const workspace: Workspace = {
