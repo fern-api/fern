@@ -1324,6 +1324,14 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      collapsible:
+        type: optional<boolean>
+        docs: |
+          Whether the section can be expanded/collapsed by the user.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: |
+          Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open).
       availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
