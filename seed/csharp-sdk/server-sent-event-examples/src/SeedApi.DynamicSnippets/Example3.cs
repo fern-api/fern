@@ -2,7 +2,7 @@ using SeedServerSentEvents;
 
 namespace Usage;
 
-public class Example1
+public class Example3
 {
     public async Task Do() {
         var client = new SeedServerSentEventsClient(
@@ -11,8 +11,8 @@ public class Example1
             }
         );
 
-        await foreach (var item in client.Completions.StreamAsync(
-            new StreamCompletionRequest {
+        await foreach (var item in client.Completions.StreamEventsAsync(
+            new StreamEventsRequest {
                 Query = "query"
             }
         ))

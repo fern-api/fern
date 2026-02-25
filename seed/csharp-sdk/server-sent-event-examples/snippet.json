@@ -14,7 +14,7 @@
             }
         },
         {
-            "example_identifier": null,
+            "example_identifier": "Stream events",
             "id": {
                 "path": "/stream-events",
                 "method": "POST",
