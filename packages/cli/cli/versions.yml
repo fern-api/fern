@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.4
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v3 channel parameters ignoring their `schema` property, which
+        caused types like `oneOf: [string, string[]]` to be flattened to `string`
+        in generated WebSocket clients.
+      type: fix
+    - summary: |
+        Fix `oneOf: [primitive, array<primitive>]` query parameter detection when
+        the primitive appears before the array in the union, which caused the type
+        to lose its `allow-multiple` representation.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.88.3
   changelogEntry:
     - summary: |
