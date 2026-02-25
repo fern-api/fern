@@ -7,3 +7,4 @@ export * as getWithQuery from "./getWithQuery.js";
 export * as modifyWithInlinePath from "./modifyWithInlinePath.js";
 export * as modifyWithPath from "./modifyWithPath.js";
 export * from "./requests/index.js";
+export * as uploadWithPath from "./uploadWithPath.js";
