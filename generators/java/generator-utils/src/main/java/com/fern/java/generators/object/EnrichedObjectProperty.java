@@ -7,7 +7,6 @@ import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
 import com.fern.ir.model.types.ObjectProperty;
-import com.fern.ir.model.types.PrimitiveTypeV1;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
@@ -251,7 +250,7 @@ public interface EnrichedObjectProperty {
 
     static boolean isDateTimeRfc2822(TypeReference reference) {
         if (reference.isPrimitive()
-                && reference.getPrimitive().get().getV1().equals(PrimitiveTypeV1.DATE_TIME_RFC_2822)) {
+                && "DATE_TIME_RFC_2822".equals(reference.getPrimitive().get().getV1().toString())) {
             return true;
         }
         if (reference.isContainer()) {

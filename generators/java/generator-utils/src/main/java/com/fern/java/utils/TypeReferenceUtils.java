@@ -272,11 +272,6 @@ public class TypeReferenceUtils {
         }
 
         @Override
-        public String visitDateTimeRfc2822() {
-            return "DateTimeRfc2822";
-        }
-
-        @Override
         public String visitDate() {
             return "Date";
         }
@@ -298,6 +293,9 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitUnknown(String unknownType) {
+            if ("DATE_TIME_RFC_2822".equals(unknownType)) {
+                return "DateTimeRfc2822";
+            }
             throw new RuntimeException("Unknown primitive type " + unknownType);
         }
     }
@@ -456,11 +454,6 @@ public class TypeReferenceUtils {
                     }
 
                     @Override
-                    public Boolean visitDateTimeRfc2822() {
-                        return false;
-                    }
-
-                    @Override
                     public Boolean visitUuid() {
                         return false;
                     }
@@ -536,11 +529,6 @@ public class TypeReferenceUtils {
 
                     @Override
                     public Boolean visitDateTime() {
-                        return false;
-                    }
-
-                    @Override
-                    public Boolean visitDateTimeRfc2822() {
                         return false;
                     }
 

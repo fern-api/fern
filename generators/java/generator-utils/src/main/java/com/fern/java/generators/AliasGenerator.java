@@ -241,7 +241,6 @@ public final class AliasGenerator extends AbstractTypeGenerator {
             case STRING:
             case UUID:
             case DATE_TIME:
-            case DATE_TIME_RFC_2822:
                 return CodeBlock.builder().addStatement("return of(value)").build();
             case DOUBLE:
                 return CodeBlock.builder()
@@ -259,6 +258,11 @@ public final class AliasGenerator extends AbstractTypeGenerator {
                 return CodeBlock.builder()
                         .addStatement("return of($T.parseLong(value))", Long.class)
                         .build();
+            case UNKNOWN:
+                if ("DATE_TIME_RFC_2822".equals(primitiveType.getV1().toString())) {
+                    return CodeBlock.builder().addStatement("return of(value)").build();
+                }
+                // fall through
         }
         throw new IllegalStateException("Unsupported primitive type: " + primitiveType + "for `valueOf` method.");
     }
@@ -313,11 +317,6 @@ public final class AliasGenerator extends AbstractTypeGenerator {
         }
 
         @Override
-        public CodeBlock visitDateTimeRfc2822() {
-            return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
-        }
-
-        @Override
         public CodeBlock visitDate() {
             return CodeBlock.of("return $L", VALUE_FIELD_NAME);
         }
@@ -339,6 +338,9 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
         @Override
         public CodeBlock visitUnknown(String unknown) {
+            if ("DATE_TIME_RFC_2822".equals(unknown)) {
+                return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
+            }
             throw new RuntimeException("Encountered unknown primitive type: " + unknown);
         }
     }
@@ -393,11 +395,6 @@ public final class AliasGenerator extends AbstractTypeGenerator {
         }
 
         @Override
-        public CodeBlock visitDateTimeRfc2822() {
-            return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
-        }
-
-        @Override
         public CodeBlock visitDate() {
             return visitString();
         }
@@ -419,6 +416,9 @@ public final class AliasGenerator extends AbstractTypeGenerator {
 
         @Override
         public CodeBlock visitUnknown(String unknown) {
+            if ("DATE_TIME_RFC_2822".equals(unknown)) {
+                return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+            }
             throw new RuntimeException("Encountered unknown primitive type: " + unknown);
         }
     }
