@@ -1,60 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../../workspace/lazy-fern-workspace"
-    },
-    {
-      "path": "../../../workspace/loader"
-    },
-    {
-      "path": "../../../task-context"
-    },
-    {
-      "path": "../../../register"
-    },
-    {
-      "path": "../../../logger"
-    },
-    {
-      "path": "../../../../ir-sdk"
-    },
-    {
-      "path": "../../ir-migrations"
-    },
-    {
-      "path": "../../ir-generator"
-    },
-    {
-      "path": "../../../../commons/fs-utils"
-    },
-    {
-      "path": "../../../../commons/logging-execa"
-    },
-    {
-      "path": "../../../docs-resolver"
-    },
-    {
-      "path": "../../../../commons/core-utils"
-    },
-    {
-      "path": "../../../../core"
-    },
-    {
-      "path": "../../../configuration"
-    },
-    {
-      "path": "../../../cli-source-resolver"
-    },
-    {
-      "path": "../../../auth"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

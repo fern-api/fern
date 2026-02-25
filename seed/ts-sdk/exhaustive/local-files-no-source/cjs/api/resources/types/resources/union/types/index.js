@@ -17,3 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Animal.js"), exports);
 __exportStar(require("./Cat.js"), exports);
 __exportStar(require("./Dog.js"), exports);
+__exportStar(require("./MixedType.js"), exports);

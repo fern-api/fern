@@ -50,6 +50,7 @@ export function createDefinitionFileAstVisitorForRules({
         ...createAstNodeVisitor("queryParameter"),
         ...createAstNodeVisitor("streamCondition"),
         ...createAstNodeVisitor("header"),
+        ...createAstNodeVisitor("webhookSignature"),
         ...createAstNodeVisitor("errorDeclaration"),
         ...createAstNodeVisitor("errorReference"),
         ...createAstNodeVisitor("exampleType"),

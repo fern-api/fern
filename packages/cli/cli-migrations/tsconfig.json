@@ -1,27 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../commons/core-utils"
-    },
-    {
-      "path": "../../commons/fs-utils"
-    },
-    {
-      "path": "../configuration-loader"
-    },
-    {
-      "path": "../semver-utils"
-    },
-    {
-      "path": "../task-context"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

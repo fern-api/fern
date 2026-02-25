@@ -3132,7 +3132,6 @@ func (f *fileWriter) WriteRequestType(
 	var literals []*literal
 	f.P("type ", typeName, " struct {")
 	for _, header := range append(serviceHeaders, endpoint.Headers...) {
-		f.WriteDocs(header.Docs)
 		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
 			literals = append(
 				literals,
@@ -3143,6 +3142,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
+		f.WriteDocs(header.Docs)
 		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
 	}
@@ -3158,7 +3158,6 @@ func (f *fileWriter) WriteRequestType(
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
-		f.WriteDocs(queryParam.Docs)
 		if queryParam.ValueType.Container != nil && queryParam.ValueType.Container.Literal != nil {
 			literals = append(
 				literals,
@@ -3169,6 +3168,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
+		f.WriteDocs(queryParam.Docs)
 		f.P(goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName), " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
 	}
 	if endpoint.RequestBody == nil {

@@ -157,6 +157,32 @@
       }
     },
     {
+      "id": "eaf9315d-55c4-4434-8004-a70c25af5656",
+      "name": "getAndReturnMapOfPrimToUndiscriminatedUnion - default",
+      "request": {
+        "urlPathTemplate": "/container/map-prim-to-union",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": 1.1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "eaf9315d-55c4-4434-8004-a70c25af5656",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e5271904-de0a-425f-940d-d6f6bde34755",
       "name": "getAndReturnOptional - default",
       "request": {
@@ -865,6 +891,37 @@
       }
     },
     {
+      "id": "658d6145-14f6-48d3-9c66-c63e01eb6fd2",
+      "name": "uploadWithPath - default",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "POST",
+        "pathParameters": {
+          "param": {
+            "equalTo": "upload-path"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"uploaded\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "658d6145-14f6-48d3-9c66-c63e01eb6fd2",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "0506ae7c-87b7-4cd2-9e50-31d60f81893f",
       "name": "getAndReturnString - default",
       "request": {
@@ -1396,6 +1453,6 @@
     }
   ],
   "meta": {
-    "total": 51
+    "total": 53
   }
 }

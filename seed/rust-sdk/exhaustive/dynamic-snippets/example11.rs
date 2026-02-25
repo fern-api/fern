@@ -11,11 +11,6 @@ async fn main() {
     client
         .endpoints
         .http_methods
-        .test_post(
-            &ObjectWithRequiredField {
-                string: "string".to_string(),
-            },
-            None,
-        )
+        .test_get(&"id".to_string(), None)
         .await;
 }

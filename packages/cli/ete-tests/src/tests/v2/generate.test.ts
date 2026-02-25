@@ -10,11 +10,6 @@ const FIXTURES = {
 
 describe("fern sdk generate", () => {
     describe("basic generation", () => {
-        it("typescript", async () => {
-            const result = await cliV2.generate(FIXTURES.petstore, "typescript");
-            expect(result.exitCode).toBe(0);
-        }, 60_000);
-
         it("python", async () => {
             const result = await cliV2.generate(FIXTURES.petstore, "python");
             expect(result.exitCode).toBe(0);
@@ -27,7 +22,7 @@ describe("fern sdk generate", () => {
     });
 
     describe("local generation", () => {
-        it.each([["typescript"], ["python"], ["go"]])("should generate %s SDK with --local flag", async (target) => {
+        it.each([["python"], ["go"]])("should generate %s SDK with --local flag", async (target) => {
             const result = await runCliV2({
                 args: ["sdk", "generate", "--target", target, "--local"],
                 fixture: FIXTURES.petstore,
@@ -73,7 +68,7 @@ describe("fern sdk generate", () => {
 
     describe("fern definition", () => {
         it("should generate SDK from fern definition", async () => {
-            const result = await cliV2.generate(FIXTURES.fernDefinition, "typescript");
+            const result = await cliV2.generate(FIXTURES.fernDefinition, "go");
             expect(result.exitCode).toBe(0);
         }, 60_000);
     });
@@ -91,10 +86,10 @@ api:
 
 sdks:
   targets:
-    typescript:
-      version: 3.45.1
+    go:
+      version: 1.24.0
       output:
-        path: ./sdks/typescript
+        path: ./sdks/go
 `,
                 "openapi.yml": `openapi: 3.0.3
 info:
@@ -130,7 +125,7 @@ paths:
 
             try {
                 const result = await runCliV2({
-                    args: ["sdk", "generate", "--target", "typescript", "--audience", "public", "--local"],
+                    args: ["sdk", "generate", "--target", "go", "--audience", "public", "--local"],
                     cwd: fixture.path,
                     timeout: 60_000
                 });
@@ -152,10 +147,10 @@ api:
 
 sdks:
   targets:
-    typescript:
-      version: 3.45.1
+    go:
+      version: 1.24.0
       output:
-        path: ./sdks/typescript
+        path: ./sdks/go
 `,
                 "openapi.yml": `openapi: 3.0.3
 info:
@@ -177,7 +172,7 @@ paths:
                         "sdk",
                         "generate",
                         "--target",
-                        "typescript",
+                        "go",
                         "--audience",
                         "public",
                         "--audience",

@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.GetWithQuery;
 
 public class Example26 {
     public static void main(String[] args) {
@@ -10,8 +9,6 @@ public class Example26 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints()
-                .params()
-                .getWithQuery(GetWithQuery.builder().query("query").number(1).build());
+        client.endpoints().params().getWithPath("param");
     }
 }

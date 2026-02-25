@@ -306,6 +306,57 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnMapOfPrimToUndiscriminatedUnion</a>({ ...params }) -> core.APIResponse&lt;Record&lt;string, SeedExhaustive.MixedType&gt;, SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+    "string": 1.1
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Record<string, SeedExhaustive.MixedType>` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ContainerClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnOptional</a>({ ...params }) -> core.APIResponse&lt;SeedExhaustive.ObjectWithRequiredField | undefined, SeedExhaustive.endpoints.container.getAndReturnOptional.Error&gt;</code></summary>
 <dl>
 <dd>
@@ -1891,6 +1942,77 @@ await client.endpoints.params.modifyWithInlinePath({
 <dd>
 
 **request:** `SeedExhaustive.endpoints.ModifyResourceAtInlinedPath` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ParamsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/src/api/resources/endpoints/resources/params/client/Client.ts">uploadWithPath</a>(uploadable, param) -> core.APIResponse&lt;SeedExhaustive.ObjectWithRequiredField, SeedExhaustive.endpoints.params.uploadWithPath.Error&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**uploadable:** `core.file.Uploadable` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**param:** `string` 
     
 </dd>
 </dl>

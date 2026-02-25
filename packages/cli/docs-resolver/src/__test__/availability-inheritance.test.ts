@@ -144,54 +144,49 @@ describe("availability inheritance", () => {
         expect(getAvailability(stableSection)).toBe("stable");
 
         // Test specific endpoints within Beta Features section
-        if (betaSection?.type === "apiPackage") {
-            const userManagement = findNodeByTitle(betaSection.children, "User Management");
-            expect(getAvailability(userManagement)).toBe("beta"); // Should inherit from beta section
+        expect.assert(betaSection?.type === "apiPackage");
+        const userManagement = findNodeByTitle(betaSection.children, "User Management");
+        expect(getAvailability(userManagement)).toBe("beta"); // Should inherit from beta section
 
-            if (userManagement?.type === "apiPackage") {
-                const getUser = findEndpointByTitle(userManagement.children, "getUser");
-                const createUser = findEndpointByTitle(userManagement.children, "createUser");
-                const deleteUser = findEndpointByTitle(userManagement.children, "deleteUser");
+        expect.assert(userManagement?.type === "apiPackage");
+        const getUser = findEndpointByTitle(userManagement.children, "getUser");
+        const createUser = findEndpointByTitle(userManagement.children, "createUser");
+        const deleteUser = findEndpointByTitle(userManagement.children, "deleteUser");
 
-                // getUser should inherit beta from section
-                expect(getAvailability(getUser)).toBe("beta");
+        // getUser should inherit beta from section
+        expect(getAvailability(getUser)).toBe("beta");
 
-                // createUser has its own beta, but matches parent so should be beta
-                expect(getAvailability(createUser)).toBe("beta");
+        // createUser has its own beta, but matches parent so should be beta
+        expect(getAvailability(createUser)).toBe("beta");
 
-                // deleteUser has its own deprecated, should override parent beta
-                expect(getAvailability(deleteUser)).toBe("deprecated");
-            }
-        }
+        // deleteUser has its own deprecated, should override parent beta
+        expect(getAvailability(deleteUser)).toBe("deprecated");
 
         // Test endpoints within Admin package
-        if (adminPackage?.type === "apiPackage") {
-            const healthCheck = findEndpointByTitle(adminPackage.children, "healthCheck");
-            const reboot = findEndpointByTitle(adminPackage.children, "reboot");
+        expect.assert(adminPackage?.type === "apiPackage");
+        const healthCheck = findEndpointByTitle(adminPackage.children, "healthCheck");
+        const reboot = findEndpointByTitle(adminPackage.children, "reboot");
 
-            // healthCheck should inherit deprecated from admin package
-            expect(getAvailability(healthCheck)).toBe("deprecated");
+        // healthCheck should inherit deprecated from admin package
+        expect(getAvailability(healthCheck)).toBe("deprecated");
 
-            // reboot has its own alpha, should override parent deprecated
-            expect(getAvailability(reboot)).toBe("alpha");
-        }
+        // reboot has its own alpha, should override parent deprecated
+        expect(getAvailability(reboot)).toBe("alpha");
 
         // Test endpoints within Stable section
-        if (stableSection?.type === "apiPackage") {
-            const stableUserPackage = findNodeByTitle(stableSection.children, "users");
-            expect(getAvailability(stableUserPackage)).toBe("stable"); // Should inherit stable from section
+        expect.assert(stableSection?.type === "apiPackage");
+        const stableUserPackage = findNodeByTitle(stableSection.children, "users");
+        expect(getAvailability(stableUserPackage)).toBe("stable"); // Should inherit stable from section
 
-            if (stableUserPackage?.type === "apiPackage") {
-                const stableGetUser = findEndpointByTitle(stableUserPackage.children, "getUser");
-                const stableCreateUser = findEndpointByTitle(stableUserPackage.children, "createUser");
+        expect.assert(stableUserPackage?.type === "apiPackage");
+        const stableGetUser = findEndpointByTitle(stableUserPackage.children, "getUser");
+        const stableCreateUser = findEndpointByTitle(stableUserPackage.children, "createUser");
 
-                // getUser should inherit stable from section
-                expect(getAvailability(stableGetUser)).toBe("stable");
+        // getUser should inherit stable from section
+        expect(getAvailability(stableGetUser)).toBe("stable");
 
-                // createUser has its own beta, should override parent stable
-                expect(getAvailability(stableCreateUser)).toBe("beta");
-            }
-        }
+        // createUser has its own beta, should override parent stable
+        expect(getAvailability(stableCreateUser)).toBe("beta");
 
         // Store the full snapshot for comprehensive testing
         expect(node).toMatchSnapshot();

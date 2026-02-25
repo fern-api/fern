@@ -24,8 +24,7 @@ The Go generator operates as a **tandem system** with both v1 and v2 implementat
 ### Go v1 (generators/go/)
 - `sdk/` - Go SDK generation logic
 - `model/` - Go struct and type generation
-- `fiber/` - Fiber server generator (Go web framework)
-- `cmd/` - Command-line tools (`fern-go-sdk`, `fern-go-fiber`, `fern-go-model`)
+- `cmd/` - Command-line tools (`fern-go-sdk`, `fern-go-model`)
 - `internal/` - Internal Go utilities (`goexec/`, `gospec/`)
 - `go.mod` / `go.sum` - Go module definition and dependencies
 - `Makefile` - Build automation

@@ -1,4 +1,0 @@
-{
-  "ignores": ["@boundaryml/baml"],
-  "ignore-patterns": ["lib", "dist"]
-}

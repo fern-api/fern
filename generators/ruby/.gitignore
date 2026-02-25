@@ -1,2 +1,0 @@
-# don't ignore the ruby libs generated within seed
-!seed/**/lib

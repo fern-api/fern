@@ -575,9 +575,16 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): php.TypeLiteral | undefined {
         for (const typeReference of undiscriminatedUnion.types) {
+            const errorsBefore = this.context.errors.size();
             try {
-                return this.convert({ typeReference, value });
+                const result = this.convert({ typeReference, value });
+                if (php.TypeLiteral.isNop(result)) {
+                    this.context.errors.truncate(errorsBefore);
+                    continue;
+                }
+                return result;
             } catch (e) {
+                this.context.errors.truncate(errorsBefore);
                 continue;
             }
         }

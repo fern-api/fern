@@ -4,6 +4,6 @@ import type * as FernSeedConfig from "../../../index.js";
 
 export interface TestConfiguration {
     docker: FernSeedConfig.TestContainerConfiguration;
-    podman?: FernSeedConfig.TestContainerConfiguration;
-    local?: FernSeedConfig.LocalBuildInfo;
+    podman?: FernSeedConfig.TestContainerConfiguration | undefined;
+    local?: FernSeedConfig.LocalBuildInfo | undefined;
 }

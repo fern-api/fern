@@ -6,13 +6,14 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Animal, Cat, Dog
+    from .types import Animal, Cat, Dog, MixedType
     from .errors import ErrorWithUnionBody
 _dynamic_imports: typing.Dict[str, str] = {
     "Animal": ".types",
     "Cat": ".types",
     "Dog": ".types",
     "ErrorWithUnionBody": ".errors",
+    "MixedType": ".types",
 }
 
 
@@ -37,4 +38,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Animal", "Cat", "Dog", "ErrorWithUnionBody"]
+__all__ = ["Animal", "Cat", "Dog", "ErrorWithUnionBody", "MixedType"]

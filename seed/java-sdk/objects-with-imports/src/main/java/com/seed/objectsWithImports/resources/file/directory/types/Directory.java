@@ -95,6 +95,10 @@ public final class Directory {
     public interface _FinalStage {
         Directory build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage files(Optional<List<File>> files);
 
         _FinalStage files(List<File> files);
@@ -161,6 +165,18 @@ public final class Directory {
         @java.lang.Override
         public Directory build() {
             return new Directory(name, files, directories, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

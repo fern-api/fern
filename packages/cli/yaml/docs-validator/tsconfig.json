@@ -1,60 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*", "./src/**/*.json"],
-  "references": [
-    {
-      "path": "../../cli-source-resolver"
-    },
-    {
-      "path": "../../workspace/loader"
-    },
-    {
-      "path": "../../api-importers/v3-importer-commons"
-    },
-    {
-      "path": "../../task-context"
-    },
-    {
-      "path": "../../project-loader"
-    },
-    {
-      "path": "../../api-importers/openapi-to-ir"
-    },
-    {
-      "path": "../../logger"
-    },
-    {
-      "path": "../../workspace/lazy-fern-workspace"
-    },
-    {
-      "path": "../../generation/ir-generator"
-    },
-    {
-      "path": "../../../commons/fs-utils"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../../docs-resolver"
-    },
-    {
-      "path": "../../docs-markdown-utils"
-    },
-    {
-      "path": "../../../commons/core-utils"
-    },
-    {
-      "path": "../../configuration-loader"
-    },
-    {
-      "path": "../../workspace/commons"
-    }
-  ]
+  "include": ["./src/**/*", "./src/**/*.json"]
 }

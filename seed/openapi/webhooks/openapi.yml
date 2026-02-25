@@ -1,0 +1,67 @@
+openapi: 3.0.1
+info:
+  title: webhooks
+  version: ''
+paths: {}
+components:
+  schemas:
+    UserCreatedPayload:
+      title: UserCreatedPayload
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - userId
+        - email
+        - createdAt
+    OrderCompletedPayload:
+      title: OrderCompletedPayload
+      type: object
+      properties:
+        orderId:
+          type: string
+        total:
+          type: number
+          format: double
+        currency:
+          type: string
+      required:
+        - orderId
+        - total
+        - currency
+    PaymentNotificationPayload:
+      title: PaymentNotificationPayload
+      type: object
+      properties:
+        paymentId:
+          type: string
+        amount:
+          type: number
+          format: double
+        status:
+          type: string
+      required:
+        - paymentId
+        - amount
+        - status
+    RefundProcessedPayload:
+      title: RefundProcessedPayload
+      type: object
+      properties:
+        refundId:
+          type: string
+        amount:
+          type: number
+          format: double
+        reason:
+          type: string
+          nullable: true
+      required:
+        - refundId
+        - amount
+  securitySchemes: {}

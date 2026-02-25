@@ -31,24 +31,19 @@ function validateAndTransformArray(value, transformItem) {
             ],
         };
     }
-    const maybeValidItems = value.map((item, index) => transformItem(item, index));
-    return maybeValidItems.reduce((acc, item) => {
-        if (acc.ok && item.ok) {
-            return {
-                ok: true,
-                value: [...acc.value, item.value],
-            };
+    const result = [];
+    const errors = [];
+    for (let i = 0; i < value.length; i++) {
+        const item = transformItem(value[i], i);
+        if (item.ok) {
+            result.push(item.value);
         }
-        const errors = [];
-        if (!acc.ok) {
-            errors.push(...acc.errors);
-        }
-        if (!item.ok) {
+        else {
             errors.push(...item.errors);
         }
-        return {
-            ok: false,
-            errors,
-        };
-    }, { ok: true, value: [] });
+    }
+    if (errors.length === 0) {
+        return { ok: true, value: result };
+    }
+    return { ok: false, errors };
 }

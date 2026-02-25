@@ -264,6 +264,29 @@ client.endpoints.container.get_and_return_list_of_primitives(
 "
 `;
 
+exports[`snippets > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>"
+)
+
+client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
+    request={
+        "test": 0,
+        "test2": True,
+        "test3": "Test",
+        "test4": [
+            "1",
+            "1",
+            "1",
+            "1"
+        ]
+    }
+)
+"
+`;
+
 exports[`snippets > file-upload > 'POST /' 1`] = `
 "from acme import Acme
 

@@ -67,7 +67,7 @@ export class LoginCommand {
     }
 }
 
-export function addLoginCommand(cli: Argv<GlobalArgs>): void {
+export function addLoginCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new LoginCommand();
     command(
         cli,
@@ -82,6 +82,7 @@ export function addLoginCommand(cli: Argv<GlobalArgs>): void {
                     description: "Use device code flow (for environments where browser cannot open automatically)"
                 })
                 .example("$0 auth login", "Log in via browser")
-                .example("$0 auth login --device-code", "Log in via device code")
+                .example("$0 auth login --device-code", "Log in via device code"),
+        parentPath
     );
 }

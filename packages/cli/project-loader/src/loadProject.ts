@@ -65,18 +65,18 @@ export async function loadProjectFromDirectory({
 }: loadProject.LoadProjectFromDirectoryArgs): Promise<Project> {
     let apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
 
-    if (
-        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) ||
-        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY)))) ||
-        (await doesPathExist(
-            join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))
-        )) ||
-        (await doesPathExist(
+    const [apisExists, defExists, genExists, genAltExists, openapiExists, asyncapiExists] = await Promise.all([
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY))),
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY))),
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))),
+        doesPathExist(
             join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE))
-        )) ||
-        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY)))) ||
-        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY))))
-    ) {
+        ),
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY))),
+        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
+    ]);
+
+    if (apisExists || defExists || genExists || genAltExists || openapiExists || asyncapiExists) {
         apiWorkspaces = await loadApis({
             cliName,
             fernDirectory: absolutePathToFernDirectory,

@@ -3,6 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { GeneratorName } from "./GeneratorName.js";
 
 export const DEFAULT_DOCKER_ORG = "fernapi";
+export const INCORRECT_DOCKER_ORG = "fern-api";
 
 /**
  * Adds the default Docker org prefix (fernapi/) to a generator name if no org is specified.
@@ -15,10 +16,46 @@ export const DEFAULT_DOCKER_ORG = "fernapi";
  * - "myorg/my-generator" -> "myorg/my-generator" (unchanged)
  */
 export function addDefaultDockerOrgIfNotPresent(generatorName: string): string {
+    // Correct incorrect "fern-api/" org to "fernapi/" silently
+    generatorName = correctIncorrectDockerOrg(generatorName);
     if (generatorName.includes("/")) {
         return generatorName;
     }
     return `${DEFAULT_DOCKER_ORG}/${generatorName}`;
+}
+
+/**
+ * Corrects the incorrect Docker org prefix "fern-api/" to the correct "fernapi/".
+ * This handles a common user mistake where "fern-api" (the GitHub/npm org) is
+ * confused with "fernapi" (the Docker Hub org for Fern generators).
+ *
+ * Examples:
+ * - "fern-api/fern-typescript-sdk" -> "fernapi/fern-typescript-sdk"
+ * - "fernapi/fern-typescript-sdk" -> "fernapi/fern-typescript-sdk" (unchanged)
+ * - "myorg/my-generator" -> "myorg/my-generator" (unchanged)
+ */
+export function correctIncorrectDockerOrg(generatorName: string): string {
+    const incorrectPrefix = `${INCORRECT_DOCKER_ORG}/`;
+    if (generatorName.startsWith(incorrectPrefix)) {
+        return `${DEFAULT_DOCKER_ORG}/${generatorName.slice(incorrectPrefix.length)}`;
+    }
+    return generatorName;
+}
+
+/**
+ * Corrects the incorrect Docker org prefix "fern-api/" to "fernapi/" and logs a warning.
+ * Use this variant when you have access to a TaskContext for user-visible warnings.
+ */
+export function correctIncorrectDockerOrgWithWarning(generatorName: string, context: TaskContext): string {
+    const incorrectPrefix = `${INCORRECT_DOCKER_ORG}/`;
+    if (generatorName.startsWith(incorrectPrefix)) {
+        const corrected = `${DEFAULT_DOCKER_ORG}/${generatorName.slice(incorrectPrefix.length)}`;
+        context.logger.warn(
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "fern-api".`
+        );
+        return corrected;
+    }
+    return generatorName;
 }
 
 /**

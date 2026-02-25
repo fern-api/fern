@@ -90,6 +90,10 @@ public final class GetDiscriminatedUnionRequest {
 
     public interface _FinalStage {
         GetDiscriminatedUnionRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -127,6 +131,18 @@ public final class GetDiscriminatedUnionRequest {
         @java.lang.Override
         public GetDiscriminatedUnionRequest build() {
             return new GetDiscriminatedUnionRequest(bar, foo, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 
@@ -473,6 +489,10 @@ public final class GetDiscriminatedUnionRequest {
 
             public interface _FinalStage {
                 Type1 build();
+
+                _FinalStage additionalProperty(String key, Object value);
+
+                _FinalStage additionalProperties(Map<String, Object> additionalProperties);
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -535,6 +555,18 @@ public final class GetDiscriminatedUnionRequest {
                 @java.lang.Override
                 public Type1 build() {
                     return new Type1(foo, bar, ref, additionalProperties);
+                }
+
+                @java.lang.Override
+                public Builder additionalProperty(String key, Object value) {
+                    this.additionalProperties.put(key, value);
+                    return this;
+                }
+
+                @java.lang.Override
+                public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                    this.additionalProperties.putAll(additionalProperties);
+                    return this;
                 }
             }
 
@@ -616,6 +648,10 @@ public final class GetDiscriminatedUnionRequest {
 
                 public interface _FinalStage {
                     Bar_ build();
+
+                    _FinalStage additionalProperty(String key, Object value);
+
+                    _FinalStage additionalProperties(Map<String, Object> additionalProperties);
                 }
 
                 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -663,6 +699,18 @@ public final class GetDiscriminatedUnionRequest {
                     @java.lang.Override
                     public Bar_ build() {
                         return new Bar_(foo, ref, additionalProperties);
+                    }
+
+                    @java.lang.Override
+                    public Builder additionalProperty(String key, Object value) {
+                        this.additionalProperties.put(key, value);
+                        return this;
+                    }
+
+                    @java.lang.Override
+                    public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                        this.additionalProperties.putAll(additionalProperties);
+                        return this;
                     }
                 }
             }
@@ -746,6 +794,10 @@ public final class GetDiscriminatedUnionRequest {
 
             public interface _FinalStage {
                 Type2 build();
+
+                _FinalStage additionalProperty(String key, Object value);
+
+                _FinalStage additionalProperties(Map<String, Object> additionalProperties);
             }
 
             @JsonIgnoreProperties(ignoreUnknown = true)
@@ -793,6 +845,18 @@ public final class GetDiscriminatedUnionRequest {
                 @java.lang.Override
                 public Type2 build() {
                     return new Type2(baz, ref, additionalProperties);
+                }
+
+                @java.lang.Override
+                public Builder additionalProperty(String key, Object value) {
+                    this.additionalProperties.put(key, value);
+                    return this;
+                }
+
+                @java.lang.Override
+                public Builder additionalProperties(Map<String, Object> additionalProperties) {
+                    this.additionalProperties.putAll(additionalProperties);
+                    return this;
                 }
             }
         }

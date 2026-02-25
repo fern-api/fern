@@ -43,7 +43,7 @@ import { SeedServerSentEventsClient } from "@fern/server-sent-events";
 
 const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
 const response = await client.completions.stream({
-    query: "query"
+    query: "foo"
 });
 for await (const item of response) {
     console.log(item);
@@ -93,7 +93,7 @@ import { SeedServerSentEventsClient } from "@fern/server-sent-events";
 
 const client = new SeedServerSentEventsClient({ environment: "YOUR_BASE_URL" });
 const response = await client.completions.stream({
-    query: "query"
+    query: "foo"
 });
 for await (const item of response) {
     console.log(item);
