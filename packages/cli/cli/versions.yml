@@ -10,6 +10,15 @@
   createdAt: "2026-02-25"
   irVersion: 65
 
+- version: 3.88.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI file upload detection for FastAPI `UploadFile` fields. OpenAPI schemas
+        that use `contentMediaType: application/octet-stream` are now treated as
+        `format: binary` so SDKs generate correct multipart upload code.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
 - version: 3.88.2
   changelogEntry:
     - summary: |
