@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump Docker base image from `node:22.12-slim` to `node:22.13-slim` to fix
+        `yarn install` failures caused by transitive dependencies (e.g. `eslint-visitor-keys@5.0.1`)
+        requiring Node `^20.19.0 || ^22.13.0 || >=24`.
+      type: fix
+  irVersion: 61
+  createdAt: "2026-02-25"
+  version: 0.19.4
+
+- changelogEntry:
+    - summary: |
         Update oxfmt to 0.35.0, oxlint to 1.50.0, and oxlint-tsgolint to 0.14.2.
       type: chore
   irVersion: 61

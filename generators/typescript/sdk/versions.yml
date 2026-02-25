@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.49.4
+  changelogEntry:
+    - summary: |
+        Bump Docker base image from `node:22.12-slim` to `node:22.13-slim` to fix
+        `yarn install` failures caused by transitive dependencies (e.g. `eslint-visitor-keys@5.0.1`)
+        requiring Node `^20.19.0 || ^22.13.0 || >=24`.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 63
+
 - version: 3.49.3
   changelogEntry:
     - summary: |
