@@ -7,7 +7,6 @@
         connection method name via `x-fern-sdk-method-name`, the generated SDK uses that name
         (converted to snake_case) instead of the default `connect`.
       type: feat
-      upgradeIR: true
   createdAt: "2026-02-25"
   irVersion: 65
 
