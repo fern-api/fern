@@ -21,7 +21,7 @@ export function commandGroup(
     subcommands: CommandAdder[]
 ): void {
     cli.command(name, description, (yargs) => {
-        yargs.scriptName(`${yargs.$0} ${name}`);
+        yargs.scriptName(`${(yargs as unknown as { $0: string }).$0} ${name}`);
         for (const add of subcommands) {
             add(yargs);
         }
