@@ -22,6 +22,7 @@ import { RuntimeImpl } from "./Runtime.js";
 import { StreamImpl } from "./Stream.js";
 import { UrlUtilsImpl } from "./UrlUtils.js";
 import { UtilsImpl } from "./Utils.js";
+import { WebhookCryptoImpl } from "./WebhookCrypto.js";
 import { WebsocketImpl } from "./Websocket.js";
 import { ZurgImpl } from "./Zurg.js";
 
@@ -132,6 +133,10 @@ export class CoreUtilitiesManager {
                 generateEndpointMetadata: this.generateEndpointMetadata
             }),
             logging: new LoggingImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            webhookCrypto: new WebhookCryptoImpl({
                 getReferenceToExport,
                 generateEndpointMetadata: this.generateEndpointMetadata
             })

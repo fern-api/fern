@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.50.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification helpers to generated SDKs. Define signature
+        verification via the `x-fern-webhook-signature` OpenAPI extension on individual webhooks
+        or as a document-level default, and the generator produces a `WebhooksHelper` class for
+        the most common config plus named helpers (e.g. `PaymentNotificationWebhooksHelper`) for
+        each unique per-webhook override. Supports HMAC (SHA-1/256/384/512) and asymmetric
+        (RSA-SHA256, ECDSA-SHA256) verification with configurable encoding, signature prefixes,
+        payload format composition, timestamp-based replay protection, and JWKS key resolution.
+        Includes unit tests for the underlying crypto primitives.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
 - version: 3.49.3
   changelogEntry:
     - summary: |
