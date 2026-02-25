@@ -45,7 +45,7 @@ export class WorkspaceBuilder {
             lang,
             version: imageRef.tag,
             sourceLocation,
-            output: schemas.resolveOutput(output)
+            output: schemas.resolveOutputObjectSchema(output)
         };
 
         const workspace: Workspace = {
