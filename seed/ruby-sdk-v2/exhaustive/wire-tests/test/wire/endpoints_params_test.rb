@@ -185,4 +185,25 @@ class EndpointsParamsWireTest < WireMockTestCase
       expected: 1
     )
   end
+
+  def test_endpoints_params_upload_with_path_with_wiremock
+    test_id = "endpoints.params.upload_with_path.0"
+
+    @client.endpoints.params.upload_with_path(
+      param: "upload-path",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.params.upload_with_path.0"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/params/path/upload-path",
+      query_params: nil,
+      expected: 1
+    )
+  end
 end
