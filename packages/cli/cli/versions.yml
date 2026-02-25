@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.89.0
+  changelogEntry:
+    - summary: |
+        Add `DATE_TIME_RFC_2822` primitive type to the IR. OpenAPI specs using
+        `format: date-time-rfc-2822` (e.g. Twilio) now produce typed date-time
+        fields instead of plain strings. Generators that do not yet handle the
+        new variant gracefully fall back to `DATE_TIME` behaviour.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.88.1
   changelogEntry:
     - summary: |
