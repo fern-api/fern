@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.59.5
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of `WIREMOCK_PORT`. The conftest plugin
+        now sets `WIREMOCK_URL` after discovering the dynamically assigned port. Falls
+        back to `http://localhost:8080` if the variable is not set.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
 - version: 4.59.4
   changelogEntry:
     - summary: |

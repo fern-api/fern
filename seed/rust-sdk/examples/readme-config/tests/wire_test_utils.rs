@@ -26,9 +26,11 @@ use std::collections::HashMap;
 use std::process::Command;
 use std::sync::Once;
 
-/// The base URL for WireMock
-pub const WIREMOCK_BASE_URL: &str = "http://localhost:8080";
-const WIREMOCK_ADMIN_URL: &str = "http://localhost:8080/__admin";
+/// Returns the WireMock base URL from the WIREMOCK_URL environment variable.
+pub fn get_wiremock_base_url() -> String {
+    std::env::var("WIREMOCK_URL").unwrap_or_else(|_| "http://localhost:8080".to_string())
+}
+
 const WIREMOCK_COMPOSE_FILE: &str = "wiremock/docker-compose.test.yml";
 
 static START: Once = Once::new();
@@ -36,7 +38,7 @@ static START: Once = Once::new();
 /// Check if WireMock is already running by hitting the health endpoint
 fn is_wiremock_running() -> bool {
     Command::new("curl")
-        .args(["-s", "-f", &format!("{}/__admin/health", WIREMOCK_BASE_URL)])
+        .args(["-s", "-f", &format!("{}/__admin/health", get_wiremock_base_url())])
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::null())
         .status()
@@ -87,7 +89,7 @@ fn start_wiremock() {
 /// Returns Ok(()) on success, or an error if the reset fails.
 pub async fn reset_wiremock_requests() -> Result<(), Box<dyn std::error::Error>> {
     Client::new()
-        .delete(format!("{}/requests", WIREMOCK_ADMIN_URL))
+        .delete(format!("{}/__admin/requests", get_wiremock_base_url()))
         .send()
         .await?;
     Ok(())
@@ -123,7 +125,7 @@ pub async fn verify_request_count(
     }
 
     let response = Client::new()
-        .post(format!("{}/requests/find", WIREMOCK_ADMIN_URL))
+        .post(format!("{}/__admin/requests/find", get_wiremock_base_url()))
         .json(&request_body)
         .send()
         .await?;

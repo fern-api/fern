@@ -127,7 +127,7 @@ export class WireTestGenerator {
         imports.set("http", "net/http");
         imports.set("bytes", "bytes");
         imports.set("encoding/json", "encoding/json");
-        imports.set("os", "os"); // For reading WIREMOCK_PORT env var
+        imports.set("os", "os"); // For reading WIREMOCK_URL env var
 
         // Track test function name counts to generate unique names for duplicates (e.g., Test1, Test2, Test3)
         const testFunctionNameCounts = new Map<string, number>();
@@ -234,10 +234,10 @@ export class WireTestGenerator {
                 return_: [],
                 body: go.codeblock((writer) => {
                     // Build the request body for WireMock's requests/find endpoint
-                    // Use WIREMOCK_PORT env var if set (for parallel test execution), otherwise default to 8080
+                    // Use WIREMOCK_URL env var if set (for orchestration), otherwise default to http://localhost:8080
                     writer.writeNode(
                         go.codeblock(
-                            'wiremockPort := os.Getenv("WIREMOCK_PORT")\n\tif wiremockPort == "" {\n\t\twiremockPort = "8080"\n\t}\n\tWiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"'
+                            'wiremockURL := os.Getenv("WIREMOCK_URL")\n\tif wiremockURL == "" {\n\t\twiremockURL = "http://localhost:8080"\n\t}\n\tWiremockAdminURL := wiremockURL + "/__admin"'
                         )
                     );
                     writer.newLine();
@@ -340,10 +340,10 @@ export class WireTestGenerator {
                     ],
                     return_: [],
                     body: go.codeblock((writer) => {
-                        // Use WIREMOCK_PORT env var if set (for parallel test execution), otherwise default to 8080
+                        // Use WIREMOCK_URL env var if set (for orchestration), otherwise default to http://localhost:8080
                         writer.writeNode(
                             go.codeblock(
-                                'wiremockPort := os.Getenv("WIREMOCK_PORT")\n\tif wiremockPort == "" {\n\t\twiremockPort = "8080"\n\t}\n\tWireMockBaseURL := "http://localhost:" + wiremockPort'
+                                'WireMockBaseURL := os.Getenv("WIREMOCK_URL")\n\tif WireMockBaseURL == "" {\n\t\tWireMockBaseURL = "http://localhost:8080"\n\t}'
                             )
                         );
                         writer.newLine();
