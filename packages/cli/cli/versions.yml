@@ -1,15 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.89.0
-  changelogEntry:
-    - summary: |
-        Add string shorthand for SDK target `output` configuration. Instead of
-        specifying `output: { path: ./sdks/typescript }`, you can now write
-        `output: ./sdks/typescript` directly. The string value is automatically
-        interpreted as the output path.
-      type: feat
-  createdAt: "2026-02-25"
-  irVersion: 65
-
 - version: 3.88.0
   changelogEntry:
     - summary: |
