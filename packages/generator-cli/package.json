@@ -11,17 +11,17 @@
     ".": {
       "development": "./src/api.ts",
       "source": "./src/api.ts",
-      "types": "./lib/api.d.ts",
-      "default": "./lib/api.js"
+      "types": "./dist/api.d.ts",
+      "default": "./dist/api.js"
     }
   },
-  "main": "lib/api.js",
+  "main": "dist/api.js",
   "source": "src/api.ts",
-  "types": "lib/api.d.ts",
+  "types": "dist/api.d.ts",
   "bin": {
-    "generator-cli": "bin/cli"
+    "generator-cli": "dist/cli.js"
   },
-  "files": ["bin", "dist"],
+  "files": ["dist"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
