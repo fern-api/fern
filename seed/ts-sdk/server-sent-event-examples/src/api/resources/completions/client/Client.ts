@@ -118,6 +118,7 @@ export class CompletionsClient {
                     eventShape: {
                         type: "sse",
                         streamTerminator: "[DONE]",
+                        eventDiscriminator: "event",
                     },
                 }),
                 rawResponse: _response.rawResponse,
