@@ -31,10 +31,11 @@ export const CompatibleIrVersionsRule: Rule = {
         return {
             generatorsYml: {
                 generatorInvocation: async ({ invocation, cliVersion }) => {
-                    const fdr = createFdrGeneratorsSdkService({ token: undefined });
-                    if (cliVersion == null) {
+                    if (cliVersion == null || cliVersion === "0.0.0") {
                         return [];
                     }
+
+                    const fdr = createFdrGeneratorsSdkService({ token: undefined });
 
                     // Pull the CLI release to get the IR version
                     // biome-ignore lint/suspicious/noConsole: intentional debug logging for FDR registry diagnostics

@@ -7,15 +7,24 @@
     "directory": "packages/generator-cli"
   },
   "type": "commonjs",
-  "main": "dist/api.js",
-  "source": "src/index.ts",
-  "types": "dist/api.d.ts",
+  "exports": {
+    ".": {
+      "development": "./src/api.ts",
+      "source": "./src/api.ts",
+      "types": "./lib/api.d.ts",
+      "default": "./lib/api.js"
+    }
+  },
+  "main": "lib/api.js",
+  "source": "src/api.ts",
+  "types": "lib/api.d.ts",
   "bin": {
     "generator-cli": "bin/cli"
   },
   "files": ["bin", "dist"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
+    "compile": "tsc --build",
     "depcheck": "knip --config ../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
@@ -25,9 +34,10 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/github": "workspace:*",
-    "@octokit/rest": "catalog:",
-    "@types/jest": "catalog:",
-    "@types/node": "catalog:",
+    "@fern-api/replay": "^0.6.0",
+    "@octokit/rest": "^20.1.2",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
     "es-toolkit": "catalog:",
     "esbuild": "catalog:",

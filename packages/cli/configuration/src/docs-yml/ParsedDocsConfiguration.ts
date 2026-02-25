@@ -324,6 +324,8 @@ export declare namespace DocsNavigationItem {
         icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | undefined;
+        collapsible: boolean | undefined;
+        collapsedByDefault: boolean | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;

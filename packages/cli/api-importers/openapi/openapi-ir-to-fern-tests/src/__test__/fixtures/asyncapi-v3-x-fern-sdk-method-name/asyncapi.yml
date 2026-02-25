@@ -15,6 +15,7 @@ channels:
   chat:
     address: /v1/ws/chat
     description: Chat channel for testing custom method names
+    x-fern-sdk-method-name: createChatConnection
     messages:
       userMessage:
         $ref: "#/components/messages/UserMessage"

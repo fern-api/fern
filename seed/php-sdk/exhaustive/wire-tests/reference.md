@@ -1816,6 +1816,63 @@ $client->endpoints->params->modifyWithPath(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;uploadWithPath($param) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->uploadWithPath(
+    'upload-path',
+    ,
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$param:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>$client-&gt;endpoints-&gt;primitive-&gt;getAndReturnString($request) -> string</code></summary>
 <dl>
