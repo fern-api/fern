@@ -90,8 +90,7 @@ export class DocsConfigConverter {
 
                 // Converted fields (navigation requires discriminated union conversion)
                 navigation: docs.navigation != null ? this.convertNavigation(docs.navigation) : undefined,
-                "landing-page":
-                    docs["landing-page"] != null ? this.convertPage(docs["landing-page"]) : undefined,
+                "landing-page": docs["landing-page"] != null ? this.convertPage(docs["landing-page"]) : undefined,
                 versions: docs.versions != null ? this.convertVersions(docs.versions) : undefined,
                 products: docs.products != null ? this.convertProducts(docs.products) : undefined,
 
