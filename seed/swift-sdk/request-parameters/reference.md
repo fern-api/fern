@@ -150,7 +150,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUsernameOptional</a>(request: Nullable<CreateUsernameBodyOptionalProperties>?, requestOptions: RequestOptions?) -> Void</code></summary>
+<details><summary><code>client.user.<a href="/Sources/Resources/User/UserClient.swift">createUsernameOptional</a>(request: Nullable&lt;CreateUsernameBodyOptionalProperties&gt;?, requestOptions: RequestOptions?) -> Void</code></summary>
 <dl>
 <dd>
 
