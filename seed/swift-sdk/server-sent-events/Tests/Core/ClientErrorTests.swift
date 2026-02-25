@@ -20,7 +20,7 @@ import Testing
 
         do {
             _ = try await client.completions.stream(
-                request: .init(query: "query"),
+                request: .init(query: "foo"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -53,7 +53,7 @@ import Testing
 
         do {
             _ = try await client.completions.stream(
-                request: .init(query: "query"),
+                request: .init(query: "foo"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -86,7 +86,7 @@ import Testing
 
         do {
             _ = try await client.completions.stream(
-                request: .init(query: "query"),
+                request: .init(query: "foo"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -121,7 +121,7 @@ import Testing
 
         do {
             _ = try await client.completions.stream(
-                request: .init(query: "query"),
+                request: .init(query: "foo"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -154,7 +154,7 @@ import Testing
 
         do {
             _ = try await client.completions.stream(
-                request: .init(query: "query"),
+                request: .init(query: "foo"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -189,7 +189,7 @@ import Testing
 
         do {
             _ = try await client.completions.stream(
-                request: .init(query: "query"),
+                request: .init(query: "foo"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
@@ -222,7 +222,7 @@ import Testing
 
         do {
             _ = try await client.completions.stream(
-                request: .init(query: "query"),
+                request: .init(query: "foo"),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
 
