@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.2
+  changelogEntry:
+    - summary: |
+        Fix `fern check` validation for SSE streaming endpoints with protocol-level discrimination.
+        Examples for SSE endpoints using `context: protocol` discriminated unions were rejected with
+        "Missing discriminant property" because the validator looked for the discriminant inside the
+        `data` payload instead of recognizing it at the SSE envelope level (`event:` field).
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+
 - version: 3.88.1
   changelogEntry:
     - summary: |
