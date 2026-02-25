@@ -36,7 +36,7 @@ describe("fern sdk generate", () => {
                 RelativeFilePath.of(`sdks/${target}`)
             );
             expect(await doesPathExist(outputPath)).toBe(true);
-        }, 120_000);
+        }, 60_000);
     });
 
     describe("target validation", () => {
