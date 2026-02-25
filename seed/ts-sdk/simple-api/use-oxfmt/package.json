@@ -20,7 +20,8 @@
         "fs": false,
         "os": false,
         "path": false,
-        "stream": false
+        "stream": false,
+        "crypto": false
     },
     "types": "./dist/cjs/index.d.ts",
     "exports": {
