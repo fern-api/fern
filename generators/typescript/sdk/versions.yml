@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.50.1
+  changelogEntry:
+    - summary: |
+        Support custom WebSocket connection method names via the `connectMethodName` IR field
+        (sourced from `x-fern-sdk-method-name` on AsyncAPI channels). When specified, the
+        generated client uses the custom name instead of the default `connect`.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.50.0
   changelogEntry:
     - summary: |
