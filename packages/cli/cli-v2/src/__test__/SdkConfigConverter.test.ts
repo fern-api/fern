@@ -416,7 +416,6 @@ sdks:
         });
 
         it("string shorthand output is equivalent to object with path", async () => {
-            // String shorthand
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -432,7 +431,6 @@ sdks:
             const fernYml1 = await loadFernYml({ cwd: testDir });
             const result1 = converter.convert({ fernYml: fernYml1 });
 
-            // Object form
             await writeFile(
                 join(testDir, "fern.yml"),
                 `

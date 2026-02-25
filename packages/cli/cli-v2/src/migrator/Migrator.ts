@@ -313,19 +313,20 @@ export class Migrator {
      * Simplifies SDK target output fields for YAML serialization.
      * Converts `output: { path: "./sdks/typescript" }` to `output: "./sdks/typescript"`.
      */
-    private simplifySdks(sdks: schemas.SdksSchema): Record<string, unknown> {
-        const simplified: Record<string, unknown> = { ...sdks };
-        const targets: Record<string, unknown> = {};
+    private simplifySdks(sdks: schemas.SdksSchema): schemas.SdksSchema {
+        const simplified: schemas.SdksSchema = { ...sdks };
+        const targets: Record<string, schemas.SdkTargetSchema> = {};
         for (const [name, target] of Object.entries(sdks.targets)) {
             const output = target.output;
             if (typeof output === "string") {
-                // Already simplified.
                 targets[name] = target;
-            } else if (output.git == null && output.path != null) {
-                targets[name] = { ...target, output: output.path };
-            } else {
-                targets[name] = target;
+                continue;
             }
+            if (output.git == null && output.path != null) {
+                targets[name] = { ...target, output: output.path };
+                continue;
+            }
+            targets[name] = target;
         }
         simplified.targets = targets;
         return simplified;
