@@ -14,6 +14,7 @@ import { type Duplex } from "stream";
 import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
+import { type BunServer, createBunServer } from "./createBunServer.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
 import { getPreviewDocsDefinition } from "./previewDocs.js";
@@ -450,10 +451,7 @@ export async function runAppPreviewServer({
         context.logger.info(chalk.dim(`Debug log: ${debugLogPath}`));
     }
 
-    // Detect if running under Bun (bun's http.createServer does not properly
-    // emit the 'upgrade' event that the ws package relies on).
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    const isBun = typeof globalThis !== "undefined" && "Bun" in globalThis;
+    let bunServer: BunServer | undefined;
 
     // Set up backend server first (before Next.js) so it's ready to serve requests
     const app = express();
@@ -484,7 +482,7 @@ export async function runAppPreviewServer({
         }
     >();
 
-    function sendData(data: unknown) {
+    let sendData: (data: unknown) => void = (data: unknown) => {
         const message = JSON.stringify(data);
         const deadConnections: WebSocket[] = [];
 
@@ -508,7 +506,7 @@ export async function runAppPreviewServer({
                 connections.delete(conn);
             }
         });
-    }
+    };
 
     wss.on("connection", function connection(ws, req) {
         const connectionId = `${req.socket.remoteAddress}:${req.socket.remotePort}-${Date.now()}`;
@@ -572,24 +570,6 @@ export async function runAppPreviewServer({
             context.logger.debug(`Failed to send connection confirmation: ${error}`);
         }
     });
-
-    // Bun compatibility: Bun's http.createServer does not emit the 'upgrade'
-    // event for WebSocket connections (see https://github.com/oven-sh/bun/issues/5951).
-    // When running under Bun, WebSocket upgrade requests fall through to Express
-    // as regular HTTP requests.  We intercept them here before any other middleware
-    // and manually perform the upgrade via ws's handleUpgrade.
-    if (isBun) {
-        app.use((req, res, next) => {
-            if (req.headers.upgrade?.toLowerCase() === "websocket") {
-                // Prevent Express from sending a response — we are taking over the socket.
-                wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
-                    wss.emit("connection", ws, req);
-                });
-                return;
-            }
-            next();
-        });
-    }
 
     app.use(cors());
 
@@ -713,21 +693,21 @@ export async function runAppPreviewServer({
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
 
+    function buildDocsLoadResponse(): DocsV2Read.LoadDocsForUrlResponse {
+        // Fall back to empty definition if the initial load failed
+        const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
+        return {
+            baseUrl: { domain: instance.host, basePath: instance.pathname },
+            definition,
+            lightModeEnabled: definition.config.colorsV3?.type !== "dark",
+            orgId: FernNavigation.OrgId(initialProject.config.organization)
+        };
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
-            // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
-            const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
-            const response: DocsV2Read.LoadDocsForUrlResponse = {
-                baseUrl: {
-                    domain: instance.host,
-                    basePath: instance.pathname
-                },
-                definition,
-                lightModeEnabled: definition.config.colorsV3?.type !== "dark",
-                orgId: FernNavigation.OrgId(initialProject.config.organization)
-            };
-            res.send(response);
+            res.send(buildDocsLoadResponse());
         } catch (error) {
             context.logger.error("Stack trace:", (error as Error).stack ?? "");
             context.logger.error("Error loading docs", (error as Error).message);
@@ -739,13 +719,30 @@ export async function runAppPreviewServer({
         return res.sendFile(`/${req.params[0]}`);
     });
 
-    // Start backend server first and wait for it to be ready
-    await new Promise<void>((resolve) => {
-        httpServer.listen(backendPort, () => {
-            context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
-            resolve();
+    // Start backend server first and wait for it to be ready.
+    //
+    // In Bun, http.createServer does not emit the 'upgrade' event that
+    // the ws package relies on (re: oven-sh/bun#5951).
+    //
+    // For now, use Bun.serve() with its native WebSocket support instead.
+    if (globalThis.Bun != null) {
+        const bunHandle = createBunServer({
+            bun: globalThis.Bun,
+            port: backendPort,
+            debugLogger,
+            getDocsLoadResponse: buildDocsLoadResponse
         });
-    });
+        sendData = bunHandle.sendData;
+        bunServer = bunHandle;
+        context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+    } else {
+        await new Promise<void>((resolve) => {
+            httpServer.listen(backendPort, () => {
+                context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));
+                resolve();
+            });
+        });
+    }
 
     // Now start Next.js after backend is ready
     const env = {
@@ -961,7 +958,11 @@ export async function runAppPreviewServer({
             }
         }
         connections.clear();
-        httpServer.close();
+        if (bunServer != null) {
+            bunServer.stop();
+        } else {
+            httpServer.close();
+        }
     };
 
     // handle termination signals
