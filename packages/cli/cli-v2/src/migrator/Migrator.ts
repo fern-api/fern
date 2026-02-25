@@ -317,8 +317,12 @@ export class Migrator {
         const simplified: Record<string, unknown> = { ...sdks };
         const targets: Record<string, unknown> = {};
         for (const [name, target] of Object.entries(sdks.targets)) {
-            if (target.output.git == null && target.output.path != null) {
-                targets[name] = { ...target, output: target.output.path };
+            const output = target.output;
+            if (typeof output === "string") {
+                // Already simplified.
+                targets[name] = target;
+            } else if (output.git == null && output.path != null) {
+                targets[name] = { ...target, output: output.path };
             } else {
                 targets[name] = target;
             }

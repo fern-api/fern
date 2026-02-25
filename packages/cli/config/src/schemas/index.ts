@@ -30,7 +30,7 @@ export { AuthorSchema, MetadataSchema } from "./MetadataSchema.js";
 export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlEnvironmentSchema.js";
 export { NpmPublishSchema } from "./NpmPublishSchema.js";
 export { NugetPublishSchema } from "./NugetPublishSchema.js";
-export { OutputSchema } from "./OutputSchema.js";
+export { OutputObjectSchema, OutputSchema, resolveOutput } from "./OutputSchema.js";
 export { PublishSchema } from "./PublishSchema.js";
 export { PypiMetadataSchema, PypiPublishSchema } from "./PypiPublishSchema.js";
 export { ReadmeSchema } from "./ReadmeSchema.js";

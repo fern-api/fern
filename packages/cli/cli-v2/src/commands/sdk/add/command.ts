@@ -310,6 +310,9 @@ export class AddCommand {
     }
 
     private buildOutputForYaml(output: schemas.OutputSchema): string | Record<string, unknown> {
+        if (typeof output === "string") {
+            return output;
+        }
         if (output.git != null) {
             const git = output.git;
             if (schemas.isGitOutputGitHubRepository(git)) {
