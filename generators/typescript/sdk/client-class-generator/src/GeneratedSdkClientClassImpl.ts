@@ -810,7 +810,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
             const method: MethodDeclarationStructure = {
                 kind: StructureKind.Method,
-                name: "connect",
+                name: this.generatedWebsocketImplementation.channel.connectMethodName ?? "connect",
                 isAsync: true,
                 parameters: signature.parameters,
                 returnType: getTextOfTsNode(
