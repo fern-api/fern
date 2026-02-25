@@ -3,6 +3,7 @@ export * from "./APIChangelog.js";
 export * from "./computeSemanticVersion.js";
 export * from "./FernFile.js";
 export * from "./FernWorkspace.js";
+export { getOriginGitCommit } from "./getOriginGitCommit.js";
 export * from "./openapi/index.js";
 export * from "./Source.js";
 export * from "./Spec.js";
