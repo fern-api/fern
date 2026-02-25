@@ -233,9 +233,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
         // OpenAPI 3.1 uses contentMediaType: "application/octet-stream" to indicate binary file content,
         // which is semantically equivalent to format: "binary" in OpenAPI 3.0.
         // Normalize this so downstream isFile() checks work correctly for multipart file uploads.
-        const format =
-            schema.format ??
-            (schema.contentMediaType === "application/octet-stream" ? "binary" : undefined);
+        const format = schema.format ?? (schema.contentMediaType === "application/octet-stream" ? "binary" : undefined);
         return {
             minLength: schema.minLength,
             maxLength: schema.maxLength,
