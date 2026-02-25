@@ -39,6 +39,13 @@ public final class Logger {
         return new Logger(config.level(), config.logger(), config.silent());
     }
 
+    /**
+     * Creates a Logger from an {@code Optional<LogConfig>}. If empty, returns the default silent logger.
+     */
+    public static Logger from(java.util.Optional<LogConfig> config) {
+        return config.map(Logger::from).orElse(DEFAULT);
+    }
+
     private boolean shouldLog(LogLevel messageLevel) {
         return !silent && level.getValue() <= messageLevel.getValue();
     }

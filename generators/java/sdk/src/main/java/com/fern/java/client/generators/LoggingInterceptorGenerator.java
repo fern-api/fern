@@ -26,7 +26,9 @@ import java.nio.charset.StandardCharsets;
 public final class LoggingInterceptorGenerator extends AbstractFileGenerator {
 
     public LoggingInterceptorGenerator(ClientGeneratorContext clientGeneratorContext) {
-        super(clientGeneratorContext.getPoetClassNameFactory().getLoggingInterceptorClassName(), clientGeneratorContext);
+        super(
+                clientGeneratorContext.getPoetClassNameFactory().getLoggingInterceptorClassName(),
+                clientGeneratorContext);
     }
 
     @Override

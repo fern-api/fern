@@ -607,10 +607,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         clientBuilder.addMethod(MethodSpec.methodBuilder("logging")
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("Configure logging for the SDK. Silent by default — no log output unless explicitly configured.")
-                .addParameter(
-                        clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName(),
-                        "logging")
+                .addJavadoc(
+                        "Configure logging for the SDK. Silent by default — no log output unless explicitly configured.")
+                .addParameter(clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName(), "logging")
                 .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                 .addStatement("this.logging = $T.of(logging)", Optional.class)
                 .addStatement(isExtensible ? "return self()" : "return this")

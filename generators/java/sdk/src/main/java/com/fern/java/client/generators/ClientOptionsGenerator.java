@@ -744,11 +744,11 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         // Add logging builder method
         builder.addMethod(MethodSpec.methodBuilder(LOGGING_FIELD_NAME)
                 .addModifiers(Modifier.PUBLIC)
-                .addJavadoc("Configure logging for the SDK. Silent by default — no log output unless explicitly configured.\n")
+                .addJavadoc(
+                        "Configure logging for the SDK. Silent by default — no log output unless explicitly configured.\n")
                 .returns(builderClassName)
                 .addParameter(
-                        clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName(),
-                        LOGGING_FIELD_NAME)
+                        clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName(), LOGGING_FIELD_NAME)
                 .addStatement("this.$L = $T.of($L)", LOGGING_FIELD_NAME, Optional.class, LOGGING_FIELD_NAME)
                 .addStatement("return this")
                 .build());
