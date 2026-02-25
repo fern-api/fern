@@ -32,6 +32,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
     const terminalWidth = process.stdout.columns ?? 80;
     const cli: Argv<GlobalArgs> = yargs(argv ?? hideBin(process.argv))
         .scriptName("fern")
+        .usage("Instant Docs and SDKs for your API.")
         .version(Version)
         .wrap(Math.min(120, terminalWidth))
         .option("log-level", {

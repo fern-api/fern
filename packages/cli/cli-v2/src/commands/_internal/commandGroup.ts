@@ -21,11 +21,12 @@ export function commandGroup(
     subcommands: CommandAdder[]
 ): void {
     cli.command(name, description, (yargs) => {
+        yargs.scriptName(`${yargs.$0} ${name}`);
         for (const add of subcommands) {
             add(yargs);
         }
         return yargs
-            .usage(`$0 ${name}\n\n${description}`)
+            .usage(`$0\n\n${description}`)
             .demandCommand(1)
             .fail((msg, err, y) => {
                 if (err != null) {
