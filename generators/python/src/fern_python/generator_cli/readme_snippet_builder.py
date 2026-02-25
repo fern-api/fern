@@ -454,7 +454,11 @@ for page in pager.iter_pages():
         )
         client_instantiation_str = self._expression_to_snippet_str(AST.Expression(AST.CodeWriter(_client_writer)))
         initial_import = "import asyncio\n\n" if is_async else "import threading\n\n"
-        connect_method_name = snake_case(websocket_channel.connect_method_name) if websocket_channel.connect_method_name is not None else "connect"
+        connect_method_name = (
+            snake_case(websocket_channel.connect_method_name)
+            if websocket_channel.connect_method_name is not None
+            else "connect"
+        )
         snippet = f"""
 # Connect to the websocket ({"Async" if is_async else "Sync"})
 {initial_import}{client_instantiation_str}
