@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add Replay step to post-generation pipeline. Introduces the PostGenerationPipeline
+        with ReplayStep that runs after SDK generation for self-hosted GitHub repos. Replay
+        preserves user customizations across SDK regenerations by detecting patches via
+        `.fern/replay.lock`, applying them with 3-way merge, and creating PRs with conflict
+        resolution guidance when needed.
+      type: feat
+  createdAt: "2026-02-25"
+  version: 0.6.0
+
+- changelogEntry:
+    - summary: |
         Regenerate generator-cli types with latest version of the TypeScript SDK generator.
       type: internal
   createdAt: "2026-01-29"
