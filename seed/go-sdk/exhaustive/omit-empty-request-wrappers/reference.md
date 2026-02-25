@@ -1451,6 +1451,55 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithUnknownField(request) -> *types.ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithUnknownField{
+        Unknown: map[string]any{
+            "$ref": "https://example.com/schema",
+        },
+    }
+client.Endpoints.Object.GetAndReturnWithUnknownField(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
