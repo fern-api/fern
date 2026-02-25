@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.noReqBody.postWithNoRequestBody()
+    _ = try await client.noReqBody.getWithNoRequestBody()
 }
 
 try await main()

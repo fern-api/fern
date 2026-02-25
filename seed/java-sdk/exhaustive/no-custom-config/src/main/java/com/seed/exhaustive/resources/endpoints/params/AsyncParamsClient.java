@@ -11,6 +11,8 @@ import com.seed.exhaustive.resources.endpoints.params.requests.GetWithMultipleQu
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.GetWithQuery;
 import com.seed.exhaustive.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithRequiredField;
+import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncParamsClient {
@@ -165,5 +167,35 @@ public class AsyncParamsClient {
         return this.rawClient
                 .modifyWithInlinePath(param, request, requestOptions)
                 .thenApply(response -> response.body());
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param, InputStream request) {
+        return this.rawClient.uploadWithPath(param, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public CompletableFuture<ObjectWithRequiredField> uploadWithPath(
+            String param, InputStream request, RequestOptions requestOptions) {
+        return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public CompletableFuture<ObjectWithRequiredField> uploadWithPath(String param, byte[] request) {
+        return this.rawClient.uploadWithPath(param, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * POST bytes with path param returning object
+     */
+    public CompletableFuture<ObjectWithRequiredField> uploadWithPath(
+            String param, byte[] request, RequestOptions requestOptions) {
+        return this.rawClient.uploadWithPath(param, request, requestOptions).thenApply(response -> response.body());
     }
 }

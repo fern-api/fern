@@ -721,6 +721,17 @@ export class WireTestGenerator {
             basePath = basePath.replace(`{${paramName}}`, paramValue.equalTo);
         });
 
+        // If there are still unresolved path parameter placeholders (e.g., when the example
+        // doesn't provide path parameter values), substitute them with the same default values
+        // that associateByWireValueOrDefault synthesizes (i.e., the parameter name itself).
+        // This ensures the VerifyRequestCount URL matches what the client actually sends.
+        for (const part of endpoint.fullPath.parts) {
+            const paramName = part.pathParameter;
+            if (paramName && basePath.includes(`{${paramName}}`)) {
+                basePath = basePath.replace(`{${paramName}}`, `%3C${paramName}%3E`);
+            }
+        }
+
         return basePath;
     }
 

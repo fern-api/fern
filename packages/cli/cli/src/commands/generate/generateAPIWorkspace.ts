@@ -36,7 +36,8 @@ export async function generateWorkspace({
     inspect,
     lfsOverride,
     fernignorePath,
-    dynamicIrOnly
+    dynamicIrOnly,
+    noReplay
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -56,6 +57,7 @@ export async function generateWorkspace({
     lfsOverride: string | undefined;
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
+    noReplay: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -82,7 +84,7 @@ export async function generateWorkspace({
         context
     );
 
-    const { ai } = workspace.generatorsConfiguration;
+    const { ai, replay } = workspace.generatorsConfiguration;
 
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {
@@ -141,7 +143,9 @@ export async function generateWorkspace({
                     runner,
                     absolutePathToPreview,
                     inspect,
-                    ai
+                    ai,
+                    replay,
+                    noReplay
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
