@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Use pnpm publish to properly resolve workspace directives when publishing to npm.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.2
+
+- changelogEntry:
+    - summary: |
         Bump @octokit/rest to ^22.0.1 to pull in @octokit/request@10.0.7, which fixes CVE-2025-25290 (ReDoS vulnerability).
       type: fix
   createdAt: "2026-02-25"
