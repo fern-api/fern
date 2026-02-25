@@ -1,8 +1,7 @@
 import type { Argv } from "yargs";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
-import { setParentPath } from "./getParentPath.js";
 
-type CommandAdder = (cli: Argv<GlobalArgs>) => void;
+type CommandAdder = (cli: Argv<GlobalArgs>, parentPath?: string) => void;
 
 /**
  * Registers a command group with subcommands.
@@ -22,11 +21,9 @@ export function commandGroup(
     subcommands: CommandAdder[]
 ): void {
     cli.command(name, description, (yargs) => {
-        setParentPath(name);
         for (const add of subcommands) {
-            add(yargs);
+            add(yargs, name);
         }
-        setParentPath(undefined);
         return yargs
             .usage(`$0 ${name}\n\n${description}`)
             .demandCommand(1)

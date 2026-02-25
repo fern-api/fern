@@ -21,7 +21,7 @@ export class EnableCommand {
     }
 }
 
-export function addEnableCommand(cli: Argv<GlobalArgs>): void {
+export function addEnableCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new EnableCommand();
-    command(cli, "enable", "Enable telemetry", (context, args) => cmd.handle(context, args));
+    command(cli, "enable", "Enable telemetry", (context, args) => cmd.handle(context, args), undefined, parentPath);
 }
