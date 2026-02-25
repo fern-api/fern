@@ -962,7 +962,7 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
+        specifier: ^62.3.0
         version: 62.6.0
       '@types/lodash-es':
         specifier: 'catalog:'
@@ -995,7 +995,7 @@ importers:
         specifier: ^64.0.0
         version: 64.0.0
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
+        specifier: ^62.3.0
         version: 62.6.0
       domhandler:
         specifier: 'catalog:'
@@ -1105,7 +1105,7 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
+        specifier: ^62.3.0
         version: 62.6.0
       '@types/node':
         specifier: 'catalog:'
@@ -1153,7 +1153,7 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
+        specifier: ^62.3.0
         version: 62.6.0
       '@types/node':
         specifier: 'catalog:'
@@ -1593,7 +1593,7 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
+        specifier: ^62.1.0
         version: 62.6.0
       '@types/lodash-es':
         specifier: 'catalog:'
@@ -1699,7 +1699,7 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
+        specifier: ^62.1.0
         version: 62.6.0
       '@types/node':
         specifier: 'catalog:'
@@ -1753,7 +1753,7 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.6.0
+        specifier: ^62.1.0
         version: 62.6.0
       '@types/lodash-es':
         specifier: 'catalog:'
