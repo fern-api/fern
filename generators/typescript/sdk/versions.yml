@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.50.2
+  changelogEntry:
+    - summary: |
+        Upgrade Docker base image from Node.js 22 to Node.js 24 LTS.
+      type: chore
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.50.1
   changelogEntry:
     - summary: |
