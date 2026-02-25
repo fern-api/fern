@@ -5,7 +5,7 @@ def test_completions_stream() -> None:
     """Test stream endpoint with WireMock"""
     test_id = "completions.stream.0"
     client = get_client(test_id)
-    for _ in client.completions.stream(query="query"):
+    for _ in client.completions.stream(query="foo"):
         pass
     verify_request_count(test_id, "POST", "/stream", None, 1)
 
