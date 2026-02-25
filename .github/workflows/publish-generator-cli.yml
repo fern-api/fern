@@ -13,6 +13,8 @@ env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
   TURBO_REMOTE_CACHE_TIMEOUT: 60
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
   FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
