@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.4
+  changelogEntry:
+    - summary: |
+        Fix anyOf/oneOf response examples always using the first variant's values.
+        When an OpenAPI spec defines multiple anyOf variants with discriminating enum
+        fields (e.g., status: "waiting", "progress", "success"), the example converter
+        would short-circuit on the first valid variant even when the user's explicit
+        example matched a different variant. Each named example now correctly preserves
+        its distinct field values.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
 - version: 3.88.3
   changelogEntry:
     - summary: |

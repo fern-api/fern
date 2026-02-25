@@ -1177,17 +1177,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 };
             }
 
-            // If valid and non-coerced (but didn't use provided example), return immediately
-            if (result.isValid && !result.coerced) {
-                return {
-                    isValid: true,
-                    coerced: false,
-                    usedProvidedExample: result.usedProvidedExample,
-                    validExample: result.validExample,
-                    errors: []
-                };
-            }
-
             results.push(result);
 
             // Track first valid result that used provided example
