@@ -2765,6 +2765,84 @@
                   "_postman_previewlanguage": "json"
                 }
               ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Upload With Path",
+              "request": {
+                "description": "POST bytes with path param returning object",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "upload-path"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "POST bytes with path param returning object",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "upload-path"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"uploaded\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },

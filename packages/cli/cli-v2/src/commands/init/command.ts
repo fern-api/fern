@@ -4,6 +4,7 @@ import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import type { Argv } from "yargs";
+import { FERN_YML_FILENAME } from "../../config/fern-yml/constants";
 import { FernYmlBuilder } from "../../config/fern-yml/FernYmlBuilder";
 import type { Context } from "../../context/Context";
 import type { GlobalArgs } from "../../context/GlobalArgs";
@@ -21,7 +22,6 @@ export declare namespace InitCommand {
     }
 }
 
-const FERN_YML_FILENAME = "fern.yml";
 const SPECS_DIR = "openapi";
 
 export class InitCommand {

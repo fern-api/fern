@@ -249,6 +249,7 @@ client.Nested.Api.GetSomething(
 ```go
 client.Service.Post(
         context.TODO(),
+        "<endpointParam>",
     )
 }
 ```

@@ -2270,6 +2270,88 @@ try await main()
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.params.<a href="/Sources/Resources/Endpoints/Params/ParamsClient.swift">uploadWithPath</a>(param: String, request: Data, requestOptions: RequestOptions?) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Exhaustive
+
+private func main() async throws {
+    let client = ExhaustiveClient(token: "<token>")
+
+    _ = try await client.endpoints.params.uploadWithPath(
+        param: "upload-path",
+        request: Data("data".utf8)
+    )
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Data` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>client.endpoints.primitive.<a href="/Sources/Resources/Endpoints/Primitive/PrimitiveClient.swift">getAndReturnString</a>(request: String, requestOptions: RequestOptions?) -> String</code></summary>
 <dl>

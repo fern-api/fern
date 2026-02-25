@@ -29,6 +29,8 @@ export const SectionConfigurationSchema = z.object({
     hidden: z.boolean().optional(),
     skipSlug: z.boolean().optional(),
     collapsed: z.boolean().optional(),
+    collapsible: z.boolean().optional(),
+    collapsedByDefault: z.boolean().optional(),
     flattened: z.boolean().optional(),
     path: z.string().optional(),
     availability: AvailabilitySchema.optional(),

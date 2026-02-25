@@ -1,5 +1,7 @@
 import type { schemas } from "@fern-api/config";
 
+import { isGitUrl } from "../utils/gitUrl.js";
+
 /**
  * Parses the --output argument into an OutputSchema.
  *
@@ -29,13 +31,4 @@ export function parseOutputArg(outputArg: string): schemas.OutputSchema {
     }
 
     return { path: outputArg };
-}
-
-function isGitUrl(value: string): boolean {
-    return (
-        value.endsWith(".git") ||
-        value.startsWith("https://github.com/") ||
-        value.startsWith("https://gitlab.com/") ||
-        value.startsWith("git@")
-    );
 }

@@ -4,12 +4,11 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import type { Logger } from "@fern-api/logger";
 import { readdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import { FERN_YML_FILENAME } from "../config/fern-yml/constants.js";
 import { convertMultiApi, convertSingleApi } from "./converters/index.js";
 import { FernConfigJsonMigrator } from "./fern-config-json/index.js";
 import { GeneratorsYmlMigrator } from "./generators-yml/index.js";
 import type { MigratorResult, MigratorWarning } from "./types/index.js";
-
-const FERN_YML_FILENAME = "fern.yml";
 
 export interface MigratorConfig {
     cwd: AbsoluteFilePath;
