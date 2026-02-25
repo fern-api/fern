@@ -222,9 +222,6 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitUnknown(String unknownType) {
-            if ("DATE_TIME_RFC_2822".equals(unknownType)) {
-                return ClassName.get(OffsetDateTime.class);
-            }
             throw new RuntimeException("Encountered unknown primitive type: " + unknownType);
         }
     }

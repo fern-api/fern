@@ -62,7 +62,6 @@ import com.fern.java.client.generators.auth.RoutingAuthProviderGenerator;
 import com.fern.java.client.generators.websocket.AsyncWebSocketChannelWriter;
 import com.fern.java.client.generators.websocket.SyncWebSocketChannelWriter;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
-import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
 import com.fern.java.generators.EnumGenerator;
 import com.fern.java.generators.NullableGenerator;
 import com.fern.java.generators.NullableNonemptyFilterGenerator;
@@ -368,10 +367,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
-
-        Rfc2822DateTimeDeserializerGenerator rfc2822DateTimeDeserializerGenerator =
-                new Rfc2822DateTimeDeserializerGenerator(context);
-        this.addGeneratedFile(rfc2822DateTimeDeserializerGenerator.generateFile());
 
         StreamGenerator streamGenerator = new StreamGenerator(context);
         this.addGeneratedFile(streamGenerator.generateFile());

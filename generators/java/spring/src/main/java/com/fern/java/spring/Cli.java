@@ -13,7 +13,6 @@ import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
 import com.fern.java.generators.AuthGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
-import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -106,10 +105,6 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
-
-        Rfc2822DateTimeDeserializerGenerator rfc2822DateTimeDeserializerGenerator =
-                new Rfc2822DateTimeDeserializerGenerator(context);
-        this.addGeneratedFile(rfc2822DateTimeDeserializerGenerator.generateFile());
 
         Optional<GeneratedJavaFile> errorBodyFile = getErrorBody(context);
         errorBodyFile.ifPresent(this::addGeneratedFile);

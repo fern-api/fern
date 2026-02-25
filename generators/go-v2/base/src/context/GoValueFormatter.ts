@@ -116,18 +116,6 @@ export class GoValueFormatter {
                     break;
                 case FernIr.PrimitiveTypeV1.String:
                     break;
-                case FernIr.PrimitiveTypeV1.DateTimeRfc2822:
-                    prefix = go.codeblock((writer) => {
-                        writer.writeNode(
-                            go.typeReference({
-                                name: "Sprintf",
-                                importPath: "fmt"
-                            })
-                        );
-                        writer.write('("%v", ');
-                    });
-                    suffix = go.codeblock(")");
-                    break;
                 default:
                     assertNever(primitive);
             }

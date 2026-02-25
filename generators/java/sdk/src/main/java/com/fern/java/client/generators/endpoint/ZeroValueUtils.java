@@ -111,9 +111,6 @@ public class ZeroValueUtils {
 
         @Override
         public CodeBlock visitUnknown(String s) {
-            if ("DATE_TIME_RFC_2822".equals(s)) {
-                return CodeBlock.of("!$L.isEmpty()", variableName);
-            }
             throw new IllegalArgumentException("Received unknown primitive type: " + s);
         }
     }

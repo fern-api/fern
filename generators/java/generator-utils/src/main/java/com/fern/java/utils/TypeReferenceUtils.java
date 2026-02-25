@@ -293,9 +293,6 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitUnknown(String unknownType) {
-            if ("DATE_TIME_RFC_2822".equals(unknownType)) {
-                return "DateTimeRfc2822";
-            }
             throw new RuntimeException("Unknown primitive type " + unknownType);
         }
     }

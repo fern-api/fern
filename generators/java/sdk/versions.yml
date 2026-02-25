@@ -1,16 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.39.0
-  changelogEntry:
-    - summary: |
-        Add `DATE_TIME_RFC_2822` primitive type support. Fields with
-        `format: date-time-rfc-2822` (e.g. Twilio's `dateCreated`, `dateSent`,
-        `dateUpdated`) now generate as `OffsetDateTime` with a per-field
-        `@JsonDeserialize(using = Rfc2822DateTimeDeserializer.class)` annotation
-        that parses RFC 2822 dates via `DateTimeFormatter.RFC_1123_DATE_TIME`.
-      type: feat
-  createdAt: "2026-02-25"
-  irVersion: 65
-
 - version: 3.38.1
   changelogEntry:
     - summary: |

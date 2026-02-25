@@ -113,8 +113,6 @@ export class DynamicTypeMapper {
                 return java.Type.date();
             case "DATE_TIME":
                 return java.Type.dateTime();
-            case "DATE_TIME_RFC_2822":
-                return java.Type.dateTime();
             case "UUID":
                 return java.Type.uuid();
             case "BASE_64":

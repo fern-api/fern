@@ -135,13 +135,6 @@ public interface EnrichedObjectProperty {
         } else {
             getterBuilder.addStatement("return $L", fieldSpec().get().name);
         }
-        if (isDateTimeRfc2822(objectProperty().getValueType())) {
-            getterBuilder.addAnnotation(AnnotationSpec.builder(
-                            com.fasterxml.jackson.databind.annotation.JsonDeserialize.class)
-                    .addMember("using", "$T.class", com.squareup.javapoet.ClassName.get(
-                            nullableNonemptyFilterClassName().packageName(), "Rfc2822DateTimeDeserializer"))
-                    .build());
-        }
         // Headers have empty wireKey to avoid JSON serialization
         boolean hasWireKey = wireKey().isPresent() && !wireKey().get().isEmpty();
         if (hasWireKey && !nullable() && !aliasOfNullable() && !isOptionalNullableField()) {
@@ -246,23 +239,6 @@ public interface EnrichedObjectProperty {
 
     static boolean isNullable(TypeReference reference) {
         return reference.isContainer() && reference.getContainer().get().isNullable();
-    }
-
-    static boolean isDateTimeRfc2822(TypeReference reference) {
-        if (reference.isPrimitive()
-                && "DATE_TIME_RFC_2822".equals(reference.getPrimitive().get().getV1().toString())) {
-            return true;
-        }
-        if (reference.isContainer()) {
-            ContainerType container = reference.getContainer().get();
-            if (container.isOptional()) {
-                return isDateTimeRfc2822(container.getOptional().get());
-            }
-            if (container.isNullable()) {
-                return isDateTimeRfc2822(container.getNullable().get());
-            }
-        }
-        return false;
     }
 
     default boolean isOptionalNullableField() {

@@ -620,15 +620,6 @@ export class DynamicLiteralMapper extends WithGeneration {
                 }
                 return this.csharp.Literal.datetime(dateTime);
             }
-            case "DATE_TIME_RFC_2822": {
-                const dateTime = this.context.getValueAsString({ value });
-                if (dateTime == null) {
-                    return fallbackToDefault
-                        ? this.Value.dateTime.getDeterminsticDefault(fallbackToDefault)
-                        : this.csharp.Literal.nop();
-                }
-                return this.csharp.Literal.datetime(dateTime);
-            }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });
                 if (uuid == null) {
