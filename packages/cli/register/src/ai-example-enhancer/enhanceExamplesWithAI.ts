@@ -183,7 +183,7 @@ class ConcurrentEndpointProcessor {
 }
 
 interface BodyV3 {
-    type?: "json" | "stream" | "sse" | "filename";
+    type?: "json" | "form" | "bytes" | "stream" | "sse" | "filename";
     value?: unknown;
 }
 
@@ -1183,9 +1183,12 @@ function applyEnhancementResults(
                 if (enhancementResult.enhancedReq !== undefined) {
                     enhancedExample.requestBody = enhancementResult.enhancedReq;
                     if (example.requestBodyV3) {
+                        // Check if this is a form data request (type === "form")
+                        const isFormType = example.requestBodyV3.type === "form";
+
                         // Check if the value contains FDR typed value wrappers (form data structure)
                         // Form data has a structure like: { "file": { "type": "filename", "value": "..." }, "text": { "type": "json", "value": "..." } }
-                        const isFormData =
+                        const hasTypedWrappers =
                             typeof example.requestBodyV3.value === "object" &&
                             example.requestBodyV3.value !== null &&
                             !Array.isArray(example.requestBodyV3.value) &&
@@ -1193,7 +1196,7 @@ function applyEnhancementResults(
                                 isFdrTypedValueWrapper(v)
                             );
 
-                        if (isFormData) {
+                        if (hasTypedWrappers) {
                             const enhancedReq = enhancementResult.enhancedReq as Record<string, unknown>;
                             const originalValue = example.requestBodyV3.value as Record<
                                 string,
@@ -1213,6 +1216,24 @@ function applyEnhancementResults(
                             enhancedExample.requestBodyV3 = {
                                 ...example.requestBodyV3,
                                 value: updatedValue
+                            };
+                        } else if (isFormType) {
+                            // Form data but typed wrapper detection failed (e.g., empty form value
+                            // or all values have 3+ keys like filenameWithData). Wrap each AI-generated
+                            // value as a JSON FormValue to ensure valid discriminator types.
+                            const enhancedReqObj =
+                                typeof enhancementResult.enhancedReq === "object" &&
+                                enhancementResult.enhancedReq !== null &&
+                                !Array.isArray(enhancementResult.enhancedReq)
+                                    ? (enhancementResult.enhancedReq as Record<string, unknown>)
+                                    : {};
+                            const wrappedValue: Record<string, { type: string; value: unknown }> = {};
+                            for (const [key, val] of Object.entries(enhancedReqObj)) {
+                                wrappedValue[key] = { type: "json", value: val };
+                            }
+                            enhancedExample.requestBodyV3 = {
+                                ...example.requestBodyV3,
+                                value: wrappedValue
                             };
                         } else {
                             enhancedExample.requestBodyV3 = {

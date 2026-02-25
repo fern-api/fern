@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.88.2
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancer producing invalid form data values when registering
+        API definitions. When the typed wrapper detection failed for form data requests
+        (e.g., filenameWithData wrappers with 3 keys), the raw AI output was set directly
+        without proper FormValue wrapping, causing FDR registration to reject the payload
+        with an invalid_union_discriminator error. Form values are now always wrapped with
+        a valid discriminator type, and the wrapper detection handles filenameWithData and
+        filenamesWithData variants.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.88.1
   changelogEntry:
     - summary: |

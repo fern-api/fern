@@ -8,14 +8,32 @@ export function isFdrTypedValueWrapper(value: unknown): value is { type?: string
     }
     const obj = value as Record<string, unknown>;
     const keys = Object.keys(obj);
-    if (keys.length === 0 || keys.length > 2) {
+    if (keys.length === 0) {
         return false;
     }
     const hasType = "type" in obj && typeof obj.type === "string";
     const hasValue = "value" in obj;
-    return (
-        (hasType && keys.length === 1) || (hasType && hasValue && keys.length === 2) || (hasValue && keys.length === 1)
-    );
+
+    // Standard wrappers: { type, value } or { type } or { value }
+    if (keys.length <= 2) {
+        return (
+            (hasType && keys.length === 1) ||
+            (hasType && hasValue && keys.length === 2) ||
+            (hasValue && keys.length === 1)
+        );
+    }
+
+    // filenameWithData wrapper: { type: "filenameWithData", filename: string, data: string }
+    if (hasType && obj.type === "filenameWithData" && "filename" in obj && "data" in obj) {
+        return true;
+    }
+
+    // filenamesWithData wrapper: { type: "filenamesWithData", value: [...] }
+    if (hasType && hasValue && obj.type === "filenamesWithData") {
+        return true;
+    }
+
+    return false;
 }
 
 /**
