@@ -656,6 +656,13 @@ export class DynamicTypeLiteralMapper {
                 }
                 return ts.TypeLiteral.datetime(str);
             }
+            case "DATE_TIME_RFC_2822": {
+                const str = this.context.getValueAsString({ value });
+                if (str == null) {
+                    return ts.TypeLiteral.nop();
+                }
+                return ts.TypeLiteral.string(str);
+            }
             case "BIG_INTEGER": {
                 const bigInt = this.context.getValueAsString({ value });
                 if (bigInt == null) {

@@ -498,6 +498,13 @@ export class DynamicTypeLiteralMapper {
                 }
                 return python.TypeInstantiation.datetime(str);
             }
+            case "DATE_TIME_RFC_2822": {
+                const str = this.context.getValueAsString({ value });
+                if (str == null) {
+                    return python.TypeInstantiation.nop();
+                }
+                return python.TypeInstantiation.datetime(str);
+            }
             default:
                 assertNever(primitive);
         }

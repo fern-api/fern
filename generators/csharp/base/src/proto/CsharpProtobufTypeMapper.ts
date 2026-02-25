@@ -558,6 +558,7 @@ class ToProtoPropertyMapper extends WithGeneration {
                     )
                 );
             case "DATE":
+            case "DATE_TIME_RFC_2822":
             case "INTEGER":
             case "LONG":
             case "UINT":
@@ -938,6 +939,7 @@ class FromProtoPropertyMapper extends WithGeneration {
             case "DATE_TIME":
                 return this.csharp.codeblock(`${propertyName}.ToDateTime()`);
             case "DATE":
+            case "DATE_TIME_RFC_2822":
             case "INTEGER":
             case "LONG":
             case "UINT":

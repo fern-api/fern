@@ -720,6 +720,8 @@ export class DynamicTypeInstantiationMapper {
                 return "Date";
             case "DATE_TIME":
                 return "DateTime";
+            case "DATE_TIME_RFC_2822":
+                return "DateTimeRfc2822";
             case "BASE_64":
                 return "Base64";
             default:
@@ -793,6 +795,13 @@ export class DynamicTypeInstantiationMapper {
                 }
                 const normalizedDateTime = this.normalizeDateTimeString(dateTime);
                 return go.TypeInstantiation.dateTime(normalizedDateTime);
+            }
+            case "DATE_TIME_RFC_2822": {
+                const dateTime = this.context.getValueAsString({ value });
+                if (dateTime == null) {
+                    return go.TypeInstantiation.nop();
+                }
+                return go.TypeInstantiation.string(dateTime);
             }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });

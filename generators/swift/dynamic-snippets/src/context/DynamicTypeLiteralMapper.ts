@@ -622,6 +622,13 @@ export class DynamicTypeLiteralMapper {
                 const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
                 return swift.Expression.dateLiteral(dateTimeWithoutFractional);
             }
+            case "DATE_TIME_RFC_2822": {
+                const dateTime = this.context.getValueAsString({ value });
+                if (dateTime == null) {
+                    return swift.Expression.nop();
+                }
+                return swift.Expression.stringLiteral(dateTime);
+            }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });
                 if (uuid == null) {

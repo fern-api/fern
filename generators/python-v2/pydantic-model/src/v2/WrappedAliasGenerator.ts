@@ -157,6 +157,8 @@ export class WrappedAliasGenerator {
                         return "get_as_int";
                     case FernIr.PrimitiveTypeV1.Float:
                         return "get_as_float";
+                    case FernIr.PrimitiveTypeV1.DateTimeRfc2822:
+                        return "get_as_datetime";
                     default:
                         assertNever(primitive.v1);
                 }
@@ -249,6 +251,8 @@ export class WrappedAliasGenerator {
                         return "from_int";
                     case FernIr.PrimitiveTypeV1.Float:
                         return "from_float";
+                    case FernIr.PrimitiveTypeV1.DateTimeRfc2822:
+                        return "from_datetime";
                     default:
                         assertNever(primitive.v1);
                 }
