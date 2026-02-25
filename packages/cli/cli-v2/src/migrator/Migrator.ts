@@ -297,7 +297,7 @@ export class Migrator {
             doc.cli = fernYml.cli;
         }
         if (fernYml.sdks != null) {
-            doc.sdks = fernYml.sdks;
+            doc.sdks = this.simplifySdks(fernYml.sdks);
         }
         return yaml.dump(doc, {
             indent: 2,
@@ -307,5 +307,23 @@ export class Migrator {
             quotingType: '"',
             forceQuotes: false
         });
+    }
+
+    /**
+     * Simplifies SDK target output fields for YAML serialization.
+     * Converts `output: { path: "./sdks/typescript" }` to `output: "./sdks/typescript"`.
+     */
+    private simplifySdks(sdks: schemas.SdksSchema): Record<string, unknown> {
+        const simplified: Record<string, unknown> = { ...sdks };
+        const targets: Record<string, unknown> = {};
+        for (const [name, target] of Object.entries(sdks.targets)) {
+            if (target.output.git == null && target.output.path != null) {
+                targets[name] = { ...target, output: target.output.path };
+            } else {
+                targets[name] = target;
+            }
+        }
+        simplified.targets = targets;
+        return simplified;
     }
 }

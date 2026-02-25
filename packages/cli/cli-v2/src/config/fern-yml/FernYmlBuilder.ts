@@ -34,13 +34,13 @@ export class FernYmlBuilder {
      * Builds the full fern.yml content string from the given options.
      */
     public build(options: FernYmlBuilder.Options): string {
-        const targets: Record<string, schemas.SdkTargetSchema> = {};
+        const targets: Record<string, Record<string, unknown>> = {};
         for (const language of options.languages) {
             const output = options.outputs.get(language);
             if (output == null) {
                 continue;
             }
-            const target: schemas.SdkTargetSchema = {
+            const target: Record<string, unknown> = {
                 output: this.buildOutput(output),
                 ...(output.group != null ? { group: [output.group] } : {})
             };
@@ -77,11 +77,9 @@ export class FernYmlBuilder {
         return { openapi: apiPath };
     }
 
-    private buildOutput(output: FernYmlBuilder.OutputConfig): schemas.OutputSchema {
+    private buildOutput(output: FernYmlBuilder.OutputConfig): string | schemas.OutputSchema {
         if (output.type === "local") {
-            return {
-                path: output.path
-            };
+            return output.path ?? "./sdks";
         }
         return {
             git: {
