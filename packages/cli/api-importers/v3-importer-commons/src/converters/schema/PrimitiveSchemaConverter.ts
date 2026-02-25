@@ -184,7 +184,7 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                 return TypeReference.primitive({
                     v1: "BOOLEAN",
                     v2: PrimitiveTypeV2.boolean({
-                        default: this.schema.default as boolean | undefined
+                        default: this.context.getAsBoolean(this.schema.default)
                     })
                 });
             }

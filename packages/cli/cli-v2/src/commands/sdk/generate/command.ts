@@ -11,6 +11,7 @@ import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
+import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
@@ -553,13 +554,21 @@ export class GenerateCommand {
     }
 }
 
-export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
+export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new GenerateCommand();
     command(
         cli,
         "generate",
         "Generate SDKs from fern.yml or directly from an API spec",
-        (context, args) => cmd.handle(context, args as GenerateCommand.Args),
+        async (context, args) => {
+            const timeout = new Promise<never>((_, reject) => {
+                setTimeout(
+                    () => reject(new CliError({ message: "Generation timed out after 10 minutes." })),
+                    GENERATE_COMMAND_TIMEOUT_MS
+                ).unref();
+            });
+            await Promise.race([cmd.handle(context, args as GenerateCommand.Args), timeout]);
+        },
         (yargs) =>
             yargs
                 .option("api", {
@@ -618,6 +627,7 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     default: false,
                     description: "Ignore prompts to confirm generation"
-                })
+                }),
+        parentPath
     );
 }

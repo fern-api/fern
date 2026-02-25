@@ -5,5 +5,5 @@ import { addAddCommand } from "./add/index.js";
 import { addGenerateCommand } from "./generate/index.js";
 
 export function addSdkCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "sdk <command>", "Configure and generate SDKs", [addAddCommand, addGenerateCommand]);
+    commandGroup(cli, "sdk", "Configure and generate SDKs", [addAddCommand, addGenerateCommand]);
 }

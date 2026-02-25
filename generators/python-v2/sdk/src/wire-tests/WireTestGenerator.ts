@@ -312,8 +312,8 @@ export class WireTestGenerator {
         node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
         // Import ApiError from the SDK's core module for error response tests
-        const orgName = this.context.config.organization;
-        node.addReference(python.reference({ name: "ApiError", modulePath: [orgName, "core"] }));
+        const modulePath = this.context.getModulePath();
+        node.addReference(python.reference({ name: "ApiError", modulePath: [modulePath, "core"] }));
 
         return node;
     }

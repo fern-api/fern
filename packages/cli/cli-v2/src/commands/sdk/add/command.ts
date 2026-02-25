@@ -349,7 +349,7 @@ export class AddCommand {
     }
 }
 
-export function addAddCommand(cli: Argv<GlobalArgs>): void {
+export function addAddCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new AddCommand();
     command(
         cli,
@@ -380,6 +380,7 @@ export function addAddCommand(cli: Argv<GlobalArgs>): void {
                     alias: "y",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
-                })
+                }),
+        parentPath
     );
 }

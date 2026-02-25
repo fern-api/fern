@@ -13,7 +13,19 @@
 <dd>
 
 ```typescript
-await client.users.listWithUriPagination();
+const pageableResponse = await client.users.listWithUriPagination();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithUriPagination();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
@@ -54,7 +66,19 @@ await client.users.listWithUriPagination();
 <dd>
 
 ```typescript
-await client.users.listWithPathPagination();
+const pageableResponse = await client.users.listWithPathPagination();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithPathPagination();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 
 ```
 </dd>
