@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
+import fern.ir.resources as ir_types
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.codegen.ast.nodes.docstring import escape_docstring
@@ -13,8 +15,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
-
-import fern.ir.resources as ir_types
+from fern_python.utils.snake_case import snake_case
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [
@@ -68,13 +69,18 @@ class WebsocketConnectMethodGenerator:
                 _named_parameter_names.append(name)
                 self._path_parameter_names[get_parameter_name(path_parameter.name)] = name
 
+    def _get_connect_method_name(self) -> str:
+        if self._websocket.connect_method_name is not None:
+            return snake_case(self._websocket.connect_method_name)
+        return "connect"
+
     def generate(self) -> GeneratedConnectMethod:
         unnamed_parameters = self._get_websocket_path_parameters()
         named_parameters = self._get_overridden_parameter_types()
         parameters = self._get_websocket_parameters()
 
         function_declaration = AST.FunctionDeclaration(
-            name="connect",
+            name=self._get_connect_method_name(),
             is_async=self._is_async,
             docstring=self._get_docstring_for_websocket(
                 websocket=self._websocket,

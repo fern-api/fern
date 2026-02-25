@@ -1,6 +1,9 @@
 from typing import Dict, List, Optional, Tuple
 
+import fern.generator_exec as generator_exec
+import fern.ir.resources as ir_types
 import generatorcli
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies.httpx import HttpX
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
@@ -11,9 +14,7 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
     GeneratedRootClient,
 )
 from fern_python.source_file_factory.source_file_factory import SourceFileFactory
-
-import fern.generator_exec as generator_exec
-import fern.ir.resources as ir_types
+from fern_python.utils.snake_case import snake_case
 
 
 class ReadmeSnippetBuilder:
@@ -453,10 +454,11 @@ for page in pager.iter_pages():
         )
         client_instantiation_str = self._expression_to_snippet_str(AST.Expression(AST.CodeWriter(_client_writer)))
         initial_import = "import asyncio\n\n" if is_async else "import threading\n\n"
+        connect_method_name = snake_case(websocket_channel.connect_method_name) if websocket_channel.connect_method_name is not None else "connect"
         snippet = f"""
 # Connect to the websocket ({"Async" if is_async else "Sync"})
 {initial_import}{client_instantiation_str}
-{"async " if is_async else ""}with client.{subpackage.name.snake_case.safe_name}.connect({"..." if websocket_channel.query_parameters else ""}) as socket:
+{"async " if is_async else ""}with client.{subpackage.name.snake_case.safe_name}.{connect_method_name}({"..." if websocket_channel.query_parameters else ""}) as socket:
     # Iterate over the messages as they arrive
     {"async for message in socket" if is_async else "for message in socket"}
         print(message)
