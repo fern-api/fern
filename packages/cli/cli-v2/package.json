@@ -82,6 +82,7 @@
     "inquirer": "^9.2.15",
     "is-ci": "catalog:",
     "js-yaml": "catalog:",
+    "yaml": "catalog:",
     "jsonwebtoken": "catalog:",
     "ora": "catalog:",
     "posthog-node": "^5.14.0",

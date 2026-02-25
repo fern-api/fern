@@ -5254,6 +5254,9 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+      yaml:
+        specifier: 2.3.3
+        version: 2.3.3
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
