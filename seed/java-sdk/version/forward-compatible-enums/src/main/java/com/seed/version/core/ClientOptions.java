@@ -23,6 +23,8 @@ public final class ClientOptions {
 
     private final int maxRetries;
 
+    private final Optional<LogConfig> logging;
+
     /**
      * version.toString() is sent as the "X-API-Version" header.
      */
@@ -38,6 +40,7 @@ public final class ClientOptions {
             OkHttpClient httpClient,
             int timeout,
             int maxRetries,
+            Optional<LogConfig> logging,
             Optional<ApiVersion> version) {
         this.environment = environment;
         this.headers = new HashMap<>();
@@ -53,6 +56,7 @@ public final class ClientOptions {
         this.httpClient = httpClient;
         this.timeout = timeout;
         this.maxRetries = maxRetries;
+        this.logging = logging;
         this.version = version.orElse(ApiVersion.V_2);
         this.headers.put("X-API-Version", this.version.toString());
     }
@@ -107,6 +111,10 @@ public final class ClientOptions {
         return this.maxRetries;
     }
 
+    public Optional<LogConfig> logging() {
+        return this.logging;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -123,6 +131,8 @@ public final class ClientOptions {
         private Optional<Integer> timeout = Optional.empty();
 
         private OkHttpClient httpClient = null;
+
+        private Optional<LogConfig> logging = Optional.empty();
 
         private Optional<ApiVersion> version = Optional.empty();
 
@@ -171,6 +181,14 @@ public final class ClientOptions {
         }
 
         /**
+         * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+         */
+        public Builder logging(LogConfig logging) {
+            this.logging = Optional.of(logging);
+            return this;
+        }
+
+        /**
          * version.toString() is sent as the "X-API-Version" header.
          */
         public Builder version(ApiVersion version) {
@@ -197,11 +215,21 @@ public final class ClientOptions {
                         .addInterceptor(new RetryInterceptor(this.maxRetries));
             }
 
+            Logger logger = Logger.from(this.logging);
+            httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
+
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
             return new ClientOptions(
-                    environment, headers, headerSuppliers, httpClient, this.timeout.get(), this.maxRetries, version);
+                    environment,
+                    headers,
+                    headerSuppliers,
+                    httpClient,
+                    this.timeout.get(),
+                    this.maxRetries,
+                    this.logging,
+                    version);
         }
 
         /**
@@ -215,6 +243,7 @@ public final class ClientOptions {
             builder.headers.putAll(clientOptions.headers);
             builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
             builder.maxRetries = clientOptions.maxRetries();
+            builder.logging = clientOptions.logging();
             if (clientOptions.version != null) {
                 builder.version = Optional.ofNullable(clientOptions.version);
             } else {

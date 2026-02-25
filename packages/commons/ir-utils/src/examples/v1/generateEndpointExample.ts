@@ -14,7 +14,8 @@ import {
     PrimitiveTypeV2,
     TypeDeclaration,
     TypeId,
-    TypeReference
+    TypeReference,
+    UnionDiscriminatorContext
 } from "@fern-api/ir-sdk";
 
 import { hashJSON } from "../../hashJSON.js";
@@ -302,8 +303,27 @@ export function generateEndpointExample({
                             return generatedExample;
                         }
                         const { example, jsonExample } = generatedExample;
+                        // For protocol-discriminated unions the SSE `event:` field carries the
+                        // discriminant value — use the first union variant's wire value so the
+                        // auto-generated example has a meaningful event type instead of "".
+                        const ssePayload = endpoint.response.body.value.payload;
+                        let sseEventType = "";
+                        if (ssePayload.type === "named") {
+                            const typeDecl = typeDeclarations[ssePayload.typeId];
+                            if (
+                                typeDecl?.shape.type === "union" &&
+                                typeDecl.shape.discriminatorContext === UnionDiscriminatorContext.Protocol
+                            ) {
+                                const firstVariant = typeDecl.shape.types[0];
+                                if (firstVariant != null) {
+                                    sseEventType = firstVariant.discriminantValue.wireValue;
+                                }
+                            }
+                        }
                         result.response = ExampleResponse.ok(
-                            ExampleEndpointSuccessResponse.sse([{ data: { ...example, jsonExample }, event: "" }])
+                            ExampleEndpointSuccessResponse.sse([
+                                { data: { ...example, jsonExample }, event: sseEventType }
+                            ])
                         );
                         break;
                     }

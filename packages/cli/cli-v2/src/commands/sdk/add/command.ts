@@ -309,7 +309,10 @@ export class AddCommand {
         }
     }
 
-    private buildOutputForYaml(output: schemas.OutputSchema): Record<string, unknown> {
+    private buildOutputForYaml(output: schemas.OutputSchema): string | Record<string, unknown> {
+        if (typeof output === "string") {
+            return output;
+        }
         if (output.git != null) {
             const git = output.git;
             if (schemas.isGitOutputGitHubRepository(git)) {
@@ -332,7 +335,7 @@ export class AddCommand {
                 return { git: gitConfig };
             }
         }
-        return { path: output.path };
+        return output.path ?? "";
     }
 
     private parseLanguage(target: string): Language {
