@@ -50,7 +50,7 @@ export const V65_TO_V63_MIGRATION: IrMigration<
         context: IrMigrationContext
     ): IrVersions.V63.ir.IntermediateRepresentation => {
         return {
-            ...v65,
+            ...(v65 as unknown as IrVersions.V63.ir.IntermediateRepresentation),
             services: mapValues(v65.services, (service) => convertHttpService(service, context)),
             webhookGroups: mapValues(v65.webhookGroups, (webhookGroup) =>
                 webhookGroup.map((webhook) => {
@@ -67,7 +67,7 @@ function convertHttpService(
     context: IrMigrationContext
 ): IrVersions.V63.http.HttpService {
     return {
-        ...service,
+        ...(service as unknown as IrVersions.V63.http.HttpService),
         endpoints: service.endpoints.map((endpoint) => convertHttpEndpoint(endpoint, context))
     };
 }
@@ -77,7 +77,7 @@ function convertHttpEndpoint(
     context: IrMigrationContext
 ): IrVersions.V63.http.HttpEndpoint {
     return {
-        ...endpoint,
+        ...(endpoint as unknown as IrVersions.V63.http.HttpEndpoint),
         pagination: endpoint.pagination != null ? convertPagination(endpoint.pagination, context) : undefined,
         // Examples contain TypeReferences that need conversion, but since skipValidation is true
         // in the serializer, we can pass them through and let the serializer handle it
@@ -94,11 +94,17 @@ function convertPagination(
 ): IrVersions.V63.http.Pagination | undefined {
     switch (pagination.type) {
         case "cursor":
-            return IrVersions.V63.http.Pagination.cursor(pagination);
+            return IrVersions.V63.http.Pagination.cursor(
+                pagination as unknown as IrVersions.V63.http.CursorPagination
+            );
         case "offset":
-            return IrVersions.V63.http.Pagination.offset(pagination);
+            return IrVersions.V63.http.Pagination.offset(
+                pagination as unknown as IrVersions.V63.http.OffsetPagination
+            );
         case "custom":
-            return IrVersions.V63.http.Pagination.custom(pagination);
+            return IrVersions.V63.http.Pagination.custom(
+                pagination as unknown as IrVersions.V63.http.CustomPagination
+            );
         case "uri":
         case "path":
             context.taskContext.logger.warn(
