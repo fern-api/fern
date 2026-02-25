@@ -48,20 +48,11 @@ jobs:
       - name: Run test:update
         run: pnpm test:update
 
-      - name: Build CLI (dev)
-        timeout-minutes: 15
-        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
-
-      - name: Build seed CLI
-        timeout-minutes: 15
-        run: pnpm seed:build
-
       - name: Run test:ete:update
         timeout-minutes: 30
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
-        run: |
-          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm --filter @fern-api/ete-tests test -- -u
+        run: FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete:update
 
       - name: Commit and Push Changes
         run: |
