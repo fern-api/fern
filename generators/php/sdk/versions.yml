@@ -8,7 +8,7 @@
         multiple SDK tests in parallel. The bootstrap script discovers the assigned
         port and sets `WIREMOCK_URL` automatically. Falls back to `http://localhost:8080`
         if the variable is not set.
-      type: feat
+      type: chore
   createdAt: "2026-02-25"
   irVersion: 62
 - version: 2.1.2
