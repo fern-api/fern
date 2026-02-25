@@ -388,6 +388,18 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/params/path/{param}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive;\nusing System.Text;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Params.UploadWithPathAsync(\n    \"upload-path\",\n    new MemoryStream(Encoding.UTF8.GetBytes(\"[bytes]\"))\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/primitive/string",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"

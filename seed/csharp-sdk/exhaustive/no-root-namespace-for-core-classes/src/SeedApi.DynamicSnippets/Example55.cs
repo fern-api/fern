@@ -1,9 +1,9 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints.Put;
+using SeedExhaustive.Core;
 
 namespace Usage;
 
-public class Example43
+public class Example55
 {
     public async Task Do() {
         var client = new SeedExhaustiveClient(
@@ -13,9 +13,11 @@ public class Example43
             }
         );
 
-        await client.Endpoints.Put.AddAsync(
-            new PutRequest {
-                Id = "id"
+        await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+            new ReqWithHeaders {
+                XTestServiceHeader = "X-TEST-SERVICE-HEADER",
+                XTestEndpointHeader = "X-TEST-ENDPOINT-HEADER",
+                Body = "string"
             }
         );
     }
