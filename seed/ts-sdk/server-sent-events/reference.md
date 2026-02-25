@@ -14,7 +14,7 @@
 
 ```typescript
 const response = await client.completions.stream({
-    query: "query"
+    query: "foo"
 });
 for await (const item of response) {
     console.log(item);
