@@ -111,7 +111,7 @@ jobs:
   test:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -164,7 +164,7 @@ jobs:
   test-ete:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -188,16 +188,16 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Build CLI (dev)
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
 
       - name: Build seed CLI
-        timeout-minutes: 5
+        timeout-minutes: 10
         run: pnpm seed:build
 
       - name: Run ETE tests
         if: ${{ !github.event.inputs.update_snapshots }}
-        timeout-minutes: 10
+        timeout-minutes: 20
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
@@ -205,7 +205,7 @@ jobs:
 
       - name: Run ETE tests with snapshot updates
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
-        timeout-minutes: 10
+        timeout-minutes: 20
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |

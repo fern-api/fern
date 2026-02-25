@@ -401,6 +401,9 @@ export function parseAsyncAPIV3({
                 FernAsyncAPIExtension.FERN_SDK_GROUP_NAME
             );
 
+            // Extract connect method name from x-fern-sdk-method-name extension
+            const connectMethodName = getExtension<string>(channel, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME);
+
             const channelServers = (
                 channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
                 Object.values(servers)
@@ -435,6 +438,7 @@ export function parseAsyncAPIV3({
                 ),
                 messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
+                connectMethodName,
                 servers: channelServers,
                 path: parsedChannelPath,
                 description: channel.description,
