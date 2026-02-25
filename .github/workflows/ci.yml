@@ -200,8 +200,7 @@ jobs:
       - name: Build CLIs (dev + seed)
         timeout-minutes: 10
         env:
-          TURBO_TOKEN: ""
-          TURBO_TEAM: ""
+          TURBO_CACHE: "local:rw"
         run: |
           pnpm turbo run dist:cli:dev dist:cli --filter=@fern-api/cli --filter=@fern-api/cli-v2 --filter=@fern-api/seed-cli
 
