@@ -254,6 +254,9 @@ export class ClonedRepository {
         await this.git.push("origin", branch, { "--set-upstream": null });
     }
 
+    // Only used by replay's PR mode to push synthetic divergent commits to a fern-bot/ branch.
+    // Uses --force-with-lease (not --force) so we fail safely if the branch was updated
+    // by someone else since we cloned. Never targets main or user branches.
     public async forcePush(): Promise<void> {
         await this.git.cwd(this.clonePath);
         const currentBranch = await this.getCurrentBranch();
@@ -294,10 +297,15 @@ export class ClonedRepository {
         return result.trim();
     }
 
+    // This tag is a moving pointer (fern-generation-base--<generator>) that tracks the latest
+    // clean generation SHA. --force is required because: (1) the tag is intentionally overwritten
+    // each generation, and (2) --force-with-lease doesn't work for tags since git tag -f overwrites
+    // the local ref first, making the lease check always see a stale value.
+    // Only called from replay's PR mode; the caller wraps this in a try/catch.
     public async createAndPushTag(tagName: string, commitSha: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         await this.git.tag(["-f", tagName, commitSha]);
-        await this.git.push("origin", `refs/tags/${tagName}`, ["--force-with-lease"]);
+        await this.git.push("origin", `refs/tags/${tagName}`, ["--force"]);
     }
 
     public async overwriteLocalContents(sourceDirectoryPath: string): Promise<void> {
