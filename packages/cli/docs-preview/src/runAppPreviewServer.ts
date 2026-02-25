@@ -723,15 +723,8 @@ export async function runAppPreviewServer({
     //
     // In Bun, http.createServer does not emit the 'upgrade' event that
     // the ws package relies on (re: oven-sh/bun#5951).
-    //
-    // For now, use Bun.serve() with its native WebSocket support instead.
-    if (globalThis.Bun != null) {
-        const bunHandle = createBunServer({
-            bun: globalThis.Bun,
-            port: backendPort,
-            debugLogger,
-            getDocsLoadResponse: buildDocsLoadResponse
-        });
+    const bunHandle = createBunServer({ port: backendPort, debugLogger, getDocsLoadResponse: buildDocsLoadResponse });
+    if (bunHandle != null) {
         sendData = bunHandle.sendData;
         bunServer = bunHandle;
         context.logger.info(chalk.dim(`Backend server running on http://localhost:${backendPort}`));

@@ -8,12 +8,6 @@ const CORS_HEADERS = {
     "Access-Control-Allow-Headers": "Content-Type"
 } as const;
 
-// Augment globalThis so TypeScript knows about the optional Bun global.
-declare global {
-    // eslint-disable-next-line no-var
-    var Bun: BunNamespace | undefined;
-}
-
 // Minimal Bun runtime type definitions for native WebSocket support.
 // These are used only when the CLI is run under Bun (re: oven-sh/bun#5951).
 interface BunServerWebSocket<T> {
@@ -21,7 +15,6 @@ interface BunServerWebSocket<T> {
     close(code?: number, reason?: string): void;
     readonly data: T;
 }
-
 interface BunNamespace {
     serve<T>(options: {
         port: number;
@@ -39,7 +32,6 @@ interface BunNamespace {
 }
 
 export interface BunServerOptions {
-    bun: BunNamespace;
     port: number;
     debugLogger: DebugLogger;
     getDocsLoadResponse(): DocsV2Read.LoadDocsForUrlResponse;
@@ -50,8 +42,17 @@ export interface BunServer {
     stop(closeActiveConnections?: boolean): void;
 }
 
-export function createBunServer(options: BunServerOptions): BunServer {
-    const { bun, port, debugLogger, getDocsLoadResponse } = options;
+/**
+ * Creates a Bun-native HTTP + WebSocket server. Returns `undefined` when not
+ * running under Bun so callers can fall back to a standard http.Server.
+ */
+export function createBunServer(options: BunServerOptions): BunServer | undefined {
+    const bun = getBun();
+    if (bun == null) {
+        return undefined;
+    }
+
+    const { port, debugLogger, getDocsLoadResponse } = options;
 
     type WsData = { connectionId: string };
     const connections = new Map<BunServerWebSocket<WsData>, { pingInterval: NodeJS.Timeout; lastPong: number }>();
@@ -87,7 +88,7 @@ export function createBunServer(options: BunServerOptions): BunServer {
             // WebSocket upgrade handling (re: oven-sh/bun#5951).
             if (req.headers.get("upgrade")?.toLowerCase() === "websocket") {
                 bunHttpServer.upgrade(req, { data: { connectionId: `${Date.now()}` } });
-                return undefined; // upgraded — no Response needed
+                return undefined;
             }
 
             // POST /v2/registry/docs/load-with-url
@@ -128,7 +129,7 @@ export function createBunServer(options: BunServerOptions): BunServer {
                 try {
                     ws.send(JSON.stringify({ type: "connected", connectionId }));
                 } catch {
-                    // ignore — client may have disconnected immediately
+                    // no-op; the client may have disconnected immediately.
                 }
             },
             message(ws, data) {
@@ -143,7 +144,7 @@ export function createBunServer(options: BunServerOptions): BunServer {
                         void debugLogger.logFrontendMetrics(parsed);
                     }
                 } catch {
-                    // ignore malformed messages
+                    // no-op; ignore malformed messages
                 }
             },
             close(ws) {
@@ -160,4 +161,8 @@ export function createBunServer(options: BunServerOptions): BunServer {
         sendData,
         stop: (closeActiveConnections) => server.stop(closeActiveConnections)
     };
+}
+
+function getBun(): BunNamespace | undefined {
+    return (globalThis as { Bun?: BunNamespace }).Bun;
 }
