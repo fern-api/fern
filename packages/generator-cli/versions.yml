@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump @octokit/rest to ^22.0.1 to pull in @octokit/request@10.0.7, which fixes CVE-2025-25290 (ReDoS vulnerability).
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.1
+
+- changelogEntry:
+    - summary: |
         Add Replay step to post-generation pipeline. Introduces the PostGenerationPipeline
         with ReplayStep that runs after SDK generation for self-hosted GitHub repos. Replay
         preserves user customizations across SDK regenerations by detecting patches via
