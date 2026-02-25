@@ -58,7 +58,7 @@ export class TelemetryClient {
         try {
             this.posthog.capture({
                 distinctId: await this.getDistinctId(),
-                event: "CLI",
+                event: "cli",
                 properties: {
                     ...this.baseTags,
                     ...this.accumulatedTags,
@@ -80,7 +80,7 @@ export class TelemetryClient {
             return;
         }
         try {
-            await this.posthog.flush();
+            await this.posthog.shutdown();
         } catch {
             // no-op
         }

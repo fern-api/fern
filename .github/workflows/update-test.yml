@@ -8,20 +8,22 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: write
-
 env:
   DO_NOT_TRACK: "1"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 60
 
 jobs:
   update-test:
     if: github.repository == 'fern-api/fern' && github.ref != 'refs/heads/main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    runs-on: Test
+    timeout-minutes: 90
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          lfs: true
 
       - name: Install
         uses: ./.github/actions/install
@@ -29,6 +31,9 @@ jobs:
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
+
+      - name: Verify buf
+        run: buf --version
 
       - uses: actions/setup-go@v5
         with:
@@ -41,15 +46,29 @@ jobs:
       - name: Run test:update
         run: pnpm test:update
 
+      - name: Build CLI (dev)
+        timeout-minutes: 15
+        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
+
+      - name: Build seed CLI
+        timeout-minutes: 15
+        run: pnpm seed:build
+
       - name: Run test:ete:update
+        timeout-minutes: 30
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
-        run: FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete:update
+        run: |
+          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm --filter @fern-api/ete-tests test -- -u
 
       - name: Commit and Push Changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          add: "."
-          push: true
-          fetch: false
-          message: "chore: update test snapshots"
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update test snapshots"
+            git push
+          else
+            echo "No snapshot changes to commit"
+          fi

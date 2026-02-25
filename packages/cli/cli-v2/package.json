@@ -84,7 +84,7 @@
     "js-yaml": "catalog:",
     "jsonwebtoken": "catalog:",
     "ora": "catalog:",
-    "posthog-node": "^4.3.2",
+    "posthog-node": "^5.14.0",
     "tsup": "catalog:",
     "typescript": "catalog:",
     "uuid": "catalog:",
