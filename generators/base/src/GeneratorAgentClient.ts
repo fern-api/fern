@@ -1,4 +1,7 @@
 import {
+    type GenerateReadmeParams,
+    type GenerateReferenceParams,
+    type GithubPushParams,
     generateReadme as generateReadmeApi,
     generateReference as generateReferenceApi,
     githubPr,
@@ -13,12 +16,10 @@ export class GeneratorAgentClient {
         this.logger = logger;
     }
 
-    public async generateReadme<ReadmeConfig>({ readmeConfig }: { readmeConfig: ReadmeConfig }): Promise<string> {
+    public async generateReadme({ readmeConfig }: GenerateReadmeParams): Promise<string> {
         this.logger.debug("GeneratorAgentClient.generateReadme: Calling JS API...");
         try {
-            const result = await generateReadmeApi({
-                readmeConfig: readmeConfig as Parameters<typeof generateReadmeApi>[0]["readmeConfig"]
-            });
+            const result = await generateReadmeApi({ readmeConfig });
             this.logger.debug(`GeneratorAgentClient.generateReadme: JS API returned ${result.length} bytes`);
             return result;
         } catch (error) {
@@ -28,20 +29,16 @@ export class GeneratorAgentClient {
         }
     }
 
-    public async pushToGitHub<GitHubConfig>({
+    public async pushToGitHub({
         githubConfig,
         withPullRequest
-    }: {
-        githubConfig: GitHubConfig;
-        withPullRequest?: boolean;
-    }): Promise<string> {
+    }: GithubPushParams & { withPullRequest?: boolean }): Promise<string> {
         this.logger.debug(`GeneratorAgentClient.pushToGitHub: Calling JS API (withPullRequest=${withPullRequest})...`);
         try {
-            const typedConfig = githubConfig as Parameters<typeof githubPush>[0]["githubConfig"];
             if (withPullRequest) {
-                await githubPr({ githubConfig: typedConfig });
+                await githubPr({ githubConfig });
             } else {
-                await githubPush({ githubConfig: typedConfig });
+                await githubPush({ githubConfig });
             }
             return "";
         } catch (error) {
@@ -51,16 +48,10 @@ export class GeneratorAgentClient {
         }
     }
 
-    public async generateReference<ReferenceConfig>({
-        referenceConfig
-    }: {
-        referenceConfig: ReferenceConfig;
-    }): Promise<string> {
+    public async generateReference({ referenceConfig }: GenerateReferenceParams): Promise<string> {
         this.logger.debug("GeneratorAgentClient.generateReference: Calling JS API...");
         try {
-            const result = await generateReferenceApi({
-                referenceConfig: referenceConfig as Parameters<typeof generateReferenceApi>[0]["referenceConfig"]
-            });
+            const result = await generateReferenceApi({ referenceConfig });
             this.logger.debug(`GeneratorAgentClient.generateReference: JS API returned ${result.length} bytes`);
             return result;
         } catch (error) {
