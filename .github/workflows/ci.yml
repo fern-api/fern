@@ -22,7 +22,7 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 60
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
   TURBO_NO_UPDATE_NOTIFIER: "1"
   TURBO_DAEMON: "false"
 
@@ -138,12 +138,17 @@ jobs:
       - name: Install protoc-gen-openapi
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
+      - name: Stop any stale turbo daemon
+        run: pnpm turbo daemon stop || true
+
       - name: Run tests
         if: ${{ !github.event.inputs.update_snapshots }}
+        timeout-minutes: 20
         run: pnpm test
 
       - name: Run tests with snapshot updates
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
+        timeout-minutes: 20
         run: pnpm test:update
 
       - name: Commit and push updated snapshots
@@ -189,13 +194,13 @@ jobs:
       - name: Install protoc-gen-openapi
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
-      - name: Build CLI (dev)
-        timeout-minutes: 10
-        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
+      - name: Stop any stale turbo daemon
+        run: pnpm turbo daemon stop || true
 
-      - name: Build seed CLI
+      - name: Build CLIs (dev + seed)
         timeout-minutes: 10
-        run: pnpm seed:build
+        run: |
+          pnpm turbo run dist:cli:dev dist:cli --filter=@fern-api/cli --filter=@fern-api/cli-v2 --filter=@fern-api/seed-cli
 
       - name: Run ETE tests
         if: ${{ !github.event.inputs.update_snapshots }}
