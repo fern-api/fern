@@ -55,15 +55,19 @@ export const V65_TO_V63_MIGRATION: IrMigration<
             // with V63. We convert all fields that contain TypeReference to map DATE_TIME_RFC_2822
             // back to DATE_TIME. The serializer uses skipValidation: true so deeply nested
             // TypeReferences (in examples, OAuth, etc.) are handled at serialization time.
-            types: mapValues(v65.types, (typeDeclaration) => convertTypeDeclaration(typeDeclaration)),
-            headers: v65.headers.map((header) => convertHttpHeader(header)),
-            idempotencyHeaders: v65.idempotencyHeaders.map((header) => convertHttpHeader(header)),
-            pathParameters: v65.pathParameters.map((p) => convertPathParameter(p)),
-            variables: v65.variables.map((v) => ({
-                ...v,
-                type: convertTypeReference(v.type)
-            })),
-            auth: convertApiAuth(v65.auth),
+            types:
+                v65.types != null
+                    ? mapValues(v65.types, (typeDeclaration) => convertTypeDeclaration(typeDeclaration))
+                    : {},
+            headers: v65.headers?.map((header) => convertHttpHeader(header)) ?? [],
+            idempotencyHeaders: v65.idempotencyHeaders?.map((header) => convertHttpHeader(header)) ?? [],
+            pathParameters: v65.pathParameters?.map((p) => convertPathParameter(p)) ?? [],
+            variables:
+                v65.variables?.map((v) => ({
+                    ...v,
+                    type: convertTypeReference(v.type)
+                })) ?? [],
+            auth: v65.auth != null ? convertApiAuth(v65.auth) : v65.auth,
             // apiVersion contains nested TypeReferences; skipValidation handles serialization
             apiVersion: v65.apiVersion as unknown as IrVersions.V63.ir.ApiVersionScheme | undefined,
             // dynamic IR contains its own TypeReference hierarchy; skipValidation handles serialization
@@ -295,8 +299,8 @@ function convertHttpService(
 ): IrVersions.V63.http.HttpService {
     return {
         ...service,
-        headers: service.headers.map((h) => convertHttpHeader(h)),
-        pathParameters: service.pathParameters.map((p) => convertPathParameter(p)),
+        headers: service.headers?.map((h) => convertHttpHeader(h)) ?? [],
+        pathParameters: service.pathParameters?.map((p) => convertPathParameter(p)) ?? [],
         endpoints: service.endpoints.map((endpoint) => convertHttpEndpoint(endpoint, context))
     };
 }
@@ -307,10 +311,10 @@ function convertHttpEndpoint(
 ): IrVersions.V63.http.HttpEndpoint {
     return {
         ...endpoint,
-        allPathParameters: endpoint.allPathParameters.map((p) => convertPathParameter(p)),
-        pathParameters: endpoint.pathParameters.map((p) => convertPathParameter(p)),
-        headers: endpoint.headers.map((h) => convertHttpHeader(h)),
-        queryParameters: endpoint.queryParameters.map((q) => convertQueryParameter(q)),
+        allPathParameters: endpoint.allPathParameters?.map((p) => convertPathParameter(p)) ?? [],
+        pathParameters: endpoint.pathParameters?.map((p) => convertPathParameter(p)) ?? [],
+        headers: endpoint.headers?.map((h) => convertHttpHeader(h)) ?? [],
+        queryParameters: endpoint.queryParameters?.map((q) => convertQueryParameter(q)) ?? [],
         responseHeaders: endpoint.responseHeaders?.map((h) => convertHttpHeader(h)),
         requestBody: endpoint.requestBody != null ? convertRequestBody(endpoint.requestBody) : undefined,
         sdkRequest: endpoint.sdkRequest != null ? convertSdkRequest(endpoint.sdkRequest) : undefined,
@@ -537,7 +541,7 @@ function convertRequestProperty(prop: IrVersions.V65.RequestProperty): IrVersion
             ...item,
             type: convertTypeReference(item.type)
         })),
-        property: convertRequestPropertyValue(prop.property)
+        property: prop.property != null ? convertRequestPropertyValue(prop.property) : prop.property
     };
 }
 
@@ -562,10 +566,10 @@ function convertResponseProperty(prop: IrVersions.V65.ResponseProperty): IrVersi
             ...item,
             type: convertTypeReference(item.type)
         })),
-        property: {
-            ...prop.property,
-            valueType: convertTypeReference(prop.property.valueType)
-        }
+        property:
+            prop.property?.valueType != null
+                ? { ...prop.property, valueType: convertTypeReference(prop.property.valueType) }
+                : (prop.property as unknown as IrVersions.V63.types.ObjectProperty)
     };
 }
 
