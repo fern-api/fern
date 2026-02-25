@@ -8,6 +8,8 @@ import (
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
+	types "github.com/exhaustive/fern/types"
+	io "io"
 )
 
 type Client struct {
@@ -168,6 +170,25 @@ func (c *Client) ModifyWithInlinePath(
 	)
 	if err != nil {
 		return "", err
+	}
+	return response.Body, nil
+}
+
+// POST bytes with path param returning object
+func (c *Client) UploadWithPath(
+	ctx context.Context,
+	param string,
+	request io.Reader,
+	opts ...option.RequestOption,
+) (*types.ObjectWithRequiredField, error) {
+	response, err := c.WithRawResponse.UploadWithPath(
+		ctx,
+		param,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
 	}
 	return response.Body, nil
 }

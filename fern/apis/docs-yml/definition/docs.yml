@@ -1093,7 +1093,19 @@ types:
         docs: |
           The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<boolean>
+        docs: |
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+        availability: deprecated
+      collapsible:
+        type: optional<boolean>
+        docs: |
+          Whether the section can be expanded/collapsed by the user.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: |
+          Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open).
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
@@ -1119,7 +1131,19 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<boolean>
+        docs: |
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+        availability: deprecated
+      collapsible:
+        type: optional<boolean>
+        docs: |
+          Whether the section can be expanded/collapsed by the user.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: |
+          Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open).
       availability: optional<Availability>
 
   TitleSource:
@@ -1156,7 +1180,9 @@ types:
         type: optional<list<ApiReferenceLayoutItem>>
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<boolean>
+        availability: deprecated
       icon: optional<string>
       slug: optional<string>
       hidden: optional<boolean>

@@ -94,7 +94,8 @@ export async function convertGeneratorsConfiguration({
                       github: rawGeneratorsConfiguration.whitelabel.github
                   }
                 : undefined,
-        ai: rawGeneratorsConfiguration.ai
+        ai: rawGeneratorsConfiguration.ai,
+        replay: rawGeneratorsConfiguration.replay
     };
 }
 

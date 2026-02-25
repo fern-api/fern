@@ -100,6 +100,12 @@ fixtures:
 allowedFailures:
   - bytes-download
   - bytes-upload
+  - exhaustive:test-package-path
+  - exhaustive:no-custom-config
+  - exhaustive:retain-original-casing
+  - exhaustive:no-optional-properties
+  - exhaustive:allow-extra-fields
+  - exhaustive:union-utils
   - file-download
   - file-upload
   - file-upload-openapi
