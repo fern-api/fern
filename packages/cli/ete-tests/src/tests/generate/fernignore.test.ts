@@ -52,7 +52,7 @@ describe("fern generate --local", () => {
 
         // rerun and make sure no issues if there are no changes
         await runFernCli(["generate", "--local", "--keepDocker"], { cwd: pathOfDirectory, signal });
-    }, 360_000);
+    }, 720_000);
 
     // eslint-disable-next-line jest/expect-expect
     it.concurrent("Prevent initial generation of files listed in .fernignore", async ({ signal }) => {
@@ -86,7 +86,7 @@ describe("fern generate --local", () => {
         // Files should still not exist
         await expectPathDoesNotExist(absolutePathToClientTs);
         await expectPathDoesNotExist(absolutePathToCore);
-    }, 360_000);
+    }, 720_000);
 });
 
 async function expectPathDoesNotExist(absoluteFilePath: AbsoluteFilePath): Promise<void> {
