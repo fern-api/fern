@@ -188,6 +188,7 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
         double: () => "double",
         string: () => "string",
         datetime: () => "datetime",
+        datetimeRfc2822: () => "datetime-rfc-2822",
         date: () => "date",
         base64: () => "base64",
         boolean: () => "boolean",
