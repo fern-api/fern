@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.5
+  changelogEntry:
+    - summary: |
+        Fix per-spec settings being ignored in multi-spec API configurations.
+        When `respect-nullable-schemas` (or other boolean settings) was set on
+        only a subset of specs, the setting was incorrectly collapsed to `false`
+        because `specs.every()` treated unset (`undefined`) the same as
+        explicitly disabled (`false`). Now, specs that don't define a setting
+        are treated as neutral ("don't care") so enabling a setting on a subset
+        of specs works correctly without affecting specs that don't set it.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.90.4
   changelogEntry:
     - summary: |
