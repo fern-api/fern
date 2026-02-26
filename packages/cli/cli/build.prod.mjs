@@ -23,7 +23,7 @@ buildCli({
     runtimeDependencies: ["@boundaryml/baml", "cli-progress"],
     packageJsonOverrides: {
         name: "fern-api",
-        bin: { fern: "cli.cjs" }
+        bin: { fern: "cli.mjs" }
     },
     tsdownOverrides: PRODUCTION_TSDOWN_OVERRIDES
 });

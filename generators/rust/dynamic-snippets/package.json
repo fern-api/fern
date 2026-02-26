@@ -7,6 +7,7 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/rust/dynamic-snippets"
   },
+  "sideEffects": false,
   "exports": {
     ".": {
       "development": "./src/index.ts",

@@ -22,11 +22,13 @@
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
   "bin": {
-    "fern:dev": "./dist/cli.cjs",
-    "fern:local": "./dist/cli.cjs",
-    "fern:prod": "./dist/cli.cjs"
+    "fern:dev": "./dist/cli.mjs",
+    "fern:local": "./dist/cli.mjs",
+    "fern:prod": "./dist/cli.mjs"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",

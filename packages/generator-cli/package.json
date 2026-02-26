@@ -6,6 +6,7 @@
     "url": "git+https://github.com/fern-api/fern.git",
     "directory": "packages/generator-cli"
   },
+  "sideEffects": false,
   "type": "commonjs",
   "exports": {
     ".": {

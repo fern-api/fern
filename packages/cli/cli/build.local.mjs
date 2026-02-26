@@ -24,7 +24,7 @@ buildCli({
     runtimeDependencies: ["@boundaryml/baml"],
     packageJsonOverrides: {
         name: "fern-api",
-        bin: { fern: "cli.cjs" }
+        bin: { fern: "cli.mjs" }
     },
     tsdownOverrides: {
         external: MINIMAL_EXTERNALS
