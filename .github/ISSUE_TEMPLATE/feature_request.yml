@@ -32,7 +32,7 @@ body:
     id: sdk-language
     attributes:
       label: "Which SDK language(s)?"
-      description: "If this is related to SDK generation, select the relevant language(s)."
+      description: "Only if you selected 'SDKs' above. Skip this field otherwise."
       multiple: true
       options:
         - "TypeScript"
