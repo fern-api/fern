@@ -64,6 +64,19 @@ export function getReferencedTypesFromRawDeclaration({
                     if (resolvedBaseGenericArguments) {
                         underlyingObjectRawTypeReferences
                             .filter((typeReference) => !resolvedBaseGenericArguments.includes(typeReference))
+                            .map((typeReference) => {
+                                // Substitute generic parameters in type references
+                                // e.g., "list<Data<T>>" with T->User becomes "list<Data<User>>"
+                                let substituted = typeReference;
+                                for (let i = 0; i < resolvedBaseGenericArguments.length; i++) {
+                                    const param = resolvedBaseGenericArguments[i];
+                                    const arg = parsedGeneric.arguments[i];
+                                    if (param != null && arg != null) {
+                                        substituted = substituted.replace(new RegExp(`\\b${param}\\b`, "g"), arg);
+                                    }
+                                }
+                                return substituted;
+                            })
                             .forEach((type) => rawTypeReferences.add(type));
                     }
                 }

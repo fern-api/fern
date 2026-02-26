@@ -6,6 +6,32 @@ import { TypeResolver } from "../../resolvers/TypeResolver.js";
 import { parseTypeName } from "../../utils/parseTypeName.js";
 import { getExtensionsAsList, getObjectPropertiesFromRawObjectSchema } from "./convertObjectTypeDeclaration.js";
 
+/**
+ * Substitutes generic parameter names with their corresponding argument values
+ * within a type reference string. Uses word-boundary matching to avoid replacing
+ * substrings of other identifiers (e.g., replacing "T" won't affect "TypeName").
+ *
+ * Examples:
+ *   substituteGenericParams("T", ["T"], ["User"]) => "User"
+ *   substituteGenericParams("list<Data<T>>", ["T"], ["User"]) => "list<Data<User>>"
+ *   substituteGenericParams("map<A, list<B>>", ["A", "B"], ["string", "integer"]) => "map<string, list<integer>>"
+ */
+function substituteGenericParams(
+    typeReference: string,
+    genericParamNames: string[],
+    genericArgValues: string[]
+): string {
+    let result = typeReference;
+    for (let i = 0; i < genericParamNames.length; i++) {
+        const param = genericParamNames[i];
+        const arg = genericArgValues[i];
+        if (param != null && arg != null) {
+            result = result.replace(new RegExp(`\\b${param}\\b`, "g"), arg);
+        }
+    }
+    return result;
+}
+
 export function convertGenericTypeDeclaration({
     generic,
     file,
@@ -32,15 +58,24 @@ export function convertGenericTypeDeclaration({
 
         const newProperties = Object.entries(resolvedBaseGeneric.declaration.properties ?? {}).map(([key, value]) => {
             let maybeReplacedValue = value;
-            if (typeof value === "string" && genericArgumentDefinitions?.includes(value)) {
-                maybeReplacedValue = maybeGeneric.arguments?.[genericArgumentDefinitions.indexOf(value)] ?? value;
+            if (typeof value === "string") {
+                maybeReplacedValue = substituteGenericParams(value, genericArgumentDefinitions, maybeGeneric.arguments);
+            } else if (typeof value === "object" && value != null && "type" in value) {
+                maybeReplacedValue = {
+                    ...value,
+                    type: substituteGenericParams(value.type, genericArgumentDefinitions, maybeGeneric.arguments)
+                };
             }
             return [key, maybeReplacedValue];
         });
+
+        const newExtends = getExtensionsAsList(resolvedBaseGeneric.declaration.extends).map((extended) => {
+            const substituted = substituteGenericParams(extended, genericArgumentDefinitions, maybeGeneric.arguments);
+            return parseTypeName({ typeName: substituted, file });
+        });
+
         return Type.object({
-            extends: getExtensionsAsList(resolvedBaseGeneric.declaration.extends).map((extended) =>
-                parseTypeName({ typeName: extended, file })
-            ),
+            extends: newExtends,
             properties: getObjectPropertiesFromRawObjectSchema({ properties: Object.fromEntries(newProperties) }, file),
             extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
             extendedProperties: undefined
