@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        `pipeline run --config` now accepts inline JSON, "-" for stdin,
+        or a file path. Result JSON is written to stdout.
+      type: feat
+  createdAt: "2026-02-26"
+  version: 0.6.7
+
+- changelogEntry:
+    - summary: |
         Handle shallow git clones in the pipeline. Add `git fetch --unshallow`
         at the start of GithubStep to ensure full history is available for
         replay operations, and use `--force` instead of `--force-with-lease`
