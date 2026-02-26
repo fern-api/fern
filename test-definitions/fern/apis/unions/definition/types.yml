@@ -270,15 +270,6 @@ types:
       type: optional<literal<"secondItemType">>
       title: string
 
-  UnionWithDigitStartingDiscriminants:
-    union:
-      1foo:
-        type: Foo
-        key: value
-      2bar:
-        type: Bar
-        key: value
-
   Foo:
     properties:
       name: string
