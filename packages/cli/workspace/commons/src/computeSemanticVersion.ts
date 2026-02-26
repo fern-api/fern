@@ -131,7 +131,7 @@ async function getLatestVersionFromNpm(packageName: string): Promise<string | un
                     return latestTag;
                 }
             }
-            // Falls through to try unauthenticated access
+            return undefined;
         }
         return await latestVersion(packageName);
     } catch (error) {
