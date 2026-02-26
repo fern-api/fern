@@ -65,14 +65,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-tags: false
-
-      - name: Fetch tags and history for git describe
-        run: |
-          # Fetch all tags (lightweight refs only, no branch history)
-          git fetch --tags --no-recurse-submodules origin
-          # Deepen current branch enough to reach the nearest tag
-          git fetch --deepen=100 --no-tags origin ${{ github.ref_name }}
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Install
         uses: ./.github/actions/install
@@ -128,7 +122,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-tags: false
+          fetch-depth: 20
 
       - name: Install
         uses: ./.github/actions/install
@@ -140,18 +134,17 @@ jobs:
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          GH_TOKEN: ${{ github.token }}
         run: |
-          # Get the previous version of versions.yml using GitHub API (avoids fetching all branches)
-          previous_sha=$(gh api "/repos/${{ github.repository }}/commits?path=packages/cli/cli/versions.yml&per_page=2" --jq '.[1].sha')
-          current_sha=$(gh api "/repos/${{ github.repository }}/commits?path=packages/cli/cli/versions.yml&per_page=1" --jq '.[0].sha')
+          previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/cli/cli/versions.yml | tail -n 1)
+          current_commit=$(git log -n 1 --pretty=format:"%h" -- packages/cli/cli/versions.yml)
 
-          gh api "/repos/${{ github.repository }}/contents/packages/cli/cli/versions.yml?ref=${previous_sha}" --jq '.content' | base64 -d > tmp_cli_previous_versions.yml
+          # Get the previous version of the file using the specific commit that last changed it
+          git show ${previous_commit}:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
 
-          echo "Preview of the previous file (${previous_sha:0:7})"
+          echo "Preview of the previous file (${previous_commit})"
           head tmp_cli_previous_versions.yml
 
-          echo "Preview of the current file (${current_sha:0:7})"
+          echo "Preview of the current file (${current_commit})"
           head packages/cli/cli/versions.yml
 
           # Publish dev CLI at the same version as prod
@@ -173,7 +166,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-tags: false
+          fetch-tags: true
 
       - name: Install
         uses: ./.github/actions/install
