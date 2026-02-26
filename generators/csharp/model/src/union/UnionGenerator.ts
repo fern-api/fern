@@ -569,13 +569,27 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 );
                 writer.writeLine();
 
-                // Check if any union type uses samePropertiesAsObject - if so, we need to
-                // strip the discriminant from the JSON before deserializing to avoid it
-                // leaking into AdditionalProperties
-                const hasSamePropertiesAsObject = this.unionDeclaration.types.some(
-                    (type) => type.shape.propertiesType === "samePropertiesAsObject"
+                // For samePropertiesAsObject variants, we need to strip the discriminant
+                // from the JSON before deserializing to avoid it leaking into
+                // AdditionalProperties. However, if the subtype itself has a property
+                // with the same wire name as the discriminant, we must use the full JSON
+                // to preserve that property.
+                const samePropertiesAsObjectTypes = this.unionDeclaration.types.filter(
+                    (type): type is FernIr.SingleUnionType & { shape: { propertiesType: "samePropertiesAsObject" } } =>
+                        type.shape.propertiesType === "samePropertiesAsObject"
                 );
-                if (hasSamePropertiesAsObject) {
+                const variantsNeedingStrippedJson = new Set<string>();
+                for (const type of samePropertiesAsObjectTypes) {
+                    const typeDecl = this.model.dereferenceType(type.shape.typeId).typeDeclaration;
+                    const hasDiscriminantProperty =
+                        typeDecl.shape.type === "object" &&
+                        typeDecl.shape.properties.some((prop) => prop.name.wireValue === discriminatorPropName);
+                    if (!hasDiscriminantProperty) {
+                        variantsNeedingStrippedJson.add(type.discriminantValue.wireValue);
+                    }
+                }
+                const needsStrippedJson = variantsNeedingStrippedJson.size > 0;
+                if (needsStrippedJson) {
                     writer.writeLine(
                         "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
                     );
@@ -598,7 +612,13 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                         writer.write(" => ");
                         switch (type.shape.propertiesType) {
                             case "samePropertiesAsObject":
-                                writer.write("jsonWithoutDiscriminator");
+                                // Use stripped JSON only if the subtype doesn't have a property
+                                // matching the discriminant name
+                                if (variantsNeedingStrippedJson.has(type.discriminantValue.wireValue)) {
+                                    writer.write("jsonWithoutDiscriminator");
+                                } else {
+                                    writer.write("json");
+                                }
                                 break;
                             case "singleProperty":
                                 writer.write(`json.GetProperty("${type.shape.name.wireValue}")`);
