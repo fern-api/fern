@@ -143,11 +143,6 @@ jobs:
             .github/
           fetch-tags: false
 
-      - name: Fetch history for current branch only
-        run: |
-          # Deepen just the current branch instead of fetching all ~750 remote branches
-          git fetch --no-tags --unshallow origin "${{ github.head_ref || github.ref_name }}" 2>/dev/null || true
-
       - name: Get base SHA for change detection
         id: get-base-sha
         env:
