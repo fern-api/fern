@@ -166,7 +166,7 @@ export class PersistedTypescriptProject {
 
         const startTime = Date.now();
         await (this.packageManager === "yarn"
-            ? pm(["add", "--dev", ...this.checkFixPackages], {
+            ? pm(["add", "--dev", "--ignore-scripts", "--prefer-offline", ...this.checkFixPackages], {
                   env: {
                       YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
                   }
