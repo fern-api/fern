@@ -65,8 +65,8 @@ export function generateOverridesContent({
 }): { paths: Record<string, Record<string, unknown>>; components: Record<string, Record<string, unknown>> } {
     const hasExisting = existingOverrides != null && typeof existingOverrides === "object";
 
-    const paths: Record<string, Record<string, unknown>> = hasExisting && "path" in existingOverrides
-        ? (existingOverrides.path as Record<string, Record<string, unknown>>)
+    const paths: Record<string, Record<string, unknown>> = hasExisting && "paths" in existingOverrides
+        ? (existingOverrides.paths as Record<string, Record<string, unknown>>)
         : {};
     for (const endpoint of ir.endpoints) {
         const endpointLocation = getEndpointLocation(endpoint);
