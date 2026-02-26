@@ -21,6 +21,12 @@ function bundle(entryCode: string): Promise<number> {
             },
             resolve: {
                 extensions: [".ts", ".js"],
+                // The generated source uses ".js" extensions in its imports
+                // (ESM-style), but the actual files on disk are ".ts".
+                // extensionAlias tells webpack to try ".ts" when it sees ".js".
+                extensionAlias: {
+                    ".js": [".ts", ".js"],
+                },
                 // Use exact-match aliases ($) so that the root alias does not
                 // swallow subpackage imports.  Subpackage paths point straight at
                 // the source exports file that the generator creates.
@@ -38,6 +44,12 @@ function bundle(entryCode: string): Promise<number> {
                             options: {
                                 transpileOnly: true,
                                 configFile: path.join(PKG_ROOT, "tsconfig.cjs.json"),
+                                compilerOptions: {
+                                    // Disable isolatedDeclarations which requires
+                                    // declaration output; not needed for bundling.
+                                    isolatedDeclarations: false,
+                                    declaration: false,
+                                },
                             },
                         },
                         exclude: /node_modules/,
