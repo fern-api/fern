@@ -7,7 +7,7 @@ import { readFile, writeFile } from "fs/promises";
 import { CliContext } from "../../cli-context/CliContext.js";
 
 const IMAGE_NAME = "fernenterprise/fern-self-hosted";
-const FROM_REGEX = new RegExp(`^(FROM\\s+${IMAGE_NAME.replace("/", "\\/")}):(.+)$`, "m");
+const FROM_REGEX = new RegExp(`^(FROM\\s+${IMAGE_NAME.replace("/", "\\/")}):([^\\s]+)(.*)$`, "m");
 
 export async function containerUpgrade({
     cliContext,
@@ -67,7 +67,7 @@ export async function containerUpgrade({
             return;
         }
 
-        const updatedContent = content.replace(FROM_REGEX, `$1:${latestTag}`);
+        const updatedContent = content.replace(FROM_REGEX, `$1:${latestTag}$3`);
         await writeFile(dockerfilePath, updatedContent);
 
         context.logger.info(
