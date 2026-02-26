@@ -68,9 +68,14 @@ export function convertParameters({
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs, context.options.preserveSchemaIds);
 
-        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
-            ? [false, !isRequired]
-            : [!isRequired, false];
+        // For header parameters, don't coerce optional to nullable. HTTP headers don't have
+        // a "null" concept at the wire level — they're either present with a value or absent.
+        // The coerceOptionalSchemasToNullable option should only affect request/response body
+        // properties, not header parameters. If a header's schema is explicitly nullable,
+        // that will still be respected via convertSchema/convertSchemaObject.
+        const isHeader = resolvedParameter.in === "header";
+        const [isOptional, isNullable] =
+            context.options.coerceOptionalSchemasToNullable && !isHeader ? [false, !isRequired] : [!isRequired, false];
 
         let schema =
             resolvedParameter.schema != null

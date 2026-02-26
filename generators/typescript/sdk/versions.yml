@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.6
+  changelogEntry:
+    - summary: |
+        Handle nullable header types by converting null to undefined. HTTP headers
+        don't have a "null" concept — they're either present with a value or absent.
+        When a header's type is nullable (explicitly via `nullable: true` in the spec),
+        the generated code now wraps the value with `?? undefined` to ensure null values
+        are treated as "don't send the header" instead of causing type errors.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.51.5
   changelogEntry:
     - summary: |
