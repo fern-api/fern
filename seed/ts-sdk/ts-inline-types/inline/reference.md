@@ -179,3 +179,4 @@ await client.getUndiscriminatedUnion({
 </dd>
 </dl>
 </details>
+

@@ -1690,7 +1690,11 @@ describe("${serviceName}", () => {
                     if (!value.body) {
                         return code`{ ${literalOf(discriminantWireValue)}: ${literalOf(errorName)} }`;
                     }
-                    const bodyCode = createRawJsonExample({ example: value.body, isForRequest: false, isForResponse: true });
+                    const bodyCode = createRawJsonExample({
+                        example: value.body,
+                        isForRequest: false,
+                        isForResponse: true
+                    });
                     return code`{ ${literalOf(discriminantWireValue)}: ${literalOf(errorName)}, ...${bodyCode} }`;
                 }
 

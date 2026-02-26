@@ -168,8 +168,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     public writeToFile(context: SdkContext): void {
         // Only get the request wrapper if the endpoint has a wrapped request.
         // Some endpoints (e.g., with justRequestBody or no sdkRequest) don't have wrappers.
-        const hasWrappedRequest =
-            this.endpoint.sdkRequest != null && this.endpoint.sdkRequest.shape.type === "wrapper";
+        const hasWrappedRequest = this.endpoint.sdkRequest != null && this.endpoint.sdkRequest.shape.type === "wrapper";
         const requestWrapper = hasWrappedRequest
             ? context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
             : undefined;

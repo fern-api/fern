@@ -1067,3 +1067,4 @@ client.nullable_optional.get_search_results(
 </dd>
 </dl>
 </details>
+
