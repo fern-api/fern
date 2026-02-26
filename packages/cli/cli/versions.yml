@@ -2,11 +2,18 @@
 - version: 3.90.3
   changelogEntry:
     - summary: |
-        Fix AUTO versioning incorrectly skipping SDK generation when the cleaned
-        diff is empty but the raw diff contains real changes. When all file sections
-        in a diff happen to be filtered out by the version-change cleaning logic
-        (e.g. when changes coincide with version bump patterns), the system now falls
-        back to a PATCH increment instead of reporting "no semantic changes detected".
+        Fix AUTO versioning missing namespace changes in the git diff. When
+        generated SDK files are copied without `.fernignore` (the
+        `copyGeneratedFilesNoFernIgnorePreservingGit` path), new files created
+        by namespace renames were untracked and invisible to `git diff HEAD`.
+        The diff generator now runs `git add -N .` (intent-to-add) before
+        diffing so that newly created files appear in the diff and are
+        correctly analyzed by the AI as breaking changes.
+      type: fix
+    - summary: |
+        Add safety net for AUTO versioning when the cleaned diff is empty but
+        the raw diff contains real changes. Falls back to a PATCH increment
+        instead of incorrectly skipping SDK generation.
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
