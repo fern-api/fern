@@ -307,6 +307,10 @@ export class OpenApiIrConverterContext {
      * Gets the final name for a schema, or the original name if no mapping exists.
      */
     public getSchemaFinalName(schemaId: string): string {
+        // Fast path: if respect-readonly-schemas is disabled, no schema renaming occurs
+        if (!this.options.respectReadonlySchemas) {
+            return schemaId;
+        }
         return this.schemaNameMapping.get(schemaId) ?? schemaId;
     }
 }

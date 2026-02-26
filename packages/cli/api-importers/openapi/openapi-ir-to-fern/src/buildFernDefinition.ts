@@ -35,17 +35,20 @@ function addSchemas({
     context: OpenApiIrConverterContext;
 }): void {
     // Phase 1: Pre-compute all final schema names to handle readonly renaming
-    for (const [id, schema] of Object.entries(schemas)) {
-        if (schemaIdsToExclude.includes(id) || schema.type !== "object") {
-            continue;
-        }
+    // Skip this phase entirely if respect-readonly-schemas is disabled
+    if (context.options.respectReadonlySchemas) {
+        for (const [id, schema] of Object.entries(schemas)) {
+            if (schemaIdsToExclude.includes(id) || schema.type !== "object") {
+                continue;
+            }
 
-        const originalName = schema.nameOverride ?? schema.generatedName;
-        const hasReadonlyProperties = schema.properties.some((prop) => prop.readonly);
+            const originalName = schema.nameOverride ?? schema.generatedName;
+            const hasReadonlyProperties = schema.properties.some((prop) => prop.readonly);
 
-        if (hasReadonlyProperties && context.options.respectReadonlySchemas) {
-            const finalName = `${originalName}Read`;
-            context.setSchemaFinalName(originalName, finalName);
+            if (hasReadonlyProperties) {
+                const finalName = `${originalName}Read`;
+                context.setSchemaFinalName(originalName, finalName);
+            }
         }
     }
 
