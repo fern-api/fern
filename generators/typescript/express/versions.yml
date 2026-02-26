@@ -1,6 +1,56 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-26"
+  version: 0.19.6
+
+- changelogEntry:
+    - summary: |
+        Upgrade Docker base image from Node.js 22 to Node.js 24 LTS.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-25"
+  version: 0.19.5
+
+- changelogEntry:
+    - summary: |
+        Upgrade to IRv65
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-24"
+  version: 0.19.4
+
+- changelogEntry:
+    - summary: |
+        Update oxfmt to 0.35.0, oxlint to 1.50.0, and oxlint-tsgolint to 0.14.2.
+      type: chore
+  irVersion: 61
+  createdAt: "2026-02-24"
+  version: 0.19.3
+
+- changelogEntry:
+    - summary: |
+        Update @biomejs/biome from 2.3.11 to 2.4.3.
+      type: chore
+  irVersion: 61
+  createdAt: "2026-02-20"
+  version: 0.19.2
+
+- changelogEntry:
+    - summary: |
+        Fix `outputSrcOnly` to take priority over `shouldGenerateFullProject` so that organizations
+        with self-hosted SDKs correctly receive only source files instead of the full project.
+      type: fix
+  irVersion: 61
+  createdAt: "2026-02-10"
+  version: 0.19.1
+
+- changelogEntry:
+    - summary: |
         Add `outputSrcOnly` configuration option that outputs only the contents of the `src/` directory
         directly to the destination path, without the `src/` wrapper directory. This is useful when you
         want to integrate the generated source files directly into another project without the extra

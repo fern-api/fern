@@ -1,15 +1,17 @@
 import { z } from "zod";
-import { AiConfigSchema } from "./AiConfigSchema";
-import { ApiDefinitionSchema } from "./ApiDefinitionSchema";
-import { ApisSchema } from "./ApisSchema";
-import { CliSchema } from "./CliSchema";
-import { SdksSchema } from "./SdksSchema";
+import { AiConfigSchema } from "./AiConfigSchema.js";
+import { ApiDefinitionSchema } from "./ApiDefinitionSchema.js";
+import { ApisSchema } from "./ApisSchema.js";
+import { CliSchema } from "./CliSchema.js";
+import { DocsSchema } from "./docs/DocsSchema.js";
+import { SdksSchema } from "./SdksSchema.js";
 
 export const FernYmlSchema = z.object({
-    edition: z.string(),
+    edition: z.string().optional(),
     org: z.string(),
     ai: AiConfigSchema.optional(),
     cli: CliSchema.optional(),
+    docs: DocsSchema.optional(),
     sdks: SdksSchema.optional(),
 
     // At most one of 'api' or 'apis' should be present.

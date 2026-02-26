@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { GithubLicenseSchema } from "./GithubLicenseSchema";
+import { GithubLicenseSchema } from "./GithubLicenseSchema.js";
 
 export const GithubConfigurationSchema = z.strictObject({
     repository: z.string(),

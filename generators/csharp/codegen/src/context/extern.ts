@@ -1,6 +1,6 @@
-import { type Type } from "../ast/types/IType";
-import { type Generation } from "../context/generation-info";
-import { lazy } from "../utils/lazy";
+import { type Type } from "../ast/types/IType.js";
+import { type Generation } from "../context/generation-info.js";
+import { lazy } from "../utils/lazy.js";
 
 /**
  * Provides access to external type references for C# code generation.

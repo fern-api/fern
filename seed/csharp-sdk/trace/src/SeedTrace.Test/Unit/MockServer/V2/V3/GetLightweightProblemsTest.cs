@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedTrace.Core;
 using SeedTrace.Test_.Unit.MockServer;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer.V2.V3;
 
@@ -50,14 +50,6 @@ public class GetLightweightProblemsTest : BaseMockServerTest
             );
 
         var response = await Client.V2.V3.Problem.GetLightweightProblemsAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(
-                    JsonUtils.Deserialize<IEnumerable<SeedTrace.V2.V3.LightweightProblemInfoV2>>(
-                        mockResponse
-                    )
-                )
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -5,16 +5,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
-    ExampleEndpointCall,
-    HttpEndpoint,
-    HttpService,
-    IntermediateRepresentation,
-    Subpackage,
-    TypeDeclaration,
-    TypeId,
-    WebSocketChannel
-} from "@fern-fern/ir-sdk/api";
-import {
     AsIsManager,
     BundledTypescriptProject,
     CoreUtilitiesManager,
@@ -53,30 +43,32 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { WebsocketTypeSchemaGenerator } from "@fern-typescript/websocket-type-schema-generator";
 import { writeFile } from "fs/promises";
 import { Directory, ModuleDeclaration, Project, SourceFile, SyntaxKind, ts } from "ts-morph";
-import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl";
-import { SdkContextImpl } from "./contexts/SdkContextImpl";
-import { ContributingGenerator } from "./contributing/ContributingGenerator";
-import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer";
-import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
-import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
-import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
-import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
-import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer";
-import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
-import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer";
-import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer";
-import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
-import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
-import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
-import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
-import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer";
-import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
-import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator";
-import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
-import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
-import { TestGenerator } from "./test-generator/TestGenerator";
-import { VersionFileGenerator } from "./version/VersionFileGenerator";
-import { VersionGenerator } from "./version/VersionGenerator";
+import { BaseClientContextImpl } from "./contexts/base-client/BaseClientContextImpl.js";
+import { SdkContextImpl } from "./contexts/SdkContextImpl.js";
+import { ContributingGenerator } from "./contributing/ContributingGenerator.js";
+import { BaseClientTypeDeclarationReferencer } from "./declaration-referencers/BaseClientTypeDeclarationReferencer.js";
+import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer.js";
+import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer.js";
+import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer.js";
+import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer.js";
+import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer.js";
+import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer.js";
+import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer.js";
+import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer.js";
+import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer.js";
+import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer.js";
+import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer.js";
+import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer.js";
+import { WebhooksHelperDeclarationReferencer } from "./declaration-referencers/WebhooksHelperDeclarationReferencer.js";
+import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
+import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
+import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
+import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent.js";
+import { TestGenerator } from "./test-generator/TestGenerator.js";
+import { VersionFileGenerator } from "./version/VersionFileGenerator.js";
+import { VersionGenerator } from "./version/VersionGenerator.js";
+import { WebhooksHelperGenerator } from "./webhooks/WebhooksHelperGenerator.js";
 
 const FILE_HEADER = `// This file was auto-generated by Fern from our API Definition.
 `;
@@ -84,10 +76,15 @@ const FILE_HEADER = `// This file was auto-generated by Fern from our API Defini
 const WHITELABEL_FILE_HEADER = `//  This file was auto-generated from our API Definition.
 `;
 
+interface WebhookVerificationEntry {
+    config: FernIr.WebhookSignatureVerification;
+    webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
+}
+
 export declare namespace SdkGenerator {
     export interface Init {
         namespaceExport: string;
-        intermediateRepresentation: IntermediateRepresentation;
+        intermediateRepresentation: FernIr.IntermediateRepresentation;
         context: GeneratorContext;
         npmPackage: NpmPackage | undefined;
         generateJestTests: boolean;
@@ -166,7 +163,7 @@ export declare namespace SdkGenerator {
 export class SdkGenerator {
     private namespaceExport: string;
     private context: GeneratorContext;
-    private intermediateRepresentation: IntermediateRepresentation;
+    private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private rawConfig: FernGeneratorExec.GeneratorConfig;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
@@ -207,6 +204,7 @@ export class SdkGenerator {
     private timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
     private nonStatusCodeErrorHandlerDeclarationReferencer: NonStatusCodeErrorHandlerDeclarationReferencer;
     private jsonDeclarationReferencer: JsonDeclarationReferencer;
+    private webhooksHelperDeclarationReferencer: WebhooksHelperDeclarationReferencer;
 
     private versionGenerator: VersionGenerator;
     private typeGenerator: TypeGenerator;
@@ -407,6 +405,10 @@ export class SdkGenerator {
             ],
             namespaceExport: "json"
         });
+        this.webhooksHelperDeclarationReferencer = new WebhooksHelperDeclarationReferencer({
+            containingDirectory: [],
+            namespaceExport
+        });
 
         this.versionGenerator = new VersionGenerator();
         this.typeGenerator = new TypeGenerator({
@@ -594,6 +596,8 @@ export class SdkGenerator {
         this.context.logger.debug("Generating auth providers");
         this.generateAuthProviders();
         this.context.logger.debug("Generated auth providers");
+        this.generateWebhooksHelper();
+        this.context.logger.debug("Generated webhooks helper");
 
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
@@ -741,7 +745,7 @@ export class SdkGenerator {
         await this.asIsManager.addToTsProject({ project: this.project });
     }
 
-    private getTypesToGenerate(): Record<TypeId, TypeDeclaration> {
+    private getTypesToGenerate(): Record<FernIr.TypeId, FernIr.TypeDeclaration> {
         if (this.config.enableInlineTypes) {
             return Object.fromEntries(
                 Object.entries(this.intermediateRepresentation.types).filter(
@@ -785,7 +789,7 @@ export class SdkGenerator {
     }
 
     private generateConsolidatedTypeDeclarations() {
-        const typesByFile = new Map<string, TypeDeclaration[]>();
+        const typesByFile = new Map<string, FernIr.TypeDeclaration[]>();
 
         for (const typeDeclaration of Object.values(this.getTypesToGenerate())) {
             const filepath = this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name);
@@ -956,7 +960,7 @@ export class SdkGenerator {
     }
 
     private generateAggregatedRequestWrappers() {
-        const requestWrappers: Array<{ packageId: PackageId; endpoint: HttpEndpoint }> = [];
+        const requestWrappers: Array<{ packageId: PackageId; endpoint: FernIr.HttpEndpoint }> = [];
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
                 if (endpoint.sdkRequest?.shape.type === "wrapper") {
@@ -1166,8 +1170,8 @@ export class SdkGenerator {
         importsManager: ImportsManager;
         rootPackage: PackageId;
         packageId: PackageId;
-        endpoint: HttpEndpoint;
-        example: ExampleEndpointCall;
+        endpoint: FernIr.HttpEndpoint;
+        example: FernIr.ExampleEndpointCall;
         includeImports: boolean;
     }): ts.Node[] | undefined {
         const context = this.generateSdkContext({ sourceFile, importsManager }, { isForSnippet: true });
@@ -1235,7 +1239,7 @@ export class SdkGenerator {
             const serviceFilepath = this.exportsManager.convertExportedFilePathToFilePath(exportedFilepath);
 
             for (const endpoint of service.endpoints) {
-                let examplesForEndpoint: ExampleEndpointCall[] = [];
+                let examplesForEndpoint: FernIr.ExampleEndpointCall[] = [];
                 for (const userDefinedExample of endpoint.userSpecifiedExamples) {
                     if (userDefinedExample.example != null) {
                         examplesForEndpoint.push(userDefinedExample.example);
@@ -1371,7 +1375,7 @@ export class SdkGenerator {
         });
     }
 
-    private getEndpointFunctionName(endpoint: HttpEndpoint): string {
+    private getEndpointFunctionName(endpoint: FernIr.HttpEndpoint): string {
         return endpoint.name.camelCase.unsafeName;
     }
 
@@ -1444,6 +1448,138 @@ export class SdkGenerator {
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     routingAuthProvidersGenerator.writeToFile(context);
+                }
+            });
+        }
+    }
+
+    private getVerificationTimestampKey(
+        timestamp: FernIr.WebhookTimestampConfig | undefined
+    ): { headerName: string; format: string; tolerance: number | undefined } | null {
+        if (timestamp == null) {
+            return null;
+        }
+        return {
+            headerName: timestamp.headerName.wireValue,
+            format: timestamp.format,
+            tolerance: timestamp.tolerance
+        };
+    }
+
+    private computeVerificationKey(verification: FernIr.WebhookSignatureVerification): string {
+        const common = {
+            type: verification.type,
+            algorithm: verification.algorithm,
+            encoding: verification.encoding,
+            signaturePrefix: verification.signaturePrefix,
+            signatureHeaderName: verification.signatureHeaderName.wireValue,
+            timestamp: this.getVerificationTimestampKey(verification.timestamp)
+        };
+
+        switch (verification.type) {
+            case "hmac":
+                return JSON.stringify({
+                    ...common,
+                    payloadFormat: {
+                        components: verification.payloadFormat.components,
+                        delimiter: verification.payloadFormat.delimiter
+                    }
+                });
+            case "asymmetric": {
+                const keySource =
+                    verification.keySource.type === "jwks"
+                        ? {
+                              type: verification.keySource.type,
+                              url: verification.keySource.url,
+                              keyIdHeader: verification.keySource.keyIdHeader?.wireValue ?? null
+                          }
+                        : { type: verification.keySource.type };
+                return JSON.stringify({ ...common, keySource });
+            }
+            default:
+                return JSON.stringify({ type: "unknown" });
+        }
+    }
+
+    private collectWebhookVerificationConfigs(): {
+        defaultEntry: WebhookVerificationEntry | undefined;
+        overrideEntries: WebhookVerificationEntry[];
+    } {
+        const grouped = new Map<string, WebhookVerificationEntry>();
+
+        for (const webhookGroup of Object.values(this.intermediateRepresentation.webhookGroups)) {
+            for (const webhook of webhookGroup) {
+                if (webhook.signatureVerification == null) {
+                    continue;
+                }
+                const key = this.computeVerificationKey(webhook.signatureVerification);
+                const existing = grouped.get(key);
+                if (existing != null) {
+                    existing.webhookNames.push(webhook.name);
+                } else {
+                    grouped.set(key, {
+                        config: webhook.signatureVerification,
+                        webhookNames: [webhook.name]
+                    });
+                }
+            }
+        }
+
+        if (grouped.size === 0) {
+            return { defaultEntry: undefined, overrideEntries: [] };
+        }
+
+        // Pick the most frequent config as the default (ties broken by insertion order)
+        let defaultEntry: WebhookVerificationEntry | undefined;
+        let maxCount = 0;
+        for (const entry of grouped.values()) {
+            if (entry.webhookNames.length > maxCount) {
+                maxCount = entry.webhookNames.length;
+                defaultEntry = entry;
+            }
+        }
+
+        const overrideEntries: WebhookVerificationEntry[] = [];
+        for (const entry of grouped.values()) {
+            if (entry !== defaultEntry) {
+                overrideEntries.push(entry);
+            }
+        }
+
+        return { defaultEntry, overrideEntries };
+    }
+
+    private generateWebhooksHelper(): void {
+        const { defaultEntry, overrideEntries } = this.collectWebhookVerificationConfigs();
+        if (defaultEntry == null) {
+            return;
+        }
+
+        // Generate default WebhooksHelper
+        const defaultGenerator = new WebhooksHelperGenerator(defaultEntry.config);
+        this.withSourceFile({
+            filepath: this.webhooksHelperDeclarationReferencer.getExportedFilepath(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                defaultGenerator.writeToFile(context);
+            }
+        });
+
+        // Generate named override helpers
+        for (const overrideEntry of overrideEntries) {
+            const [firstWebhookName] = overrideEntry.webhookNames;
+            const className = `${firstWebhookName.pascalCase.safeName}WebhooksHelper`;
+            const overrideReferencer = new WebhooksHelperDeclarationReferencer({
+                containingDirectory: [],
+                namespaceExport: this.namespaceExport,
+                helperName: className
+            });
+            const overrideGenerator = new WebhooksHelperGenerator(overrideEntry.config, className);
+            this.withSourceFile({
+                filepath: overrideReferencer.getExportedFilepath(),
+                run: ({ sourceFile, importsManager }) => {
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    overrideGenerator.writeToFile(context);
                 }
             });
         }
@@ -1726,7 +1862,7 @@ export class SdkGenerator {
         ];
     }
 
-    private forPackageChannel(run: (channel: WebSocketChannel, packageId: PackageId) => void): void {
+    private forPackageChannel(run: (channel: FernIr.WebSocketChannel, packageId: PackageId) => void): void {
         for (const packageId of this.getAllPackageIds()) {
             const channel = this.packageResolver.getChannelDeclaration(packageId);
             if (channel != null) {
@@ -1734,7 +1870,7 @@ export class SdkGenerator {
             }
         }
     }
-    private forEachService(run: (service: HttpService, packageId: PackageId) => void): void {
+    private forEachService(run: (service: FernIr.HttpService, packageId: PackageId) => void): void {
         for (const packageId of this.getAllPackageIds()) {
             const service = this.packageResolver.getServiceDeclaration(packageId);
             if (service != null) {
@@ -1873,7 +2009,7 @@ export class SdkGenerator {
             }
 
             const segments = package_.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
-            const subpackage = package_ as Subpackage;
+            const subpackage = package_ as FernIr.Subpackage;
             if (subpackage.name != null) {
                 const packageName = subpackage.name.camelCase.safeName;
                 if (segments.length === 0 || segments[segments.length - 1] !== packageName) {

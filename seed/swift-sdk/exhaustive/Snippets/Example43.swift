@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.urls.noEndingSlash()
+    _ = try await client.endpoints.put.add(id: "id")
 }
 
 try await main()

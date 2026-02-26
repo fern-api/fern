@@ -1,13 +1,13 @@
-import { enableStackTracking } from "../utils";
+import { enableStackTracking } from "../utils/index.js";
 import {
     getFramesForTaggedObject,
     StackTraceFrame,
     stacktrace,
     startTracking,
     trackingType
-} from "../utils/stacktrace";
-import { AbstractAstNode } from "./AbstractAstNode";
-import { CodeBlock } from "./CodeBlock";
+} from "../utils/stacktrace.js";
+import { AbstractAstNode } from "./AbstractAstNode.js";
+import { CodeBlock } from "./CodeBlock.js";
 
 const TAB_SIZE = 4;
 // this will start tracking only when FERN_STACK_TRACK is defined

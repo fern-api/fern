@@ -1,6 +1,6 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 
-import { ExecutionEnvironment } from "./ExecutionEnvironment";
+import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
 /**
  * Executes generators natively on the host system using provided commands.

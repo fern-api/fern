@@ -18,6 +18,9 @@ permissions: # Required for OIDC
   id-token: write
   contents: read
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   publish:
     permissions:
@@ -30,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 2
+          fetch-depth: 10
       - name: automated publish
         if: ${{ github.event_name == 'push' }}
         uses: ./.github/actions/publish-generator

@@ -76,6 +76,10 @@ public final class RequestTypeInlineType1 {
 
     public interface _FinalStage {
         RequestTypeInlineType1 build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -108,6 +112,18 @@ public final class RequestTypeInlineType1 {
         @java.lang.Override
         public RequestTypeInlineType1 build() {
             return new RequestTypeInlineType1(foo, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

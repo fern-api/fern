@@ -577,13 +577,9 @@ request := &pleaseinhere.BigEntity{
                     Nodes: []*pleaseinhere.Node{
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                     },
                     Trees: []*pleaseinhere.Tree{
@@ -600,13 +596,9 @@ request := &pleaseinhere.BigEntity{
                     Nodes: []*pleaseinhere.Node{
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                         &pleaseinhere.Node{
                             Name: "name",
-                            Nodes: []*pleaseinhere.Node{},
-                            Trees: []*pleaseinhere.Tree{},
                         },
                     },
                     Trees: []*pleaseinhere.Tree{
@@ -678,13 +670,9 @@ request := &pleaseinhere.BigEntity{
                     Directories: []*pleaseinhere.Directory{
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                     },
                 },
@@ -703,13 +691,9 @@ request := &pleaseinhere.BigEntity{
                     Directories: []*pleaseinhere.Directory{
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                         &pleaseinhere.Directory{
                             Name: "name",
-                            Files: []*pleaseinhere.File{},
-                            Directories: []*pleaseinhere.Directory{},
                         },
                     },
                 },
@@ -801,3 +785,4 @@ client.Service.RefreshToken(
 </dd>
 </dl>
 </details>
+

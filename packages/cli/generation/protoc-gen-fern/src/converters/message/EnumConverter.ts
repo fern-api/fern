@@ -3,8 +3,8 @@ import { EnumDescriptorProto } from "@bufbuild/protobuf/wkt";
 import { Type } from "@fern-api/ir-sdk";
 import { AbstractConverter } from "@fern-api/v3-importer-commons";
 
-import { ProtofileConverterContext } from "../ProtofileConverterContext";
-import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers";
+import { ProtofileConverterContext } from "../ProtofileConverterContext.js";
+import { PATH_FIELD_NUMBERS } from "../utils/PathFieldNumbers.js";
 
 export declare namespace EnumConverter {
     export interface Args extends AbstractConverter.Args<ProtofileConverterContext> {

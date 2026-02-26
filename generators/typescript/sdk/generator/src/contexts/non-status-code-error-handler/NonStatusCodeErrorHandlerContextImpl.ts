@@ -2,8 +2,8 @@ import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/comm
 import { NonStatusCodeErrorHandlerContext } from "@fern-typescript/contexts";
 import { SourceFile } from "ts-morph";
 
-import { NonStatusCodeErrorHandlerDeclarationReferencer } from "../../declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer";
-import { NonStatusCodeErrorHandlerGenerator } from "../../non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator";
+import { NonStatusCodeErrorHandlerDeclarationReferencer } from "../../declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer.js";
+import { NonStatusCodeErrorHandlerGenerator } from "../../non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
 
 export declare namespace NonStatusCodeErrorHandlerContextImpl {
     export interface Init {

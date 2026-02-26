@@ -103,6 +103,16 @@
         }
       ]
     },
+    "replay": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/replay.ReplayConfigSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "ai": {
       "oneOf": [
         {
@@ -1577,6 +1587,48 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "url-templates": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-urls": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variables": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/fernDefinition.environments.ServerVariableSchema"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1899,6 +1951,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -2243,6 +2305,16 @@
             }
           ]
         },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "message-naming": {
           "oneOf": [
             {
@@ -2378,7 +2450,7 @@
             }
           ]
         },
-        "resource": {
+        "name": {
           "oneOf": [
             {
               "type": "string"
@@ -2705,6 +2777,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolve-schema-collisions": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -4064,6 +4146,18 @@
       },
       "required": [
         "generators"
+      ],
+      "additionalProperties": false
+    },
+    "replay.ReplayConfigSchema": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled"
       ],
       "additionalProperties": false
     },

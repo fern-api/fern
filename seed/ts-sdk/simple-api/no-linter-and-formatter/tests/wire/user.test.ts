@@ -17,15 +17,15 @@ describe("UserClient", () => {
                 .build();
 
         
-                    
-                            const response = await client.user.get("id");
-                            expect(response).toEqual({
+                        
+                                const response = await client.user.get("id");
+                                expect(response).toEqual({
     id: "id",
     name: "name",
     email: "email"
 });
-                          
-                
+                              
+                    
     });
           
 });

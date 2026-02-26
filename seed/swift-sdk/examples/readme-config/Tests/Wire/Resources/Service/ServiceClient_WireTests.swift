@@ -407,14 +407,10 @@ import Examples
                             name: "name",
                             nodes: [
                                 Node(
-                                    name: "name",
-                                    nodes: [],
-                                    trees: []
+                                    name: "name"
                                 ),
                                 Node(
-                                    name: "name",
-                                    nodes: [],
-                                    trees: []
+                                    name: "name"
                                 )
                             ],
                             trees: [
@@ -430,14 +426,10 @@ import Examples
                             name: "name",
                             nodes: [
                                 Node(
-                                    name: "name",
-                                    nodes: [],
-                                    trees: []
+                                    name: "name"
                                 ),
                                 Node(
-                                    name: "name",
-                                    nodes: [],
-                                    trees: []
+                                    name: "name"
                                 )
                             ],
                             trees: [
@@ -508,14 +500,10 @@ import Examples
                             ],
                             directories: [
                                 Directory(
-                                    name: "name",
-                                    files: [],
-                                    directories: []
+                                    name: "name"
                                 ),
                                 Directory(
-                                    name: "name",
-                                    files: [],
-                                    directories: []
+                                    name: "name"
                                 )
                             ]
                         ),
@@ -533,14 +521,10 @@ import Examples
                             ],
                             directories: [
                                 Directory(
-                                    name: "name",
-                                    files: [],
-                                    directories: []
+                                    name: "name"
                                 ),
                                 Directory(
-                                    name: "name",
-                                    files: [],
-                                    directories: []
+                                    name: "name"
                                 )
                             ]
                         )

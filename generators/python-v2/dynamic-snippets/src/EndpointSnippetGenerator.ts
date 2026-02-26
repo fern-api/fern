@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
 const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     type: "primitive",
@@ -702,7 +702,7 @@ export class EndpointSnippetGenerator {
         }
         return [
             {
-                name: this.context.getPropertyName(body.bodyKey),
+                name: REQUEST_BODY_ARG_NAME,
                 value: typeInstantiation
             }
         ];

@@ -3,7 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
@@ -499,6 +499,7 @@ export class DynamicTypeLiteralMapper {
         const variantErrors: string[] = [];
 
         for (const typeReference of undiscriminatedUnion.types) {
+            const errorsBefore = this.context.errors.size();
             try {
                 attemptedVariants.push(JSON.stringify(typeReference));
                 const typeInstantiation = this.convert({
@@ -507,8 +508,14 @@ export class DynamicTypeLiteralMapper {
                     inUndiscriminatedUnion: true
                 });
 
+                if (java.TypeLiteral.isNop(typeInstantiation)) {
+                    this.context.errors.truncate(errorsBefore);
+                    continue;
+                }
+
                 return { valueTypeReference: typeReference, typeInstantiation };
             } catch (e) {
+                this.context.errors.truncate(errorsBefore);
                 variantErrors.push(
                     `Type ${JSON.stringify(typeReference)}: ${e instanceof Error ? e.message : String(e)}`
                 );
@@ -666,8 +673,14 @@ export class DynamicTypeLiteralMapper {
                 return "DateTime";
             case "BASE_64":
                 return "Base64";
-            default:
+            default: {
+                // Forward-compatible: handle primitive types not yet in the published SDK
+                const primitiveStr: string = primitive;
+                if (primitiveStr === "DATE_TIME_RFC_2822") {
+                    return "DateTimeRfc2822";
+                }
                 assertNever(primitive);
+            }
         }
     }
 
@@ -866,8 +879,18 @@ export class DynamicTypeLiteralMapper {
                 }
                 return java.TypeLiteral.bigInteger(bigInt);
             }
-            default:
+            default: {
+                // Forward-compatible: handle primitive types not yet in the published SDK
+                const primitiveStr: string = primitive;
+                if (primitiveStr === "DATE_TIME_RFC_2822") {
+                    const dateTime = this.context.getValueAsString({ value });
+                    if (dateTime == null) {
+                        return java.TypeLiteral.nop();
+                    }
+                    return java.TypeLiteral.dateTime(dateTime);
+                }
                 assertNever(primitive);
+            }
         }
     }
 

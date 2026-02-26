@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { java } from "@fern-api/java-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
+import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeMapper {
     interface Args {
@@ -119,8 +119,14 @@ export class DynamicTypeMapper {
                 return java.Type.bytes();
             case "BIG_INTEGER":
                 return java.Type.bigInteger();
-            default:
+            default: {
+                // Forward-compatible: handle primitive types not yet in the published SDK
+                const primitiveStr: string = primitive;
+                if (primitiveStr === "DATE_TIME_RFC_2822") {
+                    return java.Type.dateTime();
+                }
                 assertNever(primitive);
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
-import { FERNIGNORE_FILENAME, getFernIgnorePaths } from "@fern-api/configuration";
-import { AiServicesSchema } from "@fern-api/configuration/src/generators-yml";
+import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -11,8 +10,8 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService";
-import { isAutoVersion } from "./VersionUtils";
+import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
+import { isAutoVersion } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -24,7 +23,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
         version: string | undefined;
-        ai: AiServicesSchema | undefined;
+        ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
     }
 }
@@ -38,7 +37,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     private version: string | undefined;
-    private ai: AiServicesSchema | undefined;
+    private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
 
     constructor({
@@ -140,6 +139,22 @@ export class LocalTaskHandler {
 
             this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
             this.context.logger.debug(`Cleaned diff size: ${cleanedDiff.length} bytes`);
+
+            // Handle new SDK repository with no previous version
+            if (previousVersion == null) {
+                this.context.logger.info(
+                    "No previous version found (new SDK repository). Using 0.0.1 as initial version."
+                );
+                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const commitMessage = this.isWhitelabel
+                    ? "Initial SDK generation"
+                    : "Initial SDK generation\n\n🌿 Generated with Fern";
+                return {
+                    version: initialVersion,
+                    commitMessage
+                };
+            }
+
             this.context.logger.debug(`Previous version detected: ${previousVersion}`);
 
             // Call AI to analyze the diff
@@ -170,8 +185,8 @@ export class LocalTaskHandler {
                 this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
-                    ? "SDK regeneration\n\nUnable to analyze changes with AI, incrementing PATCH version."
-                    : "SDK regeneration\n\nUnable to analyze changes with AI, incrementing PATCH version.\n\n🌿 Generated with Fern";
+                    ? "SDK regeneration"
+                    : "SDK regeneration\n\n🌿 Generated with Fern";
                 return {
                     version: newVersion,
                     commitMessage: fallbackMessage
@@ -179,12 +194,20 @@ export class LocalTaskHandler {
             }
         } catch (error) {
             if (error instanceof AutoVersioningException) {
-                // When user explicitly requested AUTO versioning, we must fail if we can't extract version
-                this.context.logger.error(`AUTO versioning failed: ${error.message}`);
-                throw new Error(
-                    `Failed to extract previous version for automatic semantic versioning. ` +
-                        `Please ensure your project has a version file in a supported format. Error: ${error.message}`
+                // Fall back to initial version when we can't extract the previous version
+                // (e.g., new SDK repos where all files are additions, or unsupported version formats)
+                this.context.logger.warn(
+                    `AUTO versioning could not extract previous version: ${error.message}. ` +
+                        `Falling back to initial version 0.0.1.`
                 );
+                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const commitMessage = this.isWhitelabel
+                    ? "Initial SDK generation"
+                    : "Initial SDK generation\n\n🌿 Generated with Fern";
+                return {
+                    version: initialVersion,
+                    commitMessage
+                };
             }
 
             this.context.logger.error(`Failed to perform automatic versioning: ${error}`);
@@ -278,6 +301,10 @@ export class LocalTaskHandler {
         );
         const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
 
+        // Also preserve README.md if the generated output doesn't include one,
+        // to prevent accidental deletion when README generation fails silently.
+        const pathsToPreserve = await this.getPathsToPreserve(fernIgnorePaths);
+
         const response = await this.runGitCommand(["config", "--list"], this.absolutePathToLocalOutput);
         if (!response.includes("user.name")) {
             await this.runGitCommand(["config", "user.name", "fern-api"], this.absolutePathToLocalOutput);
@@ -296,9 +323,9 @@ export class LocalTaskHandler {
         // If absolutePathToLocalOutput is already a git repository, work directly in it
         await this.runGitCommand(["add", "."], this.absolutePathToLocalOutput);
 
-        // Undo changes to fernignore paths
-        await this.runGitCommand(["reset", "--", ...fernIgnorePaths], this.absolutePathToLocalOutput);
-        await this.runGitCommand(["clean", "-fd", "--", ...fernIgnorePaths], this.absolutePathToLocalOutput);
+        // Undo changes to preserved paths (fernignore + README.md if missing from output)
+        await this.runGitCommand(["reset", "--", ...pathsToPreserve], this.absolutePathToLocalOutput);
+        await this.runGitCommand(["clean", "-fd", "--", ...pathsToPreserve], this.absolutePathToLocalOutput);
         await this.runGitCommand(["restore", "."], this.absolutePathToLocalOutput);
     }
 
@@ -311,6 +338,9 @@ export class LocalTaskHandler {
             join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
         );
         const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+
+        // Also preserve README.md if the generated output doesn't include one.
+        const pathsToPreserve = await this.getPathsToPreserve(fernIgnorePaths);
 
         // Copy files from local output to tmp directory
         await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
@@ -334,9 +364,9 @@ export class LocalTaskHandler {
 
         await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
 
-        // Undo changes to fernignore paths
-        await this.runGitCommand(["reset", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
-        await this.runGitCommand(["clean", "-fd", "--", ...fernIgnorePaths], tmpOutputResolutionDir);
+        // Undo changes to preserved paths (fernignore + README.md if missing from output)
+        await this.runGitCommand(["reset", "--", ...pathsToPreserve], tmpOutputResolutionDir);
+        await this.runGitCommand(["clean", "-fd", "--", ...pathsToPreserve], tmpOutputResolutionDir);
         await this.runGitCommand(["restore", "."], tmpOutputResolutionDir);
 
         // remove .git dir before copying files over
@@ -353,10 +383,16 @@ export class LocalTaskHandler {
         // Read directory contents
         const contents = await readdir(this.absolutePathToLocalOutput);
 
-        // Delete everything except .git
+        // Build list of items to preserve: always .git, plus README.md if not in generated output
+        const itemsToPreserve = [".git"];
+        if (await this.generatedOutputMissingReadme()) {
+            itemsToPreserve.push("README.md");
+        }
+
+        // Delete everything except preserved items
         await Promise.all(
             contents
-                .filter((item) => item !== ".git")
+                .filter((item) => !itemsToPreserve.includes(item))
                 .map((item) =>
                     rm(join(this.absolutePathToLocalOutput, RelativeFilePath.of(item)), {
                         force: true,
@@ -409,6 +445,38 @@ export class LocalTaskHandler {
     }): Promise<void> {
         this.context.logger.debug(`Copying generated snippets to ${absolutePathToLocalSnippetJSON}`);
         await cp(absolutePathToTmpSnippetJSON, absolutePathToLocalSnippetJSON);
+    }
+
+    /**
+     * Checks whether the generated output is missing README.md.
+     * When true, the existing README.md should be preserved to prevent
+     * accidental deletion caused by silent README generation failures.
+     */
+    private async generatedOutputMissingReadme(): Promise<boolean> {
+        try {
+            const contents = await readdir(this.absolutePathToTmpOutputDirectory);
+            // If the output is a single zip file we can't inspect its contents,
+            // so conservatively assume it includes a README.
+            if (contents.length === 1 && contents[0] != null && contents[0].endsWith(".zip")) {
+                return false;
+            }
+            return !contents.includes("README.md");
+        } catch {
+            // If we can't check the generated output, preserve the existing README to be safe
+            return true;
+        }
+    }
+
+    /**
+     * Returns the list of paths that should be preserved during file copy.
+     * Starts with fernignore paths, and adds README.md if the generated
+     * output does not include one.
+     */
+    private async getPathsToPreserve(fernIgnorePaths: string[]): Promise<string[]> {
+        if (await this.generatedOutputMissingReadme()) {
+            return [...fernIgnorePaths, "README.md"];
+        }
+        return fernIgnorePaths;
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {

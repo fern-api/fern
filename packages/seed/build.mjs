@@ -37,10 +37,10 @@ async function main() {
         external: ["@fern-api/go-formatter", "@boundaryml/baml"]
     });
 
-    process.chdir(path.join(__dirname, "dist"));
+    const outDirAbs = path.join(__dirname, "dist");
 
     await writeFile(
-        "package.json",
+        path.join(outDirAbs, "package.json"),
         JSON.stringify(
             {
                 name: "fern-api",
@@ -58,5 +58,5 @@ async function main() {
     );
 
     // Run npm pkg fix to format and fix the package.json
-    await execAsync("npm pkg fix");
+    await execAsync("npm pkg fix", { cwd: outDirAbs });
 }

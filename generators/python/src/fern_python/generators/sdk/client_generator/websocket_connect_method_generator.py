@@ -13,6 +13,7 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
+from fern_python.utils.snake_case import snake_case
 
 import fern.ir.resources as ir_types
 
@@ -68,13 +69,18 @@ class WebsocketConnectMethodGenerator:
                 _named_parameter_names.append(name)
                 self._path_parameter_names[get_parameter_name(path_parameter.name)] = name
 
+    def _get_connect_method_name(self) -> str:
+        if self._websocket.connect_method_name is not None:
+            return snake_case(self._websocket.connect_method_name)
+        return "connect"
+
     def generate(self) -> GeneratedConnectMethod:
         unnamed_parameters = self._get_websocket_path_parameters()
         named_parameters = self._get_overridden_parameter_types()
         parameters = self._get_websocket_parameters()
 
         function_declaration = AST.FunctionDeclaration(
-            name="connect",
+            name=self._get_connect_method_name(),
             is_async=self._is_async,
             docstring=self._get_docstring_for_websocket(
                 websocket=self._websocket,
@@ -373,14 +379,21 @@ class WebsocketConnectMethodGenerator:
                     handlers=[
                         AST.ExceptHandler(
                             exception_type=AST.Expression(
-                                AST.ReferenceNode(reference=Websockets.get_invalid_status_code_exception()),
+                                AST.ReferenceNode(
+                                    reference=self._context.core_utilities.get_reference_to_invalid_websocket_status()
+                                ),
                             ),
                             name="exc",
                             body=[
                                 AST.VariableDeclaration(
                                     name="status_code",
                                     type_hint=AST.TypeHint.int_(),
-                                    initializer=AST.Expression("exc.status_code"),
+                                    initializer=AST.Expression(
+                                        AST.FunctionInvocation(
+                                            function_definition=self._context.core_utilities.get_reference_to_get_status_code(),
+                                            args=[AST.Expression("exc")],
+                                        )
+                                    ),
                                 ),
                                 AST.ConditionalTree(
                                     conditions=[
@@ -778,10 +791,12 @@ class WebsocketConnectMethodGenerator:
             container=lambda container: container.visit(
                 list_=lambda _lt: False,
                 set_=lambda _st: False,
-                optional=lambda item_type: allow_optional
-                and self._is_enum_type_with_value(item_type, allow_optional=True),
-                nullable=lambda item_type: allow_optional
-                and self._is_enum_type_with_value(item_type, allow_optional=True),
+                optional=lambda item_type: (
+                    allow_optional and self._is_enum_type_with_value(item_type, allow_optional=True)
+                ),
+                nullable=lambda item_type: (
+                    allow_optional and self._is_enum_type_with_value(item_type, allow_optional=True)
+                ),
                 map_=lambda _mt: False,
                 literal=lambda _lit: False,
             ),
@@ -856,19 +871,23 @@ class WebsocketConnectMethodGenerator:
             container=lambda container: container.visit(
                 list_=lambda x: False,
                 set_=lambda x: False,
-                optional=lambda item_type: allow_optional
-                and self._does_type_reference_match_primitives(
-                    item_type,
-                    expected=expected,
-                    allow_optional=True,
-                    allow_enum=allow_enum,
+                optional=lambda item_type: (
+                    allow_optional
+                    and self._does_type_reference_match_primitives(
+                        item_type,
+                        expected=expected,
+                        allow_optional=True,
+                        allow_enum=allow_enum,
+                    )
                 ),
-                nullable=lambda item_type: allow_optional
-                and self._does_type_reference_match_primitives(
-                    item_type,
-                    expected=expected,
-                    allow_optional=True,
-                    allow_enum=allow_enum,
+                nullable=lambda item_type: (
+                    allow_optional
+                    and self._does_type_reference_match_primitives(
+                        item_type,
+                        expected=expected,
+                        allow_optional=True,
+                        allow_enum=allow_enum,
+                    )
                 ),
                 map_=lambda x: False,
                 literal=lambda literal: literal.visit(

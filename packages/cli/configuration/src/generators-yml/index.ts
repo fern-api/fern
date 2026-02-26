@@ -6,7 +6,7 @@ export {
     DEFAULT_GROUP_NAME,
     OPENAPI_LOCATION_KEY,
     OPENAPI_OVERRIDES_LOCATION_KEY
-} from "../constants";
+} from "../constants.js";
 export {
     type APIDefinition,
     type APIDefinitionLocation,
@@ -18,7 +18,7 @@ export {
     getPackageName,
     type ProtoAPIDefinitionSchema,
     type SingleNamespaceAPIDefinition
-} from "./GeneratorsConfiguration";
-export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
-export * from "./schemas";
-export * from "./utils";
+} from "./GeneratorsConfiguration.js";
+export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema.js";
+export * from "./schemas/index.js";
+export * from "./utils/index.js";

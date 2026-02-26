@@ -1,5 +1,5 @@
-import { default as CONFIG } from "./fixtures/basic-go/readme";
-import { testGenerateReadme } from "./testGenerateReadme";
+import { default as CONFIG } from "./fixtures/basic-go/readme.js";
+import { testGenerateReadme } from "./testGenerateReadme.js";
 
 describe("basic-go", () => {
     testGenerateReadme({

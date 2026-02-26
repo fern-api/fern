@@ -1,9 +1,9 @@
 import type { Argv } from "yargs";
-import type { Context } from "../../../context/Context";
-import type { GlobalArgs } from "../../../context/GlobalArgs";
-import { CliError } from "../../../errors/CliError";
-import { Migrator } from "../../../migrator";
-import { command } from "../../_internal/command";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { CliError } from "../../../errors/CliError.js";
+import { Migrator } from "../../../migrator/index.js";
+import { command } from "../../_internal/command.js";
 
 export declare namespace MigrateCommand {
     export interface Args extends GlobalArgs {
@@ -54,7 +54,7 @@ export class MigrateCommand {
     }
 }
 
-export function addMigrateCommand(cli: Argv<GlobalArgs>): void {
+export function addMigrateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new MigrateCommand();
     command(
         cli,
@@ -66,6 +66,7 @@ export function addMigrateCommand(cli: Argv<GlobalArgs>): void {
                 type: "boolean",
                 description: "Keep original files after migration",
                 default: true
-            })
+            }),
+        parentPath
     );
 }

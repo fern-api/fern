@@ -407,6 +407,26 @@
             }
           ]
         },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "slug": {
           "oneOf": [
             {
@@ -931,6 +951,26 @@
             }
           ]
         },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {
@@ -1059,6 +1099,88 @@
       ],
       "additionalProperties": false
     },
+    "docs.ApiReferenceOperationConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "additionalProperties": false
+    },
     "docs.LinkConfiguration": {
       "type": "object",
       "properties": {
@@ -1113,6 +1235,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceEndpointConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.ApiReferenceOperationConfiguration"
         },
         {
           "$ref": "#/definitions/docs.PageConfiguration"
@@ -1357,11 +1482,44 @@
       ],
       "additionalProperties": false
     },
-    "docs.PythonDocsConfiguration": {
+    "docs.LibraryName": {
+      "type": "string"
+    },
+    "docs.LibraryReferenceConfiguration": {
       "type": "object",
       "properties": {
-        "python-docs": {
-          "type": "string"
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "library": {
+          "$ref": "#/definitions/docs.LibraryName"
         },
         "title": {
           "oneOf": [
@@ -1385,7 +1543,7 @@
         }
       },
       "required": [
-        "python-docs"
+        "library"
       ],
       "additionalProperties": false
     },
@@ -1584,6 +1742,26 @@
             }
           ]
         },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {
@@ -1612,7 +1790,7 @@
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
         },
         {
-          "$ref": "#/definitions/docs.PythonDocsConfiguration"
+          "$ref": "#/definitions/docs.LibraryReferenceConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LinkConfiguration"

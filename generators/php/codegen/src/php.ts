@@ -1,5 +1,6 @@
 import { Ternary } from "@fern-api/browser-compatible-base-generator";
-
+import { AstNode } from "./ast/core/AstNode.js";
+import { DataClass } from "./ast/DataClass.js";
 import {
     Array as Array_,
     Attribute,
@@ -9,16 +10,15 @@ import {
     CodeBlock,
     Enum,
     Field,
+    Interface,
     Map,
     Method,
     MethodInvocation,
     Parameter,
     Trait
-} from "./ast";
-import { AstNode } from "./ast/core/AstNode";
-import { DataClass } from "./ast/DataClass";
-import { MergeArrays } from "./ast/MergeArrays";
-import { convertToPhpVariableName } from "./ast/utils/convertToPhpVariableName";
+} from "./ast/index.js";
+import { MergeArrays } from "./ast/MergeArrays.js";
+import { convertToPhpVariableName } from "./ast/utils/convertToPhpVariableName.js";
 
 export function array(args: Array_.Args): Array_ {
     return new Array_(args);
@@ -34,6 +34,10 @@ export function class_(args: Class.Args): Class {
 
 export function trait(args: Trait.Args): Trait {
     return new Trait(args);
+}
+
+export function interface_(args: Interface.Args): Interface {
+    return new Interface(args);
 }
 
 export function classReference(args: ClassReference.Args): ClassReference {
@@ -126,6 +130,7 @@ export function this_(): AstNode {
     });
 }
 
+export { AstNode } from "./ast/core/AstNode.js";
 export {
     Access,
     Array,
@@ -138,6 +143,7 @@ export {
     DataClass,
     Enum,
     Field,
+    Interface,
     Map,
     Method,
     MethodInvocation,
@@ -146,5 +152,4 @@ export {
     Type,
     TypeLiteral,
     Writer
-} from "./ast";
-export { AstNode } from "./ast/core/AstNode";
+} from "./ast/index.js";

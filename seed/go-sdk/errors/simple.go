@@ -31,6 +31,9 @@ func (f *FooRequest) GetBar() string {
 }
 
 func (f *FooRequest) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (f *FooRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FooRequest) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value
@@ -109,6 +115,9 @@ func (f *FooResponse) GetBar() string {
 }
 
 func (f *FooResponse) GetExtraProperties() map[string]interface{} {
+	if f == nil {
+		return nil
+	}
 	return f.extraProperties
 }
 
@@ -154,6 +163,9 @@ func (f *FooResponse) MarshalJSON() ([]byte, error) {
 }
 
 func (f *FooResponse) String() string {
+	if f == nil {
+		return "<nil>"
+	}
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
 			return value

@@ -63,6 +63,9 @@ var (
 	//go:embed sdk/utils/pointer.go
 	pointerFile string
 
+	//go:embed sdk/utils/pointer_test.go
+	pointerTestFile string
+
 	//go:embed sdk/internal/query.go
 	queryFile string
 
@@ -1773,6 +1776,7 @@ func (f *fileWriter) WriteClient(
 		f,
 		fernFilepath,
 		irEndpoints,
+		serviceHeaders,
 		rootClientInstantiation,
 	)
 }
@@ -2047,6 +2051,7 @@ func NewGeneratedClient(
 	f *fileWriter,
 	fernFilepath *common.FernFilepath,
 	endpoints []*ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
 	rootClientInstantiation *ast.AssignStmt,
 ) (*GeneratedClient, error) {
 	var generatedEndpoints []*GeneratedEndpoint
@@ -2069,6 +2074,7 @@ func NewGeneratedClient(
 				fernFilepath,
 				rootClientInstantiation,
 				endpoint,
+				serviceHeaders,
 				example,
 			),
 		)
@@ -2084,6 +2090,7 @@ func newGeneratedEndpoint(
 	fernFilepath *common.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
 	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
 	return &GeneratedEndpoint{
@@ -2093,6 +2100,7 @@ func newGeneratedEndpoint(
 			fernFilepath,
 			rootClientInstantiation,
 			endpoint,
+			serviceHeaders,
 			example,
 		),
 	}
@@ -2141,6 +2149,7 @@ func newEndpointSnippet(
 	fernFilepath *common.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
 	example *ir.ExampleEndpointCall,
 ) *ast.Block {
 	methodName := getEndpointMethodName(fernFilepath, endpoint)
@@ -2148,6 +2157,7 @@ func newEndpointSnippet(
 		f,
 		fernFilepath,
 		endpoint,
+		serviceHeaders,
 		example,
 	)
 	call := &ast.CallExpr{
@@ -2207,6 +2217,7 @@ func getEndpointParameters(
 	f *fileWriter,
 	fernFilepath *common.FernFilepath,
 	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
 	example *ir.ExampleEndpointCall,
 ) []ast.Expr {
 	var fields []*ast.Field
@@ -2279,7 +2290,7 @@ func getEndpointParameters(
 		)
 	}
 
-	if !shouldSkipRequestType(endpoint, f.inlinePathParameters, f.inlineFileProperties) {
+	if !shouldSkipRequestType(endpoint, serviceHeaders, f.inlinePathParameters, f.inlineFileProperties, f.omitEmptyRequestWrappers) {
 		fields = append(
 			fields,
 			exampleRequestBodyToFields(f, endpoint, example.Request)...,
@@ -2646,7 +2657,7 @@ func (f *fileWriter) endpointFromIR(
 	)
 
 	if irEndpoint.SdkRequest != nil {
-		if needsRequestParameter(irEndpoint, inlinePathParameters, inlineFileProperties) {
+		if needsRequestParameter(irEndpoint, serviceHeaders, inlinePathParameters, inlineFileProperties, f.omitEmptyRequestWrappers) {
 			var requestType string
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
@@ -3075,6 +3086,7 @@ func (f *fileWriter) WriteRequestType(
 			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
+			// Headers have json:"-" tags, so skip for test generation
 		}
 	}
 
@@ -3085,6 +3097,7 @@ func (f *fileWriter) WriteRequestType(
 			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
+			// Path parameters have json:"-" tags, so skip for test generation
 		}
 	}
 
@@ -3119,7 +3132,6 @@ func (f *fileWriter) WriteRequestType(
 	var literals []*literal
 	f.P("type ", typeName, " struct {")
 	for _, header := range append(serviceHeaders, endpoint.Headers...) {
-		f.WriteDocs(header.Docs)
 		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
 			literals = append(
 				literals,
@@ -3130,6 +3142,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
+		f.WriteDocs(header.Docs)
 		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
 	}
@@ -3145,7 +3158,6 @@ func (f *fileWriter) WriteRequestType(
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
-		f.WriteDocs(queryParam.Docs)
 		if queryParam.ValueType.Container != nil && queryParam.ValueType.Container.Literal != nil {
 			literals = append(
 				literals,
@@ -3156,6 +3168,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
+		f.WriteDocs(queryParam.Docs)
 		f.P(goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName), " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
 	}
 	if endpoint.RequestBody == nil {
@@ -3178,6 +3191,18 @@ func (f *fileWriter) WriteRequestType(
 
 		// Write setter methods for all properties
 		f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
+
+		// Collect test data for request type (requests have setters only, no getters)
+		needsDereference := make([]bool, len(propertyNames)) // all false for requests
+		f.AddGetterSetterTestData(GetterSetterTestConfig{
+			TypeName:         typeName,
+			PropertyNames:    propertyNames,
+			PropertyTypes:    propertyTypes,
+			SafeNames:        propertySafeNames,
+			HasGetters:       false,
+			HasSetters:       true,
+			NeedsDereference: needsDereference,
+		})
 
 		return nil
 	}
@@ -3209,6 +3234,18 @@ func (f *fileWriter) WriteRequestType(
 
 	// Write setter methods for all properties
 	f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
+
+	// Collect test data for request type (requests have setters only, no getters)
+	needsDereference := make([]bool, len(propertyNames)) // all false for requests
+	f.AddGetterSetterTestData(GetterSetterTestConfig{
+		TypeName:         typeName,
+		PropertyNames:    propertyNames,
+		PropertyTypes:    propertyTypes,
+		SafeNames:        propertySafeNames,
+		HasGetters:       false,
+		HasSetters:       true,
+		NeedsDereference: needsDereference,
+	})
 
 	var (
 		referenceType           string
@@ -3867,8 +3904,10 @@ func typeReferenceFromStreamingResponse(
 // function signature.
 func needsRequestParameter(
 	endpoint *ir.HttpEndpoint,
+	serviceHeaders []*ir.HttpHeader,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
+	omitEmptyRequestWrappers bool,
 ) bool {
 	if endpoint.SdkRequest == nil {
 		return false
@@ -3882,6 +3921,9 @@ func needsRequestParameter(
 	if len(endpoint.Headers) > 0 {
 		return true
 	}
+	if len(serviceHeaders) > 0 {
+		return true
+	}
 	if endpoint.RequestBody != nil {
 		return endpoint.RequestBody.FileUpload == nil ||
 			fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload) ||
@@ -3891,7 +3933,7 @@ func needsRequestParameter(
 	if onlyPathParameters != nil && *onlyPathParameters {
 		return false
 	}
-	return true
+	return !omitEmptyRequestWrappers
 }
 
 // includePathParametersInWrappedRequest returns true if the endpoint's request should

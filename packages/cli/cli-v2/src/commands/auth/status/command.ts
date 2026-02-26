@@ -1,11 +1,11 @@
 import { getAccessToken } from "@fern-api/auth";
 import chalk from "chalk";
 import type { Argv } from "yargs";
-import { TokenService } from "../../../auth/TokenService";
-import { FERN_TOKEN_ENV_VAR } from "../../../constants";
-import type { Context } from "../../../context/Context";
-import type { GlobalArgs } from "../../../context/GlobalArgs";
-import { command } from "../../_internal/command";
+import { TokenService } from "../../../auth/TokenService.js";
+import { FERN_TOKEN_ENV_VAR } from "../../../constants.js";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { command } from "../../_internal/command.js";
 
 export declare namespace StatusCommand {
     export interface Args extends GlobalArgs {
@@ -133,7 +133,7 @@ export class StatusCommand {
     }
 }
 
-export function addStatusCommand(cli: Argv<GlobalArgs>): void {
+export function addStatusCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new StatusCommand();
     command(
         cli,
@@ -151,6 +151,7 @@ export function addStatusCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     default: false,
                     description: "Show active account only"
-                })
+                }),
+        parentPath
     );
 }

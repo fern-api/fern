@@ -15,11 +15,11 @@
  */
 
 import { fail } from "node:assert";
-import { type Field as AstField, ClassReference } from "../ast";
-import { Generation } from "../context/generation-info";
-import { Origin } from "../context/model-navigator";
-import { is } from "../utils/type-guards";
-import { builtIns } from "./knownTypes";
+import { type Field as AstField, ClassReference } from "../ast/index.js";
+import { Generation } from "../context/generation-info.js";
+import { Origin } from "../context/model-navigator.js";
+import { is } from "../utils/type-guards.js";
+import { builtIns } from "./knownTypes.js";
 
 // C# Keywords and Reserved Names (from Registry)
 const base_keywords = new Set([

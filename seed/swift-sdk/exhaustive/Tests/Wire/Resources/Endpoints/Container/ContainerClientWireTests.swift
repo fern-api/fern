@@ -183,6 +183,38 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
+    @Test func getAndReturnMapOfPrimToUndiscriminatedUnion1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "string": 1.1
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = [
+            "string": MixedType.double(
+                1.1
+            )
+        ]
+        let response = try await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(
+            request: [
+                "string": MixedType.double(
+                    1.1
+                )
+            ],
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func getAndReturnOptional1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(

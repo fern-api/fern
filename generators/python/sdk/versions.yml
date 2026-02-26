@@ -1,5 +1,316 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.60.1
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 4.60.0
+  changelogEntry:
+    - summary: |
+        Support `connectMethodName` on WebSocket channels. When a channel specifies a custom
+        connection method name via `x-fern-sdk-method-name`, the generated SDK uses that name
+        (converted to snake_case) instead of the default `connect`.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 4.59.4
+  changelogEntry:
+    - summary: |
+        Fix wire test import generation for organizations with hyphens in their name.
+        Use `package_name` from custom config when available, and auto-convert hyphens
+        to underscores in the fallback module path to produce valid Python import statements.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 4.59.3
+  changelogEntry:
+    - summary: Fix bytes body snippet generation to use `request` parameter name instead of dynamic IR body key.
+      type: fix
+    - summary: Skip wire test generation for bytes request body endpoints, which lack IR example support.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 4.59.2
+  changelogEntry:
+    - summary: |
+        Generate an appropriate `client.py` file when `client.exported_filename` differs from `client.filename`.
+        Previously, the `__init__.py` would import from the exported filename (e.g., `client.py`) but
+        that file was never created, causing mypy `import-not-found` errors.
+      type: fix
+  createdAt: "2026-02-20"
+  irVersion: 65
+
+- version: 4.59.1
+  changelogEntry:
+    - summary: Fix wire test imports to respect package_name custom config, preventing import errors when users specify custom package names
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+
+- version: 4.59.0
+  changelogEntry:
+    - summary: |
+        Add `offsetSemantics` custom config option. When set to `"page-index"`, offset pagination
+        increments by 1 each page instead of by the number of items returned (`"item-index"`, the default).
+      type: feat
+  createdAt: "2026-02-17"
+  irVersion: 65
+
+- version: 4.58.1
+  changelogEntry:
+    - summary: |
+        Export `ConsoleLogger` and `ILogger` from the `core` module, allowing users to import
+        and use them directly:
+
+        ```python
+        from acme.core import ConsoleLogger, ILogger
+        ```
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 65
+
+- version: 4.58.0
+  changelogEntry:
+    - summary: |
+        Add support for logging to the generated SDK.
+        Users can configure the logger by passing in a `logging` parameter to the client constructor.
+
+        ```python
+        from acme import AcmeClient
+        from acme.core import ConsoleLogger
+
+        client = AcmeClient(
+            token="YOUR_TOKEN",
+            logging={
+                "level": "debug",  # "info" is the default
+                "logger": ConsoleLogger(),  # ConsoleLogger is the default
+                "silent": False,  # True is the default, set to False to enable logging
+            }
+        )
+        ```
+
+        The `logging` parameter accepts a `LogConfig` dict with the following properties:
+        - `level`: The log level to use. Defaults to `"info"`.
+        - `logger`: The logger to use. Defaults to `ConsoleLogger`.
+        - `silent`: Whether to silence the logger. Defaults to `True`.
+
+        The `level` property can be one of the following values:
+        - `"debug"`
+        - `"info"`
+        - `"warn"`
+        - `"error"`
+
+        To provide a custom logger, pass an object implementing the `ILogger` protocol
+        with `debug`, `info`, `warn`, and `error` methods.
+
+        Sensitive headers (`authorization`, `x-api-key`, `cookie`, etc.) are automatically
+        redacted in logs.
+      type: feat
+  createdAt: "2026-02-10"
+  irVersion: 65
+
+- version: 4.57.3
+  changelogEntry:
+    - summary: |
+        Handle optional access tokens in OAuth token provider by raising `RuntimeError`
+        when the token is `None`. Fix wire test setup to use `client_id`/`client_secret`
+        for OAuth client credentials and expect 2 requests when testing the token endpoint.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
+- version: 4.57.2
+  changelogEntry:
+    - summary: |
+        Fix path-based pagination to pass the next page path as `path=` instead of `url=`
+        in the generated HTTP client request call.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 65
+
+- version: 4.57.1
+  changelogEntry:
+    - summary: |
+        Only copy `custom_pagination.py` into generated SDKs when custom pagination endpoints
+        are present, and only copy `pagination.py` when standard pagination endpoints are present.
+      type: fix
+  createdAt: "2026-02-12"
+  irVersion: 65
+
+- version: 4.57.0
+  changelogEntry:
+    - summary: |
+        Add `custom_transport: true` generator config option that exposes an `http_client` parameter
+        on generated client constructors for custom httpx transport injection.
+
+        **Primary use case:** Enables PKCE (Proof Key for Code Exchange) OAuth flows and other
+        authentication schemes that require request interception at the transport layer.
+
+        **Configuration:**
+        ```yaml
+        generators:
+          - name: fernapi/fern-python-sdk
+            config:
+              custom_transport: true
+        ```
+
+        **Generated parameter types:**
+        - Sync client: `http_client: typing.Optional[httpx.BaseTransport]`
+        - Async client: `http_client: typing.Optional[httpx.AsyncBaseTransport]`
+
+        **Use cases:**
+        - PKCE OAuth authentication flows requiring code challenge/verifier injection
+        - Custom request signing or authentication header manipulation
+        - Request/response interception and modification
+        - Mock transports for testing without network calls
+        - Custom retry logic beyond the built-in exponential backoff
+
+        **Example pattern (Twilio SDK style):**
+        ```python
+        # SDK developer provides a factory method in custom code
+        class ValidationClient:
+            @classmethod
+            def create(cls, account_sid: str, auth_token: str) -> httpx.BaseTransport:
+                # Custom transport with PKCE or validation logic
+                return CustomValidationTransport(account_sid, auth_token)
+
+        # End-user usage
+        from myapi import MyClient, ValidationClient
+
+        validation_transport = ValidationClient.create("account_sid", "auth_token")
+        client = MyClient(http_client=validation_transport, base_url="https://api.example.com")
+        ```
+
+        This feature allows SDK developers to defer transport-specific logic to custom code while
+        the generator simply threads the transport through to `httpx.Client`/`httpx.AsyncClient`.
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
+- version: 4.56.0
+  changelogEntry:
+    - summary: |
+        Add support for URI and path-based pagination.
+      type: feat
+  createdAt: "2026-02-11"
+  irVersion: 65
+- version: 4.55.5
+  changelogEntry:
+    - summary: |
+        Compute Docker Compose project name during generation to avoid invalid characters from runtime directory names (e.g. `.seed`).
+      type: fix
+    - summary: |
+        Cache client constructor signature check at module level and use httpx instead of requests for WireMock admin calls in generated wire test conftest.
+      type: chore
+  createdAt: "2026-02-11"
+  irVersion: 63
+
+- version: 4.55.4
+  changelogEntry:
+    - summary: |
+        Fix Python 3.14 compatibility by replacing `pydantic.v1.datetime_parse` imports with
+        Pydantic V2 `TypeAdapter`-based `parse_date`/`parse_datetime` implementations. Remaining
+        `pydantic.v1` imports are wrapped with warning suppression to avoid the
+        "Core Pydantic V1 functionality isn't compatible with Python 3.14" warning.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 4.55.3
+  changelogEntry:
+    - summary: |
+        Fix body property named `json` clashing with the `json` module import when generating
+        `json.dumps(jsonable_encoder(...))` for multipart file upload requests. The `json` module
+        is now aliased as `_json` when a body property named `json` is detected.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 4.55.2
+  changelogEntry:
+    - summary: |
+        Add websocket compatibility shim for websockets library v14. The generated SDK now
+        uses a `core/websocket_compat.py` module that abstracts the `InvalidStatusCode` vs
+        `InvalidStatus` exception difference, ensuring compatibility with both websockets
+        v12-13 and v14+.
+      type: fix
+  createdAt: "2026-02-09"
+  irVersion: 63
+
+- version: 4.55.1
+  changelogEntry:
+    - summary: |
+        Adds back intermediate raw_clients which were removed in 4.51.2.
+      type: fix
+  createdAt: "2026-02-06"
+  irVersion: 63
+
+- version: 4.55.0
+  changelogEntry:
+    - summary: |
+        Add support for server URL templating with OpenAPI server variables. This enables
+        dynamic base URL construction at runtime based on user-provided configuration.
+
+        **OpenAPI definition example:**
+        ```yaml
+        servers:
+          - url: https://api.{region}.{environment}.example.com/v1
+            variables:
+              region:
+                default: us-east-1
+                enum: [us-east-1, us-west-2, eu-west-1]
+              environment:
+                default: prod
+                enum: [prod, staging, dev]
+        ```
+
+        **Generated constructor parameters:**
+        Server variables are exposed as optional constructor parameters with their default values:
+        - `region: typing.Optional[str]` - defaults to `"us-east-1"`
+        - `server_url_environment: typing.Optional[str]` - defaults to `"prod"` (prefixed to avoid shadowing)
+
+        **Runtime URL interpolation:**
+        When server variables are provided, the SDK performs runtime URL template interpolation:
+        ```python
+        from seed import SeedApi
+
+        # Uses default: https://api.us-east-1.prod.example.com/v1
+        client = SeedApi()
+
+        # Custom region: https://api.eu-west-1.prod.example.com/v1
+        client = SeedApi(region="eu-west-1")
+
+        # Custom region and environment: https://api.us-west-2.staging.example.com/v1
+        client = SeedApi(region="us-west-2", server_url_environment="staging")
+        ```
+
+        **Multiple base URL environments:**
+        For APIs with multiple base URLs (e.g., separate `base` and `auth` URLs), each URL
+        template is interpolated independently with the same server variables.
+
+        **`x-fern-default-url` extension:**
+        When present in the OpenAPI spec, this extension specifies which server URL should
+        be used as the default environment, overriding the first server in the list.
+      type: feat
+  createdAt: "2026-02-05"
+  irVersion: 63
+
+- version: 4.54.4
+  changelogEntry:
+    - summary: |
+        The `use_provided_defaults` config option no longer applies defaults to
+        inlined request body properties.
+      type: fix
+  createdAt: "2026-02-05"
+  irVersion: 62
 - version: 4.54.3
   changelogEntry:
     - summary: |

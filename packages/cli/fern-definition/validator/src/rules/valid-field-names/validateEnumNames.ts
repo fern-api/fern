@@ -2,8 +2,8 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { getEnumName } from "@fern-api/ir-generator";
 import chalk from "chalk";
 
-import { RuleViolation } from "../../Rule";
-import { VALID_NAME_REGEX } from "./regex";
+import { RuleViolation } from "../../Rule.js";
+import { VALID_NAME_REGEX } from "./regex.js";
 
 const X_FERN_ENUM_DOCS_LINK =
     "https://buildwithfern.com/learn/api-definitions/openapi/extensions/enum-descriptions-and-names";

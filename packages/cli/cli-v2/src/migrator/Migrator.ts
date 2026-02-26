@@ -4,13 +4,11 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import type { Logger } from "@fern-api/logger";
 import { readdir, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { convertMultiApi, convertSingleApi } from "./converters";
-import { FernConfigJsonMigrator } from "./fern-config-json";
-import { GeneratorsYmlMigrator } from "./generators-yml";
-import type { MigratorResult, MigratorWarning } from "./types";
-
-const FERN_YML_FILENAME = "fern.yml";
-const EDITION = "2026-01-01";
+import { FERN_YML_FILENAME } from "../config/fern-yml/constants.js";
+import { convertMultiApi, convertSingleApi } from "./converters/index.js";
+import { FernConfigJsonMigrator } from "./fern-config-json/index.js";
+import { GeneratorsYmlMigrator } from "./generators-yml/index.js";
+import type { MigratorResult, MigratorWarning } from "./types/index.js";
 
 export interface MigratorConfig {
     cwd: AbsoluteFilePath;
@@ -166,7 +164,6 @@ export class Migrator {
         warnings.push(...apiResult.warnings);
 
         const fernYml: schemas.FernYmlSchema = {
-            edition: EDITION,
             org
         };
 
@@ -196,7 +193,7 @@ export class Migrator {
                 type: "conflict",
                 message: "No API directories found in fern/apis/"
             });
-            return { success: false, fernYml: { edition: EDITION, org } };
+            return { success: false, fernYml: { org } };
         }
 
         // Collect generators.yml API configs and SDK results for each API.
@@ -240,7 +237,6 @@ export class Migrator {
         warnings.push(...apisResult.warnings);
 
         const fernYml: schemas.FernYmlSchema = {
-            edition: EDITION,
             org,
             apis: apisResult.apis
         };
@@ -301,7 +297,7 @@ export class Migrator {
             doc.cli = fernYml.cli;
         }
         if (fernYml.sdks != null) {
-            doc.sdks = fernYml.sdks;
+            doc.sdks = this.simplifySdks(fernYml.sdks);
         }
         return yaml.dump(doc, {
             indent: 2,
@@ -311,5 +307,28 @@ export class Migrator {
             quotingType: '"',
             forceQuotes: false
         });
+    }
+
+    /**
+     * Simplifies SDK target output fields for YAML serialization.
+     * Converts `output: { path: "./sdks/typescript" }` to `output: "./sdks/typescript"`.
+     */
+    private simplifySdks(sdks: schemas.SdksSchema): schemas.SdksSchema {
+        const simplified: schemas.SdksSchema = { ...sdks };
+        const targets: Record<string, schemas.SdkTargetSchema> = {};
+        for (const [name, target] of Object.entries(sdks.targets)) {
+            const output = target.output;
+            if (typeof output === "string") {
+                targets[name] = target;
+                continue;
+            }
+            if (output.git == null && output.path != null) {
+                targets[name] = { ...target, output: output.path };
+                continue;
+            }
+            targets[name] = target;
+        }
+        simplified.targets = targets;
+        return simplified;
     }
 }

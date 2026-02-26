@@ -4,8 +4,8 @@ import { CodeGeneratorResponse_Feature, CodeGeneratorResponseSchema } from "@buf
 import { FileInfo, Plugin } from "@bufbuild/protoplugin";
 
 import { version } from "../package.json";
-import { generateIr } from "./generateIr";
-import { Options, parseOptions } from "./parseOptions";
+import { generateIr } from "./generateIr.js";
+import { Options, parseOptions } from "./parseOptions.js";
 
 export const protocGenFern = createPlugin({
     name: "protoc-gen-fern",

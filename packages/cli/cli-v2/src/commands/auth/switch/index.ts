@@ -1,1 +1,1 @@
-export { addSwitchCommand } from "./command";
+export { addSwitchCommand } from "./command.js";

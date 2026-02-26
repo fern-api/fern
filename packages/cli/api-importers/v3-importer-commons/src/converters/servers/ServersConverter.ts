@@ -7,9 +7,9 @@ import {
     SingleBaseUrlEnvironment
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { AbstractConverter, AbstractConverterContext } from "../..";
-import { ServerNameExtension } from "../../extensions/x-fern-server-name";
+import { AudienceExtension } from "../../extensions/x-fern-audiences.js";
+import { ServerNameExtension } from "../../extensions/x-fern-server-name.js";
+import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 
 const DEFAULT_BASE_URL_ID = "Base";
 const X_FERN_DEFAULT_URL = "x-fern-default-url";
@@ -74,6 +74,10 @@ export class ServersConverter extends AbstractConverter<
                     ServersConverter.getServerName({ server, context: this.context }),
                     this.getServerUrl(server)
                 ]);
+                const audiences = ServersConverter.getServerAudiences({
+                    server: baseUrl,
+                    context: this.context
+                });
 
                 const { defaultUrls, urlTemplates, urlVariables } = this.buildMultiUrlTemplateFields({
                     defaultBaseUrlId,
@@ -89,6 +93,7 @@ export class ServersConverter extends AbstractConverter<
                         ...Object.fromEntries(endpointLevelServerEntries ?? [])
                     },
                     docs: baseUrl.description,
+                    audiences,
                     defaultUrls,
                     urlTemplates,
                     urlVariables
@@ -113,6 +118,7 @@ export class ServersConverter extends AbstractConverter<
         const environments: SingleBaseUrlEnvironment[] = this.servers
             .map((server) => {
                 const serverName = ServersConverter.getServerName({ server, context: this.context });
+                const audiences = ServersConverter.getServerAudiences({ server, context: this.context });
                 const hasVariables = server.variables != null && Object.keys(server.variables).length > 0;
 
                 if (hasVariables && server.variables != null) {
@@ -121,6 +127,7 @@ export class ServersConverter extends AbstractConverter<
                         id: serverName,
                         name: this.context.casingsGenerator.generateName(serverName),
                         url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
+                        audiences,
                         defaultUrl: fernDefaultUrl,
                         urlTemplate: this.maybeRemoveTrailingSlashIfNotEmpty(server.url),
                         urlVariables: this.convertServerVariables(server.variables),
@@ -132,6 +139,7 @@ export class ServersConverter extends AbstractConverter<
                     id: serverName,
                     name: this.context.casingsGenerator.generateName(serverName),
                     url: this.maybeRemoveTrailingSlashIfNotEmpty(this.getServerUrl(server)),
+                    audiences,
                     defaultUrl: undefined,
                     urlTemplate: undefined,
                     urlVariables: undefined,
@@ -171,6 +179,17 @@ export class ServersConverter extends AbstractConverter<
         context: AbstractConverterContext<object>;
     }): string | undefined {
         return new ServerNameExtension({ breadcrumbs: [], server, context }).convert();
+    }
+
+    public static getServerAudiences({
+        server,
+        context
+    }: {
+        server: OpenAPIV3_1.ServerObject;
+        context: AbstractConverterContext<object>;
+    }): string[] | undefined {
+        const audienceExtension = new AudienceExtension({ breadcrumbs: [], operation: server, context });
+        return audienceExtension.convert()?.audiences;
     }
 
     public static getServerName({

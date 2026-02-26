@@ -4,12 +4,12 @@ import { type Auth0TokenResponse, getTokenFromAuth0 } from "@fern-api/login";
 import chalk from "chalk";
 import type { Argv } from "yargs";
 
-import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter";
-import type { Context } from "../../../context/Context";
-import type { GlobalArgs } from "../../../context/GlobalArgs";
-import { CliError } from "../../../errors/CliError";
-import { Icons } from "../../../ui/format";
-import { command } from "../../_internal/command";
+import { TaskContextAdapter } from "../../../context/adapter/TaskContextAdapter.js";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { CliError } from "../../../errors/CliError.js";
+import { Icons } from "../../../ui/format.js";
+import { command } from "../../_internal/command.js";
 
 export declare namespace LoginCommand {
     export interface Args extends GlobalArgs {
@@ -67,7 +67,7 @@ export class LoginCommand {
     }
 }
 
-export function addLoginCommand(cli: Argv<GlobalArgs>): void {
+export function addLoginCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new LoginCommand();
     command(
         cli,
@@ -82,6 +82,7 @@ export function addLoginCommand(cli: Argv<GlobalArgs>): void {
                     description: "Use device code flow (for environments where browser cannot open automatically)"
                 })
                 .example("$0 auth login", "Log in via browser")
-                .example("$0 auth login --device-code", "Log in via device code")
+                .example("$0 auth login --device-code", "Log in via device code"),
+        parentPath
     );
 }

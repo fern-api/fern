@@ -577,13 +577,9 @@ request := &fern.BigEntity{
                     Nodes: []*fern.Node{
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                     },
                     Trees: []*fern.Tree{
@@ -600,13 +596,9 @@ request := &fern.BigEntity{
                     Nodes: []*fern.Node{
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                         &fern.Node{
                             Name: "name",
-                            Nodes: []*fern.Node{},
-                            Trees: []*fern.Tree{},
                         },
                     },
                     Trees: []*fern.Tree{
@@ -678,13 +670,9 @@ request := &fern.BigEntity{
                     Directories: []*fern.Directory{
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                     },
                 },
@@ -703,13 +691,9 @@ request := &fern.BigEntity{
                     Directories: []*fern.Directory{
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                         &fern.Directory{
                             Name: "name",
-                            Files: []*fern.File{},
-                            Directories: []*fern.Directory{},
                         },
                     },
                 },
@@ -801,3 +785,4 @@ client.Service.RefreshToken(
 </dd>
 </dl>
 </details>
+

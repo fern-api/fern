@@ -1,14 +1,14 @@
 import { fail } from "node:assert";
-import { type Generation } from "../../context/generation-info";
-import { type Origin } from "../../context/model-navigator";
-import { type TypeScope } from "../../context/name-registry";
-import { type ClassInstantiation } from "../code/ClassInstantiation";
-import { Literal } from "../code/Literal";
-import { Node } from "../core/AstNode";
-import type { Writer } from "../core/Writer";
-import { type Field } from "./Field";
-import { Type } from "./IType";
-import { Nullable, Optional } from "./Type";
+import { type Generation } from "../../context/generation-info.js";
+import { type Origin } from "../../context/model-navigator.js";
+import { type TypeScope } from "../../context/name-registry.js";
+import { type ClassInstantiation } from "../code/ClassInstantiation.js";
+import { Literal } from "../code/Literal.js";
+import { Node } from "../core/AstNode.js";
+import type { Writer } from "../core/Writer.js";
+import { type Field } from "./Field.js";
+import { Type } from "./IType.js";
+import { Nullable, Optional } from "./Type.js";
 
 export declare namespace ClassReference {
     interface Identity {

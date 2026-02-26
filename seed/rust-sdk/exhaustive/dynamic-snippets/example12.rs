@@ -11,8 +11,7 @@ async fn main() {
     client
         .endpoints
         .http_methods
-        .test_put(
-            &"id".to_string(),
+        .test_post(
             &ObjectWithRequiredField {
                 string: "string".to_string(),
             },

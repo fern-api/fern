@@ -2,12 +2,12 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
 
-import { TokenService } from "../../../auth/TokenService";
-import type { Context } from "../../../context/Context";
-import type { GlobalArgs } from "../../../context/GlobalArgs";
-import { CliError } from "../../../errors/CliError";
-import { Icons } from "../../../ui/format";
-import { command } from "../../_internal/command";
+import { TokenService } from "../../../auth/TokenService.js";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { CliError } from "../../../errors/CliError.js";
+import { Icons } from "../../../ui/format.js";
+import { command } from "../../_internal/command.js";
 
 export declare namespace LogoutCommand {
     export interface Args extends GlobalArgs {
@@ -127,7 +127,7 @@ export class LogoutCommand {
     }
 }
 
-export function addLogoutCommand(cli: Argv<GlobalArgs>): void {
+export function addLogoutCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new LogoutCommand();
     command(
         cli,
@@ -149,6 +149,7 @@ export function addLogoutCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     default: false,
                     description: "Skip confirmation prompt"
-                })
+                }),
+        parentPath
     );
 }

@@ -598,13 +598,9 @@ await client.service.createBigEntity({
         nodes: [{
                 name: "name",
                 nodes: [{
-                        name: "name",
-                        nodes: [],
-                        trees: []
+                        name: "name"
                     }, {
-                        name: "name",
-                        nodes: [],
-                        trees: []
+                        name: "name"
                     }],
                 trees: [{
                         nodes: []
@@ -614,13 +610,9 @@ await client.service.createBigEntity({
             }, {
                 name: "name",
                 nodes: [{
-                        name: "name",
-                        nodes: [],
-                        trees: []
+                        name: "name"
                     }, {
-                        name: "name",
-                        nodes: [],
-                        trees: []
+                        name: "name"
                     }],
                 trees: [{
                         nodes: []
@@ -669,13 +661,9 @@ await client.service.createBigEntity({
                         contents: "contents"
                     }],
                 directories: [{
-                        name: "name",
-                        files: [],
-                        directories: []
+                        name: "name"
                     }, {
-                        name: "name",
-                        files: [],
-                        directories: []
+                        name: "name"
                     }]
             }, {
                 name: "name",
@@ -687,13 +675,9 @@ await client.service.createBigEntity({
                         contents: "contents"
                     }],
                 directories: [{
-                        name: "name",
-                        files: [],
-                        directories: []
+                        name: "name"
                     }, {
-                        name: "name",
-                        files: [],
-                        directories: []
+                        name: "name"
                     }]
             }]
     },
@@ -786,3 +770,4 @@ await client.service.refreshToken(undefined);
 </dd>
 </dl>
 </details>
+

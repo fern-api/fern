@@ -4,5 +4,5 @@ import type * as FernDefinition from "../../../index.js";
 
 export interface ExampleBodyResponseSchema {
     error?: string;
-    body?: FernDefinition.ExampleTypeReferenceSchema | undefined;
+    body?: FernDefinition.ExampleTypeReferenceSchema;
 }

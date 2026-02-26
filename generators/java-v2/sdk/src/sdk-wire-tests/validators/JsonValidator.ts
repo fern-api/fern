@@ -1,6 +1,6 @@
-import { Writer } from "@fern-api/java-ast/src/ast";
-import { HttpEndpoint, Pagination } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { Writer } from "@fern-api/java-ast";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 /**
  * Validator for JSON assertions in wire tests.
@@ -59,7 +59,7 @@ export class JsonValidator {
      */
     public generateEnhancedJsonValidation(
         writer: Writer,
-        endpoint: HttpEndpoint,
+        endpoint: FernIr.HttpEndpoint,
         context: "request" | "response",
         actualVarName: string,
         expectedVarName: string
@@ -79,7 +79,7 @@ export class JsonValidator {
     /**
      * Generates enhanced validation for response types
      */
-    private generateResponseTypeValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+    private generateResponseTypeValidation(writer: Writer, endpoint: FernIr.HttpEndpoint, actualVarName: string): void {
         const responseBody = endpoint.response?.body;
         if (!responseBody || responseBody.type !== "json") {
             return;
@@ -99,7 +99,7 @@ export class JsonValidator {
     /**
      * Generates enhanced validation for request types
      */
-    private generateRequestTypeValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+    private generateRequestTypeValidation(writer: Writer, endpoint: FernIr.HttpEndpoint, actualVarName: string): void {
         const requestBody = endpoint.requestBody;
         if (!requestBody) {
             return;
@@ -165,14 +165,14 @@ export class JsonValidator {
     /**
      * Checks if an endpoint has pagination configuration
      */
-    private isPaginatedEndpoint(endpoint: HttpEndpoint): boolean {
+    private isPaginatedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         return endpoint.pagination != null;
     }
 
     /**
      * Generates pagination-specific validation for Iterable<T> responses
      */
-    private generatePaginationValidation(writer: Writer, endpoint: HttpEndpoint, actualVarName: string): void {
+    private generatePaginationValidation(writer: Writer, endpoint: FernIr.HttpEndpoint, actualVarName: string): void {
         const pagination = endpoint.pagination;
         if (!pagination) {
             return;
@@ -196,7 +196,7 @@ export class JsonValidator {
 
             writer.writeLine(
                 `Assertions.assertTrue(${currentPath}.isArray(), ` +
-                    `"Pagination results at '${resultsPath}' should be an array");`
+                    `"FernIr.Pagination results at '${resultsPath}' should be an array");`
             );
 
             // Close all the if statements
@@ -218,7 +218,7 @@ export class JsonValidator {
 
             writer.writeLine(
                 `Assertions.assertTrue(${currentPath}.isTextual() || ${currentPath}.isNull(), ` +
-                    `"Pagination cursor at '${nextCursorPath}' should be a string or null");`
+                    `"FernIr.Pagination cursor at '${nextCursorPath}' should be a string or null");`
             );
 
             // Close all the if statements
@@ -232,7 +232,7 @@ export class JsonValidator {
     /**
      * Gets the path to pagination results from the pagination configuration
      */
-    private getPaginationResultsPath(pagination: Pagination): string | undefined {
+    private getPaginationResultsPath(pagination: FernIr.Pagination): string | undefined {
         // TODO:This is a simplified implementation - actual implementation would
         // parse the ResponseProperty structure from IR
         if (pagination.type === "cursor" || pagination.type === "offset") {
@@ -245,7 +245,7 @@ export class JsonValidator {
     /**
      * Gets the path to the next cursor from the pagination configuration
      */
-    private getPaginationNextCursorPath(pagination: Pagination): string | undefined {
+    private getPaginationNextCursorPath(pagination: FernIr.Pagination): string | undefined {
         // This is a simplified implementation - actual implementation would
         // parse the ResponseProperty structure from IR
         if (pagination.type === "cursor") {

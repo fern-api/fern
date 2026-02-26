@@ -49,3 +49,12 @@ types:
       - commons.WithDocsSchema
     properties:
       urls: map<string, string>
+      url-templates:
+        type: optional<map<string, string>>
+        docs: URL templates with variable placeholders for each base URL (e.g., "https://api.{region}.example.com")
+      default-urls:
+        type: optional<map<string, string>>
+        docs: Default URLs to use when no variables are provided (from x-fern-default-url extension)
+      variables:
+        type: optional<map<string, list<ServerVariableSchema>>>
+        docs: Server variables for URL templating, keyed by base URL ID

@@ -15,6 +15,7 @@
         "value": {
           "commonProperties": [],
           "discriminantProperty": "type",
+          "discriminatorContext": "data",
           "generatedName": "Shape",
           "schemas": {
             "triangle": {

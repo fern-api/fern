@@ -2,18 +2,17 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { InferredAuthScheme, Literal, Subpackage } from "@fern-fern/ir-sdk/api";
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments";
-import { Comments } from "../utils/comments";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { astNodeToCodeBlockWithComments } from "../utils/astNodeToCodeBlockWithComments.js";
+import { Comments } from "../utils/comments.js";
 
 const TOKEN_PARAMETER_NAME = "token";
 
 interface InferredAuthParameter {
     snakeName: string;
     isOptional: boolean;
-    literal?: Literal;
+    literal?: FernIr.Literal;
 }
 
 export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -141,7 +140,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return method;
     }
 
-    private getInferredAuthInitializationStatement(scheme: InferredAuthScheme): ruby.AstNode {
+    private getInferredAuthInitializationStatement(scheme: FernIr.InferredAuthScheme): ruby.AstNode {
         const inferredParams = this.getParametersForInferredAuth(scheme);
 
         // Get the auth service/endpoint info to determine the auth client class
@@ -321,7 +320,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         return parameters;
     }
 
-    private getParametersForInferredAuth(scheme: InferredAuthScheme): InferredAuthParameter[] {
+    private getParametersForInferredAuth(scheme: FernIr.InferredAuthScheme): InferredAuthParameter[] {
         const parameters: InferredAuthParameter[] = [];
 
         // Get the token endpoint to extract request properties
@@ -379,10 +378,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private maybeLiteral(typeReference: {
         type: string;
-        container?: { type: string; literal?: Literal };
-    }): Literal | undefined {
+        container?: { type: string; literal?: FernIr.Literal };
+    }): FernIr.Literal | undefined {
         if (typeReference.type === "container") {
-            const container = typeReference as { type: string; container: { type: string; literal?: Literal } };
+            const container = typeReference as { type: string; container: { type: string; literal?: FernIr.Literal } };
             if (container.container?.type === "literal") {
                 return container.container.literal;
             }
@@ -466,7 +465,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
     }
 
-    private getSubpackages(): Subpackage[] {
+    private getSubpackages(): FernIr.Subpackage[] {
         return this.context.ir.rootPackage.subpackages.map((subpackageId) => {
             return this.context.getSubpackageOrThrow(subpackageId);
         });

@@ -4,6 +4,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   validate:
     name: Validate versions.yml files
@@ -26,16 +29,6 @@ jobs:
         with:
           schema: "fern-versions-yml.schema.json"
           files: "generators/go/model/versions.yml"
-      - name: Validate go-fiber versions.yml
-        uses: dsanders11/json-schema-validate-action@v1.4.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/go/fiber/versions.yml"
-      - name: Validate typescript-mcp versions.yml
-        uses: dsanders11/json-schema-validate-action@v1.4.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/typescript-mcp/model/versions.yml"
       - name: Validate python-sdk versions.yml
         uses: dsanders11/json-schema-validate-action@v1.4.0
         with:
@@ -111,16 +104,6 @@ jobs:
         with:
           schema: "fern-versions-yml.schema.json"
           files: "generators/csharp/model/versions.yml"
-      - name: Validate ruby versions.yml
-        uses: dsanders11/json-schema-validate-action@v1.4.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/ruby/sdk/versions.yml"
-      - name: Validate ruby-model versions.yml
-        uses: dsanders11/json-schema-validate-action@v1.4.0
-        with:
-          schema: "fern-versions-yml.schema.json"
-          files: "generators/ruby/model/versions.yml"
       - name: Validate rust-sdk versions.yml
         uses: dsanders11/json-schema-validate-action@v1.4.0
         with:

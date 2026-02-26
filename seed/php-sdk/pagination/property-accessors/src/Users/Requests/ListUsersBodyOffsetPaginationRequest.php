@@ -42,6 +42,7 @@ class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
     public function setPagination(?WithPage $value = null): self
     {
         $this->pagination = $value;
+        $this->_setField('pagination');
         return $this;
     }
 }

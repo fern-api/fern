@@ -1,7 +1,7 @@
 import { Examples } from "@fern-api/core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 
-import { AbstractConverter, AbstractConverterContext, APIError } from "..";
+import { AbstractConverter, AbstractConverterContext, APIError } from "../index.js";
 
 const LITERAL_REGEX = /^literal<\s*(?:"(.*)"|(true|false))\s*>$/;
 

@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/uri",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithUriPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationUriPathClient } from \"@fern/pagination-uri-path\";\n\nconst client = new SeedPaginationUriPathClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithUriPagination();\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithUriPagination();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/path",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithPathPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationUriPathClient } from \"@fern/pagination-uri-path\";\n\nconst client = new SeedPaginationUriPathClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nconst pageableResponse = await client.users.listWithPathPagination();\nfor await (const item of pageableResponse) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nlet page = await client.users.listWithPathPagination();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n\n// You can also access the underlying response\nconst response = page.response;\n"
+            }
+        }
+    ],
+    "types": {}
+}

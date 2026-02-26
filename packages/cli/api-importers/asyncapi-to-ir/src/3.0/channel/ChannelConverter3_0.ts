@@ -2,11 +2,11 @@ import { HttpHeader, PathParameter, QueryParameter, WebSocketMessage, WebSocketM
 import { constructHttpPath } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
-import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter";
-import { ParameterConverter } from "../../converters/ParameterConverter";
-import { DisplayNameExtension } from "../../extensions/x-fern-display-name";
-import { AsyncAPIV3 } from "..";
-import { ChannelParameter } from "../types";
+import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter.js";
+import { ParameterConverter } from "../../converters/ParameterConverter.js";
+import { DisplayNameExtension } from "../../extensions/x-fern-display-name.js";
+import { AsyncAPIV3 } from "../index.js";
+import { ChannelParameter } from "../types.js";
 
 export declare namespace ChannelConverter3_0 {
     export interface Args extends AbstractChannelConverter.Args<AsyncAPIV3.ChannelV3> {
@@ -109,6 +109,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             channel: {
                 name: this.context.casingsGenerator.generateName(displayName),
                 displayName,
+                connectMethodName: undefined, // This will be populated from OpenAPI IR layer
                 baseUrl,
                 path,
                 auth: false,

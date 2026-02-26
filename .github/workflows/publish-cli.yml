@@ -24,8 +24,12 @@ permissions:
   id-token: write # Required for OIDC
 
 env:
+  DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
 
 jobs:
   detect-release-bump:
@@ -81,7 +85,6 @@ jobs:
           git_version="$(./scripts/git-version.sh)"
           pnpm seed publish cli --ver ${git_version} --dev --log-level debug
 
-  # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
     environment: Fern Prod
@@ -106,8 +109,8 @@ jobs:
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN" "true"
 
   prod:
-    needs: [live-test]
-    if: ${{ inputs.version == null }}
+    needs: [live-test, detect-release-bump]
+    if: ${{ inputs.version == null && needs.detect-release-bump.outputs.is_release_bump == 'true' }}
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}

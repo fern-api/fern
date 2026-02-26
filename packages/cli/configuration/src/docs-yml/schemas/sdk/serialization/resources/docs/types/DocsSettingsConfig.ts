@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { HttpSnippetsConfig } from "./HttpSnippetsConfig.js";
 import { Language } from "./Language.js";
+import { TitleSource } from "./TitleSource.js";
 
 export const DocsSettingsConfig: core.serialization.ObjectSchema<
     serializers.DocsSettingsConfig.Raw,
@@ -29,6 +30,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     ),
     disableAnalytics: core.serialization.property("disable-analytics", core.serialization.boolean().optional()),
     language: Language.optional(),
+    folderTitleSource: core.serialization.property("folder-title-source", TitleSource.optional()),
     substituteEnvVars: core.serialization.property("substitute-env-vars", core.serialization.boolean().optional()),
 });
 
@@ -44,6 +46,7 @@ export declare namespace DocsSettingsConfig {
         "disable-explorer-proxy"?: boolean | null;
         "disable-analytics"?: boolean | null;
         language?: Language.Raw | null;
+        "folder-title-source"?: TitleSource.Raw | null;
         "substitute-env-vars"?: boolean | null;
     }
 }

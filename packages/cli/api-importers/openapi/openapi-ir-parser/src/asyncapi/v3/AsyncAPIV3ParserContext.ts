@@ -1,12 +1,27 @@
 import { OpenAPIV3 } from "openapi-types";
 
-import { AbstractAsyncAPIParserContext } from "../AbstractAsyncAPIParserContext";
-import { WebsocketSessionExampleMessage } from "../getFernExamples";
-import { AsyncAPIV3 } from "../v3";
+import { AbstractAsyncAPIParserContext } from "../AbstractAsyncAPIParserContext.js";
+import { WebsocketSessionExampleMessage } from "../getFernExamples.js";
+import { AsyncAPIV3 } from "../v3/index.js";
 
 export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<AsyncAPIV3.DocumentV3> {
     public getExampleMessageReference(message: WebsocketSessionExampleMessage): string {
-        return `#/channels/${message.channelId}/messages/${message.messageId}`;
+        const channelId = message.channelId ?? this.getDefaultChannelId();
+        if (channelId == null) {
+            throw new Error(
+                `Cannot resolve example message reference: no channelId provided and no channels found in document`
+            );
+        }
+        return `#/channels/${channelId}/messages/${message.messageId}`;
+    }
+
+    /**
+     * Returns the first channel ID from the document as a fallback when
+     * x-fern-examples messages omit `channelId`.
+     */
+    private getDefaultChannelId(): string | undefined {
+        const channelIds = Object.keys(this.document.channels ?? {});
+        return channelIds[0];
     }
 
     public resolveParameterReference(parameter: OpenAPIV3.ReferenceObject): AsyncAPIV3.ChannelParameter {
@@ -38,10 +53,19 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
         const CHANNELS_PATH_PART = "#/channels/";
         const MESSAGE_REFERENCE_PREFIX = "#/components/messages/";
 
+        if (message == null) {
+            throw new Error("Cannot resolve message reference: message is null or undefined");
+        }
+
+        if (!message.$ref) {
+            throw new Error("Cannot resolve message reference: message.$ref is undefined or empty");
+        }
+
         if (message.$ref.startsWith(CHANNELS_PATH_PART)) {
             const parts = message.$ref.split("/");
-            const channelPath = parts[2];
+            const rawChannelPath = parts[2];
             const messageKey = parts[4];
+            const channelPath = rawChannelPath?.replace(/~1/g, "/").replace(/~0/g, "~");
 
             if (channelPath == null || messageKey == null || !this.document.channels?.[channelPath]) {
                 throw new Error(`Failed to resolve message reference ${message.$ref} in channel ${channelPath}`);

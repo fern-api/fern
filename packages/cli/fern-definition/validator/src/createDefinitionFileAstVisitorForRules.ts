@@ -1,8 +1,8 @@
 import { DefinitionFileSchema, NodePath } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DefinitionFileAstNodeTypes, DefinitionFileAstNodeVisitor, DefinitionFileAstVisitor } from "./ast";
-import { RuleVisitors } from "./Rule";
-import { ValidationViolation } from "./ValidationViolation";
+import { DefinitionFileAstNodeTypes, DefinitionFileAstNodeVisitor, DefinitionFileAstVisitor } from "./ast/index.js";
+import { RuleVisitors } from "./Rule.js";
+import { ValidationViolation } from "./ValidationViolation.js";
 
 export function createDefinitionFileAstVisitorForRules({
     relativeFilepath,
@@ -50,6 +50,7 @@ export function createDefinitionFileAstVisitorForRules({
         ...createAstNodeVisitor("queryParameter"),
         ...createAstNodeVisitor("streamCondition"),
         ...createAstNodeVisitor("header"),
+        ...createAstNodeVisitor("webhookSignature"),
         ...createAstNodeVisitor("errorDeclaration"),
         ...createAstNodeVisitor("errorReference"),
         ...createAstNodeVisitor("exampleType"),

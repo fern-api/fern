@@ -3,8 +3,8 @@ import type { BlockContent, DefinitionContent } from "mdast";
 import type { MdxJsxFlowElement } from "mdast-util-mdx-jsx";
 import { visit } from "unist-util-visit";
 
-import { ESCAPED_COMPONENTS } from "../constants";
-import type { EscapedComponent } from "../types/components";
+import { ESCAPED_COMPONENTS } from "../constants.js";
+import type { EscapedComponent } from "../types/components.js";
 
 export function rehypeToRemarkCustomComponents(): (tree: HastRoot) => HastRoot {
     return function (tree: HastRoot): HastRoot {

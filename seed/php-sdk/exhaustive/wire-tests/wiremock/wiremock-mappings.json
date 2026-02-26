@@ -157,6 +157,32 @@
       }
     },
     {
+      "id": "eaf9315d-55c4-4434-8004-a70c25af5656",
+      "name": "getAndReturnMapOfPrimToUndiscriminatedUnion - default",
+      "request": {
+        "urlPathTemplate": "/container/map-prim-to-union",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": 1.1\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "eaf9315d-55c4-4434-8004-a70c25af5656",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e5271904-de0a-425f-940d-d6f6bde34755",
       "name": "getAndReturnOptional - default",
       "request": {
@@ -598,6 +624,33 @@
       }
     },
     {
+      "id": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
+      "name": "listItems - default",
+      "request": {
+        "urlPathTemplate": "/pagination",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"items\": [\n    {\n      \"string\": \"string\"\n    },\n    {\n      \"string\": \"string\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "f15b2079-2482-4ed2-951d-d2b5c4de9afd",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "97806fdb-f31f-4f90-84b8-f9cc1713d53d",
       "name": "getWithPath - default",
       "request": {
@@ -826,6 +879,37 @@
         }
       },
       "uuid": "6bfc7195-b99c-4449-bf47-7c4f74f6f33b",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "658d6145-14f6-48d3-9c66-c63e01eb6fd2",
+      "name": "uploadWithPath - default",
+      "request": {
+        "urlPathTemplate": "/params/path/{param}",
+        "method": "POST",
+        "pathParameters": {
+          "param": {
+            "equalTo": "upload-path"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"string\": \"uploaded\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "658d6145-14f6-48d3-9c66-c63e01eb6fd2",
       "persistent": true,
       "priority": 3,
       "metadata": {
@@ -1369,6 +1453,6 @@
     }
   ],
   "meta": {
-    "total": 50
+    "total": 53
   }
 }

@@ -11,11 +11,11 @@ import {
 } from "@fern-api/openapi-ir";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-import { convertEnum } from "./convertEnum";
-import { convertReferenceObject, convertSchema } from "./convertSchemas";
-import { SchemaParserContext } from "./SchemaParserContext";
-import { getGeneratedTypeName } from "./utils/getSchemaName";
-import { isReferenceObject } from "./utils/isReferenceObject";
+import { convertEnum } from "./convertEnum.js";
+import { convertReferenceObject, convertSchema } from "./convertSchemas.js";
+import { SchemaParserContext } from "./SchemaParserContext.js";
+import { getGeneratedTypeName } from "./utils/getSchemaName.js";
+import { isReferenceObject } from "./utils/isReferenceObject.js";
 
 export interface UndiscriminatedOneOfSuffixNotFound {
     type: "notFound";

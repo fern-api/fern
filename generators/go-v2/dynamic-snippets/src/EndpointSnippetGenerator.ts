@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { go } from "@fern-api/go-ast";
 
-import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
-import { FilePropertyInfo } from "./context/FilePropertyMapper";
+import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
+import { FilePropertyInfo } from "./context/FilePropertyMapper.js";
 
 const SNIPPET_PACKAGE_NAME = "example";
 const SNIPPET_IMPORT_PATH = "fern";
@@ -244,7 +244,12 @@ export class EndpointSnippetGenerator {
                     go.invokeMethod({
                         on: go.codeblock(CLIENT_VAR_NAME),
                         method: this.getMethod({ endpoint }),
-                        arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs, go.codeblock("nil")]
+                        arguments_: [
+                            this.context.getContextTodoFunctionInvocation(),
+                            ...otherArgs,
+                            go.codeblock("nil"),
+                            ...optionArgsInvocation
+                        ]
                     })
                 );
             } else {
@@ -636,14 +641,16 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): go.TypeInstantiation {
-        if (typeof value !== "string") {
-            this.context.errors.add({
-                severity: Severity.Critical,
-                message: `Expected bytes value to be a string, got ${typeof value}`
-            });
-            return go.TypeInstantiation.nop();
-        }
-        return go.TypeInstantiation.bytes(value as string);
+        const bytesValue = typeof value === "string" ? (value as string) : "";
+        return go.TypeInstantiation.reference(
+            go.invokeFunc({
+                func: go.typeReference({
+                    name: "NewReader",
+                    importPath: "bytes"
+                }),
+                arguments_: [go.TypeInstantiation.bytes(bytesValue)]
+            })
+        );
     }
 
     private getMethodArgsForInlinedRequest({
@@ -872,7 +879,7 @@ export class EndpointSnippetGenerator {
     }): go.StructField[] {
         const args: go.StructField[] = [];
 
-        const pathParameters = this.context.associateByWireValue({
+        const pathParameters = this.context.associateByWireValueOrDefault({
             parameters: namedParameters,
             values: snippet.pathParameters ?? {}
         });

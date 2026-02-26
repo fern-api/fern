@@ -17,6 +17,19 @@
         }
       ]
     },
+    "libraries": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/docs.LibraryConfiguration"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "analytics": {
       "oneOf": [
         {
@@ -511,6 +524,89 @@
       },
       "required": [
         "url"
+      ],
+      "additionalProperties": false
+    },
+    "docs.GitLibraryInputSchema": {
+      "type": "object",
+      "properties": {
+        "git": {
+          "type": "string"
+        },
+        "subpath": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "git"
+      ],
+      "additionalProperties": false
+    },
+    "docs.PathLibraryInputSchema": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "docs.LibraryInputConfiguration": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.GitLibraryInputSchema"
+        },
+        {
+          "$ref": "#/definitions/docs.PathLibraryInputSchema"
+        }
+      ]
+    },
+    "docs.LibraryOutputConfiguration": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "docs.LibraryLanguage": {
+      "type": "string",
+      "enum": [
+        "python",
+        "cpp"
+      ]
+    },
+    "docs.LibraryConfiguration": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "$ref": "#/definitions/docs.LibraryInputConfiguration"
+        },
+        "output": {
+          "$ref": "#/definitions/docs.LibraryOutputConfiguration"
+        },
+        "lang": {
+          "$ref": "#/definitions/docs.LibraryLanguage"
+        }
+      },
+      "required": [
+        "input",
+        "output",
+        "lang"
       ],
       "additionalProperties": false
     },
@@ -1401,6 +1497,26 @@
             }
           ]
         },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "slug": {
           "oneOf": [
             {
@@ -1909,6 +2025,26 @@
             }
           ]
         },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {
@@ -2037,6 +2173,88 @@
       ],
       "additionalProperties": false
     },
+    "docs.ApiReferenceOperationConfiguration": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "operation": {
+          "type": "string"
+        },
+        "title": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "operation"
+      ],
+      "additionalProperties": false
+    },
     "docs.LinkConfiguration": {
       "type": "object",
       "properties": {
@@ -2091,6 +2309,9 @@
         },
         {
           "$ref": "#/definitions/docs.ApiReferenceEndpointConfiguration"
+        },
+        {
+          "$ref": "#/definitions/docs.ApiReferenceOperationConfiguration"
         },
         {
           "$ref": "#/definitions/docs.PageConfiguration"
@@ -2335,11 +2556,44 @@
       ],
       "additionalProperties": false
     },
-    "docs.PythonDocsConfiguration": {
+    "docs.LibraryName": {
+      "type": "string"
+    },
+    "docs.LibraryReferenceConfiguration": {
       "type": "object",
       "properties": {
-        "python-docs": {
-          "type": "string"
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "library": {
+          "$ref": "#/definitions/docs.LibraryName"
         },
         "title": {
           "oneOf": [
@@ -2363,7 +2617,7 @@
         }
       },
       "required": [
-        "python-docs"
+        "library"
       ],
       "additionalProperties": false
     },
@@ -2562,6 +2816,26 @@
             }
           ]
         },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {
@@ -2590,7 +2864,7 @@
           "$ref": "#/definitions/docs.ApiReferenceConfiguration"
         },
         {
-          "$ref": "#/definitions/docs.PythonDocsConfiguration"
+          "$ref": "#/definitions/docs.LibraryReferenceConfiguration"
         },
         {
           "$ref": "#/definitions/docs.LinkConfiguration"
@@ -3852,6 +4126,16 @@
               "type": "null"
             }
           ]
+        },
+        "basepath-aware": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4432,6 +4716,126 @@
               "type": "null"
             }
           ]
+        },
+        "accent-1": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-2": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-3": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-4": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-5": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-6": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-7": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-8": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-9": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-10": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-11": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "accent-12": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ColorConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4920,6 +5324,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.Language"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "folder-title-source": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TitleSource"
             },
             {
               "type": "null"

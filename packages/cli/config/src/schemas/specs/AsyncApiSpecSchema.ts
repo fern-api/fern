@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { AsyncApiSettingsSchema } from "../settings/AsyncApiSettingsSchema";
+import { AsyncApiSettingsSchema } from "../settings/AsyncApiSettingsSchema.js";
 
 /**
  * Schema for AsyncAPI spec definition in fern.yml.

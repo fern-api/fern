@@ -513,14 +513,14 @@ await client.Service.CreateBigEntityAsync(
                         new Node
                         {
                             Name = "name",
-                            Nodes = new List<Node>() { },
-                            Trees = new List<Tree>() { },
+                            Nodes = null,
+                            Trees = null,
                         },
                         new Node
                         {
                             Name = "name",
-                            Nodes = new List<Node>() { },
-                            Trees = new List<Tree>() { },
+                            Nodes = null,
+                            Trees = null,
                         },
                     },
                     Trees = new List<Tree>()
@@ -537,14 +537,14 @@ await client.Service.CreateBigEntityAsync(
                         new Node
                         {
                             Name = "name",
-                            Nodes = new List<Node>() { },
-                            Trees = new List<Tree>() { },
+                            Nodes = null,
+                            Trees = null,
                         },
                         new Node
                         {
                             Name = "name",
-                            Nodes = new List<Node>() { },
-                            Trees = new List<Tree>() { },
+                            Nodes = null,
+                            Trees = null,
                         },
                     },
                     Trees = new List<Tree>()
@@ -617,14 +617,14 @@ await client.Service.CreateBigEntityAsync(
                         new SeedExamples.Directory
                         {
                             Name = "name",
-                            Files = new List<SeedExamples.File>() { },
-                            Directories = new List<SeedExamples.Directory>() { },
+                            Files = null,
+                            Directories = null,
                         },
                         new SeedExamples.Directory
                         {
                             Name = "name",
-                            Files = new List<SeedExamples.File>() { },
-                            Directories = new List<SeedExamples.Directory>() { },
+                            Files = null,
+                            Directories = null,
                         },
                     },
                 },
@@ -641,14 +641,14 @@ await client.Service.CreateBigEntityAsync(
                         new SeedExamples.Directory
                         {
                             Name = "name",
-                            Files = new List<SeedExamples.File>() { },
-                            Directories = new List<SeedExamples.Directory>() { },
+                            Files = null,
+                            Directories = null,
                         },
                         new SeedExamples.Directory
                         {
                             Name = "name",
-                            Files = new List<SeedExamples.File>() { },
-                            Directories = new List<SeedExamples.Directory>() { },
+                            Files = null,
+                            Directories = null,
                         },
                     },
                 },
@@ -727,3 +727,4 @@ await client.Service.RefreshTokenAsync(null);
 </dd>
 </dl>
 </details>
+

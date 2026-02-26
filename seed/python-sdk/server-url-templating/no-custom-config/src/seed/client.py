@@ -4,6 +4,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
 from .environment import SeedApiEnvironment
 from .raw_client import AsyncRawSeedApi, RawSeedApi
@@ -29,6 +30,12 @@ class SeedApi:
 
 
 
+    region : typing.Optional[str]
+        Server URL variable for 'region'. Defaults to 'us-east-1'.
+
+    server_url_environment : typing.Optional[str]
+        Server URL variable for 'environment'. Defaults to 'prod'.
+
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -41,6 +48,9 @@ class SeedApi:
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import SeedApi
@@ -52,14 +62,28 @@ class SeedApi:
         self,
         *,
         environment: SeedApiEnvironment = SeedApiEnvironment.REGIONAL_API_SERVER,
+        region: typing.Optional[str] = None,
+        server_url_environment: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if region is not None or server_url_environment is not None:
+            _region = region if region is not None else "us-east-1"
+            _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
+            environment = SeedApiEnvironment(
+                base="https://api.{region}.{environment}.example.com/v1".format(
+                    region=_region, environment=_server_url_environment
+                ),
+                auth="https://auth.{region}.example.com".format(
+                    region=_region,
+                ),
+            )
         self._client_wrapper = SyncClientWrapper(
             environment=environment,
             headers=headers,
@@ -69,6 +93,7 @@ class SeedApi:
             if follow_redirects is not None
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
 
@@ -180,6 +205,12 @@ class AsyncSeedApi:
 
 
 
+    region : typing.Optional[str]
+        Server URL variable for 'region'. Defaults to 'us-east-1'.
+
+    server_url_environment : typing.Optional[str]
+        Server URL variable for 'environment'. Defaults to 'prod'.
+
     headers : typing.Optional[typing.Dict[str, str]]
         Additional headers to send with every request.
 
@@ -192,6 +223,9 @@ class AsyncSeedApi:
     httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    logging : typing.Optional[typing.Union[LogConfig, Logger]]
+        Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), 'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. You can also pass a pre-configured Logger instance.
+
     Examples
     --------
     from seed import AsyncSeedApi
@@ -203,14 +237,28 @@ class AsyncSeedApi:
         self,
         *,
         environment: SeedApiEnvironment = SeedApiEnvironment.REGIONAL_API_SERVER,
+        region: typing.Optional[str] = None,
+        server_url_environment: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if region is not None or server_url_environment is not None:
+            _region = region if region is not None else "us-east-1"
+            _server_url_environment = server_url_environment if server_url_environment is not None else "prod"
+            environment = SeedApiEnvironment(
+                base="https://api.{region}.{environment}.example.com/v1".format(
+                    region=_region, environment=_server_url_environment
+                ),
+                auth="https://auth.{region}.example.com".format(
+                    region=_region,
+                ),
+            )
         self._client_wrapper = AsyncClientWrapper(
             environment=environment,
             headers=headers,
@@ -220,6 +268,7 @@ class AsyncSeedApi:
             if follow_redirects is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
+            logging=logging,
         )
         self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
 

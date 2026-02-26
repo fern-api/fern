@@ -241,6 +241,7 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 availability: oneOfSchema.availability,
                 discriminantProperty: oneOfSchema.discriminantProperty,
                 discriminantPropertyNameOverride: oneOfSchema.discriminantPropertyNameOverride,
+                discriminatorContext: oneOfSchema.discriminatorContext,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 title: oneOfSchema.title,
@@ -300,6 +301,10 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             });
         case "datetime":
             return PrimitiveSchemaValueWithExample.datetime({
+                example: undefined
+            });
+        case "datetimeRfc2822":
+            return PrimitiveSchemaValueWithExample.datetimeRfc2822({
                 example: undefined
             });
         case "double":

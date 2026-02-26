@@ -1,46 +1,30 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
+import { FernIr } from "@fern-fern/ir-sdk";
 
-import {
-    BasicAuthScheme,
-    BearerAuthScheme,
-    FernFilepath,
-    HeaderAuthScheme,
-    HttpEndpoint,
-    HttpService,
-    Name,
-    OAuthScheme,
-    RequestProperty,
-    ResponseProperty,
-    ServiceId,
-    Subpackage,
-    SubpackageId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace ClientGenerator {
     interface Args {
         context: SdkGeneratorContext;
         isRootClient?: boolean;
-        fernFilepath: FernFilepath;
-        subpackage: Subpackage | undefined;
-        nestedSubpackages: SubpackageId[];
-        serviceId: ServiceId | undefined;
-        service: HttpService | undefined;
+        fernFilepath: FernIr.FernFilepath;
+        subpackage: FernIr.Subpackage | undefined;
+        nestedSubpackages: FernIr.SubpackageId[];
+        serviceId: FernIr.ServiceId | undefined;
+        service: FernIr.HttpService | undefined;
     }
 }
 
 export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private isRootClient: boolean = false;
-    private fernFilepath: FernFilepath;
-    private nestedSubpackages: SubpackageId[] = [];
-    private subpackage: Subpackage | undefined;
-    private serviceId: ServiceId | undefined;
-    private service: HttpService | undefined;
+    private fernFilepath: FernIr.FernFilepath;
+    private nestedSubpackages: FernIr.SubpackageId[] = [];
+    private subpackage: FernIr.Subpackage | undefined;
+    private serviceId: FernIr.ServiceId | undefined;
+    private service: FernIr.HttpService | undefined;
 
     constructor({
         fernFilepath,
@@ -274,7 +258,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         scheme
     }: {
         writer: go.Writer;
-        scheme: BasicAuthScheme;
+        scheme: FernIr.BasicAuthScheme;
     }): void {
         if (scheme.usernameEnvVar != null) {
             this.writeEnvConditional({
@@ -297,7 +281,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         scheme
     }: {
         writer: go.Writer;
-        scheme: BearerAuthScheme;
+        scheme: FernIr.BearerAuthScheme;
     }): void {
         if (scheme.tokenEnvVar != null) {
             this.writeEnvConditional({
@@ -313,7 +297,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         scheme
     }: {
         writer: go.Writer;
-        scheme: HeaderAuthScheme;
+        scheme: FernIr.HeaderAuthScheme;
     }): void {
         if (scheme.headerEnvVar != null) {
             this.writeEnvConditional({
@@ -324,7 +308,13 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         }
     }
 
-    private writeOAuthEnvironmentVariables({ writer, scheme }: { writer: go.Writer; scheme: OAuthScheme }): void {
+    private writeOAuthEnvironmentVariables({
+        writer,
+        scheme
+    }: {
+        writer: go.Writer;
+        scheme: FernIr.OAuthScheme;
+    }): void {
         const configuration = scheme.configuration;
         if (configuration == null || configuration.type !== "clientCredentials") {
             return;
@@ -527,7 +517,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         );
     }
 
-    private getOAuthTokenEndpoint(): HttpEndpoint | undefined {
+    private getOAuthTokenEndpoint(): FernIr.HttpEndpoint | undefined {
         const oauthScheme = this.getOAuthClientCredentialsScheme();
         if (oauthScheme?.configuration?.type !== "clientCredentials") {
             return undefined;
@@ -540,9 +530,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return service.endpoints.find((ep) => ep.id === endpointId);
     }
 
-    private getRequestPropertyFieldName(requestProperty: RequestProperty): string {
+    private getRequestPropertyFieldName(requestProperty: FernIr.RequestProperty): string {
         // The property can be either "query" or "body" type
-        // Both have a name field that contains the Name object
+        // Both have a name field that contains the FernIr.Name object
         if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
             return this.context.getFieldName(requestProperty.property.name.name);
         }
@@ -553,11 +543,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return "ClientId";
     }
 
-    private isRequestPropertyOptional(requestProperty: RequestProperty): boolean {
+    private isRequestPropertyOptional(requestProperty: FernIr.RequestProperty): boolean {
         return this.isTypeReferenceOptional(this.getRequestPropertyValueType(requestProperty));
     }
 
-    private getRequestPropertyValueType(requestProperty: RequestProperty): TypeReference | undefined {
+    private getRequestPropertyValueType(requestProperty: FernIr.RequestProperty): FernIr.TypeReference | undefined {
         if (requestProperty.property.type === "body") {
             return requestProperty.property.valueType;
         }
@@ -567,11 +557,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return undefined;
     }
 
-    private isResponsePropertyOptional(responseProperty: ResponseProperty): boolean {
+    private isResponsePropertyOptional(responseProperty: FernIr.ResponseProperty): boolean {
         return this.isTypeReferenceOptional(responseProperty.property.valueType);
     }
 
-    private isTypeReferenceOptional(typeRef: TypeReference | undefined): boolean {
+    private isTypeReferenceOptional(typeRef: FernIr.TypeReference | undefined): boolean {
         if (typeRef == null) {
             return false;
         }
@@ -581,7 +571,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return false;
     }
 
-    private getOAuthClientCredentialsScheme(): OAuthScheme | undefined {
+    private getOAuthClientCredentialsScheme(): FernIr.OAuthScheme | undefined {
         if (this.context.ir.auth == null) {
             return undefined;
         }
@@ -593,7 +583,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         return undefined;
     }
 
-    private getAuthServiceFernFilepath(): FernFilepath | undefined {
+    private getAuthServiceFernFilepath(): FernIr.FernFilepath | undefined {
         const oauthScheme = this.getOAuthClientCredentialsScheme();
         if (oauthScheme?.configuration?.type === "clientCredentials") {
             const serviceId = oauthScheme.configuration.tokenEndpoint.endpointReference.serviceId;
@@ -626,11 +616,11 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         writer.writeLine("}");
     }
 
-    private getOptionsPropertyReference(name: Name): go.Selector {
+    private getOptionsPropertyReference(name: FernIr.Name): go.Selector {
         return go.selector({ on: go.codeblock("options"), selector: go.codeblock(this.context.getFieldName(name)) });
     }
 
-    private instantiateSubClient({ subpackage }: { subpackage: Subpackage }): go.TypeInstantiation {
+    private instantiateSubClient({ subpackage }: { subpackage: FernIr.Subpackage }): go.TypeInstantiation {
         return go.TypeInstantiation.reference(
             go.invokeFunc({
                 func: this.getClientConstructor({ subpackage }),
@@ -656,7 +646,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         );
     }
 
-    private getClientConstructor({ subpackage }: { subpackage: Subpackage }): go.TypeReference {
+    private getClientConstructor({ subpackage }: { subpackage: FernIr.Subpackage }): go.TypeReference {
         return go.typeReference({
             name: this.context.getClientConstructorName(subpackage),
             importPath: this.context.getClientFileLocation({ fernFilepath: subpackage.fernFilepath, subpackage })

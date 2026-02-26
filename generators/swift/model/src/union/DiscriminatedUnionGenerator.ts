@@ -1,13 +1,13 @@
 import { assertNever, noop } from "@fern-api/core-utils";
 import { Referencer, sanitizeSelf, swift } from "@fern-api/swift-codegen";
-import { UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
-import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+import { StructGenerator } from "../helpers/struct-generator/StructGenerator.js";
+import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export declare namespace DiscriminatedUnionGenerator {
     interface Args {
         symbol: swift.Symbol;
-        unionTypeDeclaration: UnionTypeDeclaration;
+        unionTypeDeclaration: FernIr.UnionTypeDeclaration;
         docsContent?: string;
         context: ModelGeneratorContext;
     }
@@ -15,7 +15,7 @@ export declare namespace DiscriminatedUnionGenerator {
 
 export class DiscriminatedUnionGenerator {
     private readonly symbol: swift.Symbol;
-    private readonly unionTypeDeclaration: UnionTypeDeclaration;
+    private readonly unionTypeDeclaration: FernIr.UnionTypeDeclaration;
     private readonly docsContent?: string;
     private readonly context: ModelGeneratorContext;
     private readonly referencer: Referencer;

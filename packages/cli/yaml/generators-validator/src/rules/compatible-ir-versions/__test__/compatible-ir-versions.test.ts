@@ -1,11 +1,11 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
-import { ValidationViolation } from "../../../ValidationViolation";
-import { CompatibleIrVersionsRule } from "../compatible-ir-versions";
+import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule.js";
+import { ValidationViolation } from "../../../ValidationViolation.js";
+import { CompatibleIrVersionsRule } from "../compatible-ir-versions.js";
 
 describe("compatible-ir-versions", () => {
     it("simple failure", async () => {
-        process.env.DEFAULT_FDR_ORIGIN = "https://registry-dev2.buildwithfern.com";
+        process.env.DEFAULT_FDR_ORIGIN = "https://registry.buildwithfern.com";
         const violations = await getViolationsForRule({
             rule: CompatibleIrVersionsRule,
             absolutePathToWorkspace: join(
@@ -27,10 +27,10 @@ describe("compatible-ir-versions", () => {
         ];
 
         expect(violations).toEqual(expectedViolations);
-    }, 10_000);
+    }, 30_000);
 
     it("simple success", async () => {
-        process.env.DEFAULT_FDR_ORIGIN = "https://registry-dev2.buildwithfern.com";
+        process.env.DEFAULT_FDR_ORIGIN = "https://registry.buildwithfern.com";
         const violations = await getViolationsForRule({
             rule: CompatibleIrVersionsRule,
             absolutePathToWorkspace: join(
@@ -45,5 +45,5 @@ describe("compatible-ir-versions", () => {
         const expectedViolations: ValidationViolation[] = [];
 
         expect(violations).toEqual(expectedViolations);
-    }, 10_000);
+    }, 30_000);
 });

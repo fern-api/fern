@@ -6,6 +6,7 @@ public final class EndpointsClient: Sendable {
     public let `enum`: EnumClient
     public let httpMethods: HttpMethodsClient
     public let object: ObjectClient
+    public let pagination: PaginationClient
     public let params: ParamsClient
     public let primitive: PrimitiveClient
     public let put: PutClient
@@ -19,6 +20,7 @@ public final class EndpointsClient: Sendable {
         self.enum = EnumClient(config: config)
         self.httpMethods = HttpMethodsClient(config: config)
         self.object = ObjectClient(config: config)
+        self.pagination = PaginationClient(config: config)
         self.params = ParamsClient(config: config)
         self.primitive = PrimitiveClient(config: config)
         self.put = PutClient(config: config)

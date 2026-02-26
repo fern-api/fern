@@ -1,23 +1,23 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, Writer } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    CursorPagination,
-    ExampleEndpointCall,
-    HttpEndpoint,
-    OffsetPagination,
-    RequestProperty,
-    ResponseError,
-    ResponseProperty,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+
+type CursorPagination = FernIr.CursorPagination;
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type OffsetPagination = FernIr.OffsetPagination;
+type RequestProperty = FernIr.RequestProperty;
+type ResponseError = FernIr.ResponseError;
+type ResponseProperty = FernIr.ResponseProperty;
+type ServiceId = FernIr.ServiceId;
+
 import { fail } from "assert";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
-import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
-import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
-import { RawClient } from "./RawClient";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator.js";
+import { EndpointSignatureInfo } from "../EndpointSignatureInfo.js";
+import { SingleEndpointSnippet } from "../snippets/EndpointSnippetsGenerator.js";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
+import { RawClient } from "./RawClient.js";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -432,8 +432,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(this.Types.BaseApiException);
                     writer.write('("Failed to deserialize response", ');
                     writer.write(`${this.names.variables.response}.StatusCode, `);
-                    writer.write(`${this.names.variables.responseBody}, `);
-                    writer.write("e");
+                    if (this.settings.redactResponseBodyOnError) {
+                        writer.write("null, ");
+                        writer.write("e");
+                    } else {
+                        writer.write(`${this.names.variables.responseBody}, `);
+                        writer.write("e");
+                    }
                     writer.writeTextStatement(")");
                     writer.popScope();
                 },
@@ -772,16 +777,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(payloadType);
                     writer.writeTextStatement(`>(${jsonString})`);
                     writer.popScope();
-                    writer.writeLine("catch (System.Text.Json.JsonException)");
-                    writer.pushScope();
-                    writer.writeStatement(
-                        "throw new ",
-                        exceptionClass,
-                        `($"Unable to deserialize JSON response '`,
-                        jsonString,
-                        `'")`
-                    );
-                    writer.popScope();
+                    if (context.generation.settings.redactResponseBodyOnError) {
+                        writer.writeLine("catch (System.Text.Json.JsonException e)");
+                        writer.pushScope();
+                        writer.writeStatement(
+                            "throw new ",
+                            exceptionClass,
+                            `("Failed to deserialize streaming response", e)`
+                        );
+                        writer.popScope();
+                    } else {
+                        writer.writeLine("catch (System.Text.Json.JsonException)");
+                        writer.pushScope();
+                        writer.writeStatement(
+                            "throw new ",
+                            exceptionClass,
+                            `($"Unable to deserialize JSON response '`,
+                            jsonString,
+                            `'")`
+                        );
+                        writer.popScope();
+                    }
                 }
 
                 value._visit({
@@ -996,7 +1012,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(this.Types.BaseApiException);
                     writer.write('("Failed to deserialize response", ');
                     writer.write(`${this.names.variables.response}.StatusCode, `);
-                    writer.write(`${this.names.variables.responseBody}`);
+                    if (this.settings.redactResponseBodyOnError) {
+                        writer.write("null, ");
+                        writer.write("e");
+                    } else {
+                        writer.write(`${this.names.variables.responseBody}`);
+                    }
                     writer.writeTextStatement(")");
                     writer.popScope();
 
@@ -1396,7 +1417,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                     properties: [...enclosingType.scope.fields]
                                         .map((each) => each.field)
                                         .filter(is.NonNullable)
-                                        .filter((each) => each.needsIntialization)
+                                        .filter((each) => each.needsInitialization)
                                         .map((each) => ({
                                             name: each.name,
                                             value: each.type.defaultValue
@@ -1473,6 +1494,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference,
             pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
             headerBagReference: headerParameterCodeBlock.headerParameterBagReference,
+            queryString: queryParameterCodeBlock?.queryStringReference,
             endpointRequest: endpointSignatureInfo.request
         });
         if (apiRequestCodeBlock.code) {

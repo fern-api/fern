@@ -2,9 +2,9 @@ import { Source } from "@fern-api/openapi-ir";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
-import { convertSecurityScheme } from "../openapi/v3/converters/convertSecurityScheme";
-import { OpenAPIV3ParserContext } from "../openapi/v3/OpenAPIV3ParserContext";
-import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../options";
+import { convertSecurityScheme } from "../openapi/v3/converters/convertSecurityScheme.js";
+import { OpenAPIV3ParserContext } from "../openapi/v3/OpenAPIV3ParserContext.js";
+import { DEFAULT_PARSE_OPENAPI_SETTINGS } from "../options.js";
 
 describe("convertSecurityScheme", () => {
     const mockTaskContext = {
@@ -59,12 +59,10 @@ describe("convertSecurityScheme", () => {
         const result = convertSecurityScheme(securitySchemeRef, source, mockTaskContext, context);
 
         // Verify the result
-        expect(result).toBeDefined();
-        expect(result?.type).toBe("bearer");
-        if (result?.type === "bearer") {
-            expect(result.tokenVariableName).toBeUndefined();
-            expect(result.tokenEnvVar).toBeUndefined();
-        }
+        expect.assert(result != null);
+        expect.assert(result.type === "bearer");
+        expect(result.tokenVariableName).toBeUndefined();
+        expect(result.tokenEnvVar).toBeUndefined();
     });
 
     it("should throw an error when resolving reference without context", () => {
@@ -86,11 +84,9 @@ describe("convertSecurityScheme", () => {
 
         const result = convertSecurityScheme(securityScheme, source, mockTaskContext);
 
-        expect(result).toBeDefined();
-        expect(result?.type).toBe("bearer");
-        if (result?.type === "bearer") {
-            expect(result.tokenVariableName).toBeUndefined();
-            expect(result.tokenEnvVar).toBeUndefined();
-        }
+        expect.assert(result != null);
+        expect.assert(result.type === "bearer");
+        expect(result.tokenVariableName).toBeUndefined();
+        expect(result.tokenEnvVar).toBeUndefined();
     });
 });

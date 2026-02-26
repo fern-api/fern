@@ -1,6 +1,7 @@
 using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
 
@@ -278,6 +279,82 @@ public partial class ParamsClient : IParamsClient
                     {
                         var responseData = JsonUtils.Deserialize<string>(responseBody)!;
                         return new WithRawResponse<string>()
+                        {
+                            Data = responseData,
+                            RawResponse = new RawResponse()
+                            {
+                                StatusCode = response.Raw.StatusCode,
+                                Url =
+                                    response.Raw.RequestMessage?.RequestUri
+                                    ?? new Uri("about:blank"),
+                                Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                            },
+                        };
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveApiException(
+                            "Failed to deserialize response",
+                            response.StatusCode,
+                            responseBody,
+                            e
+                        );
+                    }
+                }
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
+
+    private async Task<WithRawResponse<ObjectWithRequiredField>> UploadWithPathAsyncCore(
+        string param,
+        Stream request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
+            {
+                var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+                    .Add(_client.Options.Headers)
+                    .Add(_client.Options.AdditionalHeaders)
+                    .Add(options?.AdditionalHeaders)
+                    .BuildAsync()
+                    .ConfigureAwait(false);
+                var response = await _client
+                    .SendRequestAsync(
+                        new StreamRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = string.Format(
+                                "/params/path/{0}",
+                                ValueConvert.ToPathParameterString(param)
+                            ),
+                            Body = request,
+                            Headers = _headers,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        var responseData = JsonUtils.Deserialize<ObjectWithRequiredField>(
+                            responseBody
+                        )!;
+                        return new WithRawResponse<ObjectWithRequiredField>()
                         {
                             Data = responseData,
                             RawResponse = new RawResponse()
@@ -616,6 +693,27 @@ public partial class ParamsClient : IParamsClient
     {
         return new WithRawResponseTask<string>(
             ModifyWithInlinePathAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <summary>
+    /// POST bytes with path param returning object
+    /// </summary>
+    /// <example><code>
+    /// await client.Endpoints.Params.UploadWithPathAsync(
+    ///     "upload-path",
+    ///     new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<ObjectWithRequiredField> UploadWithPathAsync(
+        string param,
+        Stream request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<ObjectWithRequiredField>(
+            UploadWithPathAsyncCore(param, request, options, cancellationToken)
         );
     }
 }

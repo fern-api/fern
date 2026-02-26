@@ -1,7 +1,7 @@
 import { ts } from "ts-morph";
 
-import { Reference } from "../referencing";
-import { CoreUtility } from "./CoreUtility";
+import { Reference } from "../referencing/index.js";
+import { CoreUtility } from "./CoreUtility.js";
 
 export interface SchemaOptions {
     unrecognizedObjectKeys?: "fail" | "passthrough" | "strip";
@@ -136,7 +136,7 @@ export const MANIFEST: CoreUtility.Manifest = {
     name: "schemas",
     pathInCoreUtilities: { nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } },
     getFilesPatterns: () => {
-        return { patterns: ["src/core/schemas/**", "tests/unit/schemas/**"] };
+        return { patterns: ["src/core/schemas/**", "tests/unit/schemas/**"], ignore: ["**/benchmarks/**"] };
     }
 };
 export class ZurgImpl extends CoreUtility implements Zurg {

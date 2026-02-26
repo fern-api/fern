@@ -8,7 +8,7 @@ import {
     ContainerType,
     DeclaredTypeName,
     FernFilepath,
-    ObjectPropertyAccess,
+    FernIr,
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
@@ -17,10 +17,9 @@ import { Logger } from "@fern-api/logger";
 import yaml from "js-yaml";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
-
-import { Extensions } from ".";
-import { SchemaConverter } from "./converters/schema/SchemaConverter";
-import { APIErrorLevel, ErrorCollector } from "./ErrorCollector";
+import { SchemaConverter } from "./converters/schema/SchemaConverter.js";
+import { APIErrorLevel, ErrorCollector } from "./ErrorCollector.js";
+import { Extensions } from "./index.js";
 
 export type DisplayNameOverrideSource = "schema_identifier" | "discriminator_key" | "reference_identifier";
 
@@ -549,7 +548,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
     public getPropertyAccess(
         schemaOrReference: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject
-    ): ObjectPropertyAccess | undefined {
+    ): FernIr.ObjectPropertyAccess | undefined {
         let schema = schemaOrReference;
 
         while (this.isReferenceObject(schema)) {
@@ -568,11 +567,11 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         if (readOnly) {
-            return ObjectPropertyAccess.ReadOnly;
+            return FernIr.ObjectPropertyAccess.ReadOnly;
         }
 
         if (writeOnly) {
-            return ObjectPropertyAccess.WriteOnly;
+            return FernIr.ObjectPropertyAccess.WriteOnly;
         }
 
         return undefined;

@@ -233,9 +233,11 @@ class AbstractGenerator(ABC):
         return generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda publish: publish.registries_v_2.pypi.pypi_metadata,
-            github=lambda github: cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
-            if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
-            else None,
+            github=lambda github: (
+                cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
+                if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
+                else None
+            ),
         )
 
     def _publish(
@@ -369,8 +371,8 @@ jobs:
 """
         if write_unit_tests:
             workflow_yaml += """
-      - name: Install Fern
-        run: npm install -g fern-api
+      - name: Install Fern CLI
+        uses: fern-api/setup-fern-cli@v1
       - name: Test
         run: fern test --command "poetry run pytest -rP -n auto ."
 """
@@ -456,8 +458,8 @@ jobs:
 """
         if write_unit_tests:
             workflow_yaml += """
-      - name: Install Fern
-        run: npm install -g fern-api
+      - name: Install Fern CLI
+        uses: fern-api/setup-fern-cli@v1
       - name: Test
         run: fern test --command "poetry run pytest -rP -n auto ."
 """

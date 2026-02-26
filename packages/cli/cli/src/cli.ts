@@ -4,15 +4,25 @@ import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { runCliV2 } from "@fern-api/cli-v2";
 import {
+    correctIncorrectDockerOrg,
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,
+    INCORRECT_DOCKER_ORG,
     loadProjectConfig,
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { initializeAPI, initializeDocs, initializeWithMintlify, initializeWithReadme } from "@fern-api/init";
+import { formatBootstrapSummary, replayInit } from "@fern-api/generator-cli";
+import {
+    initializeAPI,
+    initializeDocs,
+    initializeWithMintlify,
+    initializeWithReadme,
+    LoadOpenAPIStatus,
+    loadOpenAPIFromUrl
+} from "@fern-api/init";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, login, logout } from "@fern-api/login";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
@@ -21,47 +31,48 @@ import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
-import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "../../init/src/utils/loadOpenApiFromUrl";
-import { CliContext } from "./cli-context/CliContext";
-import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
-import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
-import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
-import { diff } from "./commands/diff/diff";
-import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
-import { docsDiff } from "./commands/docs-diff/docsDiff";
-import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview";
-import { listDocsPreview } from "./commands/docs-preview/listDocsPreview";
-import { downgrade } from "./commands/downgrade/downgrade";
-import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
-import { formatWorkspaces } from "./commands/format/formatWorkspaces";
-import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
-import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
-import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces";
-import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
-import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
-import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces";
-import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
-import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs";
-import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
-import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace";
-import { mockServer } from "./commands/mock/mockServer";
-import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
-import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
-import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand";
-import { selfUpdate } from "./commands/self-update/selfUpdate";
-import { testOutput } from "./commands/test/testOutput";
-import { generateToken } from "./commands/token/token";
-import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
-import { upgrade } from "./commands/upgrade/upgrade";
-import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks";
-import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
-import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
-import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject";
-import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject";
-import { FERN_CWD_ENV_VAR } from "./cwd";
-import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
-import { RUNTIME } from "./runtime";
+import { CliContext } from "./cli-context/CliContext.js";
+import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli.js";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
+import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
+import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { diff } from "./commands/diff/diff.js";
+import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
+import { docsDiff } from "./commands/docs-diff/docsDiff.js";
+import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
+import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
+import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
+import { downgrade } from "./commands/downgrade/downgrade.js";
+import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
+import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
+import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
+import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
+import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
+import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js";
+import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces.js";
+import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/generate-openapi-fdr/generateOpenApiToFdrApiDefinitionForWorkspaces.js";
+import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
+import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
+import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
+import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { mockServer } from "./commands/mock/mockServer.js";
+import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
+import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
+import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { selfUpdate } from "./commands/self-update/selfUpdate.js";
+import { testOutput } from "./commands/test/testOutput.js";
+import { generateToken } from "./commands/token/token.js";
+import { updateApiSpec } from "./commands/upgrade/updateApiSpec.js";
+import { upgrade } from "./commands/upgrade/upgrade.js";
+import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
+import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
+import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
+import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
+import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
+import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
+import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
+import { RUNTIME } from "./runtime.js";
 
 void runCli();
 
@@ -218,6 +229,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
@@ -285,6 +297,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec"
                 })
+                .option("fern-definition", {
+                    boolean: true,
+                    description: "Initialize with a sample Fern Definition instead of an OpenAPI spec"
+                })
                 .option("mintlify", {
                     type: "string",
                     description: "Migrate docs from Mintlify provided a path to a mint.json file"
@@ -307,6 +323,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             } else if (argv.readme != null && argv.mintlify != null) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --readme and --mintlify. Please choose one."
+                );
+            } else if (argv.openapi != null && argv["fern-definition"] === true) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --openapi and --fern-definition. Please choose one."
                 );
             } else if (argv.readme != null) {
                 await cliContext.runTask(async (context) => {
@@ -359,7 +379,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         context,
-                        openApiPath: absoluteOpenApiPath
+                        openApiPath: absoluteOpenApiPath,
+                        useFernDefinition: argv["fern-definition"] === true
                     });
                 });
             }
@@ -534,12 +555,13 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Add the generator to the specified group"
                 }),
         async (argv) => {
+            const generatorName = warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext);
             await addGeneratorToWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false
                 }),
-                generatorName: argv.generator,
+                generatorName,
                 groupName: argv.group,
                 cliContext
             });
@@ -573,6 +595,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("group", {
                     type: "string",
                     description: "The group to generate"
+                })
+                .option("generator", {
+                    type: "string",
+                    description: "The name of a specific generator to run"
                 })
                 .option("mode", {
                     choices: Object.values(GenerationMode),
@@ -657,6 +683,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("output", {
                     type: "string",
                     description: "Custom output directory (currently only supported with --preview for SDK generation)"
+                })
+                .option("replay", {
+                    boolean: true,
+                    default: true,
+                    hidden: true,
+                    description: "Run replay after generation (use --no-replay to skip)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -694,6 +726,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
             }
+            const correctedGeneratorFilter =
+                argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -703,6 +737,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     version: argv.version,
                     groupName: argv.group,
+                    generatorName: correctedGeneratorFilter,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local || argv.runner != null,
@@ -714,12 +749,16 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     lfsOverride: argv.lfsOverride,
                     fernignorePath: argv.fernignore,
                     dynamicIrOnly: argv["dynamic-ir-only"],
-                    outputDir: argv.output
+                    outputDir: argv.output,
+                    noReplay: !argv.replay
                 });
             }
             if (argv.docs != null) {
                 if (argv.group != null) {
                     cliContext.logger.warn("--group is ignored when generating docs");
+                }
+                if (argv.generator != null) {
+                    cliContext.logger.warn("--generator is ignored when generating docs");
                 }
                 if (argv.version != null) {
                     cliContext.logger.warn("--version is ignored when generating docs");
@@ -752,6 +791,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 cliContext,
                 version: argv.version,
                 groupName: argv.group,
+                generatorName: correctedGeneratorFilter,
                 shouldLogS3Url: argv.printZipUrl,
                 keepDocker: argv.keepDocker,
                 useLocalDocker: argv.local,
@@ -763,7 +803,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 lfsOverride: argv.lfsOverride,
                 fernignorePath: argv.fernignore,
                 dynamicIrOnly: argv["dynamic-ir-only"],
-                outputDir: argv.output
+                outputDir: argv.output,
+                noReplay: !argv.replay
             });
         }
     );
@@ -1533,8 +1574,46 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsBrokenLinksCommand(yargs, cliContext);
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
+        addDocsMdCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsMdCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    // Hidden command - pass false as description to hide from help output
+    // This command is in beta and not yet ready for general use
+    cli.command("md", false, (yargs) => {
+        addDocsMdGenerateCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
+function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "generate",
+        "[Beta] Generate MDX documentation from library source code. Requires 'libraries' config in docs.yml.",
+        (yargs) =>
+            yargs.option("library", {
+                type: "string",
+                description: "Name of a specific library defined in docs.yml to generate docs for"
+            }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs md generate"
+            });
+
+            const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                commandLineApiWorkspace: undefined,
+                defaultToAllApiWorkspaces: true
+            });
+
+            await generateLibraryDocs({
+                project,
+                cliContext,
+                library: argv.library
+            });
+        }
+    );
 }
 
 function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -1930,6 +2009,20 @@ function readBytes(stream: ReadStream): Promise<Uint8Array> {
     });
 }
 
+/**
+ * Corrects the incorrect "fern-api/" Docker org prefix to "fernapi/" and logs a warning.
+ * Used for CLI arguments that accept generator names.
+ */
+function warnAndCorrectIncorrectDockerOrg(generatorName: string, cliContext: CliContext): string {
+    const corrected = correctIncorrectDockerOrg(generatorName);
+    if (corrected !== generatorName) {
+        cliContext.logger.warn(
+            `"${generatorName}" is not a valid generator name. Using "${corrected}" instead — the Docker org is "fernapi", not "${INCORRECT_DOCKER_ORG}".`
+        );
+    }
+    return corrected;
+}
+
 function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         stream.write(data, (err) => {
@@ -1940,4 +2033,115 @@ function writeBytes(stream: WriteStream, data: Uint8Array): Promise<void> {
             }
         });
     });
+}
+
+function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command({
+        command: "replay",
+        describe: false, // hidden from --help
+        builder: (yargs) => {
+            addReplayInitCommand(yargs, cliContext);
+            return yargs;
+        },
+        handler: () => {
+            // parent command — subcommands handle execution
+        }
+    });
+}
+
+function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "init",
+        false, // hidden from --help
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description: "Generator group from generators.yml (reads github config automatically)"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "If multiple APIs, specify which API workspace to use"
+                })
+                .option("github", {
+                    type: "string",
+                    description: "GitHub repository (e.g., owner/repo). Overrides --group config."
+                })
+                .option("token", {
+                    type: "string",
+                    description: "GitHub token. Overrides --group config."
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    default: false,
+                    description: "Report what would happen without making changes"
+                })
+                .option("max-commits", {
+                    type: "number",
+                    description: "Max commits to scan for generation history"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite existing lockfile if Replay is already initialized"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern replay init"
+            });
+
+            let githubRepo: string | undefined = argv.github;
+            let token: string | undefined = argv.token;
+
+            // If --group is provided, load config from generators.yml
+            if (argv.group != null) {
+                const resolved = await resolveGroupGithubConfig(cliContext, argv.group, argv.api);
+                // Use group config as defaults, allow --github/--token to override
+                githubRepo = githubRepo ?? resolved.githubRepo;
+                token = token ?? resolved.token;
+            }
+
+            if (githubRepo == null || token == null) {
+                return cliContext.failAndThrow(
+                    "Missing required github config. Either use --group to read from generators.yml, or provide --github and --token directly."
+                );
+            }
+
+            cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
+            if (argv.dryRun) {
+                cliContext.logger.info("(dry-run mode)");
+            }
+
+            try {
+                const result = await replayInit({
+                    githubRepo,
+                    token,
+                    dryRun: argv.dryRun,
+                    maxCommitsToScan: argv.maxCommits,
+                    force: argv.force
+                });
+
+                const logEntries = formatBootstrapSummary(result);
+                for (const entry of logEntries) {
+                    if (entry.level === "warn") {
+                        cliContext.logger.warn(entry.message);
+                    } else {
+                        cliContext.logger.info(entry.message);
+                    }
+                }
+
+                if (!result.bootstrap.generationCommit) {
+                    return;
+                }
+
+                if (argv.dryRun) {
+                    cliContext.logger.info("\nDry run complete. No changes made.");
+                }
+            } catch (error) {
+                cliContext.failAndThrow(
+                    `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+        }
+    );
 }

@@ -1,4 +1,4 @@
-import { SymbolGraph } from "../symbol-graph";
+import { SymbolGraph } from "../symbol-graph.js";
 
 describe("SymbolGraph", () => {
     function setupGraph() {

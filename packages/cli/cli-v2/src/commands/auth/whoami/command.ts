@@ -1,9 +1,9 @@
 import chalk from "chalk";
 import type { Argv } from "yargs";
-import type { Context } from "../../../context/Context";
-import type { GlobalArgs } from "../../../context/GlobalArgs";
-import { CliError } from "../../../errors/CliError";
-import { command } from "../../_internal/command";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { CliError } from "../../../errors/CliError.js";
+import { command } from "../../_internal/command.js";
 
 export declare namespace WhoamiCommand {
     export interface Args extends GlobalArgs {
@@ -30,7 +30,7 @@ export class WhoamiCommand {
     }
 }
 
-export function addWhoamiCommand(cli: Argv<GlobalArgs>): void {
+export function addWhoamiCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new WhoamiCommand();
     command(
         cli,
@@ -42,6 +42,7 @@ export function addWhoamiCommand(cli: Argv<GlobalArgs>): void {
                 type: "boolean",
                 default: false,
                 description: "Output as JSON"
-            })
+            }),
+        parentPath
     );
 }

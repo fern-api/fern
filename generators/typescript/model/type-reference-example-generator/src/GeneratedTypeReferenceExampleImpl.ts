@@ -1,26 +1,19 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    ExampleContainer,
-    ExamplePrimitive,
-    ExampleTypeReference,
-    ExampleTypeReferenceShape,
-    ShapeType,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { FernIr } from "@fern-fern/ir-sdk";
 import { createNumericLiteralSafe, GetReferenceOpts, isExpressionUndefined } from "@fern-typescript/commons";
 import { BaseContext, GeneratedTypeReferenceExample } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
     export interface Init {
-        example: ExampleTypeReference;
+        example: FernIr.ExampleTypeReference;
         useBigInt: boolean;
         includeSerdeLayer: boolean;
     }
 }
 
 export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReferenceExample {
-    private example: ExampleTypeReference;
+    private example: FernIr.ExampleTypeReference;
     private useBigInt: boolean;
     private includeSerdeLayer: boolean;
 
@@ -39,13 +32,13 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         context,
         opts
     }: {
-        example: ExampleTypeReference;
+        example: FernIr.ExampleTypeReference;
         context: BaseContext;
         opts: GetReferenceOpts;
     }): ts.Expression {
-        return ExampleTypeReferenceShape._visit(example.shape, {
+        return FernIr.ExampleTypeReferenceShape._visit(example.shape, {
             primitive: (primitiveExample) =>
-                ExamplePrimitive._visit<ts.Expression>(primitiveExample, {
+                FernIr.ExamplePrimitive._visit<ts.Expression>(primitiveExample, {
                     string: (stringExample) => {
                         if (opts.isForComment || opts.isForTypeDeclarationComment) {
                             return ts.factory.createStringLiteral(escapeStringForComment(stringExample.original));
@@ -87,7 +80,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     }
                 }),
             container: (exampleContainer) => {
-                return ExampleContainer._visit<ts.Expression>(exampleContainer, {
+                return FernIr.ExampleContainer._visit<ts.Expression>(exampleContainer, {
                     list: (exampleItems) =>
                         ts.factory.createArrayLiteralExpression(
                             exampleItems.list
@@ -139,7 +132,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                             ? this.buildExample({
                                   example: {
                                       jsonExample: this.getJsonExampleForPrimitive(exampleItem.literal, opts),
-                                      shape: ExampleTypeReferenceShape.primitive(exampleItem.literal)
+                                      shape: FernIr.ExampleTypeReferenceShape.primitive(exampleItem.literal)
                                   },
                                   context,
                                   opts
@@ -169,7 +162,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         });
     }
 
-    private getJsonExampleForPrimitive(primitiveExample: ExamplePrimitive, opts: GetReferenceOpts): unknown {
+    private getJsonExampleForPrimitive(primitiveExample: FernIr.ExamplePrimitive, opts: GetReferenceOpts): unknown {
         switch (primitiveExample.type) {
             case "string":
                 if (opts.isForComment || opts.isForTypeDeclarationComment) {
@@ -210,13 +203,13 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         context,
         opts
     }: {
-        example: ExampleTypeReference;
+        example: FernIr.ExampleTypeReference;
         context: BaseContext;
         opts: GetReferenceOpts;
     }): ts.PropertyName {
-        return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
+        return FernIr.ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {
             primitive: (primitiveExample) =>
-                ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
+                FernIr.ExamplePrimitive._visit<ts.PropertyName>(primitiveExample, {
                     string: (stringExample) => ts.factory.createStringLiteral(stringExample.original),
                     integer: (integerExample) =>
                         integerExample < 0
@@ -254,7 +247,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     case "literal":
                         return this.getExampleAsPropertyName({
                             example: {
-                                shape: ExampleTypeReferenceShape.primitive(containerExample.literal),
+                                shape: FernIr.ExampleTypeReferenceShape.primitive(containerExample.literal),
                                 jsonExample: example.jsonExample
                             },
                             context,
@@ -299,12 +292,12 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         });
     }
 
-    protected isTypeReferencePrimitive(typeReference: TypeReference, context: BaseContext): boolean {
+    protected isTypeReferencePrimitive(typeReference: FernIr.TypeReference, context: BaseContext): boolean {
         const resolvedType = context.type.resolveTypeReference(typeReference);
         if (resolvedType.type === "primitive") {
             return true;
         }
-        if (resolvedType.type === "named" && resolvedType.shape === ShapeType.Enum) {
+        if (resolvedType.type === "named" && resolvedType.shape === FernIr.ShapeType.Enum) {
             return true;
         }
         return false;

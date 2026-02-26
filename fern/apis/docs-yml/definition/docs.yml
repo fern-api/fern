@@ -151,6 +151,23 @@ types:
       title:
         type: optional<string>
         docs: A string that is used as the tab bar title.
+      libraries:
+        type: optional<map<LibraryName, LibraryConfiguration>>
+        docs: |
+          Configuration for library documentation generation. Each library entry defines
+          a source repository and output location for generated MDX documentation.
+
+          Example:
+          ```yaml
+          libraries:
+            my-sdk:
+              input:
+                git: https://github.com/acme/sdk-python
+                subpath: src/sdk
+              output:
+                path: ./static/sdk-docs
+              lang: python
+          ```
       analytics:
         type: optional<AnalyticsConfig>
         docs: |
@@ -562,7 +579,7 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiReferenceConfiguration
-      - PythonDocsConfiguration
+      - LibraryReferenceConfiguration
       - LinkConfiguration
       - ChangelogConfiguration
       - FolderConfiguration
@@ -795,6 +812,13 @@ types:
           @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
+      folder-title-source:
+        type: optional<TitleSource>
+        docs: |
+          Sets the default title source for all folder navigations. When set, this value is used as the
+          default `title-source` for any folder that does not explicitly specify its own `title-source`.
+          Options are `frontmatter` (use the `title` field from the file's frontmatter) or `filename`
+          (derive title from the file name).
       substitute-env-vars:
         type: optional<boolean>
         docs: |
@@ -1069,7 +1093,19 @@ types:
         docs: |
           The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<boolean>
+        docs: |
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+        availability: deprecated
+      collapsible:
+        type: optional<boolean>
+        docs: |
+          Whether the section can be expanded/collapsed by the user.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: |
+          Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open).
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
@@ -1095,7 +1131,19 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<boolean>
+        docs: |
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+        availability: deprecated
+      collapsible:
+        type: optional<boolean>
+        docs: |
+          Whether the section can be expanded/collapsed by the user.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: |
+          Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open).
       availability: optional<Availability>
 
   TitleSource:
@@ -1132,7 +1180,9 @@ types:
         type: optional<list<ApiReferenceLayoutItem>>
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
-      collapsed: optional<boolean>
+      collapsed:
+        type: optional<boolean>
+        availability: deprecated
       icon: optional<string>
       slug: optional<string>
       hidden: optional<boolean>
@@ -1156,26 +1206,89 @@ types:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.
 
-  PythonDocsConfiguration:
-    docs: |
-      Configuration for generating Python library documentation from source code.
-      The docs are generated from a GitHub repository and merged into the navigation.
+  # Library Documentation Types
+  LibraryName:
+    type: string
+    docs: The name identifier for a library. Used to reference the library in navigation.
+
+  LibraryLanguage:
+    enum:
+      - python
+      - cpp
+    docs: The programming language of the library source code.
+
+  LibraryInputConfiguration:
+    docs: Configuration for the library source location.
+    discriminated: false
+    union:
+      - GitLibraryInputSchema
+      - PathLibraryInputSchema
+
+  GitLibraryInputSchema:
+    docs: Configuration for fetching library source from a Git repository.
     properties:
-      python-docs:
+      git:
         type: string
         docs: |
-          GitHub URL to the repository containing the Python library source code.
-          Example: https://github.com/NVIDIA/NeMo-RL
+          GitHub URL to the repository containing the library source code.
+          Example: https://github.com/django/django
+      subpath:
+        type: optional<string>
+        docs: |
+          Optional path within the repository to the library source.
+          Example: django/core
+
+  PathLibraryInputSchema:
+    docs: Configuration for using a local filesystem path as library source. (Not yet implemented)
+    properties:
+      path:
+        type: string
+        docs: |
+          Local filesystem path to the library source.
+          Example: ./src/my-library
+
+  LibraryOutputConfiguration:
+    docs: Configuration for the library documentation output.
+    properties:
+      path:
+        type: string
+        docs: |
+          The output directory where MDX files will be generated.
+          Example: ./static/sdk-docs
+
+  LibraryConfiguration:
+    docs: |
+      Configuration for a library documentation source.
+      Used by `fern docs md generate` to generate MDX files from library source code.
+    properties:
+      input:
+        type: LibraryInputConfiguration
+        docs: Configuration for the library source location.
+      output:
+        type: LibraryOutputConfiguration
+        docs: Configuration for the library documentation output.
+      lang:
+        type: LibraryLanguage
+        docs: The programming language of the library source code.
+
+  LibraryReferenceConfiguration:
+    extends: [WithPermissions, WithFeatureFlags]
+    docs: |
+      References a library defined in the `libraries` section.
+      The library's generated navigation will be injected at this point.
+    properties:
+      library:
+        type: LibraryName
+        docs: |
+          The name of the library to reference (must match a key in the `libraries` section).
       title:
         type: optional<string>
         docs: |
-          Navigation title for the Python docs section.
-          @default: "Python Reference"
+          Override the display title for this library reference.
       slug:
         type: optional<string>
         docs: |
-          URL slug for the Python docs pages.
-          @default: "python-docs"
+          Override the URL slug for this library reference.
 
   ApiReferenceLayoutItem:
     docs: |
@@ -1189,6 +1302,7 @@ types:
         docs: Keyed by subpackage name, this object allows you to group endpoints and pages together.
       - ApiReferenceSectionConfiguration
       - ApiReferenceEndpointConfiguration
+      - ApiReferenceOperationConfiguration
       - PageConfiguration
       - LinkConfiguration
 
@@ -1210,6 +1324,12 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      collapsible:
+        type: optional<boolean>
+        docs: Whether the section can be expanded/collapsed by the user in the sidebar.
+      collapsed-by-default:
+        type: optional<boolean>
+        docs: Whether the section starts collapsed. Only meaningful when collapsible is true.
       availability: optional<Availability>
       playground:
         type: optional<PlaygroundSettings>
@@ -1251,6 +1371,16 @@ types:
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
+
+  ApiReferenceOperationConfiguration:
+    docs: Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      operation: string
+      title: optional<string>
+      slug: optional<string>
+      hidden: optional<boolean>
+      availability: optional<Availability>
 
   LinkConfiguration:
     properties:
@@ -1352,6 +1482,78 @@ types:
           @default:
             dark: white/3.5%
             light: white/70%
+
+      accent-1:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 1. This is the lightest accent color, typically used for subtle backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-2:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 2. A very light accent color for backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-3:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 3. A light accent color for UI element backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-4:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 4. Used for hovered UI element backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-5:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 5. Used for active/selected UI element backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-6:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 6. Used for subtle borders and separators.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-7:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 7. Used for UI element borders and focus rings.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-8:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 8. Used for hovered UI element borders.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-9:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 9. The solid accent color, used for solid backgrounds like buttons.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-10:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 10. Used for hovered solid backgrounds.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-11:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 11. Used for low-contrast text.
+          By default, this is automatically calculated from the accent-primary color.
+
+      accent-12:
+        type: optional<ColorConfig>
+        docs: |
+          Override for accent scale step 12. The darkest accent color, used for high-contrast text.
+          By default, this is automatically calculated from the accent-primary color.
 
   ColorConfig:
     discriminated: false
@@ -1710,6 +1912,10 @@ types:
         availability: pre-release
         docs: |
           Experimental flag to exclude API reference sections from documentation generation. When enabled, API reference content will be omitted from the generated documentation.
+      basepath-aware:
+        type: optional<boolean>
+        docs: |
+          When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
 
   PlaygroundSettings:
     properties:

@@ -40,6 +40,9 @@ func (r *ReceiveEvent) GetBeta() int {
 }
 
 func (r *ReceiveEvent) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -92,6 +95,9 @@ func (r *ReceiveEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ReceiveEvent) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -143,6 +149,9 @@ func (r *ReceiveEvent2) GetEpsilon() bool {
 }
 
 func (r *ReceiveEvent2) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -202,6 +211,9 @@ func (r *ReceiveEvent2) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ReceiveEvent2) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -235,6 +247,9 @@ func (r *ReceiveEvent3) GetReceiveText3() string {
 }
 
 func (r *ReceiveEvent3) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -280,6 +295,9 @@ func (r *ReceiveEvent3) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ReceiveEvent3) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -322,6 +340,9 @@ func (s *SendEvent) GetSendParam() int {
 }
 
 func (s *SendEvent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -374,6 +395,9 @@ func (s *SendEvent) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendEvent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -416,6 +440,9 @@ func (s *SendEvent2) GetSendParam2() bool {
 }
 
 func (s *SendEvent2) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -468,6 +495,9 @@ func (s *SendEvent2) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendEvent2) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -510,6 +540,9 @@ func (r *ReceiveSnakeCase) GetReceiveInt() int {
 }
 
 func (r *ReceiveSnakeCase) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -562,6 +595,9 @@ func (r *ReceiveSnakeCase) MarshalJSON() ([]byte, error) {
 }
 
 func (r *ReceiveSnakeCase) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -604,6 +640,9 @@ func (s *SendSnakeCase) GetSendParam() int {
 }
 
 func (s *SendSnakeCase) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -656,6 +695,9 @@ func (s *SendSnakeCase) MarshalJSON() ([]byte, error) {
 }
 
 func (s *SendSnakeCase) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value

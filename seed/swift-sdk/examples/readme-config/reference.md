@@ -172,7 +172,7 @@ try await main()
 </details>
 
 ## File Service
-<details><summary><code>client.file.service.<a href="/Sources/Resources/File/Service/FileServiceClient.swift">getFile</a>(filename: String, requestOptions: RequestOptions?) -> File</code></summary>
+<details><summary><code>client.file.service.<a href="/Sources/Resources/File/Service/FileServiceClient.swift">getFile</a>(filename: String, xFileApiVersion: String, requestOptions: RequestOptions?) -> File</code></summary>
 <dl>
 <dd>
 
@@ -224,6 +224,14 @@ try await main()
 <dd>
 
 **filename:** `String` — This is a filename
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**xFileApiVersion:** `String` 
     
 </dd>
 </dl>
@@ -692,14 +700,10 @@ private func main() async throws {
                     name: "name",
                     nodes: [
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         ),
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         )
                     ],
                     trees: [
@@ -715,14 +719,10 @@ private func main() async throws {
                     name: "name",
                     nodes: [
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         ),
                         Node(
-                            name: "name",
-                            nodes: [],
-                            trees: []
+                            name: "name"
                         )
                     ],
                     trees: [
@@ -793,14 +793,10 @@ private func main() async throws {
                     ],
                     directories: [
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         ),
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         )
                     ]
                 ),
@@ -818,14 +814,10 @@ private func main() async throws {
                     ],
                     directories: [
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         ),
                         Directory(
-                            name: "name",
-                            files: [],
-                            directories: []
+                            name: "name"
                         )
                     ]
                 )

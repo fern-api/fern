@@ -4,7 +4,7 @@ import { readdir } from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 import { describe, expect, it } from "vitest";
-import { GraphQLConverter } from "../GraphQLConverter";
+import { GraphQLConverter } from "../GraphQLConverter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

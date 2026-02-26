@@ -13,6 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -20,14 +21,12 @@ import axios from "axios";
 import chalk from "chalk";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
-import yaml from "js-yaml";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { detectAirGappedMode, OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
-import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
-import { measureImageSizes } from "./measureImageSizes";
-import { asyncPool } from "./utils/asyncPool";
+import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { measureImageSizes } from "./measureImageSizes.js";
+import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -39,9 +38,19 @@ interface FileWithMimeType {
     relativeFilePath: RelativeFilePath;
 }
 
+interface FileWithSanitizedPathAndMimeType extends FileWithMimeType {
+    sanitizedPath: RelativeFilePath;
+}
+
 export async function calculateFileHash(absoluteFilePath: AbsoluteFilePath | string): Promise<string> {
     const fileBuffer = await readFile(absoluteFilePath);
     return createHash("sha256").update(new Uint8Array(fileBuffer)).digest("hex");
+}
+
+export function sanitizeRelativePathForS3(relativeFilePath: RelativeFilePath): RelativeFilePath {
+    // Replace ../ segments with _dot_dot_/ to prevent HTTP client normalization issues
+    // that cause S3 signature mismatches when paths contain parent directory references
+    return relativeFilePath.replace(/\.\.\//g, "_dot_dot_/") as RelativeFilePath;
 }
 
 export async function publishDocs({
@@ -101,6 +110,11 @@ export async function publishDocs({
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
         docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
+    const isBasepathAware = docsWorkspace.config.experimental?.basepathAware === true;
+
+    if (isBasepathAware) {
+        context.logger.debug("Experimental flag 'basepath-aware' is enabled - using basepath-aware S3 key format");
+    }
 
     const resolver = new DocsDefinitionResolver({
         domain,
@@ -110,13 +124,24 @@ export async function publishDocs({
         taskContext: context,
         editThisPage,
         uploadFiles: async (files) => {
-            const filesMap = new Map(files.map((file) => [file.absoluteFilePath, file]));
-            const filesWithMimeType: FileWithMimeType[] = files
+            // Pre-compute sanitized paths and attach to file objects
+            const filesWithSanitizedPaths = files.map((file) => ({
+                ...file,
+                sanitizedPath: sanitizeRelativePathForS3(file.relativeFilePath)
+            }));
+
+            const filesMap = new Map(filesWithSanitizedPaths.map((file) => [file.absoluteFilePath, file]));
+            const sanitizedToAbsoluteMap = new Map(
+                filesWithSanitizedPaths.map((file) => [file.sanitizedPath, file.absoluteFilePath])
+            );
+            const filesWithMimeType: FileWithSanitizedPathAndMimeType[] = filesWithSanitizedPaths
                 .map((fileMetadata) => ({
                     ...fileMetadata,
                     mediaType: mime.lookup(fileMetadata.absoluteFilePath)
                 }))
-                .filter((fileMetadata): fileMetadata is FileWithMimeType => fileMetadata.mediaType !== false);
+                .filter(
+                    (fileMetadata): fileMetadata is FileWithSanitizedPathAndMimeType => fileMetadata.mediaType !== false
+                );
 
             const imagesToMeasure = filesWithMimeType
                 .filter((file) => MediaType.parse(file.mediaType)?.isImage() ?? false)
@@ -137,10 +162,9 @@ export async function publishDocs({
                         return null;
                     }
 
+                    const sanitizedPath = filePath.sanitizedPath;
                     const obj = {
-                        filePath: CjsFdrSdk.docs.v1.write.FilePath(
-                            convertToFernHostRelativeFilePath(filePath.relativeFilePath)
-                        ),
+                        filePath: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(sanitizedPath)),
                         width: image.width,
                         height: image.height,
                         blurDataUrl: image.blurDataUrl,
@@ -157,7 +181,9 @@ export async function publishDocs({
             const hashImageTime = performance.now() - hashImageStart;
             context.logger.debug(`Hashed ${images.length} images in ${hashImageTime.toFixed(0)}ms`);
 
-            const nonImageFiles = files.filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath));
+            const nonImageFiles = filesWithSanitizedPaths.filter(
+                ({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath)
+            );
 
             context.logger.debug(
                 `Hashing ${nonImageFiles.length} non-image files with concurrency ${HASH_CONCURRENCY}...`
@@ -166,10 +192,12 @@ export async function publishDocs({
             const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = await asyncPool(
                 HASH_CONCURRENCY,
                 nonImageFiles,
-                async (file) => ({
-                    path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.relativeFilePath)),
-                    fileHash: await calculateFileHash(file.absoluteFilePath)
-                })
+                async (file) => {
+                    return {
+                        path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.sanitizedPath)),
+                        fileHash: await calculateFileHash(file.absoluteFilePath)
+                    };
+                }
             );
             const hashNonImageTime = performance.now() - hashNonImageStart;
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
@@ -206,7 +234,8 @@ export async function publishDocs({
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
                                 context,
-                                UPLOAD_FILE_BATCH_SIZE
+                                UPLOAD_FILE_BATCH_SIZE,
+                                sanitizedToAbsoluteMap
                             );
                         } else {
                             context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
@@ -214,7 +243,8 @@ export async function publishDocs({
                     }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath
+                        docsWorkspace.absoluteFilePath,
+                        sanitizedToAbsoluteMap
                     );
                 } else {
                     return await startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
@@ -227,7 +257,8 @@ export async function publishDocs({
                     apiId: CjsFdrSdk.ApiId(""),
                     orgId: CjsFdrSdk.OrgId(organization),
                     filepaths: filepaths,
-                    images
+                    images,
+                    ...(isBasepathAware && { basepathAware: true })
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
@@ -258,7 +289,8 @@ export async function publishDocs({
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
                                 context,
-                                UPLOAD_FILE_BATCH_SIZE
+                                UPLOAD_FILE_BATCH_SIZE,
+                                sanitizedToAbsoluteMap
                             );
                         } else {
                             context.logger.info("No files to upload (all up to date)");
@@ -266,7 +298,8 @@ export async function publishDocs({
                     }
                     return convertToFilePathPairs(
                         startDocsRegisterResponse.body.uploadUrls,
-                        docsWorkspace.absoluteFilePath
+                        docsWorkspace.absoluteFilePath,
+                        sanitizedToAbsoluteMap
                     );
                 } else {
                     return startDocsRegisterFailed(startDocsRegisterResponse.error, context, organization);
@@ -298,19 +331,27 @@ export async function publishDocs({
                 withAiExamples,
                 docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
-            if (aiEnhancerConfig && workspace) {
-                const sources = workspace.getSources();
-                const openApiSource = sources.find((source) => source.type === "openapi");
-                const sourceFilePath = openApiSource?.absoluteFilePath;
+            if (aiEnhancerConfig) {
+                const sources = workspace?.getSources();
+                const openApiSources = sources
+                    ?.filter((source) => source.type === "openapi")
+                    .map((source) => ({
+                        absoluteFilePath: source.absoluteFilePath,
+                        absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
+                    }));
 
-                apiDefinition = await enhanceExamplesWithAI(
-                    apiDefinition,
-                    aiEnhancerConfig,
-                    context,
-                    token,
-                    organization,
-                    sourceFilePath
-                );
+                if (openApiSources == null || openApiSources.length === 0) {
+                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
+                } else {
+                    apiDefinition = await enhanceExamplesWithAI(
+                        apiDefinition,
+                        aiEnhancerConfig,
+                        context,
+                        token,
+                        organization,
+                        openApiSources
+                    );
+                }
             }
 
             // create dynamic IR + metadata for each generator language
@@ -441,76 +482,6 @@ export async function publishDocs({
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    // Handle Python docs generation if configured
-    let libraryDocsConfig: DocsV2Write.LibraryDocsRegistrationConfig | undefined;
-    const pythonDocsSection = await extractPythonDocsSectionFromConfig(
-        docsWorkspace.config,
-        docsWorkspace.absoluteFilePath
-    );
-    if (pythonDocsSection != null && !isAirGapped) {
-        // Config is already deserialized with camelCase properties
-        const githubUrl = pythonDocsSection.pythonDocs;
-
-        context.logger.info(`Generating Python documentation from ${githubUrl}...`);
-
-        // Start Python docs generation
-        const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
-            orgId: CjsFdrSdk.OrgId(organization),
-            githubUrl: CjsFdrSdk.Url(githubUrl),
-            language: "PYTHON",
-            config: {
-                branch: undefined,
-                packagePath: undefined,
-                title: pythonDocsSection.title,
-                slug: pythonDocsSection.slug
-            }
-        });
-
-        if (!startResponse.ok) {
-            return context.failAndThrow(`Failed to start Python docs generation for ${githubUrl}`, startResponse.error);
-        }
-
-        const jobId = startResponse.body.jobId;
-        context.logger.debug(`Python docs generation started with jobId: ${jobId}`);
-
-        // Poll for completion
-        const POLL_INTERVAL_MS = 3000;
-        const MAX_POLL_ATTEMPTS = 100; // ~5 minutes
-        let pollAttempts = 0;
-
-        while (pollAttempts < MAX_POLL_ATTEMPTS) {
-            const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
-
-            if (!statusResponse.ok) {
-                return context.failAndThrow(`Failed to check Python docs generation status`, statusResponse.error);
-            }
-
-            const status = statusResponse.body.status;
-            context.logger.debug(`Python docs generation status: ${status}`);
-
-            if (status === "COMPLETED") {
-                context.logger.info("Python documentation generation completed.");
-                libraryDocsConfig = {
-                    jobId,
-                    slug: pythonDocsSection.slug,
-                    title: pythonDocsSection.title
-                };
-                break;
-            } else if (status === "FAILED") {
-                const errorMsg = statusResponse.body.error?.message ?? "Unknown error";
-                return context.failAndThrow(`Python docs generation failed: ${errorMsg}`);
-            }
-
-            // Wait before next poll
-            await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
-            pollAttempts++;
-        }
-
-        if (pollAttempts >= MAX_POLL_ATTEMPTS) {
-            return context.failAndThrow("Python docs generation timed out");
-        }
-    }
-
     context.logger.info("Publishing docs to FDR...");
     const publishStart = performance.now();
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
@@ -518,7 +489,7 @@ export async function publishDocs({
         {
             docsDefinition,
             excludeApis,
-            libraryDocs: libraryDocsConfig
+            ...(isBasepathAware && { basepathAware: true })
         }
     );
 
@@ -560,7 +531,8 @@ async function uploadFiles(
     filesToUpload: Record<string, DocsV1Write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath,
     context: TaskContext,
-    batchSize: number
+    batchSize: number,
+    sanitizedToAbsoluteMap: Map<string, AbsoluteFilePath>
 ): Promise<void> {
     const startTime = Date.now();
     const totalFiles = Object.keys(filesToUpload).length;
@@ -570,8 +542,9 @@ async function uploadFiles(
     for (const chunkedFilepaths of chunkedFilepathsToUpload) {
         await Promise.all(
             chunkedFilepaths.map(async ([key, { uploadUrl }]) => {
-                const relativeFilePath = RelativeFilePath.of(key);
-                const absoluteFilePath = resolve(docsWorkspacePath, relativeFilePath);
+                // Use the mapping to get the original absolute path instead of reconstructing from sanitized key
+                const absoluteFilePath =
+                    sanitizedToAbsoluteMap.get(key) || resolve(docsWorkspacePath, RelativeFilePath.of(key));
                 try {
                     const mimeType = mime.lookup(absoluteFilePath);
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
@@ -597,12 +570,14 @@ async function uploadFiles(
 
 function convertToFilePathPairs(
     uploadUrls: Record<string, DocsV1Write.FileS3UploadUrl>,
-    docsWorkspacePath: AbsoluteFilePath
+    docsWorkspacePath: AbsoluteFilePath,
+    sanitizedToAbsoluteMap?: Map<string, AbsoluteFilePath>
 ): UploadedFile[] {
     const toRet: UploadedFile[] = [];
     for (const [key, value] of Object.entries(uploadUrls)) {
         const relativeFilePath = RelativeFilePath.of(key);
-        const absoluteFilePath = resolve(docsWorkspacePath, relativeFilePath);
+        // Use the mapping to get the original absolute path instead of reconstructing from sanitized key
+        const absoluteFilePath = sanitizedToAbsoluteMap?.get(key) || resolve(docsWorkspacePath, relativeFilePath);
         toRet.push({
             relativeFilePath,
             absoluteFilePath,
@@ -1198,200 +1173,4 @@ function extractErrorDetails(error: unknown): Record<string, unknown> {
         // Include the raw error for complete debugging if needed
         rawError: error
     };
-}
-
-/**
- * Extracts the first library section configuration from the docs config navigation.
- * Only supports Python libraries for now.
- * Searches through top-level navigation, tabbed navigation, versioned navigation,
- * and product-based navigation (including product files and version files).
- */
-async function extractPythonDocsSectionFromConfig(
-    config: docsYml.RawSchemas.DocsConfiguration,
-    absolutePathToFernFolder: AbsoluteFilePath
-): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> {
-    // Helper to check if an item is a Python docs config
-    // The config may have "pythonDocs" (camelCase, deserialized) or "python-docs" (kebab-case, raw YAML)
-    const isPythonDocsConfig = (item: unknown): boolean => {
-        if (item == null || typeof item !== "object") {
-            return false;
-        }
-        const obj = item as Record<string, unknown>;
-        // Check for deserialized format (pythonDocs) or raw YAML format (python-docs)
-        return typeof obj.pythonDocs === "string" || typeof obj["python-docs"] === "string";
-    };
-
-    // Helper to normalize python-docs config to the expected format
-    const normalizePythonDocsConfig = (item: unknown): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
-        if (item == null || typeof item !== "object") {
-            return undefined;
-        }
-        const obj = item as Record<string, unknown>;
-        // If it has pythonDocs (deserialized format), return as-is
-        if (typeof obj.pythonDocs === "string") {
-            return item as docsYml.RawSchemas.PythonDocsConfiguration;
-        }
-        // If it has python-docs (raw YAML format), convert to deserialized format
-        if (typeof obj["python-docs"] === "string") {
-            return {
-                pythonDocs: obj["python-docs"],
-                title: typeof obj.title === "string" ? obj.title : undefined,
-                slug: typeof obj.slug === "string" ? obj.slug : undefined
-            } as docsYml.RawSchemas.PythonDocsConfiguration;
-        }
-        return undefined;
-    };
-
-    // Helper to recursively search navigation items
-    const findPythonDocsSectionInItems = (
-        items: unknown[] | undefined
-    ): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
-        if (items == null) {
-            return undefined;
-        }
-        for (const item of items) {
-            if (isPythonDocsConfig(item)) {
-                return normalizePythonDocsConfig(item);
-            }
-            // Check in section contents
-            if (item != null && typeof item === "object" && "section" in item) {
-                const sectionItem = item as { contents?: unknown[] };
-                if (sectionItem.contents) {
-                    const found = findPythonDocsSectionInItems(sectionItem.contents);
-                    if (found) {
-                        return found;
-                    }
-                }
-            }
-            // Check in tabbed navigation items (items with tab and layout properties)
-            if (item != null && typeof item === "object" && "tab" in item && "layout" in item) {
-                const tabbedItem = item as { layout?: unknown[] };
-                if (tabbedItem.layout) {
-                    const found = findPythonDocsSectionInItems(tabbedItem.layout);
-                    if (found) {
-                        return found;
-                    }
-                }
-            }
-        }
-        return undefined;
-    };
-
-    // Helper to search in a navigation config (handles arrays, tabbed, and versioned)
-    const findInNavigationConfig = (navigation: unknown): docsYml.RawSchemas.PythonDocsConfiguration | undefined => {
-        if (navigation == null) {
-            return undefined;
-        }
-
-        // Check if it's an array (simple navigation)
-        if (Array.isArray(navigation)) {
-            return findPythonDocsSectionInItems(navigation);
-        }
-
-        // Check if it's an object with tabs
-        if (navigation != null && typeof navigation === "object") {
-            const navObj = navigation as Record<string, unknown>;
-
-            // Tabbed navigation - check each tab's layout
-            if (Array.isArray(navObj.tabs)) {
-                for (const tab of navObj.tabs) {
-                    if (tab != null && typeof tab === "object") {
-                        const tabObj = tab as Record<string, unknown>;
-                        if (Array.isArray(tabObj.layout)) {
-                            const found = findPythonDocsSectionInItems(tabObj.layout);
-                            if (found) {
-                                return found;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return undefined;
-    };
-
-    // Helper to load and search a version file
-    const searchVersionFile = async (
-        versionPath: string
-    ): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> => {
-        try {
-            const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, RelativeFilePath.of(versionPath));
-            const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-            if (content != null && typeof content === "object") {
-                const versionContent = content as Record<string, unknown>;
-                return findInNavigationConfig(versionContent.navigation);
-            }
-        } catch {
-            // If we can't read the file, skip it
-        }
-        return undefined;
-    };
-
-    // Helper to load and search a product file
-    const searchProductFile = async (
-        productPath: string,
-        productVersions?: docsYml.RawSchemas.VersionConfig[]
-    ): Promise<docsYml.RawSchemas.PythonDocsConfiguration | undefined> => {
-        try {
-            const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, RelativeFilePath.of(productPath));
-            const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
-
-            if (content != null && typeof content === "object") {
-                const productContent = content as Record<string, unknown>;
-
-                // First check the product file's own navigation
-                const found = findInNavigationConfig(productContent.navigation);
-                if (found) {
-                    return found;
-                }
-            }
-
-            // If the product has versions, search each version file
-            if (productVersions != null && productVersions.length > 0) {
-                for (const version of productVersions) {
-                    const found = await searchVersionFile(version.path);
-                    if (found) {
-                        return found;
-                    }
-                }
-            }
-        } catch {
-            // If we can't read the file, skip it
-        }
-        return undefined;
-    };
-
-    // First, check top-level navigation
-    if (config.navigation != null) {
-        const found = findInNavigationConfig(config.navigation);
-        if (found) {
-            return found;
-        }
-    }
-
-    // Check top-level versions (versioned navigation at root level)
-    if (config.versions != null && config.versions.length > 0) {
-        for (const version of config.versions) {
-            const found = await searchVersionFile(version.path);
-            if (found) {
-                return found;
-            }
-        }
-    }
-
-    // Check products (product-based navigation)
-    if (config.products != null && config.products.length > 0) {
-        for (const product of config.products) {
-            // Only internal products have a path to a product file
-            if ("path" in product && product.path != null) {
-                const found = await searchProductFile(product.path, product.versions);
-                if (found) {
-                    return found;
-                }
-            }
-        }
-    }
-
-    return undefined;
 }

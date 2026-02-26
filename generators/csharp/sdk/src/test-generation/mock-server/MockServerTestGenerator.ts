@@ -3,10 +3,15 @@ import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExampleEndpointCall, ExampleTypeReference, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
-import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { MockEndpointGenerator } from "./MockEndpointGenerator";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type ExampleTypeReference = FernIr.ExampleTypeReference;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ServiceId = FernIr.ServiceId;
+
+import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
+import { MockEndpointGenerator } from "./MockEndpointGenerator.js";
 
 export declare namespace TestClass {
     interface TestInput {

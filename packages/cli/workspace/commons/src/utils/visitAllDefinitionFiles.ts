@@ -3,8 +3,8 @@ import { entries } from "@fern-api/core-utils";
 import { DefinitionFileSchema } from "@fern-api/fern-definition-schema";
 import { basename, RelativeFilePath } from "@fern-api/path-utils";
 
-import { FernWorkspace } from "../FernWorkspace";
-import { getAllDefinitionFiles } from "./getAllDefinitionFiles";
+import { FernWorkspace } from "../FernWorkspace.js";
+import { getAllDefinitionFiles } from "./getAllDefinitionFiles.js";
 
 export function visitAllDefinitionFiles(
     workspace: FernWorkspace,

@@ -85,6 +85,10 @@ public final class UpdateUserRequest {
     public interface _FinalStage {
         UpdateUserRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         /**
          * <p>If true, validate the update without persisting</p>
          */
@@ -141,6 +145,18 @@ public final class UpdateUserRequest {
         @java.lang.Override
         public UpdateUserRequest build() {
             return new UpdateUserRequest(dryRun, body, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

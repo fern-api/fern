@@ -86,8 +86,7 @@ export async function buildCli(config) {
         ...tsdownOverrides
     });
 
-    // Change to output directory
-    process.chdir(path.join(__dirname, outDir));
+    const outDirAbs = path.join(__dirname, outDir);
 
     // Collect runtime dependencies
     const dependencies = {};
@@ -116,8 +115,8 @@ export async function buildCli(config) {
         ...packageJsonOverrides
     };
 
-    await writeFile("package.json", JSON.stringify(outputPackageJson, undefined, 2));
+    await writeFile(path.join(outDirAbs, "package.json"), JSON.stringify(outputPackageJson, undefined, 2));
 
     // Run npm pkg fix to format and fix the package.json
-    await execAsync("npm pkg fix");
+    await execAsync("npm pkg fix", { cwd: outDirAbs });
 }

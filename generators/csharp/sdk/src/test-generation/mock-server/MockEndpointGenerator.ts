@@ -1,15 +1,17 @@
 import { ast, WithGeneration } from "@fern-api/csharp-codegen";
-import {
-    ExampleEndpointCall,
-    ExampleRequestBody,
-    ExampleTypeReference,
-    HttpEndpoint,
-    ObjectPropertyAccess,
-    TypeId,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type ExampleEndpointCall = FernIr.ExampleEndpointCall;
+type ExampleRequestBody = FernIr.ExampleRequestBody;
+type ExampleTypeReference = FernIr.ExampleTypeReference;
+type HttpEndpoint = FernIr.HttpEndpoint;
+type ObjectPropertyAccess = FernIr.ObjectPropertyAccess;
+const ObjectPropertyAccess = FernIr.ObjectPropertyAccess;
+type TypeId = FernIr.TypeId;
+type TypeReference = FernIr.TypeReference;
+
+import { getContentTypeFromRequestBody } from "../../endpoint/utils/getContentTypeFromRequestBody.js";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext.js";
 
 export declare namespace TestClass {
     interface TestInput {
@@ -196,7 +198,7 @@ export class MockEndpointGenerator extends WithGeneration {
      * Filters read-only properties from a reference request body and normalizes datetime values.
      * Always uses recursive filtering to ensure datetime values are normalized to ISO 8601 format.
      */
-    private filterReferenceRequestBody(exampleRequest: ExampleRequestBody.Reference): unknown {
+    private filterReferenceRequestBody(exampleRequest: FernIr.ExampleRequestBody.Reference): unknown {
         // Always use recursive filtering to:
         // 1. Remove read-only properties if any exist
         // 2. Normalize datetime values to ISO 8601 format for wire test matching
@@ -300,7 +302,7 @@ export class MockEndpointGenerator extends WithGeneration {
      * Always uses recursive filtering to ensure datetime values are normalized to ISO 8601 format.
      */
     private filterInlinedRequestBody(
-        exampleRequest: ExampleRequestBody.InlinedRequestBody,
+        exampleRequest: FernIr.ExampleRequestBody.InlinedRequestBody,
         _endpoint: HttpEndpoint
     ): Record<string, unknown> {
         // Build the result with filtering and datetime normalization
@@ -340,7 +342,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
         // Check properties
         for (const prop of typeDeclaration.shape.properties) {
-            if (prop.name.wireValue === wireValue && prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+            if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                 return true;
             }
         }
@@ -348,7 +350,7 @@ export class MockEndpointGenerator extends WithGeneration {
         // Check extended properties
         if (typeDeclaration.shape.extendedProperties) {
             for (const prop of typeDeclaration.shape.extendedProperties) {
-                if (prop.name.wireValue === wireValue && prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                if (prop.name.wireValue === wireValue && prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                     return true;
                 }
             }
@@ -494,7 +496,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
             case "union":
                 // For unions, we need to handle the discriminant and the union value
-                return this.filterUnionExample(innerShape, options);
+                return this.filterUnionExample(typeId, innerShape, options);
 
             case "undiscriminatedUnion":
                 return this.filterExampleTypeReference(innerShape.singleUnionType, options);
@@ -543,11 +545,12 @@ export class MockEndpointGenerator extends WithGeneration {
      * Filters properties from a union example.
      */
     private filterUnionExample(
+        typeId: TypeId,
         unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown },
         options: { filterWriteOnly?: boolean } = {}
     ): unknown {
-        // Union examples have a complex structure - for now, return the JSON example
-        // and rely on the SDK's serialization to handle read-only properties
+        // Union examples have a complex structure
+        // The singleUnionType has a wireDiscriminantValue and a shape that describes the variant
         const singleUnionType = unionShape.singleUnionType as {
             wireDiscriminantValue: { wireValue: string };
             shape:
@@ -556,7 +559,7 @@ export class MockEndpointGenerator extends WithGeneration {
                       typeId: TypeId;
                       object: { properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> };
                   }
-                | { type: "singleProperty"; jsonExample: unknown; typeReference: ExampleTypeReference }
+                | ({ type: "singleProperty" } & ExampleTypeReference)
                 | { type: "noProperties" };
         };
 
@@ -572,14 +575,40 @@ export class MockEndpointGenerator extends WithGeneration {
             );
             Object.assign(result, filteredProps);
         } else if (singleUnionType.shape.type === "singleProperty") {
-            // Single property unions have a nested value
-            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape.typeReference, options);
-            // The property name for single property unions is typically the variant name
-            // but we need to check the union definition for the actual wire name
-            Object.assign(result, filteredValue);
+            // For singleProperty, the shape itself extends ExampleTypeReference
+            // so it has shape and jsonExample fields directly on it
+            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape, options);
+            // Look up the union type definition to get the correct property wire name
+            // for singleProperty variants (e.g., "value")
+            const propertyWireName = this.getSinglePropertyWireName(
+                typeId,
+                singleUnionType.wireDiscriminantValue.wireValue
+            );
+            result[propertyWireName] = filteredValue;
         }
 
         return result;
+    }
+
+    /**
+     * Looks up the union type definition to find the wire name for a singleProperty variant.
+     * Falls back to the discriminant wire value if the type definition can't be found.
+     */
+    private getSinglePropertyWireName(typeId: TypeId, discriminantWireValue: string): string {
+        try {
+            const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
+            if (typeDeclaration.shape.type === "union") {
+                const matchingType = typeDeclaration.shape.types.find(
+                    (t) => t.discriminantValue.wireValue === discriminantWireValue
+                );
+                if (matchingType?.shape.propertiesType === "singleProperty") {
+                    return matchingType.shape.name.wireValue;
+                }
+            }
+        } catch {
+            // Fall through to default
+        }
+        return discriminantWireValue;
     }
 
     /**
@@ -600,14 +629,14 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         for (const prop of shape.properties) {
-            if (prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+            if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                 readOnlyNames.add(prop.name.wireValue);
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
-                if (prop.propertyAccess === ObjectPropertyAccess.ReadOnly) {
+                if (prop.propertyAccess === FernIr.ObjectPropertyAccess.ReadOnly) {
                     readOnlyNames.add(prop.name.wireValue);
                 }
             }
@@ -634,14 +663,14 @@ export class MockEndpointGenerator extends WithGeneration {
         }
 
         for (const prop of shape.properties) {
-            if (prop.propertyAccess === ObjectPropertyAccess.WriteOnly) {
+            if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
                 writeOnlyNames.add(prop.name.wireValue);
             }
         }
 
         if (shape.extendedProperties) {
             for (const prop of shape.extendedProperties) {
-                if (prop.propertyAccess === ObjectPropertyAccess.WriteOnly) {
+                if (prop.propertyAccess === FernIr.ObjectPropertyAccess.WriteOnly) {
                     writeOnlyNames.add(prop.name.wireValue);
                 }
             }

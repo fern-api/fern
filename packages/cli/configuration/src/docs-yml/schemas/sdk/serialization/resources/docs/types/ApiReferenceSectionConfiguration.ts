@@ -24,6 +24,8 @@ export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+        collapsible: core.serialization.boolean().optional(),
+        collapsedByDefault: core.serialization.property("collapsed-by-default", core.serialization.boolean().optional()),
         availability: Availability.optional(),
         playground: PlaygroundSettings.optional(),
     })
@@ -40,6 +42,8 @@ export declare namespace ApiReferenceSectionConfiguration {
         icon?: string | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
+        collapsible?: boolean | null;
+        "collapsed-by-default"?: boolean | null;
         availability?: Availability.Raw | null;
         playground?: PlaygroundSettings.Raw | null;
     }

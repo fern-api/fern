@@ -2,8 +2,8 @@ import type { Element, ElementContent } from "hast";
 import type { Code } from "mdast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
 
-import { convertHastChildrenToMdast } from "../customComponents/children";
-import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes";
+import { convertHastChildrenToMdast } from "../customComponents/children.js";
+import type { HastNode, HastNodeIndex, HastNodeParent } from "../types/hastTypes.js";
 
 export function scrapeCodeGroup(node: HastNode, _: HastNodeIndex, __: HastNodeParent): Element | undefined {
     if (

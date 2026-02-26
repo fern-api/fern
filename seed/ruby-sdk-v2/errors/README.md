@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
-client.simple.foo_without_endpoint_error(bar: 'bar');
+client.simple.foo_without_endpoint_error(bar: "bar")
 ```
 
 ## Environments

@@ -15,6 +15,7 @@ types:
       method: WebhookMethodSchema
       headers: optional<map<string, services.HttpHeaderSchema>>
       payload: WebhookPayloadSchema
+      signature: optional<WebhookSignatureSchema>
       response: optional<services.HttpResponseSchema>
       response-stream: optional<services.HttpResponseStreamSchema>
       examples: optional<list<examples.ExampleWebhookCallSchema>>
@@ -42,3 +43,111 @@ types:
       name: string
       extends: optional<types.ObjectExtendsSchema>
       properties: optional<map<string, types.ObjectPropertySchema>>
+
+  WebhookSignatureSchema:
+    discriminant: type
+    union:
+      hmac: HmacSignatureSchema
+      asymmetric: AsymmetricSignatureSchema
+
+  HmacSignatureSchema:
+    properties:
+      header: string
+      algorithm:
+        type: optional<WebhookSignatureAlgorithmSchema>
+        docs: Defaults to sha256.
+      encoding:
+        type: optional<WebhookSignatureEncodingSchema>
+        docs: Defaults to base64.
+      signature-prefix:
+        type: optional<string>
+        docs: |
+          Prefix in the header value before the signature (e.g. "sha256=").
+      payload-format:
+        type: optional<WebhookPayloadFormatSchema>
+        docs: |
+          Defaults to body-only (components: [body], delimiter: "").
+      timestamp: optional<WebhookTimestampSchema>
+
+  AsymmetricSignatureSchema:
+    properties:
+      header: string
+      asymmetric-algorithm: AsymmetricAlgorithmSchema
+      encoding:
+        type: optional<WebhookSignatureEncodingSchema>
+        docs: Defaults to base64.
+      signature-prefix:
+        type: optional<string>
+        docs: |
+          Prefix in the header value before the signature.
+      jwks-url:
+        type: optional<string>
+        docs: JWKS endpoint URL. When omitted, a static public key is expected at runtime.
+      key-id-header:
+        type: optional<string>
+        docs: HTTP header containing the key ID for JWKS key selection.
+      timestamp: optional<WebhookTimestampSchema>
+
+  WebhookSignatureAlgorithmSchema:
+    enum:
+      - sha256
+      - sha1
+      - sha384
+      - sha512
+
+  WebhookSignatureEncodingSchema:
+    enum:
+      - base64
+      - hex
+
+  WebhookTimestampSchema:
+    properties:
+      header: string
+      format:
+        type: optional<WebhookTimestampFormatSchema>
+        docs: Defaults to unix-seconds.
+      tolerance:
+        type: optional<integer>
+        docs: Allowed clock skew in seconds. Defaults to 300.
+
+  WebhookTimestampFormatSchema:
+    enum:
+      - name: unixSeconds
+        value: unix-seconds
+      - name: unixMillis
+        value: unix-millis
+      - name: iso8601
+        value: iso8601
+
+  WebhookPayloadFormatSchema:
+    properties:
+      components: list<WebhookPayloadComponentSchema>
+      delimiter:
+        type: optional<string>
+        docs: Defaults to empty string.
+
+  WebhookPayloadComponentSchema:
+    enum:
+      - body
+      - timestamp
+      - name: notificationUrl
+        value: notification-url
+      - name: messageId
+        value: message-id
+
+  AsymmetricAlgorithmSchema:
+    enum:
+      - name: rsaSha256
+        value: rsa-sha256
+      - name: rsaSha384
+        value: rsa-sha384
+      - name: rsaSha512
+        value: rsa-sha512
+      - name: ecdsaSha256
+        value: ecdsa-sha256
+      - name: ecdsaSha384
+        value: ecdsa-sha384
+      - name: ecdsaSha512
+        value: ecdsa-sha512
+      - name: ed25519
+        value: ed25519

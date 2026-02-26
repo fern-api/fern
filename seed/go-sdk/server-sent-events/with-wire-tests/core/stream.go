@@ -73,6 +73,16 @@ func WithFormat(format StreamFormat) StreamOption {
 	}
 }
 
+// WithEventDiscriminator configures the SSE stream reader to inject the
+// SSE event field value as a JSON discriminator into the data payload.
+// This is used for protocol-level discrimination where the union discriminant
+// comes from the SSE event: field rather than from within the JSON data.
+func WithEventDiscriminator(field string) StreamOption {
+	return func(opts *streamOptions) {
+		opts.eventDiscriminator = field
+	}
+}
+
 // NewStream constructs a new Stream from the given *http.Response.
 func NewStream[T any](response *http.Response, opts ...StreamOption) *Stream[T] {
 	options := new(streamOptions)
@@ -227,11 +237,12 @@ func (s *ScannerStreamReader) isTerminated(bytes []byte) bool {
 }
 
 type streamOptions struct {
-	delimiter  string
-	prefix     string
-	terminator string
-	format     StreamFormat
-	maxBufSize int
+	delimiter          string
+	prefix             string
+	terminator         string
+	format             StreamFormat
+	maxBufSize         int
+	eventDiscriminator string
 }
 
 func (s *streamOptions) isEmpty() bool {
@@ -297,6 +308,11 @@ func (s *SseStreamReader) ReadFromStream() ([]byte, error) {
 	if s.isTerminated(event.data) {
 		return nil, io.EOF
 	}
+	// For protocol-level discrimination, inject the SSE event field value
+	// as the discriminator key into the JSON data payload.
+	if s.options.eventDiscriminator != "" && len(event.event) > 0 {
+		event.data = injectDiscriminator(event.data, s.options.eventDiscriminator, string(event.event))
+	}
 	return event.data, nil
 }
 
@@ -361,6 +377,47 @@ func (event *SseEvent) size() int {
 
 func (event *SseEvent) String() string {
 	return fmt.Sprintf("SseEvent{id: %q, event: %q, data: %q, retry: %q}", event.id, event.event, event.data, event.retry)
+}
+
+// injectDiscriminator inserts a JSON key-value pair for the discriminator
+// at the beginning of a JSON object. For example, given data `{"content":"Hello"}`,
+// field "type", and value "completion", it produces `{"type":"completion","content":"Hello"}`.
+//
+// If the data already contains the discriminator key, it is returned unchanged
+// to avoid duplicate keys.
+func injectDiscriminator(data []byte, field string, value string) []byte {
+	trimmed := bytes.TrimSpace(data)
+	if len(trimmed) == 0 || trimmed[0] != '{' {
+		return data
+	}
+	// Skip injection if the key already exists in the data.
+	quotedField := fmt.Sprintf("%q", field)
+	if bytes.Contains(data, []byte(quotedField+":")) || bytes.Contains(data, []byte(quotedField+" :")) {
+		return data
+	}
+	// Build the injected key-value: "field":"value"
+	injected := quotedField + ":" + fmt.Sprintf("%q", value)
+	// Find the opening brace in the original data
+	openIdx := bytes.IndexByte(data, '{')
+	after := data[openIdx+1:]
+	// Check if the object has existing content (non-empty after trimming)
+	afterTrimmed := bytes.TrimSpace(after)
+	var result []byte
+	if len(afterTrimmed) == 0 || afterTrimmed[0] == '}' {
+		// Empty object: {"field":"value"}
+		result = make([]byte, 0, len(data)+len(injected))
+		result = append(result, data[:openIdx+1]...)
+		result = append(result, injected...)
+		result = append(result, after...)
+	} else {
+		// Non-empty object: {"field":"value",<existing>}
+		result = make([]byte, 0, len(data)+len(injected)+1)
+		result = append(result, data[:openIdx+1]...)
+		result = append(result, injected...)
+		result = append(result, ',')
+		result = append(result, after...)
+	}
+	return result
 }
 
 type SseEvent struct {

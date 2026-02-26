@@ -363,6 +363,7 @@ $client->reference->send(
                 ]),
             ],
         ]),
+        'ending' => '$ending',
     ]),
 );
 ```
@@ -390,3 +391,4 @@ $client->reference->send(
 </dd>
 </dl>
 </details>
+

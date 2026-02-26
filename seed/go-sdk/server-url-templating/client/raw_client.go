@@ -46,7 +46,7 @@ func (r *RawClient) GetUsers(
 			r.options.Environment,
 			"Base",
 		),
-		"https://api.us-east-1.prod.example.com/v1",
+		"https://api.example.com/v1",
 	)
 	endpointURL := baseURL + "/users"
 	headers := internal.MergeHeaders(
@@ -94,7 +94,7 @@ func (r *RawClient) GetUser(
 			r.options.Environment,
 			"Base",
 		),
-		"https://api.us-east-1.prod.example.com/v1",
+		"https://api.example.com/v1",
 	)
 	endpointURL := internal.EncodeURL(
 		baseURL+"/users/%v",
@@ -145,7 +145,7 @@ func (r *RawClient) GetToken(
 			r.options.Environment,
 			"Auth",
 		),
-		"https://auth.us-east-1.example.com",
+		"https://auth.example.com",
 	)
 	endpointURL := baseURL + "/auth/token"
 	headers := internal.MergeHeaders(

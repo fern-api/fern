@@ -1,4 +1,4 @@
-import { BaseGoCustomConfigSchema } from "./BaseGoCustomConfigSchema";
+import { BaseGoCustomConfigSchema } from "./BaseGoCustomConfigSchema.js";
 
 export const defaultBaseGoCustomConfigSchema: BaseGoCustomConfigSchema = {
     alwaysSendRequiredProperties: true,

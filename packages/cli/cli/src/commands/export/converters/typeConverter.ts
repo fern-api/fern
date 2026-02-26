@@ -21,7 +21,7 @@ import {
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
 
-import { convertObject } from "./convertObject";
+import { convertObject } from "./convertObject.js";
 
 export interface ConvertedType {
     openApiSchema: OpenApiComponentSchema;
@@ -321,6 +321,12 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
                         format: "bigint"
                     };
                 },
+                dateTimeRfc2822: () => {
+                    return {
+                        type: "string",
+                        format: "date-time-rfc-2822"
+                    };
+                },
                 _other: () => {
                     throw new Error("Encountered unknown primitiveType: " + primitiveType.v1);
                 }
@@ -404,6 +410,12 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
             return {
                 type: "integer",
                 format: "bigint"
+            };
+        },
+        dateTimeRfc2822: () => {
+            return {
+                type: "string",
+                format: "date-time-rfc-2822"
             };
         },
         _other: () => {

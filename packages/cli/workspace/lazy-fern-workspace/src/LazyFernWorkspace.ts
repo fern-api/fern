@@ -4,13 +4,13 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import hash from "object-hash";
 
-import { OSSWorkspace } from "./OSSWorkspace";
-import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult";
-import { listFernFiles } from "./utils/listFernFiles";
-import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace";
-import { parseYamlFiles } from "./utils/parseYamlFiles";
-import { processPackageMarkers } from "./utils/processPackageMarkers";
-import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFiles";
+import { OSSWorkspace } from "./OSSWorkspace.js";
+import { handleFailedWorkspaceParserResultRaw } from "./utils/handleFailedWorkspaceParserResult.js";
+import { listFernFiles } from "./utils/listFernFiles.js";
+import { LoadAPIWorkspace } from "./utils/loadAPIWorkspace.js";
+import { parseYamlFiles } from "./utils/parseYamlFiles.js";
+import { processPackageMarkers } from "./utils/processPackageMarkers.js";
+import { validateStructureOfYamlFiles } from "./utils/validateStructureOfYamlFiles.js";
 
 export declare namespace LazyFernWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
@@ -39,7 +39,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
     }
 
     public async toFernWorkspace(
-        { context }: { context?: TaskContext },
+        { context, skipValidation }: { context?: TaskContext; skipValidation?: boolean },
         settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
         const key = hash(settings ?? {});
@@ -63,7 +63,8 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
             const structuralValidationResult = validateStructureOfYamlFiles({
                 files: parseResult.files,
-                absolutePathToDefinition
+                absolutePathToDefinition,
+                skipValidation
             });
             if (!structuralValidationResult.didSucceed) {
                 handleFailedWorkspaceParserResultRaw(structuralValidationResult.failures, defaultedContext.logger);

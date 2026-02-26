@@ -94,6 +94,10 @@ public final class SinglyLinkedListNodeValue {
     public interface _FinalStage {
         SinglyLinkedListNodeValue build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage next(Optional<String> next);
 
         _FinalStage next(String next);
@@ -150,6 +154,18 @@ public final class SinglyLinkedListNodeValue {
         @java.lang.Override
         public SinglyLinkedListNodeValue build() {
             return new SinglyLinkedListNodeValue(nodeId, val, next, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

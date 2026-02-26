@@ -3,22 +3,25 @@ import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    AuthScheme,
-    HttpHeader,
-    InferredAuthScheme,
-    Literal,
-    OAuthScheme,
-    PrimitiveTypeV1,
-    PrimitiveTypeV2,
-    ServiceId,
-    Subpackage,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
-import { RawClient } from "../endpoint/http/RawClient";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils";
-import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator";
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type AuthScheme = FernIr.AuthScheme;
+type InferredAuthScheme = FernIr.InferredAuthScheme;
+type OAuthScheme = FernIr.OAuthScheme;
+type PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+const PrimitiveTypeV1 = FernIr.PrimitiveTypeV1;
+type PrimitiveTypeV2 = FernIr.PrimitiveTypeV2;
+const PrimitiveTypeV2 = FernIr.PrimitiveTypeV2;
+type ServiceId = FernIr.ServiceId;
+type Subpackage = FernIr.Subpackage;
+type HttpHeader = FernIr.HttpHeader;
+type Literal = FernIr.Literal;
+type TypeReference = FernIr.TypeReference;
+
+import { RawClient } from "../endpoint/http/RawClient.js";
+import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
+import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -400,7 +403,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 arguments_: [this.csharp.codeblock("clientOptions")]
                             })
                         ];
+                        const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
                         innerWriter.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
+                        for (const param of oauthAdditionalParams) {
+                            innerWriter.write(`${param}, `);
+                        }
                         innerWriter.writeNode(
                             this.csharp.instantiateClass({
                                 classReference: authClientClassReference,
@@ -638,9 +645,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             name: "Authorization",
                             prefix: "Bearer"
                         },
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -660,9 +667,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: usernameName,
                         docs: scheme.docs ?? `The ${usernameName} to use for authentication.`,
                         isOptional,
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -675,9 +682,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: passwordName,
                         docs: scheme.docs ?? `The ${passwordName} to use for authentication.`,
                         isOptional,
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -695,9 +702,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: "clientId",
                         docs: "The clientId to use for authentication.",
                         isOptional,
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -710,9 +717,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         name: "clientSecret",
                         docs: "The clientSecret to use for authentication.",
                         isOptional,
-                        typeReference: TypeReference.primitive({
-                            v1: PrimitiveTypeV1.String,
-                            v2: PrimitiveTypeV2.string({
+                        typeReference: FernIr.TypeReference.primitive({
+                            v1: FernIr.PrimitiveTypeV1.String,
+                            v2: FernIr.PrimitiveTypeV2.string({
                                 default: undefined,
                                 validation: undefined
                             })
@@ -720,7 +727,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         type: this.Primitive.string,
                         environmentVariable: scheme.configuration.clientSecretEnvVar,
                         exampleValue: "client_secret"
-                    }
+                    },
+                    ...this.getOAuthAdditionalConstructorParams(scheme, isOptional)
                 ];
             } else {
                 this.context.logger.warn(
@@ -821,6 +829,62 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
     }
 
+    private getOAuthAdditionalConstructorParams(scheme: OAuthScheme, isOptional: boolean): ConstructorParameter[] {
+        const params: ConstructorParameter[] = [];
+        // Include required, non-literal custom properties, matching Java's approach of
+        // skipping only literals. Keep the optional guard to avoid adding optional-typed
+        // properties as required constructor parameters.
+        for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: customProperty.property.valueType
+            });
+            if (typeRef.isOptional) {
+                continue;
+            }
+            const name = customProperty.property.name.name.camelCase.safeName;
+            params.push({
+                name,
+                docs: `The ${name} for OAuth authentication.`,
+                isOptional,
+                typeReference: customProperty.property.valueType,
+                type: typeRef,
+                exampleValue: name
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: scopes.property.valueType
+            });
+            if (!typeRef.isOptional) {
+                const name = scopes.property.name.name.camelCase.safeName;
+                params.push({
+                    name,
+                    docs: `The ${name} for OAuth authentication.`,
+                    isOptional,
+                    typeReference: scopes.property.valueType,
+                    type: typeRef,
+                    exampleValue: name
+                });
+            }
+        }
+        return params;
+    }
+
+    /**
+     * Gets the parameter names for additional OAuth fields (custom properties and scopes)
+     * that need to be passed to the OAuthTokenProvider constructor.
+     */
+    private getOAuthAdditionalParamNames(): string[] {
+        if (this.oauth == null) {
+            return [];
+        }
+        return this.getOAuthAdditionalConstructorParams(this.oauth, false).map((p) => p.name);
+    }
+
     private getInferredAuthCredentialParams(): string[] {
         if (this.inferred == null) {
             return [];
@@ -837,4 +901,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
         return credentials.map((credential) => credential.camelName);
     }
+}
+
+/**
+ * Checks if a type reference is a literal type (container with literal value).
+ * Literal properties are hardcoded in the request class and should not be
+ * propagated as constructor parameters.
+ */
+function isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+    return typeReference.type === "container" && typeReference.container.type === "literal";
 }

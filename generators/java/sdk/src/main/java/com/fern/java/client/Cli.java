@@ -33,13 +33,19 @@ import com.fern.java.client.generators.AsyncRootClientGenerator;
 import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
+import com.fern.java.client.generators.ConsoleLoggerGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.FileStreamGenerator;
 import com.fern.java.client.generators.HttpResponseGenerator;
+import com.fern.java.client.generators.ILoggerGenerator;
 import com.fern.java.client.generators.InferredAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
+import com.fern.java.client.generators.LogConfigGenerator;
+import com.fern.java.client.generators.LogLevelGenerator;
+import com.fern.java.client.generators.LoggerGenerator;
+import com.fern.java.client.generators.LoggingInterceptorGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
@@ -69,6 +75,9 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.OptionalNullableGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.QueryStringMapperGenerator;
+import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
+import com.fern.java.generators.SseEventGenerator;
+import com.fern.java.generators.SseEventParserGenerator;
 import com.fern.java.generators.StreamGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -292,7 +301,20 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedRequestOptions);
 
-        PaginationCoreGenerator paginationCoreGenerator = new PaginationCoreGenerator(context, generatorExecClient);
+        String apiExceptionSimpleName = context.getPoetClassNameFactory()
+                .getApiErrorClassName(
+                        context.getGeneratorConfig().getOrganization(),
+                        context.getGeneratorConfig().getWorkspaceName(),
+                        context.getCustomConfig())
+                .simpleName();
+        String baseExceptionSimpleName = context.getPoetClassNameFactory()
+                .getBaseExceptionClassName(
+                        context.getGeneratorConfig().getOrganization(),
+                        context.getGeneratorConfig().getWorkspaceName(),
+                        context.getCustomConfig())
+                .simpleName();
+        PaginationCoreGenerator paginationCoreGenerator = new PaginationCoreGenerator(
+                context, generatorExecClient, apiExceptionSimpleName, baseExceptionSimpleName);
         List<GeneratedFile> generatedFiles = paginationCoreGenerator.generateFiles();
         generatedFiles.forEach(this::addGeneratedFile);
 
@@ -307,6 +329,24 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         RetryInterceptorGenerator retryInterceptorGenerator = new RetryInterceptorGenerator(context);
         this.addGeneratedFile(retryInterceptorGenerator.generateFile());
+
+        LogLevelGenerator logLevelGenerator = new LogLevelGenerator(context);
+        this.addGeneratedFile(logLevelGenerator.generateFile());
+
+        ILoggerGenerator iLoggerGenerator = new ILoggerGenerator(context);
+        this.addGeneratedFile(iLoggerGenerator.generateFile());
+
+        ConsoleLoggerGenerator consoleLoggerGenerator = new ConsoleLoggerGenerator(context);
+        this.addGeneratedFile(consoleLoggerGenerator.generateFile());
+
+        LogConfigGenerator logConfigGenerator = new LogConfigGenerator(context);
+        this.addGeneratedFile(logConfigGenerator.generateFile());
+
+        LoggerGenerator loggerGenerator = new LoggerGenerator(context);
+        this.addGeneratedFile(loggerGenerator.generateFile());
+
+        LoggingInterceptorGenerator loggingInterceptorGenerator = new LoggingInterceptorGenerator(context);
+        this.addGeneratedFile(loggingInterceptorGenerator.generateFile());
 
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);
@@ -353,8 +393,18 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
 
+        Rfc2822DateTimeDeserializerGenerator rfc2822DateTimeDeserializerGenerator =
+                new Rfc2822DateTimeDeserializerGenerator(context);
+        this.addGeneratedFile(rfc2822DateTimeDeserializerGenerator.generateFile());
+
         StreamGenerator streamGenerator = new StreamGenerator(context);
         this.addGeneratedFile(streamGenerator.generateFile());
+
+        SseEventGenerator sseEventGenerator = new SseEventGenerator(context);
+        this.addGeneratedFile(sseEventGenerator.generateFile());
+
+        SseEventParserGenerator sseEventParserGenerator = new SseEventParserGenerator(context);
+        this.addGeneratedFile(sseEventParserGenerator.generateFile());
 
         QueryStringMapperGenerator queryStringMapperGenerator = new QueryStringMapperGenerator(context);
         this.addGeneratedFile(queryStringMapperGenerator.generateFile());

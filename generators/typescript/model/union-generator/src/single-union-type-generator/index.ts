@@ -1,2 +1,2 @@
-export * from "./common";
-export { type SingleUnionTypeGenerator } from "./SingleUnionTypeGenerator";
+export * from "./common/index.js";
+export { type SingleUnionTypeGenerator } from "./SingleUnionTypeGenerator.js";

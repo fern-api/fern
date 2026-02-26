@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.unknown.post();
+client.unknown.post
 ```
 </dd>
 </dl>
@@ -61,7 +61,7 @@ client.unknown.post();
 <dd>
 
 ```ruby
-client.unknown.post_object();
+client.unknown.post_object
 ```
 </dd>
 </dl>
@@ -95,3 +95,4 @@ client.unknown.post_object();
 </dd>
 </dl>
 </details>
+

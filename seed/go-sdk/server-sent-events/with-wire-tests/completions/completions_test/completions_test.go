@@ -74,7 +74,7 @@ func TestCompletionsStreamWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &sse.StreamCompletionRequest{
-		Query: "query",
+		Query: "foo",
 	}
 	_, invocationErr := client.Completions.Stream(
 		context.TODO(),
@@ -86,4 +86,30 @@ func TestCompletionsStreamWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestCompletionsStreamWithWireMock", "POST", "/stream", nil, 1)
+}
+
+func TestCompletionsStreamWithoutTerminatorWithWireMock(
+	t *testing.T,
+) {
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &sse.StreamCompletionRequestWithoutTerminator{
+		Query: "query",
+	}
+	_, invocationErr := client.Completions.StreamWithoutTerminator(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestCompletionsStreamWithoutTerminatorWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestCompletionsStreamWithoutTerminatorWithWireMock", "POST", "/stream-no-terminator", nil, 1)
 }

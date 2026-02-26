@@ -60,6 +60,7 @@
       "_visit": [Function],
       "environments": [
         {
+          "audiences": undefined,
           "defaultUrl": undefined,
           "docs": undefined,
           "id": "production",
@@ -698,6 +699,7 @@
       "auth": false,
       "availability": undefined,
       "baseUrl": "production",
+      "connectMethodName": undefined,
       "displayName": undefined,
       "docs": "Receive order status notifications",
       "examples": [
@@ -1102,6 +1104,7 @@
       "auth": false,
       "availability": undefined,
       "baseUrl": "production",
+      "connectMethodName": undefined,
       "displayName": undefined,
       "docs": "Receive real-time plant inventory updates",
       "examples": [
