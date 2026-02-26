@@ -163,7 +163,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             return undefined;
         }
 
-        return lines.join("\n");
+        return lines.join("\n\n");
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
