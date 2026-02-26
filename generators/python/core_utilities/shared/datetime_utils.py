@@ -2,6 +2,10 @@ import datetime as dt
 from email.utils import parsedate_to_datetime
 from typing import Any
 
+import pydantic
+
+IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
+
 
 def parse_rfc2822_datetime(v: Any) -> dt.datetime:
     """
@@ -13,6 +17,24 @@ def parse_rfc2822_datetime(v: Any) -> dt.datetime:
     if isinstance(v, str):
         return parsedate_to_datetime(v)
     raise ValueError(f"Expected str or datetime, got {type(v)}")
+
+
+class Rfc2822DateTime(dt.datetime):
+    """A datetime subclass that parses RFC 2822 date strings.
+
+    On Pydantic V1, uses __get_validators__ for pre-validation.
+    On Pydantic V2, uses __get_pydantic_core_schema__ for BeforeValidator-style parsing.
+    """
+
+    @classmethod
+    def __get_validators__(cls):  # type: ignore[no-untyped-def]
+        yield parse_rfc2822_datetime
+
+    @classmethod
+    def __get_pydantic_core_schema__(cls, _source_type: Any, _handler: Any) -> Any:  # type: ignore[override]
+        from pydantic_core import core_schema
+
+        return core_schema.no_info_before_validator_function(parse_rfc2822_datetime, core_schema.datetime_schema())
 
 
 def serialize_datetime(v: dt.datetime) -> str:

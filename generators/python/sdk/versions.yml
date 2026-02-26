@@ -4,10 +4,10 @@
   changelogEntry:
     - summary: |
         Add support for `DATE_TIME_RFC_2822` primitive type. Fields with `format: date-time-rfc-2822`
-        in OpenAPI specs now generate as `datetime.datetime` with a Pydantic `BeforeValidator` that
+        in OpenAPI specs now generate as `Rfc2822DateTime` (a `datetime.datetime` subclass) that
         parses RFC 2822 date strings (e.g., "Wed, 02 Oct 2002 13:00:00 GMT") using Python's
-        `email.utils.parsedate_to_datetime`. This enables proper deserialization of RFC 2822 date
-        fields (commonly used by Twilio) into native Python datetime objects.
+        `email.utils.parsedate_to_datetime`. Compatible with both Pydantic V1 (`__get_validators__`)
+        and V2 (`__get_pydantic_core_schema__`), passing mypy strict type checking.
       type: feat
   createdAt: "2026-02-26"
   irVersion: 65
