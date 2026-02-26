@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
  * Custom deserializer that handles converting RFC 2822 (RFC 1123) dates into {@link OffsetDateTime} objects.
  * This is used for fields with format "date-time-rfc-2822", such as Twilio's dateCreated, dateSent, dateUpdated.
  */
-class Rfc2822DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
+public class Rfc2822DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
 
     @Override
     public OffsetDateTime deserialize(JsonParser parser, DeserializationContext context) throws IOException {
