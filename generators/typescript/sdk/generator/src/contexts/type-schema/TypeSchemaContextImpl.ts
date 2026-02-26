@@ -222,13 +222,14 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
 
         return this.typeSchemaDeclarationReferencer.getReferenceToType({
             name: typeName,
-            importStrategy: isCircular || wouldCollide
-                ? {
-                      type: "fromRoot",
-                      useDynamicImport: false,
-                      namespaceImport: "serializers"
-                  }
-                : { type: "direct" },
+            importStrategy:
+                isCircular || wouldCollide
+                    ? {
+                          type: "fromRoot",
+                          useDynamicImport: false,
+                          namespaceImport: "serializers"
+                      }
+                    : { type: "direct" },
             // TODO this should not be hardcoded here
             subImport: ["Raw"],
             importsManager: this.importsManager,
