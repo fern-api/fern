@@ -1,4 +1,18 @@
 import datetime as dt
+from email.utils import parsedate_to_datetime
+from typing import Any
+
+
+def parse_rfc2822_datetime(v: Any) -> dt.datetime:
+    """
+    Parse an RFC 2822 datetime string (e.g., "Wed, 02 Oct 2002 13:00:00 GMT")
+    into a datetime object. If the value is already a datetime, return it as-is.
+    """
+    if isinstance(v, dt.datetime):
+        return v
+    if isinstance(v, str):
+        return parsedate_to_datetime(v)
+    raise ValueError(f"Expected str or datetime, got {type(v)}")
 
 
 def serialize_datetime(v: dt.datetime) -> str:

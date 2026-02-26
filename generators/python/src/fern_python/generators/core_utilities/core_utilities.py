@@ -8,6 +8,7 @@ from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import Pydantic
 from fern_python.external_dependencies.pydantic import (
     PYDANTIC_CORE_DEPENDENCY,
+    PYDANTIC_V2_DEPENDENCY,
     PydanticVersionCompatibility,
 )
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
@@ -39,7 +40,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
-            exports={"serialize_datetime"},
+            exports={"serialize_datetime", "parse_rfc2822_datetime"},
         )
 
         self._copy_file_to_project(
@@ -128,6 +129,35 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
         )
+
+    def get_rfc2822_datetime_type_hint(self, inner_type_hint: AST.TypeHint) -> AST.TypeHint:
+        """Wrap a datetime type hint with Annotated[..., BeforeValidator(parse_rfc2822_datetime)] for RFC 2822 parsing."""
+        validator_ref = AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.external(
+                            module_path=("pydantic",),
+                            dependency=PYDANTIC_V2_DEPENDENCY,
+                        ),
+                        named_import="BeforeValidator",
+                    ),
+                ),
+                args=[
+                    AST.Expression(
+                        AST.Reference(
+                            qualified_name_excluding_import=(),
+                            import_=AST.ReferenceImport(
+                                module=AST.Module.local(*self._module_path, "datetime_utils"),
+                                named_import="parse_rfc2822_datetime",
+                            ),
+                        )
+                    )
+                ],
+            )
+        )
+        return AST.TypeHint.annotated(inner_type_hint, validator_ref)
 
     def get_fern_enum(self) -> AST.ClassReference:
         return AST.ClassReference(
