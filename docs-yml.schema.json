@@ -4477,16 +4477,6 @@
             }
           ]
         },
-        "canonical-host": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "og:dynamic": {
           "oneOf": [
             {
@@ -4498,6 +4488,16 @@
           ]
         },
         "og:background-image": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "canonical-host": {
           "oneOf": [
             {
               "type": "string"
