@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.2
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer to recognize `format: date-time-rfc-2822` regardless
+        of `typeDatesAsStrings` setting. Previously the check was inside a guard that
+        defaults to `undefined`, so RFC 2822 date fields silently fell through to string.
+      type: fix
+    - summary: |
+        Fix example validation for `DATE_TIME_RFC_2822` fields to accept RFC 2822
+        formatted timestamps (e.g. "Wed, 02 Oct 2002 13:00:00 +0000") instead of
+        rejecting them as invalid ISO 8601.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.90.1
   changelogEntry:
     - summary: |
