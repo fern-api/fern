@@ -228,12 +228,18 @@ public record UnionWithBaseProperties
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "integer" => json.GetProperty("value").Deserialize<int>(options),
                 "string" => json.GetProperty("value").Deserialize<string?>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
-                "foo" => json.Deserialize<SeedUnions.Foo?>(options)
+                "foo" => jsonWithoutDiscriminator.Deserialize<SeedUnions.Foo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedUnions.Foo"),
                 _ => json.Deserialize<object?>(options),
             };
