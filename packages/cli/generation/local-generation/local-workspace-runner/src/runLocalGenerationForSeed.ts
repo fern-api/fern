@@ -10,13 +10,18 @@ export async function runContainerizedGenerationForSeed(
         runner?: ContainerRunner;
     }
 ): Promise<void> {
-    const executionEnv = new ContainerExecutionEnvironment({
-        containerImage: args.dockerImage,
-        keepContainer: args.keepDocker,
-        runner: args.runner ?? "podman"
-    });
-    const runner = new GenerationRunner(executionEnv);
-    await runner.run(args);
+    process.env.IGNORE_GIT_IN_METADATA = "true";
+    try {
+        const executionEnv = new ContainerExecutionEnvironment({
+            containerImage: args.dockerImage,
+            keepContainer: args.keepDocker,
+            runner: args.runner ?? "podman"
+        });
+        const runner = new GenerationRunner(executionEnv);
+        await runner.run(args);
+    } finally {
+        delete process.env.IGNORE_GIT_IN_METADATA;
+    }
 }
 
 export async function runNativeGenerationForSeed(
@@ -25,9 +30,14 @@ export async function runNativeGenerationForSeed(
     workingDirectory?: string,
     env?: Record<string, string>
 ): Promise<void> {
-    const executionEnv = new NativeExecutionEnvironment({ commands, workingDirectory, env });
-    const runner = new GenerationRunner(executionEnv);
-    await runner.run(args);
+    process.env.IGNORE_GIT_IN_METADATA = "true";
+    try {
+        const executionEnv = new NativeExecutionEnvironment({ commands, workingDirectory, env });
+        const runner = new GenerationRunner(executionEnv);
+        await runner.run(args);
+    } finally {
+        delete process.env.IGNORE_GIT_IN_METADATA;
+    }
 }
 
 export async function runNativeGenerationWithCommand(args: GenerationRunner.RunArgs, command: string): Promise<void> {
