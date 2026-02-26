@@ -206,9 +206,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     }
                 },
                 downloadFiles: async () => {
-                    // Determine the output strategy to avoid installing dependencies
-                    // unnecessarily. Source-only output paths don't need production
-                    // dependencies — only the build path requires a full install.
+                    // Determine the output strategy to avoid installing all
+                    // dependencies unnecessarily. Source-only output paths only
+                    // need devDependencies (formatters, linters) — the build
+                    // path requires a full install of production deps too.
                     const needsBuild =
                         !this.outputSrcOnly(customConfig) &&
                         !this.shouldGenerateFullProject(ir) &&
@@ -216,6 +217,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
                     if (needsBuild) {
                         await typescriptProject.installDependencies(logger);
+                    } else {
+                        await typescriptProject.installCheckFixDependencies(logger);
                     }
                     await typescriptProject.checkFix(logger);
 

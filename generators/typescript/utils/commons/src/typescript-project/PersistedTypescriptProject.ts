@@ -16,6 +16,8 @@ export declare namespace PersistedTypescriptProject {
         buildCommand: string[];
         formatCommand: string[];
         checkFixCommand: string[];
+        /** Package specifiers needed for check:fix (e.g. ["@biomejs/biome@2.4.3"]) */
+        checkFixPackages: string[];
         runScripts: boolean;
         packageManager: "pnpm" | "yarn";
     }
@@ -30,6 +32,7 @@ export class PersistedTypescriptProject {
     private buildCommand: string[];
     private formatCommand: string[];
     private checkFixCommand: string[];
+    private checkFixPackages: string[];
 
     private runScripts;
 
@@ -41,6 +44,7 @@ export class PersistedTypescriptProject {
         buildCommand,
         formatCommand,
         checkFixCommand,
+        checkFixPackages,
         runScripts,
         packageManager
     }: PersistedTypescriptProject.Init) {
@@ -51,6 +55,7 @@ export class PersistedTypescriptProject {
         this.buildCommand = buildCommand;
         this.formatCommand = formatCommand;
         this.checkFixCommand = checkFixCommand;
+        this.checkFixPackages = checkFixPackages;
         this.runScripts = runScripts;
         this.packageManager = packageManager;
     }
@@ -139,6 +144,39 @@ export class PersistedTypescriptProject {
                   }
               }));
         logger.debug(`[TIMING] installDependencies took ${Date.now() - startTime}ms`);
+    }
+
+    /**
+     * Installs only the packages required by checkFix (formatter / linter)
+     * instead of the full dependency tree. This is significantly faster for
+     * output modes that only need formatting/linting but not a full build.
+     */
+    public async installCheckFixDependencies(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+        if (this.checkFixPackages.length === 0) {
+            return;
+        }
+
+        const pm = createLoggingExecutable(this.packageManager, {
+            cwd: this.directory,
+            logger
+        });
+
+        const startTime = Date.now();
+        await (this.packageManager === "yarn"
+            ? pm(["add", "--dev", ...this.checkFixPackages], {
+                  env: {
+                      YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                  }
+              })
+            : pm(["add", "--save-dev", "--ignore-scripts", "--prefer-offline", ...this.checkFixPackages], {
+                  env: {
+                      PNPM_FROZEN_LOCKFILE: "false"
+                  }
+              }));
+        logger.debug(`[TIMING] installCheckFixDependencies took ${Date.now() - startTime}ms`);
     }
 
     public async format(logger: Logger): Promise<void> {

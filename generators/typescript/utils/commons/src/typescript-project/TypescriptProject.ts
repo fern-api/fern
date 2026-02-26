@@ -212,6 +212,7 @@ export abstract class TypescriptProject {
             buildCommand: this.getBuildCommand(),
             formatCommand: this.getFormatCommand(),
             checkFixCommand: this.getCheckFixCommand(),
+            checkFixPackages: this.getCheckFixPackages(),
             packageManager: this.packageManager
         });
     }
@@ -367,6 +368,29 @@ export abstract class TypescriptProject {
 
     protected getCheckFixCommand(): string[] {
         return [COMMON_SCRIPTS.CHECK_FIX];
+    }
+
+    /**
+     * Returns the exact package specifiers (name@version) required by the
+     * configured formatter and linter so they can be installed in isolation
+     * without pulling in the full dependency tree.
+     */
+    protected getCheckFixPackages(): string[] {
+        const packages: string[] = [];
+        if (this.formatter === "biome" || this.linter === "biome") {
+            packages.push("@biomejs/biome@2.4.3");
+        }
+        if (this.formatter === "prettier") {
+            packages.push("prettier@3.7.4");
+        }
+        if (this.formatter === "oxfmt") {
+            packages.push("oxfmt@0.35.0");
+        }
+        if (this.linter === "oxlint") {
+            packages.push("oxlint@1.50.0");
+            packages.push("oxlint-tsgolint@0.14.2");
+        }
+        return packages;
     }
 
     protected getBuildCommand(): string[] {
