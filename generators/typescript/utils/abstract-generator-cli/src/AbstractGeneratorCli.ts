@@ -212,7 +212,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     // path requires a full install of production deps too.
                     const needsBuild =
                         !this.outputSrcOnly(customConfig) &&
-                        !this.shouldGenerateFullProject(ir) &&
                         !this.outputSourceFiles(customConfig);
 
                     if (needsBuild) {
