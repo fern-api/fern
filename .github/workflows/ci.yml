@@ -22,7 +22,9 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 60
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
 
 jobs:
   compile:
@@ -111,7 +113,7 @@ jobs:
   test:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -136,13 +138,18 @@ jobs:
       - name: Install protoc-gen-openapi
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
+      - name: Stop any stale turbo daemon
+        run: pnpm turbo daemon stop || true
+
       - name: Run tests
         if: ${{ !github.event.inputs.update_snapshots }}
-        run: pnpm test
+        timeout-minutes: 20
+        run: ./scripts/turbo-retry.sh pnpm test
 
       - name: Run tests with snapshot updates
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
-        run: pnpm test:update
+        timeout-minutes: 20
+        run: ./scripts/turbo-retry.sh pnpm test:update
 
       - name: Commit and push updated snapshots
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
@@ -164,7 +171,7 @@ jobs:
   test-ete:
     if: github.repository == 'fern-api/fern'
     runs-on: Test
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -187,17 +194,17 @@ jobs:
       - name: Install protoc-gen-openapi
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
-      - name: Build CLI (dev)
-        timeout-minutes: 5
-        run: pnpm turbo run dist:cli:dev --filter=@fern-api/cli --filter=@fern-api/cli-v2
+      - name: Stop any stale turbo daemon
+        run: pnpm turbo daemon stop || true
 
-      - name: Build seed CLI
-        timeout-minutes: 5
-        run: pnpm seed:build
+      - name: Build CLIs (dev + seed)
+        timeout-minutes: 10
+        run: |
+          ./scripts/turbo-retry.sh pnpm turbo run dist:cli:dev dist:cli --filter=@fern-api/cli --filter=@fern-api/cli-v2 --filter=@fern-api/seed-cli
 
       - name: Run ETE tests
         if: ${{ !github.event.inputs.update_snapshots }}
-        timeout-minutes: 10
+        timeout-minutes: 20
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
@@ -205,7 +212,7 @@ jobs:
 
       - name: Run ETE tests with snapshot updates
         if: ${{ github.event.inputs.update_snapshots == 'true' }}
-        timeout-minutes: 10
+        timeout-minutes: 20
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |

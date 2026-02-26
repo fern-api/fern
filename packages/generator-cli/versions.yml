@@ -1,6 +1,46 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update @fern-api/fern-replay to 0.6.1 which published as ESM and CJS.
+        As a result, the generator-cli can also be ESM and CJS.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.4
+
+- changelogEntry:
+    - summary: |
+        Publish package from dist directory with a generated package.json. Bundle all dependencies for the CLI binary, and keep published dependencies external for the JS API.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.3
+
+- changelogEntry:
+    - summary: |
+        Use pnpm publish to properly resolve workspace directives when publishing to npm.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.2
+
+- changelogEntry:
+    - summary: |
+        Bump @octokit/rest to ^22.0.1 to pull in @octokit/request@10.0.7, which fixes CVE-2025-25290 (ReDoS vulnerability).
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.1
+
+- changelogEntry:
+    - summary: |
+        Add Replay step to post-generation pipeline. Introduces the PostGenerationPipeline
+        with ReplayStep that runs after SDK generation for self-hosted GitHub repos. Replay
+        preserves user customizations across SDK regenerations by detecting patches via
+        `.fern/replay.lock`, applying them with 3-way merge, and creating PRs with conflict
+        resolution guidance when needed.
+      type: feat
+  createdAt: "2026-02-25"
+  version: 0.6.0
+
+- changelogEntry:
+    - summary: |
         Regenerate generator-cli types with latest version of the TypeScript SDK generator.
       type: internal
   createdAt: "2026-01-29"

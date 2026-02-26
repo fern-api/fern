@@ -31,6 +31,11 @@ export function visitDefinitionFileYamlAst(
                 visitWebhooks({ webhook, visitor, nodePathForWebhook: ["webhooks", webhookId] });
             }
         },
+        "webhook-signature": (webhookSignature) => {
+            if (webhookSignature != null) {
+                visitor.webhookSignature?.(webhookSignature, ["webhook-signature"]);
+            }
+        },
         // TODO(dsinghvi): Implement visitor for channel
         channel: noop,
         errors: (errors) => {

@@ -1,4 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.39.0
+  changelogEntry:
+    - summary: |
+        Add support for logging to the generated SDK.
+        Users can configure logging by passing a `LogConfig` to the client builder's `.logging()` method.
+
+        ```java
+        import com.example.api.AcmeApiClient;
+        import com.example.api.core.LogConfig;
+        import com.example.api.core.LogLevel;
+        import com.example.api.core.ConsoleLogger;
+
+        AcmeApiClient client = AcmeApiClient.builder()
+            .token("YOUR_TOKEN")
+            .logging(LogConfig.builder()
+                .level(LogLevel.DEBUG)        // INFO is the default
+                .logger(new ConsoleLogger())  // ConsoleLogger is the default
+                .silent(false)                // true is the default, set to false to enable logging
+                .build())
+            .build();
+        ```
+
+        The `LogConfig` builder accepts the following properties:
+        - `level(LogLevel)`: The log level to use. Defaults to `LogLevel.INFO`.
+        - `logger(ILogger)`: The logger implementation to use. Defaults to `ConsoleLogger`.
+        - `silent(boolean)`: Whether to silence the logger. Defaults to `true`.
+
+        The `LogLevel` enum supports the following values:
+        - `DEBUG`
+        - `INFO`
+        - `WARN`
+        - `ERROR`
+
+        To provide a custom logger, implement the `ILogger` interface
+        with `debug`, `info`, `warn`, and `error` methods.
+
+        HTTP request and response details (method, URL, status code, headers, body) are
+        logged via a `LoggingInterceptor` added to the OkHttp client. Sensitive headers
+        (`authorization`, `x-api-key`, `cookie`, `x-csrf-token`, etc.) are automatically
+        redacted in logs.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.38.1
   changelogEntry:
     - summary: |

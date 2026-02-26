@@ -103,6 +103,16 @@
         }
       ]
     },
+    "replay": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/replay.ReplayConfigSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "ai": {
       "oneOf": [
         {
@@ -4136,6 +4146,18 @@
       },
       "required": [
         "generators"
+      ],
+      "additionalProperties": false
+    },
+    "replay.ReplayConfigSchema": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled"
       ],
       "additionalProperties": false
     },

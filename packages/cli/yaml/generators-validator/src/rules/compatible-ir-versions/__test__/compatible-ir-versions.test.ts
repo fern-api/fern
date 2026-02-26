@@ -5,7 +5,7 @@ import { CompatibleIrVersionsRule } from "../compatible-ir-versions.js";
 
 describe("compatible-ir-versions", () => {
     it("simple failure", async () => {
-        process.env.DEFAULT_FDR_ORIGIN = "https://registry-dev2.buildwithfern.com";
+        process.env.DEFAULT_FDR_ORIGIN = "https://registry.buildwithfern.com";
         const violations = await getViolationsForRule({
             rule: CompatibleIrVersionsRule,
             absolutePathToWorkspace: join(
@@ -30,7 +30,7 @@ describe("compatible-ir-versions", () => {
     }, 30_000);
 
     it("simple success", async () => {
-        process.env.DEFAULT_FDR_ORIGIN = "https://registry-dev2.buildwithfern.com";
+        process.env.DEFAULT_FDR_ORIGIN = "https://registry.buildwithfern.com";
         const violations = await getViolationsForRule({
             rule: CompatibleIrVersionsRule,
             absolutePathToWorkspace: join(

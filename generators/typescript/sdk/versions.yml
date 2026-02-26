@@ -1,4 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.1
+  changelogEntry:
+    - summary: |
+        Upgrade Docker base image from Node.js 22 to Node.js 24 LTS.
+      type: chore
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.51.0
+  changelogEntry:
+    - summary: |
+        Add event-level SSE discrimination support. When an SSE streaming endpoint returns a
+        discriminated union with `discriminatorContext: "protocol"`, the Stream class injects the
+        SSE `event:` field value into the JSON data as the discriminator key before deserialization.
+        This matches the Go SDK's approach and supports proper SSE event-level discrimination,
+        multiline `data:` concatenation, and blank-line event boundaries per the SSE spec.
+        Also adds wire test generation support for SSE streaming endpoints.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 3.50.1
+  changelogEntry:
+    - summary: |
+        Support custom WebSocket connection method names via the `connectMethodName` IR field
+        (sourced from `x-fern-sdk-method-name` on AsyncAPI channels). When specified, the
+        generated client uses the custom name instead of the default `connect`.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.50.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification helpers to generated SDKs. Define signature
+        verification via the `x-fern-webhook-signature` OpenAPI extension on individual webhooks
+        or as a document-level default, and the generator produces a `WebhooksHelper` class for
+        the most common config plus named helpers (e.g. `PaymentNotificationWebhooksHelper`) for
+        each unique per-webhook override. Supports HMAC (SHA-1/256/384/512) and asymmetric
+        (RSA-SHA256, ECDSA-SHA256) verification with configurable encoding, signature prefixes,
+        payload format composition, timestamp-based replay protection, and JWKS key resolution.
+        Includes unit tests for the underlying crypto primitives.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
 - version: 3.49.3
   changelogEntry:
     - summary: |
@@ -6,7 +52,6 @@
       type: chore
   createdAt: "2026-02-24"
   irVersion: 63
-
 - version: 3.49.2
   changelogEntry:
     - summary: |

@@ -7,5 +7,7 @@ export * as group from "./group/index.js";
 export * from "./group/types/index.js";
 export * as license from "./license/index.js";
 export * from "./license/types/index.js";
+export * as replay from "./replay/index.js";
+export * from "./replay/types/index.js";
 export * as reviewers from "./reviewers/index.js";
 export * from "./reviewers/types/index.js";
