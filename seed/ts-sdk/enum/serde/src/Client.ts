@@ -7,6 +7,7 @@ import { PathParamClient } from "./api/resources/pathParam/client/Client.js";
 import { QueryParamClient } from "./api/resources/queryParam/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
 
 export declare namespace SeedEnumClient {
     export type Options = BaseClientOptions;
@@ -44,5 +45,36 @@ export class SeedEnumClient {
 
     public get queryParam(): QueryParamClient {
         return (this._queryParam ??= new QueryParamClient(this._options));
+    }
+
+    /**
+     * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
+     * This is useful for making requests to endpoints not yet supported in the SDK.
+     * The URL can be a full URL or a relative path (resolved against the configured base URL).
+     *
+     * @param {string} url - The URL or path to request.
+     * @param {RequestInit} init - Standard fetch RequestInit options.
+     * @param {core.PassthroughRequest.RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal).
+     * @returns {Promise<Response>} A standard Response object.
+     */
+    public async fetch(
+        url: string,
+        init?: RequestInit,
+        requestOptions?: core.PassthroughRequest.RequestOptions,
+    ): Promise<Response> {
+        return core.makePassthroughRequest(
+            url,
+            init,
+            {
+                environment: this._options.environment,
+                baseUrl: this._options.baseUrl,
+                headers: this._options.headers,
+                timeoutInSeconds: this._options.timeoutInSeconds,
+                maxRetries: this._options.maxRetries,
+                fetch: this._options.fetch,
+                logging: this._options.logging,
+            },
+            requestOptions,
+        );
     }
 }

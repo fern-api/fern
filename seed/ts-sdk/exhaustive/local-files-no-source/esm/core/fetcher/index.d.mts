@@ -6,6 +6,8 @@ export type { Fetcher, FetchFunction } from "./Fetcher.mjs";
 export { fetcher } from "./Fetcher.mjs";
 export { getHeader } from "./getHeader.mjs";
 export { HttpResponsePromise } from "./HttpResponsePromise.mjs";
+export type { PassthroughRequest } from "./makePassthroughRequest.mjs";
+export { makePassthroughRequest } from "./makePassthroughRequest.mjs";
 export type { RawResponse, WithRawResponse } from "./RawResponse.mjs";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
 export { Supplier } from "./Supplier.mjs";

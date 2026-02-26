@@ -827,6 +827,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             serviceModule.statements.push(this.generateIdempotentRequestOptionsInterface(context));
         }
 
+        // Add passthrough fetch method on root client
+        if (this.isRoot) {
+            this.addPassthroughFetchMethod({ serviceClass, context });
+        }
+
         for (const wrappedService of this.generatedWrappedServices) {
             wrappedService.addToServiceClass({
                 isRoot: this.isRoot,
@@ -853,6 +858,61 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
 
         return code`this._options = normalizeClientOptionsWithAuth(options);`;
+    }
+
+    private addPassthroughFetchMethod({
+        serviceClass,
+        context
+    }: {
+        serviceClass: SetRequired<ClassDeclarationStructure, "properties" | "ctors" | "methods" | "getAccessors">;
+        context: SdkContext;
+    }): void {
+        // Build the auth headers getter expression
+        const hasAuth = this.authProvider && this.anyEndpointWithAuth;
+        let getAuthHeadersCode: string;
+        if (hasAuth) {
+            getAuthHeadersCode =
+                "getAuthHeaders: async () => (await this._options.authProvider.getAuthRequest()).headers,";
+        } else {
+            getAuthHeadersCode = "";
+        }
+
+        const fetchMethodBody = `
+return core.makePassthroughRequest(url, init, {
+    environment: this._options.environment,
+    baseUrl: this._options.baseUrl,
+    headers: this._options.headers,
+    timeoutInSeconds: this._options.timeoutInSeconds,
+    maxRetries: this._options.maxRetries,
+    fetch: this._options.fetch,
+    logging: this._options.logging,
+    ${getAuthHeadersCode}
+}, requestOptions);`;
+
+        const fetchMethod: MethodDeclarationStructure = {
+            kind: StructureKind.Method,
+            scope: Scope.Public,
+            isAsync: true,
+            name: "fetch",
+            docs: [
+                "Make a passthrough request using the SDK's configured auth, retry, logging, etc.\n" +
+                    "This is useful for making requests to endpoints not yet supported in the SDK.\n" +
+                    "The URL can be a full URL or a relative path (resolved against the configured base URL).\n\n" +
+                    "@param {string} url - The URL or path to request.\n" +
+                    "@param {RequestInit} init - Standard fetch RequestInit options.\n" +
+                    "@param {core.PassthroughRequest.RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal).\n" +
+                    "@returns {Promise<Response>} A standard Response object."
+            ],
+            parameters: [
+                { name: "url", type: "string" },
+                { name: "init", type: "RequestInit", hasQuestionToken: true },
+                { name: "requestOptions", type: "core.PassthroughRequest.RequestOptions", hasQuestionToken: true }
+            ],
+            returnType: "Promise<Response>",
+            statements: fetchMethodBody
+        };
+
+        serviceClass.methods.push(fetchMethod);
     }
 
     public getBaseUrl(endpoint: FernIr.HttpEndpoint, context: SdkContext): ts.Expression {
