@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.1
+  changelogEntry:
+    - summary: |
+        Fix v2 OpenAPI importer support for `format: date-time-rfc-2822` so the CLI
+        emits `DATE_TIME_RFC_2822` instead of falling back to `string`.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.90.0
   changelogEntry:
     - summary: |
