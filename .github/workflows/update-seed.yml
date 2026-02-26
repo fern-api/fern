@@ -241,12 +241,9 @@ jobs:
           BASE_SHA=""
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
-            # Use GitHub API to get merge base - avoids fetching all branches/tags
-            CURRENT_SHA=$(git rev-parse HEAD)
-            MAIN_SHA=$(gh api "/repos/${{ github.repository }}/git/ref/heads/main" --jq '.object.sha')
-            MERGE_BASE=$(gh api \
-              "/repos/${{ github.repository }}/compare/${MAIN_SHA}...${CURRENT_SHA}" \
-              --jq '.merge_base_commit.sha')
+            # Fetch just the main branch tip (1 commit, no tags, no other branches)
+            git fetch --no-tags --depth=1 origin main
+            MERGE_BASE=$(git merge-base HEAD origin/main)
             echo "Merge base commit: $MERGE_BASE"
             BASE_SHA=$MERGE_BASE
           else
@@ -258,9 +255,9 @@ jobs:
               echo "Last successful run SHA: $LAST_SUCCESS_SHA"
               BASE_SHA=$LAST_SUCCESS_SHA
             else
-              PREVIOUS_SHA=$(gh api \
-                "/repos/${{ github.repository }}/commits?sha=main&per_page=2" \
-                --jq '.[1].sha')
+              # Fetch 2 commits of main to get the previous commit
+              git fetch --no-tags --depth=2 origin main
+              PREVIOUS_SHA=$(git rev-parse origin/main~1)
               echo "No successful run found, falling back to previous commit: $PREVIOUS_SHA"
               BASE_SHA=$PREVIOUS_SHA
             fi
