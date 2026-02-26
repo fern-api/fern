@@ -10,6 +10,10 @@ import semver from "semver";
  * This is a local implementation of the logic that exists in FDR's computeSemanticVersion endpoint.
  * It allows local generation to compute versions without calling the FDR API.
  *
+ * Supports authenticated access to private registries and repositories via environment variables:
+ * - GITHUB_TOKEN: Used to authenticate GitHub API requests for private repositories
+ * - NPM_TOKEN: Used to authenticate npm registry requests for private packages
+ *
  * @param packageName - The name of the package (e.g., "@anduril-industries/lattice-sdk")
  * @param generatorInvocation - The generator configuration containing language and output mode
  * @returns The next semantic version string, or undefined if version cannot be computed
@@ -48,7 +52,9 @@ export async function computeSemanticVersion({
  * Gets the existing version of a package from registries or GitHub tags.
  * Tries package registries first (npm, PyPI), then falls back to GitHub tags.
  *
- * NOTE: This does not handle private registries or private GitHub repositories.
+ * Supports authenticated access via environment variables:
+ * - GITHUB_TOKEN: Authenticates GitHub API requests for private repositories
+ * - NPM_TOKEN: Authenticates npm registry requests for private packages
  *
  * @param packageName - The name of the package
  * @param language - The programming language of the SDK
@@ -99,11 +105,34 @@ async function getExistingVersion({
 /**
  * Fetches the latest version of an npm package.
  *
+ * If the NPM_TOKEN environment variable is set, it will be used to authenticate
+ * requests to the npm registry, enabling access to private packages.
+ *
  * @param packageName - The npm package name (e.g., "@anduril-industries/lattice-sdk")
  * @returns The latest version string, or undefined if the package doesn't exist
  */
 async function getLatestVersionFromNpm(packageName: string): Promise<string | undefined> {
     try {
+        const npmToken = process.env.NPM_TOKEN;
+        if (npmToken != null) {
+            // Use direct registry API call with auth token for private packages
+            const encodedName = encodeURIComponent(packageName).replace(/^%40/, "@");
+            const response = await fetch(`https://registry.npmjs.org/${encodedName}`, {
+                headers: {
+                    accept: "application/vnd.npm.install-v1+json; q=1.0, application/json; q=0.8, */*",
+                    authorization: `Bearer ${npmToken}`
+                }
+            });
+            if (response.ok) {
+                // biome-ignore lint/suspicious/noExplicitAny: npm registry response structure
+                const data = (await response.json()) as any;
+                const latestTag = data["dist-tags"]?.latest;
+                if (latestTag != null) {
+                    return latestTag;
+                }
+            }
+            // Falls through to try unauthenticated access
+        }
         return await latestVersion(packageName);
     } catch (error) {
         // Package doesn't exist or network error
@@ -138,6 +167,9 @@ async function getLatestVersionFromPypi(packageName: string): Promise<string | u
 /**
  * Fetches the latest tag from a GitHub repository.
  *
+ * If the GITHUB_TOKEN environment variable is set, it will be used to authenticate
+ * requests to the GitHub API, enabling access to private repositories.
+ *
  * @param githubRepository - Repository in "owner/repo" format
  * @returns The latest tag name, or undefined if no tags exist
  */
@@ -145,7 +177,8 @@ async function getLatestTag(githubRepository: string): Promise<string | undefine
     try {
         const { owner, repo } = parseRepository(githubRepository);
 
-        const octokit = new Octokit();
+        const githubToken = process.env.GITHUB_TOKEN;
+        const octokit = githubToken != null ? new Octokit({ auth: githubToken }) : new Octokit();
         const response = await octokit.rest.repos.listTags({
             owner,
             repo,
