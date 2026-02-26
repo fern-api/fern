@@ -1,7 +1,7 @@
 import { fail } from "node:assert";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator, GrpcClientInfo } from "@fern-api/csharp-base";
-import { ast, escapeForCSharpString, is, lazy } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, lazy } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
