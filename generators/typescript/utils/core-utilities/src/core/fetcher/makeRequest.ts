@@ -6,7 +6,7 @@ import { anySignal, getTimeoutSignal } from "./signals";
  * throw a TypeError when this option is used.
  */
 let _cacheNoStoreSupported: boolean | undefined;
-function isCacheNoStoreSupported(): boolean {
+export function isCacheNoStoreSupported(): boolean {
     if (_cacheNoStoreSupported != null) {
         return _cacheNoStoreSupported;
     }
@@ -17,6 +17,13 @@ function isCacheNoStoreSupported(): boolean {
         _cacheNoStoreSupported = false;
     }
     return _cacheNoStoreSupported;
+}
+
+/**
+ * Reset the cached result of `isCacheNoStoreSupported`. Exposed for testing only.
+ */
+export function resetCacheNoStoreSupported(): void {
+    _cacheNoStoreSupported = undefined;
 }
 
 export const makeRequest = async (

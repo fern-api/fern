@@ -1,4 +1,8 @@
-import { makeRequest } from "../../../src/core/fetcher/makeRequest";
+import {
+    makeRequest,
+    isCacheNoStoreSupported,
+    resetCacheNoStoreSupported,
+} from "../../../src/core/fetcher/makeRequest";
 
 describe("Test makeRequest", () => {
     const mockPostUrl = "https://httpbin.org/post";
@@ -11,6 +15,7 @@ describe("Test makeRequest", () => {
     beforeEach(() => {
         mockFetch = jest.fn();
         mockFetch.mockResolvedValue(new Response(JSON.stringify({ test: "successful" }), { status: 200 }));
+        resetCacheNoStoreSupported();
     });
 
     it("should handle POST request correctly", async () => {
@@ -49,5 +54,66 @@ describe("Test makeRequest", () => {
         );
         expect(calledOptions.signal).toBeDefined();
         expect(calledOptions.signal).toBeInstanceOf(AbortSignal);
+    });
+
+    it("should not include cache option when disableCache is not set", async () => {
+        await makeRequest(mockFetch, mockGetUrl, "GET", mockHeaders, undefined);
+        const [, calledOptions] = mockFetch.mock.calls[0];
+        expect(calledOptions.cache).toBeUndefined();
+    });
+
+    it("should not include cache option when disableCache is false", async () => {
+        await makeRequest(
+            mockFetch,
+            mockGetUrl,
+            "GET",
+            mockHeaders,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            false,
+        );
+        const [, calledOptions] = mockFetch.mock.calls[0];
+        expect(calledOptions.cache).toBeUndefined();
+    });
+
+    it("should include cache: no-store when disableCache is true and runtime supports it", async () => {
+        // In Node.js test environment, Request supports the cache option
+        expect(isCacheNoStoreSupported()).toBe(true);
+        await makeRequest(
+            mockFetch,
+            mockGetUrl,
+            "GET",
+            mockHeaders,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+            true,
+        );
+        const [, calledOptions] = mockFetch.mock.calls[0];
+        expect(calledOptions.cache).toBe("no-store");
+    });
+
+    it("should cache the result of isCacheNoStoreSupported", () => {
+        const first = isCacheNoStoreSupported();
+        const second = isCacheNoStoreSupported();
+        expect(first).toBe(second);
+    });
+
+    it("should reset cache detection state with resetCacheNoStoreSupported", () => {
+        // First call caches the result
+        const first = isCacheNoStoreSupported();
+        expect(first).toBe(true);
+
+        // Reset clears the cache
+        resetCacheNoStoreSupported();
+
+        // After reset, it should re-detect (and still return true in Node.js)
+        const second = isCacheNoStoreSupported();
+        expect(second).toBe(true);
     });
 });
