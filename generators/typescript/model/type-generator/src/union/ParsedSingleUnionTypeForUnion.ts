@@ -92,7 +92,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
 
     public getBuilderName(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.safeName;
         } else {
             return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
         }
@@ -100,7 +100,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
 
     public getVisitorKey(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.safeName;
         } else {
             return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
         }

@@ -212,19 +212,19 @@
                             "originalName": "3d",
                             "camelCase": {
                                 "unsafeName": "3D",
-                                "safeName": "3D"
+                                "safeName": "_3D"
                             },
                             "snakeCase": {
                                 "unsafeName": "3d",
-                                "safeName": "3d"
+                                "safeName": "_3d"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "3D",
-                                "safeName": "3D"
+                                "safeName": "_3D"
                             },
                             "pascalCase": {
                                 "unsafeName": "3D",
-                                "safeName": "3D"
+                                "safeName": "_3D"
                             }
                         },
                         "wireValue": "3d"

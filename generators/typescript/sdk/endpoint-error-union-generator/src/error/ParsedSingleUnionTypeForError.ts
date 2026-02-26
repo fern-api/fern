@@ -62,7 +62,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     }
 
     public getTypeName(): string {
-        return this.errorDeclaration.discriminantValue.name.pascalCase.unsafeName;
+        return this.errorDeclaration.discriminantValue.name.pascalCase.safeName;
     }
 
     public getDiscriminantValue(): string | number {
@@ -78,13 +78,13 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     public getBuilderName(): string {
         return this.retainOriginalCasing
             ? this.errorDeclaration.discriminantValue.name.originalName
-            : this.errorDeclaration.discriminantValue.name.camelCase.unsafeName;
+            : this.errorDeclaration.discriminantValue.name.camelCase.safeName;
     }
 
     public getVisitorKey(): string {
         return this.retainOriginalCasing
             ? this.errorDeclaration.discriminantValue.name.originalName
-            : this.errorDeclaration.discriminantValue.name.camelCase.unsafeName;
+            : this.errorDeclaration.discriminantValue.name.camelCase.safeName;
     }
 
     public needsRequestResponse(): { request: boolean; response: boolean } {

@@ -106,16 +106,16 @@ export function constructCasingsGenerator({
 }
 
 function sanitizeName({ name, keywords }: { name: string; keywords: Set<string> | undefined }): string {
+    if (startsWithNumber(name)) {
+        return "_" + name;
+    }
     if (keywords == null) {
         return name;
     }
     if (keywords.has(name)) {
         return name + "_";
-    } else if (startsWithNumber(name)) {
-        return "_" + name;
-    } else {
-        return name;
     }
+    return name;
 }
 
 function getKeywords({
