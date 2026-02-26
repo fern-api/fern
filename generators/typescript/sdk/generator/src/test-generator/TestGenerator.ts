@@ -1686,7 +1686,8 @@ describe("${serviceName}", () => {
                 // so the discriminant must be at the same level as the error content.
                 if (this.ir.errorDiscriminationStrategy.type === "property") {
                     const discriminantWireValue = this.ir.errorDiscriminationStrategy.discriminant.wireValue;
-                    const errorName = value.error.name.originalName;
+                    const errorDecl = this.ir.errors[value.error.errorId];
+                    const errorName = errorDecl?.discriminantValue.wireValue ?? value.error.name.originalName;
                     if (!value.body) {
                         return code`{ ${literalOf(discriminantWireValue)}: ${literalOf(errorName)} }`;
                     }
