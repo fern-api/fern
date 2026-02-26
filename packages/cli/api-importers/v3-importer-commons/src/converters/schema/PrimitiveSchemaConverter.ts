@@ -33,6 +33,14 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                     return TypeReference.container(ContainerType.literal(Literal.string(stringConst)));
                 }
 
+                // date-time-rfc-2822 is always recognized regardless of typeDatesAsStrings setting
+                if (this.schema.format === "date-time-rfc-2822") {
+                    return TypeReference.primitive({
+                        v1: PrimitiveTypeV1.DateTimeRfc2822,
+                        v2: PrimitiveTypeV2.dateTimeRfc2822({})
+                    });
+                }
+
                 if (this.context.settings.typeDatesAsStrings === false) {
                     if (this.schema.format === "date") {
                         return TypeReference.primitive({
@@ -43,11 +51,6 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                         return TypeReference.primitive({
                             v1: PrimitiveTypeV1.DateTime,
                             v2: PrimitiveTypeV2.dateTime({})
-                        });
-                    } else if (this.schema.format === "date-time-rfc-2822") {
-                        return TypeReference.primitive({
-                            v1: PrimitiveTypeV1.DateTimeRfc2822,
-                            v2: PrimitiveTypeV2.dateTimeRfc2822({})
                         });
                     }
                 }

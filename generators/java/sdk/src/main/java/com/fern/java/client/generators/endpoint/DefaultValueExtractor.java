@@ -247,6 +247,11 @@ public final class DefaultValueExtractor {
         }
 
         @Override
+        public Boolean visitDateTimeRfc2822(com.fern.ir.model.types.DateTimeRfc2822Type dateTimeRfc2822Type) {
+            return false;
+        }
+
+        @Override
         public Boolean visitUuid(com.fern.ir.model.types.UuidType uuidType) {
             return false;
         }
@@ -318,6 +323,12 @@ public final class DefaultValueExtractor {
 
         @Override
         public Optional<CodeBlock> visitDateTime(com.fern.ir.model.types.DateTimeType dateTimeType) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<CodeBlock> visitDateTimeRfc2822(
+                com.fern.ir.model.types.DateTimeRfc2822Type dateTimeRfc2822Type) {
             return Optional.empty();
         }
 

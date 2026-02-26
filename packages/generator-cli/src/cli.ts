@@ -18,6 +18,8 @@ import { loadReadmeConfig } from "./configuration/loadReadmeConfig.js";
 import { loadReferenceConfig } from "./configuration/loadReferenceConfig.js";
 import { type PipelineConfig, PostGenerationPipeline } from "./pipeline/index.js";
 
+const STDIN_MARKER = "-";
+
 void yargs(hideBin(process.argv))
     // eslint-disable-next-line turbo/no-undeclared-env-vars
     .scriptName(process.env.CLI_NAME ?? "generator-cli")
@@ -172,17 +174,12 @@ void yargs(hideBin(process.argv))
                         .option("config", {
                             string: true,
                             required: true,
-                            description: "Path to pipeline config JSON"
+                            description: "The file or data to use for pipeline configuration"
                         })
                         .option("output-dir", {
                             string: true,
                             required: true,
                             description: "Path to SDK output directory"
-                        })
-                        .option("result-file", {
-                            string: true,
-                            required: false,
-                            description: "Path to write result JSON"
                         });
                 },
                 async (argv) => {
@@ -196,9 +193,21 @@ void yargs(hideBin(process.argv))
                     try {
                         const wd = cwd();
 
-                        // Read pipeline config from file
-                        const configContent = await readFile(resolve(wd, argv.config), "utf-8");
-                        const config: PipelineConfig = JSON.parse(configContent);
+                        // Read pipeline config: "-" = stdin, starts with "{" = inline JSON, otherwise file path
+                        const configValue = argv.config;
+                        const configContent =
+                            configValue === STDIN_MARKER
+                                ? await readStdin()
+                                : configValue.trimStart().startsWith("{")
+                                  ? configValue
+                                  : await readFile(resolve(wd, configValue), "utf-8");
+                        let config: PipelineConfig;
+                        try {
+                            config = JSON.parse(configContent);
+                        } catch (parseError) {
+                            const parseMessage = parseError instanceof Error ? parseError.message : String(parseError);
+                            throw new Error(`Failed to parse pipeline config as JSON: ${parseMessage}`);
+                        }
 
                         // Override outputDir from CLI arg
                         config.outputDir = resolve(wd, argv["output-dir"]);
@@ -206,13 +215,6 @@ void yargs(hideBin(process.argv))
                         // Run pipeline
                         const pipeline = new PostGenerationPipeline(config);
                         const result = await pipeline.run();
-
-                        // Write result if specified
-                        if (argv["result-file"] != null) {
-                            const resultPath = resolve(wd, argv["result-file"]);
-                            await mkdir(path.dirname(resultPath), { recursive: true });
-                            await fs.promises.writeFile(resultPath, JSON.stringify(result, null, 2));
-                        }
 
                         // Log summary to stderr
                         process.stderr.write(`Pipeline ${result.success ? "succeeded" : "failed"}\n`);
@@ -238,12 +240,15 @@ void yargs(hideBin(process.argv))
                             process.stderr.write(`Errors:\n${result.errors.map((e) => `  - ${e}`).join("\n")}\n`);
                         }
 
-                        // Exit with appropriate code
-                        process.exit(result.success ? 0 : 1);
+                        // Write result JSON to stdout for programmatic consumption
+                        process.stdout.write(JSON.stringify(result) + "\n");
+
+                        // Use process.exitCode instead of process.exit() to allow stdout to drain
+                        process.exitCode = result.success ? 0 : 1;
                     } catch (error) {
                         const errorMessage = error instanceof Error ? error.message : String(error);
                         process.stderr.write(`Pipeline failed: ${errorMessage}\n`);
-                        process.exit(1);
+                        process.exitCode = 1;
                     }
                 }
             )
@@ -437,6 +442,14 @@ void yargs(hideBin(process.argv))
     .demandCommand()
     .showHelpOnFail(true)
     .parse();
+
+async function readStdin(): Promise<string> {
+    const chunks: Buffer[] = [];
+    for await (const chunk of process.stdin) {
+        chunks.push(chunk);
+    }
+    return Buffer.concat(chunks).toString("utf-8");
+}
 
 async function createWriteStream(outputPath: string | undefined): Promise<fs.WriteStream | NodeJS.Process["stdout"]> {
     return outputPath != null ? await createWriteStreamFromFile(resolve(cwd(), outputPath)) : process.stdout;

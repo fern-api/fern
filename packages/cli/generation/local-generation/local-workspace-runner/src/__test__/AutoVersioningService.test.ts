@@ -1121,6 +1121,122 @@ describe("AutoVersioningService", () => {
         expect(cleaned).toContain("+    newMethod() { return true; }");
     });
 
+    it("testCleanDiffForAI_namespaceChangeWithVersionChanges", () => {
+        // Simulates namespace change from marketdata to market_data with version changes
+        const diff =
+            "diff --git a/pyproject.toml b/pyproject.toml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/pyproject.toml\n" +
+            "+++ b/pyproject.toml\n" +
+            "@@ -1,5 +1,5 @@\n" +
+            " [tool.poetry]\n" +
+            ' name = "immix-sdk"\n' +
+            '-version = "0.0.46"\n' +
+            '+version = "505.503.4455"\n' +
+            ' description = ""\n' +
+            "diff --git a/src/immix/version.py b/src/immix/version.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/immix/version.py\n" +
+            "+++ b/src/immix/version.py\n" +
+            "@@ -1 +1 @@\n" +
+            '-__version__ = "0.0.46"\n' +
+            '+__version__ = "505.503.4455"\n' +
+            "diff --git a/src/immix/client.py b/src/immix/client.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/immix/client.py\n" +
+            "+++ b/src/immix/client.py\n" +
+            "@@ -1,5 +1,5 @@\n" +
+            "-from .marketdata import MarketDataClient\n" +
+            "+from .market_data import MarketDataClient\n" +
+            " from .trading import TradingClient\n" +
+            " \n" +
+            " class ImmixClient:\n" +
+            "diff --git a/src/immix/core/client_wrapper.py b/src/immix/core/client_wrapper.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/immix/core/client_wrapper.py\n" +
+            "+++ b/src/immix/core/client_wrapper.py\n" +
+            "@@ -5,7 +5,7 @@\n" +
+            " class ClientWrapper:\n" +
+            "     headers = {\n" +
+            '-        "X-Fern-SDK-Version": "0.0.46",\n' +
+            '+        "X-Fern-SDK-Version": "505.503.4455",\n' +
+            "     }\n" +
+            "diff --git a/src/immix/marketdata/__init__.py b/src/immix/marketdata/__init__.py\n" +
+            "deleted file mode 100644\n" +
+            "index abc123..0000000\n" +
+            "--- a/src/immix/marketdata/__init__.py\n" +
+            "+++ /dev/null\n" +
+            "@@ -1,3 +0,0 @@\n" +
+            "-from .market_data import MarketDataClient\n" +
+            "-from . import types\n" +
+            '-__all__ = ["MarketDataClient", "types"]\n' +
+            "diff --git a/src/immix/market_data/__init__.py b/src/immix/market_data/__init__.py\n" +
+            "new file mode 100644\n" +
+            "index 0000000..def456\n" +
+            "--- /dev/null\n" +
+            "+++ b/src/immix/market_data/__init__.py\n" +
+            "@@ -0,0 +1,3 @@\n" +
+            "+from .market_data import MarketDataClient\n" +
+            "+from . import types\n" +
+            '+__all__ = ["MarketDataClient", "types"]\n';
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // Version-only changes should be removed
+        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("0.0.46");
+        // Namespace changes should be preserved
+        expect(cleaned).toContain("market_data");
+        expect(cleaned).toContain("marketdata");
+        // File sections with only version changes should be removed
+        expect(cleaned).not.toContain("pyproject.toml");
+        expect(cleaned).not.toContain("version.py");
+        // File sections with namespace changes should be preserved
+        expect(cleaned).toContain("client.py");
+        // Cleaned diff should be non-empty since there are real namespace changes
+        expect(cleaned.trim().length).toBeGreaterThan(0);
+    });
+
+    it("testCleanDiffForAI_versionOnlyChanges_returnsEmptyDiff", () => {
+        // Simulates a diff where ALL changes are version-related (no namespace or other changes)
+        // This is the scenario that was causing the bug: cleaned diff becomes empty
+        const diff =
+            "diff --git a/pyproject.toml b/pyproject.toml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/pyproject.toml\n" +
+            "+++ b/pyproject.toml\n" +
+            "@@ -1,5 +1,5 @@\n" +
+            " [tool.poetry]\n" +
+            ' name = "immix-sdk"\n' +
+            '-version = "0.0.46"\n' +
+            '+version = "505.503.4455"\n' +
+            ' description = ""\n' +
+            "diff --git a/src/immix/version.py b/src/immix/version.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/immix/version.py\n" +
+            "+++ b/src/immix/version.py\n" +
+            "@@ -1 +1 @@\n" +
+            '-__version__ = "0.0.46"\n' +
+            '+__version__ = "505.503.4455"\n' +
+            "diff --git a/src/immix/core/client_wrapper.py b/src/immix/core/client_wrapper.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/immix/core/client_wrapper.py\n" +
+            "+++ b/src/immix/core/client_wrapper.py\n" +
+            "@@ -5,7 +5,7 @@\n" +
+            " class ClientWrapper:\n" +
+            "     headers = {\n" +
+            '-        "X-Fern-SDK-Version": "0.0.46",\n' +
+            '+        "X-Fern-SDK-Version": "505.503.4455",\n' +
+            "     }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // All changes are version-related, so the cleaned diff should be empty
+        expect(cleaned.trim().length).toBe(0);
+        // Original diff was non-empty
+        expect(diff.trim().length).toBeGreaterThan(0);
+    });
+
     // TODO(tjb9dc): Reenable these tests, need to have them reference the LocalTaskHandler's gitDiff function (or refactor)
     // it("testAutoVersioningWorkflow_endToEnd", async () => {
     //     const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
