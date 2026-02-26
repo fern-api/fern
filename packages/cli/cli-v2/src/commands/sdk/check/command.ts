@@ -1,15 +1,15 @@
 import chalk from "chalk";
 import type { Argv } from "yargs";
-import { ApiChecker } from "../../api/checker/ApiChecker.js";
-import type { Context } from "../../context/Context.js";
-import type { GlobalArgs } from "../../context/GlobalArgs.js";
-import { CliError } from "../../errors/CliError.js";
-import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
-import { Icons } from "../../ui/format.js";
-import type { Workspace } from "../../workspace/Workspace.js";
-import { command } from "../_internal/command.js";
+import { ApiChecker } from "../../../api/checker/ApiChecker.js";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { CliError } from "../../../errors/CliError.js";
+import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
+import { Icons } from "../../../ui/format.js";
+import type { Workspace } from "../../../workspace/Workspace.js";
+import { command } from "../../_internal/command.js";
 
-export declare namespace CheckCommand {
+export declare namespace SdkCheckCommand {
     export interface Args extends GlobalArgs {
         /** Validate a specific API */
         api?: string;
@@ -18,12 +18,13 @@ export declare namespace CheckCommand {
     }
 }
 
-export class CheckCommand {
-    public async handle(context: Context, args: CheckCommand.Args): Promise<void> {
+export class SdkCheckCommand {
+    public async handle(context: Context, args: SdkCheckCommand.Args): Promise<void> {
         const workspace = await context.loadWorkspaceOrThrow();
 
         this.validateArgs(args, workspace);
 
+        // Run API checks first since SDKs depend on valid APIs.
         const apiChecker = new ApiChecker({
             context,
             cliVersion: workspace.cliVersion
@@ -35,10 +36,12 @@ export class CheckCommand {
             strict: args.strict
         });
 
+        // Run SDK-specific checks.
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = sdkChecker.check({ workspace });
 
-        const totalErrors = (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount;
+        const totalErrors =
+            (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount;
         const totalWarnings = apiCheckResult.warningCount + sdkCheckResult.warningCount;
 
         // Fail if there are errors, or if strict mode and there are warnings.
@@ -48,14 +51,14 @@ export class CheckCommand {
 
         if (totalWarnings > 0) {
             process.stderr.write(`${Icons.warning} ${chalk.yellow(`Found ${totalWarnings} warnings`)}\n`);
-            process.stderr.write(chalk.dim("  Run 'fern check --strict' to treat warnings as errors\n"));
+            process.stderr.write(chalk.dim("  Run 'fern sdk check --strict' to treat warnings as errors\n"));
             return;
         }
 
-        process.stderr.write(`${Icons.success} ${chalk.green("All checks passed")}\n`);
+        process.stderr.write(`${Icons.success} ${chalk.green("All SDK checks passed")}\n`);
     }
 
-    private validateArgs(args: CheckCommand.Args, workspace: Workspace): void {
+    private validateArgs(args: SdkCheckCommand.Args, workspace: Workspace): void {
         // Validate that the requested API exists if specified.
         if (args.api != null && workspace.apis[args.api] == null) {
             const availableApis = Object.keys(workspace.apis).join(", ");
@@ -66,13 +69,13 @@ export class CheckCommand {
     }
 }
 
-export function addCheckCommand(cli: Argv<GlobalArgs>): void {
-    const cmd = new CheckCommand();
+export function addCheckCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+    const cmd = new SdkCheckCommand();
     command(
         cli,
         "check",
-        "Validate your API, docs, and SDK configuration",
-        (context, args) => cmd.handle(context, args as CheckCommand.Args),
+        "Validate your API and SDK configuration",
+        (context, args) => cmd.handle(context, args as SdkCheckCommand.Args),
         (yargs) =>
             yargs
                 .option("api", {
@@ -83,6 +86,7 @@ export function addCheckCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     description: "Treat warnings as errors",
                     default: false
-                })
+                }),
+        parentPath
     );
 }

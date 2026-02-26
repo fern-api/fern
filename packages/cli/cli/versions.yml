@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk check` command to validate SDK configuration. The command
+        checks that the `sdks` configuration is valid according to the schema,
+        all configured targets have valid language entries, and all configured
+        target versions exist. The existing `fern check` command now also runs
+        SDK validation alongside API validation.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.90.1
   changelogEntry:
     - summary: |
