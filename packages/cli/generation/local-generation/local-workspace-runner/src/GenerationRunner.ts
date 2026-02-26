@@ -1,4 +1,4 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { FernWorkspace, getOriginGitCommit } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -9,7 +9,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicSnippetTests.js";
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
-import { getOriginGitCommit } from "./getOriginGitCommit.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace.js";
 

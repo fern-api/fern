@@ -5,7 +5,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/workspace/commons"
+    "directory": "packages/commons/api-workspace-commons"
   },
   "sideEffects": false,
   "type": "module",
@@ -26,7 +26,7 @@
     "clean": "rm -rf ./lib",
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
-    "depcheck": "knip --config ../../../../knip.json --no-config-hints",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "test": "vitest --run --passWithNoTests",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"

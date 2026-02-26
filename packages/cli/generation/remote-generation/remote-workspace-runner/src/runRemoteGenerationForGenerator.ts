@@ -1,3 +1,4 @@
+import { getOriginGitCommit } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
@@ -13,7 +14,6 @@ import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { execSync } from "child_process";
 import { createAndStartJob } from "./createAndStartJob.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus.js";
@@ -102,7 +102,7 @@ export async function runRemoteGenerationForGenerator({
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
             generatorConfig: generatorInvocation.config,
-            originGitCommit: getOriginGitCommitHash()
+            originGitCommit: getOriginGitCommit()
         }
     });
 
@@ -424,25 +424,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     features: undefined,
     exampleStyle: undefined
 };
-
-/**
- * Resolves the current git commit hash of the working directory.
- * Returns undefined if not in a git repo or if git is not available.
- */
-function getOriginGitCommitHash(): string | undefined {
-    try {
-        const commit = execSync("git rev-parse HEAD", {
-            encoding: "utf-8",
-            stdio: ["pipe", "pipe", "pipe"]
-        }).trim();
-        if (/^[0-9a-f]{40}$/.test(commit)) {
-            return commit;
-        }
-        return undefined;
-    } catch {
-        return undefined;
-    }
-}
 
 async function uploadDynamicIRForSdkGeneration({
     fdr,

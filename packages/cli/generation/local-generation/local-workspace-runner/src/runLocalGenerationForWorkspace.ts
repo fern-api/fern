@@ -1,4 +1,4 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import { computeSemanticVersion, getOriginGitCommit } from "@fern-api/api-workspace-commons";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
@@ -21,7 +21,6 @@ import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-import { getOriginGitCommit } from "./getOriginGitCommit.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
