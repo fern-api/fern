@@ -3,7 +3,6 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
-    getReplacedHref,
     isValidRelativeSlug,
     parseImagePaths,
     type ReferencedMarkdownFile,
@@ -53,6 +52,7 @@ interface LibraryNavNode {
 }
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
+import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
@@ -478,11 +478,7 @@ export class DocsDefinitionResolver {
                 });
 
                 // Update all apiDefinitionId references in the navigation subtree
-                this.updateApiDefinitionIdInTree(
-                    pending.apiReferenceNode,
-                    pending.tempApiDefinitionId,
-                    realApiDefinitionId
-                );
+                updateApiDefinitionIdInTree(pending.apiReferenceNode, pending.tempApiDefinitionId, realApiDefinitionId);
             }
             const deferredTime = performance.now() - deferredStart;
             this.taskContext.logger.debug(`Processed deferred API registrations in ${deferredTime.toFixed(0)}ms`);
@@ -2251,84 +2247,7 @@ export class DocsDefinitionResolver {
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absolutePathToMarkdownFile: this.docsWorkspace.absoluteFilePath
         };
-        this.resolveLinksInObject(ir, markdownFilesToPathName, metadata);
-    }
-
-    /**
-     * Recursively walks an object and resolves .mdx/.md file path links in all string values.
-     * Rather than matching on a specific key name, this checks every string for markdown links
-     * containing .mdx/.md extensions — the regex in resolveLinksInMarkdownString is the real filter.
-     */
-    private resolveLinksInObject(
-        obj: unknown,
-        markdownFilesToPathName: Record<AbsoluteFilePath, string>,
-        metadata: { absolutePathToFernFolder: AbsoluteFilePath; absolutePathToMarkdownFile: AbsoluteFilePath }
-    ): void {
-        if (obj == null || typeof obj !== "object") {
-            return;
-        }
-        if (Array.isArray(obj)) {
-            for (const item of obj) {
-                this.resolveLinksInObject(item, markdownFilesToPathName, metadata);
-            }
-            return;
-        }
-        const record = obj as Record<string, unknown>;
-        for (const [key, value] of Object.entries(record)) {
-            if (typeof value === "string" && value.includes(".md")) {
-                record[key] = this.resolveLinksInMarkdownString(value, markdownFilesToPathName, metadata);
-            } else if (typeof value === "object") {
-                this.resolveLinksInObject(value, markdownFilesToPathName, metadata);
-            }
-        }
-    }
-
-    /**
-     * Resolves .mdx/.md file path links in a markdown string to URL slugs.
-     * For example, converts [Order](/docs/pages/objects/Order.mdx) to [Order](/objects/order).
-     */
-    private resolveLinksInMarkdownString(
-        markdown: string,
-        markdownFilesToPathName: Record<AbsoluteFilePath, string>,
-        metadata: { absolutePathToFernFolder: AbsoluteFilePath; absolutePathToMarkdownFile: AbsoluteFilePath }
-    ): string {
-        // Match markdown links ending in .md or .mdx, optionally with an anchor fragment
-        return markdown.replace(/\[([^\]]*)\]\(([^)]+\.mdx?(?:#[^)]*)?)\)/g, (match, text, fullHref) => {
-            const hashIndex = fullHref.indexOf("#");
-            const href = hashIndex >= 0 ? fullHref.substring(0, hashIndex) : fullHref;
-            const anchor = hashIndex >= 0 ? fullHref.substring(hashIndex) : "";
-
-            const replaced = getReplacedHref({ href, metadata, markdownFilesToPathName });
-            if (replaced != null && replaced.type === "replace") {
-                return `[${text}](${replaced.slug}${anchor})`;
-            }
-            return match;
-        });
-    }
-
-    /**
-     * Recursively walks a navigation node tree and replaces all occurrences of
-     * oldApiDefinitionId with newApiDefinitionId.
-     */
-    private updateApiDefinitionIdInTree(node: unknown, oldId: string, newId: string): void {
-        if (node == null || typeof node !== "object") {
-            return;
-        }
-        if (Array.isArray(node)) {
-            for (const item of node) {
-                this.updateApiDefinitionIdInTree(item, oldId, newId);
-            }
-            return;
-        }
-        const record = node as Record<string, unknown>;
-        if (record["apiDefinitionId"] === oldId) {
-            record["apiDefinitionId"] = newId;
-        }
-        for (const value of Object.values(record)) {
-            if (typeof value === "object") {
-                this.updateApiDefinitionIdInTree(value, oldId, newId);
-            }
-        }
+        resolveLinksInObject(ir, markdownFilesToPathName, metadata);
     }
 }
 
