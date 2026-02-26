@@ -14,8 +14,9 @@
 [![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
-[![Slack](https://img.shields.io/badge/slack-pink.svg)](https://buildwithfern.com/slack)
-[![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)
+[![Documentation](https://img.shields.io/badge/Read%20our%20Docs-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)
+[![Book a demo](https://img.shields.io/badge/Book%20a%20demo-fcfcfd)](https://buildwithfern.com/book-demo?utm_source=fern-github-readme)
+[![Start for free](https://img.shields.io/badge/Start%20for%20free-008700)](https://dashboard.buildwithfern.com/sign-up?redirect_on_login=%2Fget-started&utm_source=fern-github-readme)
 
 </div>
 
