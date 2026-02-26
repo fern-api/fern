@@ -32,7 +32,6 @@ export class WireTestGenerator {
     private dynamicIr: FernIr.dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
     private snippetGenerator: DynamicSnippetsGenerator;
-    private nonInlinedSnippetGenerator: DynamicSnippetsGenerator;
     constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
         this.context = context;
         const dynamicIr = ir.dynamic;
@@ -49,20 +48,6 @@ export class WireTestGenerator {
                 organization: context.config.organization,
                 workspaceName: context.config.workspaceName,
                 customConfig: context.customConfig
-            } as FernGeneratorExec.GeneratorConfig
-        });
-
-        // A second snippet generator with inline_request_params forced to false.
-        // Used for endpoints whose SDK request shape is "justRequestBody" (i.e., the body
-        // is passed as a single `request` parameter and NOT flattened into individual args).
-        // Without this, the default generator would flatten body properties and incorrectly
-        // deconflict path parameter names that collide with body field names (e.g. task_name -> task_name_).
-        this.nonInlinedSnippetGenerator = new DynamicSnippetsGenerator({
-            ir: this.dynamicIr,
-            config: {
-                organization: context.config.organization,
-                workspaceName: context.config.workspaceName,
-                customConfig: { ...context.customConfig, inline_request_params: false }
             } as FernGeneratorExec.GeneratorConfig
         });
     }
@@ -572,21 +557,10 @@ export class WireTestGenerator {
             // file fields that are missing from the example request body.
             this.addPlaceholderFileUploadFields({ endpoint, snippetRequest });
 
-            // Choose the correct snippet generator based on whether the SDK inlines
-            // the request body. When the body is a referenced type passed as a single
-            // `request` parameter (sdkRequest.shape === "justRequestBody"), body field
-            // names are NOT top-level parameters and must not trigger path-parameter
-            // deconfliction (e.g. path param `task_name` should stay `task_name`, not
-            // become `task_name_` due to a body field with the same name).
-            const generator =
-                endpoint.sdkRequest?.shape.type === "justRequestBody"
-                    ? this.nonInlinedSnippetGenerator
-                    : this.snippetGenerator;
-
             // Generate just the method call AST using DynamicSnippetsGenerator
             // Pass endpointId to avoid path collision issues when multiple
             // namespaces have endpoints with the same HTTP method and path pattern
-            return generator.generateMethodCallSnippetAst({
+            return this.snippetGenerator.generateMethodCallSnippetAst({
                 request: snippetRequest,
                 options: { endpointId: endpoint.id }
             });

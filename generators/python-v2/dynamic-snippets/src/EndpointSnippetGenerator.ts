@@ -489,9 +489,12 @@ export class EndpointSnippetGenerator {
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
 
-        // Get body property names to check for collisions
+        // Get body property names to check for collisions.
+        // Only collect property names when the body is actually flattened into individual
+        // parameters (inline_request_params !== false). When the body is NOT flattened,
+        // it becomes a single "request" parameter and there is no collision with path params.
         let bodyPropertyNames: Set<string> = new Set();
-        if (request.body != null) {
+        if (request.body != null && this.context.customConfig.inline_request_params !== false) {
             const bodyArgs = this.getBodyRequestArgs({ body: request.body, value: snippet.requestBody });
             bodyPropertyNames = new Set(bodyArgs.map((arg) => arg.name));
 
