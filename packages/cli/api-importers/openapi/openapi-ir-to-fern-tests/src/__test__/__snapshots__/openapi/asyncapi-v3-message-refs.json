@@ -6,6 +6,19 @@
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
         "types": {
+          "Keyterm": {
+            "discriminated": false,
+            "docs": "A single keyterm or list of keyterms",
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../asyncapi.yml",
+            },
+            "union": [
+              "string",
+              "list<string>",
+            ],
+          },
           "ServerResponsePayload": {
             "docs": undefined,
             "inline": undefined,
@@ -35,6 +48,14 @@
         },
       },
       "rawContents": "types:
+  Keyterm:
+    discriminated: false
+    docs: A single keyterm or list of keyterms
+    union:
+      - string
+      - list<string>
+    source:
+      openapi: ../asyncapi.yml
   UserMessagePayload:
     properties:
       text:
@@ -86,6 +107,13 @@
             },
           },
           "path": "/v1/ws/chat",
+          "query-parameters": {
+            "keyterm": {
+              "allow-multiple": true,
+              "type": "optional<string>",
+            },
+            "model": "string",
+          },
           "url": "production",
         },
         "imports": {
@@ -97,6 +125,11 @@
   url: production
   auth: false
   docs: Chat channel for testing message references
+  query-parameters:
+    keyterm:
+      type: optional<string>
+      allow-multiple: true
+    model: string
   messages:
     serverResponse:
       origin: server

@@ -140,3 +140,4 @@ client.Simple.FooWithExamples(
 </dd>
 </dl>
 </details>
+

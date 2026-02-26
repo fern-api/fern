@@ -1,3 +1,5 @@
+import { execFileSync } from "child_process";
+import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "./github/constants";
 import { consolePipelineLogger, type PipelineLogger } from "./PipelineLogger";
 import { BaseStep } from "./steps/BaseStep";
 import { GithubStep } from "./steps/GithubStep";
@@ -51,6 +53,17 @@ export class PostGenerationPipeline {
     }
 
     async run(): Promise<PipelineResult> {
+        // Set git identity BEFORE any steps run, so all commits
+        // (including replay commits) are attributed to fern-bot.
+        if (this.config.github?.enabled) {
+            try {
+                execFileSync("git", ["config", "user.name", FERN_BOT_NAME], { cwd: this.config.outputDir });
+                execFileSync("git", ["config", "user.email", FERN_BOT_EMAIL], { cwd: this.config.outputDir });
+            } catch {
+                // pass
+            }
+        }
+
         const result: PipelineResult = {
             success: true,
             steps: {}

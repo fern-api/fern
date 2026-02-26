@@ -161,3 +161,4 @@ client.UpdateFoo(
 </dd>
 </dl>
 </details>
+

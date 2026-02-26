@@ -221,14 +221,23 @@ public record ErrorInfo
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "compileError" => json.Deserialize<SeedTrace.CompileError?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.CompileError"),
-                "runtimeError" => json.Deserialize<SeedTrace.RuntimeError?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.RuntimeError"),
-                "internalError" => json.Deserialize<SeedTrace.InternalError?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.InternalError"),
+                "compileError" => jsonWithoutDiscriminator.Deserialize<SeedTrace.CompileError?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.CompileError"),
+                "runtimeError" => jsonWithoutDiscriminator.Deserialize<SeedTrace.RuntimeError?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.RuntimeError"),
+                "internalError" => jsonWithoutDiscriminator.Deserialize<SeedTrace.InternalError?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.InternalError"),
                 _ => json.Deserialize<object?>(options),
             };
             return new ErrorInfo(discriminator, value);

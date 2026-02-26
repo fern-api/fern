@@ -2,7 +2,6 @@ import { ClonedRepository, parseRepository } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
 import { access, writeFile } from "fs/promises";
 import { join } from "path";
-import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "../github/constants";
 import { createReplayBranch } from "../github/createReplayBranch";
 import type { ExistingPullRequest } from "../github/findExistingUpdatablePR";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
@@ -33,6 +32,16 @@ export class GithubStep extends BaseStep {
             this.logger.debug("Starting GitHub self-hosted flow in directory: " + this.outputDir);
             const repository = ClonedRepository.createAtPath(this.outputDir);
 
+            // Ensure full git history is available.
+            // Fiddle clones with --depth 1 for performance.
+            // Replay references historical SHAs from .fern/replay.lock that won't exist
+            // in a shallow clone.
+            try {
+                await repository.fetch(["--unshallow"]);
+            } catch {
+                // Not a shallow clone — already has full history. This is fine.
+            }
+
             const now = new Date();
             const formattedDate = now
                 .toISOString()
@@ -41,15 +50,6 @@ export class GithubStep extends BaseStep {
                 .replace("Z", "")
                 .replace(".", "_");
             const newPrBranch = `fern-bot/${formattedDate}`;
-
-            try {
-                await repository.setUserAndEmail({
-                    name: FERN_BOT_NAME,
-                    email: FERN_BOT_EMAIL
-                });
-            } catch {
-                // pass
-            }
 
             const mode = this.config.mode;
             switch (mode) {

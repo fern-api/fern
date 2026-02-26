@@ -168,11 +168,6 @@ export class SimpleClient {
                         _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );
-                case 500:
-                    throw new SeedErrors.InternalServerError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
                 default:
                     throw new errors.SeedErrorsError({
                         statusCode: _response.error.statusCode,
@@ -253,11 +248,6 @@ export class SimpleClient {
                     );
                 case 400:
                     throw new SeedErrors.BadRequestError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 500:
-                    throw new SeedErrors.InternalServerError(
                         _response.error.body as SeedErrors.ErrorBody,
                         _response.rawResponse,
                     );

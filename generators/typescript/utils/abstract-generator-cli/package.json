@@ -37,7 +37,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-exec-sdk": "catalog:",
-    "@fern-fern/ir-sdk": "^65.2.1",
+    "@fern-fern/ir-sdk": "^65.3.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "tmp-promise": "catalog:"

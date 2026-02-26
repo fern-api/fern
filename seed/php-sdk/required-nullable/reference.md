@@ -147,3 +147,4 @@ $client->updateFoo(
 </dd>
 </dl>
 </details>
+

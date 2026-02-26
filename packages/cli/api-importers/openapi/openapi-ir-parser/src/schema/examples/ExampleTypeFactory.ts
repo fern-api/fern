@@ -726,6 +726,7 @@ export class ExampleTypeFactory {
                     double: () => typeof fullExample === "number",
                     string: () => typeof fullExample === "string",
                     datetime: () => typeof fullExample === "string",
+                    datetimeRfc2822: () => typeof fullExample === "string",
                     date: () => typeof fullExample === "string",
                     base64: () => typeof fullExample === "string",
                     boolean: () => typeof fullExample === "boolean",
@@ -961,6 +962,14 @@ export class ExampleTypeFactory {
                     return PrimitiveExample.datetime(schema.example);
                 } else {
                     return PrimitiveExample.datetime(Examples.DATE_TIME);
+                }
+            case "datetimeRfc2822":
+                if (example != null && typeof example === "string") {
+                    return PrimitiveExample.datetimeRfc2822(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.datetimeRfc2822(schema.example);
+                } else {
+                    return PrimitiveExample.datetimeRfc2822(Examples.DATE_TIME);
                 }
             case "double":
                 if (example != null && typeof example === "number") {

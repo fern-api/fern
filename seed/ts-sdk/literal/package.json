@@ -59,7 +59,8 @@
         "fs": false,
         "os": false,
         "path": false,
-        "stream": false
+        "stream": false,
+        "crypto": false
     },
     "packageManager": "pnpm@10.20.0",
     "engines": {

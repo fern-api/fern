@@ -44,6 +44,11 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                             v1: PrimitiveTypeV1.DateTime,
                             v2: PrimitiveTypeV2.dateTime({})
                         });
+                    } else if (this.schema.format === "date-time-rfc-2822") {
+                        return TypeReference.primitive({
+                            v1: PrimitiveTypeV1.DateTimeRfc2822,
+                            v2: PrimitiveTypeV2.dateTimeRfc2822({})
+                        });
                     }
                 }
 
@@ -230,11 +235,18 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
     }
 
     private getStringValidation(schema: OpenAPIV3_1.SchemaObject): StringValidationRules | undefined {
+        // If the schema has contentMediaType: application/octet-stream (used by FastAPI >= 0.129.1
+        // for UploadFile fields), treat it as format: binary for file upload detection.
+        const format =
+            schema.format ??
+            ((schema as Record<string, unknown>).contentMediaType === "application/octet-stream"
+                ? "binary"
+                : undefined);
         return {
             minLength: schema.minLength,
             maxLength: schema.maxLength,
             pattern: schema.pattern,
-            format: schema.format
+            format
         };
     }
 }
