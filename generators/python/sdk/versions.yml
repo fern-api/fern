@@ -3,9 +3,9 @@
 - version: 4.60.2
   changelogEntry:
     - summary: |
-        Fix wire test generation incorrectly appending underscore to path parameter names
-        when a referenced request body type has a field with the same name. When the SDK
-        request shape is "justRequestBody" (body passed as a single `request` parameter),
+        Fix dynamic snippet generation incorrectly appending underscore to path parameter names
+        when a referenced request body type has a field with the same name. When
+        `inline_request_params` is false (body passed as a single `request` parameter),
         body field names no longer trigger path parameter deconfliction.
       type: fix
   createdAt: "2026-02-26"
