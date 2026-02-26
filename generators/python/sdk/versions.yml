@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.60.2
+  changelogEntry:
+    - summary: |
+        Fix wire test generation incorrectly appending underscore to path parameter names
+        when a referenced request body type has a field with the same name. When the SDK
+        request shape is "justRequestBody" (body passed as a single `request` parameter),
+        body field names no longer trigger path parameter deconfliction.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 4.60.1
   changelogEntry:
     - summary: |
