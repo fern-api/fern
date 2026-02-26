@@ -15,11 +15,14 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                 "result": {
                   "expectedResult": {
                     "type": "integerValue",
-                    "integerValue": 1
+                    "value": 1
                   },
                   "actualResult": {
-                    "type": "integerValue",
-                    "integerValue": 1
+                    "type": "value",
+                    "value": {
+                      "type": "integerValue",
+                      "value": 1
+                    }
                   },
                   "passed": true
                 },
@@ -31,7 +34,7 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                   "lineNumber": 1,
                   "returnValue": {
                     "type": "integerValue",
-                    "integerValue": 1
+                    "value": 1
                   },
                   "expressionLocation": {
                     "start": 1,
@@ -47,7 +50,7 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                           "variables": {
                             "variables": {
                               "type": "integerValue",
-                              "integerValue": 1
+                              "value": 1
                             }
                           }
                         },
@@ -55,7 +58,7 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                           "variables": {
                             "variables": {
                               "type": "integerValue",
-                              "integerValue": 1
+                              "value": 1
                             }
                           }
                         }
@@ -69,7 +72,7 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                   "lineNumber": 1,
                   "returnValue": {
                     "type": "integerValue",
-                    "integerValue": 1
+                    "value": 1
                   },
                   "expressionLocation": {
                     "start": 1,
@@ -85,7 +88,7 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                           "variables": {
                             "variables": {
                               "type": "integerValue",
-                              "integerValue": 1
+                              "value": 1
                             }
                           }
                         },
@@ -93,7 +96,7 @@ public class StoreTracedTestCaseTest : BaseMockServerTest
                           "variables": {
                             "variables": {
                               "type": "integerValue",
-                              "integerValue": 1
+                              "value": 1
                             }
                           }
                         }

@@ -18,11 +18,11 @@ public class GetProblemsTest : BaseMockServerTest
                   "boards": [
                     {
                       "type": "html",
-                      "html": "boards"
+                      "value": "boards"
                     },
                     {
                       "type": "html",
-                      "html": "boards"
+                      "value": "boards"
                     }
                   ]
                 },
@@ -80,11 +80,11 @@ public class GetProblemsTest : BaseMockServerTest
                       "boards": [
                         {
                           "type": "html",
-                          "html": "boards"
+                          "value": "boards"
                         },
                         {
                           "type": "html",
-                          "html": "boards"
+                          "value": "boards"
                         }
                       ]
                     },
@@ -156,11 +156,11 @@ public class GetProblemsTest : BaseMockServerTest
                         "boards": [
                           {
                             "type": "html",
-                            "html": "boards"
+                            "value": "boards"
                           },
                           {
                             "type": "html",
-                            "html": "boards"
+                            "value": "boards"
                           }
                         ]
                       },
@@ -211,11 +211,11 @@ public class GetProblemsTest : BaseMockServerTest
                         "boards": [
                           {
                             "type": "html",
-                            "html": "boards"
+                            "value": "boards"
                           },
                           {
                             "type": "html",
-                            "html": "boards"
+                            "value": "boards"
                           }
                         ]
                       },
@@ -268,12 +268,12 @@ public class GetProblemsTest : BaseMockServerTest
                     },
                     "implementation": {
                       "type": "templateId",
-                      "templateId": "implementation"
+                      "value": "implementation"
                     },
                     "arguments": {
                       "arguments": {
                         "type": "integerValue",
-                        "integerValue": 1
+                        "value": 1
                       }
                     },
                     "expects": {
@@ -288,12 +288,12 @@ public class GetProblemsTest : BaseMockServerTest
                     },
                     "implementation": {
                       "type": "templateId",
-                      "templateId": "implementation"
+                      "value": "implementation"
                     },
                     "arguments": {
                       "arguments": {
                         "type": "integerValue",
-                        "integerValue": 1
+                        "value": 1
                       }
                     },
                     "expects": {
@@ -309,11 +309,11 @@ public class GetProblemsTest : BaseMockServerTest
                   "boards": [
                     {
                       "type": "html",
-                      "html": "boards"
+                      "value": "boards"
                     },
                     {
                       "type": "html",
-                      "html": "boards"
+                      "value": "boards"
                     }
                   ]
                 },
@@ -371,11 +371,11 @@ public class GetProblemsTest : BaseMockServerTest
                       "boards": [
                         {
                           "type": "html",
-                          "html": "boards"
+                          "value": "boards"
                         },
                         {
                           "type": "html",
-                          "html": "boards"
+                          "value": "boards"
                         }
                       ]
                     },
@@ -447,11 +447,11 @@ public class GetProblemsTest : BaseMockServerTest
                         "boards": [
                           {
                             "type": "html",
-                            "html": "boards"
+                            "value": "boards"
                           },
                           {
                             "type": "html",
-                            "html": "boards"
+                            "value": "boards"
                           }
                         ]
                       },
@@ -502,11 +502,11 @@ public class GetProblemsTest : BaseMockServerTest
                         "boards": [
                           {
                             "type": "html",
-                            "html": "boards"
+                            "value": "boards"
                           },
                           {
                             "type": "html",
-                            "html": "boards"
+                            "value": "boards"
                           }
                         ]
                       },
@@ -559,12 +559,12 @@ public class GetProblemsTest : BaseMockServerTest
                     },
                     "implementation": {
                       "type": "templateId",
-                      "templateId": "implementation"
+                      "value": "implementation"
                     },
                     "arguments": {
                       "arguments": {
                         "type": "integerValue",
-                        "integerValue": 1
+                        "value": 1
                       }
                     },
                     "expects": {
@@ -579,12 +579,12 @@ public class GetProblemsTest : BaseMockServerTest
                     },
                     "implementation": {
                       "type": "templateId",
-                      "templateId": "implementation"
+                      "value": "implementation"
                     },
                     "arguments": {
                       "arguments": {
                         "type": "integerValue",
-                        "integerValue": 1
+                        "value": 1
                       }
                     },
                     "expects": {

@@ -35,22 +35,18 @@ public class DirectoryTest
         var expectedObject = new SeedExamples.Directory
         {
             Name = "root",
-            Files = new List<global::SeedExamples.File>()
+            Files = new List<SeedExamples.File>()
             {
-                new global::SeedExamples.File { Name = "file.txt", Contents = "..." },
+                new SeedExamples.File { Name = "file.txt", Contents = "..." },
             },
             Directories = new List<SeedExamples.Directory>()
             {
                 new SeedExamples.Directory
                 {
                     Name = "tmp",
-                    Files = new List<global::SeedExamples.File>()
+                    Files = new List<SeedExamples.File>()
                     {
-                        new global::SeedExamples.File
-                        {
-                            Name = "another_file.txt",
-                            Contents = "...",
-                        },
+                        new SeedExamples.File { Name = "another_file.txt", Contents = "..." },
                     },
                 },
             },
@@ -87,22 +83,18 @@ public class DirectoryTest
         var actualObj = new SeedExamples.Directory
         {
             Name = "root",
-            Files = new List<global::SeedExamples.File>()
+            Files = new List<SeedExamples.File>()
             {
-                new global::SeedExamples.File { Name = "file.txt", Contents = "..." },
+                new SeedExamples.File { Name = "file.txt", Contents = "..." },
             },
             Directories = new List<SeedExamples.Directory>()
             {
                 new SeedExamples.Directory
                 {
                     Name = "tmp",
-                    Files = new List<global::SeedExamples.File>()
+                    Files = new List<SeedExamples.File>()
                     {
-                        new global::SeedExamples.File
-                        {
-                            Name = "another_file.txt",
-                            Contents = "...",
-                        },
+                        new SeedExamples.File { Name = "another_file.txt", Contents = "..." },
                     },
                 },
             },

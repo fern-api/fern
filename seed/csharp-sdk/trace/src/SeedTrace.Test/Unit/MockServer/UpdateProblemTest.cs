@@ -17,11 +17,11 @@ public class UpdateProblemTest : BaseMockServerTest
                 "boards": [
                   {
                     "type": "html",
-                    "html": "boards"
+                    "value": "boards"
                   },
                   {
                     "type": "html",
-                    "html": "boards"
+                    "value": "boards"
                   }
                 ]
               },
@@ -67,17 +67,17 @@ public class UpdateProblemTest : BaseMockServerTest
                     "params": [
                       {
                         "type": "integerValue",
-                        "integerValue": 1
+                        "value": 1
                       },
                       {
                         "type": "integerValue",
-                        "integerValue": 1
+                        "value": 1
                       }
                     ]
                   },
                   "expectedResult": {
                     "type": "integerValue",
-                    "integerValue": 1
+                    "value": 1
                   }
                 },
                 {
@@ -86,17 +86,17 @@ public class UpdateProblemTest : BaseMockServerTest
                     "params": [
                       {
                         "type": "integerValue",
-                        "integerValue": 1
+                        "value": 1
                       },
                       {
                         "type": "integerValue",
-                        "integerValue": 1
+                        "value": 1
                       }
                     ]
                   },
                   "expectedResult": {
                     "type": "integerValue",
-                    "integerValue": 1
+                    "value": 1
                   }
                 }
               ],

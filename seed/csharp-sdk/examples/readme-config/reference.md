@@ -597,20 +597,20 @@ await client.Service.CreateBigEntityAsync(
         Directory = new SeedExamples.Directory
         {
             Name = "name",
-            Files = new List<global::SeedExamples.File>()
+            Files = new List<SeedExamples.File>()
             {
-                new global::SeedExamples.File { Name = "name", Contents = "contents" },
-                new global::SeedExamples.File { Name = "name", Contents = "contents" },
+                new SeedExamples.File { Name = "name", Contents = "contents" },
+                new SeedExamples.File { Name = "name", Contents = "contents" },
             },
             Directories = new List<SeedExamples.Directory>()
             {
                 new SeedExamples.Directory
                 {
                     Name = "name",
-                    Files = new List<global::SeedExamples.File>()
+                    Files = new List<SeedExamples.File>()
                     {
-                        new global::SeedExamples.File { Name = "name", Contents = "contents" },
-                        new global::SeedExamples.File { Name = "name", Contents = "contents" },
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
                     },
                     Directories = new List<SeedExamples.Directory>()
                     {
@@ -631,10 +631,10 @@ await client.Service.CreateBigEntityAsync(
                 new SeedExamples.Directory
                 {
                     Name = "name",
-                    Files = new List<global::SeedExamples.File>()
+                    Files = new List<SeedExamples.File>()
                     {
-                        new global::SeedExamples.File { Name = "name", Contents = "contents" },
-                        new global::SeedExamples.File { Name = "name", Contents = "contents" },
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
+                        new SeedExamples.File { Name = "name", Contents = "contents" },
                     },
                     Directories = new List<SeedExamples.Directory>()
                     {

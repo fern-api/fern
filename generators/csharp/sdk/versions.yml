@@ -2,8 +2,9 @@
 - version: 2.22.5
   changelogEntry:
     - summary: |
-        Fix union type generation crash when generating mock server tests for
-        singleProperty union variants (e.g. in the trace fixture).
+        Fix mock server test generation for singleProperty union variants to use
+        the correct property wire name from the union type definition (e.g. "value")
+        instead of the discriminant variant name (e.g. "integerValue").
       type: fix
     - summary: |
         Fix CS0555 build error for union types with optional member types where the

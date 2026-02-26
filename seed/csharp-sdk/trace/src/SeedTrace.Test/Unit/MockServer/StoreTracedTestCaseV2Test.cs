@@ -20,7 +20,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                 },
                 "returnValue": {
                   "type": "integerValue",
-                  "integerValue": 1
+                  "value": 1
                 },
                 "expressionLocation": {
                   "start": 1,
@@ -36,7 +36,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                         "variables": {
                           "variables": {
                             "type": "integerValue",
-                            "integerValue": 1
+                            "value": 1
                           }
                         }
                       },
@@ -44,7 +44,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                         "variables": {
                           "variables": {
                             "type": "integerValue",
-                            "integerValue": 1
+                            "value": 1
                           }
                         }
                       }
@@ -62,7 +62,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                 },
                 "returnValue": {
                   "type": "integerValue",
-                  "integerValue": 1
+                  "value": 1
                 },
                 "expressionLocation": {
                   "start": 1,
@@ -78,7 +78,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                         "variables": {
                           "variables": {
                             "type": "integerValue",
-                            "integerValue": 1
+                            "value": 1
                           }
                         }
                       },
@@ -86,7 +86,7 @@ public class StoreTracedTestCaseV2Test : BaseMockServerTest
                         "variables": {
                           "variables": {
                             "type": "integerValue",
-                            "integerValue": 1
+                            "value": 1
                           }
                         }
                       }
