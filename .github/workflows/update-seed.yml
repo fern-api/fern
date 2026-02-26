@@ -241,9 +241,12 @@ jobs:
           BASE_SHA=""
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
-            # Fetch just the main branch tip (1 commit, no tags, no other branches)
-            git fetch --no-tags --depth=1 origin main
-            MERGE_BASE=$(git merge-base HEAD origin/main)
+            # Use GitHub API to get merge base - git merge-base doesn't work with shallow clones
+            CURRENT_SHA=$(git rev-parse HEAD)
+            MAIN_SHA=$(gh api "/repos/${{ github.repository }}/git/ref/heads/main" --jq '.object.sha')
+            MERGE_BASE=$(gh api \
+              "/repos/${{ github.repository }}/compare/${MAIN_SHA}...${CURRENT_SHA}" \
+              --jq '.merge_base_commit.sha')
             echo "Merge base commit: $MERGE_BASE"
             BASE_SHA=$MERGE_BASE
           else

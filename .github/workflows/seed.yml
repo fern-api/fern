@@ -149,11 +149,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # Fetch just the base branch tip (1 commit, no tags, no other branches)
-            git fetch --no-tags --depth=1 origin main
-            MERGE_BASE=$(git merge-base HEAD origin/main)
-            echo "Using merge base with main for PR: $MERGE_BASE"
-            echo "base_sha=$MERGE_BASE" >> $GITHUB_OUTPUT
+            # Use the PR base SHA directly from the event - no git fetch needed
+            echo "Using PR base SHA: ${{ github.event.pull_request.base.sha }}"
+            echo "base_sha=${{ github.event.pull_request.base.sha }}" >> $GITHUB_OUTPUT
           else
             LAST_SUCCESS_SHA=$(gh api \
               "/repos/${{ github.repository }}/actions/workflows/seed.yml/runs?branch=main&status=success&per_page=1" \
