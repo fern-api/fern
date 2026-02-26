@@ -28,6 +28,10 @@ const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA
 
 const RFC_3339_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
+// RFC 2822 date-time format: e.g. "Wed, 02 Oct 2002 13:00:00 +0000"
+const RFC_2822_REGEX =
+    /^(?:(?:Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s+)?\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{2,4}\s+\d{2}:\d{2}(?::\d{2})?\s+(?:[+-]\d{4}|[A-Z]{2,3})$/i;
+
 const MAX_RECURSION_DEPTH = 128;
 
 export function validateTypeReferenceExample({
@@ -286,7 +290,7 @@ function validatePrimitiveExample({
             uuid: () => validateUuid(example),
             date: () => validateDate(example),
             dateTime: () => validateDateTime(example),
-            dateTimeRfc2822: () => validateDateTime(example),
+            dateTimeRfc2822: () => validateDateTimeRfc2822(example),
             base64: () => validateString(example),
             bigInteger: () => validateString(example),
             _other: () => {
@@ -305,7 +309,7 @@ function validatePrimitiveExample({
         string: () => validateString(example),
         uuid: () => validateUuid(example),
         dateTime: () => validateDateTime(example),
-        dateTimeRfc2822: () => validateDateTime(example),
+        dateTimeRfc2822: () => validateDateTimeRfc2822(example),
         date: () => validateDate(example),
         base64: () => validateString(example),
         bigInteger: () => validateString(example),
@@ -465,6 +469,10 @@ const validateDateTime = createValidator(
 const validateDate = createValidator(
     (example) => typeof example === "string" && RFC_3339_DATE_REGEX.test(example) && ISO_8601_REGEX.test(example),
     "a date"
+);
+const validateDateTimeRfc2822 = createValidator(
+    (example) => typeof example === "string" && (RFC_2822_REGEX.test(example) || ISO_8601_REGEX.test(example)),
+    "an RFC 2822 or ISO 8601 timestamp"
 );
 
 function createValidator(
