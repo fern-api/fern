@@ -17,14 +17,14 @@ export class GeneratorAgentClient {
     }
 
     public async generateReadme({ readmeConfig }: GenerateReadmeParams): Promise<string> {
-        this.logger.debug("GeneratorAgentClient.generateReadme: Calling JS API...");
+        this.logger.debug("Generating readme...");
         try {
             const result = await generateReadmeApi({ readmeConfig });
-            this.logger.debug(`GeneratorAgentClient.generateReadme: JS API returned ${result.length} bytes`);
+            this.logger.debug(`Generated readme (${result.length} bytes)`);
             return result;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
-            this.logger.debug(`GeneratorAgentClient.generateReadme: JS API FAILED: ${errorMessage}`);
+            this.logger.debug(`Failed to generate readme: ${errorMessage}`);
             throw error;
         }
     }
@@ -33,7 +33,7 @@ export class GeneratorAgentClient {
         githubConfig,
         withPullRequest
     }: GithubPushParams & { withPullRequest?: boolean }): Promise<string> {
-        this.logger.debug(`GeneratorAgentClient.pushToGitHub: Calling JS API (withPullRequest=${withPullRequest})...`);
+        this.logger.debug(`Pushing to GitHub (withPullRequest=${withPullRequest})...`);
         try {
             if (withPullRequest) {
                 await githubPr({ githubConfig });
@@ -43,20 +43,20 @@ export class GeneratorAgentClient {
             return "";
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
-            this.logger.debug(`GeneratorAgentClient.pushToGitHub: JS API FAILED: ${errorMessage}`);
+            this.logger.debug(`Failed to push to GitHub: ${errorMessage}`);
             throw error;
         }
     }
 
     public async generateReference({ referenceConfig }: GenerateReferenceParams): Promise<string> {
-        this.logger.debug("GeneratorAgentClient.generateReference: Calling JS API...");
+        this.logger.debug("Generating reference...");
         try {
             const result = await generateReferenceApi({ referenceConfig });
-            this.logger.debug(`GeneratorAgentClient.generateReference: JS API returned ${result.length} bytes`);
+            this.logger.debug(`Generated reference (${result.length} bytes)`);
             return result;
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
-            this.logger.debug(`GeneratorAgentClient.generateReference: JS API FAILED: ${errorMessage}`);
+            this.logger.debug(`Failed to generate reference: ${errorMessage}`);
             throw error;
         }
     }
