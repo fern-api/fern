@@ -11,11 +11,17 @@ def parse_rfc2822_datetime(v: Any) -> dt.datetime:
     """
     Parse an RFC 2822 datetime string (e.g., "Wed, 02 Oct 2002 13:00:00 GMT")
     into a datetime object. If the value is already a datetime, return it as-is.
+    Falls back to ISO 8601 parsing if RFC 2822 parsing fails.
     """
     if isinstance(v, dt.datetime):
         return v
     if isinstance(v, str):
-        return parsedate_to_datetime(v)
+        try:
+            return parsedate_to_datetime(v)
+        except Exception:
+            pass
+        # Fallback to ISO 8601 parsing
+        return dt.datetime.fromisoformat(v.replace("Z", "+00:00"))
     raise ValueError(f"Expected str or datetime, got {type(v)}")
 
 
