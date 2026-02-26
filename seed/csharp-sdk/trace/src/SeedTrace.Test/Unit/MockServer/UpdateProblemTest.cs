@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedTrace;
-using SeedTrace.Core;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
@@ -211,9 +211,6 @@ public class UpdateProblemTest : BaseMockServerTest
                 MethodName = "methodName",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<UpdateProblemResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

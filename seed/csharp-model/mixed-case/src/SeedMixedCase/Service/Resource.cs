@@ -185,12 +185,19 @@ public record Resource
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'resource_type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("resource_type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "user" => json.Deserialize<SeedMixedCase.User?>(options)
+                "user" => jsonWithoutDiscriminator.Deserialize<SeedMixedCase.User?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedMixedCase.User"),
-                "Organization" => json.Deserialize<SeedMixedCase.Organization?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedMixedCase.Organization"),
+                "Organization" => jsonWithoutDiscriminator.Deserialize<SeedMixedCase.Organization?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedMixedCase.Organization"),
                 _ => json.Deserialize<object?>(options),
             };
             var baseProperties =

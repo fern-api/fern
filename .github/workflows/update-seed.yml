@@ -228,11 +228,10 @@ jobs:
       - name: Checkout Files
         uses: actions/checkout@v4
         with:
-          # Get sufficient history to check for changes
-          fetch-depth: 0
           sparse-checkout: |
             ${{ matrix.files }}
             .github/
+          fetch-tags: false
 
       - name: Setup Base SHA
         id: setup-base-sha
@@ -242,8 +241,12 @@ jobs:
           BASE_SHA=""
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ github.ref }}" != "refs/heads/main" ]]; then
-            git fetch origin main
-            MERGE_BASE=$(git merge-base HEAD origin/main)
+            # Use GitHub API to get merge base - git merge-base doesn't work with shallow clones
+            CURRENT_SHA=$(git rev-parse HEAD)
+            MAIN_SHA=$(gh api "/repos/${{ github.repository }}/git/ref/heads/main" --jq '.object.sha')
+            MERGE_BASE=$(gh api \
+              "/repos/${{ github.repository }}/compare/${MAIN_SHA}...${CURRENT_SHA}" \
+              --jq '.merge_base_commit.sha')
             echo "Merge base commit: $MERGE_BASE"
             BASE_SHA=$MERGE_BASE
           else
@@ -255,9 +258,11 @@ jobs:
               echo "Last successful run SHA: $LAST_SUCCESS_SHA"
               BASE_SHA=$LAST_SUCCESS_SHA
             else
-              PREVIOUS_MAIN_COMMIT=$(git rev-parse origin/main^)
-              echo "No successful run found, falling back to previous commit: $PREVIOUS_MAIN_COMMIT"
-              BASE_SHA=$PREVIOUS_MAIN_COMMIT
+              # Fetch 2 commits of main to get the previous commit
+              git fetch --no-tags --depth=2 origin main
+              PREVIOUS_SHA=$(git rev-parse origin/main~1)
+              echo "No successful run found, falling back to previous commit: $PREVIOUS_SHA"
+              BASE_SHA=$PREVIOUS_SHA
             fi
           fi
 

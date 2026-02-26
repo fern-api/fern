@@ -219,8 +219,6 @@ public record UnionWithNullableReference
         internal Foo? Value { get; set; }
 
         public override string ToString() => Value?.ToString() ?? "null";
-
-        public static implicit operator UnionWithNullableReference.Foo(Foo? value) => new(value);
     }
 
     /// <summary>
@@ -237,7 +235,5 @@ public record UnionWithNullableReference
         internal Bar? Value { get; set; }
 
         public override string ToString() => Value?.ToString() ?? "null";
-
-        public static implicit operator UnionWithNullableReference.Bar(Bar? value) => new(value);
     }
 }

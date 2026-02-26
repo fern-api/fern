@@ -54,6 +54,7 @@ jobs:
             ai-search
             swift
             rust
+            generator-cli
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

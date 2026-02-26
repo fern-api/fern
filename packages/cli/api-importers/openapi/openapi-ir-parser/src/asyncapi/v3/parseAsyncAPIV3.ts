@@ -15,8 +15,9 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension.js";
 import { FernOpenAPIExtension } from "../../index.js";
 import { convertAvailability } from "../../schema/convertAvailability.js";
-import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
+import { convertReferenceObject, convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
 import { getSchemas } from "../../utils/getSchemas.js";
 import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
 import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory.js";
@@ -291,37 +292,58 @@ export function parseAsyncAPIV3({
                     FernAsyncAPIExtension.FERN_PARAMETER_OPTIONAL
                 );
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
-                const parameterSchemaObject = {
-                    ...resolvedParameter,
-                    type: "string" as OpenAPIV3.NonArraySchemaObjectType,
-                    title: parameterName,
-                    example: resolvedParameter.examples?.[0],
-                    default: resolvedParameter.default,
-                    enum: resolvedParameter.enum,
-                    required: undefined
-                };
-                let parameterSchema: SchemaWithExample = convertSchema(
-                    parameterSchemaObject,
-                    false,
-                    false,
-                    context,
-                    [parameterKey],
-                    source,
-                    context.namespace
-                );
-                if (isOptional) {
-                    parameterSchema = SchemaWithExample.optional({
-                        value: parameterSchema,
-                        description: undefined,
-                        availability: undefined,
-                        generatedName: "",
-                        title: parameterName,
-                        namespace: undefined,
-                        groupName: undefined,
-                        nameOverride: undefined,
-                        inline: undefined
-                    });
-                }
+                const baseParameterSchema: SchemaWithExample =
+                    resolvedParameter.schema != null
+                        ? isReferenceObject(resolvedParameter.schema)
+                            ? convertReferenceObject(
+                                  resolvedParameter.schema,
+                                  false,
+                                  false,
+                                  context,
+                                  [parameterKey],
+                                  undefined,
+                                  source,
+                                  context.namespace
+                              )
+                            : convertSchema(
+                                  resolvedParameter.schema,
+                                  false,
+                                  false,
+                                  context,
+                                  [parameterKey],
+                                  source,
+                                  context.namespace
+                              )
+                        : convertSchema(
+                              {
+                                  ...resolvedParameter,
+                                  type: "string" as OpenAPIV3.NonArraySchemaObjectType,
+                                  title: parameterName,
+                                  example: resolvedParameter.examples?.[0],
+                                  default: resolvedParameter.default,
+                                  enum: resolvedParameter.enum,
+                                  required: undefined
+                              },
+                              false,
+                              false,
+                              context,
+                              [parameterKey],
+                              source,
+                              context.namespace
+                          );
+                const parameterSchema = isOptional
+                    ? SchemaWithExample.optional({
+                          value: baseParameterSchema,
+                          description: undefined,
+                          availability: undefined,
+                          generatedName: "",
+                          title: parameterName,
+                          namespace: undefined,
+                          groupName: undefined,
+                          nameOverride: undefined,
+                          inline: undefined
+                      })
+                    : baseParameterSchema;
                 const parameterObject = {
                     name: parameterKey,
                     description: resolvedParameter.description,

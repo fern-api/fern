@@ -300,5 +300,3 @@ allowedFailures:
   - oauth-client-credentials-custom
   - package-yml
   - trace
-  - unions-with-local-date
-  - unions:no-custom-config

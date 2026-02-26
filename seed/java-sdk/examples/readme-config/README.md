@@ -277,3 +277,4 @@ CreateMovieHttpResponse response = client.service().withRawResponse().createMovi
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));
 ```
+
