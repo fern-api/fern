@@ -146,24 +146,28 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     }
 
     public getDocs(context: SdkContext): string | undefined {
-        const lines: string[] = [];
+        const groups: string[] = [];
         const availabilityDoc = getAvailabilityDocs(this.endpoint);
         if (availabilityDoc != null) {
-            lines.push(availabilityDoc);
+            groups.push(availabilityDoc);
         }
         if (this.endpoint.docs) {
-            lines.push(this.endpoint.docs);
+            groups.push(this.endpoint.docs);
         }
 
+        const exceptions: string[] = [];
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
-            lines.push(`@throws {@link ${errorName}}`);
+            exceptions.push(`@throws {@link ${errorName}}`);
+        }
+        if (exceptions.length > 0) {
+            groups.push(exceptions.join("\n"));
         }
 
-        if (lines.length === 0) {
+        if (groups.length === 0) {
             return undefined;
         }
 
-        return lines.join("\n\n");
+        return groups.join("\n\n");
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
