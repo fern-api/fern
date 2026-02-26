@@ -1466,6 +1466,7 @@ class EndpointFunctionGenerator:
         )
 
         if query_parameter.allow_multiple:
+
             def write_comma_join(writer: AST.NodeWriter) -> None:
                 writer.write(
                     f'",".join(map(str, {param_name})) if isinstance({param_name}, (list, tuple, set)) else {param_name}'
