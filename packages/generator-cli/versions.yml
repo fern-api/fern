@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        Ensure commits are signed by fern-bot and remove specific customization counts from Replay PR descriptions in favor of generic messaging.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.5
+
 - changelogEntry:
     - summary: |
         Update @fern-api/fern-replay to 0.6.1 which published as ESM and CJS.

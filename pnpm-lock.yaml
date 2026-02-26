@@ -809,6 +809,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:packages/configs
+      '@fern-api/generator-cli':
+        specifier: 'catalog:'
+        version: 0.6.4
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.0.0-rc.5
@@ -866,6 +869,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../packages/commons/fs-utils
+      '@fern-api/generator-cli':
+        specifier: 'catalog:'
+        version: 0.6.4
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../packages/cli/logger
@@ -881,9 +887,6 @@ importers:
       lodash-es:
         specifier: 'catalog:'
         version: 4.17.23
-      tmp-promise:
-        specifier: 'catalog:'
-        version: 3.0.3
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*

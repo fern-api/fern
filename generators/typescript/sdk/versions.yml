@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.2
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.51.1
   changelogEntry:
     - summary: |

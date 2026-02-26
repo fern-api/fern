@@ -164,3 +164,4 @@ await client.Optional.SendOptionalNullableWithAllOptionalPropertiesAsync(
 </dd>
 </dl>
 </details>
+

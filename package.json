@@ -101,6 +101,7 @@
     "@babel/preset-env": "catalog:",
     "@babel/preset-typescript": "catalog:",
     "@biomejs/biome": "catalog:",
+    "@fern-api/generator-cli": "catalog:",
     "@blueprintjs/eslint-plugin": "catalog:",
     "@blueprintjs/stylelint-plugin": "catalog:",
     "@fern-api/configs": "workspace:*",
