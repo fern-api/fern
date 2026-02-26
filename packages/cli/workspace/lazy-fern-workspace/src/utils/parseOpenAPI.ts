@@ -12,14 +12,10 @@ export async function parseOpenAPI({
     parsed
 }: {
     absolutePathToOpenAPI: AbsoluteFilePath;
-    absolutePathToOpenAPIOverrides?: AbsoluteFilePath | AbsoluteFilePath[];
+    absolutePathToOpenAPIOverrides?: AbsoluteFilePath;
     absolutePathToOpenAPIOverlays?: AbsoluteFilePath;
     parsed?: OpenAPI.Document;
 }): Promise<OpenAPI.Document> {
-    // For ref resolution, use the first override path if an array is provided
-    const overridesPathForRefResolver = Array.isArray(absolutePathToOpenAPIOverrides)
-        ? absolutePathToOpenAPIOverrides[0]
-        : absolutePathToOpenAPIOverrides;
     const result =
         parsed != null
             ? await bundle({
@@ -29,7 +25,7 @@ export async function parseOpenAPI({
                       parsed
                   },
                   externalRefResolver: new OpenAPIRefResolver({
-                      absolutePathToOpenAPIOverrides: overridesPathForRefResolver,
+                      absolutePathToOpenAPIOverrides,
                       absolutePathToOpenAPIOverlays
                   })
               })
@@ -37,7 +33,7 @@ export async function parseOpenAPI({
                   ...DEFAULT_OPENAPI_BUNDLE_OPTIONS,
                   ref: absolutePathToOpenAPI,
                   externalRefResolver: new OpenAPIRefResolver({
-                      absolutePathToOpenAPIOverrides: overridesPathForRefResolver,
+                      absolutePathToOpenAPIOverrides,
                       absolutePathToOpenAPIOverlays
                   })
               });
