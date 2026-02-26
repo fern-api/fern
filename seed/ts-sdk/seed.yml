@@ -464,6 +464,12 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: "MyPager"
+  cross-package-type-names:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
   ts-extra-properties:
     - outputFolder: .
       customConfig:
@@ -514,6 +520,7 @@ scripts:
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
 allowedFailures:
+  - cross-package-type-names:serde-layer
   - enum:forward-compatible-enums-with-serde
   - exhaustive:never-throw-errors
   - oauth-client-credentials-custom
