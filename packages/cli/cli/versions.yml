@@ -10,11 +10,6 @@
         diffing so that newly created files appear in the diff and are
         correctly analyzed by the AI as breaking changes.
       type: fix
-    - summary: |
-        Add safety net for AUTO versioning when the cleaned diff is empty but
-        the raw diff contains real changes. Falls back to a PATCH increment
-        instead of incorrectly skipping SDK generation.
-      type: fix
   createdAt: "2026-02-26"
   irVersion: 65
 
