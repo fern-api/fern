@@ -73,6 +73,16 @@
         }
       ]
     },
+    "webhook-signature": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/webhooks.WebhookSignatureSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "channel": {
       "oneOf": [
         {
@@ -3949,6 +3959,16 @@
         },
         "path": {
           "type": "string"
+        },
+        "connect-method-name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "headers": {
           "oneOf": [

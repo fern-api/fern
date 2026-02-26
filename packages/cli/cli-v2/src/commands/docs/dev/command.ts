@@ -41,7 +41,7 @@ export class DevCommand {
     }
 }
 
-export function addDevCommand(cli: Argv<GlobalArgs>): void {
+export function addDevCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new DevCommand();
     command(
         cli,
@@ -67,6 +67,7 @@ export function addDevCommand(cli: Argv<GlobalArgs>): void {
                 .option("bundle-path", {
                     type: "string",
                     description: "Path to a custom preview bundle"
-                })
+                }),
+        parentPath
     );
 }

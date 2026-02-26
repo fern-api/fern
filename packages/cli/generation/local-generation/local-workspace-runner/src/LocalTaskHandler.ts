@@ -194,12 +194,20 @@ export class LocalTaskHandler {
             }
         } catch (error) {
             if (error instanceof AutoVersioningException) {
-                // When user explicitly requested AUTO versioning, we must fail if we can't extract version
-                this.context.logger.error(`AUTO versioning failed: ${error.message}`);
-                throw new Error(
-                    `Failed to extract previous version for automatic semantic versioning. ` +
-                        `Please ensure your project has a version file in a supported format. Error: ${error.message}`
+                // Fall back to initial version when we can't extract the previous version
+                // (e.g., new SDK repos where all files are additions, or unsupported version formats)
+                this.context.logger.warn(
+                    `AUTO versioning could not extract previous version: ${error.message}. ` +
+                        `Falling back to initial version 0.0.1.`
                 );
+                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const commitMessage = this.isWhitelabel
+                    ? "Initial SDK generation"
+                    : "Initial SDK generation\n\n🌿 Generated with Fern";
+                return {
+                    version: initialVersion,
+                    commitMessage
+                };
             }
 
             this.context.logger.error(`Failed to perform automatic versioning: ${error}`);

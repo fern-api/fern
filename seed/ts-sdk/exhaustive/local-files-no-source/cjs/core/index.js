@@ -36,10 +36,11 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.url = exports.logging = void 0;
+exports.url = exports.logging = exports.file = void 0;
 __exportStar(require("./auth/index.js"), exports);
 __exportStar(require("./base64.js"), exports);
 __exportStar(require("./fetcher/index.js"), exports);
+exports.file = __importStar(require("./file/index.js"));
 exports.logging = __importStar(require("./logging/index.js"));
 __exportStar(require("./pagination/index.js"), exports);
 __exportStar(require("./runtime/index.js"), exports);

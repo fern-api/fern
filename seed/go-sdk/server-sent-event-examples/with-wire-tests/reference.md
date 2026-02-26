@@ -93,3 +93,4 @@ client.Completions.StreamEvents(
 </dd>
 </dl>
 </details>
+

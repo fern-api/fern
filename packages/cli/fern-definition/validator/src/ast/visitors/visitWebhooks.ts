@@ -94,7 +94,11 @@ export function visitWebhooks({
                 }
             });
         },
-        signature: noop,
+        signature: (signature) => {
+            if (signature != null) {
+                visitor.webhookSignature?.(signature, [...nodePathForWebhook, "signature"]);
+            }
+        },
         response: noop,
         "response-stream": noop,
         audiences: noop,

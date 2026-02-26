@@ -116,4 +116,17 @@ export declare class ParamsClient {
      */
     modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __modifyWithInlinePath;
+    /**
+     * POST bytes with path param returning object
+     *
+     * @param {core.file.Uploadable} uploadable
+     * @param {string} param
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     import { createReadStream } from "fs";
+     *     await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path")
+     */
+    uploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
+    private __uploadWithPath;
 }

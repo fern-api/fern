@@ -579,7 +579,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 acc.push({
                     type: spec.type,
                     id: uuidv4(),
-                    absoluteFilePath
+                    absoluteFilePath,
+                    absoluteFilePathToOverrides: spec.type === "openapi" ? spec.absoluteFilepathToOverrides : undefined
                 });
             }
 

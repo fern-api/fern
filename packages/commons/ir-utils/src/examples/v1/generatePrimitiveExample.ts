@@ -87,6 +87,16 @@ export function generatePrimitiveExample({
         case "UUID": {
             return { type: "success", example: ExamplePrimitive.uuid(Examples.UUID), jsonExample: Examples.UUID };
         }
+        case "DATE_TIME_RFC_2822": {
+            return {
+                type: "success",
+                example: ExamplePrimitive.datetimeRfc2822({
+                    datetime: new Date(Examples.DATE_TIME),
+                    raw: Examples.DATE_TIME
+                }),
+                jsonExample: Examples.DATE_TIME
+            };
+        }
         default:
             assertNever(primitiveType.v1);
     }

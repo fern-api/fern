@@ -237,6 +237,19 @@ export function getSchemaFromFernType({
                                 format: undefined
                             })
                         });
+                    case "DATE_TIME_RFC_2822":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            title,
+                            description,
+                            availability,
+                            namespace,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.datetime({
+                                example: undefined
+                            })
+                        });
                     default:
                         assertNever(primitive.v1);
                 }

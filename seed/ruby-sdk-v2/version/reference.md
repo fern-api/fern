@@ -47,3 +47,4 @@ client.user.get_user(user_id: "userId")
 </dd>
 </dl>
 </details>
+
