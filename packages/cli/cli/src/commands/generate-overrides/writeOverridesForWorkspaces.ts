@@ -91,7 +91,9 @@ export function generateOverridesContent({
         }
     }
 
-    const schemas: Record<string, Record<string, unknown>> = hasExisting && "components" in existingOverrides && existingOverrides.components?.schemas != null
+    const schemas: Record<string, Record<string, unknown>> = hasExisting &&
+    "components" in existingOverrides &&
+    existingOverrides.components?.schemas != null
         ? (existingOverrides.components.schemas as Record<string, Record<string, unknown>>)
         : {};
     if (includeModels) {
