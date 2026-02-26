@@ -1,13 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.90.5
+- version: 3.90.6
   changelogEntry:
     - summary: |
         Fix schema reference resolution when `respect-readonly-schemas: true` is enabled.
         Previously, when schemas containing readonly properties were renamed with "Read"
         suffixes (e.g., `UserConfig` → `UserConfigRead`), other schemas that referenced
         them would still point to the original names, causing validation failures.
-        Implemented two-phase processing to pre-compute final schema names before
-        building type declarations, ensuring references resolve correctly.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.5
+  changelogEntry:
+    - summary: |
+        Fix per-spec settings being ignored in multi-spec API configurations.
+        When `respect-nullable-schemas` (or other boolean settings) was set on
+        only a subset of specs, the setting was incorrectly collapsed to `false`
+        because `specs.every()` treated unset (`undefined`) the same as
+        explicitly disabled (`false`). Now, specs that don't define a setting
+        are treated as neutral ("don't care") so enabling a setting on a subset
+        of specs works correctly without affecting specs that don't set it.
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
