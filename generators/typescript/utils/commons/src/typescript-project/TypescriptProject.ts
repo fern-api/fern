@@ -222,6 +222,7 @@ export abstract class TypescriptProject {
             formatCommand: this.getFormatCommand(),
             checkFixCommand: this.getCheckFixCommand(),
             checkFixPackages: this.getCheckFixPackages(),
+            checkFixToolBinaries: this.getCheckFixToolBinaries(),
             packageManager: this.packageManager
         });
     }
@@ -400,6 +401,27 @@ export abstract class TypescriptProject {
             packages.push(`oxlint-tsgolint@${TOOL_VERSIONS.OXLINT_TSGOLINT}`);
         }
         return packages;
+    }
+
+    /**
+     * Returns the binary names that must be on PATH for check:fix to work
+     * without installing packages (e.g. ["biome"], ["prettier", "oxlint"]).
+     */
+    protected getCheckFixToolBinaries(): string[] {
+        const binaries: string[] = [];
+        if (this.formatter === "biome" || this.linter === "biome") {
+            binaries.push("biome");
+        }
+        if (this.formatter === "prettier") {
+            binaries.push("prettier");
+        }
+        if (this.formatter === "oxfmt") {
+            binaries.push("oxfmt");
+        }
+        if (this.linter === "oxlint") {
+            binaries.push("oxlint");
+        }
+        return binaries;
     }
 
     protected getBuildCommand(): string[] {

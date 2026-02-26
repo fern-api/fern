@@ -214,7 +214,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
                     if (needsBuild) {
                         await typescriptProject.installDependencies(logger);
-                    } else {
+                    } else if (!typescriptProject.areCheckFixToolsAvailable(logger)) {
                         await typescriptProject.installCheckFixDependencies(logger);
                     }
                     await typescriptProject.checkFix(logger);
