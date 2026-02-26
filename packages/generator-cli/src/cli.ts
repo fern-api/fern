@@ -172,7 +172,7 @@ void yargs(hideBin(process.argv))
                         .option("config", {
                             string: true,
                             required: true,
-                            description: "Path to pipeline config JSON"
+                            description: "Pipeline config as inline JSON string or path to JSON file"
                         })
                         .option("output-dir", {
                             string: true,
@@ -196,8 +196,11 @@ void yargs(hideBin(process.argv))
                     try {
                         const wd = cwd();
 
-                        // Read pipeline config from file
-                        const configContent = await readFile(resolve(wd, argv.config), "utf-8");
+                        // Read pipeline config from inline JSON or file
+                        const configValue = argv.config;
+                        const configContent = configValue.trimStart().startsWith("{")
+                            ? configValue
+                            : await readFile(resolve(wd, configValue), "utf-8");
                         const config: PipelineConfig = JSON.parse(configContent);
 
                         // Override outputDir from CLI arg
@@ -237,6 +240,9 @@ void yargs(hideBin(process.argv))
                         if (result.errors != null && result.errors.length > 0) {
                             process.stderr.write(`Errors:\n${result.errors.map((e) => `  - ${e}`).join("\n")}\n`);
                         }
+
+                        // Write result JSON to stdout for programmatic consumption
+                        process.stdout.write(JSON.stringify(result) + "\n");
 
                         // Exit with appropriate code
                         process.exit(result.success ? 0 : 1);
