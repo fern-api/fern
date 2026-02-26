@@ -11,7 +11,7 @@
 - version: 2.1.2
   changelogEntry:
     - summary: |
-        Fix `generateClientInterfaces` to generate interfaces for aggregator-only clients(clients
+        Fix `generateClientInterfaces` to generate interfaces for aggregator-only clients (clients
         that hold sub-client properties but have no direct API endpoints). Previously, these clients
         were skipped, leaving the top-level client and intermediate grouping clients without interfaces.
 

@@ -12,7 +12,7 @@
 - version: 1.0.2
   changelogEntry:
     - summary: |
-        Rename `Union#member?` to `Union#type_member?`to avoid rubocop-minitest's
+        Rename `Union#member?` to `Union#type_member?` to avoid rubocop-minitest's
         `Minitest/AssertIncludes` cop incorrectly autocorrecting `assert obj.member?(x)`
         to `assert_includes obj, x`. The autocorrected form calls `Module#include?` which
         raises `TypeError: wrong argument type Class (expected Module)` on union type tests.

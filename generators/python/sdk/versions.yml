@@ -12,7 +12,7 @@
 - version: 4.60.0
   changelogEntry:
     - summary: |
-        Support `connectMethodName` on WebSocket channels.When a channel specifies a custom
+        Support `connectMethodName` on WebSocket channels. When a channel specifies a custom
         connection method name via `x-fern-sdk-method-name`, the generated SDK uses that name
         (converted to snake_case) instead of the default `connect`.
       type: feat

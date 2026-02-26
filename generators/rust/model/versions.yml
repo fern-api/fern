@@ -10,7 +10,7 @@
 
 - version: 0.1.2
   changelogEntry:
-    - summary: Update IR version to 61to support Generation Metadata feature and maintain consistency with seed configuration.
+    - summary: Update IR version to 61 to support Generation Metadata feature and maintain consistency with seed configuration.
       type: chore
   createdAt: "2026-01-21"
   irVersion: 61
