@@ -67,6 +67,13 @@ jobs:
         with:
           fetch-tags: false
 
+      - name: Fetch tags and history for git describe
+        run: |
+          # Fetch all tags (lightweight refs only, no branch history)
+          git fetch --tags --no-recurse-submodules origin
+          # Deepen current branch enough to reach the nearest tag
+          git fetch --deepen=100 --no-tags origin ${{ github.ref_name }}
+
       - name: Install
         uses: ./.github/actions/install
 
@@ -74,33 +81,15 @@ jobs:
         run: |
           pnpm seed:build
 
-      - name: Compute git version
-        id: git-version
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Print version
         run: |
-          # Replicate git describe --tags --always --first-parent using GitHub API
-          # This avoids needing full git history + all tags (saves fetching ~750 branches)
-          CURRENT_SHA="${{ github.sha }}"
-          SHORT_SHA="${CURRENT_SHA:0:7}"
-
-          # Check if current commit is tagged
-          EXACT_TAG=$(gh api "/repos/${{ github.repository }}/git/matching-refs/tags/" --jq \
-            "[.[] | select(.object.sha == \"${CURRENT_SHA}\")] | first | .ref // empty" 2>/dev/null | sed 's|refs/tags/||' || true)
-
-          if [ -n "$EXACT_TAG" ]; then
-            echo "version=$EXACT_TAG" >> $GITHUB_OUTPUT
-          else
-            # Find the latest tag and distance from HEAD
-            LATEST_TAG=$(gh api "/repos/${{ github.repository }}/tags?per_page=1" --jq '.[0].name')
-            AHEAD_BY=$(gh api "/repos/${{ github.repository }}/compare/${LATEST_TAG}...${{ github.sha }}" --jq '.ahead_by')
-            echo "version=${LATEST_TAG}-${AHEAD_BY}-g${SHORT_SHA}" >> $GITHUB_OUTPUT
-          fi
-          echo "Publishing version: $(cat $GITHUB_OUTPUT | grep version= | cut -d= -f2)"
+          git_version="$(./scripts/git-version.sh)"
+          echo Publishing version: "${git_version}"
 
       - name: Publish Dev CLI
         run: |
-          pnpm seed publish cli --ver ${{ steps.git-version.outputs.version }} --dev --log-level debug
+          git_version="$(./scripts/git-version.sh)"
+          pnpm seed publish cli --ver ${git_version} --dev --log-level debug
 
   live-test:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
