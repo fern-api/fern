@@ -41,6 +41,30 @@ export declare namespace OSSWorkspace {
     export type Settings = BaseOpenAPIWorkspace.Settings;
 }
 
+/**
+ * Collapses a boolean per-spec setting into a single workspace-level value.
+ *
+ * - If no spec explicitly defines the setting (all undefined) → returns undefined (defaults apply)
+ * - If at least one spec defines it → returns true only if no spec explicitly sets it to false
+ *   (undefined specs are treated as neutral / "don't care")
+ *
+ * This ensures that enabling a setting on a subset of specs works correctly,
+ * without breaking users who don't set it at all. See https://github.com/fern-api/fern/issues/6408
+ */
+function collapseSpecBooleanSetting(
+    specs: (OpenAPISpec | ProtobufSpec)[],
+    getter: (settings: ParseOpenAPIOptions | undefined) => boolean | undefined
+): boolean | undefined {
+    const values = specs.map((spec) => getter(spec.settings));
+    const hasAnyExplicit = values.some((v) => v != null);
+    if (!hasAnyExplicit) {
+        return undefined;
+    }
+    // If at least one spec explicitly defines the setting, treat undefined as neutral.
+    // Only return false if a spec explicitly sets it to false.
+    return values.every((v) => v == null || v === true);
+}
+
 function convertRemoveDiscriminantsFromSchemas(
     specs: (OpenAPISpec | ProtobufSpec)[]
 ): generatorsYml.RemoveDiscriminantsFromSchemas {
@@ -71,34 +95,39 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     private graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
+        const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
         super({
             ...superArgs,
-            respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
-            respectNullableSchemas: specs.every((spec) => spec.settings?.respectNullableSchemas),
-            wrapReferencesToNullableInOptional: specs.every(
-                (spec) => spec.settings?.wrapReferencesToNullableInOptional
+            respectReadonlySchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectReadonlySchemas),
+            respectNullableSchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectNullableSchemas),
+            wrapReferencesToNullableInOptional: collapseSpecBooleanSetting(
+                specs,
+                (s) => s?.wrapReferencesToNullableInOptional
             ),
             removeDiscriminantsFromSchemas: convertRemoveDiscriminantsFromSchemas(specs),
-            coerceOptionalSchemasToNullable: specs.every((spec) => spec.settings?.coerceOptionalSchemasToNullable),
-            coerceEnumsToLiterals: specs.every((spec) => spec.settings?.coerceEnumsToLiterals),
-            onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
-            inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
-            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
-            useBytesForBinaryResponse: specs
-                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
-
-                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
-                .some((spec) => spec.settings?.useBytesForBinaryResponse),
-            respectForwardCompatibleEnums: specs
-                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
-
-                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
-                .some((spec) => spec.settings?.respectForwardCompatibleEnums),
-            inlineAllOfSchemas: specs.every((spec) => spec.settings?.inlineAllOfSchemas),
+            coerceOptionalSchemasToNullable: collapseSpecBooleanSetting(
+                specs,
+                (s) => s?.coerceOptionalSchemasToNullable
+            ),
+            coerceEnumsToLiterals: collapseSpecBooleanSetting(specs, (s) => s?.coerceEnumsToLiterals),
+            onlyIncludeReferencedSchemas: collapseSpecBooleanSetting(specs, (s) => s?.onlyIncludeReferencedSchemas),
+            inlinePathParameters: collapseSpecBooleanSetting(specs, (s) => s?.inlinePathParameters),
+            objectQueryParameters: collapseSpecBooleanSetting(specs, (s) => s?.objectQueryParameters),
+            useBytesForBinaryResponse: collapseSpecBooleanSetting(openapiSpecs, (s) => s?.useBytesForBinaryResponse),
+            respectForwardCompatibleEnums: collapseSpecBooleanSetting(
+                openapiSpecs,
+                (s) => s?.respectForwardCompatibleEnums
+            ),
+            inlineAllOfSchemas: collapseSpecBooleanSetting(specs, (s) => s?.inlineAllOfSchemas),
             resolveAliases: (() => {
-                // Require that resolveAliases is true/provided for all specs
-                const allHaveResolveAliases = specs.every((spec) => spec.settings?.resolveAliases);
-                if (!allHaveResolveAliases) {
+                // Only collapse if at least one spec explicitly defines resolveAliases
+                const values = specs.map((spec) => spec.settings?.resolveAliases);
+                const hasAnyExplicit = values.some((v) => v != null);
+                if (!hasAnyExplicit) {
+                    return undefined;
+                }
+                // If any spec explicitly sets it to false, return false
+                if (values.some((v) => v === false)) {
                     return false;
                 }
 
