@@ -164,6 +164,105 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_:StreamEvent": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "StreamEvent",
+                    "camelCase": {
+                        "unsafeName": "streamEvent",
+                        "safeName": "streamEvent"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_event",
+                        "safeName": "stream_event"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_EVENT",
+                        "safeName": "STREAM_EVENT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamEvent",
+                        "safeName": "StreamEvent"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "delta",
+                            "camelCase": {
+                                "unsafeName": "delta",
+                                "safeName": "delta"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "delta",
+                                "safeName": "delta"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DELTA",
+                                "safeName": "DELTA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Delta",
+                                "safeName": "Delta"
+                            }
+                        },
+                        "wireValue": "delta"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "tokens",
+                            "camelCase": {
+                                "unsafeName": "tokens",
+                                "safeName": "tokens"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "tokens",
+                                "safeName": "tokens"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TOKENS",
+                                "safeName": "TOKENS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Tokens",
+                                "safeName": "Tokens"
+                            }
+                        },
+                        "wireValue": "tokens"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_:User": {
             "type": "object",
             "declaration": {
@@ -1035,6 +1134,153 @@
             },
             "response": {
                 "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.streamEvents": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "streamEvents",
+                    "camelCase": {
+                        "unsafeName": "streamEvents",
+                        "safeName": "streamEvents"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "stream_events",
+                        "safeName": "stream_events"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAM_EVENTS",
+                        "safeName": "STREAM_EVENTS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamEvents",
+                        "safeName": "StreamEvents"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/stream/events"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "StreamEventsRequest",
+                        "camelCase": {
+                            "unsafeName": "streamEventsRequest",
+                            "safeName": "streamEventsRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "stream_events_request",
+                            "safeName": "stream_events_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAM_EVENTS_REQUEST",
+                            "safeName": "STREAM_EVENTS_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StreamEventsRequest",
+                            "safeName": "StreamEventsRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "tags",
+                                "camelCase": {
+                                    "unsafeName": "tags",
+                                    "safeName": "tags"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "tags",
+                                    "safeName": "tags"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TAGS",
+                                    "safeName": "TAGS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Tags",
+                                    "safeName": "Tags"
+                                }
+                            },
+                            "wireValue": "tags"
+                        },
+                        "typeReference": {
+                            "type": "list",
+                            "value": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "ids",
+                                "camelCase": {
+                                    "unsafeName": "ids",
+                                    "safeName": "ids"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "ids",
+                                    "safeName": "ids"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "IDS",
+                                    "safeName": "IDS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "IDs",
+                                    "safeName": "IDs"
+                                }
+                            },
+                            "wireValue": "ids"
+                        },
+                        "typeReference": {
+                            "type": "list",
+                            "value": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "streaming"
             },
             "examples": null
         }
