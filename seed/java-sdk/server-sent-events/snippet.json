@@ -1,6 +1,19 @@
 {
     "endpoints": [
         {
+            "example_identifier": "Stream completions",
+            "id": {
+                "method": "POST",
+                "path": "/stream",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"foo\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"foo\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "3ba8b3b6",
             "id": {
                 "method": "POST",
@@ -11,6 +24,19 @@
                 "type": "java",
                 "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().stream(\n            StreamCompletionRequest\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "Stream without terminator",
+            "id": {
+                "method": "POST",
+                "path": "/stream-no-terminator",
+                "identifier_override": "endpoint_completions.streamWithoutTerminator"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequestWithoutTerminator;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamWithoutTerminator(\n            StreamCompletionRequestWithoutTerminator\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.serverSentEvents.SeedServerSentEventsClient;\nimport com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequestWithoutTerminator;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedServerSentEventsClient client = SeedServerSentEventsClient\n            .builder()\n            .build();\n\n        client.completions().streamWithoutTerminator(\n            StreamCompletionRequestWithoutTerminator\n                .builder()\n                .query(\"query\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
