@@ -671,12 +671,16 @@ export class DynamicTypeLiteralMapper {
                 return "Date";
             case "DATE_TIME":
                 return "DateTime";
-            case "DATE_TIME_RFC_2822":
-                return "DateTimeRfc2822";
             case "BASE_64":
                 return "Base64";
-            default:
+            default: {
+                // Forward-compatible: handle primitive types not yet in the published SDK
+                const primitiveStr: string = primitive;
+                if (primitiveStr === "DATE_TIME_RFC_2822") {
+                    return "DateTimeRfc2822";
+                }
                 assertNever(primitive);
+            }
         }
     }
 
@@ -854,13 +858,6 @@ export class DynamicTypeLiteralMapper {
                 }
                 return java.TypeLiteral.dateTime(dateTime);
             }
-            case "DATE_TIME_RFC_2822": {
-                const dateTime = this.context.getValueAsString({ value });
-                if (dateTime == null) {
-                    return java.TypeLiteral.nop();
-                }
-                return java.TypeLiteral.dateTime(dateTime);
-            }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });
                 if (uuid == null) {
@@ -882,8 +879,18 @@ export class DynamicTypeLiteralMapper {
                 }
                 return java.TypeLiteral.bigInteger(bigInt);
             }
-            default:
+            default: {
+                // Forward-compatible: handle primitive types not yet in the published SDK
+                const primitiveStr: string = primitive;
+                if (primitiveStr === "DATE_TIME_RFC_2822") {
+                    const dateTime = this.context.getValueAsString({ value });
+                    if (dateTime == null) {
+                        return java.TypeLiteral.nop();
+                    }
+                    return java.TypeLiteral.dateTime(dateTime);
+                }
                 assertNever(primitive);
+            }
         }
     }
 

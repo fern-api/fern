@@ -113,16 +113,20 @@ export class DynamicTypeMapper {
                 return java.Type.date();
             case "DATE_TIME":
                 return java.Type.dateTime();
-            case "DATE_TIME_RFC_2822":
-                return java.Type.dateTime();
             case "UUID":
                 return java.Type.uuid();
             case "BASE_64":
                 return java.Type.bytes();
             case "BIG_INTEGER":
                 return java.Type.bigInteger();
-            default:
+            default: {
+                // Forward-compatible: handle primitive types not yet in the published SDK
+                const primitiveStr: string = primitive;
+                if (primitiveStr === "DATE_TIME_RFC_2822") {
+                    return java.Type.dateTime();
+                }
                 assertNever(primitive);
+            }
         }
     }
 }
