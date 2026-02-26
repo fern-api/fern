@@ -28,7 +28,7 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: "<token>")
+client = Seed::MyClient.new(token: "<token>")
 
 client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])
 ```
@@ -41,7 +41,7 @@ This SDK allows you to configure different custom URLs for API requests. You can
 ```ruby
 require "seed"
 
-client = Seed::Client.new(
+client = Seed::MyClient.new(
     base_url: "https://example.com"
 )
 ```
@@ -53,7 +53,7 @@ Failed API calls will raise errors that can be rescued from granularly.
 ```ruby
 require "seed"
 
-client = Seed::Client.new(
+client = Seed::MyClient.new(
     base_url: "https://example.com"
 )
 
@@ -90,7 +90,7 @@ Use the `max_retries` option to configure this behavior.
 ```ruby
 require "seed"
 
-client = Seed::Client.new(
+client = Seed::MyClient.new(
     base_url: "https://example.com",
     max_retries: 3  # Configure max retries (default is 2)
 )

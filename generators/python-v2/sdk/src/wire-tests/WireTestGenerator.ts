@@ -205,6 +205,12 @@ export class WireTestGenerator {
                 continue;
             }
 
+            // Skip bytes request body endpoints — the IR example system has no
+            // ExampleRequestBody variant for bytes, so we can't produce a proper example.
+            if (endpoint.requestBody?.type === "bytes") {
+                continue;
+            }
+
             // Always use static IR examples to match WireMock mappings
             // WireMock mappings are generated from static IR examples, so we must use the same examples
             const staticExample = this.getStaticIrExample(endpoint);
@@ -306,8 +312,8 @@ export class WireTestGenerator {
         node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
         // Import ApiError from the SDK's core module for error response tests
-        const orgName = this.context.config.organization;
-        node.addReference(python.reference({ name: "ApiError", modulePath: [orgName, "core"] }));
+        const modulePath = this.context.getModulePath();
+        node.addReference(python.reference({ name: "ApiError", modulePath: [modulePath, "core"] }));
 
         return node;
     }
@@ -648,7 +654,7 @@ export class WireTestGenerator {
     private getClientModulePath(): string[] {
         // The client is imported from the root package module
         // e.g., "from seed import SeedExhaustive" -> modulePath is ["seed"]
-        return [this.context.config.organization];
+        return [this.context.getModulePath()];
     }
 
     private getClientClassName(): string {

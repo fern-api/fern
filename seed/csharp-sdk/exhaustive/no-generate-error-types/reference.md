@@ -262,6 +262,48 @@ await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnMapOfPrimToUndiscriminatedUnionAsync</a>(Dictionary&lt;string, OneOf&lt;double, bool, string, IEnumerable&lt;string&gt;&gt;&gt; { ... }) -> WithRawResponseTask&lt;Dictionary&lt;string, OneOf&lt;double, bool, string, IEnumerable&lt;string&gt;&gt;&gt;&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>() { { "string", 1.1 } }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Container.<a href="/src/SeedExhaustive/Endpoints/Container/ContainerClient.cs">GetAndReturnOptionalAsync</a>(ObjectWithRequiredField? { ... }) -> WithRawResponseTask&lt;ObjectWithRequiredField?&gt;</code></summary>
 <dl>
 <dd>
@@ -1641,6 +1683,71 @@ await client.Endpoints.Params.ModifyWithInlinePathAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Params.<a href="/src/SeedExhaustive/Endpoints/Params/ParamsClient.cs">UploadWithPathAsync</a>(param, Stream { ... }) -> WithRawResponseTask&lt;ObjectWithRequiredField&gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Params.UploadWithPathAsync(
+    "upload-path",
+    new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `Stream` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Primitive
 <details><summary><code>client.Endpoints.Primitive.<a href="/src/SeedExhaustive/Endpoints/Primitive/PrimitiveClient.cs">GetAndReturnStringAsync</a>(string { ... }) -> WithRawResponseTask&lt;string&gt;</code></summary>
 <dl>
@@ -2419,3 +2526,4 @@ await client.ReqWithHeaders.GetWithCustomHeaderAsync(
 </dd>
 </dl>
 </details>
+

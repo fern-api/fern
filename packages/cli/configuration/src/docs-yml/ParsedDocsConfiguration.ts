@@ -324,6 +324,8 @@ export declare namespace DocsNavigationItem {
         icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | undefined;
+        collapsible: boolean | undefined;
+        collapsedByDefault: boolean | undefined;
         slug: string | undefined;
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
@@ -418,6 +420,8 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
+        collapsible: boolean | undefined;
+        collapsedByDefault: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }

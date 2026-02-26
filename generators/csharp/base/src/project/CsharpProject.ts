@@ -2,13 +2,15 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { Eta } from "eta";
 import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
-import { template } from "lodash-es";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
 import { findDotnetToolPath } from "../findDotNetToolPath.js";
 import { CSharpFile } from "./CSharpFile.js";
+
+const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 export const CORE_DIRECTORY_NAME = "Core";
 export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
@@ -173,6 +175,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     }
 
     public async persist(): Promise<void> {
+        const persistStartTime = Date.now();
         // Get configurable output paths
         const outputPath = this.settings.outputPath;
         const libraryPath = outputPath.library;
@@ -206,6 +209,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         this.context.logger.debug(`mkdir ${absolutePathToOtherDirectory}`);
         await mkdir(absolutePathToOtherDirectory, { recursive: true });
 
+        const createProjectStartTime = Date.now();
         const absolutePathToProjectDirectory = await this.createProject({
             absolutePathToLibraryDirectory,
             absolutePathToSolutionDirectory,
@@ -213,19 +217,26 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             libraryPath,
             solutionPath
         });
+        this.context.logger.debug(`[TIMING] createProject took ${Date.now() - createProjectStartTime}ms`);
+        const createTestProjectStartTime = Date.now();
         const absolutePathToTestProjectDirectory = await this.createTestProject({
             absolutePathToTestDirectory,
             absolutePathToSolutionDirectory,
             absolutePathToProjectDirectory
         });
+        this.context.logger.debug(`[TIMING] createTestProject took ${Date.now() - createTestProjectStartTime}ms`);
 
+        const writeSourceFilesStartTime = Date.now();
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
         }
+        this.context.logger.debug(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
+        const writeTestFilesStartTime = Date.now();
         for (const file of this.testFiles) {
             await file.write(absolutePathToTestProjectDirectory);
         }
+        this.context.logger.debug(`[TIMING] writeTestFiles took ${Date.now() - writeTestFilesStartTime}ms`);
 
         await this.createRawFiles();
 
@@ -276,22 +287,24 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         }
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
-        const githubWorkflow = template(githubWorkflowTemplate)({
-            projectName: this.name,
-            libraryPath: path.posix.join(libraryPath, this.name),
-            libraryProjectFilePath: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
-            testProjectFilePath: path.posix.join(
-                testPath,
-                this.names.files.testProject,
-                `${this.names.files.testProject}.csproj`
-            ),
-            shouldWritePublishBlock: this.context.publishConfig != null,
-            nugetTokenEnvvar:
-                this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
-                this.context.publishConfig?.apiKeyEnvironmentVariable === ""
-                    ? "NUGET_API_TOKEN"
-                    : this.context.publishConfig.apiKeyEnvironmentVariable
-        }).replaceAll("\\{", "{");
+        const githubWorkflow = eta
+            .renderString(githubWorkflowTemplate, {
+                projectName: this.name,
+                libraryPath: path.posix.join(libraryPath, this.name),
+                libraryProjectFilePath: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
+                testProjectFilePath: path.posix.join(
+                    testPath,
+                    this.names.files.testProject,
+                    `${this.names.files.testProject}.csproj`
+                ),
+                shouldWritePublishBlock: this.context.publishConfig != null,
+                nugetTokenEnvvar:
+                    this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
+                    this.context.publishConfig?.apiKeyEnvironmentVariable === ""
+                        ? "NUGET_API_TOKEN"
+                        : this.context.publishConfig.apiKeyEnvironmentVariable
+            })
+            .replaceAll("\\{", "{");
         const ghDir = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".github/workflows"));
         await mkdir(ghDir, { recursive: true });
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
@@ -301,6 +314,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
+        const dotnetFormatStartTime = Date.now();
         if (this.settings.useDotnetFormat) {
             // apply dotnet analyzer and formatter pass 1
             await this.dotnetFormat(
@@ -325,9 +339,13 @@ dotnet_diagnostic.IDE0005.severity = error
           `
             );
         }
+        this.context.logger.debug(`[TIMING] dotnetFormat took ${Date.now() - dotnetFormatStartTime}ms`);
 
         // format the code cleanly using csharpier on the full output directory
+        const csharpierStartTime = Date.now();
         await this.csharpier(this.absolutePathToOutputDirectory);
+        this.context.logger.debug(`[TIMING] csharpier took ${Date.now() - csharpierStartTime}ms`);
+        this.context.logger.debug(`[TIMING] persist took ${Date.now() - persistStartTime}ms`);
     }
 
     private async createProject({
@@ -422,7 +440,7 @@ dotnet_diagnostic.IDE0005.severity = error
         const testCsProjTemplateContents = (
             await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
         ).toString();
-        const testCsProjContents = template(testCsProjTemplateContents)({
+        const testCsProjContents = eta.renderString(testCsProjTemplateContents, {
             projectName: this.name,
             testProjectName
         });
@@ -685,7 +703,7 @@ dotnet_diagnostic.IDE0005.severity = error
 }
 
 function replaceTemplate({ contents, variables }: { contents: string; variables: Record<string, unknown> }): string {
-    return template(contents)(variables);
+    return eta.renderString(contents, variables);
 }
 
 function getAsIsFilepath(filename: string): string {

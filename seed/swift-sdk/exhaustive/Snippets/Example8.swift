@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.endpoints.contentType.postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField(
+    _ = try await client.endpoints.contentType.postJsonPatchContentType(request: ObjectWithOptionalField(
         string: "string",
         integer: 1,
         long: 1000000,

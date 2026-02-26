@@ -1,4 +1,3 @@
-import { TtyAwareLogger } from "@fern-api/cli-logger";
 import { assertNever } from "@fern-api/core-utils";
 import chalk from "chalk";
 import { Context } from "../context/Context.js";
@@ -33,7 +32,6 @@ export class TaskGroup {
     private static readonly URL_PATTERN = /https?:\/\/[^\s]+/;
 
     private readonly context: Context;
-    private readonly ttyAwareLogger: TtyAwareLogger;
     private readonly stream: NodeJS.WriteStream;
     private readonly tasks: Record<string, Task> = {};
     private readonly taskOrder: string[] = [];
@@ -43,7 +41,6 @@ export class TaskGroup {
 
     constructor(config: TaskGroup.Config) {
         this.context = config.context;
-        this.ttyAwareLogger = this.context.getTtyAwareLogger();
         this.stream = config.stream ?? process.stderr;
     }
 
@@ -69,7 +66,7 @@ export class TaskGroup {
         // Write header before registering to avoid paint/freeze issues.
         // If we register first, takeOverTerminal() would freeze the initial paint.
         if (header != null) {
-            await this.ttyAwareLogger.takeOverTerminal(() => {
+            await this.context.ttyAwareLogger.takeOverTerminal(() => {
                 this.stream.write("\n");
                 this.stream.write(`${chalk.cyan("◆")} ${chalk.bold(header.title)}\n`);
                 if (header.subtitle != null) {
@@ -224,7 +221,7 @@ export class TaskGroup {
             }
         }
 
-        this.ttyAwareLogger.finish();
+        this.context.ttyAwareLogger.finish();
 
         let successCount = 0;
         let failedCount = 0;
@@ -501,6 +498,6 @@ export class TaskGroup {
             return;
         }
         this.isRegistered = true;
-        this.ttyAwareLogger.registerTask(this);
+        this.context.ttyAwareLogger.registerTask(this);
     }
 }

@@ -15,7 +15,7 @@
 ```php
 $client->completions->stream(
     new StreamCompletionRequest([
-        'query' => 'query',
+        'query' => 'foo',
     ]),
 );
 ```

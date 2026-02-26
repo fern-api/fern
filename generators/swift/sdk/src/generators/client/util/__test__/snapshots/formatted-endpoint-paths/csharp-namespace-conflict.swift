@@ -1,2 +1,0 @@
-// service_tasktest
-"/hello"

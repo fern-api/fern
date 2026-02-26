@@ -12,14 +12,14 @@ export const V65_TO_V63_MIGRATION: IrMigration<
     laterVersion: "v65",
     earlierVersion: "v63",
     firstGeneratorVersionToConsumeNewIR: {
-        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: "3.50.0",
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "3.50.0",
+        [GeneratorName.TYPESCRIPT]: "3.50.0",
+        [GeneratorName.TYPESCRIPT_SDK]: "3.50.0",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: "0.19.4",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SDK]: "3.36.0",
         [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -28,10 +28,8 @@ export const V65_TO_V63_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: "4.56.0",
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -53,7 +51,13 @@ export const V65_TO_V63_MIGRATION: IrMigration<
     ): IrVersions.V63.ir.IntermediateRepresentation => {
         return {
             ...v65,
-            services: mapValues(v65.services, (service) => convertHttpService(service, context))
+            services: mapValues(v65.services, (service) => convertHttpService(service, context)),
+            webhookGroups: mapValues(v65.webhookGroups, (webhookGroup) =>
+                webhookGroup.map((webhook) => {
+                    const { signatureVerification: _, ...rest } = webhook;
+                    return rest as IrVersions.V63.webhooks.Webhook;
+                })
+            )
         };
     }
 };

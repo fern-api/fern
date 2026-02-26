@@ -75,6 +75,12 @@ export class ClonedRepository {
         await this.git.raw([...args, ...(Array.isArray(files) ? files : [files])]);
     }
 
+    public async restoreFilesFromCommit(commitSha: string, files: string | string[]): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        const fileList = Array.isArray(files) ? files : [files];
+        await this.git.raw(["checkout", commitSha, "--", ...fileList]);
+    }
+
     public async commit(message?: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         await this.git.commit(message ?? `Automated commit`, undefined, {
@@ -248,15 +254,76 @@ export class ClonedRepository {
         await this.git.push("origin", branch, { "--set-upstream": null });
     }
 
+    // Only used by replay's PR mode to push synthetic divergent commits to a fern-bot/ branch.
+    // Uses --force-with-lease (not --force) so we fail safely if the branch was updated
+    // by someone else since we cloned. Never targets main or user branches.
+    public async forcePush(): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        const currentBranch = await this.getCurrentBranch();
+        await this.git.push("origin", currentBranch, ["--force-with-lease"]);
+    }
+
+    public async createBranchFromHead(branchName: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.checkoutLocalBranch(branchName);
+    }
+
+    public async createBranchFromCommit(branchName: string, commitSha: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.raw(["checkout", "-b", branchName, commitSha]);
+    }
+
+    public async commitTree(treeSha: string, parentSha: string, message: string): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["commit-tree", treeSha, "-p", parentSha, "-m", message]);
+        return result.trim();
+    }
+
+    public async getHeadSha(): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.revparse(["HEAD"]);
+        return result.trim();
+    }
+
+    public async getHeadTreeHash(): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["rev-parse", "HEAD^{tree}"]);
+        return result.trim();
+    }
+
+    public async getCommitTreeHash(commitSha: string): Promise<string> {
+        await this.git.cwd(this.clonePath);
+        const result = await this.git.raw(["rev-parse", `${commitSha}^{tree}`]);
+        return result.trim();
+    }
+
+    // This tag is a moving pointer (fern-generation-base--<generator>) that tracks the latest
+    // clean generation SHA. --force is required because: (1) the tag is intentionally overwritten
+    // each generation, and (2) --force-with-lease doesn't work for tags since git tag -f overwrites
+    // the local ref first, making the lease check always see a stale value.
+    // Only called from replay's PR mode; the caller wraps this in a try/catch.
+    public async createAndPushTag(tagName: string, commitSha: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.tag(["-f", tagName, commitSha]);
+        await this.git.push("origin", `refs/tags/${tagName}`, ["--force"]);
+    }
+
     public async overwriteLocalContents(sourceDirectoryPath: string): Promise<void> {
         const [sourceContents, destContents] = await Promise.all([
             readdir(sourceDirectoryPath),
             readdir(this.clonePath)
         ]);
 
+        // Build list of files to preserve: always preserve .git, .gitignore, .fernignore.
+        // Also preserve README.md if the source doesn't include one, to prevent accidental
+        // deletion when a generator fails to produce a README (e.g. silent try/catch failure).
+        const filesToPreserve = sourceContents.includes(README_FILEPATH)
+            ? DEFAULT_IGNORED_FILES
+            : [...DEFAULT_IGNORED_FILES, README_FILEPATH];
+
         await Promise.all(
             destContents
-                .filter((content) => !DEFAULT_IGNORED_FILES.includes(content))
+                .filter((content) => !filesToPreserve.includes(content))
                 .map(async (content) => {
                     await rm(resolve(this.clonePath, content), {
                         recursive: true,

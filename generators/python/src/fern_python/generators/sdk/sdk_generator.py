@@ -3,7 +3,7 @@ import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
 from .client_generator.client_generator import ClientGenerator
-from .client_generator.generated_root_client import GeneratedRootClient
+from .client_generator.generated_root_client import GeneratedRootClient, RootClient
 from .client_generator.inferred_auth_token_provider_generator import InferredAuthTokenProviderGenerator
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.raw_client_generator import RawClientGenerator
@@ -249,6 +249,17 @@ class SdkGenerator(AbstractGenerator):
             endpoint_metadata_collector=endpoint_metadata_collector,
             oauth_scheme=oauth_scheme,
         )
+
+        # If exported_filename differs from filename, generate an inheritance-based wrapper
+        actual_filename = custom_config.client_filename or custom_config.client.filename
+        if custom_config.client.exported_filename != actual_filename:
+            self._generate_exported_client_wrapper(
+                context=context,
+                custom_config=custom_config,
+                project=project,
+                generated_root_client=generated_root_client,
+                generator_exec_wrapper=generator_exec_wrapper,
+            )
 
         # Since you can customize the client export, we handle it here to capture the generated
         # and non-generated cases. If we were to base this off exporting the class declaration
@@ -557,6 +568,95 @@ class SdkGenerator(AbstractGenerator):
             ).generate(source_file=raw_client_source_file)
             project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
         return generated_root_client
+
+    def _generate_exported_client_wrapper(
+        self,
+        context: SdkGeneratorContext,
+        custom_config: SDKCustomConfig,
+        project: Project,
+        generated_root_client: GeneratedRootClient,
+        generator_exec_wrapper: GeneratorExecWrapper,
+    ) -> None:
+        exported_module = custom_config.client.exported_filename.removesuffix(".py")
+        exported_sync_class = context.get_class_name_for_exported_root_client()
+        exported_async_class = "Async" + exported_sync_class
+
+        filepath = Filepath(
+            directories=(),
+            file=Filepath.FilepathPart(module_name=exported_module),
+        )
+        source_file = context.source_file_factory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+
+        generated_filepath = context.get_filepath_for_generated_root_client()
+        generated_sync_name = context.get_class_name_for_generated_root_client()
+        generated_async_name = "Async" + generated_sync_name
+
+        sync_base_class_ref = AST.ClassReference(
+            import_=AST.ReferenceImport(
+                module=generated_filepath.to_module(),
+                named_import=generated_sync_name,
+            ),
+            qualified_name_excluding_import=(),
+        )
+        async_base_class_ref = AST.ClassReference(
+            import_=AST.ReferenceImport(
+                module=generated_filepath.to_module(),
+                named_import=generated_async_name,
+            ),
+            qualified_name_excluding_import=(),
+        )
+
+        sync_class = self._create_wrapper_class_declaration(
+            class_name=exported_sync_class,
+            base_class_ref=sync_base_class_ref,
+            root_client=generated_root_client.sync_client,
+        )
+        async_class = self._create_wrapper_class_declaration(
+            class_name=exported_async_class,
+            base_class_ref=async_base_class_ref,
+            root_client=generated_root_client.async_client,
+        )
+
+        source_file.add_class_declaration(declaration=sync_class, should_export=True)
+        source_file.add_class_declaration(declaration=async_class, should_export=True)
+
+        project.write_source_file(source_file=source_file, filepath=filepath)
+
+    @staticmethod
+    def _create_wrapper_class_declaration(
+        *,
+        class_name: str,
+        base_class_ref: AST.ClassReference,
+        root_client: "RootClient",
+    ) -> AST.ClassDeclaration:
+        params = root_client.init_parameters if root_client.init_parameters is not None else root_client.parameters
+
+        named_params = [
+            AST.NamedFunctionParameter(
+                name=param.constructor_parameter_name,
+                type_hint=param.type_hint,
+                initializer=param.initializer,
+            )
+            for param in params
+        ]
+
+        def write_super_init(writer: AST.NodeWriter) -> None:
+            writer.write_line("super().__init__(")
+            with writer.indent():
+                for param in params:
+                    writer.write_line(f"{param.constructor_parameter_name}={param.constructor_parameter_name},")
+            writer.write_line(")")
+
+        return AST.ClassDeclaration(
+            name=class_name,
+            extends=[base_class_ref],
+            constructor=AST.ClassConstructor(
+                signature=AST.FunctionSignature(named_parameters=named_params),
+                body=AST.CodeWriter(write_super_init),
+            ),
+        )
 
     def _generate_subpackage_client(
         self,

@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.types.enum_.types.WeatherReport;
 
 public class Example10 {
     public static void main(String[] args) {
@@ -10,6 +11,6 @@ public class Example10 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().httpMethods().testGet("id");
+        client.endpoints().enum_().getAndReturnEnum(WeatherReport.SUNNY);
     }
 }

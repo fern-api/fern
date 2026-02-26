@@ -113,6 +113,10 @@ public final class PushNotification {
     public interface _FinalStage {
         PushNotification build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage badge(Optional<Integer> badge);
 
         _FinalStage badge(Integer badge);
@@ -179,6 +183,18 @@ public final class PushNotification {
         @java.lang.Override
         public PushNotification build() {
             return new PushNotification(deviceToken, title, body, badge, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

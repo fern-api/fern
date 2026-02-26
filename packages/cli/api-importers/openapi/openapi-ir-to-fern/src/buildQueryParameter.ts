@@ -209,7 +209,7 @@ function getQueryParameterTypeReference({
                 if (
                     firstSchema != null &&
                     secondSchema != null &&
-                    hasSamePrimitiveValueType({ array: firstSchema, primitive: secondSchema })
+                    hasSamePrimitiveValueType({ array: secondSchema, primitive: firstSchema })
                 ) {
                     return {
                         value: buildTypeReference({

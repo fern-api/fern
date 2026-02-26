@@ -16,6 +16,8 @@ export const FolderConfigurationSchema = z.object({
     icon: z.string().optional(),
     hidden: z.boolean().optional(),
     collapsed: z.boolean().optional(),
+    collapsible: z.boolean().optional(),
+    collapsedByDefault: z.boolean().optional(),
     path: z.string().optional(),
     // WithPermissions
     viewers: RoleSchema.optional(),

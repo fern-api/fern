@@ -11,6 +11,9 @@ on:
 permissions:
   pull-requests: read
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   run:
     name: Lint PR title
@@ -51,6 +54,7 @@ jobs:
             ai-search
             swift
             rust
+            generator-cli
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -15,6 +15,11 @@ channels:
   chat:
     address: /v1/ws/chat
     description: Chat channel for testing message references
+    parameters:
+      keyterm:
+        $ref: "#/components/parameters/Keyterm"
+      model:
+        $ref: "#/components/parameters/Model"
     messages:
       userMessage:
         $ref: "#/components/messages/UserMessage"
@@ -52,7 +57,25 @@ components:
       payload:
         $ref: "#/components/schemas/ServerResponsePayload"
 
+  parameters:
+    Keyterm:
+      location: $message.payload#/keyterm
+      schema:
+        $ref: "#/components/schemas/Keyterm"
+    Model:
+      location: $message.payload#/model
+      schema:
+        type: string
+
   schemas:
+    Keyterm:
+      oneOf:
+        - type: string
+        - type: array
+          items:
+            type: string
+      description: A single keyterm or list of keyterms
+
     UserMessagePayload:
       type: object
       required:

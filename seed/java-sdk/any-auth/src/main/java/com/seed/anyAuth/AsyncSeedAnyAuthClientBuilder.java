@@ -6,6 +6,7 @@ package com.seed.anyAuth;
 import com.seed.anyAuth.core.ClientOptions;
 import com.seed.anyAuth.core.Environment;
 import com.seed.anyAuth.core.InferredAuthTokenSupplier;
+import com.seed.anyAuth.core.LogConfig;
 import com.seed.anyAuth.core.OAuthTokenSupplier;
 import com.seed.anyAuth.resources.auth.AuthClient;
 import java.util.Base64;
@@ -36,6 +37,8 @@ public class AsyncSeedAnyAuthClientBuilder {
     protected Environment environment;
 
     private OkHttpClient httpClient;
+
+    private Optional<LogConfig> logging = Optional.empty();
 
     /**
      * Sets token.
@@ -141,6 +144,14 @@ public class AsyncSeedAnyAuthClientBuilder {
     }
 
     /**
+     * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+     */
+    public AsyncSeedAnyAuthClientBuilder logging(LogConfig logging) {
+        this.logging = Optional.of(logging);
+        return this;
+    }
+
+    /**
      * Add a custom header to be sent with all requests.
      * For headers that need to be computed dynamically or conditionally, use the setAdditional() method override instead.
      *
@@ -160,6 +171,7 @@ public class AsyncSeedAnyAuthClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        setLogging(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
         }
@@ -246,6 +258,18 @@ public class AsyncSeedAnyAuthClientBuilder {
     protected void setHttpClient(ClientOptions.Builder builder) {
         if (this.httpClient != null) {
             builder.httpClient(this.httpClient);
+        }
+    }
+
+    /**
+     * Sets the logging configuration for the SDK.
+     * Override this method to customize logging behavior.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setLogging(ClientOptions.Builder builder) {
+        if (this.logging.isPresent()) {
+            builder.logging(this.logging.get());
         }
     }
 

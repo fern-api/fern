@@ -20,6 +20,7 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
         path: core.serialization.string(),
         groupName: SdkGroupName,
         summary: core.serialization.string().optional(),
+        connectMethodName: core.serialization.string().optional(),
         handshake: WebsocketHandshake,
         messages: core.serialization.list(WebsocketMessageSchema),
         servers: core.serialization.list(WebsocketServer),
@@ -34,6 +35,7 @@ export declare namespace WebsocketChannel {
         path: string;
         groupName: SdkGroupName.Raw;
         summary?: string | null;
+        connectMethodName?: string | null;
         handshake: WebsocketHandshake.Raw;
         messages: WebsocketMessageSchema.Raw[];
         servers: WebsocketServer.Raw[];

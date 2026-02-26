@@ -6,6 +6,8 @@ const filterObject_1 = require("../../utils/filterObject");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const isPlainObject_1 = require("../../utils/isPlainObject");
 const index_1 = require("../schema-utils/index");
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const _hasOwn = Object.prototype.hasOwnProperty;
 function getObjectLikeUtils(schema) {
     return {
         withParsedProperties: (properties) => withParsedProperties(schema, properties),
@@ -21,9 +23,14 @@ function withParsedProperties(objectLike, properties) {
             if (!parsedObject.ok) {
                 return parsedObject;
             }
-            const additionalProperties = Object.entries(properties).reduce((processed, [key, value]) => {
-                return Object.assign(Object.assign({}, processed), { [key]: typeof value === "function" ? value(parsedObject.value) : value });
-            }, {});
+            const additionalProperties = {};
+            for (const key in properties) {
+                if (_hasOwn.call(properties, key)) {
+                    const value = properties[key];
+                    additionalProperties[key] =
+                        typeof value === "function" ? value(parsedObject.value) : value;
+                }
+            }
             return {
                 ok: true,
                 value: Object.assign(Object.assign({}, parsedObject.value), additionalProperties),

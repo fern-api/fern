@@ -129,7 +129,7 @@
   "typescript.disableAutomaticTypeAcquisition": true,
   "typescript.updateImportsOnFileMove.enabled": "never",
   "javascript.updateImportsOnFileMove.enabled": "never",
-  "extensions.ignoreRecommendations": false,
+  "extensions.ignoreRecommendations": true,
   "git.ignoreLimitWarning": true,
   "git.branchProtection": ["main", "master"]
 }

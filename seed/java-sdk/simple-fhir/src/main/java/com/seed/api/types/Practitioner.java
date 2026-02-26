@@ -122,6 +122,10 @@ public final class Practitioner implements IBaseResource {
     public interface _FinalStage {
         Practitioner build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage relatedResources(List<ResourceList> relatedResources);
 
         _FinalStage addRelatedResources(ResourceList relatedResources);
@@ -201,6 +205,18 @@ public final class Practitioner implements IBaseResource {
         @java.lang.Override
         public Practitioner build() {
             return new Practitioner(id, relatedResources, memo, name, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

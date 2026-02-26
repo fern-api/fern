@@ -3,14 +3,11 @@ import {
     GeneratorNotificationService,
     NopGeneratorNotificationService,
     parseGeneratorConfig,
-    parseIR,
-    type RawGithubConfig,
-    resolveGitHubConfig
+    parseIR
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import {
     constructNpmPackage,
@@ -20,8 +17,6 @@ import {
     PersistedTypescriptProject
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import { writeFile } from "fs/promises";
-import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage.js";
 import { writeGenerationMetadata } from "./writeGenerationMetadata.js";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows.js";
@@ -118,6 +113,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             });
 
             const generatorContext = new GeneratorContextImpl(logger, version);
+            const codeGenStartTime = Date.now();
             const typescriptProject = await this.generateTypescriptProject({
                 config,
                 customConfig,
@@ -125,6 +121,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 generatorContext,
                 intermediateRepresentation: ir
             });
+            logger.debug(`[TIMING] code generation took ${Date.now() - codeGenStartTime}ms`);
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
             }
@@ -308,39 +305,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             default:
                 assertNever(publishConfig);
         }
-    }
-
-    private async pushToGitHub(
-        ir: FernIr.IntermediateRepresentation,
-        sourceDirectory: string,
-        logger: Logger
-    ): Promise<string> {
-        const rawGithubConfig = this.getRawGitHubConfig({ ir, sourceDirectory });
-        const githubConfig = resolveGitHubConfig({ rawGithubConfig, logger });
-        const file = await tmp.file();
-        await writeFile(file.path, JSON.stringify(githubConfig));
-        const filePath = AbsoluteFilePath.of(file.path);
-        const cmd = githubConfig.mode === "pull-request" ? "pr" : "push";
-        const args = ["github", cmd, "--config", filePath];
-        const loggingExecutable = createLoggingExecutable("generator-cli", { cwd: process.cwd(), logger });
-        const content = await loggingExecutable(args);
-        return content.stdout;
-    }
-
-    public getRawGitHubConfig({
-        ir,
-        sourceDirectory
-    }: {
-        ir: FernIr.IntermediateRepresentation;
-        sourceDirectory: string;
-    }): RawGithubConfig {
-        return {
-            sourceDirectory,
-            type: ir.publishConfig?.type,
-            uri: ir.publishConfig?.type === "github" ? ir.publishConfig.uri : undefined,
-            token: ir.publishConfig?.type === "github" ? ir.publishConfig.token : undefined,
-            mode: ir.publishConfig?.type === "github" ? ir.publishConfig.mode : undefined
-        };
     }
 }
 

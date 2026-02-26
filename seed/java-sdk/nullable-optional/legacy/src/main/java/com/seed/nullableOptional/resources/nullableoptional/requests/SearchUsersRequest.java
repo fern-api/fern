@@ -126,6 +126,10 @@ public final class SearchUsersRequest {
     public interface _FinalStage {
         SearchUsersRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage department(Optional<String> department);
 
         _FinalStage department(String department);
@@ -240,6 +244,18 @@ public final class SearchUsersRequest {
         @java.lang.Override
         public SearchUsersRequest build() {
             return new SearchUsersRequest(query, department, role, isActive, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }
