@@ -11,6 +11,7 @@ export type PrimitiveSchemaValue =
     | FernOpenapiIr.PrimitiveSchemaValue.Double
     | FernOpenapiIr.PrimitiveSchemaValue.String
     | FernOpenapiIr.PrimitiveSchemaValue.Datetime
+    | FernOpenapiIr.PrimitiveSchemaValue.DatetimeRfc2822
     | FernOpenapiIr.PrimitiveSchemaValue.Date_
     | FernOpenapiIr.PrimitiveSchemaValue.Base64
     | FernOpenapiIr.PrimitiveSchemaValue.Boolean;
@@ -48,6 +49,10 @@ export namespace PrimitiveSchemaValue {
         type: "datetime";
     }
 
+    export interface DatetimeRfc2822 extends _Utils {
+        type: "datetimeRfc2822";
+    }
+
     export interface Date_ extends _Utils {
         type: "date";
     }
@@ -73,6 +78,7 @@ export namespace PrimitiveSchemaValue {
         double: (value: FernOpenapiIr.DoubleSchema) => _Result;
         string: (value: FernOpenapiIr.StringSchema) => _Result;
         datetime: () => _Result;
+        datetimeRfc2822: () => _Result;
         date: () => _Result;
         base64: () => _Result;
         boolean: (value: FernOpenapiIr.BooleanSchema) => _Result;
@@ -181,6 +187,18 @@ export const PrimitiveSchemaValue = {
         };
     },
 
+    datetimeRfc2822: (): FernOpenapiIr.PrimitiveSchemaValue.DatetimeRfc2822 => {
+        return {
+            type: "datetimeRfc2822",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.PrimitiveSchemaValue.DatetimeRfc2822,
+                visitor: FernOpenapiIr.PrimitiveSchemaValue._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.PrimitiveSchemaValue._visit(this, visitor);
+            },
+        };
+    },
+
     date: (): FernOpenapiIr.PrimitiveSchemaValue.Date_ => {
         return {
             type: "date",
@@ -239,6 +257,8 @@ export const PrimitiveSchemaValue = {
                 return visitor.string(value);
             case "datetime":
                 return visitor.datetime();
+            case "datetimeRfc2822":
+                return visitor.datetimeRfc2822();
             case "date":
                 return visitor.date();
             case "base64":

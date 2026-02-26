@@ -442,6 +442,7 @@ types:
       double: DoubleWithExample
       string: StringSchemaWithExample
       datetime: DatetimeWithExample
+      datetimeRfc2822: DatetimeWithExample
       date: DateWithExample
       base64: Base64WithExample
       boolean: BooleanWithExample
