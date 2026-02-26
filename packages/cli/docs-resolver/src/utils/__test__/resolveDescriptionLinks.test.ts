@@ -119,8 +119,8 @@ describe("resolveLinksInObject", () => {
             items: [{ docs: "Link to [SDKs](/docs/pages/sdks.mdx)" }, { docs: "Link to [guide](/docs/pages/guide.md)" }]
         };
         resolveLinksInObject(obj, markdownFilesToPathName, metadata);
-        expect(obj.items[0]!.docs).toBe("Link to [SDKs](/sdks)");
-        expect(obj.items[1]!.docs).toBe("Link to [guide](/guide)");
+        expect(obj.items[0]?.docs).toBe("Link to [SDKs](/sdks)");
+        expect(obj.items[1]?.docs).toBe("Link to [guide](/guide)");
     });
 
     it("leaves non-.md strings untouched", () => {
@@ -176,13 +176,13 @@ describe("resolveLinksInObject", () => {
             }
         };
         resolveLinksInObject(ir, markdownFilesToPathName, metadata);
-        expect(ir.services["service_1"]!.endpoints[0]!.docs).toBe("Creates a new [Order](/objects/order)");
-        expect(ir.services["service_1"]!.endpoints[0]!.request.body.docs).toBe(
+        expect(ir.services["service_1"]?.endpoints[0]?.docs).toBe("Creates a new [Order](/objects/order)");
+        expect(ir.services["service_1"]?.endpoints[0]?.request.body.docs).toBe(
             "See [getting started](/getting-started#setup)"
         );
-        expect(ir.types["type_1"]!.docs).toBe("Represents an [Order](/objects/order) entity");
-        expect(ir.types["type_1"]!.properties[0]!.docs).toBe("The [SDKs](/sdks) support this field");
-        expect(ir.types["type_1"]!.properties[0]!.name).toBe("orderId");
+        expect(ir.types["type_1"]?.docs).toBe("Represents an [Order](/objects/order) entity");
+        expect(ir.types["type_1"]?.properties[0]?.docs).toBe("The [SDKs](/sdks) support this field");
+        expect(ir.types["type_1"]?.properties[0]?.name).toBe("orderId");
     });
 
     it("does not modify non-object primitives", () => {
@@ -223,9 +223,9 @@ describe("updateApiDefinitionIdInTree", () => {
             ]
         };
         updateApiDefinitionIdInTree(tree, "old-id", "new-id");
-        expect(tree.children[0]!.apiDefinitionId).toBe("new-id");
-        expect(tree.children[1]!.apiDefinitionId).toBe("new-id");
-        expect(tree.children[2]!.apiDefinitionId).toBe("other-id");
+        expect(tree.children[0]?.apiDefinitionId).toBe("new-id");
+        expect(tree.children[1]?.apiDefinitionId).toBe("new-id");
+        expect(tree.children[2]?.apiDefinitionId).toBe("other-id");
     });
 
     it("does not modify unrelated values", () => {

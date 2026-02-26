@@ -1,5 +1,5 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { getReplacedHref } from "@fern-api/docs-markdown-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
 export interface AbsolutePathMetadata {
     absolutePathToFernFolder: AbsoluteFilePath;
