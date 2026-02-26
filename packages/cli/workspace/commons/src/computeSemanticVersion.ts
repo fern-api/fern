@@ -133,7 +133,8 @@ async function getExistingVersion({
  * @param packageName - The npm package name (e.g., "@anduril-industries/lattice-sdk")
  * @returns The latest version string, or undefined if the package doesn't exist
  */
-async function getLatestVersionFromNpm(packageName: string): Promise<string | undefined> {
+/** @internal Exported for testing */
+export async function getLatestVersionFromNpm(packageName: string): Promise<string | undefined> {
     try {
         const npmToken = process.env.NPM_TOKEN;
         if (npmToken != null) {
@@ -168,7 +169,8 @@ async function getLatestVersionFromNpm(packageName: string): Promise<string | un
  * @param packageName - The PyPI package name
  * @returns The latest version string, or undefined if the package doesn't exist
  */
-async function getLatestVersionFromPypi(packageName: string): Promise<string | undefined> {
+/** @internal Exported for testing */
+export async function getLatestVersionFromPypi(packageName: string): Promise<string | undefined> {
     try {
         const response = await fetch(`https://pypi.org/pypi/${packageName}/json`);
 
@@ -195,7 +197,8 @@ async function getLatestVersionFromPypi(packageName: string): Promise<string | u
  * @param coordinate - The Maven coordinate in "groupId:artifactId" format
  * @returns The latest version string, or undefined if the artifact doesn't exist
  */
-async function getLatestVersionFromMaven(coordinate: string): Promise<string | undefined> {
+/** @internal Exported for testing */
+export async function getLatestVersionFromMaven(coordinate: string): Promise<string | undefined> {
     try {
         const parts = coordinate.split(":");
         if (parts.length < 2 || parts[0] == null || parts[1] == null) {
@@ -233,7 +236,8 @@ async function getLatestVersionFromMaven(coordinate: string): Promise<string | u
  * @param packageName - The NuGet package name (e.g., "Newtonsoft.Json")
  * @returns The latest stable version string, or undefined if the package doesn't exist
  */
-async function getLatestVersionFromNuget(packageName: string): Promise<string | undefined> {
+/** @internal Exported for testing */
+export async function getLatestVersionFromNuget(packageName: string): Promise<string | undefined> {
     try {
         const response = await fetch(`https://api.nuget.org/v3-flatcontainer/${packageName.toLowerCase()}/index.json`);
 
@@ -265,7 +269,8 @@ async function getLatestVersionFromNuget(packageName: string): Promise<string | 
  * @param packageName - The gem name (e.g., "rails")
  * @returns The latest version string, or undefined if the gem doesn't exist
  */
-async function getLatestVersionFromRubyGems(packageName: string): Promise<string | undefined> {
+/** @internal Exported for testing */
+export async function getLatestVersionFromRubyGems(packageName: string): Promise<string | undefined> {
     try {
         const response = await fetch(`https://rubygems.org/api/v1/gems/${packageName}.json`);
 
@@ -293,9 +298,13 @@ async function getLatestVersionFromRubyGems(packageName: string): Promise<string
  * @param modulePath - The Go module path (e.g., "github.com/owner/repo")
  * @returns The latest version string (without "v" prefix), or undefined if not found
  */
-async function getLatestVersionFromGoProxy(modulePath: string): Promise<string | undefined> {
+/** @internal Exported for testing */
+export async function getLatestVersionFromGoProxy(modulePath: string): Promise<string | undefined> {
     try {
-        const response = await fetch(`https://proxy.golang.org/${modulePath}/@latest`);
+        // Go module proxy requires case-encoding: uppercase letters become "!" + lowercase
+        // e.g., "github.com/Azure/sdk" -> "github.com/!azure/sdk"
+        const encodedPath = modulePath.replace(/[A-Z]/g, (c) => "!" + c.toLowerCase());
+        const response = await fetch(`https://proxy.golang.org/${encodedPath}/@latest`);
 
         if (response.ok) {
             // biome-ignore lint/suspicious/noExplicitAny: Go proxy API response structure
@@ -319,7 +328,8 @@ async function getLatestVersionFromGoProxy(modulePath: string): Promise<string |
  * @param packageName - The crate name (e.g., "serde")
  * @returns The latest stable version string, or undefined if the crate doesn't exist
  */
-async function getLatestVersionFromCrates(packageName: string): Promise<string | undefined> {
+/** @internal Exported for testing */
+export async function getLatestVersionFromCrates(packageName: string): Promise<string | undefined> {
     try {
         const response = await fetch(`https://crates.io/api/v1/crates/${packageName}`, {
             headers: {
@@ -353,7 +363,8 @@ async function getLatestVersionFromCrates(packageName: string): Promise<string |
  * @param githubRepository - Repository in "owner/repo" format
  * @returns The latest tag name, or undefined if no tags exist
  */
-async function getLatestTag(githubRepository: string): Promise<string | undefined> {
+/** @internal Exported for testing */
+export async function getLatestTag(githubRepository: string): Promise<string | undefined> {
     try {
         const { owner, repo } = parseRepository(githubRepository);
 
