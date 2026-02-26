@@ -32,6 +32,16 @@ export class GithubStep extends BaseStep {
             this.logger.debug("Starting GitHub self-hosted flow in directory: " + this.outputDir);
             const repository = ClonedRepository.createAtPath(this.outputDir);
 
+            // Ensure full git history is available.
+            // Fiddle clones with --depth 1 for performance.
+            // Replay references historical SHAs from .fern/replay.lock that won't exist
+            // in a shallow clone.
+            try {
+                await repository.fetch(["--unshallow"]);
+            } catch {
+                // Not a shallow clone — already has full history. This is fine.
+            }
+
             const now = new Date();
             const formattedDate = now
                 .toISOString()

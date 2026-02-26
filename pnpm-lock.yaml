@@ -8156,8 +8156,8 @@ importers:
   packages/generator-cli:
     dependencies:
       '@fern-api/replay':
-        specifier: ^0.6.1
-        version: 0.6.1
+        specifier: ^0.6.2
+        version: 0.6.2
       '@octokit/rest':
         specifier: 'catalog:'
         version: 22.0.1
@@ -9658,6 +9658,11 @@ packages:
 
   '@fern-api/replay@0.6.1':
     resolution: {integrity: sha512-h3pRkz+i4IuWTR1usuRDNpCvk6Cv534VX76aXicE/L+u7ZcPbRAShNb08RLeFc9y3LeoEOK+s2JlvWqsvv1W/A==}
+    engines: {node: '>=18'}
+    hasBin: true
+
+  '@fern-api/replay@0.6.2':
+    resolution: {integrity: sha512-AECUgZRIqU1XJneDRWkIB3YBAqJ4NdHqQ9CVx10abotGUtiGeoyoXNov79y4SgSrbKF+77CpmdjxTnwauNlPdQ==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -16402,6 +16407,15 @@ snapshots:
       chalk: 5.6.2
 
   '@fern-api/replay@0.6.1':
+    dependencies:
+      minimatch: 10.2.2
+      node-diff3: 3.2.0
+      simple-git: 3.30.0
+      yaml: 2.3.3
+    transitivePeerDependencies:
+      - supports-color
+
+  '@fern-api/replay@0.6.2':
     dependencies:
       minimatch: 10.2.2
       node-diff3: 3.2.0

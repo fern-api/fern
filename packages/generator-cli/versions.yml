@@ -2,6 +2,16 @@
 
 - changelogEntry:
     - summary: |
+        Handle shallow git clones in the pipeline. Add `git fetch --unshallow`
+        at the start of GithubStep to ensure full history is available for
+        replay operations, and use `--force` instead of `--force-with-lease`
+        for fern-bot branch pushes to avoid stale ref failures.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.6
+
+- changelogEntry:
+    - summary: |
         Ensure commits are signed by fern-bot and remove specific customization counts from Replay PR descriptions in favor of generic messaging.
       type: fix
   createdAt: "2026-02-25"

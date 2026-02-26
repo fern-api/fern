@@ -107,6 +107,11 @@ export class ClonedRepository {
         }
     }
 
+    public async fetch(args: string[]): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.fetch(args);
+    }
+
     public async pull(branch: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         await this.git.pull("origin", branch);
@@ -255,12 +260,13 @@ export class ClonedRepository {
     }
 
     // Only used by replay's PR mode to push synthetic divergent commits to a fern-bot/ branch.
-    // Uses --force-with-lease (not --force) so we fail safely if the branch was updated
-    // by someone else since we cloned. Never targets main or user branches.
+    // These branches are exclusively owned by the pipeline — no human pushes to them.
+    // Uses --force (not --force-with-lease) because the lease check fails after
+    // git fetch --unshallow updates remote refs. Never targets main or user branches.
     public async forcePush(): Promise<void> {
         await this.git.cwd(this.clonePath);
         const currentBranch = await this.getCurrentBranch();
-        await this.git.push("origin", currentBranch, ["--force-with-lease"]);
+        await this.git.push("origin", currentBranch, ["--force"]);
     }
 
     public async createBranchFromHead(branchName: string): Promise<void> {
