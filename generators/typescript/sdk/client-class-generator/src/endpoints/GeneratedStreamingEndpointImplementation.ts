@@ -7,8 +7,8 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { getReadableTypeNode } from "../getReadableTypeNode.js";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse.js";
 import { buildUrl } from "./utils/buildUrl.js";
-import { getAvailabilityDocs } from "./utils/getAvailabilityDocs.js";
 import { generateEndpointMetadata } from "./utils/generateEndpointMetadata.js";
+import { getAvailabilityDocs } from "./utils/getAvailabilityDocs.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,

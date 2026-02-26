@@ -13,8 +13,8 @@ import {
     getTimeoutExpression,
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter.js";
-import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse.js";
 import { getAvailabilityDocs } from "../utils/getAvailabilityDocs.js";
+import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse.js";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
