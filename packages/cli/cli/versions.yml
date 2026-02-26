@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.90.4
+- version: 3.90.5
   changelogEntry:
     - summary: |
         Fix `getExplodeForQueryParameter` to treat `deepObject` style as having
@@ -13,6 +13,17 @@
   createdAt: "2026-02-26"
   irVersion: 65
 
+- version: 3.90.4
+  changelogEntry:
+    - summary: |
+        Pass CLI-computed semantic version to Fiddle when creating remote generation
+        jobs. Previously the CLI computed the version via the FDR API but passed the
+        raw user-provided version (typically undefined for AUTO mode) to Fiddle,
+        causing Fiddle to independently re-resolve the version and fall back to an
+        internal counter that produced incorrect low version numbers.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
 - version: 3.90.3
   changelogEntry:
     - summary: |
