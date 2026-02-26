@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.88.4
+- version: 3.90.1
   changelogEntry:
     - summary: |
         Fix anyOf/oneOf response examples always using the first variant's values.
@@ -8,6 +8,58 @@
         would short-circuit on the first valid variant even when the user's explicit
         example matched a different variant. Each named example now correctly preserves
         its distinct field values.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.0
+  changelogEntry:
+    - summary: |
+        Add `DATE_TIME_RFC_2822` primitive type to the IR. OpenAPI specs using
+        `format: date-time-rfc-2822` (e.g. Twilio) now produce typed date-time
+        fields instead of plain strings. Generators that do not yet handle the
+        new variant gracefully fall back to `DATE_TIME` behaviour.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.89.2
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancement for multi-spec API definitions. All OpenAPI sources are now combined into a single merged spec, with overrides applied per-spec, so endpoints from any spec are correctly matched during AI enhancement.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.89.1
+  changelogEntry:
+    - summary: |
+        Fix wire test failures for APIs with both JSON and bytes endpoints at the same path.
+        WireMock mappings are no longer generated for bytes request body endpoints, which
+        prevents ambiguous matches that return empty response bodies.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.89.0
+  changelogEntry:
+    - summary: |
+        Added `collapsible` and `collapsed-by-default` support for API reference layout section items in `docs.yml`.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.88.4
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v3 channel parameters ignoring their `schema` property, which
+        caused types like `oneOf: [string, string[]]` to be flattened to `string`
+        in generated WebSocket clients.
+      type: fix
+    - summary: |
+        Fix `oneOf: [primitive, array<primitive>]` query parameter detection when
+        the primitive appears before the array in the union, which caused the type
+        to lose its `allow-multiple` representation.
       type: fix
   createdAt: "2026-02-25"
   irVersion: 65
@@ -30,7 +82,6 @@
       type: fix
   createdAt: "2026-02-24"
   irVersion: 65
-
 - version: 3.88.1
   changelogEntry:
     - summary: |

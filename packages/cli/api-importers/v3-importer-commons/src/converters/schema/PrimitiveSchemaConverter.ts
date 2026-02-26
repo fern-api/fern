@@ -44,6 +44,11 @@ export class PrimitiveSchemaConverter extends AbstractConverter<AbstractConverte
                             v1: PrimitiveTypeV1.DateTime,
                             v2: PrimitiveTypeV2.dateTime({})
                         });
+                    } else if (this.schema.format === "date-time-rfc-2822") {
+                        return TypeReference.primitive({
+                            v1: PrimitiveTypeV1.DateTimeRfc2822,
+                            v2: PrimitiveTypeV2.dateTimeRfc2822({})
+                        });
                     }
                 }
 

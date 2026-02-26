@@ -221,15 +221,22 @@ public record ActualResult
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "value" => json.GetProperty("value").Deserialize<SeedTrace.VariableValue?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
-                "exception" => json.Deserialize<SeedTrace.ExceptionInfo?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.VariableValue"),
+                "exception" => jsonWithoutDiscriminator.Deserialize<SeedTrace.ExceptionInfo?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "exceptionV2" => json.GetProperty("value")
                     .Deserialize<SeedTrace.ExceptionV2?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionV2"),
+                    ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionV2"),
                 _ => json.Deserialize<object?>(options),
             };
             return new ActualResult(discriminator, value);

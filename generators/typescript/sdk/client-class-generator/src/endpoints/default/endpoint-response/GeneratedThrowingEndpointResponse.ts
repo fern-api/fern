@@ -965,13 +965,25 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody: (responseError: FernIr.ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
+        // Deduplicate errors by status code to prevent duplicate case clauses.
+        // The first error for each status code wins (endpoint-specific errors come before global errors).
+        const seenStatusCodes = new Set<number>();
+        const deduplicatedErrors = this.endpoint.errors.filter((error) => {
+            const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
+            if (seenStatusCodes.has(errorDeclaration.statusCode)) {
+                return false;
+            }
+            seenStatusCodes.add(errorDeclaration.statusCode);
+            return true;
+        });
+
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToError(context),
                 context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
             ),
             ts.factory.createCaseBlock([
-                ...this.endpoint.errors.map((error) => {
+                ...deduplicatedErrors.map((error) => {
                     const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
                     return ts.factory.createCaseClause(
                         ts.factory.createNumericLiteral(errorDeclaration.statusCode),

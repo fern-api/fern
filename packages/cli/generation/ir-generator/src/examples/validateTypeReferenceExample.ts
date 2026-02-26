@@ -286,6 +286,7 @@ function validatePrimitiveExample({
             uuid: () => validateUuid(example),
             date: () => validateDate(example),
             dateTime: () => validateDateTime(example),
+            dateTimeRfc2822: () => validateDateTime(example),
             base64: () => validateString(example),
             bigInteger: () => validateString(example),
             _other: () => {
@@ -304,6 +305,7 @@ function validatePrimitiveExample({
         string: () => validateString(example),
         uuid: () => validateUuid(example),
         dateTime: () => validateDateTime(example),
+        dateTimeRfc2822: () => validateDateTime(example),
         date: () => validateDate(example),
         base64: () => validateString(example),
         bigInteger: () => validateString(example),

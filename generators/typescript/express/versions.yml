@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  irVersion: 65
+  createdAt: "2026-02-26"
+  version: 0.19.6
+
+- changelogEntry:
+    - summary: |
         Upgrade Docker base image from Node.js 22 to Node.js 24 LTS.
       type: chore
   irVersion: 65
