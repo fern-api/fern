@@ -95,3 +95,4 @@ client.completions.stream_without_terminator(query: "query")
 </dd>
 </dl>
 </details>
+

@@ -106,3 +106,4 @@ client.payment.delete(payment_id: "paymentId")
 </dd>
 </dl>
 </details>
+
