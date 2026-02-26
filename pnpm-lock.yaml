@@ -811,7 +811,7 @@ importers:
         version: link:packages/configs
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.5.3
+        version: 0.6.4
       '@rolldown/binding-darwin-arm64':
         specifier: 'catalog:'
         version: 1.0.0-rc.5
@@ -871,7 +871,7 @@ importers:
         version: link:../../packages/commons/fs-utils
       '@fern-api/generator-cli':
         specifier: 'catalog:'
-        version: 0.5.3
+        version: 0.6.4
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../packages/cli/logger
