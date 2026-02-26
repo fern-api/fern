@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.5
+  changelogEntry:
+    - summary: |
+        Skip dependency installation in downloadFiles mode when outputting source
+        files only. Production dependencies are only needed for the build path;
+        source-only output paths (outputSrcOnly, shouldGenerateFullProject,
+        outputSourceFiles) no longer trigger a full install, saving ~1.8s per
+        generation in those modes.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.51.4
   changelogEntry:
     - summary: |
