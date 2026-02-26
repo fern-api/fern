@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.4
+  changelogEntry:
+    - summary: |
+        Add `cache: "no-store"` to streaming and SSE fetch requests to prevent
+        Next.js from buffering streamed responses. The option is guarded by a
+        cached runtime feature-detection so it is safely skipped in runtimes
+        that do not support the `cache` RequestInit option (e.g. Cloudflare Workers).
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.51.3
   changelogEntry:
     - summary: |
