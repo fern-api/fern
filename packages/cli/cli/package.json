@@ -26,9 +26,7 @@
     "fern:local": "./dist/cli.mjs",
     "fern:prod": "./dist/cli.mjs"
   },
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",

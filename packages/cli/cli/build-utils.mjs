@@ -104,7 +104,7 @@ export async function buildCli(config) {
     if (missingDeps.length > 0) {
         throw new Error(
             `Missing required runtime dependencies in package.json: ${missingDeps.join(", ")}. ` +
-            `These must be declared in either dependencies or devDependencies.`
+                `These must be declared in either dependencies or devDependencies.`
         );
     }
 
