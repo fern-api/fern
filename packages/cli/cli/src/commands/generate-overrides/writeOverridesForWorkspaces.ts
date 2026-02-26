@@ -74,7 +74,7 @@ export function generateOverridesContent({
             paths[endpoint.path] = {};
         }
         const pathItem = paths[endpoint.path];
-        if (pathItem != null && pathItem[endpoint.method] == null) {
+        if (pathItem != null && pathItem[endpoint.method] == null && pathItem[endpoint.method.toLowerCase()] == null) {
             const groupName = endpointLocation.file
                 .split("/")
                 .map((part) => part.replace(".yml", ""))
