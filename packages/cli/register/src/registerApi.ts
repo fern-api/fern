@@ -64,20 +64,22 @@ export async function registerApi({
 
     if (aiEnhancerConfig) {
         const sources = workspace.getSources();
-        const openApiSources = sources.filter((source) => source.type === "openapi");
+        const openApiSources = sources
+            .filter((source) => source.type === "openapi")
+            .map((source) => ({
+                absoluteFilePath: source.absoluteFilePath,
+                absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
+            }));
 
-        for (const openApiSource of openApiSources) {
-            apiDefinition = await enhanceExamplesWithAI(
-                apiDefinition,
-                aiEnhancerConfig,
-                context,
-                token,
-                organization,
-                openApiSource.absoluteFilePath,
-                openApiSource.absoluteFilePathToOverrides,
-                ir.apiName.originalName
-            );
-        }
+        apiDefinition = await enhanceExamplesWithAI(
+            apiDefinition,
+            aiEnhancerConfig,
+            context,
+            token,
+            organization,
+            openApiSources.length > 0 ? openApiSources : undefined,
+            ir.apiName.originalName
+        );
     }
 
     const response = await fdrService.api.v1.register.registerApiDefinition({
