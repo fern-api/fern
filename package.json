@@ -116,7 +116,7 @@
     "stylelint-config-standard-scss": "catalog:",
     "tsup": "catalog:",
     "tsx": "catalog:",
-    "turbo": "catalog:",
+    "turbo": "^2.8.11",
     "typescript": "catalog:",
     "vitest": "catalog:"
   },

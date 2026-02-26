@@ -21,7 +21,7 @@ client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.completions.stream(
-    query="query",
+    query="foo",
 )
 for chunk in response.data:
     yield chunk

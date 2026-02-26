@@ -1,6 +1,21 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update @fern-api/fern-replay to 0.6.1 which published as ESM and CJS.
+        As a result, the generator-cli can also be ESM and CJS.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.4
+
+- changelogEntry:
+    - summary: |
+        Publish package from dist directory with a generated package.json. Bundle all dependencies for the CLI binary, and keep published dependencies external for the JS API.
+      type: fix
+  createdAt: "2026-02-25"
+  version: 0.6.3
+
+- changelogEntry:
+    - summary: |
         Use pnpm publish to properly resolve workspace directives when publishing to npm.
       type: fix
   createdAt: "2026-02-25"
