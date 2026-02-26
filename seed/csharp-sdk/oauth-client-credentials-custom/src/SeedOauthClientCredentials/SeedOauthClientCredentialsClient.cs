@@ -11,6 +11,8 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
     public SeedOauthClientCredentialsClient(
         string clientId,
         string clientSecret,
+        string entityId,
+        string scp,
         ClientOptions? clientOptions = null
     )
     {
@@ -35,6 +37,8 @@ public partial class SeedOauthClientCredentialsClient : ISeedOauthClientCredenti
         var tokenProvider = new OAuthTokenProvider(
             clientId,
             clientSecret,
+            entityId,
+            scp,
             new AuthClient(new RawClient(clientOptions))
         );
         clientOptionsWithAuth.Headers["Authorization"] =

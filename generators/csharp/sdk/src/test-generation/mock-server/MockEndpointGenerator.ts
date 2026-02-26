@@ -548,8 +548,8 @@ export class MockEndpointGenerator extends WithGeneration {
         unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown },
         options: { filterWriteOnly?: boolean } = {}
     ): unknown {
-        // Union examples have a complex structure - for now, return the JSON example
-        // and rely on the SDK's serialization to handle read-only properties
+        // Union examples have a complex structure
+        // The singleUnionType has a wireDiscriminantValue and a shape that describes the variant
         const singleUnionType = unionShape.singleUnionType as {
             wireDiscriminantValue: { wireValue: string };
             shape:
@@ -558,7 +558,7 @@ export class MockEndpointGenerator extends WithGeneration {
                       typeId: TypeId;
                       object: { properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> };
                   }
-                | { type: "singleProperty"; jsonExample: unknown; typeReference: ExampleTypeReference }
+                | ({ type: "singleProperty" } & ExampleTypeReference)
                 | { type: "noProperties" };
         };
 
@@ -574,11 +574,16 @@ export class MockEndpointGenerator extends WithGeneration {
             );
             Object.assign(result, filteredProps);
         } else if (singleUnionType.shape.type === "singleProperty") {
-            // Single property unions have a nested value
-            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape.typeReference, options);
+            // For singleProperty, the shape itself extends ExampleTypeReference
+            // so it has shape and jsonExample fields directly on it
+            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape, options);
             // The property name for single property unions is typically the variant name
             // but we need to check the union definition for the actual wire name
-            Object.assign(result, filteredValue);
+            if (typeof filteredValue === "object" && filteredValue !== null && !Array.isArray(filteredValue)) {
+                Object.assign(result, filteredValue);
+            } else {
+                result[singleUnionType.wireDiscriminantValue.wireValue] = filteredValue;
+            }
         }
 
         return result;

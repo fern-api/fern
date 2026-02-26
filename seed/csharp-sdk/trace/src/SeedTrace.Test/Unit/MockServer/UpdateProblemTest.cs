@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedTrace;
-using SeedTrace.Core;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
@@ -17,11 +17,11 @@ public class UpdateProblemTest : BaseMockServerTest
                 "boards": [
                   {
                     "type": "html",
-                    "value": "boards"
+                    "html": "boards"
                   },
                   {
                     "type": "html",
-                    "value": "boards"
+                    "html": "boards"
                   }
                 ]
               },
@@ -67,17 +67,17 @@ public class UpdateProblemTest : BaseMockServerTest
                     "params": [
                       {
                         "type": "integerValue",
-                        "value": 1
+                        "integerValue": 1
                       },
                       {
                         "type": "integerValue",
-                        "value": 1
+                        "integerValue": 1
                       }
                     ]
                   },
                   "expectedResult": {
                     "type": "integerValue",
-                    "value": 1
+                    "integerValue": 1
                   }
                 },
                 {
@@ -86,17 +86,17 @@ public class UpdateProblemTest : BaseMockServerTest
                     "params": [
                       {
                         "type": "integerValue",
-                        "value": 1
+                        "integerValue": 1
                       },
                       {
                         "type": "integerValue",
-                        "value": 1
+                        "integerValue": 1
                       }
                     ]
                   },
                   "expectedResult": {
                     "type": "integerValue",
-                    "value": 1
+                    "integerValue": 1
                   }
                 }
               ],
@@ -211,9 +211,6 @@ public class UpdateProblemTest : BaseMockServerTest
                 MethodName = "methodName",
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<UpdateProblemResponse>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

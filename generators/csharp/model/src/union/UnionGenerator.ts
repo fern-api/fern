@@ -429,7 +429,19 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 });
                 // we can't have an implicit cast from object or (IEnumerable<T>)
                 const underlyingType = memberType.asNonOptional();
-                if (!is.Primitive.object(underlyingType) && !is.Collection.list(underlyingType)) {
+                // When memberType is optional and the underlying type has the same name as the inner class,
+                // the implicit operator would be a self-conversion (CS0555) because within the inner class
+                // scope, the unqualified type name refers to the inner class itself.
+                // e.g., for `optional<Foo>`, the inner class `Foo` wrapping `Foo?` would generate
+                // `implicit operator Foo(Foo? value)` which is a self-conversion.
+                const innerClassName = this.getUnionTypeClassReferenceByTypeName(
+                    type.discriminantValue.name.pascalCase.safeName
+                ).name;
+                const isSelfConversion =
+                    memberType.isOptional &&
+                    is.ClassReference(underlyingType) &&
+                    underlyingType.name === innerClassName;
+                if (!is.Primitive.object(underlyingType) && !is.Collection.list(underlyingType) && !isSelfConversion) {
                     unionTypeClass.addOperator({
                         type: ast.Class.CastOperator.Type.Implicit,
                         parameter: this.csharp.parameter({
@@ -557,6 +569,24 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                 );
                 writer.writeLine();
 
+                // Check if any union type uses samePropertiesAsObject - if so, we need to
+                // strip the discriminant from the JSON before deserializing to avoid it
+                // leaking into AdditionalProperties
+                const hasSamePropertiesAsObject = this.unionDeclaration.types.some(
+                    (type) => type.shape.propertiesType === "samePropertiesAsObject"
+                );
+                if (hasSamePropertiesAsObject) {
+                    writer.writeLine(
+                        "// Strip the discriminant property to prevent it from leaking into AdditionalProperties"
+                    );
+                    writer.writeLine("var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);");
+                    writer.writeLine(`jsonObject?.Remove("${discriminatorPropName}");`);
+                    writer.writeTextStatement(
+                        "var jsonWithoutDiscriminator = jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json"
+                    );
+                    writer.writeLine();
+                }
+
                 writer.writeLine("var value = discriminator switch");
                 writer.pushScope();
 
@@ -568,7 +598,7 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                         writer.write(" => ");
                         switch (type.shape.propertiesType) {
                             case "samePropertiesAsObject":
-                                writer.write("json");
+                                writer.write("jsonWithoutDiscriminator");
                                 break;
                             case "singleProperty":
                                 writer.write(`json.GetProperty("${type.shape.name.wireValue}")`);

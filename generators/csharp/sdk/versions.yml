@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.4
+  changelogEntry:
+    - summary: |
+        Fix union type generation crash when generating mock server tests for
+        singleProperty union variants (e.g. in the trace fixture).
+      type: fix
+    - summary: |
+        Fix CS0555 build error for union types with optional member types where the
+        underlying type name matches the inner class name, causing a self-conversion
+        implicit operator.
+      type: fix
+    - summary: |
+        Fix union deserialization to strip the discriminant property from JSON before
+        deserializing samePropertiesAsObject variants, preventing the discriminant from
+        leaking into AdditionalProperties.
+      type: fix
+    - summary: |
+        Fix OAuth client credentials custom flow to pass additional properties and
+        scopes to the OAuthTokenProvider constructor.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 62
+
 - version: 2.22.3
   changelogEntry:
     - summary: |

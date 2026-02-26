@@ -15,7 +15,7 @@ public class SendTestSubmissionUpdateTest : BaseMockServerTest
               "updateTime": "2024-01-15T09:30:00.000Z",
               "updateInfo": {
                 "type": "running",
-                "value": "QUEUEING_SUBMISSION"
+                "running": "QUEUEING_SUBMISSION"
               }
             }
             """;

@@ -495,20 +495,20 @@ public partial class ServiceClient : IServiceClient
     ///         Directory = new SeedExamples.Directory
     ///         {
     ///             Name = "name",
-    ///             Files = new List&lt;SeedExamples.File&gt;()
+    ///             Files = new List&lt;global::SeedExamples.File&gt;()
     ///             {
-    ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
-    ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                 new global::SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                 new global::SeedExamples.File { Name = "name", Contents = "contents" },
     ///             },
     ///             Directories = new List&lt;SeedExamples.Directory&gt;()
     ///             {
     ///                 new SeedExamples.Directory
     ///                 {
     ///                     Name = "name",
-    ///                     Files = new List&lt;SeedExamples.File&gt;()
+    ///                     Files = new List&lt;global::SeedExamples.File&gt;()
     ///                     {
-    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
-    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                         new global::SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                         new global::SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
     ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
@@ -529,10 +529,10 @@ public partial class ServiceClient : IServiceClient
     ///                 new SeedExamples.Directory
     ///                 {
     ///                     Name = "name",
-    ///                     Files = new List&lt;SeedExamples.File&gt;()
+    ///                     Files = new List&lt;global::SeedExamples.File&gt;()
     ///                     {
-    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
-    ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                         new global::SeedExamples.File { Name = "name", Contents = "contents" },
+    ///                         new global::SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
     ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {

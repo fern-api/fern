@@ -31,7 +31,7 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                   "lineNumber": 1,
                   "returnValue": {
                     "type": "integerValue",
-                    "value": 1
+                    "integerValue": 1
                   },
                   "expressionLocation": {
                     "start": 1,
@@ -47,7 +47,7 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                           "variables": {
                             "variables": {
                               "type": "integerValue",
-                              "value": 1
+                              "integerValue": 1
                             }
                           }
                         },
@@ -55,7 +55,7 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                           "variables": {
                             "variables": {
                               "type": "integerValue",
-                              "value": 1
+                              "integerValue": 1
                             }
                           }
                         }
@@ -69,7 +69,7 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                   "lineNumber": 1,
                   "returnValue": {
                     "type": "integerValue",
-                    "value": 1
+                    "integerValue": 1
                   },
                   "expressionLocation": {
                     "start": 1,
@@ -85,7 +85,7 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                           "variables": {
                             "variables": {
                               "type": "integerValue",
-                              "value": 1
+                              "integerValue": 1
                             }
                           }
                         },
@@ -93,7 +93,7 @@ public class StoreTracedWorkspaceTest : BaseMockServerTest
                           "variables": {
                             "variables": {
                               "type": "integerValue",
-                              "value": 1
+                              "integerValue": 1
                             }
                           }
                         }
