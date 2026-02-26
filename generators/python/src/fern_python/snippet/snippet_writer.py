@@ -210,15 +210,12 @@ class SnippetWriter:
                     function_definition=AST.ClassReference(
                         import_=AST.ReferenceImport(
                             module=AST.Module.snippet(
-                                module_path=("datetime",),
+                                module_path=("email", "utils"),
                             )
                         ),
-                        qualified_name_excluding_import=(
-                            "datetime",
-                            "fromisoformat",
-                        ),
+                        qualified_name_excluding_import=("parsedate_to_datetime",),
                     ),
-                    args=[AST.Expression(f'"{str(datetime_rfc_2822.datetime)}"')],
+                    args=[AST.Expression(f'"{str(datetime_rfc_2822.raw)}"')],
                 ),
             ),
         )
