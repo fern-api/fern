@@ -11,6 +11,7 @@ import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
+import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
@@ -387,7 +388,7 @@ export class GenerateCommand {
      *   produce a self-hosted git output with token from GITHUB_TOKEN or GIT_TOKEN env vars.
      * - Anything else is treated as a local path.
      */
-    private parseTargetOutput(args: GenerateCommand.Args): schemas.OutputSchema {
+    private parseTargetOutput(args: GenerateCommand.Args): schemas.OutputObjectSchema {
         if (args.output != null && isGitUrl(args.output)) {
             if (!args.local) {
                 throw new CliError({
@@ -559,7 +560,15 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
         cli,
         "generate",
         "Generate SDKs from fern.yml or directly from an API spec",
-        (context, args) => cmd.handle(context, args as GenerateCommand.Args),
+        async (context, args) => {
+            const timeout = new Promise<never>((_, reject) => {
+                setTimeout(
+                    () => reject(new CliError({ message: "Generation timed out after 10 minutes." })),
+                    GENERATE_COMMAND_TIMEOUT_MS
+                ).unref();
+            });
+            await Promise.race([cmd.handle(context, args as GenerateCommand.Args), timeout]);
+        },
         (yargs) =>
             yargs
                 .option("api", {

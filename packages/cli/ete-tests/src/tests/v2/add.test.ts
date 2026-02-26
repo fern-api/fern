@@ -139,7 +139,7 @@ describe("fern sdk add", () => {
 
             const written = await readFile(fixture.path, "fern.yml");
             expect(written).toContain("python:");
-            expect(written).toContain("path: ./sdks/python");
+            expect(written).toContain("output: ./sdks/python");
         } finally {
             await fixture.cleanup();
         }
@@ -156,7 +156,7 @@ describe("fern sdk add", () => {
 
             const written = await readFile(fixture.path, "fern.yml");
             expect(written).toContain("go:");
-            expect(written).toContain("path: ./custom/go");
+            expect(written).toContain("output: ./custom/go");
         } finally {
             await fixture.cleanup();
         }
@@ -494,8 +494,7 @@ sdks:
             const sdks = parsed.sdks as Record<string, unknown>;
             const targets = sdks.targets as Record<string, unknown>;
             const csharp = targets.csharp as Record<string, unknown>;
-            const output = csharp.output as Record<string, unknown>;
-            expect(output.path).toBe("./sdks/csharp");
+            expect(csharp.output).toBe("./sdks/csharp");
             expect(csharp.version).toBeUndefined();
             expect(csharp.group).toBeUndefined();
         } finally {

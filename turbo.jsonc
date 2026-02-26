@@ -1,5 +1,5 @@
 {
-    "$schema": "https://turbo.build/schema.json",
+    "$schema": "https://turborepo.dev/schema.json",
     "globalDependencies": [
         ".npmrc",
         ".prettierrc.json",
@@ -17,12 +17,28 @@
         "compile": {
             "dependsOn": ["^compile"],
             "outputs": ["lib/**", "*.tsbuildinfo"],
-            "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json", "$TURBO_ROOT$/packages/configs/**"]
+            "inputs": [
+                "src/**",
+                "tests/**",
+                "package.json",
+                "tsconfig.json",
+                "build.tsconfig.json",
+                "tsconfig.build.json",
+                "$TURBO_ROOT$/packages/configs/**"
+            ]
         },
         "compile:debug": {
             "dependsOn": ["^compile:debug"],
             "outputs": ["lib/**", "*.tsbuildinfo"],
-            "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json", "$TURBO_ROOT$/packages/configs/**"]
+            "inputs": [
+                "src/**",
+                "tests/**",
+                "package.json",
+                "tsconfig.json",
+                "build.tsconfig.json",
+                "tsconfig.build.json",
+                "$TURBO_ROOT$/packages/configs/**"
+            ]
         },
         "depcheck": {
             "outputs": [],
@@ -30,11 +46,27 @@
         },
         "lint:eslint": {
             "outputs": [],
-            "inputs": ["src/**", "tests/**", "$TURBO_ROOT$/.eslintrc.js", "$TURBO_ROOT$/.eslintignore", "tsconfig.json"]
+            "inputs": [
+                "src/**",
+                "tests/**",
+                "$TURBO_ROOT$/.eslintrc.js",
+                "$TURBO_ROOT$/.eslintignore",
+                "tsconfig.json",
+                "build.tsconfig.json",
+                "tsconfig.build.json"
+            ]
         },
         "lint:eslint:fix": {
             "outputs": [],
-            "inputs": ["src/**", "tests/**", "$TURBO_ROOT$/.eslintrc.js", "$TURBO_ROOT$/.eslintignore", "tsconfig.json"]
+            "inputs": [
+                "src/**",
+                "tests/**",
+                "$TURBO_ROOT$/.eslintrc.js",
+                "$TURBO_ROOT$/.eslintignore",
+                "tsconfig.json",
+                "build.tsconfig.json",
+                "tsconfig.build.json"
+            ]
         },
         "test": {
             "dependsOn": ["^compile", "compile"],
@@ -90,6 +122,7 @@
                 "package.json",
                 "tsconfig.json",
                 "build.tsconfig.json",
+                "tsconfig.build.json",
                 "build-utils.mjs",
                 "build.mjs",
                 "$TURBO_ROOT$/packages/configs/**",
@@ -108,6 +141,7 @@
                 "package.json",
                 "tsconfig.json",
                 "build.tsconfig.json",
+                "tsconfig.build.json",
                 "build-utils.mjs",
                 "build.dev.mjs",
                 "$TURBO_ROOT$/shared/.prettierignore",
@@ -126,6 +160,7 @@
                 "package.json",
                 "tsconfig.json",
                 "build.tsconfig.json",
+                "tsconfig.build.json",
                 "build-utils.mjs",
                 "build.local.mjs",
                 "$TURBO_ROOT$/shared/.prettierignore",
@@ -144,6 +179,7 @@
                 "package.json",
                 "tsconfig.json",
                 "build.tsconfig.json",
+                "tsconfig.build.json",
                 "build-utils.mjs",
                 "build.prod.mjs",
                 "$TURBO_ROOT$/shared/.prettierignore",
@@ -161,6 +197,7 @@
                 "package.json",
                 "tsconfig.json",
                 "build.tsconfig.json",
+                "tsconfig.build.json",
                 "build-utils.mjs",
                 "build.mjs",
                 "$TURBO_ROOT$/shared/.prettierignore",

@@ -21,10 +21,16 @@
   "bin": {
     "generator-cli": "bin/cli"
   },
-  "files": ["bin", "dist"],
+  "files": ["bin", "dist", "lib"],
+  "dependencies": {
+    "@fern-api/replay": "^0.6.1",
+    "@octokit/rest": "catalog:",
+    "es-toolkit": "catalog:",
+    "tmp-promise": "catalog:"
+  },
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
-    "compile": "tsc --build",
+    "clean": "rm -rf ./lib && rm -rf ./dist",
+    "compile": "tsc --project tsconfig.build.json",
     "depcheck": "knip --config ../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
@@ -34,15 +40,12 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/github": "workspace:*",
-    "@fern-api/replay": "^0.6.0",
     "@octokit/rest": "catalog:",
     "@types/jest": "^29.5.11",
     "@types/node": "^22.0.0",
     "@types/yargs": "^17.0.32",
-    "es-toolkit": "catalog:",
     "esbuild": "catalog:",
     "execa": "^9.5.1",
-    "tmp-promise": "catalog:",
     "tsup": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:",

@@ -8,8 +8,9 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-events\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.stream({\n    query: \"query\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
-            }
+                "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-events\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.stream({\n    query: \"foo\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
+            },
+            "example_identifier": "Stream completions"
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-events\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.streamWithoutTerminator({\n    query: \"query\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
-            }
+            },
+            "example_identifier": "Stream without terminator"
         }
     ],
     "types": {}
