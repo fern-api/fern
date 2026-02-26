@@ -7,6 +7,13 @@
         other packages referenced it via `@JsonDeserialize(using = ...)`.
         The class is now `public`.
       type: fix
+    - summary: |
+        Fix URI/path pagination generating `String` instead of `Optional<String>`
+        for the next page token. `UriPage.create` and `PathPage.create` expect
+        `Optional<String>`, but `getNestedPropertySnippet` was unwrapping the
+        optional via `.orElse(null)`. The generator now builds the getter chain
+        directly to preserve the `Optional<String>` type.
+      type: fix
   createdAt: "2026-02-26"
   irVersion: 65
 
