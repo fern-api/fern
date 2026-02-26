@@ -212,7 +212,7 @@ class EndpointsParamsWireTest extends WireMockTestCase
         $this->verifyRequestCount(
             $testId,
             "POST",
-            "/params/path/upload-path",
+            "/params/path/{param}",
             null,
             1
         );

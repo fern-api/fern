@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.40.1
+  changelogEntry:
+    - summary: |
+        Fix `Rfc2822DateTimeDeserializer` visibility. The class was generated
+        with package-private access, causing compilation errors when types in
+        other packages referenced it via `@JsonDeserialize(using = ...)`.
+        The class is now `public`.
+      type: fix
+    - summary: |
+        Fix URI/path pagination generating `String` instead of `Optional<String>`
+        for the next page token. `UriPage.create` and `PathPage.create` expect
+        `Optional<String>`, but `getNestedPropertySnippet` was unwrapping the
+        optional via `.orElse(null)`. The generator now builds the getter chain
+        directly to preserve the `Optional<String>` type.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.40.0
   changelogEntry:
     - summary: |
