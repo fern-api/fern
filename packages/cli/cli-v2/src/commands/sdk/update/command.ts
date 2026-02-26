@@ -3,7 +3,7 @@ import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from
 import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import inquirer from "inquirer";
-import { type Document, parseDocument } from "yaml";
+import { type Document, type Pair, parseDocument, Scalar, YAMLMap } from "yaml";
 import type { Argv } from "yargs";
 import { FERN_YML_FILENAME, REF_KEY } from "../../../config/fern-yml/constants.js";
 import type { Context } from "../../../context/Context.js";
@@ -126,8 +126,7 @@ export class UpdateCommand {
         }
 
         // In interactive mode, let the user choose which targets to update.
-        const selectedUpdates =
-            !context.isTTY || args.yes ? updates : await this.promptForUpdates({ updates });
+        const selectedUpdates = !context.isTTY || args.yes ? updates : await this.promptForUpdates({ updates });
 
         if (selectedUpdates.length === 0) {
             context.stderr.info(chalk.dim("No targets selected for update."));
@@ -164,15 +163,11 @@ export class UpdateCommand {
 
         // targetsNode is a YAML map; iterate over its entries.
         const targetsObj = document.getIn(targetsPath, true);
-        if (targetsObj == null || !("items" in (targetsObj as object))) {
+        if (!(targetsObj instanceof YAMLMap)) {
             return entries;
         }
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const yamlMap = targetsObj as any;
-        for (const item of yamlMap.items) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const name = (item.key as any).value as string;
+        for (const item of targetsObj.items as Pair<Scalar<string>>[]) {
+            const name = item.key.value;
 
             if (targetFilter != null && name !== targetFilter) {
                 continue;
@@ -345,13 +340,7 @@ export class UpdateCommand {
         return updates.filter((u) => selected.includes(u.name));
     }
 
-    private printAppliedUpdates({
-        context,
-        updates
-    }: {
-        context: Context;
-        updates: TargetUpdate[];
-    }): void {
+    private printAppliedUpdates({ context, updates }: { context: Context; updates: TargetUpdate[] }): void {
         if (updates.length === 0) {
             return;
         }
@@ -371,13 +360,7 @@ export class UpdateCommand {
         }
     }
 
-    private printUpToDate({
-        context,
-        upToDate
-    }: {
-        context: Context;
-        upToDate: TargetUpToDate[];
-    }): void {
+    private printUpToDate({ context, upToDate }: { context: Context; upToDate: TargetUpToDate[] }): void {
         if (upToDate.length === 0) {
             return;
         }
@@ -414,9 +397,7 @@ export class UpdateCommand {
             if (changelogUrl != null) {
                 context.stderr.info(chalk.yellow(`    Changelog: ${changelogUrl}`));
             }
-            context.stderr.info(
-                chalk.yellow(`    Run: fern sdk update --target ${upgrade.name} --include-major`)
-            );
+            context.stderr.info(chalk.yellow(`    Run: fern sdk update --target ${upgrade.name} --include-major`));
         }
     }
 
