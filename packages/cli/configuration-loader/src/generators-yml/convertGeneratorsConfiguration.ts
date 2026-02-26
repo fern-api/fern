@@ -659,7 +659,6 @@ function getApiOverride({
         };
     }
 
-    // Fall back to workspace-level V2 specs if available
     if (rawApiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(rawApiConfiguration)) {
         return {
             specs: rawApiConfiguration.specs
