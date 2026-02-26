@@ -1177,6 +1177,16 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 };
             }
 
+            if (result.isValid && !result.coerced && this.example === undefined) {
+                return {
+                    isValid: true,
+                    coerced: false,
+                    usedProvidedExample: result.usedProvidedExample,
+                    validExample: result.validExample,
+                    errors: []
+                };
+            }
+
             results.push(result);
 
             // Track first valid result that used provided example
