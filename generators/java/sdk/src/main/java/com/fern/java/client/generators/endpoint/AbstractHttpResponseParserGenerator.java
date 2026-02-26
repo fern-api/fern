@@ -1912,13 +1912,17 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (nextProperty.getPropertyPath().isPresent()) {
                 for (PropertyPathItem pathItem : nextProperty.getPropertyPath().get()) {
                     nextGetterBuilder.add(
-                            ".get$L()",
-                            pathItem.getName().getPascalCase().getUnsafeName());
+                            ".get$L()", pathItem.getName().getPascalCase().getUnsafeName());
                 }
             }
             nextGetterBuilder.add(
                     ".get$L()",
-                    nextProperty.getProperty().getName().getName().getPascalCase().getUnsafeName());
+                    nextProperty
+                            .getProperty()
+                            .getName()
+                            .getName()
+                            .getPascalCase()
+                            .getUnsafeName());
             CodeBlock nextGetterCode = nextGetterBuilder.build();
 
             TypeName optionalStringType =
