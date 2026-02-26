@@ -31,8 +31,7 @@ export class TaskContextLogger implements Logger {
 
     public debug(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Debug, message });
-        this.writeToConsoleInCI(LogLevel.Debug, message);
+        this.writeLog({ level: LogLevel.Debug, message });
 
         if (this.shouldLogToTask(LogLevel.Debug)) {
             if (this.task.logs == null) {
@@ -44,8 +43,7 @@ export class TaskContextLogger implements Logger {
 
     public info(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Info, message });
-        this.writeToConsoleInCI(LogLevel.Info, message);
+        this.writeLog({ level: LogLevel.Info, message });
 
         if (this.shouldLogToTask(LogLevel.Info)) {
             if (this.task.logs == null) {
@@ -58,8 +56,7 @@ export class TaskContextLogger implements Logger {
 
     public warn(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Warn, message });
-        this.writeToConsoleInCI(LogLevel.Warn, message);
+        this.writeLog({ level: LogLevel.Warn, message });
 
         if (this.shouldLogToTask(LogLevel.Warn)) {
             if (this.task.logs == null) {
@@ -71,8 +68,7 @@ export class TaskContextLogger implements Logger {
 
     public error(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Error, message });
-        this.writeToConsoleInCI(LogLevel.Error, message);
+        this.writeLog({ level: LogLevel.Error, message });
 
         if (this.shouldLogToTask(LogLevel.Error)) {
             this.collectedErrors.push(message);
@@ -101,10 +97,12 @@ export class TaskContextLogger implements Logger {
     }
 
     /**
-     * In CI / non-TTY environments, write logs directly to stderr so they
-     * are visible in CI runner output rather than hidden in a log file.
+     * Write a log entry to the log file. In CI / non-TTY environments,
+     * also write directly to stderr so logs are visible in CI runner output.
      */
-    private writeToConsoleInCI(level: LogLevel, message: string): void {
+    private writeLog({ level, message }: { level: LogLevel; message: string }): void {
+        this.context.logs.write({ taskName: this.task.name, level, message });
+
         if (this.context.isTTY) {
             return;
         }
