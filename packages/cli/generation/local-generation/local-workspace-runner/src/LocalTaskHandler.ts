@@ -157,6 +157,26 @@ export class LocalTaskHandler {
 
             this.context.logger.debug(`Previous version detected: ${previousVersion}`);
 
+            // If the cleaned diff is empty but the raw diff was not, there are real changes
+            // that were all classified as version-only changes by the cleaning logic.
+            // Fall back to PATCH increment to avoid incorrectly skipping the commit.
+            if (cleanedDiff.trim().length === 0) {
+                this.context.logger.warn(
+                    `Cleaned diff is empty but raw diff had ${diffContent.length} bytes. ` +
+                        `This may indicate the diff cleaning logic is too aggressive. ` +
+                        `Falling back to PATCH increment.`
+                );
+                const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                this.context.logger.info(`Fallback version bump: PATCH, new version: ${newVersion}`);
+                const fallbackMessage = this.isWhitelabel
+                    ? "SDK regeneration"
+                    : "SDK regeneration\n\n🌿 Generated with Fern";
+                return {
+                    version: newVersion,
+                    commitMessage: fallbackMessage
+                };
+            }
+
             // Call AI to analyze the diff
             try {
                 // TODO: Need to get project for BAML client configuration

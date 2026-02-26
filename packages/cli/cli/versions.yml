@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.3
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning incorrectly skipping SDK generation when the cleaned
+        diff is empty but the raw diff contains real changes. When all file sections
+        in a diff happen to be filtered out by the version-change cleaning logic
+        (e.g. when changes coincide with version bump patterns), the system now falls
+        back to a PATCH increment instead of reporting "no semantic changes detected".
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.90.2
   changelogEntry:
     - summary: |
