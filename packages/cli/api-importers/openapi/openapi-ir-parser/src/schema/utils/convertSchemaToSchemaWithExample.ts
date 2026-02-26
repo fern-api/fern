@@ -303,6 +303,10 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             return PrimitiveSchemaValueWithExample.datetime({
                 example: undefined
             });
+        case "datetimeRfc2822":
+            return PrimitiveSchemaValueWithExample.datetimeRfc2822({
+                example: undefined
+            });
         case "double":
             return PrimitiveSchemaValueWithExample.double({
                 default: primitiveSchema.default,

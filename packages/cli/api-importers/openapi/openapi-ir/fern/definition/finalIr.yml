@@ -709,6 +709,7 @@ types:
       double: DoubleSchema
       string: StringSchema
       datetime: {}
+      datetimeRfc2822: {}
       date: {}
       base64: {}
       boolean: BooleanSchema
