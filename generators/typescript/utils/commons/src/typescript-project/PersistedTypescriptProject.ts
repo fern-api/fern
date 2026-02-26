@@ -3,11 +3,11 @@ import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
 import { execFile } from "child_process";
-import { promisify } from "util";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
+import { promisify } from "util";
 
 export declare namespace PersistedTypescriptProject {
     export interface Init {
