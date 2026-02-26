@@ -1,12 +1,41 @@
 import nodePolyfills from "@rolldown/plugin-node-polyfills";
 import { exec } from "child_process";
-import { cp, mkdir, rm, writeFile } from "fs/promises";
+import { existsSync, readdirSync } from "fs";
+import { cp, mkdir, readdir, rm, writeFile } from "fs/promises";
 import path from "path";
 import { build } from "tsdown";
 import { fileURLToPath } from "url";
 import { promisify } from "util";
 
 const execAsync = promisify(exec);
+
+function findPackageInNodeModules(startDir, packageName) {
+    let dir = startDir;
+    while (dir !== path.dirname(dir)) {
+        const candidate = path.join(dir, "node_modules", packageName);
+        if (existsSync(candidate)) {
+            return candidate;
+        }
+        const pnpmDir = path.join(dir, "node_modules", ".pnpm");
+        if (existsSync(pnpmDir)) {
+            try {
+                const entries = readdirSync(pnpmDir);
+                for (const entry of entries) {
+                    if (entry.startsWith(`${packageName}@`)) {
+                        const nested = path.join(pnpmDir, entry, "node_modules", packageName);
+                        if (existsSync(nested)) {
+                            return nested;
+                        }
+                    }
+                }
+            } catch (_e) {
+                // Continue searching up
+            }
+        }
+        dir = path.dirname(dir);
+    }
+    return null;
+}
 
 /**
  * Standard build function for Fern generators
@@ -20,9 +49,10 @@ const execAsync = promisify(exec);
  *   - array of strings: ['../base/src/asIs', '../base/src/template'] - copies each to dist/
  *   - object: { from: '../base/src/asIs', to: 'dist/asIs' } - custom destination
  *   - array of objects: [{ from: '...', to: '...' }, ...]
+ * @param {string[]} [options.copyNativeModules=[]] - Package names with native .node files to copy to dist
  */
 export async function buildGenerator(dirname, options = {}) {
-    const { entry = "src/cli.ts", tsdownOptions = {}, copy = null } = options;
+    const { entry = "src/cli.ts", tsdownOptions = {}, copy = null, copyNativeModules = [] } = options;
 
     // Build with tsdown (merge default options with custom ones)
     const defaultTsdownOptions = {
@@ -33,6 +63,11 @@ export async function buildGenerator(dirname, options = {}) {
         inlineOnly: false,
         outputOptions: {
             codeSplitting: false
+        },
+        inputOptions: {
+            resolve: {
+                conditionNames: ["development", "source", "import", "default"]
+            }
         },
         outDir: "dist"
     };
@@ -56,6 +91,21 @@ export async function buildGenerator(dirname, options = {}) {
                     recursive: true,
                     force: true
                 });
+            }
+        }
+    }
+
+    if (copyNativeModules.length > 0) {
+        const outDir = tsdownOptions.outDir || defaultTsdownOptions.outDir;
+        for (const moduleName of copyNativeModules) {
+            const moduleDir = findPackageInNodeModules(dirname, moduleName);
+            if (moduleDir) {
+                const files = await readdir(moduleDir);
+                for (const file of files) {
+                    if (file.endsWith(".node")) {
+                        await cp(path.join(moduleDir, file), path.join(dirname, outDir, file));
+                    }
+                }
             }
         }
     }
