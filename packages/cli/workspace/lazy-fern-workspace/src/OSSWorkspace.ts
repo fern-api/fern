@@ -504,7 +504,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
-    private async convertSpecsOverrideToSpecs(
+    protected async convertSpecsOverrideToSpecs(
         specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<Spec[]> {
         // Handle conjure schema case
