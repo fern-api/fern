@@ -1,9 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.17.3
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 62
+
 - version: 0.17.2
   changelogEntry:
     - summary: |
-        Add serde helpers for base64 and BigInt types to properly serialize/deserialize these types
+        Add serde helpers for base64 and BigInt typesto properly serialize/deserialize these types
         in JSON. Add execute_request_base64 method for handling base64 primitive endpoint responses.
         Fix union variant serde rename to be case-sensitive for proper JSON deserialization.
       type: fix
