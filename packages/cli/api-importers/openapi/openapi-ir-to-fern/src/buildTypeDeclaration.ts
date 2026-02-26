@@ -144,12 +144,12 @@ export function buildObjectTypeDeclaration({
     namespace: string | undefined;
     declarationDepth: number;
 }): ConvertedTypeDeclaration {
-    const shouldSkipReadonly =
-        context.isInState(State.Request) &&
-        context.options.respectReadonlySchemas &&
-        (context.getEndpointMethod() === "POST" ||
-            context.getEndpointMethod() === "PUT" ||
-            context.getEndpointMethod() === "PATCH");
+    const isInRequestState = context.isInState(State.Request);
+    const respectReadonlySchemas = context.options.respectReadonlySchemas;
+    const endpointMethod = context.getEndpointMethod();
+    const isWriteMethod = endpointMethod === "POST" || endpointMethod === "PUT" || endpointMethod === "PATCH";
+
+    const shouldSkipReadonly = isInRequestState && respectReadonlySchemas && isWriteMethod;
 
     let readOnlyPropertyPresent = false;
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
@@ -300,11 +300,16 @@ export function buildObjectTypeDeclaration({
     objectTypeDeclaration.inline = getInline(schema, declarationDepth);
 
     const name = schema.nameOverride ?? schema.generatedName;
+    const finalName =
+        readOnlyPropertyPresent && context.options.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name;
+
+    // Record the final name mapping for reference resolution
+    if (finalName !== name) {
+        context.setSchemaFinalName(name, finalName);
+    }
+
     return {
-        name:
-            readOnlyPropertyPresent && context.options.respectReadonlySchemas && !shouldSkipReadonly
-                ? `${name}Read`
-                : name,
+        name: finalName,
         schema: objectTypeDeclaration
     };
 }
