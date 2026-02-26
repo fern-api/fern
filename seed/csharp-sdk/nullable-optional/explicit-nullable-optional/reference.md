@@ -1043,3 +1043,4 @@ await client.NullableOptional.GetSearchResultsAsync(
 </dd>
 </dl>
 </details>
+
