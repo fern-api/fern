@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.0
+  changelogEntry:
+    - summary: |
+        Update AI example enhancement to use fdr-lambda endpoint (AWS Bedrock)
+        instead of fdr-lambda-docs (OpenAI). Rename DEFAULT_FDR_LAMBDA_DOCS_ORIGIN
+        to DEFAULT_FDR_LAMBDA_ORIGIN.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.90.0
   changelogEntry:
     - summary: |
