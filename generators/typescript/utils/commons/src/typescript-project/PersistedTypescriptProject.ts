@@ -2,7 +2,8 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
-import { execSync } from "child_process";
+import { execFile } from "child_process";
+import { promisify } from "util";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
@@ -157,13 +158,14 @@ export class PersistedTypescriptProject {
      * available on the system PATH (e.g. globally installed in Docker).
      * When true, callers can skip installing packages entirely.
      */
-    public areCheckFixToolsAvailable(logger: Logger): boolean {
+    public async areCheckFixToolsAvailable(logger: Logger): Promise<boolean> {
         if (this.checkFixToolBinaries.length === 0) {
             return true;
         }
+        const execFileAsync = promisify(execFile);
         for (const binary of this.checkFixToolBinaries) {
             try {
-                execSync(`which ${binary}`, { stdio: "ignore" });
+                await execFileAsync("which", [binary]);
             } catch {
                 logger.debug(`Tool '${binary}' not found on PATH, will install check:fix packages`);
                 return false;
