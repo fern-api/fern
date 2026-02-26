@@ -1,14 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
-    getLatestVersionFromNpm,
-    getLatestVersionFromPypi,
-    getLatestVersionFromMaven,
-    getLatestVersionFromNuget,
-    getLatestVersionFromRubyGems,
-    getLatestVersionFromGoProxy,
+    getLatestTag,
     getLatestVersionFromCrates,
-    getLatestTag
+    getLatestVersionFromGoProxy,
+    getLatestVersionFromMaven,
+    getLatestVersionFromNpm,
+    getLatestVersionFromNuget,
+    getLatestVersionFromPypi,
+    getLatestVersionFromRubyGems
 } from "../computeSemanticVersion.js";
 
 // ─── Helpers ────────────────────────────────────────────────────────
