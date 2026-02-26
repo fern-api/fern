@@ -221,7 +221,7 @@ export async function runRemoteGenerationForGenerator({
         organization,
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
         context: interactiveTaskContext,
-        version,
+        version: resolvedVersion,
         intermediateRepresentation: {
             ...ir,
             fdrApiDefinitionId,
