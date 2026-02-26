@@ -195,9 +195,11 @@ export class TypeInstantiation extends AstNode {
                 break;
             case "string":
                 writer.write(
-                    this.internalType.value.includes('"') || this.internalType.value.includes("\n")
-                        ? `\`${this.internalType.value}\``
-                        : `"${escapeGoString(this.internalType.value)}"`
+                    this.internalType.value.includes("`")
+                        ? `"${escapeGoString(this.internalType.value)}"`
+                        : this.internalType.value.includes('"') || this.internalType.value.includes("\n")
+                          ? `\`${this.internalType.value}\``
+                          : `"${escapeGoString(this.internalType.value)}"`
                 );
                 break;
             case "struct":
@@ -392,7 +394,11 @@ export class TypeInstantiation extends AstNode {
                 return;
             case "string":
                 writer.write(
-                    value.includes('"') || value.includes("\n") ? `\`${value}\`` : `"${escapeGoString(value)}"`
+                    value.includes("`")
+                        ? `"${escapeGoString(value)}"`
+                        : value.includes('"') || value.includes("\n")
+                          ? `\`${value}\``
+                          : `"${escapeGoString(value)}"`
                 );
                 return;
             case "number":
