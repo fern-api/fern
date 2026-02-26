@@ -583,7 +583,9 @@ export class UnionGenerator extends FileGenerator<CSharpFile, ModelGeneratorCont
                     const typeDecl = this.model.dereferenceType(type.shape.typeId).typeDeclaration;
                     const hasDiscriminantProperty =
                         typeDecl.shape.type === "object" &&
-                        typeDecl.shape.properties.some((prop) => prop.name.wireValue === discriminatorPropName);
+                        [...typeDecl.shape.properties, ...(typeDecl.shape.extendedProperties ?? [])].some(
+                            (prop) => prop.name.wireValue === discriminatorPropName
+                        );
                     if (!hasDiscriminantProperty) {
                         variantsNeedingStrippedJson.add(type.discriminantValue.wireValue);
                     }
