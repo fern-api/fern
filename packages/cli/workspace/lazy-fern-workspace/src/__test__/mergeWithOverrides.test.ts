@@ -90,7 +90,7 @@ describe("mergeWithOverrides", () => {
 
         // Both the existing key and the new key from the override are present
         expect(result.foo.bar.existingKey).toBe("original");
-        expect(result.foo.bar.newKey).toBe("added");
+        expect((result.foo.bar as Record<string, unknown>).newKey).toBe("added");
     });
 
     it("throws when the override file does not exist", async () => {

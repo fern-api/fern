@@ -51,7 +51,7 @@ async function readExistingOverrides(overridesFilepath: string, context: TaskCon
     return parsedOverrides;
 }
 
-function generateOverridesContent({
+export function generateOverridesContent({
     ir,
     existingOverrides,
     includeModels,
