@@ -22,7 +22,7 @@ export async function runFernCli(
     return loggingExeca(
         CONSOLE_LOGGER,
         "node",
-        ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args],
+        ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.mjs"), ...args],
         {
             ...execaOptions,
             env,
@@ -44,7 +44,7 @@ export function captureFernCli(
     return runExeca(
         CONSOLE_LOGGER,
         "node",
-        ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args],
+        ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.mjs"), ...args],
         {
             ...execaOptions,
             env: {

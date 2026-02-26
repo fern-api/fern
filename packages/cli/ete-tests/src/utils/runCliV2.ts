@@ -198,5 +198,5 @@ async function copyDirectory(src: string, dest: string): Promise<void> {
  * Gets the path to the cli-v2 binary.
  */
 function getCliV2BinaryPath(): string {
-    return path.join(__dirname, "../../../cli-v2/dist/dev/cli.cjs");
+    return path.join(__dirname, "../../../cli-v2/dist/dev/cli.mjs");
 }
