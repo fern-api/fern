@@ -6,7 +6,6 @@ import { createReplayBranch } from "../github/createReplayBranch";
 import type { ExistingPullRequest } from "../github/findExistingUpdatablePR";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
-import { postConflictComments } from "../github/postConflictComments";
 import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
@@ -239,10 +238,6 @@ export class GithubStep extends BaseStep {
                     throw error;
                 }
             }
-        }
-
-        if (!this.config.previewMode && replayConflictInfo?.hasConflicts === true && result.prNumber != null) {
-            await postConflictComments(octokit, owner, repo, result.prNumber, replayResult, this.logger);
         }
 
         if (
