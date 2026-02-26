@@ -9,6 +9,11 @@
         `email.utils.parsedate_to_datetime`. Compatible with both Pydantic V1 (`__get_validators__`)
         and V2 (`__get_pydantic_core_schema__`), passing mypy strict type checking.
       type: feat
+    - summary: |
+        Fix code snippet generation for RFC 2822 datetime fields to use
+        `email.utils.parsedate_to_datetime()` with RFC 2822 format strings instead of
+        `datetime.fromisoformat()` with ISO 8601 format.
+      type: fix
   createdAt: "2026-02-26"
   irVersion: 65
 
