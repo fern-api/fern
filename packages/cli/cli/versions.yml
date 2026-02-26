@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.3
+  changelogEntry:
+    - summary: |
+        Treat JSON Schema `const` values as literal types in the IR regardless of the
+        `coerceEnumsToLiterals` setting. Previously, `const` was converted to a single-value
+        enum, which meant generated SDKs (e.g. Python Pydantic models) did not auto-populate
+        a default value for fields that can only ever be one value. Now `const` always produces
+        a literal type, so generators can automatically set the default.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.90.2
   changelogEntry:
     - summary: |
