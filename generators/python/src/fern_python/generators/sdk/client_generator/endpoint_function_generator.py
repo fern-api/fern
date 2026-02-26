@@ -1466,24 +1466,12 @@ class EndpointFunctionGenerator:
         )
 
         if query_parameter.allow_multiple:
-            # allow_multiple means the type is Union[T, Sequence[T]] (possibly optional).
-            # We need to handle both single values and sequences.
-            if is_optional:
+            def write_comma_join(writer: AST.NodeWriter) -> None:
+                writer.write(
+                    f'",".join(map(str, {param_name})) if isinstance({param_name}, (list, tuple, set)) else {param_name}'
+                )
 
-                def write_comma_join(writer: AST.NodeWriter) -> None:
-                    writer.write(
-                        f'",".join(map(str, {param_name})) if isinstance({param_name}, list) else {param_name}'
-                    )
-
-                return AST.Expression(AST.CodeWriter(write_comma_join))
-            else:
-
-                def write_comma_join(writer: AST.NodeWriter) -> None:
-                    writer.write(
-                        f'",".join(map(str, {param_name})) if isinstance({param_name}, list) else {param_name}'
-                    )
-
-                return AST.Expression(AST.CodeWriter(write_comma_join))
+            return AST.Expression(AST.CodeWriter(write_comma_join))
         else:
             # Direct list/set type
             if is_optional:
