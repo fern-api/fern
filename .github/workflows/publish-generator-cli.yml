@@ -32,21 +32,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-tags: false
 
       - name: Install
         uses: ./.github/actions/install
 
       - name: Get version
         id: get_version
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           # Build seed CLI
           pnpm seed:build
 
-          # Get previous version from git history if it exists
-          previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/generator-cli/versions.yml | tail -n 1)
+          # Get previous version of versions.yml using GitHub API (avoids fetching all branches/tags)
+          previous_sha=$(gh api "/repos/${{ github.repository }}/commits?path=packages/generator-cli/versions.yml&per_page=2" --jq '.[1].sha' 2>/dev/null || true)
 
-          if [ -n "${previous_commit}" ] && git show ${previous_commit}:packages/generator-cli/versions.yml > /tmp/previous_versions.yml 2>/dev/null; then
+          if [ -n "${previous_sha}" ] && [ "${previous_sha}" != "null" ]; then
+            gh api "/repos/${{ github.repository }}/contents/packages/generator-cli/versions.yml?ref=${previous_sha}" --jq '.content' | base64 -d > /tmp/previous_versions.yml
             # Compare with previous version
             result=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml \
               --path packages/generator-cli/versions.yml \

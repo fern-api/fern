@@ -65,8 +65,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          fetch-tags: true
+          fetch-tags: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -75,15 +74,33 @@ jobs:
         run: |
           pnpm seed:build
 
-      - name: Print version
+      - name: Compute git version
+        id: git-version
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git_version="$(./scripts/git-version.sh)"
-          echo Publishing version: "${git_version}"
+          # Replicate git describe --tags --always --first-parent using GitHub API
+          # This avoids needing full git history + all tags (saves fetching ~750 branches)
+          CURRENT_SHA="${{ github.sha }}"
+          SHORT_SHA="${CURRENT_SHA:0:7}"
+
+          # Check if current commit is tagged
+          EXACT_TAG=$(gh api "/repos/${{ github.repository }}/git/matching-refs/tags/" --jq \
+            "[.[] | select(.object.sha == \"${CURRENT_SHA}\")] | first | .ref // empty" 2>/dev/null | sed 's|refs/tags/||' || true)
+
+          if [ -n "$EXACT_TAG" ]; then
+            echo "version=$EXACT_TAG" >> $GITHUB_OUTPUT
+          else
+            # Find the latest tag and distance from HEAD
+            LATEST_TAG=$(gh api "/repos/${{ github.repository }}/tags?per_page=1" --jq '.[0].name')
+            AHEAD_BY=$(gh api "/repos/${{ github.repository }}/compare/${LATEST_TAG}...${{ github.sha }}" --jq '.ahead_by')
+            echo "version=${LATEST_TAG}-${AHEAD_BY}-g${SHORT_SHA}" >> $GITHUB_OUTPUT
+          fi
+          echo "Publishing version: $(cat $GITHUB_OUTPUT | grep version= | cut -d= -f2)"
 
       - name: Publish Dev CLI
         run: |
-          git_version="$(./scripts/git-version.sh)"
-          pnpm seed publish cli --ver ${git_version} --dev --log-level debug
+          pnpm seed publish cli --ver ${{ steps.git-version.outputs.version }} --dev --log-level debug
 
   live-test:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
@@ -122,7 +139,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 20
+          fetch-tags: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -134,17 +151,18 @@ jobs:
       - name: Publish + Register CLI
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/cli/cli/versions.yml | tail -n 1)
-          current_commit=$(git log -n 1 --pretty=format:"%h" -- packages/cli/cli/versions.yml)
+          # Get the previous version of versions.yml using GitHub API (avoids fetching all branches)
+          previous_sha=$(gh api "/repos/${{ github.repository }}/commits?path=packages/cli/cli/versions.yml&per_page=2" --jq '.[1].sha')
+          current_sha=$(gh api "/repos/${{ github.repository }}/commits?path=packages/cli/cli/versions.yml&per_page=1" --jq '.[0].sha')
 
-          # Get the previous version of the file using the specific commit that last changed it
-          git show ${previous_commit}:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
+          gh api "/repos/${{ github.repository }}/contents/packages/cli/cli/versions.yml?ref=${previous_sha}" --jq '.content' | base64 -d > tmp_cli_previous_versions.yml
 
-          echo "Preview of the previous file (${previous_commit})"
+          echo "Preview of the previous file (${previous_sha:0:7})"
           head tmp_cli_previous_versions.yml
 
-          echo "Preview of the current file (${current_commit})"
+          echo "Preview of the current file (${current_sha:0:7})"
           head packages/cli/cli/versions.yml
 
           # Publish dev CLI at the same version as prod
@@ -166,7 +184,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-tags: true
+          fetch-tags: false
 
       - name: Install
         uses: ./.github/actions/install
