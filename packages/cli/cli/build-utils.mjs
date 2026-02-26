@@ -71,6 +71,7 @@ export async function buildCli(config) {
     const buildConfig = {
         entry: ["src/cli.ts"],
         format: ["esm"],
+        shims: true,
         minify,
         outDir,
         sourcemap: true,

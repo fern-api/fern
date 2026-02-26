@@ -101,8 +101,8 @@ catalog:
   "@octokit/rest": ^22.0.1
   "@open-rpc/meta-schema": ^1.14.9
   "@redocly/openapi-core": ^1.4.1
-  "@rolldown/binding-darwin-arm64": 1.0.0-rc.3
-  "@rolldown/binding-linux-x64-gnu": 1.0.0-rc.3
+  "@rolldown/binding-darwin-arm64": 1.0.0-rc.5
+  "@rolldown/binding-linux-x64-gnu": 1.0.0-rc.5
   "@rolldown/plugin-node-polyfills": 1.0.3
   "@types/ajv": ^1.0.0
   "@types/axios": ^0.14.0
@@ -256,7 +256,7 @@ catalog:
   ts-essentials: ^10.1.1
   ts-morph: ^27.0.2
   ts-poet: ^6.7.0
-  tsdown: 0.20.3
+  tsdown: 0.21.0-beta.2
   tsup: ^8.5.1
   tsx: ^4.21.0
   turbo: ^2.8.10
