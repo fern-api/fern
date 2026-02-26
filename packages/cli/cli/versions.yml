@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.89.0
+- version: 3.90.0
   changelogEntry:
     - summary: |
         Add support for multiple override files in OpenAPI spec configuration. The
@@ -9,6 +9,15 @@
       type: feat
   createdAt: "2026-02-25"
   irVersion: 65
+
+- version: 3.89.0
+  changelogEntry:
+    - summary: |
+        Added `collapsible` and `collapsed-by-default` support for API reference layout section items in `docs.yml`.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.88.4
   changelogEntry:
     - summary: |
