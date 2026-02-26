@@ -139,49 +139,8 @@ paths:
                     type: array
                     items:
                       type: string
-  /stream/events:
-    get:
-      operationId: streamEvents
-      x-fern-streaming:
-        format: sse
-      parameters:
-        - name: tags
-          in: query
-          required: true
-          description: List of tags. Serialized as a comma-separated list.
-          style: form
-          explode: false
-          schema:
-            type: array
-            items:
-              type: string
-        - name: ids
-          in: query
-          required: false
-          description: Optional list of IDs. Serialized as a comma-separated list.
-          style: form
-          explode: false
-          schema:
-            type: array
-            items:
-              type: string
-      responses:
-        200:
-          description: Streaming event response
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StreamEvent"
-
 components:
   schemas:
-    StreamEvent:
-      type: object
-      properties:
-        delta:
-          type: string
-        tokens:
-          type: integer
     User:
       type: object
       properties:

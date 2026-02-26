@@ -10,14 +10,12 @@ if typing.TYPE_CHECKING:
     from .search_request_neighbor import SearchRequestNeighbor
     from .search_request_neighbor_required import SearchRequestNeighborRequired
     from .search_response import SearchResponse
-    from .stream_event import StreamEvent
     from .user import User
 _dynamic_imports: typing.Dict[str, str] = {
     "NestedUser": ".nested_user",
     "SearchRequestNeighbor": ".search_request_neighbor",
     "SearchRequestNeighborRequired": ".search_request_neighbor_required",
     "SearchResponse": ".search_response",
-    "StreamEvent": ".stream_event",
     "User": ".user",
 }
 
@@ -43,11 +41,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "NestedUser",
-    "SearchRequestNeighbor",
-    "SearchRequestNeighborRequired",
-    "SearchResponse",
-    "StreamEvent",
-    "User",
-]
+__all__ = ["NestedUser", "SearchRequestNeighbor", "SearchRequestNeighborRequired", "SearchResponse", "User"]
