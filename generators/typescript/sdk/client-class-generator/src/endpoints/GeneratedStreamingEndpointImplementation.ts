@@ -7,6 +7,7 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { getReadableTypeNode } from "../getReadableTypeNode.js";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse.js";
 import { buildUrl } from "./utils/buildUrl.js";
+import { getAvailabilityDocs } from "./utils/getAvailabilityDocs.js";
 import { generateEndpointMetadata } from "./utils/generateEndpointMetadata.js";
 import {
     getAbortSignalExpression,
@@ -197,7 +198,18 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getDocs(): string | undefined {
-        return this.endpoint.docs;
+        const groups: string[] = [];
+        const availabilityDoc = getAvailabilityDocs(this.endpoint);
+        if (availabilityDoc != null) {
+            groups.push(availabilityDoc);
+        }
+        if (this.endpoint.docs) {
+            groups.push(this.endpoint.docs);
+        }
+        if (groups.length === 0) {
+            return undefined;
+        }
+        return groups.join("\n\n");
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {

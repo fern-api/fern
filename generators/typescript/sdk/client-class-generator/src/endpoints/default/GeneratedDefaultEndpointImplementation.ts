@@ -14,6 +14,7 @@ import {
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse.js";
+import { getAvailabilityDocs } from "../utils/getAvailabilityDocs.js";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
@@ -115,6 +116,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     public getDocs(context: SdkContext): string | undefined {
         const groups: string[] = [];
+        const availabilityDoc = getAvailabilityDocs(this.endpoint);
+        if (availabilityDoc != null) {
+            groups.push(availabilityDoc);
+        }
         if (this.endpoint.docs) {
             groups.push(this.endpoint.docs);
         }

@@ -8,6 +8,7 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { getReadableTypeNode } from "../getReadableTypeNode.js";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse.js";
 import { buildUrl } from "./utils/buildUrl.js";
+import { getAvailabilityDocs } from "./utils/getAvailabilityDocs.js";
 import { generateEndpointMetadata } from "./utils/generateEndpointMetadata.js";
 import {
     getAbortSignalExpression,
@@ -146,6 +147,10 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
 
     public getDocs(context: SdkContext): string | undefined {
         const lines: string[] = [];
+        const availabilityDoc = getAvailabilityDocs(this.endpoint);
+        if (availabilityDoc != null) {
+            lines.push(availabilityDoc);
+        }
         if (this.endpoint.docs) {
             lines.push(this.endpoint.docs);
         }
