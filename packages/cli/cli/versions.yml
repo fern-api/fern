@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 3.89.1
+  changelogEntry:
+    - summary: |
+        Fix wire test failures for APIs with both JSON and bytes endpoints at the same path.
+        WireMock mappings are no longer generated for bytes request body endpoints, which
+        prevents ambiguous matches that return empty response bodies.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 3.89.0
   changelogEntry:
     - summary: |
