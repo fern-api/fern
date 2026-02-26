@@ -2246,7 +2246,9 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Recursively walks an object and resolves .mdx/.md file path links in all `docs` string fields.
+     * Recursively walks an object and resolves .mdx/.md file path links in all string values.
+     * Rather than matching on a specific key name, this checks every string for markdown links
+     * containing .mdx/.md extensions — the regex in resolveLinksInMarkdownString is the real filter.
      */
     private resolveLinksInObject(
         obj: unknown,
@@ -2264,7 +2266,7 @@ export class DocsDefinitionResolver {
         }
         const record = obj as Record<string, unknown>;
         for (const [key, value] of Object.entries(record)) {
-            if (key === "docs" && typeof value === "string") {
+            if (typeof value === "string" && value.includes(".md")) {
                 record[key] = this.resolveLinksInMarkdownString(value, markdownFilesToPathName, metadata);
             } else if (typeof value === "object") {
                 this.resolveLinksInObject(value, markdownFilesToPathName, metadata);
