@@ -12,7 +12,6 @@ body:
         - "SDKs"
         - "Docs"
         - "Dashboard"
-        - "Fern's Documentation"
         - "Other"
     validations:
       required: true

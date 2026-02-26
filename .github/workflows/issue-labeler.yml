@@ -31,7 +31,6 @@ jobs:
                 "SDKs": "component:sdks",
                 "Docs": "component:docs",
                 "Dashboard": "component:dashboard",
-                "Fern's Documentation": "component:fern-docs",
                 "Other": "component:other",
               };
               if (componentMap[component]) {

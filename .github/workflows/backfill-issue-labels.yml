@@ -38,7 +38,6 @@ jobs:
               "Fern Docs": "component:docs",
               "Dashboard": "component:dashboard",
               "Fern Editor": "component:dashboard",
-              "Fern's Documentation": "component:fern-docs",
               "Other": "component:other",
             };
 
