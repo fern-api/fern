@@ -116,4 +116,42 @@ describe("Test makeRequest", () => {
         const second = isCacheNoStoreSupported();
         expect(second).toBe(true);
     });
+
+    it("should not include cache option when runtime does not support it (e.g. Cloudflare Workers)", async () => {
+        // Mock Request constructor to throw when cache option is passed,
+        // simulating runtimes like Cloudflare Workers
+        const OriginalRequest = globalThis.Request;
+        globalThis.Request = class MockRequest {
+            constructor(_url: string, init?: RequestInit) {
+                if (init?.cache != null) {
+                    throw new TypeError("The 'cache' field on 'RequestInitializerDict' is not implemented.");
+                }
+            }
+        } as unknown as typeof Request;
+
+        try {
+            // Reset so the detection runs fresh with the mocked Request
+            resetCacheNoStoreSupported();
+            expect(isCacheNoStoreSupported()).toBe(false);
+
+            await makeRequest(
+                mockFetch,
+                mockGetUrl,
+                "GET",
+                mockHeaders,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                undefined,
+                true,
+            );
+            const [, calledOptions] = mockFetch.mock.calls[0];
+            expect(calledOptions.cache).toBeUndefined();
+        } finally {
+            // Restore original Request
+            globalThis.Request = OriginalRequest;
+            resetCacheNoStoreSupported();
+        }
+    });
 });
