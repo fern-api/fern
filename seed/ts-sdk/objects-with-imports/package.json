@@ -23,6 +23,30 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./commons": {
+            "types": "./dist/cjs/api/resources/commons/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/commons/exports.d.mts",
+                "default": "./dist/esm/api/resources/commons/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/commons/exports.d.ts",
+                "default": "./dist/cjs/api/resources/commons/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/commons/exports.js"
+        },
+        "./file": {
+            "types": "./dist/cjs/api/resources/file/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/file/exports.d.mts",
+                "default": "./dist/esm/api/resources/file/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/file/exports.d.ts",
+                "default": "./dist/cjs/api/resources/file/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/file/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

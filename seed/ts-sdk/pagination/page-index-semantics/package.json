@@ -23,6 +23,42 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./complex": {
+            "types": "./dist/cjs/api/resources/complex/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/complex/exports.d.mts",
+                "default": "./dist/esm/api/resources/complex/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/complex/exports.d.ts",
+                "default": "./dist/cjs/api/resources/complex/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/complex/exports.js"
+        },
+        "./inlineUsers": {
+            "types": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/inlineUsers/resources/inlineUsers/exports.d.mts",
+                "default": "./dist/esm/api/resources/inlineUsers/resources/inlineUsers/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.js"
+        },
+        "./users": {
+            "types": "./dist/cjs/api/resources/users/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/users/exports.d.mts",
+                "default": "./dist/esm/api/resources/users/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/users/exports.d.ts",
+                "default": "./dist/cjs/api/resources/users/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/users/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

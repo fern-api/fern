@@ -23,6 +23,18 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./nullableOptional": {
+            "types": "./dist/cjs/api/resources/nullableOptional/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/nullableOptional/exports.d.mts",
+                "default": "./dist/esm/api/resources/nullableOptional/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/nullableOptional/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nullableOptional/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/nullableOptional/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
