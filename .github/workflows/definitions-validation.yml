@@ -34,5 +34,5 @@ jobs:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
           pnpm turbo run dist:cli:prod --filter @fern-api/cli
-          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.mjs"
           node $cli_path check

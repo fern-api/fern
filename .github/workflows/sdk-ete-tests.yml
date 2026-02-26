@@ -224,7 +224,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.SEED_GITHUB_TOKEN }}
         run: |
-          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs"
+          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.mjs"
           cd test-definitions
           # Use 'all' for push events (merges to main), 'exhaustive' for PRs, or the input value for workflow_dispatch
           if [ "${{ github.event_name }}" = "push" ]; then
@@ -283,7 +283,7 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.SEED_GITHUB_TOKEN }}
         run: |
-          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs"
+          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.mjs"
           cd test-definitions
           # Use 'all' for push events (merges to main), 'exhaustive' for PRs, or the input value for workflow_dispatch
           if [ "${{ github.event_name }}" = "push" ]; then

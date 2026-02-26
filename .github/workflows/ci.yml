@@ -254,7 +254,7 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
           pnpm turbo run dist:cli:dev --filter @fern-api/cli
-          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs" 
+          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.mjs" 
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
   generate-docs-test-windows:
@@ -281,13 +281,13 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
           pnpm turbo run dist:cli:dev --filter @fern-api/cli
-          $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.cjs"
-          if (-not (Test-Path $cliPath)) {
-            Write-Error "CLI path does not exist: $cliPath"
-            exit 1
-          }
-          cd windows
-          node $cliPath generate --docs --log-level trace
+                    $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.mjs"
+                    if (-not (Test-Path $cliPath)) {
+                      Write-Error "CLI path does not exist: $cliPath"
+                      exit 1
+                    }
+                    cd windows
+                    node $cliPath generate --docs --log-level trace
           if ($LASTEXITCODE -ne 0) {
             Write-Error "Command failed with exit code $LASTEXITCODE"
             exit $LASTEXITCODE
@@ -317,10 +317,10 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
           pnpm turbo run dist:cli:dev --filter @fern-api/cli
-          $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.cjs"
-          if (-not (Test-Path $cliPath)) {
-            Write-Error "CLI path does not exist: $cliPath"
-            exit 1
-          }
-          $scriptPath = Join-Path $env:GITHUB_WORKSPACE "scripts\live-test.ps1"
+                    $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.mjs"
+                    if (-not (Test-Path $cliPath)) {
+                      Write-Error "CLI path does not exist: $cliPath"
+                      exit 1
+                    }
+                    $scriptPath= Join-Path $env:GITHUB_WORKSPACE "scripts\live-test.ps1"
           & $scriptPath -cli_path $cliPath -token $env:FERN_ORG_TOKEN_DEV

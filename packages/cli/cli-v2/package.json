@@ -83,7 +83,6 @@
     "is-ci": "catalog:",
     "js-yaml": "catalog:",
     "jsonwebtoken": "catalog:",
-    "keytar": "^7.9.0",
     "ora": "catalog:",
     "posthog-node": "^5.14.0",
     "tsdown": "catalog:",
