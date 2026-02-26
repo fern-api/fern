@@ -1,42 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../cli/workspace/loader"
-    },
-    {
-      "path": "../cli/task-context"
-    },
-    {
-      "path": "../cli/login"
-    },
-    {
-      "path": "../commons/logging-execa"
-    },
-    {
-      "path": "../cli/logger"
-    },
-    {
-      "path": "../cli/generation/local-generation/local-workspace-runner"
-    },
-    {
-      "path": "../commons/fs-utils"
-    },
-    {
-      "path": "../commons/core-utils"
-    },
-    {
-      "path": "../cli/configuration"
-    },
-    {
-      "path": "../cli/workspace/commons"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

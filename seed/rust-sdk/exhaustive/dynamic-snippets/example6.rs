@@ -11,10 +11,8 @@ async fn main() {
     client
         .endpoints
         .container
-        .get_and_return_optional(
-            &Some(ObjectWithRequiredField {
-                string: "string".to_string(),
-            }),
+        .get_and_return_map_of_prim_to_undiscriminated_union(
+            &HashMap::from([("string".to_string(), MixedType::Double(1.1))]),
             None,
         )
         .await;

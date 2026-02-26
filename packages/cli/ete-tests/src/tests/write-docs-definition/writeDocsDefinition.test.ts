@@ -11,7 +11,7 @@ describe("write-docs-definition", () => {
     it.skip("products-with-versions", () => testFixture("products-with-versions"), 10_000);
 });
 
-async function testFixture(fixtureName: string) {
+async function testFixture(fixtureName: string, signal?: AbortSignal) {
     const fixturePath = path.join(FIXTURES_DIR, fixtureName);
     const outputPath = path.join(fixturePath, "docs-definition.json");
 
@@ -22,7 +22,8 @@ async function testFixture(fixtureName: string) {
 
     // Generate docs definition
     await runFernCli(["write-docs-definition", "docs-definition.json", "--log-level", "debug"], {
-        cwd: fixturePath
+        cwd: fixturePath,
+        signal
     });
 
     // Read and verify output

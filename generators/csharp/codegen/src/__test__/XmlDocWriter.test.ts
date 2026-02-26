@@ -43,45 +43,91 @@ function escapeXmlDocContent(text: string): string {
 }
 
 describe("XmlDocWriter.escapeXmlDocContent", () => {
-    describe("preserves valid XML doc tags", () => {
-        it("should preserve anchor tags with href", () => {
-            const result = escapeXmlDocContent('For more information, read <a href="https://example.com">docs</a>');
-            expect(result).toBe('For more information, read <a href="https://example.com">docs</a>');
-        });
-
-        it("should preserve code tags", () => {
+    describe("converts HTML tags to XMLDoc equivalents", () => {
+        it("should convert inline <code> to <c>", () => {
             const result = escapeXmlDocContent("Use the <code>GetValue()</code> method");
-            expect(result).toBe("Use the <code>GetValue()</code> method");
+            expect(result).toBe("Use the <c>GetValue()</c> method");
         });
 
-        it("should preserve list tags", () => {
+        it("should convert <pre><code> to <code> (block code)", () => {
+            const result = escapeXmlDocContent("<pre><code>var x = 1;</code></pre>");
+            expect(result).toBe("<code>var x = 1;</code>");
+        });
+
+        it("should convert <pre> without <code> child to <code>", () => {
+            const result = escapeXmlDocContent("<pre>var x = 1;</pre>");
+            expect(result).toBe("<code>var x = 1;</code>");
+        });
+
+        it("should convert <a href> to <see href>", () => {
+            const result = escapeXmlDocContent('For more information, read <a href="https://example.com">docs</a>');
+            expect(result).toBe('For more information, read <see href="https://example.com">docs</see>');
+        });
+
+        it("should convert <ul><li> to <list type='bullet'>", () => {
             const result = escapeXmlDocContent("<ul><li>Item 1</li><li>Item 2</li></ul>");
-            expect(result).toBe("<ul><li>Item 1</li><li>Item 2</li></ul>");
+            expect(result).toBe(
+                '<list type="bullet"><item><description>Item 1</description></item><item><description>Item 2</description></item></list>'
+            );
         });
 
+        it("should convert <ol><li> to <list type='number'>", () => {
+            const result = escapeXmlDocContent("<ol><li>First</li><li>Second</li></ol>");
+            expect(result).toBe(
+                '<list type="number"><item><description>First</description></item><item><description>Second</description></item></list>'
+            );
+        });
+
+        it("should convert <p> to <para>", () => {
+            const result = escapeXmlDocContent("<p>First paragraph</p><p>Second paragraph</p>");
+            expect(result).toBe("<para>First paragraph</para><para>Second paragraph</para>");
+        });
+
+        it("should convert <em> to <i> and <strong> to <b>", () => {
+            const result = escapeXmlDocContent("This is <em>important</em> and <strong>critical</strong>");
+            expect(result).toBe("This is <i>important</i> and <b>critical</b>");
+        });
+
+        it("should convert deprecated <tt> to <c>", () => {
+            const result = escapeXmlDocContent("Use <tt>getValue()</tt> to retrieve");
+            expect(result).toBe("Use <c>getValue()</c> to retrieve");
+        });
+
+        it("should convert headings to <para>", () => {
+            const result = escapeXmlDocContent("<h3>Section Title</h3>");
+            expect(result).toBe("<para>Section Title</para>");
+        });
+
+        it("should handle nested HTML: <li> with <code>", () => {
+            const result = escapeXmlDocContent("<li><code>field</code>: description</li>");
+            expect(result).toBe("<item><description><c>field</c>: description</description></item>");
+        });
+
+        it("should convert case-insensitive HTML tags", () => {
+            const result = escapeXmlDocContent('<A HREF="https://example.com">Link</A>');
+            expect(result).toBe('<see href="https://example.com">Link</see>');
+        });
+
+        it("should strip div, span, table tags and keep content", () => {
+            const result = escapeXmlDocContent("<div><span>text</span></div>");
+            expect(result).toBe("text");
+        });
+    });
+
+    describe("preserves valid XMLDoc tags", () => {
         it("should preserve see cref tags", () => {
             const result = escapeXmlDocContent('See <see cref="MyClass"/> for details');
             expect(result).toBe('See <see cref="MyClass"/> for details');
         });
 
-        it("should preserve self-closing tags", () => {
+        it("should preserve self-closing br tags", () => {
             const result = escapeXmlDocContent("Line 1<br/>Line 2");
             expect(result).toBe("Line 1<br/>Line 2");
         });
 
-        it("should preserve self-closing tags with space", () => {
+        it("should normalize <br /> to <br/>", () => {
             const result = escapeXmlDocContent("Line 1<br />Line 2");
-            expect(result).toBe("Line 1<br />Line 2");
-        });
-
-        it("should preserve emphasis tags", () => {
-            const result = escapeXmlDocContent("This is <em>important</em> and <strong>critical</strong>");
-            expect(result).toBe("This is <em>important</em> and <strong>critical</strong>");
-        });
-
-        it("should preserve paragraph tags", () => {
-            const result = escapeXmlDocContent("<p>First paragraph</p><p>Second paragraph</p>");
-            expect(result).toBe("<p>First paragraph</p><p>Second paragraph</p>");
+            expect(result).toBe("Line 1<br/>Line 2");
         });
 
         it("should preserve paramref tags", () => {
@@ -122,9 +168,21 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
             expect(result).toBe("This is <u>underlined</u> text");
         });
 
-        it("should preserve tags case-insensitively", () => {
-            const result = escapeXmlDocContent('<A HREF="https://example.com">Link</A>');
-            expect(result).toBe('<A HREF="https://example.com">Link</A>');
+        it("should preserve already-valid <c> tags", () => {
+            const result = escapeXmlDocContent("Use <c>myMethod</c> here");
+            expect(result).toBe("Use <c>myMethod</c> here");
+        });
+
+        it("should preserve already-valid <para> tags", () => {
+            const result = escapeXmlDocContent("<para>Already XMLDoc</para>");
+            expect(result).toBe("<para>Already XMLDoc</para>");
+        });
+
+        it("should preserve already-valid <list> tags", () => {
+            const result = escapeXmlDocContent(
+                '<list type="bullet"><item><description>item</description></item></list>'
+            );
+            expect(result).toBe('<list type="bullet"><item><description>item</description></item></list>');
         });
     });
 
@@ -156,19 +214,24 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
     });
 
     describe("handles mixed content", () => {
-        it("should handle comparison within sentence with link", () => {
+        it("should handle comparison within sentence with converted link", () => {
             const result = escapeXmlDocContent('When x < y, see <a href="https://example.com">docs</a>');
-            expect(result).toBe('When x &lt; y, see <a href="https://example.com">docs</a>');
+            expect(result).toBe('When x &lt; y, see <see href="https://example.com">docs</see>');
         });
 
-        it("should handle multiple valid tags with escaped content", () => {
+        it("should handle multiple converted tags with escaped content", () => {
             const result = escapeXmlDocContent("Use <code>a < b</code> to check if a < b in the <em>comparison</em>");
-            expect(result).toBe("Use <code>a &lt; b</code> to check if a &lt; b in the <em>comparison</em>");
+            expect(result).toBe("Use <c>a &lt; b</c> to check if a &lt; b in the <i>comparison</i>");
         });
 
-        it("should preserve complex link with comparison text", () => {
+        it("should handle converted link with comparison text", () => {
             const result = escapeXmlDocContent('For values where n > 5, see <a href="/docs">documentation</a>');
-            expect(result).toBe('For values where n &gt; 5, see <a href="/docs">documentation</a>');
+            expect(result).toBe('For values where n &gt; 5, see <see href="/docs">documentation</see>');
+        });
+
+        it("should handle entity-encoded headings as text (not tags)", () => {
+            const result = escapeXmlDocContent("&lt;h5&gt;Title&lt;/h5&gt;");
+            expect(result).toBe("&lt;h5&gt;Title&lt;/h5&gt;");
         });
     });
 
@@ -216,9 +279,9 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
             expect(result).toBe("Em dash \u2014 here");
         });
 
-        it("should handle mixed entities and tags", () => {
+        it("should handle mixed entities and converted tags", () => {
             const result = escapeXmlDocContent('<a href="https://example.com">Link</a> &copy; 2024');
-            expect(result).toBe('<a href="https://example.com">Link</a> \u00A9 2024');
+            expect(result).toBe('<see href="https://example.com">Link</see> \u00A9 2024');
         });
     });
 
@@ -238,9 +301,9 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
             expect(result).toBe("<b><i>bold italic</i></b>");
         });
 
-        it("should handle tags with multiple attributes", () => {
+        it("should convert anchor tag keeping only href attribute", () => {
             const result = escapeXmlDocContent('<a href="https://example.com" target="_blank" rel="noopener">Link</a>');
-            expect(result).toBe('<a href="https://example.com" target="_blank" rel="noopener">Link</a>');
+            expect(result).toBe('<see href="https://example.com">Link</see>');
         });
 
         it("should handle real-world auth0 example", () => {
@@ -248,7 +311,7 @@ describe("XmlDocWriter.escapeXmlDocContent", () => {
                 'For more information, read <a href="https://www.auth0.com/docs/get-started/applications"> Applications in Auth0</a>'
             );
             expect(result).toBe(
-                'For more information, read <a href="https://www.auth0.com/docs/get-started/applications"> Applications in Auth0</a>'
+                'For more information, read <see href="https://www.auth0.com/docs/get-started/applications"> Applications in Auth0</see>'
             );
         });
     });

@@ -28,23 +28,23 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.nullable.create_user(
-  username: 'username',
-  tags: ['tags', 'tags'],
+  username: "username",
+  tags: %w[tags tags],
   metadata: {
-    created_at: '2024-01-15T09:30:00Z',
-    updated_at: '2024-01-15T09:30:00Z',
-    avatar: 'avatar',
+    created_at: "2024-01-15T09:30:00Z",
+    updated_at: "2024-01-15T09:30:00Z",
+    avatar: "avatar",
     activated: true,
     status: {},
     values: {
-      values: 'values'
+      values: "values"
     }
   },
-  avatar: 'avatar'
-);
+  avatar: "avatar"
+)
 ```
 
 ## Environments

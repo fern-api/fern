@@ -27,7 +27,7 @@ Create a new organization.
 <dd>
 
 ```ruby
-client.organization.create(name: 'name');
+client.organization.create(name: "name")
 ```
 </dd>
 </dl>
@@ -90,7 +90,7 @@ List all users.
 <dd>
 
 ```ruby
-client.user.list(limit: 1);
+client.user.list(limit: 1)
 ```
 </dd>
 </dl>
@@ -153,7 +153,7 @@ List all user events.
 <dd>
 
 ```ruby
-client.user.events.list_events(limit: 1);
+client.user.events.list_events(limit: 1)
 ```
 </dd>
 </dl>
@@ -216,7 +216,7 @@ Get event metadata.
 <dd>
 
 ```ruby
-client.user.events.metadata.get_metadata(id: 'id');
+client.user.events.metadata.get_metadata(id: "id")
 ```
 </dd>
 </dl>

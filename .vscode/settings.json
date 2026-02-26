@@ -116,7 +116,7 @@
     "editor.defaultFormatter": "biomejs.biome"
   },
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "biomejs.biome"
   },
   "github.copilot.editor.enableCodeActions": false,
   "files.associations": {
@@ -129,7 +129,7 @@
   "typescript.disableAutomaticTypeAcquisition": true,
   "typescript.updateImportsOnFileMove.enabled": "never",
   "javascript.updateImportsOnFileMove.enabled": "never",
-  "extensions.ignoreRecommendations": false,
+  "extensions.ignoreRecommendations": true,
   "git.ignoreLimitWarning": true,
   "git.branchProtection": ["main", "master"]
 }

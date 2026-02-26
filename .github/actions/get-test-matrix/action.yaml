@@ -59,7 +59,6 @@ runs:
       run: |
         if [[ "${{inputs.package-alphabetically}}" == "false" || \
         "${{ inputs.sdk-name }}" == "fastapi" || \
-        "${{ inputs.sdk-name }}" == "go-fiber" || \
         "${{ inputs.sdk-name }}" == "go-model" || \
         "${{ inputs.sdk-name }}" == "java-spring" || \
         "${{ inputs.sdk-name }}" == "openapi" || \

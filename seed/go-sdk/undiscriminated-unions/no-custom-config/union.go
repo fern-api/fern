@@ -86,6 +86,9 @@ func (c *ConvertToken) GetTokenId() string {
 }
 
 func (c *ConvertToken) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -138,6 +141,9 @@ func (c *ConvertToken) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ConvertToken) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -481,6 +487,9 @@ func (n *NamedMetadata) GetValue() map[string]interface{} {
 }
 
 func (n *NamedMetadata) GetExtraProperties() map[string]interface{} {
+	if n == nil {
+		return nil
+	}
 	return n.extraProperties
 }
 
@@ -533,6 +542,9 @@ func (n *NamedMetadata) MarshalJSON() ([]byte, error) {
 }
 
 func (n *NamedMetadata) String() string {
+	if n == nil {
+		return "<nil>"
+	}
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
 			return value
@@ -905,6 +917,9 @@ func (r *Request) GetUnion() *MetadataUnion {
 }
 
 func (r *Request) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
 	return r.extraProperties
 }
 
@@ -950,6 +965,9 @@ func (r *Request) MarshalJSON() ([]byte, error) {
 }
 
 func (r *Request) String() string {
+	if r == nil {
+		return "<nil>"
+	}
 	if len(r.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
 			return value
@@ -992,6 +1010,9 @@ func (t *TokenizeCard) GetCardNumber() string {
 }
 
 func (t *TokenizeCard) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -1044,6 +1065,9 @@ func (t *TokenizeCard) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TokenizeCard) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value
@@ -1077,6 +1101,9 @@ func (t *TypeWithOptionalUnion) GetMyUnion() *MyUnion {
 }
 
 func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
+	if t == nil {
+		return nil
+	}
 	return t.extraProperties
 }
 
@@ -1122,6 +1149,9 @@ func (t *TypeWithOptionalUnion) MarshalJSON() ([]byte, error) {
 }
 
 func (t *TypeWithOptionalUnion) String() string {
+	if t == nil {
+		return "<nil>"
+	}
 	if len(t.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
 			return value

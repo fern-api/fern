@@ -32,4 +32,24 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
     public isSelfHosted(): boolean {
         return this.ir.selfHosted ?? false;
     }
+
+    /**
+     * Gets the full module path, prioritizing package_name from custom config.
+     */
+    public getModulePath(): string {
+        // First priority: Use package_name if set
+        if (this.customConfig.package_name != null) {
+            return this.customConfig.package_name;
+        }
+
+        // Fallback: Use organization + package_path logic
+        // Replace hyphens with underscores since hyphens are not valid in Python module names
+        const orgName = this.config.organization.replace(/-/g, "_");
+        const packagePath = this.customConfig.package_path;
+        if (packagePath) {
+            const packagePathDotted = packagePath.replace(/\//g, ".");
+            return `${orgName}.${packagePathDotted}`;
+        }
+        return orgName;
+    }
 }

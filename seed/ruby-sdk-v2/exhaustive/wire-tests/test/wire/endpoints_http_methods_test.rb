@@ -6,7 +6,7 @@ class EndpointsHttpMethodsWireTest < WireMockTestCase
   def setup
     super
 
-    @client = Seed::Client.new(
+    @client = Seed::MyClient.new(
       token: "<token>",
       base_url: WIREMOCK_BASE_URL
     )

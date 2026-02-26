@@ -22,25 +22,24 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
     "@fern-api/base-generator": "workspace:*",
-    "prettier2": "npm:prettier@^2.7.1"
+    "prettier2": "catalog:"
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
-    "@types/node": "18.15.3",
-    "@types/prettier2": "npm:@types/prettier@^2.7.3",
-    "depcheck": "^1.4.7",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8"
+    "@types/node": "catalog:",
+    "@types/prettier2": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
   }
 }

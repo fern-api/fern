@@ -57,10 +57,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const class_ = php.class_({
             name: this.context.getRootClientClassName(),
             namespace: this.context.getRootNamespace(),
-            interfaceReferences:
-                this.context.customConfig.generateClientInterfaces && this.context.ir.rootPackage.service != null
-                    ? [this.context.getRootClientInterfaceClassReference()]
-                    : undefined
+            interfaceReferences: this.context.customConfig.generateClientInterfaces
+                ? [this.context.getRootClientInterfaceClassReference()]
+                : undefined
         });
 
         if (!this.context.ir.rootPackage.hasEndpointsInTree) {
@@ -146,6 +145,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     endpoint
                 });
                 class_.addMethods(methods);
+            }
+        }
+
+        if (this.context.customConfig.generateClientInterfaces) {
+            for (const subpackage of subpackages) {
+                class_.addMethod(this.getSubpackageGetterMethod(subpackage));
             }
         }
 
@@ -459,6 +464,18 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
             })
         };
+    }
+
+    private getSubpackageGetterMethod(subpackage: FernIr.Subpackage): php.Method {
+        return php.method({
+            name: this.context.getSubpackageGetterName(subpackage),
+            access: "public",
+            parameters: [],
+            return_: php.Type.reference(this.context.getSubpackageInterfaceClassReference(subpackage)),
+            body: php.codeblock((writer) => {
+                writer.writeTextStatement(`return $this->${subpackage.name.camelCase.safeName}`);
+            })
+        });
     }
 
     private getFromEnvOrThrowMethod(): php.Method {

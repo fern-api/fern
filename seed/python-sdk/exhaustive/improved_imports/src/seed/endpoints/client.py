@@ -13,6 +13,7 @@ if typing.TYPE_CHECKING:
     from .enum.client import AsyncEnumClient, EnumClient
     from .http_methods.client import AsyncHttpMethodsClient, HttpMethodsClient
     from .object.client import AsyncObjectClient, ObjectClient
+    from .pagination.client import AsyncPaginationClient, PaginationClient
     from .params.client import AsyncParamsClient, ParamsClient
     from .primitive.client import AsyncPrimitiveClient, PrimitiveClient
     from .put.client import AsyncPutClient, PutClient
@@ -29,6 +30,7 @@ class EndpointsClient:
         self._enum: typing.Optional[EnumClient] = None
         self._http_methods: typing.Optional[HttpMethodsClient] = None
         self._object: typing.Optional[ObjectClient] = None
+        self._pagination: typing.Optional[PaginationClient] = None
         self._params: typing.Optional[ParamsClient] = None
         self._primitive: typing.Optional[PrimitiveClient] = None
         self._put: typing.Optional[PutClient] = None
@@ -87,6 +89,14 @@ class EndpointsClient:
         return self._object
 
     @property
+    def pagination(self):
+        if self._pagination is None:
+            from .pagination.client import PaginationClient  # noqa: E402
+
+            self._pagination = PaginationClient(client_wrapper=self._client_wrapper)
+        return self._pagination
+
+    @property
     def params(self):
         if self._params is None:
             from .params.client import ParamsClient  # noqa: E402
@@ -136,6 +146,7 @@ class AsyncEndpointsClient:
         self._enum: typing.Optional[AsyncEnumClient] = None
         self._http_methods: typing.Optional[AsyncHttpMethodsClient] = None
         self._object: typing.Optional[AsyncObjectClient] = None
+        self._pagination: typing.Optional[AsyncPaginationClient] = None
         self._params: typing.Optional[AsyncParamsClient] = None
         self._primitive: typing.Optional[AsyncPrimitiveClient] = None
         self._put: typing.Optional[AsyncPutClient] = None
@@ -192,6 +203,14 @@ class AsyncEndpointsClient:
 
             self._object = AsyncObjectClient(client_wrapper=self._client_wrapper)
         return self._object
+
+    @property
+    def pagination(self):
+        if self._pagination is None:
+            from .pagination.client import AsyncPaginationClient  # noqa: E402
+
+            self._pagination = AsyncPaginationClient(client_wrapper=self._client_wrapper)
+        return self._pagination
 
     @property
     def params(self):

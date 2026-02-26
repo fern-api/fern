@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.get();
+client.get
 ```
 </dd>
 </dl>
@@ -38,3 +38,4 @@ client.get();
 </dd>
 </dl>
 </details>
+

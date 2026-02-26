@@ -29,11 +29,11 @@ Instantiate and use the client with the following:
 require "seed"
 
 client = Seed::Client.new(
-  username: '<username>',
-  access_token: '<password>'
-);
+  username: "<username>",
+  access_token: "<password>"
+)
 
-client.basic_auth.post_with_basic_auth();
+client.basic_auth.post_with_basic_auth
 ```
 
 ## Environments

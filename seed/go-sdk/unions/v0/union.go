@@ -31,6 +31,9 @@ func (c *Circle) GetRadius() float64 {
 }
 
 func (c *Circle) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
 	return c.extraProperties
 }
 
@@ -76,6 +79,9 @@ func (c *Circle) MarshalJSON() ([]byte, error) {
 }
 
 func (c *Circle) String() string {
+	if c == nil {
+		return "<nil>"
+	}
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
 			return value
@@ -109,6 +115,9 @@ func (g *GetShapeRequest) GetId() string {
 }
 
 func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
+	if g == nil {
+		return nil
+	}
 	return g.extraProperties
 }
 
@@ -154,6 +163,9 @@ func (g *GetShapeRequest) MarshalJSON() ([]byte, error) {
 }
 
 func (g *GetShapeRequest) String() string {
+	if g == nil {
+		return "<nil>"
+	}
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
 			return value
@@ -334,6 +346,9 @@ func (s *Square) GetLength() float64 {
 }
 
 func (s *Square) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
 	return s.extraProperties
 }
 
@@ -379,6 +394,9 @@ func (s *Square) MarshalJSON() ([]byte, error) {
 }
 
 func (s *Square) String() string {
+	if s == nil {
+		return "<nil>"
+	}
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
 			return value
@@ -412,6 +430,9 @@ func (w *WithName) GetName() string {
 }
 
 func (w *WithName) GetExtraProperties() map[string]interface{} {
+	if w == nil {
+		return nil
+	}
 	return w.extraProperties
 }
 
@@ -457,6 +478,9 @@ func (w *WithName) MarshalJSON() ([]byte, error) {
 }
 
 func (w *WithName) String() string {
+	if w == nil {
+		return "<nil>"
+	}
 	if len(w.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
 			return value

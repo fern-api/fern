@@ -15,8 +15,8 @@ public class Example22 {
         client.endpoints().object().getAndReturnWithDatetimeLikeString(
             ObjectWithDatetimeLikeString
                 .builder()
-                .datetimeLikeString("datetimeLikeString")
-                .actualDatetime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
+                .datetimeLikeString("2023-08-31T14:15:22Z")
+                .actualDatetime(OffsetDateTime.parse("2023-08-31T14:15:22Z"))
                 .build()
         );
     }

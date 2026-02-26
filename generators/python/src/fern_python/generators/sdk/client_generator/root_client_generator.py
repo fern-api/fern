@@ -74,6 +74,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
 
+    LOGGING_CONSTRUCTOR_PARAMETER_NAME = "logging"
+    LOGGING_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), "
+        "'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. "
+        "You can also pass a pre-configured Logger instance."
+    )
+
     _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
         "base_url",
         "environment",
@@ -86,6 +93,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "client_secret",
         "token",
         "_token_getter_override",
+        "logging",
     }
 
     def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
@@ -173,6 +181,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             # like os.getenv("...").
             use_kwargs_snippets=(has_inferred_auth or is_oauth_client_credentials),
             base_url_example_value=base_url_example_value,
+            sync_init_parameters=self._get_constructor_parameters(is_async=False),
+            async_init_parameters=self._get_constructor_parameters(is_async=True),
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -723,6 +733,43 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 docs=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS,
             )
         )
+
+        # Expose an http_client transport override when custom_transport is enabled
+        if self._context.custom_config.custom_transport:
+            parameters.append(
+                RootClientConstructorParameter(
+                    constructor_parameter_name="http_client",
+                    type_hint=(
+                        AST.TypeHint.optional(AST.TypeHint(HttpX.BASE_TRANSPORT))
+                        if not is_async
+                        else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_BASE_TRANSPORT))
+                    ),
+                    private_member_name=None,
+                    initializer=AST.Expression(AST.TypeHint.none()),
+                    docs=(
+                        "Override the httpx transport used by the client. "
+                        "This is intended for SDK developers via custom code (e.g., factory methods)."
+                    ),
+                )
+            )
+
+        log_config_ref = self._context.core_utilities.get_reference_to_log_config()
+        logger_ref = self._context.core_utilities.get_reference_to_logger()
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(
+                    AST.TypeHint.union(
+                        AST.TypeHint(log_config_ref),
+                        AST.TypeHint(logger_ref),
+                    )
+                ),
+                private_member_name=None,
+                initializer=AST.Expression(AST.TypeHint.none()),
+                docs=RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
+
         parameters.extend(self._get_literal_header_parameters())
 
         return parameters
@@ -890,6 +937,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             self._write_url_template_interpolation(writer)
 
+            transport_var_name: typing.Optional[str] = None
+            if self._context.custom_config.custom_transport:
+                transport_var_name = "http_client"
+
             client_wrapper_generator = ClientWrapperGenerator(
                 context=self._context,
                 generated_environment=self._generated_environment,
@@ -907,6 +958,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     timeout_local_variable=timeout_local_variable,
                     is_async=is_async,
                     constructor_parameters=constructor_parameters,
+                    transport_variable_name=transport_var_name,
                 )
             elif use_oauth_token_provider:
                 # Standard OAuth mode
@@ -917,6 +969,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     is_async=is_async,
                     ignore_httpx_constructor_parameter=True,
                     exclude_auth=True,
+                    transport_variable_name=transport_var_name,
                 )
                 writer.write("oauth_token_provider = ")
                 oauth_token_provider_class = (
@@ -957,6 +1010,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     timeout_local_variable=timeout_local_variable,
                     is_async=is_async,
                     use_oauth_token_provider=use_oauth_token_provider,
+                    transport_variable_name=transport_var_name,
                 )
                 for param in constructor_parameters:
                     if param.private_member_name is not None:
@@ -976,6 +1030,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     timeout_local_variable=timeout_local_variable,
                     is_async=is_async,
                     use_oauth_token_provider=use_oauth_token_provider,
+                    transport_variable_name=transport_var_name,
                 )
                 if inferred_auth_scheme is not None:
                     inferred_auth_client_wrapper_kwargs = self._get_client_wrapper_kwargs(
@@ -984,6 +1039,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         timeout_local_variable=timeout_local_variable,
                         is_async=is_async,
                         exclude_auth=True,
+                        transport_variable_name=transport_var_name,
                     )
                     inferred_auth_provider_class = (
                         self._context.core_utilities.get_async_inferred_auth_token_provider()
@@ -1110,6 +1166,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         timeout_local_variable: str,
         is_async: bool,
         constructor_parameters: List[RootClientConstructorParameter],
+        transport_variable_name: Optional[str] = None,
     ) -> None:
         """
         Writes the constructor body for OAuth token override mode.
@@ -1130,6 +1187,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 timeout_local_variable=timeout_local_variable,
                 is_async=is_async,
                 exclude_auth=True,
+                transport_variable_name=transport_variable_name,
             )
             # Add token to kwargs - prefer the explicit override, otherwise use the provided callable
             wrapper_bearer_token_kwarg_name = self._get_wrapper_bearer_token_kwarg_name(
@@ -1163,6 +1221,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 is_async=is_async,
                 ignore_httpx_constructor_parameter=True,
                 exclude_auth=True,
+                transport_variable_name=transport_variable_name,
             )
             writer.write("oauth_token_provider = ")
             oauth_token_provider_class = (
@@ -1204,6 +1263,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 timeout_local_variable=timeout_local_variable,
                 is_async=is_async,
                 use_oauth_token_provider=True,
+                transport_variable_name=transport_variable_name,
             )
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
             writer.write_node(
@@ -1238,6 +1298,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         exclude_auth: Optional[bool] = False,
         ignore_httpx_constructor_parameter: bool = False,
         use_oauth_token_provider: bool = False,
+        transport_variable_name: Optional[str] = None,
     ) -> List[typing.Tuple[str, AST.Expression]]:
         client_wrapper_constructor_kwargs = []
 
@@ -1312,6 +1373,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 )
 
+        httpx_client_kwargs_with_redirects: List[typing.Tuple[str, AST.Expression]] = [
+            ("timeout", AST.Expression(f"{timeout_local_variable}")),
+            ("follow_redirects", AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}")),
+        ]
+        httpx_client_kwargs_without_redirects: List[typing.Tuple[str, AST.Expression]] = [
+            ("timeout", AST.Expression(f"{timeout_local_variable}")),
+        ]
+        if transport_variable_name is not None:
+            httpx_client_kwargs_with_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
+            httpx_client_kwargs_without_redirects.append(("transport", AST.Expression(f"{transport_variable_name}")))
+
         if ignore_httpx_constructor_parameter:
             client_wrapper_constructor_kwargs.append(
                 (
@@ -1320,25 +1392,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                         AST.ConditionalExpression(
                             left=AST.ClassInstantiation(
                                 HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                kwargs=[
-                                    (
-                                        "timeout",
-                                        AST.Expression(f"{timeout_local_variable}"),
-                                    ),
-                                    (
-                                        "follow_redirects",
-                                        AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
-                                    ),
-                                ],
+                                kwargs=httpx_client_kwargs_with_redirects,
                             ),
                             right=AST.ClassInstantiation(
                                 HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                kwargs=[
-                                    (
-                                        "timeout",
-                                        AST.Expression(f"{timeout_local_variable}"),
-                                    ),
-                                ],
+                                kwargs=httpx_client_kwargs_without_redirects,
                             ),
                             test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                         ),
@@ -1355,25 +1413,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             right=AST.ConditionalExpression(
                                 left=AST.ClassInstantiation(
                                     HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                    kwargs=[
-                                        (
-                                            "timeout",
-                                            AST.Expression(f"{timeout_local_variable}"),
-                                        ),
-                                        (
-                                            "follow_redirects",
-                                            AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
-                                        ),
-                                    ],
+                                    kwargs=httpx_client_kwargs_with_redirects,
                                 ),
                                 right=AST.ClassInstantiation(
                                     HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                    kwargs=[
-                                        (
-                                            "timeout",
-                                            AST.Expression(f"{timeout_local_variable}"),
-                                        ),
-                                    ],
+                                    kwargs=httpx_client_kwargs_without_redirects,
                                 ),
                                 test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                             ),
@@ -1388,6 +1432,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             (
                 ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,
                 AST.Expression(timeout_local_variable),
+            )
+        )
+
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.LOGGING_PARAMETER_NAME,
+                AST.Expression(RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME),
             )
         )
 
@@ -1516,11 +1567,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             oauth_token_override: bool = False,
             use_kwargs_snippets: bool = False,
             base_url_example_value: Optional[AST.Expression] = None,
+            sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            async_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
         ):
             self._module_path = module_path
             self._class_name = class_name
             self._async_class_name = async_class_name
             self._constructor_parameters: List[ConstructorParameter] = list(constructor_parameters)
+            self._sync_init_parameters: Optional[List[ConstructorParameter]] = (
+                list(sync_init_parameters) if sync_init_parameters is not None else None
+            )
+            self._async_init_parameters: Optional[List[ConstructorParameter]] = (
+                list(async_init_parameters) if async_init_parameters is not None else None
+            )
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
@@ -1677,7 +1736,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             return GeneratedRootClient(
                 async_instantiations=async_instantiations,
-                async_client=RootClient(class_reference=async_class_reference, parameters=self._constructor_parameters),
+                async_client=RootClient(
+                    class_reference=async_class_reference,
+                    parameters=self._constructor_parameters,
+                    init_parameters=self._async_init_parameters,
+                ),
                 sync_instantiations=sync_instantiations,
-                sync_client=RootClient(class_reference=sync_class_reference, parameters=self._constructor_parameters),
+                sync_client=RootClient(
+                    class_reference=sync_class_reference,
+                    parameters=self._constructor_parameters,
+                    init_parameters=self._sync_init_parameters,
+                ),
             )

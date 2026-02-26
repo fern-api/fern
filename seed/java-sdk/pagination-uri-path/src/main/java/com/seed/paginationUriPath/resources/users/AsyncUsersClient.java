@@ -5,8 +5,8 @@ package com.seed.paginationUriPath.resources.users;
 
 import com.seed.paginationUriPath.core.ClientOptions;
 import com.seed.paginationUriPath.core.RequestOptions;
-import com.seed.paginationUriPath.resources.users.types.ListUsersPathPaginationResponse;
-import com.seed.paginationUriPath.resources.users.types.ListUsersUriPaginationResponse;
+import com.seed.paginationUriPath.core.pagination.SyncPagingIterable;
+import com.seed.paginationUriPath.resources.users.types.User;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncUsersClient {
@@ -26,19 +26,19 @@ public class AsyncUsersClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<ListUsersUriPaginationResponse> listWithUriPagination() {
+    public CompletableFuture<SyncPagingIterable<User>> listWithUriPagination() {
         return this.rawClient.listWithUriPagination().thenApply(response -> response.body());
     }
 
-    public CompletableFuture<ListUsersUriPaginationResponse> listWithUriPagination(RequestOptions requestOptions) {
+    public CompletableFuture<SyncPagingIterable<User>> listWithUriPagination(RequestOptions requestOptions) {
         return this.rawClient.listWithUriPagination(requestOptions).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<ListUsersPathPaginationResponse> listWithPathPagination() {
+    public CompletableFuture<SyncPagingIterable<User>> listWithPathPagination() {
         return this.rawClient.listWithPathPagination().thenApply(response -> response.body());
     }
 
-    public CompletableFuture<ListUsersPathPaginationResponse> listWithPathPagination(RequestOptions requestOptions) {
+    public CompletableFuture<SyncPagingIterable<User>> listWithPathPagination(RequestOptions requestOptions) {
         return this.rawClient.listWithPathPagination(requestOptions).thenApply(response -> response.body());
     }
 }

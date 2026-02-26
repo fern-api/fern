@@ -98,6 +98,38 @@ export const FernOpenAPIExtension = {
     TYPE_DEFINITION: "x-fern-type",
 
     /**
+     * Used to specify webhook signature verification configuration.
+     * Can be set at the document level (applies to all webhooks) or
+     * on individual webhook operations (overrides the document default).
+     *
+     * Document-level usage (all webhooks inherit):
+     *   x-fern-webhook-signature:
+     *     type: hmac
+     *     header: x-webhook-signature
+     *     algorithm: sha256
+     *     encoding: hex
+     *
+     * Operation-level usage (HMAC):
+     *   x-fern-webhook-signature:
+     *     type: hmac
+     *     header: x-hub-signature-256
+     *     algorithm: sha256
+     *     encoding: hex
+     *     signature-prefix: "sha256="
+     *
+     * Operation-level usage (asymmetric):
+     *   x-fern-webhook-signature:
+     *     type: asymmetric
+     *     header: x-signature
+     *     asymmetric-algorithm: rsa-sha256
+     *     jwks-url: https://api.example.com/.well-known/jwks.json
+     *
+     * Inherit document-level config explicitly:
+     *   x-fern-webhook-signature: true
+     */
+    WEBHOOK_SIGNATURE: "x-fern-webhook-signature",
+
+    /**
      * Used to specify if an endpoint should be generated
      * as a streaming endpoint.
      *
@@ -500,7 +532,23 @@ export const FernOpenAPIExtension = {
      *    get:
      *      x-fern-explorer-enabled: true  # or false
      */
-    EXPLORER_ENABLED: "x-fern-explorer-enabled"
+    EXPLORER_ENABLED: "x-fern-explorer-enabled",
+
+    /**
+     * Used to specify the context where a discriminator exists for union types.
+     * This is used for SSE discrimination patterns.
+     *
+     * components:
+     *   schemas:
+     *     SseStreamEvent:
+     *       discriminator:
+     *         propertyName: event
+     *         x-fern-discriminator-context: protocol  # or data (default)
+     *       oneOf:
+     *         - $ref: '#/components/schemas/CompletionEvent'
+     *         - $ref: '#/components/schemas/ErrorEvent'
+     */
+    DISCRIMINATOR_CONTEXT: "x-fern-discriminator-context"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

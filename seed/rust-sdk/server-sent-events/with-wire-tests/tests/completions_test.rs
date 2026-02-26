@@ -18,7 +18,7 @@ async fn test_completions_stream_with_wiremock() {
         .completions
         .stream(
             &StreamCompletionRequest {
-                query: "query".to_string(),
+                query: "foo".to_string(),
             },
             None,
         )

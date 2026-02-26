@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.dummy.get_dummy();
+client.dummy.get_dummy
 ```
 </dd>
 </dl>
@@ -39,3 +39,4 @@ client.dummy.get_dummy();
 </dd>
 </dl>
 </details>
+

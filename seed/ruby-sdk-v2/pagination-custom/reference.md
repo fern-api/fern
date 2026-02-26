@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.users.list_usernames_custom(starting_after: 'starting_after');
+client.users.list_usernames_custom(starting_after: "starting_after")
 ```
 </dd>
 </dl>
@@ -50,3 +50,4 @@ the next page of results.
 </dd>
 </dl>
 </details>
+

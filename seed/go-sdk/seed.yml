@@ -268,9 +268,13 @@ fixtures:
         module:
           path: github.com/go-undiscriminated-union-wire-tests/fern
   exhaustive:
-    - outputFolder: .
+    - outputFolder: no-custom-config
       customConfig:
         enableWireTests: true
+    - outputFolder: omit-empty-request-wrappers
+      customConfig:
+        enableWireTests: true
+        omitEmptyRequestWrappers: true
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:
@@ -324,3 +328,7 @@ allowedFailures:
   - file-upload-openapi
 
   - pagination-custom:.
+
+  # TODO: Go generator doesn't support DATE_TIME_RFC_2822 primitive yet.
+  - exhaustive:no-custom-config
+  - exhaustive:omit-empty-request-wrappers

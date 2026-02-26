@@ -10,9 +10,9 @@ export namespace FernYmlBuilder {
 
     export interface OutputConfig {
         type: "local" | "git";
+        mode?: "pr" | "release" | "push";
         path?: string;
         repository?: string;
-        mode?: "pr" | "release" | "push";
         group?: string;
     }
 
@@ -79,9 +79,7 @@ export class FernYmlBuilder {
 
     private buildOutput(output: FernYmlBuilder.OutputConfig): schemas.OutputSchema {
         if (output.type === "local") {
-            return {
-                path: output.path
-            };
+            return output.path ?? "./sdks";
         }
         return {
             git: {

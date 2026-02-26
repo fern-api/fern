@@ -50,13 +50,7 @@ export class SdkConfigConverter {
      * @param sourced - The sourced fern.yml schema with source location tracking.
      * @returns Result with either the converted config or validation issues.
      */
-    public convert({ fernYml }: { fernYml: FernYmlSchemaLoader.Result }): SdkConfigConverter.Result {
-        if (!fernYml.success) {
-            return {
-                success: false,
-                issues: fernYml.issues
-            };
-        }
+    public convert({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): SdkConfigConverter.Result {
         const sdks = fernYml.data.sdks;
         const sourced = fernYml.sourced.sdks;
         if (sdks == null || isNullish(sourced)) {
@@ -131,7 +125,7 @@ export class SdkConfigConverter {
             api: this.resolveApi({ api: target.api }),
             sourceLocation: sourced.$loc,
             config: target.config != null ? this.convertConfig(target.config) : undefined,
-            output: target.output,
+            output: schemas.resolveOutputObjectSchema(target.output),
             publish: target.publish,
             groups: target.group ?? [],
             metadata: target.metadata

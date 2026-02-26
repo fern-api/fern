@@ -1,77 +1,8 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../../../packages/cli/logger"
-    },
-    {
-      "path": "../../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../../../packages/commons/fs-utils"
-    },
-    {
-      "path": "../../../base"
-    },
-    {
-      "path": "../../../typescript-v2/ast"
-    },
-    {
-      "path": "../../model/type-generator"
-    },
-    {
-      "path": "../../model/type-reference-converters"
-    },
-    {
-      "path": "../../model/type-reference-example-generator"
-    },
-    {
-      "path": "../../model/type-schema-generator"
-    },
-    {
-      "path": "../../utils/commons"
-    },
-    {
-      "path": "../../utils/contexts"
-    },
-    {
-      "path": "../../utils/resolvers"
-    },
-    {
-      "path": "../client-class-generator"
-    },
-    {
-      "path": "../endpoint-error-union-generator"
-    },
-    {
-      "path": "../environments-generator"
-    },
-    {
-      "path": "../generic-sdk-error-generators"
-    },
-    {
-      "path": "../request-wrapper-generator"
-    },
-    {
-      "path": "../sdk-endpoint-type-schemas-generator"
-    },
-    {
-      "path": "../sdk-error-generator"
-    },
-    {
-      "path": "../sdk-error-schema-generator"
-    },
-    {
-      "path": "../sdk-inlined-request-body-schema-generator"
-    },
-    {
-      "path": "../websocket-type-schema-generator"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

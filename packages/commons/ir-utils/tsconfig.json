@@ -1,27 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["vitest/globals"]
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../cli/configuration"
-    },
-    {
-      "path": "../../cli/fern-definition/schema"
-    },
-    {
-      "path": "../../ir-sdk"
-    },
-    {
-      "path": "../casings-generator"
-    },
-    {
-      "path": "../core-utils"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

@@ -238,3 +238,4 @@ client.user().events().metadata().getMetadata(
 </dd>
 </dl>
 </details>
+

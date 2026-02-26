@@ -13,6 +13,7 @@ from ......core.exceptions.fern_http_exception import FernHTTPException
 from ......core.route_args import get_route_args
 from ......security import ApiAuth, FernAuth
 from .....types.resources.object.types.object_with_required_field import ObjectWithRequiredField
+from .....types.resources.union.types.mixed_type import MixedType
 
 
 class AbstractEndpointsContainerService(AbstractFernService):
@@ -51,6 +52,11 @@ class AbstractEndpointsContainerService(AbstractFernService):
     ) -> typing.Dict[str, ObjectWithRequiredField]: ...
 
     @abc.abstractmethod
+    def get_and_return_map_of_prim_to_undiscriminated_union(
+        self, *, body: typing.Dict[str, MixedType], auth: ApiAuth
+    ) -> typing.Dict[str, MixedType]: ...
+
+    @abc.abstractmethod
     def get_and_return_optional(
         self, *, body: typing.Optional[ObjectWithRequiredField] = None, auth: ApiAuth
     ) -> typing.Optional[ObjectWithRequiredField]: ...
@@ -68,6 +74,7 @@ class AbstractEndpointsContainerService(AbstractFernService):
         cls.__init_get_and_return_set_of_objects(router=router)
         cls.__init_get_and_return_map_prim_to_prim(router=router)
         cls.__init_get_and_return_map_of_prim_to_object(router=router)
+        cls.__init_get_and_return_map_of_prim_to_undiscriminated_union(router=router)
         cls.__init_get_and_return_optional(router=router)
 
     @classmethod
@@ -352,6 +359,57 @@ class AbstractEndpointsContainerService(AbstractFernService):
             response_model=None,
             description=AbstractEndpointsContainerService.get_and_return_map_of_prim_to_object.__doc__,
             **get_route_args(cls.get_and_return_map_of_prim_to_object, default_tag="endpoints.container"),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_and_return_map_of_prim_to_undiscriminated_union(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_and_return_map_of_prim_to_undiscriminated_union)
+        type_hints = typing.get_type_hints(cls.get_and_return_map_of_prim_to_undiscriminated_union)
+
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            # Get the resolved type hint for this parameter, as fastapi does not handle forward refs in all cases
+            resolved_annotation = type_hints.get(parameter_name, parameter.annotation)
+
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "body":
+                new_parameters.append(
+                    parameter.replace(
+                        annotation=typing.Annotated[resolved_annotation, fastapi.temp_pydantic_v1_params.Body()]
+                    )
+                )
+            elif parameter_name == "auth":
+                new_parameters.append(
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Depends(FernAuth)])
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.get_and_return_map_of_prim_to_undiscriminated_union,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.get_and_return_map_of_prim_to_undiscriminated_union)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Dict[str, MixedType]:
+            try:
+                return cls.get_and_return_map_of_prim_to_undiscriminated_union(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_and_return_map_of_prim_to_undiscriminated_union' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        router.post(
+            path="/container/map-prim-to-union",
+            response_model=None,
+            description=AbstractEndpointsContainerService.get_and_return_map_of_prim_to_undiscriminated_union.__doc__,
+            **get_route_args(
+                cls.get_and_return_map_of_prim_to_undiscriminated_union, default_tag="endpoints.container"
+            ),
         )(wrapper)
 
     @classmethod

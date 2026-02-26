@@ -13,9 +13,9 @@
 
 ```ruby
 client.submit_form_data(
-  username: 'johndoe',
-  email: 'john@example.com'
-);
+  username: "johndoe",
+  email: "john@example.com"
+)
 ```
 </dd>
 </dl>
@@ -57,3 +57,4 @@ client.submit_form_data(
 </dd>
 </dl>
 </details>
+

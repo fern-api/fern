@@ -702,7 +702,7 @@ export class EndpointSnippetGenerator {
         }
         return [
             {
-                name: this.context.getPropertyName(body.bodyKey),
+                name: REQUEST_BODY_ARG_NAME,
                 value: typeInstantiation
             }
         ];

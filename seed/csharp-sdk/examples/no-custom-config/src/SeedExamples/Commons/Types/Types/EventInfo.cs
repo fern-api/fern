@@ -174,14 +174,19 @@ public record EventInfo
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "metadata" => json.Deserialize<SeedExamples.Commons.Metadata?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedExamples.Commons.Metadata"
-                    ),
+                "metadata" => jsonWithoutDiscriminator.Deserialize<SeedExamples.Commons.Metadata?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedExamples.Commons.Metadata"),
                 "tag" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
+                    ?? throw new JsonException("Failed to deserialize string"),
                 _ => json.Deserialize<object?>(options),
             };
             return new EventInfo(discriminator, value);

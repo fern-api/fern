@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.foo();
+client.foo
 ```
 </dd>
 </dl>
@@ -53,7 +53,7 @@ client.foo();
 <dd>
 
 ```ruby
-client.foo();
+client.foo
 ```
 </dd>
 </dl>
@@ -94,7 +94,7 @@ client.foo();
 <dd>
 
 ```ruby
-client.foo();
+client.foo
 ```
 </dd>
 </dl>
@@ -135,7 +135,7 @@ client.foo();
 <dd>
 
 ```ruby
-client.foo();
+client.foo
 ```
 </dd>
 </dl>
@@ -176,7 +176,7 @@ client.foo();
 <dd>
 
 ```ruby
-client.folder.service.endpoint();
+client.folder.service.endpoint
 ```
 </dd>
 </dl>
@@ -216,7 +216,7 @@ client.folder.service.endpoint();
 <dd>
 
 ```ruby
-client.folder.service.unknown_request();
+client.folder.service.unknown_request
 ```
 </dd>
 </dl>

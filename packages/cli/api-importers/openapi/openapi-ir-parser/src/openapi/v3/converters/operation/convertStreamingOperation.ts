@@ -33,6 +33,7 @@ export function convertStreamingOperation({
                 operationContext,
                 context,
                 streamFormat: streamingExtension.format,
+                streamTerminator: streamingExtension.terminator,
                 source: context.source
             });
             return {
@@ -77,6 +78,7 @@ export function convertStreamingOperation({
                 },
                 context,
                 streamFormat: streamingExtension.format,
+                streamTerminator: streamingExtension.terminator,
                 suffix: STREAM_SUFFIX,
                 source: context.source
             });

@@ -394,21 +394,8 @@ def pytest_unconfigure(config: pytest.Config) -> None:
      */
     private getClientImport(): string {
         const clientClassName = this.getClientClassName();
-        const modulePath = this.getModulePath();
+        const modulePath = this.context.getModulePath();
         return `from ${modulePath}.client import ${clientClassName}`;
-    }
-
-    /**
-     * Gets the full module path including package_path if set.
-     */
-    private getModulePath(): string {
-        const orgName = this.context.config.organization;
-        const packagePath = this.context.customConfig.package_path;
-        if (packagePath) {
-            const packagePathDotted = packagePath.replace(/\//g, ".");
-            return `${orgName}.${packagePathDotted}`;
-        }
-        return orgName;
     }
 
     /**
@@ -434,7 +421,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         if (environments?.environments.type === "multipleBaseUrls") {
             const envConfig = environments.environments;
             const environmentClassName = this.getEnvironmentClassName();
-            const modulePath = this.getModulePath();
+            const modulePath = this.context.getModulePath();
 
             // Build kwargs for all base URLs using dynamic base_url variable
             const baseUrlKwargsDynamic = envConfig.baseUrls
@@ -512,11 +499,14 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "oauth":
-                // OAuth typically uses client credentials
-                if (scheme.configuration) {
-                    // For client credentials OAuth, we need client_id and client_secret
-                    // The actual parameter names depend on the OAuth configuration
-                    params.push(`        _token_getter_override=lambda: "test_token",`);
+                // OAuth uses either client credentials or a token provider
+                if (scheme.configuration?.type === "clientCredentials") {
+                    // For client credentials OAuth, use client_id and client_secret
+                    params.push(`        client_id="test_client_id",`);
+                    params.push(`        client_secret="test_client_secret",`);
+                } else {
+                    // For other OAuth types, use a token callback
+                    params.push(`        token=lambda: "test_token",`);
                 }
                 break;
 

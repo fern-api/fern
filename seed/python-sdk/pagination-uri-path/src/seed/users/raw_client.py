@@ -106,7 +106,7 @@ class RawUsersClient:
                 _has_next = _parsed_next is not None and _parsed_next != ""
 
                 def _fetch_next_page(_next_path):
-                    _next_response = self._client_wrapper.httpx_client.request(method="GET", url=_next_path)
+                    _next_response = self._client_wrapper.httpx_client.request(method="GET", path=_next_path)
                     _next_parsed = typing.cast(
                         ListUsersPathPaginationResponse,
                         parse_obj_as(
@@ -225,7 +225,7 @@ class AsyncRawUsersClient:
                 _has_next = _parsed_next is not None and _parsed_next != ""
 
                 async def _fetch_next_page(_next_path):
-                    _next_response = await self._client_wrapper.httpx_client.request(method="GET", url=_next_path)
+                    _next_response = await self._client_wrapper.httpx_client.request(method="GET", path=_next_path)
                     _next_parsed = typing.cast(
                         ListUsersPathPaginationResponse,
                         parse_obj_as(

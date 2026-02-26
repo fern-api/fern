@@ -183,14 +183,13 @@ describe("buildNavigationForDirectory", () => {
             slug: "advanced"
         });
         const firstItem = result[0];
-        if (firstItem && firstItem.type === "section") {
-            expect(firstItem.contents).toHaveLength(1);
-            expect(firstItem.contents[0]).toMatchObject({
-                type: "page",
-                title: "Authentication",
-                slug: "authentication"
-            });
-        }
+        expect.assert(firstItem?.type === "section");
+        expect(firstItem.contents).toHaveLength(1);
+        expect(firstItem.contents[0]).toMatchObject({
+            type: "page",
+            title: "Authentication",
+            slug: "authentication"
+        });
         expect(result[1]).toMatchObject({
             type: "page",
             title: "Getting Started",
@@ -278,23 +277,21 @@ describe("buildNavigationForDirectory", () => {
             slug: "guides"
         });
         const firstItem = result[0];
-        if (firstItem && firstItem.type === "section") {
-            expect(firstItem.contents).toHaveLength(1);
-            expect(firstItem.contents[0]).toMatchObject({
-                type: "section",
-                title: "Advanced",
-                slug: "advanced"
-            });
-            const secondItem = firstItem.contents[0];
-            if (secondItem && secondItem.type === "section") {
-                expect(secondItem.contents).toHaveLength(1);
-                expect(secondItem.contents[0]).toMatchObject({
-                    type: "page",
-                    title: "Authentication",
-                    slug: "authentication"
-                });
-            }
-        }
+        expect.assert(firstItem?.type === "section");
+        expect(firstItem.contents).toHaveLength(1);
+        expect(firstItem.contents[0]).toMatchObject({
+            type: "section",
+            title: "Advanced",
+            slug: "advanced"
+        });
+        const secondItem = firstItem.contents[0];
+        expect.assert(secondItem?.type === "section");
+        expect(secondItem.contents).toHaveLength(1);
+        expect(secondItem.contents[0]).toMatchObject({
+            type: "page",
+            title: "Authentication",
+            slug: "authentication"
+        });
     });
 });
 
@@ -1097,14 +1094,13 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
             slug: "guides",
             overviewAbsolutePath: "/test/guides/index.mdx"
         });
-        if (section && section.type === "section") {
-            expect(section.contents).toHaveLength(1);
-            expect(section.contents[0]).toMatchObject({
-                type: "page",
-                title: "Getting Started",
-                slug: "getting-started"
-            });
-        }
+        expect.assert(section?.type === "section");
+        expect(section.contents).toHaveLength(1);
+        expect(section.contents[0]).toMatchObject({
+            type: "page",
+            title: "Getting Started",
+            slug: "getting-started"
+        });
     });
 
     it("should use index.md as section overview for subdirectories", async () => {
@@ -1153,13 +1149,12 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
             slug: "guides",
             overviewAbsolutePath: "/test/guides/index.md"
         });
-        if (section && section.type === "section") {
-            expect(section.contents).toHaveLength(1);
-            expect(section.contents[0]).toMatchObject({
-                type: "page",
-                title: "Authentication"
-            });
-        }
+        expect.assert(section?.type === "section");
+        expect(section.contents).toHaveLength(1);
+        expect(section.contents[0]).toMatchObject({
+            type: "page",
+            title: "Authentication"
+        });
     });
 
     it("should exclude index.mdx from section contents", async () => {
@@ -1208,13 +1203,12 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
 
         expect(result).toHaveLength(1);
         const section = result[0];
-        if (section && section.type === "section") {
-            expect(section.contents).toHaveLength(2);
-            const titles = section.contents.map((item) => (item.type === "page" ? item.title : ""));
-            expect(titles).not.toContain("Index");
-            expect(titles).toContain("Endpoints");
-            expect(titles).toContain("Errors");
-        }
+        expect.assert(section?.type === "section");
+        expect(section.contents).toHaveLength(2);
+        const titles = section.contents.map((item) => (item.type === "page" ? item.title : ""));
+        expect(titles).not.toContain("Index");
+        expect(titles).toContain("Endpoints");
+        expect(titles).toContain("Errors");
     });
 
     it("should handle nested subdirectories with index.mdx", async () => {
@@ -1277,22 +1271,20 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
             title: "Guides",
             overviewAbsolutePath: "/test/guides/index.mdx"
         });
-        if (guidesSection && guidesSection.type === "section") {
-            expect(guidesSection.contents).toHaveLength(1);
-            const advancedSection = guidesSection.contents[0];
-            expect(advancedSection).toMatchObject({
-                type: "section",
-                title: "Advanced",
-                overviewAbsolutePath: "/test/guides/advanced/index.mdx"
-            });
-            if (advancedSection && advancedSection.type === "section") {
-                expect(advancedSection.contents).toHaveLength(1);
-                expect(advancedSection.contents[0]).toMatchObject({
-                    type: "page",
-                    title: "Auth"
-                });
-            }
-        }
+        expect.assert(guidesSection?.type === "section");
+        expect(guidesSection.contents).toHaveLength(1);
+        const advancedSection = guidesSection.contents[0];
+        expect(advancedSection).toMatchObject({
+            type: "section",
+            title: "Advanced",
+            overviewAbsolutePath: "/test/guides/advanced/index.mdx"
+        });
+        expect.assert(advancedSection?.type === "section");
+        expect(advancedSection.contents).toHaveLength(1);
+        expect(advancedSection.contents[0]).toMatchObject({
+            type: "page",
+            title: "Auth"
+        });
     });
 
     it("should handle case-insensitive index file names", async () => {
@@ -1339,13 +1331,12 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
             type: "section",
             overviewAbsolutePath: "/test/guides/INDEX.MDX"
         });
-        if (section && section.type === "section") {
-            expect(section.contents).toHaveLength(1);
-            expect(section.contents[0]).toMatchObject({
-                type: "page",
-                title: "Page"
-            });
-        }
+        expect.assert(section?.type === "section");
+        expect(section.contents).toHaveLength(1);
+        expect(section.contents[0]).toMatchObject({
+            type: "page",
+            title: "Page"
+        });
     });
 
     it("should not set overviewAbsolutePath when no index file exists", async () => {
@@ -1387,9 +1378,8 @@ describe("buildNavigationForDirectory with index.mdx as section overview", () =>
             title: "Guides",
             overviewAbsolutePath: undefined
         });
-        if (section && section.type === "section") {
-            expect(section.contents).toHaveLength(1);
-        }
+        expect.assert(section?.type === "section");
+        expect(section.contents).toHaveLength(1);
     });
 });
 

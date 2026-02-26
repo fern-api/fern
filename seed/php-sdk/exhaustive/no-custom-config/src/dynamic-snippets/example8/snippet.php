@@ -12,7 +12,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->contentType->postJsonPatchContentWithCharsetType(
+$client->endpoints->contentType->postJsonPatchContentType(
     new ObjectWithOptionalField([
         'string' => 'string',
         'integer' => 1,
