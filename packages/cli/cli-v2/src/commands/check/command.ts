@@ -38,7 +38,8 @@ export class CheckCommand {
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = sdkChecker.check({ workspace });
 
-        const totalErrors = (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount;
+        const totalErrors =
+            (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount;
         const totalWarnings = apiCheckResult.warningCount + sdkCheckResult.warningCount;
 
         // Fail if there are errors, or if strict mode and there are warnings.

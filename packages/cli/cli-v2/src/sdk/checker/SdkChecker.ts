@@ -99,13 +99,7 @@ export class SdkChecker {
         };
     }
 
-    private validateTarget({
-        target,
-        violations
-    }: {
-        target: Target;
-        violations: SdkChecker.Violation[];
-    }): void {
+    private validateTarget({ target, violations }: { target: Target; violations: SdkChecker.Violation[] }): void {
         this.validateLanguage({ target, violations });
         this.validateVersion({ target, violations });
     }
@@ -116,13 +110,7 @@ export class SdkChecker {
      * After the SdkConfigConverter runs, the `lang` field should already be set for us.
      * This is a defense-in-depth check to ensure it's valid.
      */
-    private validateLanguage({
-        target,
-        violations
-    }: {
-        target: Target;
-        violations: SdkChecker.Violation[];
-    }): void {
+    private validateLanguage({ target, violations }: { target: Target; violations: SdkChecker.Violation[] }): void {
         const lang: Language = target.lang;
         if (!LANGUAGES.includes(lang)) {
             violations.push({
@@ -139,13 +127,7 @@ export class SdkChecker {
      * A version of "latest" is acceptable — it means the latest available version
      * will be resolved at generation time.
      */
-    private validateVersion({
-        target,
-        violations
-    }: {
-        target: Target;
-        violations: SdkChecker.Violation[];
-    }): void {
+    private validateVersion({ target, violations }: { target: Target; violations: SdkChecker.Violation[] }): void {
         if (target.version.length === 0) {
             violations.push({
                 targetName: target.name,
