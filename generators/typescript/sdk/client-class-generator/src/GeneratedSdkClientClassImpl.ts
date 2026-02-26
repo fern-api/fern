@@ -877,9 +877,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             getAuthHeadersCode = "";
         }
 
+        // For multi-URL environments, this._options.environment is an object (e.g. { ec2: string; s3: string }),
+        // not a single string URL. Only pass `environment` when it resolves to a single base URL string.
+        const isMultiUrlEnvironment =
+            this.intermediateRepresentation.environments?.environments.type === "multipleBaseUrls";
+        const environmentCode = isMultiUrlEnvironment ? "" : "environment: this._options.environment,";
+
         const fetchMethodBody = `
 return core.makePassthroughRequest(url, init, {
-    environment: this._options.environment,
+    ${environmentCode}
     baseUrl: this._options.baseUrl,
     headers: this._options.headers,
     timeoutInSeconds: this._options.timeoutInSeconds,
