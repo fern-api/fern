@@ -10,6 +10,16 @@ import semver from "semver";
  * This is a local implementation of the logic that exists in FDR's computeSemanticVersion endpoint.
  * It allows local generation to compute versions without calling the FDR API.
  *
+ * Supports registry lookups for all SDK languages:
+ * - TypeScript: npm registry
+ * - Python: PyPI
+ * - Java: Maven Central
+ * - C#: NuGet Gallery
+ * - Ruby: RubyGems.org
+ * - Go: Go Module Proxy
+ * - Rust: Crates.io
+ * - PHP/Swift: GitHub tags fallback only
+ *
  * Supports authenticated access to private registries and repositories via environment variables:
  * - GITHUB_TOKEN: Used to authenticate GitHub API requests for private repositories
  * - NPM_TOKEN: Used to authenticate npm registry requests for private packages
@@ -50,7 +60,7 @@ export async function computeSemanticVersion({
 
 /**
  * Gets the existing version of a package from registries or GitHub tags.
- * Tries package registries first (npm, PyPI), then falls back to GitHub tags.
+ * Tries package registries first, then falls back to GitHub tags.
  *
  * Supports authenticated access via environment variables:
  * - GITHUB_TOKEN: Authenticates GitHub API requests for private repositories
@@ -80,13 +90,25 @@ async function getExistingVersion({
         case "python":
             version = await getLatestVersionFromPypi(packageName);
             break;
-        case "csharp":
-        case "go":
         case "java":
+            version = await getLatestVersionFromMaven(packageName);
+            break;
+        case "csharp":
+            version = await getLatestVersionFromNuget(packageName);
+            break;
         case "ruby":
+            version = await getLatestVersionFromRubyGems(packageName);
+            break;
+        case "go":
+            version = await getLatestVersionFromGoProxy(packageName);
+            break;
+        case "rust":
+            version = await getLatestVersionFromCrates(packageName);
+            break;
         case "php":
         case "swift":
-            // These languages are not yet supported for registry lookups
+            // PHP and Swift do not have standard public registry APIs for version lookup.
+            // They rely on the GitHub tags fallback below.
             break;
     }
 
@@ -160,6 +182,164 @@ async function getLatestVersionFromPypi(packageName: string): Promise<string | u
         return undefined;
     } catch (error) {
         // Package doesn't exist or network error
+        return undefined;
+    }
+}
+
+/**
+ * Fetches the latest version of a Java artifact from Maven Central.
+ *
+ * Expects the package name in Maven coordinate format: "groupId:artifactId"
+ * (e.g., "io.github.fern-api:fern-java-sdk").
+ *
+ * @param coordinate - The Maven coordinate in "groupId:artifactId" format
+ * @returns The latest version string, or undefined if the artifact doesn't exist
+ */
+async function getLatestVersionFromMaven(coordinate: string): Promise<string | undefined> {
+    try {
+        const parts = coordinate.split(":");
+        if (parts.length < 2 || parts[0] == null || parts[1] == null) {
+            return undefined;
+        }
+        const groupId = parts[0];
+        const artifactId = parts[1];
+
+        const response = await fetch(
+            `https://search.maven.org/solrsearch/select?q=g:${encodeURIComponent(groupId)}+AND+a:${encodeURIComponent(artifactId)}&rows=1&wt=json`
+        );
+
+        if (response.ok) {
+            // biome-ignore lint/suspicious/noExplicitAny: Maven Central API response structure
+            const data = (await response.json()) as any;
+            const latestVer = data.response?.docs?.[0]?.latestVersion;
+            if (latestVer != null) {
+                return latestVer;
+            }
+        }
+
+        return undefined;
+    } catch (error) {
+        // Artifact doesn't exist or network error
+        return undefined;
+    }
+}
+
+/**
+ * Fetches the latest stable version of a NuGet package from the NuGet Gallery.
+ *
+ * Uses the NuGet V3 flat container API to list all versions, then selects the
+ * latest non-prerelease version.
+ *
+ * @param packageName - The NuGet package name (e.g., "Newtonsoft.Json")
+ * @returns The latest stable version string, or undefined if the package doesn't exist
+ */
+async function getLatestVersionFromNuget(packageName: string): Promise<string | undefined> {
+    try {
+        const response = await fetch(`https://api.nuget.org/v3-flatcontainer/${packageName.toLowerCase()}/index.json`);
+
+        if (response.ok) {
+            // biome-ignore lint/suspicious/noExplicitAny: NuGet API response structure
+            const data = (await response.json()) as any;
+            const versions: string[] = data.versions ?? [];
+
+            // Filter to stable versions (no prerelease suffix containing a hyphen)
+            // and return the last one (versions are sorted chronologically by the API)
+            for (let i = versions.length - 1; i >= 0; i--) {
+                const ver = versions[i];
+                if (ver != null && !ver.includes("-")) {
+                    return ver;
+                }
+            }
+        }
+
+        return undefined;
+    } catch (error) {
+        // Package doesn't exist or network error
+        return undefined;
+    }
+}
+
+/**
+ * Fetches the latest version of a Ruby gem from RubyGems.org.
+ *
+ * @param packageName - The gem name (e.g., "rails")
+ * @returns The latest version string, or undefined if the gem doesn't exist
+ */
+async function getLatestVersionFromRubyGems(packageName: string): Promise<string | undefined> {
+    try {
+        const response = await fetch(`https://rubygems.org/api/v1/gems/${packageName}.json`);
+
+        if (response.ok) {
+            // biome-ignore lint/suspicious/noExplicitAny: RubyGems API response structure
+            const data = (await response.json()) as any;
+            if (data.version != null) {
+                return data.version;
+            }
+        }
+
+        return undefined;
+    } catch (error) {
+        // Gem doesn't exist or network error
+        return undefined;
+    }
+}
+
+/**
+ * Fetches the latest version of a Go module from the Go Module Proxy.
+ *
+ * Uses the default public proxy at proxy.golang.org. For private modules,
+ * the GitHub tags fallback with GITHUB_TOKEN is used instead.
+ *
+ * @param modulePath - The Go module path (e.g., "github.com/owner/repo")
+ * @returns The latest version string (without "v" prefix), or undefined if not found
+ */
+async function getLatestVersionFromGoProxy(modulePath: string): Promise<string | undefined> {
+    try {
+        const response = await fetch(`https://proxy.golang.org/${modulePath}/@latest`);
+
+        if (response.ok) {
+            // biome-ignore lint/suspicious/noExplicitAny: Go proxy API response structure
+            const data = (await response.json()) as any;
+            if (data.Version != null) {
+                // Strip the "v" prefix that Go modules use (e.g., "v1.2.3" -> "1.2.3")
+                return data.Version.replace(/^v/, "");
+            }
+        }
+
+        return undefined;
+    } catch (error) {
+        // Module doesn't exist or network error
+        return undefined;
+    }
+}
+
+/**
+ * Fetches the latest stable version of a Rust crate from Crates.io.
+ *
+ * @param packageName - The crate name (e.g., "serde")
+ * @returns The latest stable version string, or undefined if the crate doesn't exist
+ */
+async function getLatestVersionFromCrates(packageName: string): Promise<string | undefined> {
+    try {
+        const response = await fetch(`https://crates.io/api/v1/crates/${packageName}`, {
+            headers: {
+                // Crates.io requires a User-Agent header
+                "user-agent": "fern-cli (https://buildwithfern.com)"
+            }
+        });
+
+        if (response.ok) {
+            // biome-ignore lint/suspicious/noExplicitAny: Crates.io API response structure
+            const data = (await response.json()) as any;
+            const maxStable = data.crate?.max_stable_version;
+            if (maxStable != null) {
+                return maxStable;
+            }
+        }
+
+        return undefined;
+    } catch (error) {
+        // Crate doesn't exist or network error
         return undefined;
     }
 }
