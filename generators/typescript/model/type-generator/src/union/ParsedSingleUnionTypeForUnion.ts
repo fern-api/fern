@@ -94,7 +94,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.safeName;
         } else {
-            return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.wireValue);
         }
     }
 
@@ -102,7 +102,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.safeName;
         } else {
-            return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.wireValue);
         }
     }
 
@@ -120,4 +120,13 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
             return singleProperty.name.wireValue;
         }
     }
+}
+
+const STARTS_WITH_DIGIT = /^\d/;
+
+function sanitizeIdentifier(name: string): string {
+    if (STARTS_WITH_DIGIT.test(name)) {
+        return `_${name}`;
+    }
+    return name;
 }

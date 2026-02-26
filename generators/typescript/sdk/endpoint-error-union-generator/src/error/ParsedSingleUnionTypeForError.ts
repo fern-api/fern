@@ -77,13 +77,13 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
 
     public getBuilderName(): string {
         return this.retainOriginalCasing
-            ? this.errorDeclaration.discriminantValue.name.originalName
+            ? sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.originalName)
             : this.errorDeclaration.discriminantValue.name.camelCase.safeName;
     }
 
     public getVisitorKey(): string {
         return this.retainOriginalCasing
-            ? this.errorDeclaration.discriminantValue.name.originalName
+            ? sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.originalName)
             : this.errorDeclaration.discriminantValue.name.camelCase.safeName;
     }
 
@@ -96,6 +96,15 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
 }
 
 const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = "content";
+
+const STARTS_WITH_DIGIT = /^\d/;
+
+function sanitizeIdentifier(name: string): string {
+    if (STARTS_WITH_DIGIT.test(name)) {
+        return `_${name}`;
+    }
+    return name;
+}
 
 function getSingleUnionTypeGenerator({
     errorDiscriminationStrategy,
