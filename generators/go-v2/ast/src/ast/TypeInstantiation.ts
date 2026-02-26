@@ -620,7 +620,12 @@ function invokeMustParseUUID({ value }: { value: string }): FuncInvocation {
 }
 
 function escapeGoString(value: string): string {
-    return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    return value
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r")
+        .replace(/\t/g, "\\t");
 }
 
 function filterNopMapEntries({ entries }: { entries: MapEntry[] }): MapEntry[] {
