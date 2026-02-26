@@ -221,13 +221,20 @@ public record FieldValue
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "primitive_value" => json.GetProperty("value")
                     .Deserialize<SeedApi.PrimitiveValue?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedApi.PrimitiveValue"),
-                "object_value" => json.Deserialize<SeedApi.ObjectValue?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedApi.ObjectValue"),
+                "object_value" => jsonWithoutDiscriminator.Deserialize<SeedApi.ObjectValue?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedApi.ObjectValue"),
                 "container_value" => json.GetProperty("value")
                     .Deserialize<SeedApi.ContainerValue?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedApi.ContainerValue"),

@@ -702,6 +702,23 @@ export function convertSchemaObject(
                 });
             }
 
+            if (schema.format === "date-time-rfc-2822") {
+                return wrapPrimitive({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    primitive: PrimitiveSchemaValueWithExample.datetimeRfc2822({
+                        example: getExamplesString({ schema, logger: context.logger, fallback })
+                    }),
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    description,
+                    availability,
+                    namespace,
+                    groupName
+                });
+            }
+
             if (schema.format === "date" && context.options.typeDatesAsStrings === false) {
                 return wrapPrimitive({
                     nameOverride,

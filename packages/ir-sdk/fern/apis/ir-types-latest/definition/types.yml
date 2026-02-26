@@ -263,6 +263,7 @@ types:
       - STRING
       - DATE
       - DATE_TIME
+      - DATE_TIME_RFC_2822
       - UUID
       - BASE_64
       - BIG_INTEGER
@@ -279,6 +280,7 @@ types:
       string: StringType
       date: DateType
       dateTime: DateTimeType
+      dateTimeRfc2822: DateTimeRfc2822Type
       uuid: UuidType
       base64: Base64Type
       bigInteger: BigIntegerType
@@ -381,6 +383,9 @@ types:
     properties: {}
 
   DateTimeType:
+    properties: {}
+
+  DateTimeRfc2822Type:
     properties: {}
 
   UuidType:
@@ -586,6 +591,7 @@ types:
         type: date
         key: date
       datetime: ExampleDatetime
+      datetimeRfc2822: ExampleDatetimeRfc2822
       uuid:
         type: uuid
         key: uuid
@@ -597,6 +603,11 @@ types:
         key: bigInteger
 
   ExampleDatetime:
+    properties:
+      datetime: datetime
+      raw: optional<string>
+
+  ExampleDatetimeRfc2822:
     properties:
       datetime: datetime
       raw: optional<string>

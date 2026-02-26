@@ -138,11 +138,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          # Full history needed to compare against last successful workflow run
-          fetch-depth: 0
           sparse-checkout: |
             ${{ matrix.files }}
             .github/
+          fetch-tags: false
 
       - name: Get base SHA for change detection
         id: get-base-sha
@@ -150,10 +149,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            git fetch origin main
-            MERGE_BASE=$(git merge-base HEAD origin/main)
-            echo "Using merge base with main for PR: $MERGE_BASE"
-            echo "base_sha=$MERGE_BASE" >> $GITHUB_OUTPUT
+            # Use the PR base SHA directly from the event - no git fetch needed
+            echo "Using PR base SHA: ${{ github.event.pull_request.base.sha }}"
+            echo "base_sha=${{ github.event.pull_request.base.sha }}" >> $GITHUB_OUTPUT
           else
             LAST_SUCCESS_SHA=$(gh api \
               "/repos/${{ github.repository }}/actions/workflows/seed.yml/runs?branch=main&status=success&per_page=1" \

@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { Examples } from "@fern-api/core-utils";
+import { Examples, mergeWithOverrides } from "@fern-api/core-utils";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { type EndpointSelector, type HttpMethod, OpenAPIPruner } from "@fern-api/openapi-pruner";
@@ -213,6 +213,11 @@ interface EndpointWorkItem {
     endpointKey: string;
 }
 
+export interface OpenAPISourceSpec {
+    absoluteFilePath: AbsoluteFilePath;
+    absoluteFilePathToOverrides?: AbsoluteFilePath;
+}
+
 function createSafeFilename(method: string, endpointPath: string): string {
     // Convert method and path to safe filename
     const safeMethod = method.toLowerCase();
@@ -238,6 +243,47 @@ function isOpenApiSpec(specContent: string): boolean {
     } catch {
         return false;
     }
+}
+
+function combineOpenAPISpecs(specs: OpenAPIV3.Document[], context: TaskContext): OpenAPIV3.Document {
+    const firstSpec = specs[0];
+    if (firstSpec == null) {
+        return { openapi: "3.0.0", info: { title: "", version: "" }, paths: {} };
+    }
+    const base = { ...firstSpec };
+    base.paths = { ...base.paths };
+    if (base.components) {
+        base.components = { ...base.components };
+        if (base.components.schemas) {
+            base.components.schemas = { ...base.components.schemas };
+        }
+    }
+
+    for (const spec of specs.slice(1)) {
+        if (spec.paths) {
+            for (const [path, pathItem] of Object.entries(spec.paths)) {
+                if (base.paths[path] == null) {
+                    base.paths[path] = pathItem;
+                }
+            }
+        }
+        if (spec.components?.schemas) {
+            if (!base.components) {
+                base.components = {};
+            }
+            if (!base.components.schemas) {
+                base.components.schemas = {};
+            }
+            for (const [name, schema] of Object.entries(spec.components.schemas)) {
+                if (base.components.schemas[name] == null) {
+                    base.components.schemas[name] = schema;
+                }
+            }
+        }
+    }
+
+    context.logger.debug(`Combined spec has ${Object.keys(base.paths ?? {}).length} paths`);
+    return base;
 }
 
 async function writeSpecToFile(spec: string, filename: string, context: TaskContext): Promise<void> {
@@ -438,7 +484,7 @@ export async function enhanceExamplesWithAI(
     context: TaskContext,
     token: FernToken,
     organizationId: string,
-    sourceFilePath?: AbsoluteFilePath,
+    sourceSpecs?: OpenAPISourceSpec[],
     apiName?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     if (!config.enabled) {
@@ -448,15 +494,7 @@ export async function enhanceExamplesWithAI(
 
     // Wrap the entire AI enhancement pipeline in try-catch to prevent CLI crashes
     try {
-        return await performAIEnhancement(
-            apiDefinition,
-            config,
-            context,
-            token,
-            organizationId,
-            sourceFilePath,
-            apiName
-        );
+        return await performAIEnhancement(apiDefinition, config, context, token, organizationId, sourceSpecs, apiName);
     } catch (error) {
         context.logger.debug(
             `AI example enhancement failed with error: ${error}. Continuing with original API definition to prevent CLI crash.`
@@ -476,7 +514,7 @@ async function performAIEnhancement(
     context: TaskContext,
     token: FernToken,
     organizationId: string,
-    sourceFilePath?: AbsoluteFilePath,
+    sourceSpecs?: OpenAPISourceSpec[],
     apiName?: string
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     const enhancer = new LambdaExampleEnhancer(config, context, token, organizationId);
@@ -484,44 +522,89 @@ async function performAIEnhancement(
 
     let openApiSpec: string | undefined;
     let endpointsNeedingRegeneration = new Set<string>();
+    const primarySourceFilePath = sourceSpecs?.[0]?.absoluteFilePath;
 
-    if (sourceFilePath != null) {
-        try {
-            const specContent = await readFile(sourceFilePath, "utf-8");
+    if (sourceSpecs != null && sourceSpecs.length > 0) {
+        const parsedSpecs: OpenAPIV3.Document[] = [];
 
-            // Check if it's an OpenAPI spec
-            if (!isOpenApiSpec(specContent)) {
-                context.logger.debug("Non-OpenAPI spec detected, skipping AI example enhancement");
-                return apiDefinition;
-            }
-
-            openApiSpec = specContent;
-            context.logger.debug(`Loaded OpenAPI spec (${specContent.length} characters) for AI enhancement`);
-
-            // Load original coverage before cleanup to know which endpoints to preserve
-            const originalCoveredEndpoints = await loadExistingOverrideCoverage(sourceFilePath, context);
-
-            // Clean up stale AI examples before processing
+        for (const sourceSpec of sourceSpecs) {
             try {
+                let specContent = await readFile(sourceSpec.absoluteFilePath, "utf-8");
+
+                if (sourceSpec.absoluteFilePathToOverrides != null) {
+                    try {
+                        let parsedSpec: object;
+                        try {
+                            parsedSpec = JSON.parse(specContent);
+                        } catch {
+                            parsedSpec = yaml.load(specContent, { json: true }) as object;
+                        }
+                        const overridesContent = await readFile(sourceSpec.absoluteFilePathToOverrides, "utf-8");
+                        let parsedOverrides: object;
+                        try {
+                            parsedOverrides = JSON.parse(overridesContent);
+                        } catch {
+                            parsedOverrides = yaml.load(overridesContent, { json: true }) as object;
+                        }
+                        const merged = mergeWithOverrides({ data: parsedSpec, overrides: parsedOverrides });
+                        specContent = yaml.dump(merged);
+                        context.logger.debug("Applied overrides to OpenAPI spec for AI enhancement");
+                    } catch (error) {
+                        context.logger.debug(`Failed to apply overrides to spec: ${error}. Using raw spec.`);
+                    }
+                }
+
+                if (!isOpenApiSpec(specContent)) {
+                    context.logger.debug(`Non-OpenAPI spec detected at ${sourceSpec.absoluteFilePath}, skipping`);
+                    continue;
+                }
+
+                let parsed: OpenAPIV3.Document;
+                try {
+                    parsed = JSON.parse(specContent);
+                } catch {
+                    parsed = yaml.load(specContent) as OpenAPIV3.Document;
+                }
+                parsedSpecs.push(parsed);
+                context.logger.debug(
+                    `Loaded OpenAPI spec from ${sourceSpec.absoluteFilePath} (${specContent.length} characters)`
+                );
+            } catch (error) {
+                context.logger.debug(`Failed to read OpenAPI spec file ${sourceSpec.absoluteFilePath}: ${error}`);
+            }
+        }
+
+        if (parsedSpecs.length > 0) {
+            const combinedSpec = combineOpenAPISpecs(parsedSpecs, context);
+            openApiSpec = JSON.stringify(combinedSpec, null, 2);
+            context.logger.debug(`Combined ${parsedSpecs.length} OpenAPI spec(s) for AI enhancement`);
+        }
+
+        for (const sourceSpec of sourceSpecs) {
+            try {
+                const originalCoveredEndpoints = await loadExistingOverrideCoverage(
+                    sourceSpec.absoluteFilePath,
+                    context
+                );
+
                 const validationResult = await validateAiExamplesFromFile({
-                    sourceFilePath,
+                    sourceFilePath: sourceSpec.absoluteFilePath,
                     context
                 });
 
                 if (validationResult.invalidCount > 0) {
-                    // Track which endpoints had invalid examples removed
                     for (const { example } of validationResult.invalidExamples) {
                         const endpointKey = `${example.method.toLowerCase()}:${example.endpointPath}`;
                         endpointsNeedingRegeneration.add(endpointKey);
                     }
 
                     const cleanupResult = await removeInvalidAiExamples({
-                        sourceFilePath,
+                        sourceFilePath: sourceSpec.absoluteFilePath,
                         context
                     });
 
                     context.logger.info(
-                        `Removed ${cleanupResult.removedCount} stale AI examples, ${endpointsNeedingRegeneration.size} endpoints will be regenerated`
+                        `Removed ${cleanupResult.removedCount} stale AI examples from ${sourceSpec.absoluteFilePath}, ${endpointsNeedingRegeneration.size} endpoints will be regenerated`
                     );
                 } else {
                     context.logger.debug("No stale AI examples found to remove");
@@ -529,26 +612,23 @@ async function performAIEnhancement(
             } catch (error) {
                 context.logger.debug(`Failed to clean up stale AI examples: ${error}`);
             }
-        } catch (error) {
-            context.logger.debug(`Failed to read OpenAPI spec file: ${error}`);
         }
     }
 
-    // Create final coverage set: exclude endpoints that need regeneration from original coverage
     let coveredEndpoints = new Set<string>();
-    if (sourceFilePath != null) {
-        const currentCoveredEndpoints = await loadExistingOverrideCoverage(sourceFilePath, context);
-
-        // Only include endpoints in coverage if they weren't removed due to being stale
-        for (const endpoint of currentCoveredEndpoints) {
-            if (!endpointsNeedingRegeneration.has(endpoint)) {
-                coveredEndpoints.add(endpoint);
+    if (sourceSpecs != null && sourceSpecs.length > 0) {
+        for (const sourceSpec of sourceSpecs) {
+            const currentCoveredEndpoints = await loadExistingOverrideCoverage(sourceSpec.absoluteFilePath, context);
+            for (const endpoint of currentCoveredEndpoints) {
+                if (!endpointsNeedingRegeneration.has(endpoint)) {
+                    coveredEndpoints.add(endpoint);
+                }
             }
         }
 
         if (endpointsNeedingRegeneration.size > 0) {
             context.logger.debug(
-                `Coverage adjusted: ${currentCoveredEndpoints.size} total, ${coveredEndpoints.size} preserved, ${endpointsNeedingRegeneration.size} marked for regeneration`
+                `Coverage adjusted: ${coveredEndpoints.size} preserved, ${endpointsNeedingRegeneration.size} marked for regeneration`
             );
         }
     }
@@ -566,16 +646,16 @@ async function performAIEnhancement(
         coveredEndpoints,
         endpointsNeedingRegeneration,
         openApiSpec,
-        sourceFilePath,
+        primarySourceFilePath,
         apiName,
         circuitBreaker
     );
 
-    if (enhancedExampleRecords.length > 0 && sourceFilePath != null) {
+    if (enhancedExampleRecords.length > 0 && primarySourceFilePath != null) {
         try {
             await writeAiExamplesOverride({
                 enhancedExamples: enhancedExampleRecords,
-                sourceFilePath,
+                sourceFilePath: primarySourceFilePath,
                 context
             });
         } catch (error) {
