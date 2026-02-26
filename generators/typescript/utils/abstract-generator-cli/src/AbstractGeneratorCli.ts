@@ -210,9 +210,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     // dependencies unnecessarily. Source-only output paths only
                     // need devDependencies (formatters, linters) — the build
                     // path requires a full install of production deps too.
-                    const needsBuild =
-                        !this.outputSrcOnly(customConfig) &&
-                        !this.outputSourceFiles(customConfig);
+                    const needsBuild = !this.outputSrcOnly(customConfig) && !this.outputSourceFiles(customConfig);
 
                     if (needsBuild) {
                         await typescriptProject.installDependencies(logger);
