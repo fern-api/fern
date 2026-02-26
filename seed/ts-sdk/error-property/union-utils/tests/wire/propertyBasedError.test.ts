@@ -26,7 +26,7 @@ describe("PropertyBasedErrorClient", () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorPropertyClient({ maxRetries: 0, environment: server.baseUrl });
 
-        const rawResponseBody = { message: "message" };
+        const rawResponseBody = { errorName: "PropertyBasedErrorTest", content: { message: "message" } };
         server
             .mockEndpoint()
             .get("/property-based-error")
