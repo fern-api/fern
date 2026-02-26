@@ -14,7 +14,7 @@
 [![2023 Y Combinator Startup](https://img.shields.io/badge/Y%20Combinator-2023-orange)](https://www.ycombinator.com/companies/fern)
 ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
-[![Slack](https://img.shields.io/badge/slack-pink.svg)](https://buildwithfern.com/contact/slack)
+[![Slack](https://img.shields.io/badge/slack-pink.svg)](https://buildwithfern.com/slack)
 [![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)
 
 </div>
@@ -107,16 +107,6 @@ Postman Collections, Server boilerplate, etc.). To add a generator, run `fern ad
 | `fernapi/fern-swift-sdk`           | ![Swift Generator Version](https://img.shields.io/docker/v/fernapi/fern-swift-sdk)                | [Changelog](https://buildwithfern.com/learn/sdks/generators/swift/changelog)                                    |
 | `fernapi/fern-rust-sdk`            | ![Rust Generator Version](https://img.shields.io/docker/v/fernapi/fern-rust-sdk)                  | [Changelog](https://buildwithfern.com/learn/sdks/generators/rust/changelog)                                     |
 
-### Server-side Generators
-
-Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers, who write their API definition (as an OpenAPI spec or Fern definition) and want to generate backend code.
-
-| Generator ID                      | Latest Version                                                                                                  | Changelog                                                                        |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| `fernapi/fern-typescript-express` | ![Typescript Express Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-express) | [versions.yml](./generators/typescript/express/versions.yml)                     |
-| `fernapi/fern-fastapi-server`     | ![Python FastAPI Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-fastapi-server)         | [versions.yml](./generators/python/fastapi/versions.yml)                         |
-| `fernapi/fern-java-spring`        | ![Java Spring Server Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-spring)               | [versions.yml](./generators/java/spring/versions.yml)                            |
-
 ### Model Generators
 
 Fern's model generators will output schemas or types defined in your OpenAPI spec or Fern Definition.
@@ -158,7 +148,7 @@ Fern is inspired by internal tooling built to enhance the developer experience. 
 
 ## Community
 
-[Join our Slack!](https://buildwithfern.com/contact/slack) We are here to answer questions and help you get the most out of Fern.
+[Join our Slack!](https://buildwithfern.com/slack) We are here to answer questions and help you get the most out of Fern.
 
 ## Contributing
 
