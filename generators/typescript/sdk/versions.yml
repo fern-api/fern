@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.5
+  changelogEntry:
+    - summary: |
+        Fix duplicate identifier collision in serialization schemas when two different packages
+        define types with the same name. The schema generator now tracks directly imported type
+        names and switches to namespace imports when a collision would occur, preventing
+        "Duplicate identifier" TypeScript errors in cross-package type references.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.51.4
   changelogEntry:
     - summary: |
@@ -9,7 +20,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.51.3
   changelogEntry:
     - summary: |

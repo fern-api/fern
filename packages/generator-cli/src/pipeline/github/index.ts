@@ -6,4 +6,3 @@ export {
     findExistingUpdatablePR
 } from "./findExistingUpdatablePR";
 export { parseCommitMessageForPR } from "./parseCommitMessage";
-export { postConflictComments } from "./postConflictComments";

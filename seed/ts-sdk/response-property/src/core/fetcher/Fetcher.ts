@@ -282,6 +282,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     args.abortSignal,
                     args.withCredentials,
                     args.duplex,
+                    args.responseType === "streaming" || args.responseType === "sse",
                 ),
             args.maxRetries,
         );
