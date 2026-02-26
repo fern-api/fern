@@ -1035,25 +1035,29 @@ describe("${serviceName}", () => {
         // Skip error examples whose status code is already handled by a prior error in the endpoint's
         // error list. The code generator deduplicates errors by status code (keeping the first), so
         // tests for shadowed errors would expect the wrong error type.
-        const firstErrorIdByStatusCode = new Map<number, string>();
-        for (const responseError of endpoint.errors) {
-            const errorDecl = this.ir.errors[responseError.error.errorId];
-            if (errorDecl != null && !firstErrorIdByStatusCode.has(errorDecl.statusCode)) {
-                firstErrorIdByStatusCode.set(errorDecl.statusCode, responseError.error.errorId);
+        // This only applies to status-code discrimination; property-discriminated errors use the
+        // discriminant value (not status code) and don't deduplicate.
+        if (this.ir.errorDiscriminationStrategy.type === "statusCode") {
+            const firstErrorIdByStatusCode = new Map<number, string>();
+            for (const responseError of endpoint.errors) {
+                const errorDecl = this.ir.errors[responseError.error.errorId];
+                if (errorDecl != null && !firstErrorIdByStatusCode.has(errorDecl.statusCode)) {
+                    firstErrorIdByStatusCode.set(errorDecl.statusCode, responseError.error.errorId);
+                }
             }
+            examples = examples.filter((example) => {
+                if (example.response.type !== "error") {
+                    return true;
+                }
+                const exampleErrorId = example.response.error.errorId;
+                const errorDecl = this.ir.errors[exampleErrorId];
+                if (errorDecl == null) {
+                    return true;
+                }
+                const firstId = firstErrorIdByStatusCode.get(errorDecl.statusCode);
+                return firstId === exampleErrorId;
+            });
         }
-        examples = examples.filter((example) => {
-            if (example.response.type !== "error") {
-                return true;
-            }
-            const exampleErrorId = example.response.error.errorId;
-            const errorDecl = this.ir.errors[exampleErrorId];
-            if (errorDecl == null) {
-                return true;
-            }
-            const firstId = firstErrorIdByStatusCode.get(errorDecl.statusCode);
-            return firstId === exampleErrorId;
-        });
         if (examples.length === 0) {
             return [];
         }
