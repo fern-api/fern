@@ -831,29 +831,35 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getOAuthAdditionalConstructorParams(scheme: OAuthScheme, isOptional: boolean): ConstructorParameter[] {
         const params: ConstructorParameter[] = [];
+        // Include required, non-literal custom properties, matching Java's approach of
+        // skipping only literals. Keep the optional guard to avoid adding optional-typed
+        // properties as required constructor parameters.
         for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: customProperty.property.valueType
             });
-            if (!typeRef.isOptional && is.IR.TypeReference.Primitive(customProperty.property.valueType)) {
-                // Use camelCase for the constructor parameter name in the root client
-                const name = customProperty.property.name.name.camelCase.safeName;
-                params.push({
-                    name,
-                    docs: `The ${name} for OAuth authentication.`,
-                    isOptional,
-                    typeReference: customProperty.property.valueType,
-                    type: typeRef,
-                    exampleValue: name
-                });
+            if (typeRef.isOptional) {
+                continue;
             }
+            const name = customProperty.property.name.name.camelCase.safeName;
+            params.push({
+                name,
+                docs: `The ${name} for OAuth authentication.`,
+                isOptional,
+                typeReference: customProperty.property.valueType,
+                type: typeRef,
+                exampleValue: name
+            });
         }
         const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
-        if (scopes) {
+        if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: scopes.property.valueType
             });
-            if (!typeRef.isOptional && is.IR.TypeReference.Primitive(scopes.property.valueType)) {
+            if (!typeRef.isOptional) {
                 const name = scopes.property.name.name.camelCase.safeName;
                 params.push({
                     name,
@@ -871,31 +877,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
     /**
      * Gets the parameter names for additional OAuth fields (custom properties and scopes)
      * that need to be passed to the OAuthTokenProvider constructor.
-     * Uses PascalCase names to match the OAuthTokenProvider constructor parameter names.
      */
     private getOAuthAdditionalParamNames(): string[] {
         if (this.oauth == null) {
             return [];
         }
-        const names: string[] = [];
-        for (const customProperty of this.oauth.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
-            const typeRef = this.context.csharpTypeMapper.convert({
-                reference: customProperty.property.valueType
-            });
-            if (!typeRef.isOptional && is.IR.TypeReference.Primitive(customProperty.property.valueType)) {
-                names.push(customProperty.property.name.name.camelCase.safeName);
-            }
-        }
-        const scopes = this.oauth.configuration.tokenEndpoint.requestProperties.scopes;
-        if (scopes) {
-            const typeRef = this.context.csharpTypeMapper.convert({
-                reference: scopes.property.valueType
-            });
-            if (!typeRef.isOptional && is.IR.TypeReference.Primitive(scopes.property.valueType)) {
-                names.push(scopes.property.name.name.camelCase.safeName);
-            }
-        }
-        return names;
+        return this.getOAuthAdditionalConstructorParams(this.oauth, false).map((p) => p.name);
     }
 
     private getInferredAuthCredentialParams(): string[] {
@@ -914,4 +901,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
         return credentials.map((credential) => credential.camelName);
     }
+}
+
+/**
+ * Checks if a type reference is a literal type (container with literal value).
+ * Literal properties are hardcoded in the request class and should not be
+ * propagated as constructor parameters.
+ */
+function isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+    return typeReference.type === "container" && typeReference.container.type === "literal";
 }

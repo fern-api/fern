@@ -20,6 +20,11 @@
         Fix OAuth client credentials custom flow to pass additional properties and
         scopes to the OAuthTokenProvider constructor.
       type: fix
+    - summary: |
+        Align OAuth custom property filter with Java generator: skip only literal
+        properties instead of filtering to only primitives. This ensures non-primitive,
+        non-literal custom OAuth properties are correctly propagated.
+      type: fix
   createdAt: "2026-02-26"
   irVersion: 62
 
