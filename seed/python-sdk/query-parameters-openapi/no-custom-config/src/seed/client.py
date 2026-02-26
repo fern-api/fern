@@ -12,6 +12,7 @@ from .types.nested_user import NestedUser
 from .types.search_request_neighbor import SearchRequestNeighbor
 from .types.search_request_neighbor_required import SearchRequestNeighborRequired
 from .types.search_response import SearchResponse
+from .types.stream_event import StreamEvent
 from .types.user import User
 
 
@@ -239,6 +240,47 @@ class SeedApi:
             request_options=request_options,
         )
         return _response.data
+
+    def stream_events(
+        self,
+        *,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[StreamEvent]:
+        """
+        Parameters
+        ----------
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of tags. Serialized as a comma-separated list.
+
+        ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Optional list of IDs. Serialized as a comma-separated list.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamEvent]
+            Streaming event response
+
+        Examples
+        --------
+        from seed import SeedApi
+
+        client = SeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.stream_events(
+            tags="tags",
+            ids="ids",
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_events(tags=tags, ids=ids, request_options=request_options) as r:
+            yield from r.data
 
 
 class AsyncSeedApi:
@@ -472,3 +514,53 @@ class AsyncSeedApi:
             request_options=request_options,
         )
         return _response.data
+
+    async def stream_events(
+        self,
+        *,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        ids: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[StreamEvent]:
+        """
+        Parameters
+        ----------
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of tags. Serialized as a comma-separated list.
+
+        ids : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Optional list of IDs. Serialized as a comma-separated list.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamEvent]
+            Streaming event response
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedApi
+
+        client = AsyncSeedApi(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.stream_events(
+                tags="tags",
+                ids="ids",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_events(tags=tags, ids=ids, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk

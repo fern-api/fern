@@ -182,7 +182,6 @@ components:
           type: string
         tokens:
           type: integer
-  schemas:
     User:
       type: object
       properties:
