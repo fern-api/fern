@@ -33,8 +33,7 @@ generatorType: SDK
 defaultOutputMode: github
 
 customFixtureConfig:
-  customConfig:
-    generateSubpackageExports: false
+  customConfig: {}
 fixtures:
   webhooks:
     - outputFolder: no-custom-config

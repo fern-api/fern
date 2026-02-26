@@ -4,6 +4,8 @@ import path from "path";
 import fs from "fs";
 import os from "os";
 
+const PKG_ROOT = path.resolve(__dirname, "../../..");
+
 function bundle(entryCode: string): Promise<number> {
     return new Promise((resolve, reject) => {
         const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "tree-shake-test-"));
@@ -19,8 +21,12 @@ function bundle(entryCode: string): Promise<number> {
             },
             resolve: {
                 extensions: [".ts", ".js"],
+                // Use exact-match aliases ($) so that the root alias does not
+                // swallow subpackage imports.  Subpackage paths point straight at
+                // the source exports file that the generator creates.
                 alias: {
-                    "@fern/exhaustive": path.resolve(__dirname, "../../../src"),
+                    "@fern/exhaustive/noAuth$": path.join(PKG_ROOT, "src/api/resources/noAuth/exports.ts"),
+                    "@fern/exhaustive$": path.join(PKG_ROOT, "src/index.ts"),
                 },
             },
             module: {
@@ -31,7 +37,7 @@ function bundle(entryCode: string): Promise<number> {
                             loader: "ts-loader",
                             options: {
                                 transpileOnly: true,
-                                configFile: path.resolve(__dirname, "../../../tsconfig.cjs.json"),
+                                configFile: path.join(PKG_ROOT, "tsconfig.cjs.json"),
                             },
                         },
                         exclude: /node_modules/,
