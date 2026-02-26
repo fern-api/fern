@@ -464,6 +464,12 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: "MyPager"
+  cross-package-type-names:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
   ts-extra-properties:
     - outputFolder: .
       customConfig:
