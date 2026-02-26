@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.3
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning missing namespace changes in the git diff. When
+        generated SDK files are copied without `.fernignore` (the
+        `copyGeneratedFilesNoFernIgnorePreservingGit` path), new files created
+        by namespace renames were untracked and invisible to `git diff HEAD`.
+        The diff generator now runs `git add -N .` (intent-to-add) before
+        diffing so that newly created files appear in the diff and are
+        correctly analyzed by the AI as breaking changes.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.90.2
   changelogEntry:
     - summary: |
