@@ -13,7 +13,9 @@ export function createMockTaskContext(): TaskContext {
             error: noop,
             log: noop
         },
-        takeOverTerminal: async () => {},
+        takeOverTerminal: async () => {
+            return;
+        },
         failAndThrow: (message?: string) => {
             throw new Error(message ?? "Task failed");
         },
@@ -23,6 +25,8 @@ export function createMockTaskContext(): TaskContext {
             throw new Error("Not implemented in mock");
         },
         runInteractiveTask: async () => false,
-        instrumentPostHogEvent: async () => {}
+        instrumentPostHogEvent: async () => {
+            return;
+        }
     };
 }

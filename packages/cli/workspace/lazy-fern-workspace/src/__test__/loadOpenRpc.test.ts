@@ -48,7 +48,7 @@ describe("loadOpenRpc", () => {
         // MethodOrReference union — use type guard for safe access
         const method = result.methods[0];
         expect(method).toBeDefined();
-        expect("name" in method! && method.name).toBe("getUser");
+        expect(method != null && "name" in method && method.name).toBe("getUser");
     });
 
     it("loads a YAML document without overrides", async () => {
@@ -66,7 +66,7 @@ describe("loadOpenRpc", () => {
         expect(result.methods).toHaveLength(1);
         const method = result.methods[0];
         expect(method).toBeDefined();
-        expect("name" in method! && method.name).toBe("getUser");
+        expect(method != null && "name" in method && method.name).toBe("getUser");
     });
 
     it("applies a single override", async () => {
@@ -123,6 +123,6 @@ describe("loadOpenRpc", () => {
         expect(result.methods).toHaveLength(1);
         const method = result.methods[0];
         expect(method).toBeDefined();
-        expect("name" in method! && method.name).toBe("getUser");
+        expect(method != null && "name" in method && method.name).toBe("getUser");
     });
 });
