@@ -1,13 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.91.0
+- version: 3.90.2
   changelogEntry:
-    - summary: |
-        Support authenticated access to private package registries and GitHub
-        repositories during AUTO version resolution. When GITHUB_TOKEN is set,
-        the CLI authenticates GitHub API requests to read tags from private repos.
-        When NPM_TOKEN is set, the CLI authenticates npm registry requests to
-        read versions from private packages.
-      type: feat
     - summary: |
         Pass CLI-computed semantic version to Fiddle when creating remote generation
         jobs. Previously the CLI computed the version via the FDR API but passed the
