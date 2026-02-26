@@ -6,6 +6,7 @@ import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpoi
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { buildUrl } from "../utils/buildUrl.js";
 import { generateEndpointMetadata } from "../utils/generateEndpointMetadata.js";
+import { getAvailabilityDocs } from "../utils/getAvailabilityDocs.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
@@ -13,7 +14,6 @@ import {
     getTimeoutExpression,
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter.js";
-import { getAvailabilityDocs } from "../utils/getAvailabilityDocs.js";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse.js";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
