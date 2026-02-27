@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+<<<<<<< devin/1772138948-private-registry-auth
 - version: 3.94.0
   changelogEntry:
     - summary: |
@@ -11,6 +12,19 @@
         registries and GitHub repositories via environment variables: GITHUB_TOKEN for
         private repos and NPM_TOKEN for private npm packages.
       type: feat
+=======
+- version: 3.93.4
+  changelogEntry:
+    - summary: |
+        Fix `getExplodeForQueryParameter` to treat `deepObject` style as having
+        a default `explode` of `true` per the OpenAPI spec. Previously,
+        `deepObject` was grouped with `spaceDelimited` and `pipeDelimited`
+        (default `explode: false`), causing `explode: true` to be incorrectly
+        preserved as non-default for `deepObject` parameters. The OpenAPI spec
+        only defines `deepObject` with `explode: true`, so it should be treated
+        as the default.
+      type: fix
+>>>>>>> main
   createdAt: "2026-02-27"
   irVersion: 65
 
@@ -220,7 +234,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.90.3
   changelogEntry:
     - summary: |
