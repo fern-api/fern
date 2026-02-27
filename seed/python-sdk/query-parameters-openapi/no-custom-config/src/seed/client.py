@@ -103,6 +103,8 @@ class SeedApi:
         optional_user: typing.Optional[User] = None,
         exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        optional_tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         neighbor: typing.Optional[SearchRequestNeighbor] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
@@ -138,6 +140,12 @@ class SeedApi:
         exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of tags. Serialized as a comma-separated list.
+
+        optional_tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Optional list of tags. Serialized as a comma-separated list.
 
         neighbor : typing.Optional[SearchRequestNeighbor]
 
@@ -197,6 +205,8 @@ class SeedApi:
                 tags=["tags", "tags"],
             ),
             filter="filter",
+            tags="tags",
+            optional_tags="optionalTags",
             neighbor=User(
                 name="name",
                 tags=["tags", "tags"],
@@ -223,6 +233,8 @@ class SeedApi:
             optional_user=optional_user,
             exclude_user=exclude_user,
             filter=filter,
+            tags=tags,
+            optional_tags=optional_tags,
             neighbor=neighbor,
             request_options=request_options,
         )
@@ -317,6 +329,8 @@ class AsyncSeedApi:
         optional_user: typing.Optional[User] = None,
         exclude_user: typing.Optional[typing.Union[User, typing.Sequence[User]]] = None,
         filter: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
+        optional_tags: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         neighbor: typing.Optional[SearchRequestNeighbor] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SearchResponse:
@@ -352,6 +366,12 @@ class AsyncSeedApi:
         exclude_user : typing.Optional[typing.Union[User, typing.Sequence[User]]]
 
         filter : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+
+        tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            List of tags. Serialized as a comma-separated list.
+
+        optional_tags : typing.Optional[typing.Union[str, typing.Sequence[str]]]
+            Optional list of tags. Serialized as a comma-separated list.
 
         neighbor : typing.Optional[SearchRequestNeighbor]
 
@@ -415,6 +435,8 @@ class AsyncSeedApi:
                     tags=["tags", "tags"],
                 ),
                 filter="filter",
+                tags="tags",
+                optional_tags="optionalTags",
                 neighbor=User(
                     name="name",
                     tags=["tags", "tags"],
@@ -444,6 +466,8 @@ class AsyncSeedApi:
             optional_user=optional_user,
             exclude_user=exclude_user,
             filter=filter,
+            tags=tags,
+            optional_tags=optional_tags,
             neighbor=neighbor,
             request_options=request_options,
         )

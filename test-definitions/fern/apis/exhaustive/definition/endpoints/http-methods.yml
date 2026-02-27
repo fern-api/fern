@@ -18,6 +18,7 @@ service:
       path: ""
       request: objects.ObjectWithRequiredField
       response: objects.ObjectWithOptionalField
+      availability: deprecated
 
     testPut:
       method: PUT
@@ -26,6 +27,9 @@ service:
         id: string
       request: objects.ObjectWithRequiredField
       response: objects.ObjectWithOptionalField
+      availability:
+        status: deprecated
+        message: Use testPatch instead.
 
     testPatch:
       method: PATCH
@@ -34,6 +38,7 @@ service:
         id: string
       request: objects.ObjectWithOptionalField
       response: objects.ObjectWithOptionalField
+      availability: pre-release
 
     testDelete:
       method: DELETE
@@ -41,3 +46,4 @@ service:
       path-parameters:
         id: string
       response: boolean
+      availability: in-development
