@@ -119,9 +119,7 @@ function evaluateRuntime(): Runtime {
      * Edge Runtime warns about Node.js APIs even when they are guarded).
      */
     const _process = typeof process !== "undefined" ? process : undefined;
-    const isNode =
-        typeof _process !== "undefined" &&
-        typeof _process.versions?.node === "string";
+    const isNode = typeof _process !== "undefined" && typeof _process.versions?.node === "string";
     if (isNode) {
         return {
             type: "node",
