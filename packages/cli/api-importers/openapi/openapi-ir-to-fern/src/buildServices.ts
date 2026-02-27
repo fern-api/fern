@@ -37,6 +37,8 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
 
     // Track endpoints added per file to detect collisions
     const endpointsByFile = new Map<RelativeFilePath, Map<string, RawSchemas.HttpEndpointSchema>>();
+    // Track which original endpointIds have been expanded into audience-suffixed keys per file
+    const expandedEndpointIds = new Map<RelativeFilePath, Set<string>>();
 
     for (const endpoint of endpoints) {
         const { endpointId, file, tag } = getEndpointLocation(endpoint);
@@ -75,13 +77,21 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
         // Resolve the endpoint key, handling collisions for disjoint audiences
         let resolvedEndpointId = endpointId;
         const fileEndpoints = endpointsByFile.get(file);
-        if (fileEndpoints != null && fileEndpoints.has(endpointId)) {
+        const fileExpanded = expandedEndpointIds.get(file);
+
+        // Check if this endpointId was already expanded into suffixed keys
+        if (fileExpanded != null && fileExpanded.has(endpointId)) {
+            // Already expanded — directly compute the suffixed key for this new endpoint
+            const newAudiences = convertedEndpoint.value.audiences ?? [];
+            const newAudSuffix = newAudiences.length > 0 ? newAudiences.join("_") : "default";
+            resolvedEndpointId = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${newAudSuffix}`;
+        } else if (fileEndpoints != null && fileEndpoints.has(endpointId)) {
             const existingSchema = fileEndpoints.get(endpointId);
             if (
                 existingSchema != null &&
                 audiencesAreDisjoint(existingSchema.audiences, convertedEndpoint.value.audiences)
             ) {
-                // Rename the existing endpoint with its audience suffix
+                // First collision: rename the existing endpoint with its audience suffix
                 const existingAudiences = existingSchema.audiences ?? [];
                 const existingAudSuffix = existingAudiences.length > 0 ? existingAudiences.join("_") : "default";
                 const existingNewKey = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${existingAudSuffix}`;
@@ -95,17 +105,12 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
                 const newAudiences = convertedEndpoint.value.audiences ?? [];
                 const newAudSuffix = newAudiences.length > 0 ? newAudiences.join("_") : "default";
                 resolvedEndpointId = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${newAudSuffix}`;
-            } else {
-                // Check if there's already an audience-suffixed version of this endpoint
-                // (i.e., we've already renamed previous collisions)
-                const newAudiences = convertedEndpoint.value.audiences ?? [];
-                const newAudSuffix = newAudiences.length > 0 ? newAudiences.join("_") : "default";
-                const candidateKey = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${newAudSuffix}`;
-                if (
-                    [...fileEndpoints.keys()].some((key) => key.startsWith(`${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}`))
-                ) {
-                    resolvedEndpointId = candidateKey;
+
+                // Mark this endpointId as expanded so subsequent endpoints are handled
+                if (!expandedEndpointIds.has(file)) {
+                    expandedEndpointIds.set(file, new Set());
                 }
+                expandedEndpointIds.get(file)?.add(endpointId);
             }
         }
 
