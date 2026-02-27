@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix TypeScript generator crash when discriminated union discriminant values start
+        with digits (e.g., "1foo", "1bar"). The generated code now prefixes such identifiers
+        with an underscore to produce valid TypeScript.
+      type: fix
+  irVersion: 65
+  createdAt: "2026-02-27"
+  version: 0.19.7
+
+- changelogEntry:
+    - summary: |
         Use generator-cli JS API directly instead of subprocess spawning.
         Remove generator-cli from Docker image since it is now bundled via esbuild.
       type: chore

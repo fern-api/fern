@@ -6,6 +6,7 @@ import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpoi
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { buildUrl } from "../utils/buildUrl.js";
 import { generateEndpointMetadata } from "../utils/generateEndpointMetadata.js";
+import { getAvailabilityDocs } from "../utils/getAvailabilityDocs.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
@@ -115,6 +116,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     public getDocs(context: SdkContext): string | undefined {
         const groups: string[] = [];
+        const availabilityDoc = getAvailabilityDocs(this.endpoint);
+        if (availabilityDoc != null) {
+            groups.push(availabilityDoc);
+        }
         if (this.endpoint.docs) {
             groups.push(this.endpoint.docs);
         }

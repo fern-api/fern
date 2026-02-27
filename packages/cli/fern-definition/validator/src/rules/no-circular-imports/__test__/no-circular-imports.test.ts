@@ -19,18 +19,21 @@ describe("no-circular-imports", () => {
                 message: "A file cannot import itself",
                 nodePath: ["imports", "b"],
                 relativeFilepath: RelativeFilePath.of("b.yml"),
+                name: "no-circular-imports",
                 severity: "fatal"
             },
             {
                 message: "Circular import detected: c/c.yml -> d/d.yml -> e.yml -> c/c.yml",
                 nodePath: ["imports", "d"],
                 relativeFilepath: RelativeFilePath.of("c/c.yml"),
+                name: "no-circular-imports",
                 severity: "fatal"
             },
             {
                 message: "Circular import detected: d/d.yml -> e.yml -> d/d.yml",
                 nodePath: ["imports", "e"],
                 relativeFilepath: RelativeFilePath.of("d/d.yml"),
+                name: "no-circular-imports",
                 severity: "fatal"
             }
         ]);
