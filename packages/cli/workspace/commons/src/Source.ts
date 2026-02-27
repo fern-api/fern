@@ -25,5 +25,5 @@ export interface IdentifiableSource {
     type: "asyncapi" | "openapi" | "protobuf";
     id: string;
     absoluteFilePath: AbsoluteFilePath;
-    absoluteFilePathToOverrides?: AbsoluteFilePath;
+    absoluteFilePathToOverrides?: AbsoluteFilePath | AbsoluteFilePath[];
 }

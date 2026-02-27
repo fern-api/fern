@@ -26,7 +26,7 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
 
     public generateInterface(context: Context): OptionalKind<InterfaceDeclarationStructure> {
         return {
-            name: this.discriminantValueWithAllCasings.name.pascalCase.unsafeName,
+            name: sanitizeIdentifier(this.discriminantValueWithAllCasings.name.pascalCase.unsafeName),
             extends: this.getExtends(context).map(getTextOfTsNode),
             properties: [
                 {
@@ -55,4 +55,13 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
     protected abstract getNonDiscriminantPropertiesForSchema(
         context: Context
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"];
+}
+
+const STARTS_WITH_DIGIT = /^\d/;
+
+function sanitizeIdentifier(name: string): string {
+    if (STARTS_WITH_DIGIT.test(name)) {
+        return `_${name}`;
+    }
+    return name;
 }

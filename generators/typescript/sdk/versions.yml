@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.6
+  changelogEntry:
+    - summary: |
+        Fix TypeScript generator crash when discriminated union discriminant values start
+        with digits (e.g., "1foo", "1bar"). The generated code now prefixes such identifiers
+        with an underscore to produce valid TypeScript.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.52.5
+  changelogEntry:
+    - summary: |
+        Fix Edge Runtime compatibility warning in Next.js. The runtime detection code
+        previously used `process.versions.node` directly, which caused Next.js bundlers
+        (Turbopack/webpack) to emit "A Node.js API is used which is not supported in
+        the Edge Runtime" warnings during static analysis, even though the code path was
+        guarded by an Edge Runtime check. The fix assigns `process` to a local variable
+        first, preventing bundlers from flagging the indirect property access.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
 - version: 3.52.4
   changelogEntry:
     - summary: |
@@ -10,7 +32,6 @@
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
-
 - version: 3.52.3
   changelogEntry:
     - summary: |
