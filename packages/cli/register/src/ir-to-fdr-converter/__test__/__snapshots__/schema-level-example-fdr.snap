@@ -230,7 +230,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": undefined,
+              "name": "Add a Fern Plant",
               "path": "/plant",
               "pathParameters": {},
               "queryParameters": {},

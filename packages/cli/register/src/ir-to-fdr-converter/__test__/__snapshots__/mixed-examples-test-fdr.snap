@@ -162,7 +162,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "getProductExample",
             "path": "/product/productId",
             "pathParameters": {
               "productId": "productId",

@@ -72,7 +72,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "listPlantsExample",
             "path": "/plants",
             "pathParameters": {},
             "queryParameters": {},
@@ -227,7 +227,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "getPlantExample",
             "path": "/plants/plantId",
             "pathParameters": {
               "plantId": "plantId",

@@ -20,7 +20,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "getPlantExample",
             "path": "/plant/plantId",
             "pathParameters": {
               "plantId": "plantId",
@@ -149,7 +149,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "createGardenExample",
             "path": "/garden",
             "pathParameters": {},
             "queryParameters": {},
