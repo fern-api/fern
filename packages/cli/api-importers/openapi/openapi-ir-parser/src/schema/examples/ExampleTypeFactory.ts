@@ -989,7 +989,12 @@ export class ExampleTypeFactory {
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.datetimeRfc2822(example);
                 } else if (example != null) {
-                    this.warnTypeMismatch({ example, expected: "string (datetime RFC 2822)", schemaType: schema.type, options });
+                    this.warnTypeMismatch({
+                        example,
+                        expected: "string (datetime RFC 2822)",
+                        schemaType: schema.type,
+                        options
+                    });
                 }
                 if (schema.example != null) {
                     return PrimitiveExample.datetimeRfc2822(schema.example);
