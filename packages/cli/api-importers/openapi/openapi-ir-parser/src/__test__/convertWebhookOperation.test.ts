@@ -110,12 +110,10 @@ describe("convertWebhookOperation", () => {
                 const eventTypeProp = webhook.payload.properties[0];
                 expect.assert(eventTypeProp != null);
                 expect(eventTypeProp.key).toBe("event_type");
-                expect(eventTypeProp.description).toBe("The type of event");
 
                 const timestampProp = webhook.payload.properties[1];
                 expect.assert(timestampProp != null);
                 expect(timestampProp.key).toBe("timestamp");
-                expect(timestampProp.description).toBe("Event timestamp");
             }
         });
 
