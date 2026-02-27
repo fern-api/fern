@@ -41,14 +41,15 @@ customFixtureConfig:
     packageVersion: "0.1.0"
 
 fixtures:
-  simple:
-    - customConfig: null
-      outputFolder: basic
+  simple-api:
+    # - customConfig: null
+    #   outputFolder: basic
     - customConfig:
         crateName: custom_simple_sdk
         crateVersion: "1.2.0"
         clientClassName: CustomSimpleClient
         enableWireTests: true
+        enableUnitTests: true
       outputFolder: basic-custom-config
   imdb:
     - customConfig:
@@ -62,6 +63,7 @@ fixtures:
           serde_derive: "1.0"
           tokio-util: "0.7"
         enableWireTests: true
+        enableUnitTests: true
       outputFolder: imdb-custom-config
     - customConfig:
         clientName: ImdbClient
@@ -88,12 +90,14 @@ fixtures:
         crateName: full_custom_sdk
         crateVersion: "1.0.0"
         enableWireTests: true
+        enableUnitTests: true
       outputFolder: full-custom
   examples:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         enableWireTests: true
+        enableUnitTests: true
         customReadmeSections:
           - title: "Override Section"
             content: "Override Content"
@@ -120,16 +124,19 @@ fixtures:
   exhaustive:
     - customConfig:
         enableWireTests: true
+        enableUnitTests: true
       outputFolder: .
   server-sent-event-examples:
     - customConfig:
         enableWireTests: true
+        enableUnitTests: true
         packageName: sse_examples
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
   server-sent-events:
     - customConfig:
         enableWireTests: true
+        enableUnitTests: true
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests

@@ -39,9 +39,9 @@ export class RootClientGenerator {
     // PUBLIC API
     // =============================================================================
 
-    public generate(): RustFile {
+    public generate(unitTestModule?: string): RustFile {
         const subpackages = this.getSubpackages();
-        const rawDeclarations = this.buildRawDeclarations(subpackages);
+        const rawDeclarations = this.buildRawDeclarations(subpackages, unitTestModule);
 
         // Build module documentation
         const moduleDoc: string[] = [];
@@ -82,12 +82,12 @@ export class RootClientGenerator {
         });
     }
 
-    public generateAllFiles(): RustFile[] {
+    public generateAllFiles(unitTestModule?: string): RustFile[] {
         const files: RustFile[] = [];
         const subpackages = this.getSubpackages();
 
         // Generate main mod.rs file
-        files.push(this.generate());
+        files.push(this.generate(unitTestModule));
 
         // Generate mod.rs files for nested directories using ALL subpackages
         const allSubpackages = this.getAllSubpackagesForModuleDetection();
@@ -100,7 +100,7 @@ export class RootClientGenerator {
     // FILE STRUCTURE GENERATION
     // =============================================================================
 
-    private buildRawDeclarations(subpackages: FernIr.Subpackage[]): string[] {
+    private buildRawDeclarations(subpackages: FernIr.Subpackage[], unitTestModule?: string): string[] {
         const rawDeclarations: string[] = [];
 
         // Add module declarations for sub-clients
@@ -117,6 +117,11 @@ export class RootClientGenerator {
         const reExports = this.generateReExports(subpackages);
         if (reExports) {
             rawDeclarations.push(reExports);
+        }
+
+        // Add unit test module if provided
+        if (unitTestModule) {
+            rawDeclarations.push(unitTestModule);
         }
 
         return rawDeclarations;

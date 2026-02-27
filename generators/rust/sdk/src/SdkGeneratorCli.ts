@@ -28,6 +28,7 @@ import { ReferenceConfigAssembler } from "./reference/index.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils/index.js";
+import { UnitTestGenerator } from "./unit-tests/index.js";
 import { WireTestGenerator } from "./wire-tests/index.js";
 
 const execAsync = promisify(exec);
@@ -213,6 +214,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Generate wire tests if enabled
         await this.generateWireTestFiles(context);
 
+        // Generate separate unit test file if enabled
+        await this.generateUnitTestFiles(context);
+
         context.logger.debug(`Persisting files to ${context.project.absolutePathToOutputDirectory}...`);
         await context.project.persist();
         context.logger.debug("File persistence complete");
@@ -227,6 +231,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
         const files: RustFile[] = [];
+        const enableUnitTests = context.customConfig.enableUnitTests;
+
+        // Create unit test generator for inline tests if enabled
+        const unitTestGenerator = enableUnitTests ? new UnitTestGenerator(context) : undefined;
 
         // Core files
         context.logger.debug("Generating core files (lib.rs, error.rs, api/mod.rs)...");
@@ -248,12 +256,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // ClientConfig.rs and ApiClientBuilder.rs (always generate with conditional template processing)
         context.logger.debug("Generating client configuration files...");
         const clientConfigGenerator = new ClientConfigGenerator(context);
-        files.push(clientConfigGenerator.generate());
+        files.push(clientConfigGenerator.generate(unitTestGenerator?.generateConfigTests()));
 
         // Client.rs and nested mod.rs files
         context.logger.debug(`Generating root client: ${context.getClientName()}...`);
         const rootClientGenerator = new RootClientGenerator(context);
-        files.push(...rootClientGenerator.generateAllFiles());
+        files.push(...rootClientGenerator.generateAllFiles(unitTestGenerator?.generateClientTests()));
 
         // Services/**/*.rs
         const serviceCount = Object.keys(context.ir.services).length;
@@ -798,6 +806,30 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.logger.debug("WireMock test generation complete");
         } catch (error) {
             context.logger.error("Failed to generate WireMock tests");
+            if (error instanceof Error) {
+                context.logger.debug(error.message);
+                context.logger.debug(error.stack ?? "");
+            }
+        }
+    }
+
+    // ===========================
+    // UNIT TEST GENERATION
+    // ===========================
+
+    private async generateUnitTestFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.customConfig.enableUnitTests) {
+            return;
+        }
+
+        try {
+            context.logger.debug("Generating unit test file...");
+            const unitTestGenerator = new UnitTestGenerator(context);
+            const unitTestFile = unitTestGenerator.generateUnitTestFile();
+            context.project.addSourceFiles(unitTestFile);
+            context.logger.debug("Unit test generation complete");
+        } catch (error) {
+            context.logger.error("Failed to generate unit tests");
             if (error instanceof Error) {
                 context.logger.debug(error.message);
                 context.logger.debug(error.stack ?? "");
