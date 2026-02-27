@@ -23,7 +23,7 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings.js";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild.js";
-import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/errorMessages.js";
+import { cannotFindSubpackageByLocatorError, packageReuseError, subpackageNotFoundError } from "./utils/errorMessages.js";
 import { isSubpackage } from "./utils/isSubpackage.js";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren.js";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs.js";
@@ -1037,10 +1037,17 @@ export class ApiReferenceNodeConverter {
 
             const subpackage = this.#holder.getSubpackageByIdOrLocator(subpackageId);
             if (subpackage == null) {
-                // I'm not clear on how this line is reachable.
-                // If the pkg.subpackages are subpackageIds, and not locators, doesn't that imply they've already been
-                // resolved to an existing subpackage?
-                this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
+                const parentPackageName = isSubpackage(pkg)
+                    ? (pkg.displayName ?? pkg.name)
+                    : this.apiSection.title;
+                this.taskContext.logger.error(
+                    subpackageNotFoundError({
+                        subpackageId,
+                        parentPackageName,
+                        apiSectionTitle: this.apiSection.title,
+                        availableSubpackages: this.#holder.subpackageLocators
+                    })
+                );
                 return;
             }
 

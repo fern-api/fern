@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.2
+  changelogEntry:
+    - summary: |
+        Improve subpackage error messages during docs generation. The error
+        `Subpackage undefined not found in <uuid>` now includes the parent
+        package name, the API section title, and lists available subpackages
+        to help quickly identify and fix configuration issues.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.1
   changelogEntry:
     - summary: |
