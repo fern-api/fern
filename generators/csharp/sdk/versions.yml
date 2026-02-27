@@ -2,10 +2,10 @@
 - version: 2.22.8
   changelogEntry:
     - summary: |
-        Modernize generated CI workflow: merge three separate jobs (compile,
-        unit-tests, publish) into a single job to avoid redundant .NET setup,
-        restore, and build steps. Update actions/checkout to v6 and remove
-        redundant duplicate checkout step.
+        Modernize generated CI workflow: consolidate three separate jobs
+        (compile, unit-tests, publish) into a single job, update to
+        actions/checkout@v6 and actions/setup-dotnet@v5, remove redundant
+        duplicate checkout step, and require tests to pass before publishing.
       type: chore
   createdAt: "2026-02-27"
   irVersion: 62
