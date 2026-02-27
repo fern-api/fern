@@ -63,7 +63,7 @@ describe("BlockMerger", () => {
         const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
         const merger = new BlockMerger({ original, updated });
         const result = merger.merge();
-        
+
         // Should not crash — duplicates are resolved by keeping the last one
         expect(result).toHaveLength(4);
         expect(result[0]?.id).toBe("INSTALLATION");
@@ -72,11 +72,9 @@ describe("BlockMerger", () => {
         expect(result[2]?.id).toBe("AUTHENTICATION");
         expect(result[2]?.content).toContain("Second auth block");
         expect(result[3]?.id).toBe("CONTRIBUTING");
-        
+
         // Should have warned about the duplicate
-        expect(warnSpy).toHaveBeenCalledWith(
-            expect.stringContaining('Duplicate block with id "AUTHENTICATION"')
-        );
+        expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('Duplicate block with id "AUTHENTICATION"'));
         warnSpy.mockRestore();
     });
 
