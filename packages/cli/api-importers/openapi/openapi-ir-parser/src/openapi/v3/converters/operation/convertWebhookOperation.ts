@@ -84,8 +84,7 @@ export function convertWebhookOperation({
             conflict: {},
             nameOverride: qp.parameterNameOverride,
             generatedName: getGeneratedTypeName([...payloadBreadcrumbs, qp.name], context.options.preserveSchemaIds),
-            availability: qp.availability,
-            description: qp.description
+            availability: qp.availability
         }));
 
         const payload: SchemaWithExample = SchemaWithExample.object({
