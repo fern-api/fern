@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.0
+  changelogEntry:
+    - summary: |
+        Add interceptor support to generated TypeScript SDKs. Interceptors follow the
+        middleware pattern inspired by Azure SDK's pipeline architecture: each interceptor
+        has a `name` and a `sendRequest(request, next)` method that can observe or modify
+        requests and responses as they flow through the HTTP pipeline. This enables clean
+        OpenTelemetry tracing, custom logging, header injection, and other cross-cutting
+        concerns without replacing the entire fetch pipeline.
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.51.5
   changelogEntry:
     - summary: |

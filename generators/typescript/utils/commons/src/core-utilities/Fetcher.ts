@@ -28,6 +28,7 @@ export interface Fetcher {
                 endpointMetadata: "endpointMetadata";
                 fetchFn: "fetchFn";
                 logging: "logging";
+                interceptors: "interceptors";
             };
         };
         Error: {
@@ -125,6 +126,10 @@ export interface Fetcher {
         _getReferenceToType: () => ts.TypeNode;
     };
 
+    readonly Interceptor: {
+        _getReferenceToType: () => ts.TypeNode;
+    };
+
     readonly RawResponse: {
         readonly RawResponse: {
             _getReferenceToType: () => ts.TypeNode;
@@ -162,6 +167,7 @@ export declare namespace Fetcher {
         endpointMetadata?: ts.Expression;
         fetchFn?: ts.Expression;
         logging?: ts.Expression;
+        interceptors?: ts.Expression;
     }
 }
 
@@ -234,7 +240,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 timeoutInSeconds: "timeoutInSeconds",
                 endpointMetadata: "endpointMetadata",
                 fetchFn: "fetchFn",
-                logging: "logging"
+                logging: "logging",
+                interceptors: "interceptors"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -358,6 +365,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             if (args.logging != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logging, args.logging)
+                );
+            }
+            if (args.interceptors != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.interceptors, args.interceptors)
                 );
             }
 
@@ -519,6 +531,13 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         _getReferenceToType: this.withExportedName(
             "FetchFunction",
             (FetchFunction) => () => FetchFunction.getTypeNode()
+        )
+    };
+
+    public Interceptor = {
+        _getReferenceToType: this.withExportedName(
+            "Interceptor",
+            (Interceptor) => () => Interceptor.getTypeNode()
         )
     };
 

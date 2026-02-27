@@ -657,6 +657,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.logging = logging;
         }
 
+        const interceptors = this.generatedSdkClientClass.getReferenceToInterceptors();
+        if (interceptors != null) {
+            fetcherArgs.interceptors = interceptors;
+        }
+
         if (this.includeCredentialsOnCrossOriginRequests) {
             fetcherArgs.withCredentials = ts.factory.createTrue();
         }
@@ -757,6 +762,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
             logging: this.generatedSdkClientClass.getReferenceToLogger(context),
+            interceptors: this.generatedSdkClientClass.getReferenceToInterceptors(),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()

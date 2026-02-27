@@ -9,6 +9,8 @@ import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
 import { Headers } from "./Headers";
+import type { Interceptor, InterceptedRequest, InterceptedResponse, SendRequest } from "./Interceptor";
+import { buildInterceptorChain } from "./Interceptor";
 import { makeRequest } from "./makeRequest";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 import { requestWithRetries } from "./requestWithRetries";
@@ -33,6 +35,7 @@ export declare namespace Fetcher {
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
+        interceptors?: Interceptor[];
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
@@ -270,22 +273,57 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     }
 
     try {
-        const response = await requestWithRetries(
-            async () =>
-                makeRequest(
-                    fetchFn,
-                    url,
-                    args.method,
-                    headers,
-                    requestBody,
-                    args.timeoutMs,
-                    args.abortSignal,
-                    args.withCredentials,
-                    args.duplex,
-                    args.responseType === "streaming" || args.responseType === "sse",
-                ),
-            args.maxRetries,
-        );
+        const interceptors = args.interceptors ?? [];
+
+        const coreRequest: SendRequest = async (interceptedRequest: InterceptedRequest) => {
+            // Apply any header modifications from interceptors
+            const finalHeaders = new Headers();
+            for (const [key, value] of headers.entries()) {
+                finalHeaders.set(key, value);
+            }
+            for (const [key, value] of Object.entries(interceptedRequest.headers)) {
+                finalHeaders.set(key, value);
+            }
+
+            const resp = await requestWithRetries(
+                async () =>
+                    makeRequest(
+                        fetchFn,
+                        interceptedRequest.url,
+                        interceptedRequest.method,
+                        finalHeaders,
+                        interceptedRequest.body,
+                        args.timeoutMs,
+                        args.abortSignal,
+                        args.withCredentials,
+                        args.duplex,
+                        args.responseType === "streaming" || args.responseType === "sse",
+                    ),
+                args.maxRetries,
+            );
+            return {
+                status: resp.status,
+                headers: resp.headers,
+                body: resp.body,
+                rawResponse: resp,
+            } satisfies InterceptedResponse;
+        };
+
+        const headersRecord: Record<string, string> = {};
+        for (const [key, value] of headers.entries()) {
+            headersRecord[key] = value;
+        }
+
+        const interceptedRequest: InterceptedRequest = {
+            url,
+            method: args.method,
+            headers: headersRecord,
+            body: requestBody,
+        };
+
+        const send = interceptors.length > 0 ? buildInterceptorChain(interceptors, coreRequest) : coreRequest;
+        const interceptedResponse = await send(interceptedRequest);
+        const response = interceptedResponse.rawResponse;
 
         if (response.status >= 200 && response.status < 400) {
             if (logger.isDebug()) {

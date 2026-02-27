@@ -6,6 +6,8 @@ export type { Fetcher, FetchFunction } from "./Fetcher";
 export { fetcher } from "./Fetcher";
 export { getHeader } from "./getHeader";
 export { HttpResponsePromise } from "./HttpResponsePromise";
+export type { Interceptor, InterceptedRequest, InterceptedResponse, SendRequest } from "./Interceptor";
+export { buildInterceptorChain } from "./Interceptor";
 export type { RawResponse, WithRawResponse } from "./RawResponse";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 export { Supplier } from "./Supplier";

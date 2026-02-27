@@ -311,6 +311,18 @@ export class BaseClientContextImpl implements BaseClientContext {
             docs: ["Configure logging for the client."]
         });
 
+        properties.push({
+            kind: StructureKind.PropertySignature,
+            name: "interceptors",
+            type: getTextOfTsNode(
+                ts.factory.createArrayTypeNode(context.coreUtilities.fetcher.Interceptor._getReferenceToType())
+            ),
+            hasQuestionToken: true,
+            docs: [
+                "Interceptors that observe or modify requests and responses. Each interceptor receives the request and a `next` function to call the next interceptor in the chain."
+            ]
+        });
+
         return {
             kind: StructureKind.Interface,
             name: OPTIONS_INTERFACE_NAME,

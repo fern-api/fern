@@ -226,6 +226,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
             logging: this.generatedSdkClientClass.getReferenceToLogger(context),
+            interceptors: this.generatedSdkClientClass.getReferenceToInterceptors(),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             responseType: (() => {
                 switch (this.fileResponseType) {
