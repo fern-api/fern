@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-<<<<<<< devin/1772138948-private-registry-auth
 - version: 3.94.0
   changelogEntry:
     - summary: |
@@ -12,7 +11,9 @@
         registries and GitHub repositories via environment variables: GITHUB_TOKEN for
         private repos and NPM_TOKEN for private npm packages.
       type: feat
-=======
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.93.4
   changelogEntry:
     - summary: |
@@ -24,7 +25,6 @@
         only defines `deepObject` with `explode: true`, so it should be treated
         as the default.
       type: fix
->>>>>>> main
   createdAt: "2026-02-27"
   irVersion: 65
 
