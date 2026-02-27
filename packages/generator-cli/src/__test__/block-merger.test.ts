@@ -1,3 +1,4 @@
+import { describe, expect, it, vi } from "vitest";
 import { Block } from "../readme/Block.js";
 import { BlockMerger } from "../readme/BlockMerger.js";
 
@@ -60,7 +61,9 @@ describe("BlockMerger", () => {
             new Block({ id: "CONTRIBUTING", content: "## Contributing\nNew\n" })
         ];
 
-        const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+        const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {
+            // intentionally empty — suppress console.warn during test
+        });
         const merger = new BlockMerger({ original, updated });
         const result = merger.merge();
 
