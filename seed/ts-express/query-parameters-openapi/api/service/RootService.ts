@@ -26,6 +26,8 @@ export interface RootServiceMethods {
                 optionalUser?: SeedApi.User;
                 excludeUser?: SeedApi.User;
                 filter?: string;
+                tags?: string;
+                optionalTags?: string;
                 neighbor?: SeedApi.SearchRequestNeighbor;
                 neighborRequired: SeedApi.SearchRequestNeighborRequired;
             }

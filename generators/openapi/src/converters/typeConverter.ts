@@ -67,6 +67,7 @@ export function convertType(
                     }
                     return {
                         docs: property.docs ?? undefined,
+                        availability: property.availability ?? undefined,
                         name: property.name,
                         valueType: property.valueType,
                         example: exampleProperty

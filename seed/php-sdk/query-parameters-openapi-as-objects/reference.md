@@ -69,6 +69,12 @@ $client->search(
         'filter' => [
             'filter',
         ],
+        'tags' => [
+            'tags',
+        ],
+        'optionalTags' => [
+            'optionalTags',
+        ],
         'neighbor' => new User([
             'name' => 'name',
             'tags' => [
@@ -204,6 +210,22 @@ $client->search(
 <dd>
 
 **$filter:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$tags:** `?string` — List of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$optionalTags:** `?string` — Optional list of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>

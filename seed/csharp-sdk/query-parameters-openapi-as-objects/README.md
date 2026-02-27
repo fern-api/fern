@@ -87,6 +87,8 @@ await client.SearchAsync(
             },
         ],
         Filter = ["filter"],
+        Tags = ["tags"],
+        OptionalTags = ["optionalTags"],
         Neighbor = new User
         {
             Name = "name",
