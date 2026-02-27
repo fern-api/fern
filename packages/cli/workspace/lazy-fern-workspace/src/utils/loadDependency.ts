@@ -68,33 +68,44 @@ export async function loadDependency({
             dependencyName
         };
     } else {
-        await context.runInteractiveTask(
-            { name: `Download ${stringifyDependency(dependency)}` },
-            async (contextForDependency) => {
-                switch (dependency.type) {
-                    case "version":
-                        definition = await validateVersionedDependencyAndGetDefinition({
-                            context: contextForDependency,
-                            dependency,
-                            cliVersion,
-                            settings,
-                            loadAPIWorkspace
-                        });
-                        return;
-                    case "local":
-                        definition = await validateLocalDependencyAndGetDefinition({
-                            context: contextForDependency,
-                            dependency,
-                            cliVersion,
-                            settings,
-                            loadAPIWorkspace
-                        });
-                        return;
-                    default:
-                        assertNever(dependency);
-                }
+        const needsDownload = await isDependencyDownloadRequired(dependency);
+
+        const loadTask = async (contextForDependency: TaskContext) => {
+            switch (dependency.type) {
+                case "version":
+                    definition = await validateVersionedDependencyAndGetDefinition({
+                        context: contextForDependency,
+                        dependency,
+                        cliVersion,
+                        settings,
+                        loadAPIWorkspace
+                    });
+                    return;
+                case "local":
+                    definition = await validateLocalDependencyAndGetDefinition({
+                        context: contextForDependency,
+                        dependency,
+                        cliVersion,
+                        settings,
+                        loadAPIWorkspace
+                    });
+                    return;
+                default:
+                    assertNever(dependency);
             }
-        );
+        };
+
+        if (needsDownload) {
+            await context.runInteractiveTask(
+                { name: `Download ${stringifyDependency(dependency)}` },
+                async (contextForDependency) => {
+                    await loadTask(contextForDependency);
+                }
+            );
+        } else {
+            context.logger.debug(`Loading cached dependency ${stringifyDependency(dependency)}`);
+            await loadTask(context);
+        }
     }
 
     if (definition != null) {
@@ -108,6 +119,31 @@ const DEPENDENCIES_FOLDER_NAME = "dependencies";
 const DEFINITION_FOLDER_NAME = "definition";
 const METADATA_RESPONSE_FILENAME = "metadata.json";
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
+
+/**
+ * Checks whether a dependency needs to be downloaded from the network.
+ * Returns false for local dependencies (always on disk) and for versioned
+ * dependencies that are already cached locally, so we can skip the
+ * interactive "Download ..." task on subsequent loads / hot-reloads.
+ */
+async function isDependencyDownloadRequired(dependency: dependenciesYml.Dependency): Promise<boolean> {
+    switch (dependency.type) {
+        case "local":
+            return false;
+        case "version": {
+            const pathToDependency = getPathToLocalStorageDependency(dependency);
+            const pathToDefinition = join(pathToDependency, RelativeFilePath.of(DEPENDENCIES_FOLDER_NAME));
+            const pathToMetadata = join(pathToDependency, RelativeFilePath.of(METADATA_RESPONSE_FILENAME));
+            const [definitionExists, metadataExists] = await Promise.all([
+                doesPathExist(pathToDefinition),
+                doesPathExist(pathToMetadata)
+            ]);
+            return !definitionExists || !metadataExists;
+        }
+        default:
+            assertNever(dependency);
+    }
+}
 
 function getPathToLocalStorageDependency(dependency: dependenciesYml.VersionedDependency): AbsoluteFilePath {
     return join(

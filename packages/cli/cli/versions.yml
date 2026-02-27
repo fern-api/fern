@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` repeatedly printing `Download @fern/registry` and
+        `Download ../fern-definition` on every hot-reload. Cached and local
+        dependencies are now loaded silently instead of spawning a visible
+        interactive task each time.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.1
   changelogEntry:
     - summary: |
