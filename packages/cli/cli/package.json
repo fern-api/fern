@@ -116,7 +116,7 @@
     "@types/semver": "catalog:",
     "@types/tar": "catalog:",
     "@types/url-join": "4.0.1",
-    "@types/validate-npm-package-name": "catalog:",
+
     "@types/ws": "catalog:",
     "@types/yargs": "^17.0.28",
     "axios": "catalog:",
@@ -141,7 +141,7 @@
     "typescript": "catalog:",
     "undici": "catalog:",
     "url-join": "catalog:",
-    "validate-npm-package-name": "catalog:",
+
     "vitest": "catalog:",
     "ws": "catalog:",
     "yaml": "catalog:",

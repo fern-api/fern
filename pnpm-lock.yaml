@@ -4876,9 +4876,6 @@ importers:
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
-      '@types/validate-npm-package-name':
-        specifier: 'catalog:'
-        version: 4.0.2
       '@types/ws':
         specifier: 'catalog:'
         version: 8.18.1
@@ -4951,9 +4948,6 @@ importers:
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
-      validate-npm-package-name:
-        specifier: 'catalog:'
-        version: 5.0.1
       vitest:
         specifier: 'catalog:'
         version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
