@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.6
+  changelogEntry:
+    - summary: |
+        Fix `ObjectDisposedException` when retrying HTTP requests with a body. The
+        `CloneRequestAsync` method now deep-copies the request content into a new
+        `MemoryStream` instead of reusing the original (already-disposed) content
+        reference. Also fixes multipart retry cloning to preserve per-part headers
+        (e.g. `Content-Disposition`) instead of incorrectly copying the parent
+        multipart headers onto each part.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 62
+
 - version: 2.22.5
   changelogEntry:
     - summary: |

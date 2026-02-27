@@ -62,40 +62,53 @@ internal partial class RawClient(ClientOptions clientOptions)
     {
         var clonedRequest = new HttpRequestMessage(request.Method, request.RequestUri);
         clonedRequest.Version = request.Version;
-        switch (request.Content)
+
+        if (request.Content != null)
         {
-            case MultipartContent oldMultipartFormContent:
-                var originalBoundary =
-                    oldMultipartFormContent
-                        .Headers.ContentType?.Parameters.First(p =>
-                            p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
-                        )
-                        .Value?.Trim('"')
-                    ?? Guid.NewGuid().ToString();
-                var newMultipartContent = oldMultipartFormContent switch
-                {
-                    MultipartFormDataContent => new MultipartFormDataContent(originalBoundary),
-                    _ => new MultipartContent(),
-                };
-                foreach (var content in oldMultipartFormContent)
-                {
-                    var ms = new MemoryStream();
-                    await content.CopyToAsync(ms).ConfigureAwait(false);
-                    ms.Position = 0;
-                    var newPart = new StreamContent(ms);
-                    foreach (var header in oldMultipartFormContent.Headers)
+            switch (request.Content)
+            {
+                case MultipartContent oldMultipartFormContent:
+                    var originalBoundary =
+                        oldMultipartFormContent
+                            .Headers.ContentType?.Parameters.First(p =>
+                                p.Name.Equals("boundary", StringComparison.OrdinalIgnoreCase)
+                            )
+                            .Value?.Trim('"')
+                        ?? Guid.NewGuid().ToString();
+                    var newMultipartContent = oldMultipartFormContent switch
                     {
-                        newPart.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                        MultipartFormDataContent => new MultipartFormDataContent(originalBoundary),
+                        _ => new MultipartContent(),
+                    };
+                    foreach (var content in oldMultipartFormContent)
+                    {
+                        var ms = new MemoryStream();
+                        await content.CopyToAsync(ms).ConfigureAwait(false);
+                        ms.Position = 0;
+                        var newPart = new StreamContent(ms);
+                        foreach (var header in content.Headers)
+                        {
+                            newPart.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                        }
+
+                        newMultipartContent.Add(newPart);
                     }
 
-                    newMultipartContent.Add(newPart);
-                }
+                    clonedRequest.Content = newMultipartContent;
+                    break;
+                default:
+                    var bodyStream = new MemoryStream();
+                    await request.Content.CopyToAsync(bodyStream).ConfigureAwait(false);
+                    bodyStream.Position = 0;
+                    var clonedContent = new StreamContent(bodyStream);
+                    foreach (var header in request.Content.Headers)
+                    {
+                        clonedContent.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                    }
 
-                clonedRequest.Content = newMultipartContent;
-                break;
-            default:
-                clonedRequest.Content = request.Content;
-                break;
+                    clonedRequest.Content = clonedContent;
+                    break;
+            }
         }
 
         foreach (var header in request.Headers)
