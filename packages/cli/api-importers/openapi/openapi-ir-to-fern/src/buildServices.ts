@@ -83,8 +83,7 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
             ) {
                 // Rename the existing endpoint with its audience suffix
                 const existingAudiences = existingSchema.audiences ?? [];
-                const existingAudSuffix =
-                    existingAudiences.length > 0 ? existingAudiences.join("_") : "default";
+                const existingAudSuffix = existingAudiences.length > 0 ? existingAudiences.join("_") : "default";
                 const existingNewKey = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${existingAudSuffix}`;
 
                 // Remove the old key and re-add with the audience-suffixed key
@@ -103,9 +102,7 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
                 const newAudSuffix = newAudiences.length > 0 ? newAudiences.join("_") : "default";
                 const candidateKey = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${newAudSuffix}`;
                 if (
-                    [...fileEndpoints.keys()].some(
-                        (key) => key.startsWith(`${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}`)
-                    )
+                    [...fileEndpoints.keys()].some((key) => key.startsWith(`${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}`))
                 ) {
                     resolvedEndpointId = candidateKey;
                 }

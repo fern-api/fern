@@ -292,9 +292,7 @@ export function convertHttpService({
             // Use the full endpoint key (including audience suffix) for a unique ID,
             // even though the SDK method name uses the stripped version.
             if (endpointMethodName !== endpointKey) {
-                const joinedFernFilePath = serviceName.fernFilepath.allParts
-                    .map((part) => part.originalName)
-                    .join("/");
+                const joinedFernFilePath = serviceName.fernFilepath.allParts.map((part) => part.originalName).join("/");
                 httpEndpoint.id = `endpoint_${joinedFernFilePath}.${endpointKey}`;
             } else {
                 httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
