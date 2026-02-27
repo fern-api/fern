@@ -92,7 +92,7 @@ export interface RequestInterceptor {
  */
 export function buildRequestInterceptorChain(
     interceptors: RequestInterceptor[],
-    finalHandler: SendRequest,
+    finalHandler: SendRequest
 ): SendRequest {
     let handler = finalHandler;
     for (let i = interceptors.length - 1; i >= 0; i--) {

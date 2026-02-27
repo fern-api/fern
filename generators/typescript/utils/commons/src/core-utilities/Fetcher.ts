@@ -371,7 +371,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 properties.push(
                     ts.factory.createPropertyAssignment(
                         this.Fetcher.Args.properties.requestInterceptors,
-                        args.requestInterceptors,
+                        args.requestInterceptors
                     )
                 );
             }
@@ -540,7 +540,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
     public RequestInterceptor = {
         _getReferenceToType: this.withExportedName(
             "RequestInterceptor",
-            (RequestInterceptor) => () => RequestInterceptor.getTypeNode(),
+            (RequestInterceptor) => () => RequestInterceptor.getTypeNode()
         )
     };
 
