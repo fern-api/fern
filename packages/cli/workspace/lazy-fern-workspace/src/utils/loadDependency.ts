@@ -104,7 +104,11 @@ export async function loadDependency({
             );
         } else {
             context.logger.debug(`Loading cached dependency ${stringifyDependency(dependency)}`);
-            await loadTask(context);
+            try {
+                await loadTask(context);
+            } catch (error) {
+                context.failWithoutThrowing(undefined, error);
+            }
         }
     }
 
