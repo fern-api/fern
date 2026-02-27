@@ -40,7 +40,7 @@ export async function collectAPIWorkspaceViolations({
     const hasErrors = violations.some((v) => v.severity === "fatal" || v.severity === "error");
 
     return {
-        apiName: workspace.workspaceName ?? workspace.definition.rootApiFile.contents.name,
+        apiName: workspace.definition.rootApiFile.contents.name,
         violations,
         elapsedMillis,
         hasErrors

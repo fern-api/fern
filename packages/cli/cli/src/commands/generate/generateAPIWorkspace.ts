@@ -7,7 +7,6 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
@@ -15,7 +14,6 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
@@ -91,14 +89,6 @@ export async function generateWorkspace({
         return context.failAndThrow("Please run fern login");
     }
 
-    // Validate workspace once before running all groups
-    await validateAPIWorkspaceAndLogIssues({
-        workspace: await workspace.toFernWorkspace({ context }),
-        context,
-        logWarnings: false,
-        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
-    });
-
     // Run generation for all resolved groups in parallel
     await Promise.all(
         resolvedGroupNames.map(async (resolvedGroupName) => {
@@ -145,7 +135,8 @@ export async function generateWorkspace({
                     inspect,
                     ai,
                     replay,
-                    noReplay
+                    noReplay,
+                    validateWorkspace: true
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -161,7 +152,8 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
-                    dynamicIrOnly
+                    dynamicIrOnly,
+                    validateWorkspace: true
                 });
             }
         })
