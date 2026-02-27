@@ -27,14 +27,20 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore <%= libraryProjectFilePath %>
 
       - name: Build
         id: build
-        run: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet build <%= libraryProjectFilePath %> --no-restore -c Release /p:ContinuousIntegrationBuild=true
+
+      - name: Restore test dependencies
+        run: dotnet restore <%= testProjectFilePath %>
+
+      - name: Build tests
+        run: dotnet build <%= testProjectFilePath %> --no-restore -c Release /p:ContinuousIntegrationBuild=true
 
       - name: Test
-        run: dotnet test --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet test <%= testProjectFilePath %> --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
 <% if (shouldWritePublishBlock) { %>
       - name: Pack
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'

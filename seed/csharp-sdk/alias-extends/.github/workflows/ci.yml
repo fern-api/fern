@@ -27,14 +27,20 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore src/SeedAliasExtends/SeedAliasExtends.csproj
 
       - name: Build
         id: build
-        run: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet build src/SeedAliasExtends/SeedAliasExtends.csproj --no-restore -c Release /p:ContinuousIntegrationBuild=true
+
+      - name: Restore test dependencies
+        run: dotnet restore src/SeedAliasExtends.Test/SeedAliasExtends.Test.csproj
+
+      - name: Build tests
+        run: dotnet build src/SeedAliasExtends.Test/SeedAliasExtends.Test.csproj --no-restore -c Release /p:ContinuousIntegrationBuild=true
 
       - name: Test
-        run: dotnet test --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet test src/SeedAliasExtends.Test/SeedAliasExtends.Test.csproj --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
 
       - name: Pack
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'

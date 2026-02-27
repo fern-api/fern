@@ -27,14 +27,20 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore src/SeedIdempotencyHeaders/SeedIdempotencyHeaders.csproj
 
       - name: Build
         id: build
-        run: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet build src/SeedIdempotencyHeaders/SeedIdempotencyHeaders.csproj --no-restore -c Release /p:ContinuousIntegrationBuild=true
+
+      - name: Restore test dependencies
+        run: dotnet restore src/SeedIdempotencyHeaders.Test/SeedIdempotencyHeaders.Test.csproj
+
+      - name: Build tests
+        run: dotnet build src/SeedIdempotencyHeaders.Test/SeedIdempotencyHeaders.Test.csproj --no-restore -c Release /p:ContinuousIntegrationBuild=true
 
       - name: Test
-        run: dotnet test --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet test src/SeedIdempotencyHeaders.Test/SeedIdempotencyHeaders.Test.csproj --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
 
       - name: Pack
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
