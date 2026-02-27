@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.2
+  changelogEntry:
+    - summary: |
+        Treat all `text/*` content types (e.g. `text/csv`, `text/xml`, `text/html`) as text
+        responses in the v1 OpenAPI parser, not just `text/plain`. Previously, endpoints
+        returning content types like `text/csv` had their response silently dropped, causing
+        generated SDK methods to return `None`.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.1
   changelogEntry:
     - summary: |
