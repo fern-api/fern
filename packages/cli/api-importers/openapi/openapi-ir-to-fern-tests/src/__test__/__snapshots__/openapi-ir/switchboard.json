@@ -120,6 +120,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -583,6 +584,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -934,6 +936,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -968,6 +971,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1455,6 +1459,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1489,6 +1494,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1861,6 +1867,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1907,6 +1914,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1932,6 +1940,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1957,6 +1966,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3506,6 +3516,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3529,6 +3540,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3553,6 +3565,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
