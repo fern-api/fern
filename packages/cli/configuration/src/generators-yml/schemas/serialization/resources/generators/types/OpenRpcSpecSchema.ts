@@ -3,20 +3,21 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { OverridesSchema } from "./OverridesSchema.js";
 
 export const OpenRpcSpecSchema: core.serialization.ObjectSchema<
     serializers.OpenRpcSpecSchema.Raw,
     GeneratorsYml.OpenRpcSpecSchema
 > = core.serialization.object({
     openrpc: core.serialization.string(),
-    overrides: core.serialization.string().optional(),
+    overrides: OverridesSchema.optional(),
     namespace: core.serialization.string().optional(),
 });
 
 export declare namespace OpenRpcSpecSchema {
     export interface Raw {
         openrpc: string;
-        overrides?: string | null;
+        overrides?: OverridesSchema.Raw | null;
         namespace?: string | null;
     }
 }

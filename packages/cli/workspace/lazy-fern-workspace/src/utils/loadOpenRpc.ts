@@ -13,7 +13,7 @@ export async function loadOpenRpc({
 }: {
     context: TaskContext;
     absoluteFilePath: AbsoluteFilePath;
-    absoluteFilePathToOverrides: AbsoluteFilePath | undefined;
+    absoluteFilePathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
 }): Promise<OpenrpcDocument> {
     const contents = (await readFile(absoluteFilePath)).toString();
     let parsed: OpenrpcDocument;
@@ -24,12 +24,27 @@ export async function loadOpenRpc({
         // If JSON parsing fails, try YAML
         parsed = yaml.load(contents) as OpenrpcDocument;
     }
+
+    // Normalize overrides to an array for consistent processing
+    let overridesFilepaths: AbsoluteFilePath[] = [];
     if (absoluteFilePathToOverrides != null) {
-        return await mergeWithOverrides<OpenrpcDocument>({
-            absoluteFilePathToOverrides,
+        if (Array.isArray(absoluteFilePathToOverrides)) {
+            overridesFilepaths = absoluteFilePathToOverrides;
+        } else {
+            overridesFilepaths = [absoluteFilePathToOverrides];
+        }
+    }
+
+    let result = parsed;
+
+    // Apply each override file sequentially in order
+    for (const overridesFilepath of overridesFilepaths) {
+        result = await mergeWithOverrides<OpenrpcDocument>({
+            absoluteFilePathToOverrides: overridesFilepath,
             context,
-            data: parsed
+            data: result
         });
     }
-    return parsed;
+
+    return result;
 }
