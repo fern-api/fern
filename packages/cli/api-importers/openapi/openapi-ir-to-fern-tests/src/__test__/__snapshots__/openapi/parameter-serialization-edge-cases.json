@@ -43,7 +43,10 @@
               "request": {
                 "name": "GetComplexRequest",
                 "query-parameters": {
-                  "filter": "optional<GetComplexRequestFilter>",
+                  "filter": {
+                    "explode": true,
+                    "type": "optional<GetComplexRequestFilter>",
+                  },
                 },
               },
               "source": {
@@ -296,7 +299,9 @@
       request:
         name: GetComplexRequest
         query-parameters:
-          filter: optional<GetComplexRequestFilter>
+          filter:
+            type: optional<GetComplexRequestFilter>
+            explode: true
       examples:
         - {}
     getFile:
