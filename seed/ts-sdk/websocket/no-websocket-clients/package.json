@@ -23,6 +23,18 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./empty": {
+            "types": "./dist/cjs/api/resources/empty/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/empty/exports.d.mts",
+                "default": "./dist/esm/api/resources/empty/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/empty/exports.d.ts",
+                "default": "./dist/cjs/api/resources/empty/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/empty/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

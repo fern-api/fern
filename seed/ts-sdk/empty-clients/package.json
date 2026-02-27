@@ -23,6 +23,30 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./level1": {
+            "types": "./dist/cjs/api/resources/level1/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/level1/exports.d.mts",
+                "default": "./dist/esm/api/resources/level1/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/level1/exports.d.ts",
+                "default": "./dist/cjs/api/resources/level1/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/level1/exports.js"
+        },
+        "./level1/level2": {
+            "types": "./dist/cjs/api/resources/level1/resources/level2/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/level1/resources/level2/exports.d.mts",
+                "default": "./dist/esm/api/resources/level1/resources/level2/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/level1/resources/level2/exports.d.ts",
+                "default": "./dist/cjs/api/resources/level1/resources/level2/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/level1/resources/level2/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
