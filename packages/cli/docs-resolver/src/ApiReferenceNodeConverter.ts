@@ -23,7 +23,11 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { convertPlaygroundSettings } from "./utils/convertPlaygroundSettings.js";
 import { enrichApiPackageChild } from "./utils/enrichApiPackageChild.js";
-import { cannotFindSubpackageByLocatorError, packageReuseError, subpackageNotFoundError } from "./utils/errorMessages.js";
+import {
+    cannotFindSubpackageByLocatorError,
+    packageReuseError,
+    subpackageNotFoundError
+} from "./utils/errorMessages.js";
 import { isSubpackage } from "./utils/isSubpackage.js";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren.js";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs.js";
@@ -1037,9 +1041,7 @@ export class ApiReferenceNodeConverter {
 
             const subpackage = this.#holder.getSubpackageByIdOrLocator(subpackageId);
             if (subpackage == null) {
-                const parentPackageName = isSubpackage(pkg)
-                    ? (pkg.displayName ?? pkg.name)
-                    : this.apiSection.title;
+                const parentPackageName = isSubpackage(pkg) ? (pkg.displayName ?? pkg.name) : this.apiSection.title;
                 this.taskContext.logger.error(
                     subpackageNotFoundError({
                         subpackageId,
