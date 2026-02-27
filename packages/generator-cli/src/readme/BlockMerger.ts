@@ -82,6 +82,7 @@ class BlockList {
         if (this.hasBlock(block.id)) {
             console.warn(`[readme] Duplicate block with id "${block.id}" detected; overriding with latest content`);
             this.blocks = this.blocks.filter((b) => b.id !== block.id);
+            this.ids.delete(block.id);
         }
         if (precedingBlockId === undefined) {
             this.addBlock(block);

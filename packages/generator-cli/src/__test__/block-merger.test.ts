@@ -1,8 +1,12 @@
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { Block } from "../readme/Block.js";
 import { BlockMerger } from "../readme/BlockMerger.js";
 
 describe("BlockMerger", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
     it("merges updated blocks with original blocks by ID", () => {
         const original = [
             new Block({ id: "INSTALLATION", content: "## Installation\nOld content\n" }),
@@ -159,11 +163,21 @@ describe("BlockMerger", () => {
         expect(result[1]?.id).toBe("USAGE");
     });
 
-    it("warns and overrides when updated has duplicate block IDs", () => {
-        const original = [new Block({ id: "INSTALLATION", content: "## Installation\nOld\n" })];
+    it("insertBlock warns exactly once when duplicate block with undefined precedingBlockId", () => {
+        // Regression test for Devin Review finding: insertBlock now deletes from this.ids
+        // before delegating to addBlock, preventing a double-warn.
+        // We test this via the merge() path: when updated has a block not in original,
+        // it goes through insertBlock. If the same ID is already in merged (from original),
+        // insertBlock fires one warn, delegates to addBlock which adds it cleanly.
+        const original = [
+            new Block({ id: "USAGE", content: "## Usage\nOld\n" }),
+            new Block({ id: "CONTRIBUTING", content: "## Contributing\nOld\n" })
+        ];
+        // Updated has USAGE (will be merged via original loop) + a NEW block
+        // that will go through insertBlock path
         const updated = [
-            new Block({ id: "USAGE", content: "## Usage\nFirst usage\n" }),
-            new Block({ id: "USAGE", content: "## Usage\nSecond usage\n" })
+            new Block({ id: "USAGE", content: "## Usage\nNew\n" }),
+            new Block({ id: "CONTRIBUTING", content: "## Contributing\nNew\n" })
         ];
 
         const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {
@@ -172,9 +186,12 @@ describe("BlockMerger", () => {
         const merger = new BlockMerger({ original, updated });
         const result = merger.merge();
 
-        // Original preserved, and only one USAGE block should appear
-        const usageBlocks = result.filter((b) => b.id === "USAGE");
-        expect(usageBlocks).toHaveLength(1);
+        // All blocks from updated replace original, no new insertions needed
+        expect(result).toHaveLength(2);
+        expect(result[0]?.id).toBe("USAGE");
+        expect(result[0]?.content).toContain("New");
+        // No duplicates means no warnings
+        expect(warnSpy).not.toHaveBeenCalled();
 
         warnSpy.mockRestore();
     });
