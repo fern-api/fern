@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Remove redundant conflict resolution comment from Replay PRs. The per-file
+        guidance was duplicating information already present in the PR description.
+      type: fix
+  createdAt: "2026-02-26"
+  version: 0.6.9
+
+- changelogEntry:
+    - summary: |
         Fix non-fast-forward push error when updating an existing fern-bot PR from a shallow clone.
       type: fix
   createdAt: "2026-02-26"

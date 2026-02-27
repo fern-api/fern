@@ -4,6 +4,7 @@ import { Type } from "@fern-api/ir-sdk";
 import { FernFileContext } from "../../FernFileContext.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
 import { parseTypeName } from "../../utils/parseTypeName.js";
+import { substituteGenericParams } from "../../utils/substituteGenericParams.js";
 import { getExtensionsAsList, getObjectPropertiesFromRawObjectSchema } from "./convertObjectTypeDeclaration.js";
 
 export function convertGenericTypeDeclaration({
@@ -32,15 +33,24 @@ export function convertGenericTypeDeclaration({
 
         const newProperties = Object.entries(resolvedBaseGeneric.declaration.properties ?? {}).map(([key, value]) => {
             let maybeReplacedValue = value;
-            if (typeof value === "string" && genericArgumentDefinitions?.includes(value)) {
-                maybeReplacedValue = maybeGeneric.arguments?.[genericArgumentDefinitions.indexOf(value)] ?? value;
+            if (typeof value === "string") {
+                maybeReplacedValue = substituteGenericParams(value, genericArgumentDefinitions, maybeGeneric.arguments);
+            } else if (typeof value === "object" && value != null && "type" in value) {
+                maybeReplacedValue = {
+                    ...value,
+                    type: substituteGenericParams(value.type, genericArgumentDefinitions, maybeGeneric.arguments)
+                };
             }
             return [key, maybeReplacedValue];
         });
+
+        const newExtends = getExtensionsAsList(resolvedBaseGeneric.declaration.extends).map((extended) => {
+            const substituted = substituteGenericParams(extended, genericArgumentDefinitions, maybeGeneric.arguments);
+            return parseTypeName({ typeName: substituted, file });
+        });
+
         return Type.object({
-            extends: getExtensionsAsList(resolvedBaseGeneric.declaration.extends).map((extended) =>
-                parseTypeName({ typeName: extended, file })
-            ),
+            extends: newExtends,
             properties: getObjectPropertiesFromRawObjectSchema({ properties: Object.fromEntries(newProperties) }, file),
             extraProperties: resolvedBaseGeneric.declaration["extra-properties"] ?? false,
             extendedProperties: undefined
