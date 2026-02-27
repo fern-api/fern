@@ -47,6 +47,28 @@ import { getTransportForEndpoint, getTransportForService } from "./convertTransp
  */
 const AUDIENCE_SUFFIX_SEPARATOR = "__aud_";
 
+/**
+ * Recovers the original SDK method name from an endpoint key that may have been
+ * suffixed with audience information to avoid dictionary collisions.
+ *
+ * Only strips the suffix when the part after `__aud_` exactly matches the
+ * endpoint's joined audience list. This prevents accidentally mangling
+ * hand-written endpoint names that happen to contain `__aud_` but were
+ * never suffixed by the OpenAPI-to-Fern converter.
+ */
+function getOriginalMethodName(endpointKey: string, endpoint: RawSchemas.HttpEndpointSchema): string {
+    const separatorIndex = endpointKey.indexOf(AUDIENCE_SUFFIX_SEPARATOR);
+    if (separatorIndex === -1) {
+        return endpointKey;
+    }
+    const suffix = endpointKey.substring(separatorIndex + AUDIENCE_SUFFIX_SEPARATOR.length);
+    const audiences = endpoint.audiences ?? [];
+    if (audiences.length > 0 && suffix === audiences.join("_")) {
+        return endpointKey.substring(0, separatorIndex);
+    }
+    return endpointKey;
+}
+
 export function convertHttpService({
     rootDefaultUrl,
     rootPathParameters,
@@ -122,12 +144,10 @@ export function convertHttpService({
         encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
         endpoints: Object.entries(serviceDefinition.endpoints).map(([endpointKey, endpoint]): HttpEndpoint => {
-            // Strip audience suffix from endpoint key to get the original SDK method name.
-            // The suffixed key is used only to avoid dictionary collisions between endpoints
-            // with the same name but disjoint audiences.
-            const endpointMethodName = endpointKey.includes(AUDIENCE_SUFFIX_SEPARATOR)
-                ? endpointKey.substring(0, endpointKey.indexOf(AUDIENCE_SUFFIX_SEPARATOR))
-                : endpointKey;
+            // Recover the original SDK method name if this key was audience-suffixed.
+            // Only strips the suffix when it matches the endpoint's actual audiences,
+            // so hand-written names containing "__aud_" are left intact.
+            const endpointMethodName = getOriginalMethodName(endpointKey, endpoint);
 
             const fullPathString =
                 endpoint["base-path"] != null
