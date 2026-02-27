@@ -1,0 +1,21 @@
+name: Infisical-testing
+
+#THIS WORKFLOW IS ONLY TO BE USED FOR TESTING
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-admin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check triggering user is repo admin
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PERMISSION=$(gh api "repos/${{ github.repository }}/collaborators/${{ github.actor }}/permission" --jq '.permission')
+          echo "User ${{ github.actor }} has permission: $PERMISSION"
+          if [ "$PERMISSION" != "admin" ]; then
+            echo "::error::Only repository admins can run this workflow. ${{ github.actor }} has '$PERMISSION' permission."
+            exit 1
+          fi

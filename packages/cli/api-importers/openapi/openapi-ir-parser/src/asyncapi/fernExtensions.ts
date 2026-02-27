@@ -117,7 +117,20 @@ export const FernAsyncAPIExtension = {
      *         description: The user ID
      *         x-fern-parameter-name: id
      */
-    FERN_PARAMETER_NAME: "x-fern-parameter-name"
+    FERN_PARAMETER_NAME: "x-fern-parameter-name",
+
+    /**
+     * Used to override the server name in AsyncAPI specs. This is useful when
+     * multiple APIs define servers with the same key (e.g. "uat") and you need
+     * to disambiguate them in the generated SDK's environment URLs.
+     *
+     * servers:
+     *   uat:
+     *     host: ws-gateway.uat.example.com
+     *     x-fern-server-name: market_data
+     *     protocol: wss
+     */
+    FERN_SERVER_NAME: "x-fern-server-name"
 } as const;
 
 export type FernAsyncAPIExtension = Values<typeof FernAsyncAPIExtension>;
