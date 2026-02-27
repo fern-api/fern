@@ -500,7 +500,9 @@ export class DocsDefinitionResolver {
                 );
             }
             const deferredTime = performance.now() - deferredStart;
-            this.taskContext.logger.debug(`Processed ${this.pendingApiRegistrations.length} deferred API registrations in ${deferredTime.toFixed(0)}ms`);
+            this.taskContext.logger.debug(
+                `Processed ${this.pendingApiRegistrations.length} deferred API registrations in ${deferredTime.toFixed(0)}ms`
+            );
             this.pendingApiRegistrations = [];
         }
 
