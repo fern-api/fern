@@ -9,7 +9,7 @@
         a literal type, so generators can automatically set the default.
       type: fix
   createdAt: "2026-02-26"
-  irVersion 65
+  irVersion: 65
 - version: 3.90.7
   changelogEntry:
     - summary: |
