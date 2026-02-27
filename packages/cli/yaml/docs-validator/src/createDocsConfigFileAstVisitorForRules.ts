@@ -26,22 +26,22 @@ export function createDocsConfigFileAstVisitorForRules({
             node: DocsConfigFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
-                for (let i = 0; i < allRuleVisitors.length; i++) {
-                    const ruleVisitors = allRuleVisitors[i];
-                    const ruleName = ruleNames[i];
-                    const visitFromRule = ruleVisitors?.[nodeType];
-                    if (visitFromRule != null) {
-                        const ruleViolations = await visitFromRule(node);
-                        addViolations(
-                            ruleViolations.map((violation) => ({
-                                name: violation.name ?? ruleName ?? "unknown",
-                                severity: violation.severity,
-                                relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
-                                nodePath,
-                                message: violation.message
-                            }))
-                        );
-                    }
+            for (let i = 0; i < allRuleVisitors.length; i++) {
+                const ruleVisitors = allRuleVisitors[i];
+                const ruleName = ruleNames[i];
+                const visitFromRule = ruleVisitors?.[nodeType];
+                if (visitFromRule != null) {
+                    const ruleViolations = await visitFromRule(node);
+                    addViolations(
+                        ruleViolations.map((violation) => ({
+                            name: violation.name ?? ruleName ?? "unknown",
+                            severity: violation.severity,
+                            relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
+                            nodePath,
+                            message: violation.message
+                        }))
+                    );
+                }
             }
         };
 
