@@ -43,11 +43,11 @@ jobs:
         run: dotnet test src/SeedObjectsWithImports.Test/SeedObjectsWithImports.Test.csproj --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
 
       - name: Pack
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
+        if: always() && github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
         run: dotnet pack src/SeedObjectsWithImports/SeedObjectsWithImports.csproj --no-build --no-restore -c Release
 
       - name: Publish to NuGet.org
-        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
+        if: always() && github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: dotnet nuget push src/SeedObjectsWithImports/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
