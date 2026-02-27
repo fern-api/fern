@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.92.0
+  changelogEntry:
+    - summary: |
+        Warn when user-provided examples in OpenAPI specs don't match their schema types.
+        Previously, if an example value had the wrong type (e.g., a number where a string
+        was expected, or an invalid enum value), Fern would silently replace it with a
+        generated fallback. Now, the CLI emits a warning identifying the mismatched field,
+        the expected type, and the actual value so users can fix their specs.
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.1
   changelogEntry:
     - summary: |

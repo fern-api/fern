@@ -87,6 +87,13 @@ export class ExampleTypeFactory {
                 if (typeof example === "string" && enumContainsValue({ schema, value: example })) {
                     return FullExample.enum(example);
                 }
+                if (example != null) {
+                    const allowed = schema.values.map((v) => v.value);
+                    this.context.logger.warn(
+                        `Example value ${JSON.stringify(example)} is not a valid enum value${options.name != null ? ` for '${options.name}'` : ""}. ` +
+                            `Allowed values: [${allowed.join(", ")}]. Using fallback value instead.`
+                    );
+                }
                 return schema.values[0] != null ? FullExample.enum(schema.values[0]?.value) : undefined;
             case "literal":
                 return FullExample.literal(schema.value);
@@ -926,7 +933,10 @@ export class ExampleTypeFactory {
             case "string":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.string(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "string", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.string(schema.example);
                 } else {
                     return PrimitiveExample.string(options.name ?? Examples.STRING);
@@ -934,7 +944,10 @@ export class ExampleTypeFactory {
             case "base64":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.base64(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "string (base64)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.base64(schema.example);
                 } else {
                     return PrimitiveExample.base64(Examples.BASE64);
@@ -942,7 +955,10 @@ export class ExampleTypeFactory {
             case "boolean":
                 if (example != null && typeof example === "boolean") {
                     return PrimitiveExample.boolean(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "boolean", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.boolean(schema.example);
                 } else {
                     return PrimitiveExample.boolean(Examples.BOOLEAN);
@@ -950,7 +966,10 @@ export class ExampleTypeFactory {
             case "date":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.date(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "string (date)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.date(schema.example);
                 } else {
                     return PrimitiveExample.date(Examples.DATE);
@@ -958,7 +977,10 @@ export class ExampleTypeFactory {
             case "datetime":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.datetime(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "string (datetime)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.datetime(schema.example);
                 } else {
                     return PrimitiveExample.datetime(Examples.DATE_TIME);
@@ -966,7 +988,10 @@ export class ExampleTypeFactory {
             case "datetimeRfc2822":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.datetimeRfc2822(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "string (datetime RFC 2822)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.datetimeRfc2822(schema.example);
                 } else {
                     return PrimitiveExample.datetimeRfc2822(Examples.DATE_TIME);
@@ -974,7 +999,10 @@ export class ExampleTypeFactory {
             case "double":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.double(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "number (double)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.double(schema.example);
                 } else {
                     return PrimitiveExample.double(Examples.DOUBLE);
@@ -982,7 +1010,10 @@ export class ExampleTypeFactory {
             case "float":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.float(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "number (float)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.float(schema.example);
                 } else {
                     return PrimitiveExample.float(Examples.FLOAT);
@@ -990,7 +1021,10 @@ export class ExampleTypeFactory {
             case "int":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.int(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "number (int)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.int(schema.example);
                 } else {
                     return PrimitiveExample.int(Examples.INT);
@@ -998,7 +1032,10 @@ export class ExampleTypeFactory {
             case "int64":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.int64(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "number (int64)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.int64(schema.example);
                 } else {
                     return PrimitiveExample.int64(Examples.INT64);
@@ -1006,7 +1043,10 @@ export class ExampleTypeFactory {
             case "uint":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.uint(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "number (uint)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.uint(schema.example);
                 } else {
                     return PrimitiveExample.uint(Examples.UINT);
@@ -1014,7 +1054,10 @@ export class ExampleTypeFactory {
             case "uint64":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.uint64(example);
-                } else if (schema.example != null) {
+                } else if (example != null) {
+                    this.warnTypeMismatch({ example, expected: "number (uint64)", schemaType: schema.type, options });
+                }
+                if (schema.example != null) {
                     return PrimitiveExample.uint64(schema.example);
                 } else {
                     return PrimitiveExample.uint64(Examples.UINT64);
@@ -1022,6 +1065,25 @@ export class ExampleTypeFactory {
             default:
                 assertNever(schema);
         }
+    }
+
+    private warnTypeMismatch({
+        example,
+        expected,
+        schemaType,
+        options
+    }: {
+        example: unknown;
+        expected: string;
+        schemaType: string;
+        options: ExampleTypeFactory.Options;
+    }): void {
+        const fieldDesc = options.name != null ? ` for '${options.name}'` : "";
+        const actualType = typeof example;
+        this.context.logger.warn(
+            `Invalid example${fieldDesc}: expected ${expected} but got ${actualType} (${JSON.stringify(example)}). ` +
+                `The provided example does not match the '${schemaType}' schema and will be replaced with a generated value.`
+        );
     }
 }
 
