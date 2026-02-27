@@ -15,8 +15,8 @@
 ```ruby
 client.payment.create(
   amount: 1,
-  currency: 'USD'
-);
+  currency: "USD"
+)
 ```
 </dd>
 </dl>
@@ -72,7 +72,7 @@ client.payment.create(
 <dd>
 
 ```ruby
-client.payment.delete(payment_id: 'paymentId');
+client.payment.delete(payment_id: "paymentId")
 ```
 </dd>
 </dl>
@@ -106,3 +106,4 @@ client.payment.delete(payment_id: 'paymentId');
 </dd>
 </dl>
 </details>
+

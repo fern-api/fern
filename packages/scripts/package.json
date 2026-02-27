@@ -26,10 +26,10 @@
   },
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
-    "compile": "tsc --build",
-    "compile:debug": "tsc --build --sourceMap",
-    "depcheck": "depcheck",
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../knip.json --no-config-hints",
     "generate": "fern generate --api ir-types-latest --local",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
@@ -41,12 +41,11 @@
     "@fern-api/configs": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
-    "@types/node": "18.15.3",
+    "@types/node": "catalog:",
     "@types/yargs": "^17.0.32",
-    "depcheck": "^1.4.7",
-    "typescript": "5.9.3",
-    "vitest": "^4.0.8",
-    "yaml": "^2.4.5",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "yaml": "catalog:",
     "yargs": "^17.7.2"
   }
 }

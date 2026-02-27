@@ -468,6 +468,82 @@ export class ContainerClient {
     }
 
     /**
+     * @param {Record<string, SeedExhaustive.types.MixedType>} request
+     * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+     *         "string": 1.1
+     *     })
+     */
+    public getAndReturnMapOfPrimToUndiscriminatedUnion(
+        request: Record<string, SeedExhaustive.types.MixedType>,
+        requestOptions?: ContainerClient.RequestOptions,
+    ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.MixedType>> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnMapOfPrimToUndiscriminatedUnion(
+        request: Record<string, SeedExhaustive.types.MixedType>,
+        requestOptions?: ContainerClient.RequestOptions,
+    ): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.MixedType>>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/container/map-prim-to-union",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Request.jsonOrThrow(
+                request,
+                { unrecognizedObjectKeys: "strip", omitUndefined: true },
+            ),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    },
+                ),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/container/map-prim-to-union");
+    }
+
+    /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *

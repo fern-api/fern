@@ -12,5 +12,5 @@ public partial class V3Client : IV3Client
         Problem = new ProblemClient(_client);
     }
 
-    public ProblemClient Problem { get; }
+    public IProblemClient Problem { get; }
 }

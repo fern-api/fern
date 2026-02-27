@@ -263,6 +263,8 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
             return PrimitiveSchemaValue.date();
         case "datetime":
             return PrimitiveSchemaValue.datetime();
+        case "datetimeRfc2822":
+            return PrimitiveSchemaValue.datetimeRfc2822();
         case "double":
             return PrimitiveSchemaValue.double(primitiveSchema);
         case "float":

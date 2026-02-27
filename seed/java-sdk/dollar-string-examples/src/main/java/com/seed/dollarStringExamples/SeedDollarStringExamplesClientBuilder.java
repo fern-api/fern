@@ -5,6 +5,7 @@ package com.seed.dollarStringExamples;
 
 import com.seed.dollarStringExamples.core.ClientOptions;
 import com.seed.dollarStringExamples.core.Environment;
+import com.seed.dollarStringExamples.core.LogConfig;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public class SeedDollarStringExamplesClientBuilder {
     private Environment environment;
 
     private OkHttpClient httpClient;
+
+    private Optional<LogConfig> logging = Optional.empty();
 
     public SeedDollarStringExamplesClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -51,6 +54,14 @@ public class SeedDollarStringExamplesClientBuilder {
     }
 
     /**
+     * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+     */
+    public SeedDollarStringExamplesClientBuilder logging(LogConfig logging) {
+        this.logging = Optional.of(logging);
+        return this;
+    }
+
+    /**
      * Add a custom header to be sent with all requests.
      * For headers that need to be computed dynamically or conditionally, use the setAdditional() method override instead.
      *
@@ -69,6 +80,7 @@ public class SeedDollarStringExamplesClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        setLogging(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
         }
@@ -119,6 +131,18 @@ public class SeedDollarStringExamplesClientBuilder {
     protected void setHttpClient(ClientOptions.Builder builder) {
         if (this.httpClient != null) {
             builder.httpClient(this.httpClient);
+        }
+    }
+
+    /**
+     * Sets the logging configuration for the SDK.
+     * Override this method to customize logging behavior.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setLogging(ClientOptions.Builder builder) {
+        if (this.logging.isPresent()) {
+            builder.logging(this.logging.get());
         }
     }
 

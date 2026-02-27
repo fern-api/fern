@@ -8,6 +8,7 @@ export const RawPrimitiveType = {
     boolean: "boolean",
     string: "string",
     datetime: "datetime",
+    datetimeRfc2822: "datetime-rfc-2822",
     base64: "base64",
     uuid: "uuid",
     date: "date",

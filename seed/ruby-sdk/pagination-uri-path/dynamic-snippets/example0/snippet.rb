@@ -1,8 +1,8 @@
 require "seed"
 
 client = Seed::Client.new(
-  token: '<token>',
-  base_url: 'https://api.fern.com'
-);
+  token: "<token>",
+  base_url: "https://api.fern.com"
+)
 
-client.users.list_with_uri_pagination();
+client.users.list_with_uri_pagination

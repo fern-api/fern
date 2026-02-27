@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.get(type_id: 'typeId');
+client.get(type_id: "typeId")
 ```
 </dd>
 </dl>

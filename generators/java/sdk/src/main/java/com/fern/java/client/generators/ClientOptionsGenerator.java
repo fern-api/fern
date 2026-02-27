@@ -91,6 +91,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName.INT, "maxRetries", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    private static final String LOGGING_FIELD_NAME = "logging";
+
     private static MethodSpec createGetter(FieldSpec fieldSpec) {
         return MethodSpec.methodBuilder(fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
@@ -185,6 +187,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private final FieldSpec apiVersionField;
     private final FieldSpec webSocketFactoryField;
     private final FieldSpec authProviderField;
+    private final FieldSpec loggingField;
 
     public ClientOptionsGenerator(
             ClientGeneratorContext clientGeneratorContext,
@@ -233,6 +236,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         } else {
             this.authProviderField = null;
         }
+        this.loggingField = FieldSpec.builder(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Optional.class),
+                                clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName()),
+                        LOGGING_FIELD_NAME,
+                        Modifier.PRIVATE,
+                        Modifier.FINAL)
+                .build();
     }
 
     @Override
@@ -286,6 +297,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .build());
         }
 
+        // Add logging parameter
+        constructorBuilder.addParameter(
+                ParameterSpec.builder(loggingField.type, loggingField.name).build());
+
         constructorBuilder
                 .addParameters(variableFields.values().stream()
                         .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
@@ -320,6 +335,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             constructorBuilder.addStatement("this.$L = $L", authProviderField.name, authProviderField.name);
         }
 
+        // Add logging assignment
+        constructorBuilder.addStatement("this.$L = $L", loggingField.name, loggingField.name);
+
         addApiVersionToConstructor(constructorBuilder);
 
         variableFields
@@ -348,6 +366,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         if (authProviderField != null) {
             clientOptionsBuilder.addField(authProviderField);
         }
+
+        // Add logging field
+        clientOptionsBuilder.addField(loggingField);
 
         clientOptionsBuilder
                 .addFields(variableFields.values())
@@ -433,6 +454,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             MethodSpec webSocketFactoryGetter = createGetter(webSocketFactoryField);
             clientOptionsBuilder.addMethod(webSocketFactoryGetter);
         }
+
+        // Add logging getter
+        MethodSpec loggingGetter = createGetter(loggingField);
+        clientOptionsBuilder.addMethod(loggingGetter);
 
         // Only add authProvider getter and getAuthHeaders method if using endpoint security
         if (authProviderField != null) {
@@ -629,6 +654,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .build())
                 .addField(FieldSpec.builder(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
                         .initializer(CodeBlock.builder().add("null").build())
+                        .build())
+                .addField(FieldSpec.builder(loggingField.type, loggingField.name, Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
                         .build());
 
         // Only add webSocketFactory field to builder if WebSocket channels are present
@@ -712,6 +740,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .addStatement("return this")
                     .build());
         }
+
+        // Add logging builder method
+        builder.addMethod(MethodSpec.methodBuilder(LOGGING_FIELD_NAME)
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc(
+                        "Configure logging for the SDK. Silent by default — no log output unless explicitly configured.\n")
+                .returns(builderClassName)
+                .addParameter(
+                        clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName(), LOGGING_FIELD_NAME)
+                .addStatement("this.$L = $T.of($L)", LOGGING_FIELD_NAME, Optional.class, LOGGING_FIELD_NAME)
+                .addStatement("return this")
+                .build());
 
         builder.addMethods(getVariableBuilders(variableFields)).addMethods(getApiPathParamBuilders(apiPathParamFields));
 
@@ -972,7 +1012,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("builder.$L.putAll(clientOptions.$L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
                 .addStatement(
                         "builder.$L.putAll(clientOptions.$L)", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
-                .addStatement("builder.$L = clientOptions.$L()", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name);
+                .addStatement("builder.$L = clientOptions.$L()", MAX_RETRIES_FIELD.name, MAX_RETRIES_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L()", LOGGING_FIELD_NAME, LOGGING_FIELD_NAME);
 
         for (Map.Entry<VariableId, FieldSpec> entry : variableFields.entrySet()) {
             MethodSpec getter = variableGetters.get(entry.getKey());
@@ -1048,6 +1089,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             returnStringBuilder.append(", this.").append(authProviderField.name);
         }
 
+        // Add logging
+        returnStringBuilder.append(", this.").append(LOGGING_FIELD_NAME);
+
         // Add apiVersion if present
         if (clientGeneratorContext.getIr().getApiVersion().isPresent()) {
             argsBuilder.add(apiVersionField.name);
@@ -1102,6 +1146,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
                         MAX_RETRIES_FIELD.name)
                 .endControlFlow()
+                .addCode("\n")
+                .addStatement(
+                        "$T $L = $T.from(this.$L)",
+                        clientGeneratorContext.getPoetClassNameFactory().getLoggerClassName(),
+                        "logger",
+                        clientGeneratorContext.getPoetClassNameFactory().getLoggerClassName(),
+                        LOGGING_FIELD_NAME)
+                .addStatement(
+                        "$L.addInterceptor(new $T($L))",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        clientGeneratorContext.getPoetClassNameFactory().getLoggingInterceptorClassName(),
+                        "logger")
                 .addCode("\n")
                 .addStatement("this.$L = $L.build()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name + "Builder")
                 .addStatement(

@@ -102,12 +102,17 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
+        const generateStartTime = Date.now();
         // generate names for everything up front.
+        const precalculateStartTime = Date.now();
         context.precalculate();
+        context.logger.debug(`[TIMING] precalculate took ${Date.now() - precalculateStartTime}ms`);
 
         // before generating anything, generate the models first so that we
         // can identify collisions or ambiguities in the generated code.
+        const modelsStartTime = Date.now();
         const models = generateModels({ context });
+        context.logger.debug(`[TIMING] generateModels took ${Date.now() - modelsStartTime}ms`);
 
         await context.snippetGenerator.populateSnippetsCache();
 
@@ -291,6 +296,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 context.logger.warn("Failed to generate reference.md, this is OK.");
             }
         }
+        context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
         await context.project.persist();
     }
 

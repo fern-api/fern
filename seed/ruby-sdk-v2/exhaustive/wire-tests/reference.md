@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_list_of_primitives(request: ["string", "string"])
+client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])
 ```
 </dd>
 </dl>
@@ -300,6 +300,56 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_map_of_prim_to_undiscriminated_union</a>(request) -> Internal::Types::Hash[String, Seed::Types::Union::Types::MixedType]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(request: {
+  string: 1.1
+})
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `Internal::Types::Hash[String, Seed::Types::Union::Types::MixedType]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Container::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.container.<a href="/lib/seed/endpoints/container/client.rb">get_and_return_optional</a>(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
@@ -374,7 +424,7 @@ client.endpoints.content_type.post_json_patch_content_type(
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base_64: "SGVsbG8gd29ybGQh",
-  list: ["list", "list"],
+  list: %w[list list],
   set: Set.new(["set"]),
   map: {
     1 => "map"
@@ -438,7 +488,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base_64: "SGVsbG8gd29ybGQh",
-  list: ["list", "list"],
+  list: %w[list list],
   set: Set.new(["set"]),
   map: {
     1 => "map"
@@ -708,7 +758,7 @@ client.endpoints.http_methods.test_patch(
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base_64: "SGVsbG8gd29ybGQh",
-  list: ["list", "list"],
+  list: %w[list list],
   set: Set.new(["set"]),
   map: {
     1 => "map"
@@ -829,7 +879,7 @@ client.endpoints.object.get_and_return_with_optional_field(
   date: "2023-01-15",
   uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   base_64: "SGVsbG8gd29ybGQh",
-  list: ["list", "list"],
+  list: %w[list list],
   set: Set.new(["set"]),
   map: {
     1 => "map"
@@ -995,7 +1045,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -1063,7 +1113,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -1138,7 +1188,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -1157,7 +1207,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -1884,6 +1934,68 @@ client.endpoints.params.modify_with_path(
 <dd>
 
 **request:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `Seed::Endpoints::Params::RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.<a href="/lib/seed/endpoints/params/client.rb">upload_with_path</a>(param, request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.endpoints.params.upload_with_path(param: "upload-path")
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
     
 </dd>
 </dl>
@@ -2636,7 +2748,7 @@ client.inlined_requests.post_with_object_bodyand_response(
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base_64: "SGVsbG8gd29ybGQh",
-    list: ["list", "list"],
+    list: %w[list list],
     set: Set.new(["set"]),
     map: {
       1 => "map"
@@ -2898,3 +3010,4 @@ client.req_with_headers.get_with_custom_header(
 </dd>
 </dl>
 </details>
+

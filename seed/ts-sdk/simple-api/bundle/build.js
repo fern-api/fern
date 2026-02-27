@@ -29,6 +29,13 @@ async function bundle({ platform, target, format, outdir }) {
         entryPoint: "./src/index.ts",
         outfile: `./dist/${outdir}/index.js`,
     });
+    await runEsbuild({
+        platform,
+        target,
+        format,
+        entryPoint: "./src/api/resources/user/index.ts",
+        outfile: `./dist/${outdir}/api/resources/user.js`,
+    });
 }
 
 async function runEsbuild({ platform, target, format, entryPoint, outfile }) {

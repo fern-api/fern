@@ -243,6 +243,29 @@ main();
 "
 `;
 
+exports[`snippets > exhaustive > 'POST /container/map-prim-to-union (mi…' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient({
+        token: "<YOUR_API_KEY>",
+    });
+    await client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion({
+        "test": 0,
+        "test2": true,
+        "test3": "Test",
+        "test4": [
+            "1",
+            "1",
+            "1",
+            "1",
+        ],
+    });
+}
+main();
+"
+`;
+
 exports[`snippets > file-upload > 'POST /' 1`] = `
 "import { AcmeClient } from "acme";
 

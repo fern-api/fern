@@ -141,6 +141,17 @@ export class RootClientGenerator {
         const initializerParams = this.getConvenienceInitializerParams({
             bearerTokenParamType
         });
+        const globalHeaders = this.sdkGeneratorContext.ir.headers
+            .filter((header) => !this.isLiteralTypeReference(header.valueType))
+            .filter((header) => {
+                const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+                return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
+            });
+
+        const headersArgValue =
+            globalHeaders.length > 0
+                ? swift.Expression.reference("mergedHeaders")
+                : swift.Expression.reference("headers");
 
         const designatedInitializerArgs: swift.FunctionArgument[] = [
             swift.functionArgument({
@@ -262,7 +273,7 @@ export class RootClientGenerator {
             }),
             swift.functionArgument({
                 label: "headers",
-                value: swift.Expression.reference("headers")
+                value: headersArgValue
             }),
             swift.functionArgument({
                 label: "timeout",
@@ -292,20 +303,62 @@ export class RootClientGenerator {
             }
         };
 
+        const bodyStatements: swift.Statement[] = [];
+
+        if (globalHeaders.length > 0) {
+            bodyStatements.push(
+                swift.Statement.variableDeclaration({
+                    unsafeName: "mergedHeaders",
+                    value: swift.Expression.rawValue("headers ?? [:]")
+                })
+            );
+            for (const header of globalHeaders) {
+                const paramName = header.name.name.camelCase.unsafeName;
+                const wireValue = header.name.wireValue;
+                const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+                if (swiftType.variant.type === "optional") {
+                    bodyStatements.push(
+                        swift.Statement.if({
+                            condition: swift.Statement.constantDeclaration({
+                                unsafeName: paramName,
+                                value: swift.Expression.reference(paramName),
+                                noTrailingNewline: true
+                            }),
+                            body: [
+                                swift.Statement.variableAssignment(
+                                    `mergedHeaders["${wireValue}"]`,
+                                    swift.Expression.reference(paramName)
+                                )
+                            ]
+                        })
+                    );
+                } else {
+                    bodyStatements.push(
+                        swift.Statement.variableAssignment(
+                            `mergedHeaders["${wireValue}"]`,
+                            swift.Expression.reference(paramName)
+                        )
+                    );
+                }
+            }
+        }
+
+        bodyStatements.push(
+            swift.Statement.expressionStatement(
+                swift.Expression.methodCall({
+                    target: swift.Expression.self(),
+                    methodName: "init",
+                    arguments_: designatedInitializerArgs,
+                    multiline: true
+                })
+            )
+        );
+
         return swift.initializer({
             accessLevel: swift.AccessLevel.Public,
             convenience: true,
             parameters: initializerParams,
-            body: swift.CodeBlock.withStatements([
-                swift.Statement.expressionStatement(
-                    swift.Expression.methodCall({
-                        target: swift.Expression.self(),
-                        methodName: "init",
-                        arguments_: designatedInitializerArgs,
-                        multiline: true
-                    })
-                )
-            ]),
+            body: swift.CodeBlock.withStatements(bodyStatements),
             multiline: true,
             docs: swift.docComment({
                 summary: getDocsSummary(),
@@ -342,6 +395,7 @@ export class RootClientGenerator {
             params.push(authSchemes.basic.usernameParam);
             params.push(authSchemes.basic.passwordParam);
         }
+        params.push(...this.getGlobalHeaderParameters());
         params.push(this.headersParam, this.timeoutParam, this.maxRetriesParam, this.urlSessionParam);
         return params;
     }
@@ -590,6 +644,55 @@ export class RootClientGenerator {
         }
 
         return paramsByScheme;
+    }
+
+    private getGlobalHeaderParameters(): swift.FunctionParameter[] {
+        const globalHeaders = this.sdkGeneratorContext.ir.headers;
+        return globalHeaders
+            .filter((header) => !this.isLiteralTypeReference(header.valueType))
+            .filter((header) => {
+                const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+                return this.referencer.resolvesToTheSwiftType(swiftType.nonOptional(), "String");
+            })
+            .map((header) => {
+                const swiftType = this.getResolvedSwiftTypeForTypeReference(header.valueType);
+                return swift.functionParameter({
+                    argumentLabel: header.name.name.camelCase.unsafeName,
+                    unsafeName: header.name.name.camelCase.unsafeName,
+                    type: swiftType,
+                    defaultValue: swiftType.variant.type === "optional" ? swift.Expression.rawValue("nil") : undefined,
+                    docsContent: header.docs
+                });
+            });
+    }
+
+    private isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type === "container") {
+            if (typeReference.container.type === "literal") {
+                return true;
+            }
+            if (typeReference.container.type === "optional") {
+                return this.isLiteralTypeReference(typeReference.container.optional);
+            }
+        }
+        if (typeReference.type === "named") {
+            const typeDeclaration = this.sdkGeneratorContext.ir.types[typeReference.typeId];
+            if (typeDeclaration != null && typeDeclaration.shape.type === "alias") {
+                return this.isLiteralTypeReference(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return false;
+    }
+
+    private getResolvedSwiftTypeForTypeReference(typeReference: FernIr.TypeReference): swift.TypeReference {
+        if (typeReference.type === "named") {
+            const { typeId } = typeReference;
+            const typeDeclaration = this.sdkGeneratorContext.ir.types[typeId];
+            if (typeDeclaration != null && typeDeclaration.shape.type === "alias") {
+                return this.getResolvedSwiftTypeForTypeReference(typeDeclaration.shape.aliasOf);
+            }
+        }
+        return this.sdkGeneratorContext.getSwiftTypeReferenceFromScope(typeReference, this.symbol);
     }
 
     private generateMethods(): swift.Method[] {

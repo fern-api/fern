@@ -28,13 +28,13 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.headers.send_(
-  operand: '>',
-  maybe_operand: '>',
-  operand_or_color: 'red'
-);
+  operand: ">",
+  maybe_operand: ">",
+  operand_or_color: "red"
+)
 ```
 
 ## Environments

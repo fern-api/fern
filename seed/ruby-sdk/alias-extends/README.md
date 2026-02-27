@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.extended_inline_request_body(
-  parent: 'parent',
-  child: 'child'
-);
+  parent: "parent",
+  child: "child"
+)
 ```
 
 ## Environments

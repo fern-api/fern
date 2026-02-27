@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedTrace;
-using SeedTrace.Core;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
@@ -31,10 +30,6 @@ public class GetNumWarmInstancesTest : BaseMockServerTest
             );
 
         var response = await Client.Sysprop.GetNumWarmInstancesAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Dictionary<Language, int>>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

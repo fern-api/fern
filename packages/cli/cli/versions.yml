@@ -1,4 +1,509 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.2
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-server-name` extension being ignored on AsyncAPI server definitions.
+        When an AsyncAPI spec uses `x-fern-server-name` to override a server's name
+        (e.g. renaming `uat` to `market_data` to avoid naming conflicts with another API),
+        both the environment ID and channel base URL now use the overridden name. This
+        fixes SDK generation errors like "Expected environment UAT to contain url for uat"
+        when the generators.yml environment URLs reference the overridden server name.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.1
+  changelogEntry:
+    - summary: |
+        Fix `coerce-optional-schemas-to-nullable` incorrectly making header parameters
+        nullable. HTTP headers don't have a "null" concept — they're either present with
+        a value or absent. The `coerceOptionalSchemasToNullable` option now only affects
+        request/response body properties, not header parameters. Explicitly nullable header
+        schemas (via `nullable: true` in the OpenAPI spec) are still respected.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.0
+  changelogEntry:
+    - summary: |
+        Add support for nested generics in Fern Definition. Generic type properties
+        that reference other generic types (e.g., `data: list<Data<T>>`) now correctly
+        substitute generic parameters throughout the type reference string, not just
+        when the entire property value matches a parameter name. This enables patterns
+        like reusable request/response wrappers with nested generic attributes.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.9
+  changelogEntry:
+    - summary: |
+        Propagate `explode` field from OpenAPI query parameters through the old importer pipeline
+        (OpenAPI IR → Fern Definition → Fern IR). Previously, `explode: false` on array query
+        parameters was silently dropped, causing generated SDKs to use repeated keys instead of
+        comma-separated values.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.8
+  changelogEntry:
+    - summary: |
+        Treat JSON Schema `const` values as literal types in the IR regardless of the
+        `coerceEnumsToLiterals` setting. Previously, `const` was converted to a single-value
+        enum, which meant generated SDKs (e.g. Python Pydantic models) did not auto-populate
+        a default value for fields that can only ever be one value. Now `const` always produces
+        a literal type, so generators can automatically set the default.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.7
+  changelogEntry:
+    - summary: |
+        Resolve .mdx/.md file path links in OpenAPI descriptions at CLI build time. Previously,
+        markdown links like `[Order](/docs/pages/objects/Order.mdx)` in OpenAPI endpoint and parameter
+        descriptions passed through as raw file paths. Now these links are resolved to proper URL slugs,
+        consistent with how they are already resolved in user-authored markdown pages.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.6
+  changelogEntry:
+    - summary: |
+        Fix schema reference resolution when `respect-readonly-schemas: true` is enabled.
+        Previously, when schemas containing readonly properties were renamed with "Read"
+        suffixes (e.g., `UserConfig` → `UserConfigRead`), other schemas that referenced
+        them would still point to the original names, causing validation failures.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.5
+  changelogEntry:
+    - summary: |
+        Fix per-spec settings being ignored in multi-spec API configurations.
+        When `respect-nullable-schemas` (or other boolean settings) was set on
+        only a subset of specs, the setting was incorrectly collapsed to `false`
+        because `specs.every()` treated unset (`undefined`) the same as
+        explicitly disabled (`false`). Now, specs that don't define a setting
+        are treated as neutral ("don't care") so enabling a setting on a subset
+        of specs works correctly without affecting specs that don't set it.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.4
+  changelogEntry:
+    - summary: |
+        Pass CLI-computed semantic version to Fiddle when creating remote generation
+        jobs. Previously the CLI computed the version via the FDR API but passed the
+        raw user-provided version (typically undefined for AUTO mode) to Fiddle,
+        causing Fiddle to independently re-resolve the version and fall back to an
+        internal counter that produced incorrect low version numbers.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.3
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning missing namespace changes in the git diff. When
+        generated SDK files are copied without `.fernignore` (the
+        `copyGeneratedFilesNoFernIgnorePreservingGit` path), new files created
+        by namespace renames were untracked and invisible to `git diff HEAD`.
+        The diff generator now runs `git add -N .` (intent-to-add) before
+        diffing so that newly created files appear in the diff and are
+        correctly analyzed by the AI as breaking changes.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.2
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer to recognize `format: date-time-rfc-2822` regardless
+        of `typeDatesAsStrings` setting. Previously the check was inside a guard that
+        defaults to `undefined`, so RFC 2822 date fields silently fell through to string.
+      type: fix
+    - summary: |
+        Fix example validation for `DATE_TIME_RFC_2822` fields to accept RFC 2822
+        formatted timestamps (e.g. "Wed, 02 Oct 2002 13:00:00 +0000") instead of
+        rejecting them as invalid ISO 8601.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.1
+  changelogEntry:
+    - summary: |
+        Fix v2 OpenAPI importer support for `format: date-time-rfc-2822` so the CLI
+        emits `DATE_TIME_RFC_2822` instead of falling back to `string`.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.0
+  changelogEntry:
+    - summary: |
+        Add `DATE_TIME_RFC_2822` primitive type to the IR. OpenAPI specs using
+        `format: date-time-rfc-2822` (e.g. Twilio) now produce typed date-time
+        fields instead of plain strings. Generators that do not yet handle the
+        new variant gracefully fall back to `DATE_TIME` behaviour.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.89.2
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancement for multi-spec API definitions. All OpenAPI sources are now combined into a single merged spec, with overrides applied per-spec, so endpoints from any spec are correctly matched during AI enhancement.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.89.1
+  changelogEntry:
+    - summary: |
+        Fix wire test failures for APIs with both JSON and bytes endpoints at the same path.
+        WireMock mappings are no longer generated for bytes request body endpoints, which
+        prevents ambiguous matches that return empty response bodies.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.89.0
+  changelogEntry:
+    - summary: |
+        Added `collapsible` and `collapsed-by-default` support for API reference layout section items in `docs.yml`.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.88.4
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v3 channel parameters ignoring their `schema` property, which
+        caused types like `oneOf: [string, string[]]` to be flattened to `string`
+        in generated WebSocket clients.
+      type: fix
+    - summary: |
+        Fix `oneOf: [primitive, array<primitive>]` query parameter detection when
+        the primitive appears before the array in the union, which caused the type
+        to lose its `allow-multiple` representation.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+- version: 3.88.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI file upload detection for FastAPI `UploadFile` fields. OpenAPI schemas
+        that use `contentMediaType: application/octet-stream` are now treated as
+        `format: binary` so SDKs generate correct multipart upload code.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+- version: 3.88.2
+  changelogEntry:
+    - summary: |
+        Fix `fern check` validation for SSE streaming endpoints with protocol-level discrimination.
+        Examples for SSE endpoints using `context: protocol` discriminated unions were rejected with
+        "Missing discriminant property" because the validator looked for the discriminant inside the
+        `data` payload instead of recognizing it at the SSE envelope level (`event:` field).
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.88.1
+  changelogEntry:
+    - summary: |
+        Fix boolean default values from OpenAPI specs being sent as strings to FDR,
+        causing docs publish failures. The OpenAPI parser now properly coerces boolean
+        defaults using `getAsBoolean()` instead of an unsafe type assertion.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.88.0
+  changelogEntry:
+    - summary: |
+        Add Replay support for preserving SDK customizations across regenerations.
+        Replay detects user edits via `.fern/replay.lock`, applies them with 3-way
+        merge, and creates PRs with conflict resolution guidance when needed.
+
+        New CLI commands: `fern replay init`, `fern replay status`, `fern replay forget`,
+        `fern replay reset`. New `--no-replay` flag on `fern generate` to skip patch
+        application. Gated behind `replay: { enabled: true }` in `generators.yml`.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 3.87.0
+  changelogEntry:
+    - summary: |
+        Added `collapsible` and `collapsed-by-default` options for `docs.yml` navigation sections/folders, preserving the legacy `collapsed` behavior while adding validation to prevent invalid configurations.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 3.86.1
+  changelogEntry:
+    - summary: |
+        Fall back to initial version 0.0.1 when AUTO versioning cannot extract
+        the previous version instead of failing the entire generation. This
+        handles new SDK repositories where all files are additions and no
+        previous version lines exist in the diff.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.86.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-sdk-method-name` extension on AsyncAPI WebSocket channels
+        to customize the connection method name in generated SDKs. This field is now
+        available in both AsyncAPI v2 and v3 specifications.
+
+        **AsyncAPI example** — use `x-fern-sdk-method-name` to customize the WebSocket
+        connection method instead of the default "connect":
+
+        ```yaml
+        asyncapi: 3.0.0
+        info:
+          title: Chat API
+          version: 1.0.0
+        channels:
+          /chat:
+            x-fern-sdk-method-name: createChatConnection
+            messages:
+              userMessage:
+                payload:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+        ```
+
+        This generates `client.createChatConnection()` instead of `client.connect()`,
+        avoiding confusing APIs where both wrapper creation and actual connection use "connect".
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.6
+  changelogEntry:
+    - summary: |
+        Complete document-level `webhook-signature` configuration parsing. Adds validation for webhook
+        signature configs (algorithms, encodings, timestamp settings, JWKS consistency).
+      type: chore
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.5
+  changelogEntry:
+    - summary: |
+        Report broken AsyncAPI V3 message references as visible warnings instead
+        of silently dropping entire specs. When an operation references a
+        non-existent channel or message (e.g. `$ref: "#/channels/auth/messages/authenticate"`
+        when no `auth` channel exists), the parser now logs a warning with the
+        specific broken `$ref` and continues processing the remaining valid
+        messages and channels.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.4
+  changelogEntry:
+    - summary: |
+        Skip compatible IR version validation when running in local development
+        mode (CLI version 0.0.0). This prevents noisy 404 errors from the FDR
+        registry when the CLI version is not a real published release.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.3
+  changelogEntry:
+    - summary: |
+        Remove unhelpful "Unable to analyze changes with AI" fallback message from
+        changelog entries when AI analysis fails during AUTO versioning. The changelog
+        now shows just the version header with no body instead.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.2
+  changelogEntry:
+    - summary: |
+        Regenerate internal SDKs with the latest TypeScript SDK generator to pick up improvements and fixes.
+      type: chore
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.85.1
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning failing for new SDK repositories. When generating an SDK
+        into an empty or newly initialized repository, the version extraction would fail
+        because all files are new additions with no previous version lines in the diff.
+        Now returns 0.0.1 as the initial version instead of throwing an error.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.0
+  changelogEntry:
+    - summary: |
+        Auto-correct incorrect `fern-api/` Docker org prefix to `fernapi/` in generator names.
+        When a generator is specified with `fern-api/` (the GitHub/npm org) instead of `fernapi/`
+        (the Docker Hub org), the CLI now automatically corrects it and prints a warning.
+        This applies to CLI commands (`--generator` flag) and `generators.yml` configuration files.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.84.0
+  changelogEntry:
+    - summary: |
+        Add workspace validation caching and skipValidation flag to improve toFernWorkspace()
+        performance. A global validation cache eliminates redundant JSON schema validation and
+        Zod parsing when the same files are processed by multiple workspace instances. The
+        skipValidation option allows callers to bypass JSON schema validation for known-good files.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.3
+  changelogEntry:
+    - summary: |
+        Preserve existing README.md during local SDK generation when the generator
+        does not produce one. Previously, `copyGeneratedFiles` deleted all files
+        before copying generator output, so if README generation failed silently
+        the file was removed from the target repository. The file copy methods now
+        skip deleting README.md when the generated output directory does not
+        include it.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.2
+  changelogEntry:
+    - summary: |
+        Improve CLI startup performance by loading workspace files concurrently.
+      type: chore
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.1
+  changelogEntry:
+    - summary: |
+        Fix S3 signature mismatch for docs assets outside fern/ folder. Paths containing "../"
+        are now sanitized to prevent HTTP client URL normalization from breaking S3 presigned URLs.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.83.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification support. Webhooks can now declare a `signature`
+        configuration with `type: hmac` or `type: asymmetric`, including algorithm, encoding,
+        signature prefix parsing, payload format composition, and timestamp-based replay protection.
+        Supported via Fern Definition `signature` field, OpenAPI `x-fern-webhook-signature` extension,
+        and the IR `WebhookSignatureVerification` union.
+
+        **OpenAPI example** — set `x-fern-webhook-signature` at the document level so
+        all webhooks inherit the same signature configuration:
+
+        ```yaml
+        openapi: 3.1.0
+        info:
+          title: My API
+          version: 1.0.0
+        x-fern-webhook-signature:
+          type: hmac
+          header: x-webhook-signature
+          algorithm: sha256
+          encoding: hex
+          signature-prefix: "sha256="
+          payload-format:
+            components:
+              - timestamp
+              - body
+            delimiter: "."
+          timestamp:
+            header: x-webhook-timestamp
+            format: unix-seconds
+            tolerance: 300
+        webhooks:
+          orderCreated:
+            post:
+              operationId: orderCreated
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/OrderEvent'
+        ```
+
+        Individual webhook operations can also override the document-level default by
+        specifying their own `x-fern-webhook-signature` configuration inline.
+      type: feat
+  createdAt: "2026-02-23"
+  irVersion: 65
+- version: 3.82.0
+  changelogEntry:
+    - summary: |
+        Add webhook signature verification configuration to the IR. Webhooks can now
+        specify a `signature` block (in Fern Definition) or `x-fern-webhook-signature`
+        extension (in OpenAPI) with algorithm, encoding, header name, and payload format.
+        SDK generators can use this to produce signature verification utilities.
+      type: feat
+    - summary: |
+        Add `terminator` field support for SSE streaming throughout the OpenAPI to Fern pipeline.
+        The field was already present in the Fern definition schema but missing from the OpenAPI
+        extension parsing, OpenAPI-IR schema, and the OpenAPI-IR to Fern conversion layers.
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 65
+- version: 3.81.1
+  changelogEntry:
+    - summary: |
+        Fix example object keys starting with `$` (e.g. `$ref`) not being unescaped when
+        generating the IR `jsonExample`. The Fern definition escapes `$`-prefixed keys with
+        a backslash to avoid collision with example references, but the backslash was not
+        removed when building the wire-format JSON example, causing generators to emit
+        invalid code (e.g. `"\$ref"` in Go).
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 65
+- version: 3.81.0
+  changelogEntry:
+    - summary: |
+        Add `--skip-autorelease-disabled` flag to `fern generator upgrade`. When passed,
+        generators with `autorelease: false` in their configuration are skipped during
+        the upgrade. Skipped generators are reported in the output summary.
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 65
+- version: 3.80.0
+  changelogEntry:
+    - summary: |
+        Make `fern init` default to OpenAPI initialization with a sample Petstore spec.
+        Previously, `fern init` created a Fern Definition workspace by default, and
+        `fern init --openapi <path>` was needed for OpenAPI. Now `fern init` creates an
+        OpenAPI workspace by default. Use `fern init --fern-definition` to get the previous
+        Fern Definition initialization behavior.
+      type: feat
+  createdAt: "2026-02-18"
+  irVersion: 65
+- version: 3.79.3
+  changelogEntry:
+    - summary: |
+        Fix auto-generated examples for recursive types to include required non-leaf properties (e.g. nested objects) and empty containers in minimal stubs, preventing deserialization failures in generated mock server tests.
+      type: fix
+  createdAt: "2026-02-18"
+  irVersion: 65
+- version: 3.79.2
+  changelogEntry:
+    - summary: |
+        Fix `fern check --strict-broken-links` to resolve `<Markdown src="..." />` snippets used
+        inside link targets.
+      type: fix
+  createdAt: "2026-02-17"
+  irVersion: 65
+- version: 3.79.1
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancement being silently skipped.
+      type: fix
+  createdAt: "2026-02-17"
+  irVersion: 65
 - version: 3.79.0
   changelogEntry:
     - summary: |
@@ -274,10 +779,47 @@
 - version: 3.66.0
   changelogEntry:
     - summary: |
-        Add support for server URL templating in multi-URL environments. The Fern definition
-        schema now supports `url-templates`, `default-urls`, and `variables` fields on
-        `MultipleBaseUrlsEnvironmentSchema`, enabling SDKs to expose server variables as
-        constructor parameters with runtime URL interpolation.
+        Add support for server URL templating in multi-URL environments. This extends the IR
+        to support OpenAPI server variables for APIs with multiple base URLs.
+
+        **New Fern definition schema fields for `MultipleBaseUrlsEnvironmentSchema`:**
+
+        - `url-templates`: URL templates with variable placeholders for each base URL
+          ```yaml
+          url-templates:
+            base: "https://api.{region}.example.com/v1"
+            auth: "https://auth.{region}.example.com"
+          ```
+
+        - `default-urls`: Default URLs when no variables are provided (from `x-fern-default-url`)
+          ```yaml
+          default-urls:
+            base: "https://api.us-east-1.example.com/v1"
+            auth: "https://auth.us-east-1.example.com"
+          ```
+
+        - `variables`: Server variables for URL templating, keyed by base URL ID
+          ```yaml
+          variables:
+            base:
+              - id: region
+                default: us-east-1
+                values: [us-east-1, us-west-2, eu-west-1]
+          ```
+
+        **ServerVariableSchema structure:**
+        - `id`: Variable name as it appears in the URL template (e.g., `region`)
+        - `default`: Default value for the variable
+        - `values`: Optional enum of allowed values
+
+        **OpenAPI to IR conversion:**
+        Server variables from OpenAPI specs are now preserved in the IR rather than being
+        exploded into multiple environment variants. This enables SDKs to expose server
+        variables as constructor parameters with runtime URL interpolation.
+
+        **`x-fern-default-url` extension:**
+        When present on an OpenAPI server, specifies a separate default URL to use when
+        no variables are provided, allowing the template URL and default URL to differ.
       type: feat
   createdAt: "2026-02-06"
   irVersion: 63

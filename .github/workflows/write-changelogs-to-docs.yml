@@ -10,6 +10,9 @@ permissions:
   pull-requests: write
   contents: write
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   copy-changelogs:
     runs-on: ubuntu-latest

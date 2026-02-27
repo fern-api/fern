@@ -407,6 +407,26 @@
             }
           ]
         },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "slug": {
           "oneOf": [
             {
@@ -922,6 +942,26 @@
           ]
         },
         "skip-slug": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1693,6 +1733,26 @@
           ]
         },
         "collapsed": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
           "oneOf": [
             {
               "type": "boolean"

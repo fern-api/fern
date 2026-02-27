@@ -104,6 +104,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
+    public getSubpackageGetterName(subpackage: FernIr.Subpackage): string {
+        return `get${subpackage.name.pascalCase.safeName}`;
+    }
+
     public getEndpointMethodName(endpoint: FernIr.HttpEndpoint): string {
         // TODO: Propogate reserved keywords through IR via CasingsGenerator.
         const unsafeName = endpoint.name.camelCase.unsafeName;

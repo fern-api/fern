@@ -59,6 +59,8 @@ public class BaseMockServerTest
         Client = new SeedOauthClientCredentialsClient(
             "client_id",
             "client_secret",
+            "entityId",
+            "scp",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
         MockOAuthEndpoint();

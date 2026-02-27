@@ -1,15 +1,21 @@
-import { CONSOLE_LOGGER, Logger } from "@fern-api/logger";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { loggingExeca, runExeca } from "@fern-api/logging-execa";
-import { Options } from "execa";
+import type { Options as ExecaOptions } from "execa";
 import path from "path";
+
+interface RunFernCliOptions extends ExecaOptions {
+    /** Include the FERN_ORG_TOKEN_DEV auth token (default: true) */
+    includeAuthToken?: boolean;
+    /** AbortSignal from vitest test context for cleanup on timeout/bail/Ctrl+C */
+    signal?: AbortSignal;
+}
 
 export async function runFernCli(
     args: string[],
-    options?: Options,
-    includeAuthToken: boolean = true
+    { includeAuthToken = true, signal, ...execaOptions }: RunFernCliOptions = {}
 ): Promise<loggingExeca.ReturnValue> {
     const env = {
-        ...options?.env,
+        ...execaOptions?.env,
         ...(includeAuthToken ? { FERN_TOKEN: process.env.FERN_ORG_TOKEN_DEV } : {})
     };
 
@@ -18,33 +24,35 @@ export async function runFernCli(
         "node",
         ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args],
         {
-            ...options,
+            ...execaOptions,
             env,
-            doNotPipeOutput: options?.reject === false
+            doNotPipeOutput: execaOptions?.reject === false,
+            signal
         }
     );
 }
 
-export async function runFernCliWithoutAuthToken(
-    args: string[],
-    options?: Options,
-    logger?: Logger
-): Promise<loggingExeca.ReturnValue> {
-    return runFernCli(args, options, false);
+interface CaptureFernCliOptions extends ExecaOptions {
+    /** AbortSignal from vitest test context for cleanup on timeout/bail/Ctrl+C */
+    signal?: AbortSignal;
 }
 
-export function captureFernCli(args: string[], options?: Options): import("execa").ExecaChildProcess {
+export function captureFernCli(
+    args: string[],
+    { signal, ...execaOptions }: CaptureFernCliOptions = {}
+): ReturnType<typeof runExeca> {
     return runExeca(
         CONSOLE_LOGGER,
         "node",
         ["--enable-source-maps", path.join(__dirname, "../../../cli/dist/dev/cli.cjs"), ...args],
         {
-            ...options,
+            ...execaOptions,
             env: {
-                ...options?.env,
+                ...execaOptions?.env,
                 FERN_TOKEN: process.env.FERN_ORG_TOKEN_DEV
             },
-            doNotPipeOutput: options?.reject === false
+            doNotPipeOutput: execaOptions?.reject === false,
+            signal
         }
     );
 }

@@ -4,6 +4,8 @@
 
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { readdirSync } from "fs";
 import path from "path";
 
 import { loadApisOrThrow } from "../../loadApisOrThrow.js";
@@ -61,54 +63,77 @@ it.skip("fhir", async () => {
     });
 }, 200_000);
 
-describe("test definitions", async () => {
+describe("test definitions", () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions");
-    const apiWorkspaces = await loadApisOrThrow({
-        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
-        context: createMockTaskContext(),
-        cliVersion: "0.0.0",
-        cliName: "fern",
-        commandLineApiWorkspace: undefined,
-        defaultToAllApiWorkspaces: true
-    });
+    const apiNames = readdirSync(path.join(TEST_DEFINITIONS_DIR, "fern/apis"), { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .map((d) => d.name);
 
-    apiWorkspaces.forEach((workspace) => {
-        it(`${workspace.workspaceName}`, async () => {
+    let workspaceMap: Map<string, AbstractAPIWorkspace<unknown>>;
+
+    beforeAll(async () => {
+        const apiWorkspaces = await loadApisOrThrow({
+            fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
+            context: createMockTaskContext(),
+            cliVersion: "0.0.0",
+            cliName: "fern",
+            commandLineApiWorkspace: undefined,
+            defaultToAllApiWorkspaces: true
+        });
+        workspaceMap = new Map(apiWorkspaces.map((w) => [w.workspaceName ?? "", w]));
+    }, 200_000);
+
+    apiNames.forEach((name) => {
+        it.concurrent(name, async () => {
+            const workspace = workspaceMap.get(name);
+            if (!workspace) {
+                throw new Error(`Workspace ${name} not found`);
+            }
             await generateAndSnapshotIR({
                 absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
                 workspace,
                 audiences: { type: "all" },
-                workspaceName: workspace.workspaceName ?? ""
+                workspaceName: name
             });
         }, 30_000);
     });
-}, 200_000);
+});
 
-describe("test definitions openapi", async () => {
+describe("test definitions openapi", () => {
     const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../../test-definitions-openapi");
-    const apiWorkspaces = await loadApisOrThrow({
-        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
-        context: createMockTaskContext(),
-        cliVersion: "0.0.0",
-        cliName: "fern",
-        commandLineApiWorkspace: undefined,
-        defaultToAllApiWorkspaces: true
-    });
+    const apiNames = readdirSync(path.join(TEST_DEFINITIONS_DIR, "fern/apis"), { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .map((d) => d.name);
 
-    apiWorkspaces.forEach((workspace) => {
-        it(`${workspace.workspaceName}`, async () => {
+    let workspaceMap: Map<string, AbstractAPIWorkspace<unknown>>;
+
+    beforeAll(async () => {
+        const apiWorkspaces = await loadApisOrThrow({
+            fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
+            context: createMockTaskContext(),
+            cliVersion: "0.0.0",
+            cliName: "fern",
+            commandLineApiWorkspace: undefined,
+            defaultToAllApiWorkspaces: true
+        });
+        workspaceMap = new Map(apiWorkspaces.map((w) => [w.workspaceName ?? "", w]));
+    }, 200_000);
+
+    apiNames.forEach((name) => {
+        it.concurrent(name, async () => {
+            const workspace = workspaceMap.get(name);
+            if (!workspace) {
+                throw new Error(`Workspace ${name} not found`);
+            }
             await generateAndSnapshotIR({
                 absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions-openapi")),
                 workspace,
-                audiences:
-                    workspace.workspaceName === "audiences"
-                        ? { type: "select", audiences: ["public"] }
-                        : { type: "all" },
-                workspaceName: workspace.workspaceName ?? ""
+                audiences: name === "audiences" ? { type: "select", audiences: ["public"] } : { type: "all" },
+                workspaceName: name
             });
         }, 10_000);
     });
-}, 200_000);
+});
 
 it("generics", async () => {
     const GENERICS_DIR = path.join(__dirname, "fixtures/generics/fern");

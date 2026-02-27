@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: "<token>")
 
-client.echo(request: 'Hello world!\n\nwith\n\tnewlines');
+client.echo(request: "Hello world!\\n\\nwith\\n\\tnewlines")
 ```
 
 ## Environments

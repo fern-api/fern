@@ -15,10 +15,9 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "isolatedModules": true,
-    "baseUrl": ".",
     "noUncheckedIndexedAccess": true,
     "noImplicitReturns": true,
-    "composite": true,
+    "incremental": false,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true

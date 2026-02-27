@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.get_token(
-  client_id: 'client_id',
-  client_secret: 'client_secret'
-);
+  client_id: "client_id",
+  client_secret: "client_secret"
+)
 ```
 
 ## Environments

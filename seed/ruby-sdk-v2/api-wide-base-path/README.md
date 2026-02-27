@@ -28,13 +28,13 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.service.post(
-  service_param: 'serviceParam',
+  service_param: "serviceParam",
   endpoint_param: 1,
-  resource_param: 'resourceParam'
-);
+  resource_param: "resourceParam"
+)
 ```
 
 ## Environments
