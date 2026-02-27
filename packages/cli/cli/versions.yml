@@ -3,17 +3,13 @@
   changelogEntry:
     - summary: |
         Add package registry version lookups for all supported SDK languages during
-        AUTO version resolution. Previously only npm (TypeScript) and PyPI (Python)
-        were supported. Now also queries Maven Central (Java), NuGet Gallery (C#),
-        RubyGems.org (Ruby), Go Module Proxy (Go), and Crates.io (Rust).
-        PHP and Swift continue to use GitHub tags as fallback.
-      type: feat
-    - summary: |
-        Support authenticated access to private package registries and GitHub
-        repositories via environment variables. When GITHUB_TOKEN is set, the CLI
-        authenticates GitHub API requests to read tags from private repos. When
-        NPM_TOKEN is set, the CLI authenticates npm registry requests to read
-        versions from private packages.
+        AUTO version resolution with private registry authentication support.
+        Previously only npm (TypeScript) and PyPI (Python) were supported. Now also
+        queries Maven Central (Java), NuGet Gallery (C#), RubyGems.org (Ruby), Go
+        Module Proxy (Go), and Crates.io (Rust). PHP and Swift continue to use GitHub
+        tags as fallback. Additionally supports authenticated access to private package
+        registries and GitHub repositories via environment variables: GITHUB_TOKEN for
+        private repos and NPM_TOKEN for private npm packages.
       type: feat
   createdAt: "2026-02-26"
   irVersion: 65
