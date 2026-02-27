@@ -312,7 +312,6 @@ export async function publishDocs({
             playgroundConfig,
             apiName,
             workspace,
-            openApiSourceFilePath,
             graphqlOperations,
             graphqlTypes
         }) => {
@@ -333,8 +332,16 @@ export async function publishDocs({
                 docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
             );
             if (aiEnhancerConfig) {
-                if (openApiSourceFilePath == null) {
-                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file path available");
+                const sources = workspace?.getSources();
+                const openApiSources = sources
+                    ?.filter((source) => source.type === "openapi")
+                    .map((source) => ({
+                        absoluteFilePath: source.absoluteFilePath,
+                        absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
+                    }));
+
+                if (openApiSources == null || openApiSources.length === 0) {
+                    context.logger.debug("Skipping AI example enhancement: no OpenAPI source file paths available");
                 } else {
                     apiDefinition = await enhanceExamplesWithAI(
                         apiDefinition,
@@ -342,7 +349,7 @@ export async function publishDocs({
                         context,
                         token,
                         organization,
-                        openApiSourceFilePath
+                        openApiSources
                     );
                 }
             }

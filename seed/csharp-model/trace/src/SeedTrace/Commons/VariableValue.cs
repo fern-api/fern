@@ -580,6 +580,12 @@ public record VariableValue
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "integerValue" => json.GetProperty("value").Deserialize<int>(options),
@@ -589,25 +595,26 @@ public record VariableValue
                     ?? throw new JsonException("Failed to deserialize string"),
                 "charValue" => json.GetProperty("value").Deserialize<string?>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
-                "mapValue" => json.Deserialize<SeedTrace.MapValue?>(options)
+                "mapValue" => jsonWithoutDiscriminator.Deserialize<SeedTrace.MapValue?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.MapValue"),
                 "listValue" => json.GetProperty("value")
                     .Deserialize<IEnumerable<VariableValue>?>(options)
                     ?? throw new JsonException("Failed to deserialize IEnumerable<VariableValue>"),
-                "binaryTreeValue" => json.Deserialize<SeedTrace.BinaryTreeValue?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.BinaryTreeValue"),
-                "singlyLinkedListValue" => json.Deserialize<SeedTrace.SinglyLinkedListValue?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.SinglyLinkedListValue"
-                    ),
-                "doublyLinkedListValue" => json.Deserialize<SeedTrace.DoublyLinkedListValue?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.DoublyLinkedListValue"
-                    ),
+                "binaryTreeValue" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.BinaryTreeValue?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.BinaryTreeValue"
+                        ),
+                "singlyLinkedListValue" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.SinglyLinkedListValue?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.SinglyLinkedListValue"
+                        ),
+                "doublyLinkedListValue" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.DoublyLinkedListValue?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.DoublyLinkedListValue"
+                        ),
                 "nullValue" => new { },
                 _ => json.Deserialize<object?>(options),
             };

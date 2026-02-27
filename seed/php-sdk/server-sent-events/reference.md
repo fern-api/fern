@@ -87,3 +87,4 @@ $client->completions->streamWithoutTerminator(
 </dd>
 </dl>
 </details>
+

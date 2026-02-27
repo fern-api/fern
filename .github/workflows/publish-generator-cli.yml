@@ -83,7 +83,7 @@ jobs:
       - name: Build CLI
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-        run: pnpm turbo run dist:cli --filter=${{ env.PACKAGE_NAME }}
+        run: pnpm turbo run dist:cli --filter=${{ env.PACKAGE_NAME }} -- ${{ needs.check-version.outputs.version }}
 
       - name: Test
         env:
@@ -93,13 +93,8 @@ jobs:
       - name: Publish generator-cli
         env:
           NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
-          NEW_VERSION: ${{ needs.check-version.outputs.version }}
         run: |
-          cd packages/generator-cli
-          mv package.json package.json.tmp
-          version_replace="s/0.0.0/${NEW_VERSION}/"
-          cat package.json.tmp| sed "${version_replace}" > package.json
-          rm -rf package.json.tmp
+          cd packages/generator-cli/dist
           pnpm publish --access public --tag latest --no-git-checks
 
   publish-sdks:

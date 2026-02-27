@@ -8,7 +8,32 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { anySignal, getTimeoutSignal } from "./signals.mjs";
-export const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutMs, abortSignal, withCredentials, duplex) => __awaiter(void 0, void 0, void 0, function* () {
+/**
+ * Cached result of checking whether the current runtime supports
+ * the `cache` option in `Request`. Some runtimes (e.g. Cloudflare Workers)
+ * throw a TypeError when this option is used.
+ */
+let _cacheNoStoreSupported;
+export function isCacheNoStoreSupported() {
+    if (_cacheNoStoreSupported != null) {
+        return _cacheNoStoreSupported;
+    }
+    try {
+        new Request("http://localhost", { cache: "no-store" });
+        _cacheNoStoreSupported = true;
+    }
+    catch (_a) {
+        _cacheNoStoreSupported = false;
+    }
+    return _cacheNoStoreSupported;
+}
+/**
+ * Reset the cached result of `isCacheNoStoreSupported`. Exposed for testing only.
+ */
+export function resetCacheNoStoreSupported() {
+    _cacheNoStoreSupported = undefined;
+}
+export const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutMs, abortSignal, withCredentials, duplex, disableCache) => __awaiter(void 0, void 0, void 0, function* () {
     const signals = [];
     let timeoutAbortId;
     if (timeoutMs != null) {
@@ -20,15 +45,9 @@ export const makeRequest = (fetchFn, url, method, headers, requestBody, timeoutM
         signals.push(abortSignal);
     }
     const newSignals = anySignal(signals);
-    const response = yield fetchFn(url, {
-        method: method,
-        headers,
-        body: requestBody,
-        signal: newSignals,
-        credentials: withCredentials ? "include" : undefined,
+    const response = yield fetchFn(url, Object.assign({ method: method, headers, body: requestBody, signal: newSignals, credentials: withCredentials ? "include" : undefined, 
         // @ts-ignore
-        duplex,
-    });
+        duplex }, (disableCache && isCacheNoStoreSupported() ? { cache: "no-store" } : {})));
     if (timeoutAbortId != null) {
         clearTimeout(timeoutAbortId);
     }

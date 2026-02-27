@@ -5,6 +5,7 @@ import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectAPIWorkspaceViolations } from "./validateAPIWorkspaceAndLogIssues.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
@@ -136,6 +137,13 @@ export async function validateWorkspaces({
             context
         });
     });
+
+    if (cliContext.isJsonMode) {
+        const showApiNames = apiResults.length > 1;
+        cliContext.writeJsonToStdout(
+            buildCheckJsonResult({ apiResults, docsResult, hasErrors: hasErrors || hasAnyErrors, showApiNames })
+        );
+    }
 
     if (hasErrors || hasAnyErrors) {
         cliContext.failAndThrow();

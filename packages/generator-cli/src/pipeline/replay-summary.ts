@@ -43,10 +43,10 @@ export function logReplaySummary(result: ReplayStepResult, logger: PipelineLogge
     );
 
     if (preserved > 0) {
-        const absorbedNote = absorbed > 0 ? ` (${plural(absorbed, "customization")} now part of generated code)` : "";
-        logger.info(`Replay: ${plural(preserved, "customization")} preserved${absorbedNote}`);
+        const absorbedNote = absorbed > 0 ? ` (some customizations now part of generated code)` : "";
+        logger.info(`Replay: customizations preserved${absorbedNote}`);
     } else if (absorbed > 0) {
-        logger.info(`Replay: ${plural(absorbed, "customization")} now part of generated code`);
+        logger.info(`Replay: customizations now part of generated code`);
     }
 
     if (conflicts > 0) {
@@ -87,10 +87,10 @@ export function formatReplayPrBody(
     const parts: string[] = [];
 
     if (preserved > 0 && conflicts === 0) {
-        parts.push(`\u2705 ${plural(preserved, "customization")} automatically preserved in this update.`);
+        parts.push(`\u2705 Customizations automatically preserved in this update.`);
     } else if (preserved > 0) {
         parts.push(
-            `\u2705 ${plural(preserved, "customization")} automatically preserved, but ${plural(conflicts, "file")} ${conflicts === 1 ? "needs" : "need"} your attention.`
+            `\u2705 Customizations automatically preserved, but ${plural(conflicts, "file")} ${conflicts === 1 ? "needs" : "need"} your attention.`
         );
     }
 

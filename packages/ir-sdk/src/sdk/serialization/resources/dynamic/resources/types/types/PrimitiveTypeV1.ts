@@ -18,6 +18,7 @@ export const PrimitiveTypeV1: core.serialization.Schema<
     "STRING",
     "DATE",
     "DATE_TIME",
+    "DATE_TIME_RFC_2822",
     "UUID",
     "BASE_64",
     "BIG_INTEGER",
@@ -35,6 +36,7 @@ export declare namespace PrimitiveTypeV1 {
         | "STRING"
         | "DATE"
         | "DATE_TIME"
+        | "DATE_TIME_RFC_2822"
         | "UUID"
         | "BASE_64"
         | "BIG_INTEGER";

@@ -420,6 +420,8 @@ export declare namespace ParsedApiReferenceLayoutItem {
         hidden: boolean | undefined;
         icon: string | AbsoluteFilePath | undefined;
         skipUrlSlug: boolean | undefined;
+        collapsible: boolean | undefined;
+        collapsedByDefault: boolean | undefined;
         availability: Availability | undefined;
         playground: PlaygroundSettings | undefined;
     }

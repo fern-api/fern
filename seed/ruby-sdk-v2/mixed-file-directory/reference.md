@@ -250,3 +250,4 @@ client.user.events.metadata.get_metadata(id: "id")
 </dd>
 </dl>
 </details>
+

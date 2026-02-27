@@ -9,6 +9,15 @@
   createdAt: "2026-02-25"
   irVersion: 61
 
+- version: 1.25.0-rc4
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 61
+
 - version: 1.25.0-rc3
   changelogEntry:
     - summary: |

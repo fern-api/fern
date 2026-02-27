@@ -5,6 +5,7 @@ import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
 
 import { getDeclaredTypeNameKey, getErrorTypeNameKey } from "../convertToOpenApi.js";
+import { convertAvailabilityStatus } from "../utils/convertAvailability.js";
 import { Mode } from "../writeOpenApi.js";
 import { convertObject } from "./convertObject.js";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter.js";
@@ -149,6 +150,13 @@ function convertHttpEndpoint({
         summary: httpEndpoint.displayName ?? undefined
     };
 
+    if (httpEndpoint.availability != null) {
+        const availabilityValue = convertAvailabilityStatus(httpEndpoint.availability.status);
+        if (availabilityValue != null) {
+            (operationObject as unknown as Record<string, unknown>)["x-fern-availability"] = availabilityValue;
+        }
+    }
+
     if (httpEndpoint.baseUrl != null) {
         const baseUrlId = httpEndpoint.baseUrl;
         if (environments?.environments.type !== "multipleBaseUrls") {
@@ -246,6 +254,11 @@ function convertRequestBody({
                         }
                         return {
                             docs: property.docs ?? undefined,
+                            availability:
+                                "availability" in property
+                                    ? (property as unknown as { availability: FernIr.Availability | undefined })
+                                          .availability
+                                    : undefined,
                             name: property.name,
                             valueType: property.valueType,
                             example: exampleProperty
@@ -634,6 +647,13 @@ function convertQueryParameter({
             : convertTypeReference(queryParameter.valueType)
     };
 
+    if (queryParameter.availability != null) {
+        const availabilityValue = convertAvailabilityStatus(queryParameter.availability.status);
+        if (availabilityValue != null) {
+            (convertedParameter as unknown as Record<string, unknown>)["x-fern-availability"] = availabilityValue;
+        }
+    }
+
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {
         const queryParameterExample = example.queryParameters.find(
@@ -678,6 +698,13 @@ function convertHeader({
         required: isTypeReferenceRequired({ typeReference: httpHeader.valueType, typesByName }),
         schema: convertTypeReference(httpHeader.valueType)
     };
+
+    if (httpHeader.availability != null) {
+        const availabilityValue = convertAvailabilityStatus(httpHeader.availability.status);
+        if (availabilityValue != null) {
+            (convertedParameter as unknown as Record<string, unknown>)["x-fern-availability"] = availabilityValue;
+        }
+    }
 
     const openapiExamples: OpenAPIV3.ParameterObject["examples"] = {};
     for (const example of examples) {

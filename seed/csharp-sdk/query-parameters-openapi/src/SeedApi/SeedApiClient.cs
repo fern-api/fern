@@ -35,7 +35,7 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 16)
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 18)
             .Add("limit", request.Limit)
             .Add("id", request.Id)
             .Add("date", request.Date)
@@ -50,6 +50,8 @@ public partial class SeedApiClient : ISeedApiClient
             .AddDeepObject("optionalUser", request.OptionalUser)
             .AddDeepObject("excludeUser", request.ExcludeUser)
             .Add("filter", request.Filter)
+            .Add("tags", request.Tags)
+            .Add("optionalTags", request.OptionalTags)
             .AddDeepObject("neighbor", request.Neighbor)
             .AddDeepObject("neighborRequired", request.NeighborRequired)
             .MergeAdditional(options?.AdditionalQueryParameters)
@@ -159,6 +161,8 @@ public partial class SeedApiClient : ISeedApiClient
     ///             },
     ///         ],
     ///         Filter = ["filter"],
+    ///         Tags = ["tags"],
+    ///         OptionalTags = ["optionalTags"],
     ///         Neighbor = new User
     ///         {
     ///             Name = "name",

@@ -240,6 +240,9 @@ async function tryRunCli(cliContext: CliContext) {
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
+        if ((argv as Record<string, unknown>).json === true) {
+            cliContext.enableJsonMode();
+        }
         cliContext.logFernVersionDebug();
     });
 
@@ -1128,6 +1131,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("from-openapi", {
                     boolean: true,
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
+                    default: false
+                })
+                .option("json", {
+                    boolean: true,
+                    description: "Output results as JSON to stdout.",
                     default: false
                 }),
         async (argv) => {

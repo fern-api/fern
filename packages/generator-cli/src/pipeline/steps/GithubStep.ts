@@ -2,12 +2,10 @@ import { ClonedRepository, parseRepository } from "@fern-api/github";
 import { Octokit } from "@octokit/rest";
 import { access, writeFile } from "fs/promises";
 import { join } from "path";
-import { FERN_BOT_EMAIL, FERN_BOT_NAME } from "../github/constants";
 import { createReplayBranch } from "../github/createReplayBranch";
 import type { ExistingPullRequest } from "../github/findExistingUpdatablePR";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
-import { postConflictComments } from "../github/postConflictComments";
 import type { PipelineLogger } from "../PipelineLogger";
 import { formatReplayPrBody } from "../replay-summary";
 import type { GithubStepConfig, GithubStepResult, PipelineContext, ReplayStepResult } from "../types";
@@ -33,6 +31,16 @@ export class GithubStep extends BaseStep {
             this.logger.debug("Starting GitHub self-hosted flow in directory: " + this.outputDir);
             const repository = ClonedRepository.createAtPath(this.outputDir);
 
+            // Ensure full git history is available.
+            // Fiddle clones with --depth 1 for performance.
+            // Replay references historical SHAs from .fern/replay.lock that won't exist
+            // in a shallow clone.
+            try {
+                await repository.fetch(["--unshallow"]);
+            } catch {
+                // Not a shallow clone — already has full history. This is fine.
+            }
+
             const now = new Date();
             const formattedDate = now
                 .toISOString()
@@ -41,15 +49,6 @@ export class GithubStep extends BaseStep {
                 .replace("Z", "")
                 .replace(".", "_");
             const newPrBranch = `fern-bot/${formattedDate}`;
-
-            try {
-                await repository.setUserAndEmail({
-                    name: FERN_BOT_NAME,
-                    email: FERN_BOT_EMAIL
-                });
-            } catch {
-                // pass
-            }
 
             const mode = this.config.mode;
             switch (mode) {
@@ -152,7 +151,9 @@ export class GithubStep extends BaseStep {
         };
 
         if (!this.config.previewMode) {
-            if (skipCommit && isUpdatingExistingPR) {
+            if (isUpdatingExistingPR) {
+                // Force push is safe: fern-bot/* branches are exclusively owned by this pipeline,
+                // and required when the clone lacks remote tracking refs (e.g., shallow clone from fiddle).
                 await repository.forcePush();
             } else {
                 await repository.push();
@@ -237,10 +238,6 @@ export class GithubStep extends BaseStep {
                     throw error;
                 }
             }
-        }
-
-        if (!this.config.previewMode && replayConflictInfo?.hasConflicts === true && result.prNumber != null) {
-            await postConflictComments(octokit, owner, repo, result.prNumber, replayResult, this.logger);
         }
 
         if (
