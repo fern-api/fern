@@ -18,6 +18,7 @@ class Quantity(UniversalBaseModel):
 
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
+            kwargs.pop('quantity', None)
             super().__init__(quantity=args[0], **kwargs)
         else:
             super().__init__(**kwargs)

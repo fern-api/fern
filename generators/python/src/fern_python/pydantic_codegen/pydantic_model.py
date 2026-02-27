@@ -376,6 +376,7 @@ class PydanticModel:
         def write_init_body(writer: AST.NodeWriter) -> None:
             writer.write_line("if args:")
             with writer.indent():
+                writer.write_line(f"kwargs.pop('{single_field.name}', None)")
                 writer.write_line(f"super().__init__({single_field.name}=args[0], **kwargs)")
             writer.write_line("else:")
             with writer.indent():

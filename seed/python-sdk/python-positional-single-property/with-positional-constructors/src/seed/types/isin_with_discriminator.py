@@ -18,6 +18,7 @@ class IsinWithDiscriminator(UniversalBaseModel):
 
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
+            kwargs.pop('isin', None)
             super().__init__(isin=args[0], **kwargs)
         else:
             super().__init__(**kwargs)

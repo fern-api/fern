@@ -18,6 +18,7 @@ class OneRequiredOneOptional(UniversalBaseModel):
 
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
+            kwargs.pop('required_field', None)
             super().__init__(required_field=args[0], **kwargs)
         else:
             super().__init__(**kwargs)
