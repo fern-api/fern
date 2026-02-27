@@ -358,7 +358,7 @@
                 "maximum": undefined,
                 "minimum": undefined,
                 "multipleOf": undefined,
-                "type": "double",
+                "type": "float",
               },
             },
           },
