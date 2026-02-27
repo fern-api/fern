@@ -1,4 +1,74 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.4
+  changelogEntry:
+    - summary: |
+        Fix publint warning for ambiguous `types` in package.json exports. Remove the top-level
+        `types` condition from export entries in `package.json` so that `import` and `require`
+        conditions each resolve to their own correctly-typed declaration file (`.d.mts` for ESM,
+        `.d.ts` for CJS). This eliminates the publint warning about CJS types being used when
+        resolving with the "import" condition.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.52.3
+  changelogEntry:
+    - summary: |
+        Handle nullable header types by converting null to undefined. HTTP headers
+        don't have a "null" concept — they're either present with a value or absent.
+        When a header's type is nullable (explicitly via `nullable: true` in the spec),
+        the generated code now wraps the value with `?? undefined` to ensure null values
+        are treated as "don't send the header" instead of causing type errors.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+- version: 3.52.2
+  changelogEntry:
+    - summary: |
+        Fix biome formatting not being applied in github output mode. The generator was calling
+        checkFix() (biome) without first installing biome, causing formatting to silently fail.
+        Now installs checkFix dependencies when tools are not globally available, matching the
+        existing behavior in downloadFiles mode.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+- version: 3.52.1
+  changelogEntry:
+    - summary: |
+        Add JSDoc availability annotations for SDK endpoint methods. Endpoints marked as
+        `deprecated` in the Fern definition now generate a `@deprecated` JSDoc tag, causing
+        IDEs to show strikethrough and deprecation warnings. Endpoints marked as `in-development`
+        or `pre-release` generate a `@beta` JSDoc annotation. This applies to all endpoint types
+        (default, file download, and streaming).
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+- version: 3.52.0
+  changelogEntry:
+    - summary: |
+        Enable `generateSubpackageExports` by default. Generated TypeScript SDKs now include
+        subpackage export entries in `package.json`, allowing users to import subpackage clients
+        directly (e.g., `import { FooClient } from '@acme/sdk/foo'`). This enables JavaScript
+        bundlers to tree-shake unused subpackages, resulting in smaller bundle sizes.
+        To opt out, explicitly set `generateSubpackageExports: false` in your generator config.
+      type: feat
+    - summary: |
+        Add tree-shaking smoke test to verify that importing a single subpackage produces a
+        significantly smaller webpack bundle than importing the full SDK.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.51.6
+  changelogEntry:
+    - summary: |
+        In downloadFiles mode, install only the configured formatter/linter
+        packages instead of the full dependency tree when outputting source files
+        only. This replaces the ~1.8s full `pnpm install` with a targeted
+        `pnpm add` of just the check:fix packages (e.g. @biomejs/biome,
+        prettier, oxfmt, oxlint).
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
 - version: 3.51.5
   changelogEntry:
     - summary: |
@@ -9,7 +79,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.51.4
   changelogEntry:
     - summary: |

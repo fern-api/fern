@@ -39,6 +39,8 @@ import type * as SeedApi from "../../index.js";
  *             tags: ["tags", "tags"]
  *         },
  *         filter: "filter",
+ *         tags: "tags",
+ *         optionalTags: "optionalTags",
  *         neighbor: {
  *             name: "name",
  *             tags: ["tags", "tags"]
@@ -64,6 +66,10 @@ export interface SearchRequest {
     optionalUser?: SeedApi.User;
     excludeUser?: SeedApi.User | SeedApi.User[];
     filter?: string | string[];
+    /** List of tags. Serialized as a comma-separated list. */
+    tags?: string | string[];
+    /** Optional list of tags. Serialized as a comma-separated list. */
+    optionalTags?: string | string[];
     neighbor?: SeedApi.SearchRequestNeighbor;
     neighborRequired: SeedApi.SearchRequestNeighborRequired;
 }

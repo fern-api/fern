@@ -466,8 +466,26 @@ export function convertSchemaObject(
         // const
         // NOTE(patrickthornton): This is an attribute of OpenAPIV3_1.SchemaObject;
         // at some point we should probably migrate to that object altogether.
+        // Per JSON Schema spec, `const` restricts a value to a single fixed value,
+        // so we always treat it as a literal regardless of `coerceEnumsToLiterals`.
         if ("const" in schema) {
-            schema.enum = [schema.const];
+            const constValue = schema.const;
+            if (typeof constValue === "string" || typeof constValue === "boolean") {
+                return convertLiteral({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    value: constValue,
+                    description,
+                    availability,
+                    namespace,
+                    groupName
+                });
+            }
+            // For non-string/boolean const values, fall back to enum behavior
+            schema.enum = [constValue];
         }
 
         // enums
