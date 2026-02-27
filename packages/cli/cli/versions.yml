@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.3
+  changelogEntry:
+    - summary: |
+        Remove noisy debug logs from IR version compatibility checking.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.2
   changelogEntry:
     - summary: |
