@@ -5,6 +5,6 @@
         "rootDir": "..",
         "baseUrl": ".."
     },
-    "include": ["../src", "../tests"],
+    "include": ["../src","../tests"],
     "exclude": []
 }

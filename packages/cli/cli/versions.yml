@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.90.10
+- version: 3.91.1
   changelogEntry:
     - summary: |
         Fix `coerce-optional-schemas-to-nullable` incorrectly making header parameters
@@ -11,6 +11,17 @@
   createdAt: "2026-02-26"
   irVersion: 65
 
+- version: 3.91.0
+  changelogEntry:
+    - summary: |
+        Add support for nested generics in Fern Definition. Generic type properties
+        that reference other generic types (e.g., `data: list<Data<T>>`) now correctly
+        substitute generic parameters throughout the type reference string, not just
+        when the entire property value matches a parameter name. This enables patterns
+        like reusable request/response wrappers with nested generic attributes.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
 - version: 3.90.9
   changelogEntry:
     - summary: |
@@ -54,7 +65,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.90.5
   changelogEntry:
     - summary: |
@@ -68,7 +78,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.90.4
   changelogEntry:
     - summary: |

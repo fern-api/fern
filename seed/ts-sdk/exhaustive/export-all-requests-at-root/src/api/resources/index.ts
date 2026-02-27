@@ -1,6 +1,6 @@
 export * as endpoints from "./endpoints/index.js";
-export * from "./generalErrors/errors/index.js";
 export * as generalErrors from "./generalErrors/index.js";
+export * from "./generalErrors/errors/index.js";
 export * from "./generalErrors/types/index.js";
 export * as inlinedRequests from "./inlinedRequests/index.js";
 export * as noAuth from "./noAuth/index.js";
