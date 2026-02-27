@@ -298,12 +298,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                     ),
                 args.maxRetries,
             );
-            return {
-                status: resp.status,
-                headers: resp.headers,
-                body: resp.body,
-                rawResponse: resp,
-            } satisfies InterceptedResponse;
+            return { rawResponse: resp } satisfies InterceptedResponse;
         };
 
         const headersRecord: Record<string, string> = {};

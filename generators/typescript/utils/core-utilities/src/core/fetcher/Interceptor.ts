@@ -10,11 +10,12 @@ export interface InterceptedRequest {
 
 /**
  * Describes an HTTP response returned from the interceptor pipeline.
+ *
+ * The `rawResponse` is the authoritative source for all response data.
+ * To observe response properties, read from `rawResponse` (e.g. `rawResponse.status`).
+ * To modify the response, construct a new `Response` object and return it as `rawResponse`.
  */
 export interface InterceptedResponse {
-    status: number;
-    headers: Headers;
-    body?: ReadableStream<Uint8Array> | null;
     rawResponse: Response;
 }
 
@@ -39,7 +40,7 @@ export type SendRequest = (request: InterceptedRequest) => Promise<InterceptedRe
  *     async sendRequest(request, next) {
  *         console.log(`→ ${request.method} ${request.url}`);
  *         const response = await next(request);
- *         console.log(`← ${response.status}`);
+ *         console.log(`← ${response.rawResponse.status}`);
  *         return response;
  *     }
  * };
@@ -57,7 +58,7 @@ export type SendRequest = (request: InterceptedRequest) => Promise<InterceptedRe
  *             propagation.inject(context.active(), request.headers);
  *             try {
  *                 const response = await next(request);
- *                 span.setAttribute("http.status_code", response.status);
+ *                 span.setAttribute("http.status_code", response.rawResponse.status);
  *                 return response;
  *             } catch (error) {
  *                 span.recordException(error as Error);
