@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -24,7 +23,6 @@
             "default": "./dist/cjs/index.js"
         },
         "./complex": {
-            "types": "./dist/cjs/api/resources/complex/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/complex/exports.d.mts",
                 "default": "./dist/esm/api/resources/complex/exports.mjs"
@@ -36,7 +34,6 @@
             "default": "./dist/cjs/api/resources/complex/exports.js"
         },
         "./inlineUsers": {
-            "types": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/inlineUsers/resources/inlineUsers/exports.d.mts",
                 "default": "./dist/esm/api/resources/inlineUsers/resources/inlineUsers/exports.mjs"
@@ -48,7 +45,6 @@
             "default": "./dist/cjs/api/resources/inlineUsers/resources/inlineUsers/exports.js"
         },
         "./users": {
-            "types": "./dist/cjs/api/resources/users/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/users/exports.d.mts",
                 "default": "./dist/esm/api/resources/users/exports.mjs"

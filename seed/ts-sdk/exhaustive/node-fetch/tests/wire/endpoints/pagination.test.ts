@@ -4,40 +4,38 @@ import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("PaginationClient", () => {
-    
     test("listItems", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
-        
-        const rawResponseBody = { "items" : [ { "string" : "string" } , { "string" : "string" } ] , "next" : "next" };
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { items: [{ string: "string" }, { string: "string" }], next: "next" };
         server
             .mockEndpoint({ once: false })
-            .get("/pagination").respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .get("/pagination")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        
-                        
-                const expected = {
-    items: [{
-            string: "string"
-        }, {
-            string: "string"
-        }],
-    next: "next"
-};
-                const page = await client.endpoints.pagination.listItems({
-    cursor: "cursor",
-    limit: 1
-});
-                
-                            expect(expected.items).toEqual(page.data);
-                            expect(page.hasNextPage()).toBe(true);
-                            const nextPage = await page.getNextPage();
-                            expect(expected.items).toEqual(nextPage.data);
-                        
-                
-                    
+        const expected = {
+            items: [
+                {
+                    string: "string",
+                },
+                {
+                    string: "string",
+                },
+            ],
+            next: "next",
+        };
+        const page = await client.endpoints.pagination.listItems({
+            cursor: "cursor",
+            limit: 1,
+        });
+
+        expect(expected.items).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.items).toEqual(nextPage.data);
     });
-          
 });

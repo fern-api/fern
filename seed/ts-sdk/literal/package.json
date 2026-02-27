@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -24,7 +23,6 @@
             "default": "./dist/cjs/index.js"
         },
         "./headers": {
-            "types": "./dist/cjs/api/resources/headers/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/headers/exports.d.mts",
                 "default": "./dist/esm/api/resources/headers/exports.mjs"
@@ -36,7 +34,6 @@
             "default": "./dist/cjs/api/resources/headers/exports.js"
         },
         "./inlined": {
-            "types": "./dist/cjs/api/resources/inlined/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/inlined/exports.d.mts",
                 "default": "./dist/esm/api/resources/inlined/exports.mjs"
@@ -48,7 +45,6 @@
             "default": "./dist/cjs/api/resources/inlined/exports.js"
         },
         "./path": {
-            "types": "./dist/cjs/api/resources/path/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/path/exports.d.mts",
                 "default": "./dist/esm/api/resources/path/exports.mjs"
@@ -60,7 +56,6 @@
             "default": "./dist/cjs/api/resources/path/exports.js"
         },
         "./query": {
-            "types": "./dist/cjs/api/resources/query/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/query/exports.d.mts",
                 "default": "./dist/esm/api/resources/query/exports.mjs"
@@ -72,7 +67,6 @@
             "default": "./dist/cjs/api/resources/query/exports.js"
         },
         "./reference": {
-            "types": "./dist/cjs/api/resources/reference/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/reference/exports.d.mts",
                 "default": "./dist/esm/api/resources/reference/exports.mjs"
