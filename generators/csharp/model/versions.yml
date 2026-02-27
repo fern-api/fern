@@ -4,9 +4,8 @@
     - summary: |
         Modernize generated CI workflow: merge three separate jobs (compile,
         unit-tests, publish) into a single job to avoid redundant .NET setup,
-        restore, and build steps. Update actions/checkout to v6, remove
-        redundant duplicate checkout step, and add CI and MSBUILDTERMINALLOGGER
-        environment variables to reduce noisy output.
+        restore, and build steps. Update actions/checkout to v6 and remove
+        redundant duplicate checkout step.
       type: chore
   createdAt: "2026-02-27"
   irVersion: 62
