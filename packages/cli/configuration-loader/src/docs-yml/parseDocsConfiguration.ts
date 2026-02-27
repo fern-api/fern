@@ -465,8 +465,11 @@ function convertLayoutConfig(
                 : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
-        hideFeedback: layout.hideFeedback ?? false
-    };
+        hideFeedback: layout.hideFeedback ?? false,
+        // tabsAlignment is not yet in the FDR SDK type; cast to forward-compat
+        // until the fern-platform companion PR merges and the SDK is updated.
+        tabsAlignment: layout.tabsAlignment === "center" ? "CENTER" : "DEFAULT"
+    } as docsYml.ParsedDocsConfiguration["layout"];
 }
 
 function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {
