@@ -35,6 +35,30 @@
             },
             "default": "./dist/cjs/serialization/index.js"
         },
+        "./organizations": {
+            "types": "./dist/cjs/api/resources/organizations/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/organizations/exports.d.mts",
+                "default": "./dist/esm/api/resources/organizations/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/organizations/exports.d.ts",
+                "default": "./dist/cjs/api/resources/organizations/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/organizations/exports.js"
+        },
+        "./user": {
+            "types": "./dist/cjs/api/resources/user/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/user/exports.d.mts",
+                "default": "./dist/esm/api/resources/user/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/user/exports.d.ts",
+                "default": "./dist/cjs/api/resources/user/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/user/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

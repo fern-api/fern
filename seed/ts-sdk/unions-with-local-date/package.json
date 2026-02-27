@@ -23,6 +23,42 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./bigunion": {
+            "types": "./dist/cjs/api/resources/bigunion/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/bigunion/exports.d.mts",
+                "default": "./dist/esm/api/resources/bigunion/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/bigunion/exports.d.ts",
+                "default": "./dist/cjs/api/resources/bigunion/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/bigunion/exports.js"
+        },
+        "./types": {
+            "types": "./dist/cjs/api/resources/types/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/types/exports.d.mts",
+                "default": "./dist/esm/api/resources/types/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/types/exports.d.ts",
+                "default": "./dist/cjs/api/resources/types/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/types/exports.js"
+        },
+        "./union": {
+            "types": "./dist/cjs/api/resources/union/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/union/exports.d.mts",
+                "default": "./dist/esm/api/resources/union/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/union/exports.d.ts",
+                "default": "./dist/cjs/api/resources/union/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/union/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

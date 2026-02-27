@@ -23,6 +23,54 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./organization": {
+            "types": "./dist/cjs/api/resources/organization/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/organization/exports.d.mts",
+                "default": "./dist/esm/api/resources/organization/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/organization/exports.d.ts",
+                "default": "./dist/cjs/api/resources/organization/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/organization/exports.js"
+        },
+        "./user": {
+            "types": "./dist/cjs/api/resources/user/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/user/exports.d.mts",
+                "default": "./dist/esm/api/resources/user/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/user/exports.d.ts",
+                "default": "./dist/cjs/api/resources/user/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/user/exports.js"
+        },
+        "./user/events": {
+            "types": "./dist/cjs/api/resources/user/resources/events/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/user/resources/events/exports.d.mts",
+                "default": "./dist/esm/api/resources/user/resources/events/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/user/resources/events/exports.d.ts",
+                "default": "./dist/cjs/api/resources/user/resources/events/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/user/resources/events/exports.js"
+        },
+        "./user/events/metadata": {
+            "types": "./dist/cjs/api/resources/user/resources/events/resources/metadata/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/user/resources/events/resources/metadata/exports.d.mts",
+                "default": "./dist/esm/api/resources/user/resources/events/resources/metadata/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/user/resources/events/resources/metadata/exports.d.ts",
+                "default": "./dist/cjs/api/resources/user/resources/events/resources/metadata/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/user/resources/events/resources/metadata/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

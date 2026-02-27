@@ -23,6 +23,18 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./imdb": {
+            "types": "./dist/cjs/api/resources/imdb/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/imdb/exports.d.mts",
+                "default": "./dist/esm/api/resources/imdb/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/imdb/exports.d.ts",
+                "default": "./dist/cjs/api/resources/imdb/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/imdb/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
