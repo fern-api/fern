@@ -44,11 +44,9 @@ describe("BlockMerger", () => {
         expect(result[2]?.id).toBe("CONTRIBUTING");
     });
 
-    it("throws when original has duplicate block IDs", () => {
-        // This is the exact crash that causes README deletion:
-        // When a README has two ## Authentication sections (from the addendum bug),
-        // ReadmeParser creates two blocks with ID "AUTHENTICATION".
-        // BlockMerger crashes when processing the second duplicate.
+    it("warns and overrides when original has duplicate block IDs", () => {
+        // Previously this crashed with 'block with id "AUTHENTICATION" already exists',
+        // causing README deletion. Now it warns and keeps the last duplicate.
         const original = [
             new Block({ id: "INSTALLATION", content: "## Installation\nContent\n" }),
             new Block({ id: "USAGE", content: "## Usage\nUsage content\n" }),
@@ -62,8 +60,24 @@ describe("BlockMerger", () => {
             new Block({ id: "CONTRIBUTING", content: "## Contributing\nNew\n" })
         ];
 
+        const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
         const merger = new BlockMerger({ original, updated });
-        expect(() => merger.merge()).toThrow('block with id "AUTHENTICATION" already exists');
+        const result = merger.merge();
+        
+        // Should not crash — duplicates are resolved by keeping the last one
+        expect(result).toHaveLength(4);
+        expect(result[0]?.id).toBe("INSTALLATION");
+        expect(result[1]?.id).toBe("USAGE");
+        // The second (last) AUTHENTICATION block wins
+        expect(result[2]?.id).toBe("AUTHENTICATION");
+        expect(result[2]?.content).toContain("Second auth block");
+        expect(result[3]?.id).toBe("CONTRIBUTING");
+        
+        // Should have warned about the duplicate
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringContaining('Duplicate block with id "AUTHENTICATION"')
+        );
+        warnSpy.mockRestore();
     });
 
     it("merges correctly when AUTHENTICATION is a stable feature block", () => {
