@@ -205,6 +205,19 @@ class SnippetWriter:
             float_=lambda float_: AST.Expression(str(float_)),
             base_64=lambda base_64: AST.Expression(repr(base_64)),
             big_integer=lambda big_integer: AST.Expression(str(big_integer)),
+            datetime_rfc_2822=lambda datetime_rfc_2822: AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.ClassReference(
+                        import_=AST.ReferenceImport(
+                            module=AST.Module.snippet(
+                                module_path=("email", "utils"),
+                            )
+                        ),
+                        qualified_name_excluding_import=("parsedate_to_datetime",),
+                    ),
+                    args=[AST.Expression(f'"{str(datetime_rfc_2822.raw)}"')],
+                ),
+            ),
         )
 
     def _get_snippet_for_string_primitive(

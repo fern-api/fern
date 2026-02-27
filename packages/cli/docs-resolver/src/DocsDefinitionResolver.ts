@@ -57,6 +57,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
+import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
 
@@ -254,6 +255,18 @@ export class DocsDefinitionResolver {
     private markdownFilesToAvailability: Map<AbsoluteFilePath, docsYml.RawSchemas.Availability> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     private referencedMarkdownFiles: ReferencedMarkdownFile[] = [];
+    private pendingApiRegistrations: Array<{
+        ir: IntermediateRepresentation;
+        snippetsConfig: APIV1Write.SnippetsConfig;
+        playgroundConfig?: PlaygroundConfig;
+        apiName?: string;
+        workspace?: FernWorkspace;
+        graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
+        graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+        tempApiDefinitionId: string;
+        apiReferenceNode: FernNavigation.V1.ApiReferenceNode;
+    }> = [];
+    private pendingApiCounter = 0;
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         const resolveStartTime = performance.now();
         const startMemory = process.memoryUsage();
@@ -441,6 +454,36 @@ export class DocsDefinitionResolver {
             await this.getMarkdownFilesToFullyQualifiedPathNames(root);
         const pathNameTime = performance.now() - pathNameStart;
         this.taskContext.logger.debug(`Got path names in ${pathNameTime.toFixed(0)}ms`);
+
+        // Process deferred API registrations: resolve .mdx/.md file path links in IR descriptions,
+        // then register APIs with FDR and update the navigation tree with real API definition IDs.
+        if (this.pendingApiRegistrations.length > 0) {
+            this.taskContext.logger.debug(
+                `Processing ${this.pendingApiRegistrations.length} deferred API registrations...`
+            );
+            const deferredStart = performance.now();
+            for (const pending of this.pendingApiRegistrations) {
+                // Resolve .mdx/.md file path links in all IR description (docs) fields
+                this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
+
+                // Register the API with resolved descriptions
+                const realApiDefinitionId = await this.registerApi({
+                    ir: pending.ir,
+                    snippetsConfig: pending.snippetsConfig,
+                    playgroundConfig: pending.playgroundConfig,
+                    apiName: pending.apiName,
+                    workspace: pending.workspace,
+                    graphqlOperations: pending.graphqlOperations,
+                    graphqlTypes: pending.graphqlTypes
+                });
+
+                // Update all apiDefinitionId references in the navigation subtree
+                updateApiDefinitionIdInTree(pending.apiReferenceNode, pending.tempApiDefinitionId, realApiDefinitionId);
+            }
+            const deferredTime = performance.now() - deferredStart;
+            this.taskContext.logger.debug(`Processed deferred API registrations in ${deferredTime.toFixed(0)}ms`);
+            this.pendingApiRegistrations = [];
+        }
 
         this.taskContext.logger.debug("Replacing image paths and URLs in markdown...");
         const replaceStart = performance.now();
@@ -1409,20 +1452,15 @@ export class DocsDefinitionResolver {
         // This allows users to reference APIs by folder name in docs components like <Schema api="latest" />
         const apiNameForRegistration = item.apiName ?? workspace?.workspaceName ?? openapiWorkspace?.workspaceName;
 
-        const apiDefinitionId = await this.registerApi({
-            ir,
-            snippetsConfig,
-            playgroundConfig: { oauth: item.playground?.oauth },
-            apiName: apiNameForRegistration,
-            workspace,
-            graphqlOperations: graphqlData.operations,
-            graphqlTypes: graphqlData.types
-        });
+        // Use a temporary API definition ID for building the navigation tree.
+        // The real ID will be assigned after markdownFilesToPathName is available,
+        // at which point we resolve .mdx/.md file path links in descriptions before registering.
+        const tempApiDefinitionId = `__pending_api_${this.pendingApiCounter++}__`;
 
         // Create API definition WITH GraphQL operations (single full conversion)
         const api = convertIrToApiDefinition({
             ir,
-            apiDefinitionId,
+            apiDefinitionId: tempApiDefinitionId,
             playgroundConfig: { oauth: item.playground?.oauth },
             context: this.taskContext,
             graphqlOperations: graphqlData.operations,
@@ -1474,7 +1512,22 @@ export class DocsDefinitionResolver {
             this.parsedDocsConfig.pages[relativePath] = processedContent;
         }
 
-        return node.get();
+        const apiReferenceNode = node.get();
+
+        // Store pending registration for deferred processing after markdownFilesToPathName is available
+        this.pendingApiRegistrations.push({
+            ir,
+            snippetsConfig,
+            playgroundConfig: { oauth: item.playground?.oauth },
+            apiName: apiNameForRegistration,
+            workspace,
+            graphqlOperations: graphqlData.operations,
+            graphqlTypes: graphqlData.types,
+            tempApiDefinitionId,
+            apiReferenceNode
+        });
+
+        return apiReferenceNode;
     }
 
     private async toChangelogNode(
@@ -2179,6 +2232,22 @@ export class DocsDefinitionResolver {
             url: ({ value }) => ({ type: "url", value: DocsV1Write.Url(value) }),
             _other: () => this.taskContext.failAndThrow("Invalid metadata configuration")
         });
+    }
+
+    /**
+     * Recursively walks the IR object and resolves .mdx/.md file path links in all `docs` string fields.
+     * This ensures that OpenAPI descriptions containing markdown links to .mdx/.md pages
+     * are resolved to proper URL slugs before being sent to FDR.
+     */
+    private resolveLinksInIrDocs(
+        ir: IntermediateRepresentation,
+        markdownFilesToPathName: Record<AbsoluteFilePath, string>
+    ): void {
+        const metadata = {
+            absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
+            absolutePathToMarkdownFile: this.docsWorkspace.absoluteFilePath
+        };
+        resolveLinksInObject(ir, markdownFilesToPathName, metadata);
     }
 }
 
