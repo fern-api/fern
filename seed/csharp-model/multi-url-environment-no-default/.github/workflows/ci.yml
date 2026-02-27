@@ -45,3 +45,4 @@ jobs:
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: dotnet nuget push src/SeedMultiUrlEnvironmentNoDefault/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+
