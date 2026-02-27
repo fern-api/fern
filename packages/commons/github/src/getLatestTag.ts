@@ -40,7 +40,8 @@ export async function getLatestTag(githubRepository: string): Promise<string | u
     let highestTagName: string | undefined;
 
     for (const tagName of tags) {
-        const parsed = semver.parse(tagName) ?? semver.parse(semver.coerce(tagName));
+        const cleaned = tagName.replace(/^v/, "");
+        const parsed = semver.parse(tagName) ?? semver.parse(cleaned);
         if (parsed != null) {
             if (highestVersion == null || semver.gt(parsed, highestVersion)) {
                 highestVersion = parsed;
