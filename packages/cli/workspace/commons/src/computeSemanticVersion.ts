@@ -201,7 +201,7 @@ export async function getLatestVersionFromPypi(packageName: string): Promise<str
 export async function getLatestVersionFromMaven(coordinate: string): Promise<string | undefined> {
     try {
         const parts = coordinate.split(":");
-        if (parts.length < 2 || parts[0] == null || parts[1] == null) {
+        if (parts.length < 2 || !parts[0] || !parts[1]) {
             return undefined;
         }
         const groupId = parts[0];
