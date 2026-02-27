@@ -247,30 +247,6 @@ describe("casingsGenerator", () => {
         expect(actual).toEqual(expected);
     });
 
-    it("digit-starting name", () => {
-        const expected: Name = {
-            originalName: "1foo",
-            camelCase: {
-                safeName: "_1Foo",
-                unsafeName: "1Foo"
-            },
-            pascalCase: {
-                safeName: "_1Foo",
-                unsafeName: "1Foo"
-            },
-            snakeCase: {
-                safeName: "_1foo",
-                unsafeName: "1foo"
-            },
-            screamingSnakeCase: {
-                safeName: "_1FOO",
-                unsafeName: "1FOO"
-            }
-        };
-        const actual = casingsGenerator.generateName(expected.originalName);
-        expect(actual).toEqual(expected);
-    });
-
     it("array brackets", () => {
         const expected: Name = {
             originalName: "string[]",

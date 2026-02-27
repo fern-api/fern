@@ -54,19 +54,19 @@
                             "originalName": "1.0.0",
                             "camelCase": {
                                 "unsafeName": "100",
-                                "safeName": "_100"
+                                "safeName": "100"
                             },
                             "snakeCase": {
                                 "unsafeName": "100",
-                                "safeName": "_100"
+                                "safeName": "100"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "100",
-                                "safeName": "_100"
+                                "safeName": "100"
                             },
                             "pascalCase": {
                                 "unsafeName": "100",
-                                "safeName": "_100"
+                                "safeName": "100"
                             }
                         },
                         "wireValue": "1.0.0"
@@ -80,19 +80,19 @@
                             "originalName": "2.0.0",
                             "camelCase": {
                                 "unsafeName": "200",
-                                "safeName": "_200"
+                                "safeName": "200"
                             },
                             "snakeCase": {
                                 "unsafeName": "200",
-                                "safeName": "_200"
+                                "safeName": "200"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "200",
-                                "safeName": "_200"
+                                "safeName": "200"
                             },
                             "pascalCase": {
                                 "unsafeName": "200",
-                                "safeName": "_200"
+                                "safeName": "200"
                             }
                         },
                         "wireValue": "2.0.0"
