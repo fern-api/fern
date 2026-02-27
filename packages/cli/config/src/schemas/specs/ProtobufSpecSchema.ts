@@ -9,7 +9,7 @@ export type ProtobufSettingsSchema = z.infer<typeof ProtobufSettingsSchema>;
 export const ProtobufDefinitionSchema = z.object({
     root: z.string(),
     target: z.string().optional(),
-    overrides: z.union([z.string(), z.array(z.string()).nonempty()]).optional(),
+    overrides: z.string().optional(),
     localGeneration: z.boolean().optional(),
     fromOpenapi: z.boolean().optional(),
     dependencies: z.array(z.string()).optional()

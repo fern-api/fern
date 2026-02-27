@@ -1,5 +1,4 @@
 import { AbstractAPIWorkspace, FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
-import { generatorsYml } from "@fern-api/configuration";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
 import { ConjureImporter } from "@fern-api/conjure-to-fern";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -28,9 +27,7 @@ export class ConjureWorkspace extends AbstractAPIWorkspace<ConjureWorkspace.Sett
 
     public async toFernWorkspace(
         { context }: { context: TaskContext },
-        settings?: ConjureWorkspace.Settings,
-        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
-        generatorOverrides?: generatorsYml.OverridesSchema
+        settings?: ConjureWorkspace.Settings
     ): Promise<FernWorkspace> {
         const definition = await this.getDefinition({ context }, settings);
         return new FernWorkspace({

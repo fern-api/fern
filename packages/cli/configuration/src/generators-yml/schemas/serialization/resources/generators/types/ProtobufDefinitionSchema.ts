@@ -3,7 +3,6 @@
 import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { OverridesSchema } from "./OverridesSchema.js";
 
 export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
     serializers.ProtobufDefinitionSchema.Raw,
@@ -11,7 +10,7 @@ export const ProtobufDefinitionSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     target: core.serialization.string().optional(),
     root: core.serialization.string(),
-    overrides: OverridesSchema.optional(),
+    overrides: core.serialization.string().optional(),
     "local-generation": core.serialization.boolean().optional(),
     "from-openapi": core.serialization.boolean().optional(),
     dependencies: core.serialization.list(core.serialization.string()).optional(),
@@ -21,7 +20,7 @@ export declare namespace ProtobufDefinitionSchema {
     export interface Raw {
         target?: string | null;
         root: string;
-        overrides?: OverridesSchema.Raw | null;
+        overrides?: string | null;
         "local-generation"?: boolean | null;
         "from-openapi"?: boolean | null;
         dependencies?: string[] | null;
