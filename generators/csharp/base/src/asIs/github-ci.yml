@@ -19,9 +19,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: |
-            10.x
-            8.x
+          dotnet-version: 10.x
 
       - name: Install tools
         run: dotnet tool restore
@@ -31,16 +29,16 @@ jobs:
 
       - name: Build
         id: build
-        run: dotnet build <%= libraryProjectFilePath %> --no-restore -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet build <%= libraryProjectFilePath %> --no-restore -c Release
 
       - name: Restore test dependencies
         run: dotnet restore <%= testProjectFilePath %>
 
       - name: Build tests
-        run: dotnet build <%= testProjectFilePath %> --no-restore -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet build <%= testProjectFilePath %> --no-restore -c Release
 
       - name: Test
-        run: dotnet test <%= testProjectFilePath %> --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
+        run: dotnet test <%= testProjectFilePath %> --no-restore --no-build -c Release
 <% if (shouldWritePublishBlock) { %>
       - name: Pack
         if: always() && github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
