@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.2
+  changelogEntry:
+    - summary: |
+        Fix publint warning for ambiguous `types` in package.json exports. Remove the top-level
+        `types` condition from export entries in `package.json` so that `import` and `require`
+        conditions each resolve to their own correctly-typed declaration file (`.d.mts` for ESM,
+        `.d.ts` for CJS). This eliminates the publint warning about CJS types being used when
+        resolving with the "import" condition.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.52.1
   changelogEntry:
     - summary: |

@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -24,7 +23,6 @@
             "default": "./dist/cjs/index.js"
         },
         "./commons": {
-            "types": "./dist/cjs/api/resources/commons/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/commons/exports.d.mts",
                 "default": "./dist/esm/api/resources/commons/exports.mjs"
@@ -36,7 +34,6 @@
             "default": "./dist/cjs/api/resources/commons/exports.js"
         },
         "./file": {
-            "types": "./dist/cjs/api/resources/file/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/file/exports.d.mts",
                 "default": "./dist/esm/api/resources/file/exports.mjs"
@@ -48,7 +45,6 @@
             "default": "./dist/cjs/api/resources/file/exports.js"
         },
         "./file/notification": {
-            "types": "./dist/cjs/api/resources/file/resources/notification/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/file/resources/notification/exports.d.mts",
                 "default": "./dist/esm/api/resources/file/resources/notification/exports.mjs"
@@ -60,7 +56,6 @@
             "default": "./dist/cjs/api/resources/file/resources/notification/exports.js"
         },
         "./file/notification/service": {
-            "types": "./dist/cjs/api/resources/file/resources/notification/resources/service/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/file/resources/notification/resources/service/exports.d.mts",
                 "default": "./dist/esm/api/resources/file/resources/notification/resources/service/exports.mjs"
@@ -72,7 +67,6 @@
             "default": "./dist/cjs/api/resources/file/resources/notification/resources/service/exports.js"
         },
         "./file/service": {
-            "types": "./dist/cjs/api/resources/file/resources/service/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/file/resources/service/exports.d.mts",
                 "default": "./dist/esm/api/resources/file/resources/service/exports.mjs"
@@ -84,7 +78,6 @@
             "default": "./dist/cjs/api/resources/file/resources/service/exports.js"
         },
         "./health": {
-            "types": "./dist/cjs/api/resources/health/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/health/exports.d.mts",
                 "default": "./dist/esm/api/resources/health/exports.mjs"
@@ -96,7 +89,6 @@
             "default": "./dist/cjs/api/resources/health/exports.js"
         },
         "./health/service": {
-            "types": "./dist/cjs/api/resources/health/resources/service/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/health/resources/service/exports.d.mts",
                 "default": "./dist/esm/api/resources/health/resources/service/exports.mjs"
@@ -108,7 +100,6 @@
             "default": "./dist/cjs/api/resources/health/resources/service/exports.js"
         },
         "./service": {
-            "types": "./dist/cjs/api/resources/service/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/service/exports.d.mts",
                 "default": "./dist/esm/api/resources/service/exports.mjs"
