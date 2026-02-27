@@ -856,7 +856,7 @@ export class DocsDefinitionResolver {
                     ? {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
-                          tabs: this.parsedDocsConfig.theme.tabs,
+                          tabs: this.parsedDocsConfig.theme.tabs as DocsV1Write.DocsTabsConfig | undefined,
                           "page-actions": this.parsedDocsConfig.theme.pageActions,
                           footerNav: this.parsedDocsConfig.theme.footerNav,
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
