@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.94.0
+  changelogEntry:
+    - summary: |
+        Add "centered" as a new tabs theme option in docs.yml. When set under
+        `theme.tabs: centered`, the header tabs will be horizontally centered.
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.93.0
   changelogEntry:
     - summary: |

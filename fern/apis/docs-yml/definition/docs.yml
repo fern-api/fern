@@ -857,6 +857,7 @@ types:
     enum:
       - default
       - bubble
+      - centered
 
   BodyThemeConfig:
     enum:

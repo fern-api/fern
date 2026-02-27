@@ -5371,7 +5371,8 @@
       "type": "string",
       "enum": [
         "default",
-        "bubble"
+        "bubble",
+        "centered"
       ]
     },
     "docs.PageActionsThemeConfig": {

@@ -3,5 +3,6 @@
 export const TabsThemeConfig = {
     Default: "default",
     Bubble: "bubble",
+    Centered: "centered",
 } as const;
 export type TabsThemeConfig = (typeof TabsThemeConfig)[keyof typeof TabsThemeConfig];
