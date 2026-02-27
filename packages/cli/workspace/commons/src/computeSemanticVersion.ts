@@ -1,6 +1,6 @@
 import type { generatorsYml } from "@fern-api/configuration";
+import { getLatestTag as getLatestTagFromGithub } from "@fern-api/github";
 import latestVersion from "latest-version";
-import { Octokit } from "octokit";
 import semver from "semver";
 
 /**
@@ -357,8 +357,8 @@ export async function getLatestVersionFromCrates(packageName: string): Promise<s
 /**
  * Fetches the latest tag from a GitHub repository.
  *
- * If the GITHUB_TOKEN environment variable is set, it will be used to authenticate
- * requests to the GitHub API, enabling access to private repositories.
+ * Delegates to the shared @fern-api/github utility, which supports
+ * GITHUB_TOKEN for authenticated access to private repositories.
  *
  * @param githubRepository - Repository in "owner/repo" format
  * @returns The latest tag name, or undefined if no tags exist
@@ -366,35 +366,11 @@ export async function getLatestVersionFromCrates(packageName: string): Promise<s
 /** @internal Exported for testing */
 export async function getLatestTag(githubRepository: string): Promise<string | undefined> {
     try {
-        const { owner, repo } = parseRepository(githubRepository);
-
-        const githubToken = process.env.GITHUB_TOKEN;
-        const octokit = githubToken != null ? new Octokit({ auth: githubToken }) : new Octokit();
-        const response = await octokit.rest.repos.listTags({
-            owner,
-            repo,
-            per_page: 1 // Fetch only the latest tag
-        });
-
-        return response.data?.[0]?.name;
+        return await getLatestTagFromGithub(githubRepository);
     } catch (error) {
         // Repository doesn't exist or API error
         return undefined;
     }
-}
-
-/**
- * Parses a GitHub repository string into owner and repo.
- *
- * @param githubRepository - Repository in "owner/repo" format
- * @returns Object containing owner and repo strings
- */
-function parseRepository(githubRepository: string): { owner: string; repo: string } {
-    const [owner, repo] = githubRepository.split("/");
-    if (owner == null || repo == null) {
-        throw new Error(`Invalid github repository: ${githubRepository}`);
-    }
-    return { owner, repo };
 }
 
 /**
