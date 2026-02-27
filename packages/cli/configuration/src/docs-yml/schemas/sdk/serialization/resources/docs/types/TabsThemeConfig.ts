@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const TabsThemeConfig: core.serialization.Schema<
     serializers.TabsThemeConfig.Raw,
     FernDocsConfig.TabsThemeConfig
-> = core.serialization.enum_(["default", "bubble", "centered"]);
+> = core.serialization.enum_(["default", "bubble"]);
 
 export declare namespace TabsThemeConfig {
-    export type Raw = "default" | "bubble" | "centered";
+    export type Raw = "default" | "bubble";
 }

@@ -5045,6 +5045,13 @@
         "sidebar"
       ]
     },
+    "docs.TabsAlignment": {
+      "type": "string",
+      "enum": [
+        "default",
+        "center"
+      ]
+    },
     "docs.TabsPlacement": {
       "type": "string",
       "enum": [
@@ -5130,6 +5137,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tabs-alignment": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsAlignment"
             },
             {
               "type": "null"
@@ -5371,8 +5388,7 @@
       "type": "string",
       "enum": [
         "default",
-        "bubble",
-        "centered"
+        "bubble"
       ]
     },
     "docs.PageActionsThemeConfig": {

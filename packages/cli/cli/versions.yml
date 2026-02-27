@@ -2,8 +2,10 @@
 - version: 3.94.0
   changelogEntry:
     - summary: |
-        Add "centered" as a new tabs theme option in docs.yml. When set under
-        `theme.tabs: centered`, the header tabs will be horizontally centered.
+        Add `layout.tabs-alignment` option to docs.yml. When set to `center`,
+        the header tabs will be horizontally centered. This is orthogonal to
+        the existing `theme.tabs` styling option, so you can combine
+        `layout.tabs-alignment: center` with `theme.tabs: bubble`.
       type: feat
   createdAt: "2026-02-27"
   irVersion: 65

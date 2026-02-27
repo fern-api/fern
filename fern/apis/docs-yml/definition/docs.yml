@@ -706,6 +706,15 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      tabs-alignment:
+        type: optional<TabsAlignment>
+        docs: |
+          Set the horizontal alignment of the tabs.
+
+          @default: `default`
+
+          When set to `center`, the header tabs will be horizontally centered.
+
       switcher-placement:
         type: optional<SwitcherPlacement>
         docs: |
@@ -853,11 +862,15 @@ types:
       - default
       - minimal
 
+  TabsAlignment:
+    enum:
+      - default
+      - center
+
   TabsThemeConfig:
     enum:
       - default
       - bubble
-      - centered
 
   BodyThemeConfig:
     enum:
