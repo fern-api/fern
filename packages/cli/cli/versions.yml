@@ -1,11 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.91.4
+- version: 3.91.5
   changelogEntry:
     - summary: |
         Treat all `text/*` content types (e.g. `text/csv`, `text/xml`, `text/html`) as text
         responses in the v1 OpenAPI parser, not just `text/plain`. Previously, endpoints
         returning content types like `text/csv` had their response silently dropped, causing
         generated SDK methods to return `None`.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.4
+  changelogEntry:
+    - summary: |
+        Fix GET webhooks without a request body being skipped during OpenAPI parsing.
+        Previously, webhooks using the GET method with query parameters instead of a
+        request body were silently dropped with "Missing a request body". The parser
+        now synthesizes a payload from the query parameters for GET webhooks that lack
+        a request body.
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
@@ -30,7 +42,6 @@
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
-
 - version: 3.91.1
   changelogEntry:
     - summary: |
