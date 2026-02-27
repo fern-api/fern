@@ -1,11 +1,71 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.60.2
+  changelogEntry:
+    - summary: |
+        Fix `explode: false` query parameter serialization for array types. When an OpenAPI spec
+        sets `explode: false` on an array query parameter, the generated SDK now serializes values
+        as comma-separated strings (e.g. `tags=A,B,C`) instead of repeated keys (e.g. `tags=A&tags=B&tags=C`).
+        This applies to both regular and streaming endpoints.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 4.60.1
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 4.60.0
+  changelogEntry:
+    - summary: |
+        Support `connectMethodName` on WebSocket channels. When a channel specifies a custom
+        connection method name via `x-fern-sdk-method-name`, the generated SDK uses that name
+        (converted to snake_case) instead of the default `connect`.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 4.59.4
+  changelogEntry:
+    - summary: |
+        Fix wire test import generation for organizations with hyphens in their name.
+        Use `package_name` from custom config when available, and auto-convert hyphens
+        to underscores in the fallback module path to produce valid Python import statements.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 4.59.3
+  changelogEntry:
+    - summary: Fix bytes body snippet generation to use `request` parameter name instead of dynamic IR body key.
+      type: fix
+    - summary: Skip wire test generation for bytes request body endpoints, which lack IR example support.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 4.59.2
+  changelogEntry:
+    - summary: |
+        Generate an appropriate `client.py` file when `client.exported_filename` differs from `client.filename`.
+        Previously, the `__init__.py` would import from the exported filename (e.g., `client.py`) but
+        that file was never created, causing mypy `import-not-found` errors.
+      type: fix
+  createdAt: "2026-02-20"
+  irVersion: 65
+
 - version: 4.59.1
   changelogEntry:
     - summary: Fix wire test imports to respect package_name custom config, preventing import errors when users specify custom package names
       type: fix
   createdAt: "2026-02-23"
   irVersion: 65
+
 - version: 4.59.0
   changelogEntry:
     - summary: |

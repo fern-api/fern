@@ -5,6 +5,7 @@ package com.seed.validation;
 
 import com.seed.validation.core.ClientOptions;
 import com.seed.validation.core.Environment;
+import com.seed.validation.core.LogConfig;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public class AsyncSeedValidationClientBuilder {
     private Environment environment;
 
     private OkHttpClient httpClient;
+
+    private Optional<LogConfig> logging = Optional.empty();
 
     public AsyncSeedValidationClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -51,6 +54,14 @@ public class AsyncSeedValidationClientBuilder {
     }
 
     /**
+     * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+     */
+    public AsyncSeedValidationClientBuilder logging(LogConfig logging) {
+        this.logging = Optional.of(logging);
+        return this;
+    }
+
+    /**
      * Add a custom header to be sent with all requests.
      * For headers that need to be computed dynamically or conditionally, use the setAdditional() method override instead.
      *
@@ -69,6 +80,7 @@ public class AsyncSeedValidationClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        setLogging(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
         }
@@ -119,6 +131,18 @@ public class AsyncSeedValidationClientBuilder {
     protected void setHttpClient(ClientOptions.Builder builder) {
         if (this.httpClient != null) {
             builder.httpClient(this.httpClient);
+        }
+    }
+
+    /**
+     * Sets the logging configuration for the SDK.
+     * Override this method to customize logging behavior.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setLogging(ClientOptions.Builder builder) {
+        if (this.logging.isPresent()) {
+            builder.logging(this.logging.get());
         }
     }
 

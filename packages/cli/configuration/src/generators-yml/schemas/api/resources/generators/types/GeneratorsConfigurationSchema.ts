@@ -21,6 +21,11 @@ export interface GeneratorsConfigurationSchema {
     aliases?: Record<string, string[]>;
     groups?: Record<string, GeneratorsYml.GeneratorGroupSchema>;
     reviewers?: GeneratorsYml.ReviewersSchema;
+    /**
+     * Configuration for SDK customization replay.
+     * Automatically preserves user customizations across SDK regenerations.
+     */
+    replay?: GeneratorsYml.ReplayConfigSchema;
     ai?: GeneratorsYml.AiServicesSchema;
     /**
      * If true, automatically release SDKs when changes are detected.

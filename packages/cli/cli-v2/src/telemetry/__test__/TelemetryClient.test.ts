@@ -5,15 +5,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // vi.hoisted creates refs accessible inside vi.mock factory functions,
 // which are hoisted to the top of the file before any imports.
-const { mockCapture, mockFlush } = vi.hoisted(() => ({
+const { mockCapture, mockShutdown } = vi.hoisted(() => ({
     mockCapture: vi.fn(),
-    mockFlush: vi.fn().mockResolvedValue(undefined)
+    mockShutdown: vi.fn().mockResolvedValue(undefined)
 }));
 
 vi.mock("posthog-node", () => ({
     // eslint-disable-next-line func-style
     PostHog: vi.fn(function () {
-        return { capture: mockCapture, flush: mockFlush };
+        return { capture: mockCapture, shutdown: mockShutdown };
     })
 }));
 
@@ -31,7 +31,7 @@ beforeEach(async () => {
     process.env["POSTHOG_API_KEY"] = "phc_test";
     delete process.env["FERN_TELEMETRY_DISABLED"];
     mockCapture.mockClear();
-    mockFlush.mockClear();
+    mockShutdown.mockClear();
 });
 
 afterEach(async () => {
@@ -55,7 +55,7 @@ describe("TelemetryClient", () => {
             expect(mockCapture).toHaveBeenCalledOnce();
             expect(mockCapture).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    event: "CLI",
+                    event: "cli",
                     properties: expect.objectContaining({
                         command: "sdk generate",
                         status: "success",
@@ -114,14 +114,14 @@ describe("TelemetryClient", () => {
         it("delegates to the posthog client", async () => {
             const client = new TelemetryClient({ isTTY: false });
             await client.flush();
-            expect(mockFlush).toHaveBeenCalledOnce();
+            expect(mockShutdown).toHaveBeenCalledOnce();
         });
 
         it("is a no-op when disabled", async () => {
             delete process.env["POSTHOG_API_KEY"];
             const client = new TelemetryClient({ isTTY: false });
             await client.flush();
-            expect(mockFlush).not.toHaveBeenCalled();
+            expect(mockShutdown).not.toHaveBeenCalled();
         });
     });
 

@@ -357,6 +357,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": true,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"

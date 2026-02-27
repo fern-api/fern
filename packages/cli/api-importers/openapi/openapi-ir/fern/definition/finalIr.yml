@@ -137,6 +137,7 @@ types:
       path: string
       groupName: commons.SdkGroupName
       summary: optional<string>
+      connectMethodName: optional<string>
       handshake: WebsocketHandshake
       messages: list<WebsocketMessageSchema>
       servers: list<WebsocketServer>
@@ -550,6 +551,10 @@ types:
         type: optional<string>
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
+      explode:
+        type: optional<boolean>
+        docs: |
+          Whether to explode the parameter. Only set when it differs from the OpenAPI default for the style.
 
   Header:
     extends:
@@ -708,6 +713,7 @@ types:
       double: DoubleSchema
       string: StringSchema
       datetime: {}
+      datetimeRfc2822: {}
       date: {}
       base64: {}
       boolean: BooleanSchema

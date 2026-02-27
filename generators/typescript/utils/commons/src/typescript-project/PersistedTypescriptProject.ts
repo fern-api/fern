@@ -2,10 +2,12 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { PublishInfo } from "@fern-api/typescript-base";
+import { execFile } from "child_process";
 import decompress from "decompress";
 import { cp, readdir, rm } from "fs/promises";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
+import { promisify } from "util";
 
 export declare namespace PersistedTypescriptProject {
     export interface Init {
@@ -16,6 +18,10 @@ export declare namespace PersistedTypescriptProject {
         buildCommand: string[];
         formatCommand: string[];
         checkFixCommand: string[];
+        /** Package specifiers needed for check:fix (e.g. ["@biomejs/biome@2.4.3"]) */
+        checkFixPackages: string[];
+        /** Binary names that must be on PATH for check:fix (e.g. ["biome"]) */
+        checkFixToolBinaries: string[];
         runScripts: boolean;
         packageManager: "pnpm" | "yarn";
     }
@@ -30,6 +36,8 @@ export class PersistedTypescriptProject {
     private buildCommand: string[];
     private formatCommand: string[];
     private checkFixCommand: string[];
+    private checkFixPackages: string[];
+    private checkFixToolBinaries: string[];
 
     private runScripts;
 
@@ -41,6 +49,8 @@ export class PersistedTypescriptProject {
         buildCommand,
         formatCommand,
         checkFixCommand,
+        checkFixPackages,
+        checkFixToolBinaries,
         runScripts,
         packageManager
     }: PersistedTypescriptProject.Init) {
@@ -51,6 +61,8 @@ export class PersistedTypescriptProject {
         this.buildCommand = buildCommand;
         this.formatCommand = formatCommand;
         this.checkFixCommand = checkFixCommand;
+        this.checkFixPackages = checkFixPackages;
+        this.checkFixToolBinaries = checkFixToolBinaries;
         this.runScripts = runScripts;
         this.packageManager = packageManager;
     }
@@ -139,6 +151,61 @@ export class PersistedTypescriptProject {
                   }
               }));
         logger.debug(`[TIMING] installDependencies took ${Date.now() - startTime}ms`);
+    }
+
+    /**
+     * Returns true when every tool binary needed by check:fix is already
+     * available on the system PATH (e.g. globally installed in Docker).
+     * When true, callers can skip installing packages entirely.
+     */
+    public async areCheckFixToolsAvailable(logger: Logger): Promise<boolean> {
+        if (this.checkFixToolBinaries.length === 0) {
+            return true;
+        }
+        const execFileAsync = promisify(execFile);
+        for (const binary of this.checkFixToolBinaries) {
+            try {
+                await execFileAsync("which", [binary]);
+            } catch {
+                logger.debug(`Tool '${binary}' not found on PATH, will install check:fix packages`);
+                return false;
+            }
+        }
+        logger.debug("All check:fix tools available on PATH, skipping install");
+        return true;
+    }
+
+    /**
+     * Installs only the packages required by checkFix (formatter / linter)
+     * instead of the full dependency tree. This is significantly faster for
+     * output modes that only need formatting/linting but not a full build.
+     */
+    public async installCheckFixDependencies(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+        if (this.checkFixPackages.length === 0) {
+            return;
+        }
+
+        const pm = createLoggingExecutable(this.packageManager, {
+            cwd: this.directory,
+            logger
+        });
+
+        const startTime = Date.now();
+        await (this.packageManager === "yarn"
+            ? pm(["add", "--dev", "--ignore-scripts", "--prefer-offline", ...this.checkFixPackages], {
+                  env: {
+                      YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                  }
+              })
+            : pm(["add", "--save-dev", "--ignore-scripts", "--prefer-offline", ...this.checkFixPackages], {
+                  env: {
+                      PNPM_FROZEN_LOCKFILE: "false"
+                  }
+              }));
+        logger.debug(`[TIMING] installCheckFixDependencies took ${Date.now() - startTime}ms`);
     }
 
     public async format(logger: Logger): Promise<void> {

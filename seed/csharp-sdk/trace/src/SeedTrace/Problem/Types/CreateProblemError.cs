@@ -132,12 +132,21 @@ public record CreateProblemError
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property '_type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("_type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "generic" => json.Deserialize<SeedTrace.GenericCreateProblemError?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.GenericCreateProblemError"
-                    ),
+                "generic" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.GenericCreateProblemError?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.GenericCreateProblemError"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new CreateProblemError(discriminator, value);

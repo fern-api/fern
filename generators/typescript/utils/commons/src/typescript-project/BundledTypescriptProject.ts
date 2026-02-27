@@ -255,7 +255,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
                 fs: false,
                 os: false,
                 path: false,
-                stream: false
+                stream: false,
+                crypto: false
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 

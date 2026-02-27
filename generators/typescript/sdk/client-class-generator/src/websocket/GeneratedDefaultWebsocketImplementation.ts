@@ -131,7 +131,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         const statements = this.generateConnectMethodStatements(context);
 
         serviceClass.methods?.push({
-            name: "connect",
+            name: this.channel.connectMethodName ?? "connect",
             scope: Scope.Public,
             isAsync: true,
             parameters: [

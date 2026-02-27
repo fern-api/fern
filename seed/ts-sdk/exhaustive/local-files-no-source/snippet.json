@@ -355,6 +355,17 @@
         },
         {
             "id": {
+                "path": "/params/path/{param}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedExhaustiveClient } from \"./src/Client\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.uploadWithPath(createReadStream(\"path/to/file\"), \"upload-path\");\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/primitive/string",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"

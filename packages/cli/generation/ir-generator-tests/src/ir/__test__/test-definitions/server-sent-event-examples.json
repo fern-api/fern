@@ -1229,7 +1229,7 @@
                                         "type": "sse",
                                         "value": [
                                             {
-                                                "event": "discriminant-1",
+                                                "event": "completion",
                                                 "data": {
                                                     "shape": {
                                                         "type": "named",
@@ -1537,7 +1537,7 @@
                                                 }
                                             },
                                             {
-                                                "event": "discriminant-2",
+                                                "event": "completion",
                                                 "data": {
                                                     "shape": {
                                                         "type": "named",
@@ -2505,11 +2505,340 @@
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "Stream events",
+                                "name": {
+                                    "originalName": "Stream events",
+                                    "camelCase": {
+                                        "unsafeName": "streamEvents",
+                                        "safeName": "streamEvents"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "stream_events",
+                                        "safeName": "stream_events"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "STREAM_EVENTS",
+                                        "safeName": "STREAM_EVENTS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "StreamEvents",
+                                        "safeName": "StreamEvents"
+                                    }
+                                },
+                                "url": "/stream-events",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
+                                                "wireValue": "query"
+                                            },
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "query"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "query"
+                                            },
+                                            "originalTypeDeclaration": null
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "query": "query"
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "sse",
+                                        "value": [
+                                            {
+                                                "event": "completion",
+                                                "data": {
+                                                    "shape": {
+                                                        "type": "named",
+                                                        "typeName": {
+                                                            "typeId": "type_completions:StreamEvent",
+                                                            "fernFilepath": {
+                                                                "allParts": [
+                                                                    {
+                                                                        "originalName": "completions",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "COMPLETIONS",
+                                                                            "safeName": "COMPLETIONS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Completions",
+                                                                            "safeName": "Completions"
+                                                                        }
+                                                                    }
+                                                                ],
+                                                                "packagePath": [],
+                                                                "file": {
+                                                                    "originalName": "completions",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "COMPLETIONS",
+                                                                        "safeName": "COMPLETIONS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Completions",
+                                                                        "safeName": "Completions"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "name": {
+                                                                "originalName": "StreamEvent",
+                                                                "camelCase": {
+                                                                    "unsafeName": "streamEvent",
+                                                                    "safeName": "streamEvent"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "stream_event",
+                                                                    "safeName": "stream_event"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STREAM_EVENT",
+                                                                    "safeName": "STREAM_EVENT"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "StreamEvent",
+                                                                    "safeName": "StreamEvent"
+                                                                }
+                                                            },
+                                                            "displayName": null
+                                                        },
+                                                        "shape": {
+                                                            "type": "union",
+                                                            "discriminant": {
+                                                                "name": {
+                                                                    "originalName": "event",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "event",
+                                                                        "safeName": "event"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "event",
+                                                                        "safeName": "event"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "EVENT",
+                                                                        "safeName": "EVENT"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Event",
+                                                                        "safeName": "Event"
+                                                                    }
+                                                                },
+                                                                "wireValue": "event"
+                                                            },
+                                                            "singleUnionType": {
+                                                                "wireDiscriminantValue": {
+                                                                    "name": {
+                                                                        "originalName": "completion",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "completion",
+                                                                            "safeName": "completion"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "completion",
+                                                                            "safeName": "completion"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "COMPLETION",
+                                                                            "safeName": "COMPLETION"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Completion",
+                                                                            "safeName": "Completion"
+                                                                        }
+                                                                    },
+                                                                    "wireValue": "completion"
+                                                                },
+                                                                "shape": {
+                                                                    "type": "samePropertiesAsObject",
+                                                                    "typeId": "type_completions:CompletionEvent",
+                                                                    "object": {
+                                                                        "properties": [
+                                                                            {
+                                                                                "name": {
+                                                                                    "name": {
+                                                                                        "originalName": "content",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "content",
+                                                                                            "safeName": "content"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "content",
+                                                                                            "safeName": "content"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "CONTENT",
+                                                                                            "safeName": "CONTENT"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "Content",
+                                                                                            "safeName": "Content"
+                                                                                        }
+                                                                                    },
+                                                                                    "wireValue": "content"
+                                                                                },
+                                                                                "value": {
+                                                                                    "shape": {
+                                                                                        "type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "type": "string",
+                                                                                            "string": {
+                                                                                                "original": "content"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "jsonExample": "content"
+                                                                                },
+                                                                                "originalTypeDeclaration": {
+                                                                                    "typeId": "type_completions:CompletionEvent",
+                                                                                    "fernFilepath": {
+                                                                                        "allParts": [
+                                                                                            {
+                                                                                                "originalName": "completions",
+                                                                                                "camelCase": {
+                                                                                                    "unsafeName": "completions",
+                                                                                                    "safeName": "completions"
+                                                                                                },
+                                                                                                "snakeCase": {
+                                                                                                    "unsafeName": "completions",
+                                                                                                    "safeName": "completions"
+                                                                                                },
+                                                                                                "screamingSnakeCase": {
+                                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                                    "safeName": "COMPLETIONS"
+                                                                                                },
+                                                                                                "pascalCase": {
+                                                                                                    "unsafeName": "Completions",
+                                                                                                    "safeName": "Completions"
+                                                                                                }
+                                                                                            }
+                                                                                        ],
+                                                                                        "packagePath": [],
+                                                                                        "file": {
+                                                                                            "originalName": "completions",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "completions",
+                                                                                                "safeName": "completions"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "completions",
+                                                                                                "safeName": "completions"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "COMPLETIONS",
+                                                                                                "safeName": "COMPLETIONS"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "Completions",
+                                                                                                "safeName": "Completions"
+                                                                                            }
+                                                                                        }
+                                                                                    },
+                                                                                    "name": {
+                                                                                        "originalName": "CompletionEvent",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "completionEvent",
+                                                                                            "safeName": "completionEvent"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "completion_event",
+                                                                                            "safeName": "completion_event"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "COMPLETION_EVENT",
+                                                                                            "safeName": "COMPLETION_EVENT"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "CompletionEvent",
+                                                                                            "safeName": "CompletionEvent"
+                                                                                        }
+                                                                                    },
+                                                                                    "displayName": null
+                                                                                },
+                                                                                "propertyAccess": null
+                                                                            }
+                                                                        ],
+                                                                        "extraProperties": null
+                                                                    }
+                                                                }
+                                                            },
+                                                            "baseProperties": [],
+                                                            "extendProperties": []
+                                                        }
+                                                    },
+                                                    "jsonExample": {
+                                                        "event": "completion",
+                                                        "content": "content"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "6bb39347",
+                                "id": "4fa7a81",
                                 "url": "/stream-events",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2808,7 +3137,7 @@
                                                         "content": "content"
                                                     }
                                                 },
-                                                "event": ""
+                                                "event": "completion"
                                             }
                                         ]
                                     }

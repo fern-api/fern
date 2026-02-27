@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.85.3
+- version: 3.91.0
   changelogEntry:
     - summary: |
         Fix `fern check --json` reporting "api" as the API name for all workspaces in
@@ -7,6 +7,297 @@
         "atoms", "unified", "waves") instead of the hardcoded name from `api.yml`.
         Additionally, `fern init` now sets the `api.yml` name to the workspace directory
         name when creating new APIs in multi-API projects.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.9
+  changelogEntry:
+    - summary: |
+        Propagate `explode` field from OpenAPI query parameters through the old importer pipeline
+        (OpenAPI IR → Fern Definition → Fern IR). Previously, `explode: false` on array query
+        parameters was silently dropped, causing generated SDKs to use repeated keys instead of
+        comma-separated values.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.8
+  changelogEntry:
+    - summary: |
+        Treat JSON Schema `const` values as literal types in the IR regardless of the
+        `coerceEnumsToLiterals` setting. Previously, `const` was converted to a single-value
+        enum, which meant generated SDKs (e.g. Python Pydantic models) did not auto-populate
+        a default value for fields that can only ever be one value. Now `const` always produces
+        a literal type, so generators can automatically set the default.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.7
+  changelogEntry:
+    - summary: |
+        Resolve .mdx/.md file path links in OpenAPI descriptions at CLI build time. Previously,
+        markdown links like `[Order](/docs/pages/objects/Order.mdx)` in OpenAPI endpoint and parameter
+        descriptions passed through as raw file paths. Now these links are resolved to proper URL slugs,
+        consistent with how they are already resolved in user-authored markdown pages.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.6
+  changelogEntry:
+    - summary: |
+        Fix schema reference resolution when `respect-readonly-schemas: true` is enabled.
+        Previously, when schemas containing readonly properties were renamed with "Read"
+        suffixes (e.g., `UserConfig` → `UserConfigRead`), other schemas that referenced
+        them would still point to the original names, causing validation failures.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.5
+  changelogEntry:
+    - summary: |
+        Fix per-spec settings being ignored in multi-spec API configurations.
+        When `respect-nullable-schemas` (or other boolean settings) was set on
+        only a subset of specs, the setting was incorrectly collapsed to `false`
+        because `specs.every()` treated unset (`undefined`) the same as
+        explicitly disabled (`false`). Now, specs that don't define a setting
+        are treated as neutral ("don't care") so enabling a setting on a subset
+        of specs works correctly without affecting specs that don't set it.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.4
+  changelogEntry:
+    - summary: |
+        Pass CLI-computed semantic version to Fiddle when creating remote generation
+        jobs. Previously the CLI computed the version via the FDR API but passed the
+        raw user-provided version (typically undefined for AUTO mode) to Fiddle,
+        causing Fiddle to independently re-resolve the version and fall back to an
+        internal counter that produced incorrect low version numbers.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.3
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning missing namespace changes in the git diff. When
+        generated SDK files are copied without `.fernignore` (the
+        `copyGeneratedFilesNoFernIgnorePreservingGit` path), new files created
+        by namespace renames were untracked and invisible to `git diff HEAD`.
+        The diff generator now runs `git add -N .` (intent-to-add) before
+        diffing so that newly created files appear in the diff and are
+        correctly analyzed by the AI as breaking changes.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.2
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer to recognize `format: date-time-rfc-2822` regardless
+        of `typeDatesAsStrings` setting. Previously the check was inside a guard that
+        defaults to `undefined`, so RFC 2822 date fields silently fell through to string.
+      type: fix
+    - summary: |
+        Fix example validation for `DATE_TIME_RFC_2822` fields to accept RFC 2822
+        formatted timestamps (e.g. "Wed, 02 Oct 2002 13:00:00 +0000") instead of
+        rejecting them as invalid ISO 8601.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.1
+  changelogEntry:
+    - summary: |
+        Fix v2 OpenAPI importer support for `format: date-time-rfc-2822` so the CLI
+        emits `DATE_TIME_RFC_2822` instead of falling back to `string`.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.0
+  changelogEntry:
+    - summary: |
+        Add `DATE_TIME_RFC_2822` primitive type to the IR. OpenAPI specs using
+        `format: date-time-rfc-2822` (e.g. Twilio) now produce typed date-time
+        fields instead of plain strings. Generators that do not yet handle the
+        new variant gracefully fall back to `DATE_TIME` behaviour.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.89.2
+  changelogEntry:
+    - summary: |
+        Fix AI example enhancement for multi-spec API definitions. All OpenAPI sources are now combined into a single merged spec, with overrides applied per-spec, so endpoints from any spec are correctly matched during AI enhancement.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.89.1
+  changelogEntry:
+    - summary: |
+        Fix wire test failures for APIs with both JSON and bytes endpoints at the same path.
+        WireMock mappings are no longer generated for bytes request body endpoints, which
+        prevents ambiguous matches that return empty response bodies.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.89.0
+  changelogEntry:
+    - summary: |
+        Added `collapsible` and `collapsed-by-default` support for API reference layout section items in `docs.yml`.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.88.4
+  changelogEntry:
+    - summary: |
+        Fix AsyncAPI v3 channel parameters ignoring their `schema` property, which
+        caused types like `oneOf: [string, string[]]` to be flattened to `string`
+        in generated WebSocket clients.
+      type: fix
+    - summary: |
+        Fix `oneOf: [primitive, array<primitive>]` query parameter detection when
+        the primitive appears before the array in the union, which caused the type
+        to lose its `allow-multiple` representation.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+- version: 3.88.3
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI file upload detection for FastAPI `UploadFile` fields. OpenAPI schemas
+        that use `contentMediaType: application/octet-stream` are now treated as
+        `format: binary` so SDKs generate correct multipart upload code.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+- version: 3.88.2
+  changelogEntry:
+    - summary: |
+        Fix `fern check` validation for SSE streaming endpoints with protocol-level discrimination.
+        Examples for SSE endpoints using `context: protocol` discriminated unions were rejected with
+        "Missing discriminant property" because the validator looked for the discriminant inside the
+        `data` payload instead of recognizing it at the SSE envelope level (`event:` field).
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.88.1
+  changelogEntry:
+    - summary: |
+        Fix boolean default values from OpenAPI specs being sent as strings to FDR,
+        causing docs publish failures. The OpenAPI parser now properly coerces boolean
+        defaults using `getAsBoolean()` instead of an unsafe type assertion.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.88.0
+  changelogEntry:
+    - summary: |
+        Add Replay support for preserving SDK customizations across regenerations.
+        Replay detects user edits via `.fern/replay.lock`, applies them with 3-way
+        merge, and creates PRs with conflict resolution guidance when needed.
+
+        New CLI commands: `fern replay init`, `fern replay status`, `fern replay forget`,
+        `fern replay reset`. New `--no-replay` flag on `fern generate` to skip patch
+        application. Gated behind `replay: { enabled: true }` in `generators.yml`.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 3.87.0
+  changelogEntry:
+    - summary: |
+        Added `collapsible` and `collapsed-by-default` options for `docs.yml` navigation sections/folders, preserving the legacy `collapsed` behavior while adding validation to prevent invalid configurations.
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+
+- version: 3.86.1
+  changelogEntry:
+    - summary: |
+        Fall back to initial version 0.0.1 when AUTO versioning cannot extract
+        the previous version instead of failing the entire generation. This
+        handles new SDK repositories where all files are additions and no
+        previous version lines exist in the diff.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.86.0
+  changelogEntry:
+    - summary: |
+        Add support for `x-fern-sdk-method-name` extension on AsyncAPI WebSocket channels
+        to customize the connection method name in generated SDKs. This field is now
+        available in both AsyncAPI v2 and v3 specifications.
+
+        **AsyncAPI example** — use `x-fern-sdk-method-name` to customize the WebSocket
+        connection method instead of the default "connect":
+
+        ```yaml
+        asyncapi: 3.0.0
+        info:
+          title: Chat API
+          version: 1.0.0
+        channels:
+          /chat:
+            x-fern-sdk-method-name: createChatConnection
+            messages:
+              userMessage:
+                payload:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+        ```
+
+        This generates `client.createChatConnection()` instead of `client.connect()`,
+        avoiding confusing APIs where both wrapper creation and actual connection use "connect".
+      type: feat
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.6
+  changelogEntry:
+    - summary: |
+        Complete document-level `webhook-signature` configuration parsing. Adds validation for webhook
+        signature configs (algorithms, encodings, timestamp settings, JWKS consistency).
+      type: chore
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.5
+  changelogEntry:
+    - summary: |
+        Report broken AsyncAPI V3 message references as visible warnings instead
+        of silently dropping entire specs. When an operation references a
+        non-existent channel or message (e.g. `$ref: "#/channels/auth/messages/authenticate"`
+        when no `auth` channel exists), the parser now logs a warning with the
+        specific broken `$ref` and continues processing the remaining valid
+        messages and channels.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.4
+  changelogEntry:
+    - summary: |
+        Skip compatible IR version validation when running in local development
+        mode (CLI version 0.0.0). This prevents noisy 404 errors from the FDR
+        registry when the CLI version is not a real published release.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 65
+- version: 3.85.3
+  changelogEntry:
+    - summary: |
+        Remove unhelpful "Unable to analyze changes with AI" fallback message from
+        changelog entries when AI analysis fails during AUTO versioning. The changelog
+        now shows just the version header with no body instead.
       type: fix
   createdAt: "2026-02-24"
   irVersion: 65

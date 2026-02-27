@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v63
+irVersion: v65
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -35,6 +35,9 @@ defaultOutputMode: github
 customFixtureConfig:
   customConfig: {}
 fixtures:
+  webhooks:
+    - outputFolder: no-custom-config
+      customConfig: null
   imdb:
     - outputFolder: no-custom-config
       customConfig: null
@@ -461,6 +464,12 @@ fixtures:
     - outputFolder: .
       customConfig:
         customPagerName: "MyPager"
+  cross-package-type-names:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: serde-layer
+      customConfig:
+        noSerdeLayer: false
   ts-extra-properties:
     - outputFolder: .
       customConfig:
@@ -511,17 +520,9 @@ scripts:
             if grep -q '"test":' package.json; then corepack yarn test; fi
           fi
 allowedFailures:
-  - enum:no-custom-config
-  - enum:forward-compatible-enums
+  - cross-package-type-names:serde-layer
   - enum:forward-compatible-enums-with-serde
-  - enum:serde
-  - error-property:no-custom-config
-  - error-property:union-utils
-  - errors
   - exhaustive:never-throw-errors
   - oauth-client-credentials-custom
   - package-yml
-  - server-url-templating
-  - trace:no-custom-config
-  - trace:serde
   - inferred-auth-implicit-reference

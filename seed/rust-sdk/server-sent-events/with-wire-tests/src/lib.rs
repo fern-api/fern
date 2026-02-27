@@ -17,7 +17,7 @@
 //!         .completions
 //!         .stream(
 //!             &StreamCompletionRequest {
-//!                 query: "query".to_string(),
+//!                 query: "foo".to_string(),
 //!             },
 //!             None,
 //!         )

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">getFoo</a>(optionalBaz: String?, optionalNullableBaz: Nullable<String>?, requiredBaz: String, requiredNullableBaz: Nullable<String>, requestOptions: RequestOptions?) -> Foo</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">getFoo</a>(optionalBaz: String?, optionalNullableBaz: Nullable&lt;String&gt;?, requiredBaz: String, requiredNullableBaz: Nullable&lt;String&gt;, requestOptions: RequestOptions?) -> Foo</code></summary>
 <dl>
 <dd>
 

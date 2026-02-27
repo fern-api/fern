@@ -112,3 +112,4 @@ client.imdb.get_movie(movie_id: "movieId")
 </dd>
 </dl>
 </details>
+
