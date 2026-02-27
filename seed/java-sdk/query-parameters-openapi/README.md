@@ -133,6 +133,12 @@ public class Example {
                 .filter(
                     Arrays.asList("filter")
                 )
+                .tags(
+                    Arrays.asList("tags")
+                )
+                .optionalTags(
+                    Arrays.asList("optionalTags")
+                )
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .keyValue(
                     new HashMap<String, String>() {{
