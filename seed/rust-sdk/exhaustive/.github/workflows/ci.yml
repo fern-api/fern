@@ -6,11 +6,11 @@ env:
   RUSTFLAGS: "-A warnings"
 
 jobs:
-  ci:
+  check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -18,8 +18,26 @@ jobs:
       - name: Check
         run: cargo check
 
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
       - name: Compile
         run: cargo build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Setup WireMock server
         run: |
@@ -39,12 +57,12 @@ jobs:
           fi
 
   publish:
-    needs: [ci]
+    needs: [check, compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1

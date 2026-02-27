@@ -3,12 +3,12 @@ name: ci
 on: [push, pull_request]
 
 jobs:
-  ci:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -21,13 +21,28 @@ jobs:
       - name: Run Rubocop
         run: bundle exec rubocop
 
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
+      - name: Install dependencies
+        run: bundle install
+
       - name: Run Tests
         run: bundle exec rake test
 
   publish:
     name: Publish to RubyGems.org
     runs-on: ubuntu-latest
-    needs: [ci]
+    needs: [lint, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
 
     permissions:
@@ -36,7 +51,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

@@ -3,12 +3,12 @@ name: ci
 on: [push]
 
 jobs:
-  ci:
+  compile:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -26,6 +26,22 @@ jobs:
       - name: Analyze
         run: |
           composer analyze
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+
+      - name: Install tools
+        run: |
+          composer install
 
       - name: Run Tests
         run: |

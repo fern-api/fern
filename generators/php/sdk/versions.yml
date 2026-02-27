@@ -1,13 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.1.5
-  changelogEntry:
-    - summary: |
-        Modernize generated CI workflow: consolidate compile and test into a
-        single job and update actions/checkout to v6.
-      type: chore
-  createdAt: "2026-02-27"
-  irVersion: 62
-
 - version: 2.1.4
   changelogEntry:
     - summary: |
