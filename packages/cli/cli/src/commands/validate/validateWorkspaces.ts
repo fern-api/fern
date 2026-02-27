@@ -1,13 +1,12 @@
+import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
-
 import { CliContext } from "../../cli-context/CliContext.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
-import { collectAPIWorkspaceViolations } from "./validateAPIWorkspaceAndLogIssues.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
 
 export async function validateWorkspaces({

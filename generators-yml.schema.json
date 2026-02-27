@@ -764,19 +764,6 @@
     "generators.APIDefinitionPathSchema": {
       "type": "string"
     },
-    "generators.OverridesSchema": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      ]
-    },
     "generators.UnionSettingsSchema": {
       "type": "string",
       "enum": [
@@ -949,7 +936,7 @@
         "overrides": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.OverridesSchema"
+              "type": "string"
             },
             {
               "type": "null"
@@ -1004,7 +991,7 @@
         "overrides": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.OverridesSchema"
+              "type": "string"
             },
             {
               "type": "null"
@@ -2172,7 +2159,7 @@
         "overrides": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.OverridesSchema"
+              "type": "string"
             },
             {
               "type": "null"
@@ -2360,7 +2347,7 @@
         "overrides": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.OverridesSchema"
+              "type": "string"
             },
             {
               "type": "null"
@@ -2414,7 +2401,7 @@
         "overrides": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.OverridesSchema"
+              "type": "string"
             },
             {
               "type": "null"
