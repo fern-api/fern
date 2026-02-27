@@ -63,6 +63,7 @@ describe("loadRawGeneratorsConfiguration", () => {
                 disable: () => undefined,
                 enable: () => undefined,
                 log: () => undefined,
+                trace: () => undefined,
                 debug: () => undefined,
                 info: () => undefined,
                 warn: () => undefined,
