@@ -178,9 +178,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
 
     public toFernWorkspace(
         { context }: { context: TaskContext },
-        settings?: BaseOpenAPIWorkspace.Settings,
-        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
-        generatorOverrides?: generatorsYml.OverridesSchema
+        settings?: BaseOpenAPIWorkspace.Settings
     ): FernWorkspace {
         const definition = this.getDefinition({ context }, settings);
         return new FernWorkspace({

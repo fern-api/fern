@@ -533,7 +533,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
-    protected async convertSpecsOverrideToSpecs(
+    private async convertSpecsOverrideToSpecs(
         specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<Spec[]> {
         // Handle conjure schema case
@@ -546,28 +546,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
                 const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
-                // Handle both single override path and array of override paths
-                let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
-                const specOverridePaths: AbsoluteFilePath[] = [];
-
-                // Add spec-level overrides
-                if (spec.overrides != null) {
-                    if (Array.isArray(spec.overrides)) {
-                        specOverridePaths.push(
-                            ...spec.overrides.map((override) =>
-                                join(this.absoluteFilePath, RelativeFilePath.of(override))
-                            )
-                        );
-                    } else {
-                        specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides)));
-                    }
-                }
-
-                // Set the final overrides array
-                if (specOverridePaths.length > 0) {
-                    absoluteFilepathToOverrides =
-                        specOverridePaths.length === 1 ? specOverridePaths[0] : specOverridePaths;
-                }
+                const absoluteFilepathToOverrides = spec.overrides
+                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides))
+                    : undefined;
                 const absoluteFilepathToOverlays = spec.overlays
                     ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
                     : undefined;
@@ -603,17 +584,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return [
             this.absoluteFilePath,
             ...this.allSpecs
-                .flatMap((spec) => {
-                    const mainPath =
-                        spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath;
-                    // Handle both single override path and array of override paths
-                    const overridePaths = Array.isArray(spec.absoluteFilepathToOverrides)
-                        ? spec.absoluteFilepathToOverrides
-                        : spec.absoluteFilepathToOverrides != null
-                          ? [spec.absoluteFilepathToOverrides]
-                          : [];
-                    return [mainPath, ...overridePaths];
-                })
+                .flatMap((spec) => [
+                    spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
+                    spec.absoluteFilepathToOverrides
+                ])
                 .filter(isNonNullish)
         ];
     }

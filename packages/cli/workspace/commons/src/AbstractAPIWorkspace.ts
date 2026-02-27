@@ -67,8 +67,7 @@ export abstract class AbstractAPIWorkspace<Settings> {
     public abstract toFernWorkspace(
         { context }: { context: TaskContext },
         settings?: Settings,
-        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
-        generatorOverrides?: generatorsYml.OverridesSchema
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<FernWorkspace>;
 
     /**
@@ -112,8 +111,7 @@ export abstract class AbstractAPIWorkspaceSync<Settings> {
     public abstract toFernWorkspace(
         { context }: { context: TaskContext },
         settings?: Settings,
-        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
-        generatorOverrides?: generatorsYml.OverridesSchema
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): FernWorkspace;
 
     /**
