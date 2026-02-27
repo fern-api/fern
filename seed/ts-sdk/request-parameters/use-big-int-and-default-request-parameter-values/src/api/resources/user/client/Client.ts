@@ -47,7 +47,7 @@ export class UserClient {
     ): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
-            tags: toJson(tags),
+            tags,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -110,7 +110,7 @@ export class UserClient {
     ): Promise<core.WithRawResponse<void>> {
         const { tags, body: _body } = request;
         const _queryParams: Record<string, unknown> = {
-            tags: toJson(tags),
+            tags,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
@@ -281,7 +281,7 @@ export class UserClient {
             deadline,
             bytes,
             user,
-            userList: toJson(userList),
+            userList,
             optionalDeadline: optionalDeadline != null ? optionalDeadline : undefined,
             keyValue: toJson(keyValue),
             optionalString,

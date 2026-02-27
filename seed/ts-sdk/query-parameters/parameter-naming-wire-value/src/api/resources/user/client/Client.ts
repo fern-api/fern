@@ -101,7 +101,7 @@ export class UserClient {
             deadline,
             bytes,
             user,
-            userList: toJson(userList),
+            userList,
             optionalDeadline: optionalDeadline != null ? optionalDeadline : undefined,
             keyValue: toJson(keyValue),
             optionalString,

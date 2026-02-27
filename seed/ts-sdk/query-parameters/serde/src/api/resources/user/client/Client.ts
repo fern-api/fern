@@ -108,7 +108,17 @@ export class UserClient {
                 omitUndefined: true,
                 breadcrumbsPrefix: ["request", "user"],
             }),
-            userList: toJson(userList),
+            userList: await Promise.all(
+                userList.map(async (item) =>
+                    serializers.User.jsonOrThrow(item, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        omitUndefined: true,
+                        breadcrumbsPrefix: ["request", "userList"],
+                    }),
+                ),
+            ),
             optionalDeadline: optionalDeadline != null ? optionalDeadline?.toISOString() : undefined,
             keyValue: toJson(keyValue),
             optionalString,
