@@ -81,10 +81,13 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
 
         // Check if this endpointId was already expanded into suffixed keys
         if (fileExpanded != null && fileExpanded.has(endpointId)) {
-            // Already expanded — directly compute the suffixed key for this new endpoint
+            // Already expanded — only suffix if this new endpoint also has disjoint audiences.
+            // An endpoint with no audiences (wildcard) overlaps with everything, so it should
+            // not be suffixed.
             const newAudiences = convertedEndpoint.value.audiences ?? [];
-            const newAudSuffix = newAudiences.length > 0 ? newAudiences.join("_") : "default";
-            resolvedEndpointId = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${newAudSuffix}`;
+            if (newAudiences.length > 0) {
+                resolvedEndpointId = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${newAudiences.join("_")}`;
+            }
         } else if (fileEndpoints != null && fileEndpoints.has(endpointId)) {
             const existingSchema = fileEndpoints.get(endpointId);
             if (

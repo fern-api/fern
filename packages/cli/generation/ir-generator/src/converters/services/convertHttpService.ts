@@ -66,6 +66,10 @@ function getOriginalMethodName(endpointKey: string, endpoint: RawSchemas.HttpEnd
     if (audiences.length > 0 && suffix === audiences.join("_")) {
         return endpointKey.substring(0, separatorIndex);
     }
+    // Defensive: also strip the "default" suffix used for empty-audience endpoints
+    if (suffix === "default" && audiences.length === 0) {
+        return endpointKey.substring(0, separatorIndex);
+    }
     return endpointKey;
 }
 
