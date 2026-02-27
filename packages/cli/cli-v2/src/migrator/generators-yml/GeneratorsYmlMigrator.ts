@@ -63,8 +63,8 @@ export class GeneratorsYmlMigrator {
             };
         }
 
+        const content = await readFile(absoluteFilePath, "utf-8");
         try {
-            const content = await readFile(absoluteFilePath, "utf-8");
             const config = yaml.load(content) as generatorsYml.GeneratorsConfigurationSchema;
 
             if (config == null || typeof config !== "object") {
@@ -115,7 +115,20 @@ export class GeneratorsYmlMigrator {
                 absoluteFilePath
             };
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
+            let message = error instanceof Error ? error.message : String(error);
+
+            // Check if the error is likely caused by an unquoted value starting with @
+            // (e.g. scoped npm packages like @scope/package)
+            if (error instanceof yaml.YAMLException && error.mark != null) {
+                const lines = content.split("\n");
+                const errorLine = lines[error.mark.line];
+                if (errorLine != null && /:\s+@/.test(errorLine)) {
+                    message +=
+                        '\n\nHint: Values starting with "@" (such as scoped npm packages) must be wrapped in quotes.' +
+                        '\n  Example: package-name: "@scope/package"';
+                }
+            }
+
             return {
                 success: false,
                 warnings: [

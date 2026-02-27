@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.2
+  changelogEntry:
+    - summary: |
+        Improve YAML parsing error message when scoped npm package names (e.g.
+        `@scope/package`) are used without quotes in `generators.yml`. The `@`
+        character is a reserved YAML anchor symbol, so unquoted values like
+        `package-name: @fixa-dev/server` produce a confusing "bad indentation"
+        error. The CLI now detects this pattern and shows a hint suggesting the
+        value be wrapped in double quotes.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.1
   changelogEntry:
     - summary: |

@@ -52,6 +52,17 @@ export async function loadRawGeneratorsConfiguration({
                 }
             }
 
+            // Check if the error is likely caused by an unquoted value starting with @
+            // (e.g. scoped npm packages like @scope/package)
+            const fileContent = contentsStr.toString();
+            const lines = fileContent.split("\n");
+            const errorLine = e.mark != null ? lines[e.mark.line] : undefined;
+            if (errorLine != null && /:\s+@/.test(errorLine)) {
+                errorMessage +=
+                    '\n\nHint: Values starting with "@" (such as scoped npm packages) must be wrapped in quotes.' +
+                    '\n  Example: package-name: "@scope/package"';
+            }
+
             context.failAndThrow(errorMessage);
         } else {
             throw e;
