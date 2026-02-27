@@ -2212,7 +2212,6 @@ function isPaginationResultsPathMissingInExample({
     return cursor === undefined;
 }
 
-
 /**
  * Extracts a property value from a JSON object by following a property path.
  * Used for walking response/request JSON examples using wire values.
@@ -2265,9 +2264,7 @@ function getRequestPropertyValueFromExample(
         return value;
     } else if (propValue.type === "query") {
         // Query parameter - find matching query param in example
-        const queryParam = example.queryParameters.find(
-            (qp) => qp.name.wireValue === propValue.name.wireValue
-        );
+        const queryParam = example.queryParameters.find((qp) => qp.name.wireValue === propValue.name.wireValue);
         return queryParam?.value.jsonExample;
     }
     return undefined;
