@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SeedTrace.Core;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
@@ -28,9 +28,6 @@ public class GetHomepageProblemsTest : BaseMockServerTest
             );
 
         var response = await Client.Homepage.GetHomepageProblemsAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<string>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

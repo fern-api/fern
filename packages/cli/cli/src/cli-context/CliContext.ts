@@ -9,6 +9,7 @@ import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 import { CliEnvironment } from "./CliEnvironment.js";
+import { StdoutRedirector } from "./StdoutRedirector.js";
 import { TaskContextImpl } from "./TaskContextImpl.js";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage.js";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions.js";
@@ -36,6 +37,8 @@ export class CliContext {
 
     private logLevel: LogLevel = LogLevel.Info;
     private isLocal: boolean;
+    private readonly stdoutRedirector = new StdoutRedirector();
+    private jsonMode = false;
 
     constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
         this.ttyAwareLogger = new TtyAwareLogger(stdout, stderr);
@@ -95,6 +98,36 @@ export class CliContext {
     public failWithoutThrowing(message?: string, error?: unknown): void {
         this.didSucceed = false;
         logErrorMessage({ message, error, logger: this.logger });
+    }
+
+    /**
+     * Activate JSON-output mode: all logger output is forced to stderr
+     * and process.stdout is redirected to stderr as a safety net for
+     * third-party code. Call this as early as possible (e.g. in yargs
+     * middleware) so that even pre-command logs stay off stdout.
+     */
+    public enableJsonMode(): void {
+        if (this.jsonMode) {
+            return;
+        }
+        this.jsonMode = true;
+        this.stdoutRedirector.redirect();
+    }
+
+    public get isJsonMode(): boolean {
+        return this.jsonMode;
+    }
+
+    /**
+     * Write a value as formatted JSON to stdout.
+     * Temporarily restores the real stdout, writes, then re-redirects.
+     */
+    public writeJsonToStdout(value: unknown): void {
+        this.stdoutRedirector.restore();
+        process.stdout.write(JSON.stringify(value, null, 2) + "\n");
+        if (this.jsonMode) {
+            this.stdoutRedirector.redirect();
+        }
     }
 
     public async exit({ code }: { code?: number } = {}): Promise<never> {
@@ -276,7 +309,7 @@ export class CliContext {
         const filtered = logs.filter((log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel));
         this.ttyAwareLogger.log(filtered, {
             includeDebugInfo: this.logLevel === LogLevel.Debug,
-            stderr
+            stderr: stderr || this.jsonMode
         });
     }
 

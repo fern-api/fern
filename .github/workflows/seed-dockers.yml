@@ -55,7 +55,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 200
+          fetch-depth: 2
+          fetch-tags: false
 
       - name: Check for ts changes
         id: ts

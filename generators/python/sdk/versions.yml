@@ -1,5 +1,73 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.61.2
+  changelogEntry:
+    - summary: |
+        Re-add `@fern-api/generator-cli` to Python SDK Docker image. The CLI was inadvertently
+        removed in 4.60.1 when JS-based generators migrated to using the generator-cli JS API
+        directly. The Python generator still relies on the CLI binary via subprocess for
+        README.md and reference.md generation.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 4.61.1
+  changelogEntry:
+    - summary: |
+        Fix `positional_single_property_constructors` breaking pydantic response deserialization.
+        The custom `__init__` now uses `@typing.overload` with a permissive `*args, **kwargs` runtime
+        signature, so pydantic can pass alias-keyed data freely during deserialization while still
+        allowing positional construction like `Wrapper("value")`.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 4.61.0
+  changelogEntry:
+    - summary: |
+        Add support for `DATE_TIME_RFC_2822` primitive type. Fields with `format: date-time-rfc-2822`
+        in OpenAPI specs now generate as `Rfc2822DateTime` (a `datetime.datetime` subclass) that
+        parses RFC 2822 date strings (e.g., "Wed, 02 Oct 2002 13:00:00 GMT") using Python's
+        `email.utils.parsedate_to_datetime`. Compatible with both Pydantic V1 (`__get_validators__`)
+        and V2 (`__get_pydantic_core_schema__`), passing mypy strict type checking.
+      type: feat
+    - summary: |
+        Fix code snippet generation for RFC 2822 datetime fields to use
+        `email.utils.parsedate_to_datetime()` with RFC 2822 format strings instead of
+        `datetime.fromisoformat()` with ISO 8601 format.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 4.60.2
+  changelogEntry:
+    - summary: |
+        Fix `explode: false` query parameter serialization for array types. When an OpenAPI spec
+        sets `explode: false` on an array query parameter, the generated SDK now serializes values
+        as comma-separated strings (e.g. `tags=A,B,C`) instead of repeated keys (e.g. `tags=A&tags=B&tags=C`).
+        This applies to both regular and streaming endpoints.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 4.60.1
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 4.60.0
+  changelogEntry:
+    - summary: |
+        Support `connectMethodName` on WebSocket channels. When a channel specifies a custom
+        connection method name via `x-fern-sdk-method-name`, the generated SDK uses that name
+        (converted to snake_case) instead of the default `connect`.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
 - version: 4.59.4
   changelogEntry:
     - summary: |

@@ -149,7 +149,12 @@ function convertResolvedResponse({
             const resolvedSchema = isReferenceObject(mediaObject.schema)
                 ? context.resolveSchemaReference(mediaObject.schema)
                 : mediaObject.schema;
-            return resolvedSchema.type === "string" && resolvedSchema.format === "binary";
+            return (
+                resolvedSchema.type === "string" &&
+                (resolvedSchema.format === "binary" ||
+                    (resolvedSchema.format == null &&
+                        (resolvedSchema as Record<string, unknown>).contentMediaType === "application/octet-stream"))
+            );
         });
         if (binaryContent) {
             if (context.options.useBytesForBinaryResponse && streamFormat == null) {
@@ -286,7 +291,7 @@ function convertResolvedResponse({
             return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
         }
 
-        if (mimeType.isPlainText()) {
+        if (mimeType.isText() && !mediaType.includes("event-stream")) {
             const textPlainSchema = mediaObject.schema;
             if (textPlainSchema == null) {
                 return ResponseWithExample.text({ description: resolvedResponse.description, source, statusCode });

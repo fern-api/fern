@@ -306,3 +306,4 @@ client.Simple.GetSomething(
 </dd>
 </dl>
 </details>
+

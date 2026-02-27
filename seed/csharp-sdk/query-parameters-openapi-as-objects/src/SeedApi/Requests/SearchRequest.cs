@@ -49,6 +49,18 @@ public record SearchRequest
     [JsonIgnore]
     public IEnumerable<string> Filter { get; set; } = new List<string>();
 
+    /// <summary>
+    /// List of tags. Serialized as a comma-separated list.
+    /// </summary>
+    [JsonIgnore]
+    public IEnumerable<string> Tags { get; set; } = new List<string>();
+
+    /// <summary>
+    /// Optional list of tags. Serialized as a comma-separated list.
+    /// </summary>
+    [JsonIgnore]
+    public IEnumerable<string> OptionalTags { get; set; } = new List<string>();
+
     [JsonIgnore]
     public OneOf<User, NestedUser, string, int>? Neighbor { get; set; }
 

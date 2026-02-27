@@ -119,3 +119,4 @@ await client.Simple.FooWithExamplesAsync(new FooRequest { Bar = "hello" });
 </dd>
 </dl>
 </details>
+

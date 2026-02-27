@@ -44,6 +44,7 @@ interface ResponseHeaderStage extends ResponseBodyStage, BuildStage {
 
 interface ResponseBodyStage {
     jsonBody(body: unknown): BuildStage;
+    sseBody(body: string): BuildStage;
 }
 
 interface BuildStage {
@@ -198,6 +199,12 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
             throw new Error("Undefined is not valid JSON. Do not call jsonBody if you expect an empty body.");
         }
         this.responseBody = toJson(body);
+        return this;
+    }
+
+    public sseBody(body: string): BuildStage {
+        this.responseHeaders["Content-Type"] = "text/event-stream";
+        this.responseBody = body;
         return this;
     }
 

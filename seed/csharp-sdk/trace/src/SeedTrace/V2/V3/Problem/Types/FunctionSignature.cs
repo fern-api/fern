@@ -233,18 +233,30 @@ public record FunctionSignature
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "void" => json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignature?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.V3.VoidFunctionSignature"
-                    ),
-                "nonVoid" => json.Deserialize<SeedTrace.V2.V3.NonVoidFunctionSignature?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.V3.NonVoidFunctionSignature"
-                    ),
+                "void" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.VoidFunctionSignature?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.V3.VoidFunctionSignature"
+                        ),
+                "nonVoid" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.NonVoidFunctionSignature?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.V3.NonVoidFunctionSignature"
+                        ),
                 "voidThatTakesActualResult" =>
-                    json.Deserialize<SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult?>(
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.VoidFunctionSignatureThatTakesActualResult?>(
                         options
                     )
                         ?? throw new JsonException(

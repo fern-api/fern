@@ -1032,6 +1032,32 @@ describe("${serviceName}", () => {
             // remove error examples because we don't have time to implement them properly right now
             examples = examples.filter((example) => example.response.type === "ok");
         }
+        // Skip error examples whose status code is already handled by a prior error in the endpoint's
+        // error list. The code generator deduplicates errors by status code (keeping the first), so
+        // tests for shadowed errors would expect the wrong error type.
+        // This only applies to status-code discrimination; property-discriminated errors use the
+        // discriminant value (not status code) and don't deduplicate.
+        if (this.ir.errorDiscriminationStrategy.type === "statusCode") {
+            const firstErrorIdByStatusCode = new Map<number, string>();
+            for (const responseError of endpoint.errors) {
+                const errorDecl = this.ir.errors[responseError.error.errorId];
+                if (errorDecl != null && !firstErrorIdByStatusCode.has(errorDecl.statusCode)) {
+                    firstErrorIdByStatusCode.set(errorDecl.statusCode, responseError.error.errorId);
+                }
+            }
+            examples = examples.filter((example) => {
+                if (example.response.type !== "error") {
+                    return true;
+                }
+                const exampleErrorId = example.response.error.errorId;
+                const errorDecl = this.ir.errors[exampleErrorId];
+                if (errorDecl == null) {
+                    return true;
+                }
+                const firstId = firstErrorIdByStatusCode.get(errorDecl.statusCode);
+                return firstId === exampleErrorId;
+            });
+        }
         if (examples.length === 0) {
             return [];
         }
@@ -1657,6 +1683,26 @@ describe("${serviceName}", () => {
                 });
             },
             error: (value) => {
+                // For property-discriminated errors, the mock response body must include
+                // the discriminant property (e.g., errorName) so the generated switch
+                // statement can match the correct error case. The generated client code
+                // checks body?.errorName then passes the full body to the serializer,
+                // so the discriminant must be at the same level as the error content.
+                if (this.ir.errorDiscriminationStrategy.type === "property") {
+                    const discriminantWireValue = this.ir.errorDiscriminationStrategy.discriminant.wireValue;
+                    const errorDecl = this.ir.errors[value.error.errorId];
+                    const errorName = errorDecl?.discriminantValue.wireValue ?? value.error.name.originalName;
+                    if (!value.body) {
+                        return code`{ ${literalOf(discriminantWireValue)}: ${literalOf(errorName)} }`;
+                    }
+                    const bodyCode = createRawJsonExample({
+                        example: value.body,
+                        isForRequest: false,
+                        isForResponse: true
+                    });
+                    return code`{ ${literalOf(discriminantWireValue)}: ${literalOf(errorName)}, ...${bodyCode} }`;
+                }
+
                 if (!value.body) {
                     return undefined;
                 }
