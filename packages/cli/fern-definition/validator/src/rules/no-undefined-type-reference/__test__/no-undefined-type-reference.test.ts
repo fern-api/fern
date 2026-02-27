@@ -19,54 +19,63 @@ describe("no-undefined-type-reference", () => {
                 message: "File response cannot be optional",
                 nodePath: ["service", "endpoints", "downloadFileOptional", "response"],
                 relativeFilepath: RelativeFilePath.of("file-download.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             },
             {
                 message: "The file type can only be used as properties in inlined requests.",
                 nodePath: ["types", "FileAlias"],
                 relativeFilepath: RelativeFilePath.of("file-upload.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             },
             {
                 message: "The file type can only be used as properties in inlined requests.",
                 nodePath: ["service", "endpoints", "noProperties", "request", "body"],
                 relativeFilepath: RelativeFilePath.of("file-upload.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             },
             {
                 message: "Type MissingType is not defined.",
                 nodePath: ["types", "MyType"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             },
             {
                 message: "Type MissingType is not defined.",
                 nodePath: ["types", "MyListType"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             },
             {
                 message: "Type commons.MissingType is not defined.",
                 nodePath: ["types", "MyListType2"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             },
             {
                 message: "Type nonExistentFile.MissingType is not defined.",
                 nodePath: ["types", "MyListType3"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             },
             {
                 message: "Type commons.DoesNotExist is not defined.",
                 nodePath: ["types", "ImportedType"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             },
             {
                 message: "The text type can only be used as a response-stream or response.",
                 nodePath: ["types", "ListOfText"],
                 relativeFilepath: RelativeFilePath.of("text.yml"),
+                name: "no-undefined-type-reference",
                 severity: "fatal"
             }
         ]);

@@ -19,12 +19,14 @@ describe("no-duplicate-example-names", () => {
                 message: "Duplicate example name: Example2",
                 nodePath: ["types", "MyObject"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
+                name: "no-duplicate-example-names",
                 severity: "fatal"
             },
             {
                 message: "Duplicate example name: Example2",
                 nodePath: ["service", "endpoints", "get"],
                 relativeFilepath: RelativeFilePath.of("1.yml"),
+                name: "no-duplicate-example-names",
                 severity: "fatal"
             }
         ]);
