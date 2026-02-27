@@ -1,14 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.93.2
+- version: 3.93.3
   changelogEntry:
     - summary: |
-        Improve error message when publishing docs to a domain already claimed by another
-        organization. The CLI now surfaces the specific domain name instead of a generic
-        permission error.
+        Surface specific domain name in error when publishing docs to a domain claimed by another org.
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
 
+- version: 3.93.2
+  changelogEntry:
+    - summary: |
+        Update AI example enhancement to use fdr-lambda endpoint.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 65
 - version: 3.93.1
   changelogEntry:
     - summary: |
