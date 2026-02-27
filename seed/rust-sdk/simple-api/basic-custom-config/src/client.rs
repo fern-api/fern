@@ -1,4 +1,4 @@
-use crate::api::resources::{{CLIENT_NAME}};
+use crate::api::resources::CustomSimpleClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -109,8 +109,8 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<{{CLIENT_NAME}}, ApiError> {
-        {{CLIENT_NAME}}::new(self.config)
+    pub fn build(self) -> Result<CustomSimpleClient, ApiError> {
+        CustomSimpleClient::new(self.config)
     }
 }
 
@@ -162,16 +162,16 @@ mod tests {
 
     #[test]
     fn test_oauth_credentials() {
-        let builder = ApiClientBuilder::new("https://api.example.com")
-            .oauth_credentials("cid", "secret");
+        let builder =
+            ApiClientBuilder::new("https://api.example.com").oauth_credentials("cid", "secret");
         assert_eq!(builder.config.client_id, Some("cid".to_string()));
         assert_eq!(builder.config.client_secret, Some("secret".to_string()));
     }
 
     #[test]
     fn test_timeout() {
-        let builder = ApiClientBuilder::new("https://api.example.com")
-            .timeout(Duration::from_secs(120));
+        let builder =
+            ApiClientBuilder::new("https://api.example.com").timeout(Duration::from_secs(120));
         assert_eq!(builder.config.timeout, Duration::from_secs(120));
     }
 
@@ -183,8 +183,8 @@ mod tests {
 
     #[test]
     fn test_custom_header() {
-        let builder = ApiClientBuilder::new("https://api.example.com")
-            .custom_header("X-Custom", "value");
+        let builder =
+            ApiClientBuilder::new("https://api.example.com").custom_header("X-Custom", "value");
         assert_eq!(
             builder.config.custom_headers.get("X-Custom"),
             Some(&"value".to_string())
@@ -196,8 +196,7 @@ mod tests {
         let mut headers = HashMap::new();
         headers.insert("X-One".to_string(), "1".to_string());
         headers.insert("X-Two".to_string(), "2".to_string());
-        let builder = ApiClientBuilder::new("https://api.example.com")
-            .custom_headers(headers);
+        let builder = ApiClientBuilder::new("https://api.example.com").custom_headers(headers);
         assert_eq!(
             builder.config.custom_headers.get("X-One"),
             Some(&"1".to_string())
@@ -210,8 +209,7 @@ mod tests {
 
     #[test]
     fn test_user_agent() {
-        let builder = ApiClientBuilder::new("https://api.example.com")
-            .user_agent("my-sdk/1.0");
+        let builder = ApiClientBuilder::new("https://api.example.com").user_agent("my-sdk/1.0");
         assert_eq!(builder.config.user_agent, "my-sdk/1.0");
     }
 
