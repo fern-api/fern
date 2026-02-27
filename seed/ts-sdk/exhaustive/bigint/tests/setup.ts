@@ -1,4 +1,3 @@
-
 expect.extend({
     toContainHeaders(this: jest.MatcherContext, actual: unknown, expectedHeaders: Record<string, string>) {
         const isHeaders = actual instanceof Headers;
@@ -17,7 +16,7 @@ expect.extend({
 
         // Create a map of lowercase header keys to actual values for case-insensitive lookup
         const actualHeadersMap = new Map<string, string>();
-        
+
         if (isHeaders) {
             for (const [key, value] of (actual as Headers).entries()) {
                 actualHeadersMap.set(key.toLowerCase(), value);
@@ -86,4 +85,3 @@ declare global {
 }
 
 export {};
-
