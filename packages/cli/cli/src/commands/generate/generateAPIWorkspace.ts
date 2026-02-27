@@ -1,3 +1,4 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
@@ -91,13 +92,14 @@ export async function generateWorkspace({
         return context.failAndThrow("Please run fern login");
     }
 
-    // Validate workspace once before running all groups
-    await validateAPIWorkspaceAndLogIssues({
-        workspace: await workspace.toFernWorkspace({ context }),
-        context,
-        logWarnings: false,
-        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
-    });
+    const validateWorkspace = async (fernWorkspace: FernWorkspace): Promise<void> => {
+        await validateAPIWorkspaceAndLogIssues({
+            workspace: fernWorkspace,
+            context,
+            logWarnings: false,
+            ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+        });
+    };
 
     // Run generation for all resolved groups in parallel
     await Promise.all(
@@ -145,7 +147,8 @@ export async function generateWorkspace({
                     inspect,
                     ai,
                     replay,
-                    noReplay
+                    noReplay,
+                    validateWorkspace
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -161,7 +164,8 @@ export async function generateWorkspace({
                     absolutePathToPreview,
                     mode,
                     fernignorePath,
-                    dynamicIrOnly
+                    dynamicIrOnly,
+                    validateWorkspace
                 });
             }
         })

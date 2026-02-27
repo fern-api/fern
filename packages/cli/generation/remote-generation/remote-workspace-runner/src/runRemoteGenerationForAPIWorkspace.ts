@@ -1,3 +1,4 @@
+import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -29,7 +30,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview,
     mode,
     fernignorePath,
-    dynamicIrOnly
+    dynamicIrOnly,
+    validateWorkspace
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -44,6 +46,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
+    validateWorkspace?: (workspace: FernWorkspace) => Promise<void>;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -63,6 +66,10 @@ export async function runRemoteGenerationForAPIWorkspace({
                     settings,
                     generatorInvocation.apiOverride?.specs
                 );
+
+                if (validateWorkspace != null) {
+                    await validateWorkspace(fernWorkspace);
+                }
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,

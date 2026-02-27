@@ -1,4 +1,4 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import { computeSemanticVersion, FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
@@ -37,7 +37,8 @@ export async function runLocalGenerationForWorkspace({
     runner,
     ai,
     replay,
-    noReplay
+    noReplay,
+    validateWorkspace
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -52,6 +53,7 @@ export async function runLocalGenerationForWorkspace({
     ai: generatorsYml.AiServicesSchema | undefined;
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
+    validateWorkspace?: (workspace: FernWorkspace) => Promise<void>;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -66,6 +68,10 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
                     generatorInvocation.apiOverride?.specs
                 );
+
+                if (validateWorkspace != null) {
+                    await validateWorkspace(fernWorkspace);
+                }
 
                 const dynamicGeneratorConfig = getDynamicGeneratorConfig({
                     apiName: fernWorkspace.definition.rootApiFile.contents.name,
