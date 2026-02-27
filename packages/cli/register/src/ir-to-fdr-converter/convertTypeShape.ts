@@ -214,9 +214,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): F
                         return convertInteger(primitive.v2);
                     },
                     float: () => {
-                        // TODO: Add support for float types in FDR. We render them as double for now
-                        // (they have the same JSON representation).
-                        return convertDouble(primitive.v2);
+                        return convertFloat(primitive.v2);
                     },
                     double: () => {
                         return convertDouble(primitive.v2);
@@ -332,6 +330,17 @@ function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api
         multipleOf: rules?.multipleOf,
         default: primitive != null && primitive.type === "double" ? primitive.default : undefined
     };
+}
+
+function convertFloat(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
+    const rules: Ir.FloatValidationRules | undefined =
+        primitive != null && primitive.type === "float" ? primitive.validation : undefined;
+    return {
+        type: "float",
+        minimum: rules?.exclusiveMin === true ? undefined : rules?.min,
+        maximum: rules?.exclusiveMax === true ? undefined : rules?.max,
+        default: primitive != null && primitive.type === "float" ? primitive.default : undefined
+    } as FdrCjsSdk.api.v1.register.PrimitiveType;
 }
 
 function convertLong(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {

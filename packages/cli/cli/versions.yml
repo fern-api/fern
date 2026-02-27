@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.92.0
+  changelogEntry:
+    - summary: |
+        Pass `float` primitive type through to FDR instead of collapsing it to `double`.
+        OpenAPI specs with `type: number, format: float` now render as "float" in Fern Docs
+        instead of incorrectly showing "double".
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.1
   changelogEntry:
     - summary: |
