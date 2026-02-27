@@ -10,8 +10,17 @@ class OneRequiredOneOptional(UniversalBaseModel):
     required_field: str
     optional_field: typing.Optional[str] = None
 
-    def __init__(self, required_field: str, **kwargs: typing.Any) -> None:
-        super().__init__(required_field=required_field, **kwargs)
+    @typing.overload
+    def __init__(self, required_field: str) -> None: ...
+
+    @typing.overload
+    def __init__(self, *, required_field: str) -> None: ...
+
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        if args:
+            super().__init__(required_field=args[0], **kwargs)
+        else:
+            super().__init__(**kwargs)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

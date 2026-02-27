@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.61.1
+  changelogEntry:
+    - summary: |
+        Fix `positional_single_property_constructors` breaking pydantic response deserialization.
+        The custom `__init__` now uses `@typing.overload` with a permissive `*args, **kwargs` runtime
+        signature, so pydantic can pass alias-keyed data freely during deserialization while still
+        allowing positional construction like `Wrapper("value")`.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 4.61.0
   changelogEntry:
     - summary: |
