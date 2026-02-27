@@ -730,7 +730,7 @@ export class DocsDefinitionResolver {
             }
 
             const absoluteFilePath = join(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(pageId));
-            markdownFilesToPathName[absoluteFilePath] = slug;
+            markdownFilesToPathName[absoluteFilePath] ??= slug;
         });
         return markdownFilesToPathName;
     }
