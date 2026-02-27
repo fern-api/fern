@@ -171,12 +171,12 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
 
         return `
   publish:
-    needs: [check, compile, test]
+    needs: [ci]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1

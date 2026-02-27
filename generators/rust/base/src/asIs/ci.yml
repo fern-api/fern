@@ -6,11 +6,11 @@ env:
   RUSTFLAGS: "-A warnings"
 
 jobs:
-  check:
+  ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
@@ -18,26 +18,9 @@ jobs:
       - name: Check
         run: cargo check
 
-  compile:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
-
       - name: Compile
         run: cargo build
 
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Set up Rust
-        uses: actions-rust-lang/setup-rust-toolchain@v1
 {{WIREMOCK_SETUP}}
       - name: Test
         run: {{TEST_COMMAND}}
