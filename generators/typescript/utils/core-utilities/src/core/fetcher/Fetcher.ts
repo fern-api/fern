@@ -276,11 +276,8 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         const interceptors = args.interceptors ?? [];
 
         const coreRequest: SendRequest = async (interceptedRequest: InterceptedRequest) => {
-            // Apply any header modifications from interceptors
+            // Use headers from the intercepted request directly — interceptors have full control
             const finalHeaders = new Headers();
-            for (const [key, value] of headers.entries()) {
-                finalHeaders.set(key, value);
-            }
             for (const [key, value] of Object.entries(interceptedRequest.headers)) {
                 finalHeaders.set(key, value);
             }
