@@ -564,17 +564,8 @@ Valid values are in the range [0, 1] inclusive.
                 "docs": "Error message",
                 "type": "string",
               },
-              "status": "optional<ErrorStatus>",
+              "status": "optional<literal<"error">>",
             },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "ErrorStatus": {
-            "enum": [
-              "error",
-            ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -588,7 +579,7 @@ Valid values are in the range [0, 1] inclusive.
             "properties": {
               "message_type": {
                 "docs": "Describes the type of message.",
-                "type": "FinalTranscriptMessageType",
+                "type": "literal<"FinalTranscript">",
               },
               "punctuated": {
                 "docs": "Whether the text has been punctuated and cased.",
@@ -599,16 +590,6 @@ Valid values are in the range [0, 1] inclusive.
                 "type": "boolean",
               },
             },
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "FinalTranscriptMessageType": {
-            "docs": "Describes the type of message.",
-            "enum": [
-              "FinalTranscript",
-            ],
-            "inline": true,
             "source": {
               "openapi": "../asyncapi.yml",
             },
@@ -859,19 +840,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "properties": {
               "message_type": {
                 "docs": "Describes the type of message.",
-                "type": "PartialTranscriptMessageType",
+                "type": "literal<"PartialTranscript">",
               },
             },
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "PartialTranscriptMessageType": {
-            "docs": "Describes the type of message.",
-            "enum": [
-              "PartialTranscript",
-            ],
-            "inline": true,
             "source": {
               "openapi": "../asyncapi.yml",
             },
@@ -1157,7 +1128,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               },
               "message_type": {
                 "docs": "Describes the type of the message.",
-                "type": "SessionBeginsMessageType",
+                "type": "literal<"SessionBegins">",
               },
               "session_id": {
                 "docs": "Unique identifier for the established session.",
@@ -1168,35 +1139,15 @@ Can be any value between 0.0 and 1.0 inclusive.
               "openapi": "../asyncapi.yml",
             },
           },
-          "SessionBeginsMessageType": {
-            "docs": "Describes the type of the message.",
-            "enum": [
-              "SessionBegins",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
           "SessionTerminated": {
             "docs": undefined,
             "inline": undefined,
             "properties": {
               "message_type": {
                 "docs": "Describes the type of the message.",
-                "type": "SessionTerminatedMessageType",
+                "type": "literal<"SessionTerminated">",
               },
             },
-            "source": {
-              "openapi": "../asyncapi.yml",
-            },
-          },
-          "SessionTerminatedMessageType": {
-            "docs": "Describes the type of the message.",
-            "enum": [
-              "SessionTerminated",
-            ],
-            "inline": true,
             "source": {
               "openapi": "../asyncapi.yml",
             },
@@ -3392,18 +3343,12 @@ types:
       (options: "basic" and "default").
     source:
       openapi: ../openapi.yml
-  ErrorStatus:
-    enum:
-      - error
-    inline: true
-    source:
-      openapi: ../openapi.yml
   Error:
     properties:
       error:
         type: string
         docs: Error message
-      status: optional<ErrorStatus>
+      status: optional<literal<"error">>
     source:
       openapi: ../openapi.yml
   RealtimeBaseMessage:
@@ -3449,17 +3394,10 @@ types:
       - FinalTranscript
     source:
       openapi: ../asyncapi.yml
-  SessionBeginsMessageType:
-    enum:
-      - SessionBegins
-    docs: Describes the type of the message.
-    inline: true
-    source:
-      openapi: ../asyncapi.yml
   SessionBegins:
     properties:
       message_type:
-        type: SessionBeginsMessageType
+        type: literal<"SessionBegins">
         docs: Describes the type of the message.
       session_id:
         type: string
@@ -3469,17 +3407,10 @@ types:
         docs: Timestamp when this session will expire.
     source:
       openapi: ../asyncapi.yml
-  SessionTerminatedMessageType:
-    enum:
-      - SessionTerminated
-    docs: Describes the type of the message.
-    inline: true
-    source:
-      openapi: ../asyncapi.yml
   SessionTerminated:
     properties:
       message_type:
-        type: SessionTerminatedMessageType
+        type: literal<"SessionTerminated">
         docs: Describes the type of the message.
     source:
       openapi: ../asyncapi.yml
@@ -3512,33 +3443,19 @@ types:
         docs: The timestamp for the partial transcript.
     source:
       openapi: ../asyncapi.yml
-  PartialTranscriptMessageType:
-    enum:
-      - PartialTranscript
-    docs: Describes the type of message.
-    inline: true
-    source:
-      openapi: ../asyncapi.yml
   PartialTranscript:
     properties:
       message_type:
-        type: PartialTranscriptMessageType
+        type: literal<"PartialTranscript">
         docs: Describes the type of message.
     extends:
       - RealtimeBaseTranscript
     source:
       openapi: ../asyncapi.yml
-  FinalTranscriptMessageType:
-    enum:
-      - FinalTranscript
-    docs: Describes the type of message.
-    inline: true
-    source:
-      openapi: ../asyncapi.yml
   FinalTranscript:
     properties:
       message_type:
-        type: FinalTranscriptMessageType
+        type: literal<"FinalTranscript">
         docs: Describes the type of message.
       punctuated:
         type: boolean

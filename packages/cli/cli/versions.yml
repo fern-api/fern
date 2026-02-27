@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.90.6
+- version: 3.90.9
   changelogEntry:
     - summary: |
         Fix `coerce-optional-schemas-to-nullable` incorrectly making header parameters
@@ -7,6 +7,39 @@
         a value or absent. The `coerceOptionalSchemasToNullable` option now only affects
         request/response body properties, not header parameters. Explicitly nullable header
         schemas (via `nullable: true` in the OpenAPI spec) are still respected.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.8
+  changelogEntry:
+    - summary: |
+        Treat JSON Schema `const` values as literal types in the IR regardless of the
+        `coerceEnumsToLiterals` setting. Previously, `const` was converted to a single-value
+        enum, which meant generated SDKs (e.g. Python Pydantic models) did not auto-populate
+        a default value for fields that can only ever be one value. Now `const` always produces
+        a literal type, so generators can automatically set the default.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.7
+  changelogEntry:
+    - summary: |
+        Resolve .mdx/.md file path links in OpenAPI descriptions at CLI build time. Previously,
+        markdown links like `[Order](/docs/pages/objects/Order.mdx)` in OpenAPI endpoint and parameter
+        descriptions passed through as raw file paths. Now these links are resolved to proper URL slugs,
+        consistent with how they are already resolved in user-authored markdown pages.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.6
+  changelogEntry:
+    - summary: |
+        Fix schema reference resolution when `respect-readonly-schemas: true` is enabled.
+        Previously, when schemas containing readonly properties were renamed with "Read"
+        suffixes (e.g., `UserConfig` → `UserConfigRead`), other schemas that referenced
+        them would still point to the original names, causing validation failures.
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
