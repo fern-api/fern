@@ -6,6 +6,9 @@
         it validates the exact definition used for generation (with generator-specific
         settings like `detectGlobalHeaders` and auth overrides applied).
       type: fix
+    - summary: |
+        Fix path-level `servers` with `x-fern-server-name` being ignored in OpenAPI 3.0 specs.
+      type: fix
   createdAt: "2026-02-27"
   irVersion: 65
 
