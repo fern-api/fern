@@ -63,8 +63,9 @@ export class GeneratorsYmlMigrator {
             };
         }
 
-        const content = await readFile(absoluteFilePath, "utf-8");
+        let content: string;
         try {
+            content = await readFile(absoluteFilePath, "utf-8");
             const config = yaml.load(content) as generatorsYml.GeneratorsConfigurationSchema;
 
             if (config == null || typeof config !== "object") {
