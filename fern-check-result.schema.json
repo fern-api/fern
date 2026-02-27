@@ -1,0 +1,133 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/CheckJsonResult",
+    "definitions": {
+        "CheckJsonResult": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "success": {
+                    "type": "boolean"
+                },
+                "results": {
+                    "$ref": "#/definitions/CheckResults"
+                }
+            },
+            "required": [
+                "success",
+                "results"
+            ],
+            "title": "Check Result"
+        },
+        "CheckResults": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "apis": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CheckJsonViolation"
+                    }
+                },
+                "docs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CheckJsonViolation"
+                    }
+                },
+                "sdks": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/CheckJsonViolation"
+                    }
+                }
+            },
+            "title": "Check Results"
+        },
+        "CheckJsonViolation": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "api": {
+                    "type": "string"
+                },
+                "severity": {
+                    "$ref": "#/definitions/ViolationSeverity"
+                },
+                "rule": {
+                    "$ref": "#/definitions/ValidationRuleName"
+                },
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "severity",
+                "rule",
+                "message"
+            ],
+            "title": "Check Violation"
+        },
+        "ValidationRuleName": {
+            "type": "string",
+            "enum": [
+                "content-type-only-for-multipart",
+                "exploded-form-data-is-array",
+                "import-file-exists",
+                "matching-environment-urls",
+                "no-circular-imports",
+                "no-complex-query-params",
+                "no-conflicting-endpoint-parameters",
+                "no-conflicting-endpoint-paths",
+                "no-conflicting-request-wrapper-properties",
+                "no-duplicate-declarations",
+                "no-duplicate-enum-values",
+                "no-duplicate-example-names",
+                "no-duplicate-field-names",
+                "no-error-status-code-conflict",
+                "no-extensions-with-file-upload",
+                "no-get-request-body",
+                "no-missing-auth",
+                "no-missing-error-discriminant",
+                "no-missing-request-name",
+                "no-object-single-property-key",
+                "no-response-property",
+                "no-undefined-error-reference",
+                "no-undefined-example-reference",
+                "no-undefined-path-parameters",
+                "no-undefined-type-reference",
+                "no-undefined-variable-reference",
+                "no-unused-generic",
+                "only-object-extensions",
+                "valid-base-path",
+                "valid-default-environment",
+                "valid-endpoint-path",
+                "valid-example-endpoint-call",
+                "valid-example-error",
+                "valid-example-type",
+                "valid-field-names",
+                "valid-generic",
+                "valid-navigation",
+                "valid-oauth",
+                "valid-pagination",
+                "valid-path-parameters-configuration",
+                "valid-service-urls",
+                "valid-stream-condition",
+                "valid-type-name",
+                "valid-type-reference-with-default-and-validation",
+                "valid-version",
+                "valid-webhook-signature"
+            ],
+            "title": "Validation Rule Name"
+        },
+        "ViolationSeverity": {
+            "type": "string",
+            "enum": [
+                "fatal",
+                "error",
+                "warning"
+            ],
+            "title": "Violation Severity"
+        }
+    }
+}
