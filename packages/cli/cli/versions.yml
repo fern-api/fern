@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Update AI example enhancement to use fdr-lambda endpoint.
-      type: feat
+      type: chore
   createdAt: "2026-02-27"
   irVersion: 65
 
