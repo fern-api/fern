@@ -613,6 +613,12 @@ async function startDocsRegisterFailed(
             return context.failAndThrow(
                 "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
             );
+        case "DomainBelongsToAnotherOrgError":
+            return context.failAndThrow(
+                typeof error.content === "string" && error.content.length > 0
+                    ? error.content
+                    : "One or more of the specified domains are already claimed by another organization."
+            );
         case "UnauthorizedError":
             return context.failAndThrow(
                 `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.\n\n` +
@@ -640,6 +646,13 @@ function getAuthenticationErrorMessage(error: unknown, organization: string): st
         const statusCode = content.statusCode as number | undefined;
 
         if (statusCode === 401 || statusCode === 403) {
+            // If the server provided a specific error message, surface it directly
+            const body = content.body as Record<string, unknown> | undefined;
+            const serverMessage = body?.message as string | undefined;
+            if (serverMessage) {
+                return serverMessage;
+            }
+
             const baseMessage = `You do not have permission to publish docs to organization '${organization}'. Please run 'fern login' to ensure you are logged in with the correct account.`;
             const contactMessage =
                 "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.";
