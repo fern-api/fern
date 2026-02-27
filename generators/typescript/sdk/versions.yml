@@ -1,10 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.52.2
+- version: 3.52.3
   changelogEntry:
     - summary: |
         Fix TypeScript generator crash when discriminated union discriminant values start
         with digits (e.g., "1foo", "1bar"). The generated code now prefixes such identifiers
         with an underscore to produce valid TypeScript.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.52.2
+  changelogEntry:
+    - summary: |
+        Fix biome formatting not being applied in github output mode. The generator was calling
+        checkFix() (biome) without first installing biome, causing formatting to silently fail.
+        Now installs checkFix dependencies when tools are not globally available, matching the
+        existing behavior in downloadFiles mode.
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
