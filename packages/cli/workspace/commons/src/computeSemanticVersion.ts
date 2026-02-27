@@ -136,23 +136,55 @@ async function getLatestVersionFromPypi(packageName: string): Promise<string | u
 }
 
 /**
- * Fetches the latest tag from a GitHub repository.
+ * Fetches the tag with the highest semantic version from a GitHub repository.
+ * Fetches all tags (paginated) and returns the one with the greatest semver.
  *
  * @param githubRepository - Repository in "owner/repo" format
- * @returns The latest tag name, or undefined if no tags exist
+ * @returns The tag name with the highest semver, or undefined if no valid semver tags exist
  */
 async function getLatestTag(githubRepository: string): Promise<string | undefined> {
     try {
         const { owner, repo } = parseRepository(githubRepository);
 
         const octokit = new Octokit();
-        const response = await octokit.rest.repos.listTags({
-            owner,
-            repo,
-            per_page: 1 // Fetch only the latest tag
-        });
 
-        return response.data?.[0]?.name;
+        // Fetch all tags using pagination
+        const tags: string[] = [];
+        let page = 1;
+        while (true) {
+            const response = await octokit.rest.repos.listTags({
+                owner,
+                repo,
+                per_page: 100,
+                page
+            });
+            if (response.data.length === 0) {
+                break;
+            }
+            for (const tag of response.data) {
+                tags.push(tag.name);
+            }
+            if (response.data.length < 100) {
+                break;
+            }
+            page++;
+        }
+
+        // Parse and find the highest semver tag
+        let highestVersion: semver.SemVer | null = null;
+        let highestTagName: string | undefined;
+
+        for (const tagName of tags) {
+            const parsed = semver.parse(tagName) ?? semver.parse(semver.coerce(tagName));
+            if (parsed != null) {
+                if (highestVersion == null || semver.gt(parsed, highestVersion)) {
+                    highestVersion = parsed;
+                    highestTagName = tagName;
+                }
+            }
+        }
+
+        return highestTagName;
     } catch (error) {
         // Repository doesn't exist or API error
         return undefined;
