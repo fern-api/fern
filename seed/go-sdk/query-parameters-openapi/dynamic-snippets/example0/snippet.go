@@ -93,6 +93,16 @@ func do() {
                 "filter",
             ),
         },
+        Tags: []*string{
+            fern.String(
+                "tags",
+            ),
+        },
+        OptionalTags: []*string{
+            fern.String(
+                "optionalTags",
+            ),
+        },
         Neighbor: &fern.SearchRequestNeighbor{
             User: &fern.User{
                 Name: fern.String(

@@ -1,0 +1,384 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createConfiguration": {
+              "auth": undefined,
+              "display-name": "Create configuration",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "metadata": {
+                        "owner": "owner",
+                        "tags": [
+                          "tags",
+                        ],
+                        "version": 1,
+                      },
+                      "provisioning": {
+                        "createdAt": "2024-01-15T09:30:00Z",
+                        "enabled": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "mappings": [
+                          {},
+                        ],
+                        "syncStatus": "active",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/config",
+              "request": {
+                "body": {
+                  "properties": {
+                    "enabled": {
+                      "docs": "Whether provisioning is enabled",
+                      "type": "optional<boolean>",
+                    },
+                    "mappings": "optional<list<AttributeMapping>>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "ConfigCreateRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Configuration created successfully",
+                "status-code": 200,
+                "type": "ConfigResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getConfiguration": {
+              "auth": undefined,
+              "display-name": "Get configuration",
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "configId": "configId",
+                  },
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "metadata": {
+                        "owner": "owner",
+                        "tags": [
+                          "tags",
+                        ],
+                        "version": 1,
+                      },
+                      "provisioning": {
+                        "createdAt": "2024-01-15T09:30:00Z",
+                        "enabled": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "mappings": [
+                          {},
+                        ],
+                        "syncStatus": "active",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/config/{configId}",
+              "request": {
+                "name": "GetConfigConfigIdRequest",
+                "path-parameters": {
+                  "configId": "string",
+                },
+              },
+              "response": {
+                "docs": "Configuration retrieved successfully",
+                "status-code": 200,
+                "type": "ConfigResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "AttributeMapping": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "required": {
+                "default": false,
+                "type": "optional<boolean>",
+              },
+              "source": {
+                "docs": "Source attribute name",
+                "type": "optional<string>",
+              },
+              "target": {
+                "docs": "Target attribute name",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConfigMetadataRead": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "owner": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "tags": "optional<list<string>>",
+              "version": {
+                "access": "read-only",
+                "type": "optional<integer>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConfigResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "id": {
+                "docs": "Configuration ID",
+                "type": "optional<string>",
+              },
+              "metadata": "optional<ConfigMetadataRead>",
+              "provisioning": {
+                "docs": "Provisioning configuration",
+                "type": "optional<IdpProvisioningConfigRead>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "IdpProvisioningConfigRead": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "createdAt": {
+                "access": "read-only",
+                "docs": "When the config was created",
+                "type": "optional<datetime>",
+              },
+              "enabled": {
+                "docs": "Whether provisioning is enabled",
+                "type": "optional<boolean>",
+              },
+              "lastModified": {
+                "access": "read-only",
+                "docs": "When the config was last modified",
+                "type": "optional<datetime>",
+              },
+              "mappings": "optional<list<AttributeMapping>>",
+              "syncStatus": {
+                "access": "read-only",
+                "docs": "Current sync status",
+                "type": "optional<IdpProvisioningConfigSyncStatus>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "IdpProvisioningConfigSyncStatus": {
+            "docs": "Current sync status",
+            "enum": [
+              "active",
+              "pending",
+              "failed",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createConfiguration:
+      path: /config
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Create configuration
+      request:
+        name: ConfigCreateRequest
+        body:
+          properties:
+            enabled:
+              type: optional<boolean>
+              docs: Whether provisioning is enabled
+            mappings: optional<list<AttributeMapping>>
+        content-type: application/json
+      response:
+        docs: Configuration created successfully
+        type: ConfigResponse
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              provisioning:
+                enabled: true
+                mappings:
+                  - {}
+                createdAt: '2024-01-15T09:30:00Z'
+                lastModified: '2024-01-15T09:30:00Z'
+                syncStatus: active
+              metadata:
+                version: 1
+                owner: owner
+                tags:
+                  - tags
+    getConfiguration:
+      path: /config/{configId}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: Get configuration
+      request:
+        name: GetConfigConfigIdRequest
+        path-parameters:
+          configId: string
+      response:
+        docs: Configuration retrieved successfully
+        type: ConfigResponse
+        status-code: 200
+      examples:
+        - path-parameters:
+            configId: configId
+          response:
+            body:
+              id: id
+              provisioning:
+                enabled: true
+                mappings:
+                  - {}
+                createdAt: '2024-01-15T09:30:00Z'
+                lastModified: '2024-01-15T09:30:00Z'
+                syncStatus: active
+              metadata:
+                version: 1
+                owner: owner
+                tags:
+                  - tags
+  source:
+    openapi: ../openapi.yml
+types:
+  IdpProvisioningConfigSyncStatus:
+    enum:
+      - active
+      - pending
+      - failed
+    docs: Current sync status
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  IdpProvisioningConfigRead:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: Whether provisioning is enabled
+      mappings: optional<list<AttributeMapping>>
+      createdAt:
+        type: optional<datetime>
+        docs: When the config was created
+        access: read-only
+      lastModified:
+        type: optional<datetime>
+        docs: When the config was last modified
+        access: read-only
+      syncStatus:
+        type: optional<IdpProvisioningConfigSyncStatus>
+        docs: Current sync status
+        access: read-only
+    source:
+      openapi: ../openapi.yml
+  ConfigResponse:
+    properties:
+      id:
+        type: optional<string>
+        docs: Configuration ID
+      provisioning:
+        type: optional<IdpProvisioningConfigRead>
+        docs: Provisioning configuration
+      metadata: optional<ConfigMetadataRead>
+    source:
+      openapi: ../openapi.yml
+  AttributeMapping:
+    properties:
+      source:
+        type: optional<string>
+        docs: Source attribute name
+      target:
+        type: optional<string>
+        docs: Target attribute name
+      required:
+        type: optional<boolean>
+        default: false
+    source:
+      openapi: ../openapi.yml
+  ConfigMetadataRead:
+    properties:
+      version:
+        type: optional<integer>
+        access: read-only
+      owner:
+        type: optional<string>
+        access: read-only
+      tags: optional<list<string>>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Readonly Schema References API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Readonly Schema References API
+",
+  },
+}

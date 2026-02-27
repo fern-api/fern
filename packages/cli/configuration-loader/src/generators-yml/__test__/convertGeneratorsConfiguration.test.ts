@@ -841,4 +841,196 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.groups[0]?.generators[2]?.name).toEqual("myorg/custom-generator");
         });
     });
+
+    describe("apiOverride", () => {
+        it("returns undefined when no api config and no generator api override", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
+        });
+
+        it("uses generator-level specs override", async () => {
+            const context = createMockTaskContext();
+            const generatorSpecs = [{ openapi: "custom-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    api: {
+                                        specs: generatorSpecs
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: generatorSpecs,
+                auth: undefined,
+                "auth-schemes": undefined
+            });
+        });
+
+        it("uses generator-level auth override", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    api: {
+                                        auth: "bearer"
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: undefined,
+                auth: "bearer",
+                "auth-schemes": undefined
+            });
+        });
+
+        it("falls back to V2 workspace-level specs when no generator override", async () => {
+            const context = createMockTaskContext();
+            const workspaceSpecs = [{ openapi: "workspace-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: workspaceSpecs
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: workspaceSpecs
+            });
+        });
+
+        it("generator-level specs take priority over V2 workspace-level specs", async () => {
+            const context = createMockTaskContext();
+            const generatorSpecs = [{ openapi: "generator-spec.yml" }];
+            const workspaceSpecs = [{ openapi: "workspace-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: workspaceSpecs
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    api: {
+                                        specs: generatorSpecs
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: generatorSpecs,
+                auth: undefined,
+                "auth-schemes": undefined
+            });
+        });
+
+        it("returns undefined when workspace api is non-V2 (string path)", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: "path/to/openapi.yml",
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
+        });
+    });
 });

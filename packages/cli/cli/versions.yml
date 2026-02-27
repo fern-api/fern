@@ -1,9 +1,205 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.91.0
+- version: 3.93.0
   changelogEntry:
     - summary: |
         Update AI example enhancement to use fdr-lambda endpoint.
       type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.92.0
+  changelogEntry:
+    - summary: |
+        Add support for multiple override files in OpenAPI spec configuration. The
+        `overrides` field now accepts either a single path or an array of paths. When
+        multiple paths are provided, overrides are applied sequentially in order, allowing
+        for layered customization of OpenAPI specs.
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.6
+  changelogEntry:
+    - summary: |
+        Treat all `text/*` content types (e.g. `text/csv`, `text/xml`, `text/html`) as text
+        responses in the v1 OpenAPI parser, not just `text/plain`. Previously, endpoints
+        returning content types like `text/csv` had their response silently dropped, causing
+        generated SDK methods to return `None`.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.5
+  changelogEntry:
+    - summary: |
+        Fix anyOf/oneOf response examples always using the first variant's values.
+        When an OpenAPI spec defines multiple anyOf variants with discriminating enum
+        fields (e.g., status: "waiting", "progress", "success"), the example converter
+        would short-circuit on the first valid variant even when the user's explicit
+        example matched a different variant. Each named example now correctly preserves
+        its distinct field values.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.91.4
+  changelogEntry:
+    - summary: |
+        Fix GET webhooks without a request body being skipped during OpenAPI parsing.
+        Previously, webhooks using the GET method with query parameters instead of a
+        request body were silently dropped with "Missing a request body". The parser
+        now synthesizes a payload from the query parameters for GET webhooks that lack
+        a request body.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.3
+  changelogEntry:
+    - summary: |
+        Remove noisy debug logs from IR version compatibility checking.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.2
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-server-name` extension being ignored on AsyncAPI server definitions.
+        When an AsyncAPI spec uses `x-fern-server-name` to override a server's name
+        (e.g. renaming `uat` to `market_data` to avoid naming conflicts with another API),
+        both the environment ID and channel base URL now use the overridden name. This
+        fixes SDK generation errors like "Expected environment UAT to contain url for uat"
+        when the generators.yml environment URLs reference the overridden server name.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+- version: 3.91.1
+  changelogEntry:
+    - summary: |
+        Fix `coerce-optional-schemas-to-nullable` incorrectly making header parameters
+        nullable. HTTP headers don't have a "null" concept — they're either present with
+        a value or absent. The `coerceOptionalSchemasToNullable` option now only affects
+        request/response body properties, not header parameters. Explicitly nullable header
+        schemas (via `nullable: true` in the OpenAPI spec) are still respected.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.0
+  changelogEntry:
+    - summary: |
+        Add support for nested generics in Fern Definition. Generic type properties
+        that reference other generic types (e.g., `data: list<Data<T>>`) now correctly
+        substitute generic parameters throughout the type reference string, not just
+        when the entire property value matches a parameter name. This enables patterns
+        like reusable request/response wrappers with nested generic attributes.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.9
+  changelogEntry:
+    - summary: |
+        Propagate `explode` field from OpenAPI query parameters through the old importer pipeline
+        (OpenAPI IR → Fern Definition → Fern IR). Previously, `explode: false` on array query
+        parameters was silently dropped, causing generated SDKs to use repeated keys instead of
+        comma-separated values.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.8
+  changelogEntry:
+    - summary: |
+        Treat JSON Schema `const` values as literal types in the IR regardless of the
+        `coerceEnumsToLiterals` setting. Previously, `const` was converted to a single-value
+        enum, which meant generated SDKs (e.g. Python Pydantic models) did not auto-populate
+        a default value for fields that can only ever be one value. Now `const` always produces
+        a literal type, so generators can automatically set the default.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.7
+  changelogEntry:
+    - summary: |
+        Resolve .mdx/.md file path links in OpenAPI descriptions at CLI build time. Previously,
+        markdown links like `[Order](/docs/pages/objects/Order.mdx)` in OpenAPI endpoint and parameter
+        descriptions passed through as raw file paths. Now these links are resolved to proper URL slugs,
+        consistent with how they are already resolved in user-authored markdown pages.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.6
+  changelogEntry:
+    - summary: |
+        Fix schema reference resolution when `respect-readonly-schemas: true` is enabled.
+        Previously, when schemas containing readonly properties were renamed with "Read"
+        suffixes (e.g., `UserConfig` → `UserConfigRead`), other schemas that referenced
+        them would still point to the original names, causing validation failures.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.5
+  changelogEntry:
+    - summary: |
+        Fix per-spec settings being ignored in multi-spec API configurations.
+        When `respect-nullable-schemas` (or other boolean settings) was set on
+        only a subset of specs, the setting was incorrectly collapsed to `false`
+        because `specs.every()` treated unset (`undefined`) the same as
+        explicitly disabled (`false`). Now, specs that don't define a setting
+        are treated as neutral ("don't care") so enabling a setting on a subset
+        of specs works correctly without affecting specs that don't set it.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+- version: 3.90.4
+  changelogEntry:
+    - summary: |
+        Pass CLI-computed semantic version to Fiddle when creating remote generation
+        jobs. Previously the CLI computed the version via the FDR API but passed the
+        raw user-provided version (typically undefined for AUTO mode) to Fiddle,
+        causing Fiddle to independently re-resolve the version and fall back to an
+        internal counter that produced incorrect low version numbers.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.3
+  changelogEntry:
+    - summary: |
+        Fix AUTO versioning missing namespace changes in the git diff. When
+        generated SDK files are copied without `.fernignore` (the
+        `copyGeneratedFilesNoFernIgnorePreservingGit` path), new files created
+        by namespace renames were untracked and invisible to `git diff HEAD`.
+        The diff generator now runs `git add -N .` (intent-to-add) before
+        diffing so that newly created files appear in the diff and are
+        correctly analyzed by the AI as breaking changes.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.2
+  changelogEntry:
+    - summary: |
+        Fix v3 OpenAPI importer to recognize `format: date-time-rfc-2822` regardless
+        of `typeDatesAsStrings` setting. Previously the check was inside a guard that
+        defaults to `undefined`, so RFC 2822 date fields silently fell through to string.
+      type: fix
+    - summary: |
+        Fix example validation for `DATE_TIME_RFC_2822` fields to accept RFC 2822
+        formatted timestamps (e.g. "Wed, 02 Oct 2002 13:00:00 +0000") instead of
+        rejecting them as invalid ISO 8601.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.90.1
+  changelogEntry:
+    - summary: |
+        Fix v2 OpenAPI importer support for `format: date-time-rfc-2822` so the CLI
+        emits `DATE_TIME_RFC_2822` instead of falling back to `string`.
+      type: fix
   createdAt: "2026-02-26"
   irVersion: 65
 

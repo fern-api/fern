@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.0.9
+  changelogEntry:
+    - summary: |
+        Make OneOf single-type serialization test whitespace insensitive for
+        consistency with all other JSON test assertions.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 62
+
 - version: 0.0.8
   changelogEntry:
     - summary: |
