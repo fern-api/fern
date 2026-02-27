@@ -23,6 +23,66 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./headers": {
+            "types": "./dist/cjs/api/resources/headers/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/headers/exports.d.mts",
+                "default": "./dist/esm/api/resources/headers/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/headers/exports.d.ts",
+                "default": "./dist/cjs/api/resources/headers/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/headers/exports.js"
+        },
+        "./inlined": {
+            "types": "./dist/cjs/api/resources/inlined/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/inlined/exports.d.mts",
+                "default": "./dist/esm/api/resources/inlined/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/inlined/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inlined/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/inlined/exports.js"
+        },
+        "./path": {
+            "types": "./dist/cjs/api/resources/path/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/path/exports.d.mts",
+                "default": "./dist/esm/api/resources/path/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/path/exports.d.ts",
+                "default": "./dist/cjs/api/resources/path/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/path/exports.js"
+        },
+        "./query": {
+            "types": "./dist/cjs/api/resources/query/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/query/exports.d.mts",
+                "default": "./dist/esm/api/resources/query/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/query/exports.d.ts",
+                "default": "./dist/cjs/api/resources/query/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/query/exports.js"
+        },
+        "./reference": {
+            "types": "./dist/cjs/api/resources/reference/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/reference/exports.d.mts",
+                "default": "./dist/esm/api/resources/reference/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/reference/exports.d.ts",
+                "default": "./dist/cjs/api/resources/reference/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/reference/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

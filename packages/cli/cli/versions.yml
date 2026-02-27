@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.9
+  changelogEntry:
+    - summary: |
+        Propagate `explode` field from OpenAPI query parameters through the old importer pipeline
+        (OpenAPI IR → Fern Definition → Fern IR). Previously, `explode: false` on array query
+        parameters was silently dropped, causing generated SDKs to use repeated keys instead of
+        comma-separated values.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+  
 - version: 3.90.8
   changelogEntry:
     - summary: |

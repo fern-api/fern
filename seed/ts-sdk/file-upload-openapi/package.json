@@ -23,6 +23,18 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./fileUploadExample": {
+            "types": "./dist/cjs/api/resources/fileUploadExample/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/fileUploadExample/exports.d.mts",
+                "default": "./dist/esm/api/resources/fileUploadExample/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/fileUploadExample/exports.d.ts",
+                "default": "./dist/cjs/api/resources/fileUploadExample/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/fileUploadExample/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

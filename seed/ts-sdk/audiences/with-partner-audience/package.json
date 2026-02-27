@@ -23,6 +23,30 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./folderD": {
+            "types": "./dist/cjs/api/resources/folderD/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/folderD/exports.d.mts",
+                "default": "./dist/esm/api/resources/folderD/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/folderD/exports.d.ts",
+                "default": "./dist/cjs/api/resources/folderD/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/folderD/exports.js"
+        },
+        "./folderD/service": {
+            "types": "./dist/cjs/api/resources/folderD/resources/service/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/folderD/resources/service/exports.d.mts",
+                "default": "./dist/esm/api/resources/folderD/resources/service/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/folderD/resources/service/exports.d.ts",
+                "default": "./dist/cjs/api/resources/folderD/resources/service/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/folderD/resources/service/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
