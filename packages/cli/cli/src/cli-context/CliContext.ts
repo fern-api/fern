@@ -9,7 +9,7 @@ import { input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 import { CliEnvironment } from "./CliEnvironment.js";
-import { StdoutGuard } from "./StdoutGuard.js";
+import { StdoutRedirector } from "./StdoutRedirector.js";
 import { TaskContextImpl } from "./TaskContextImpl.js";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage.js";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions.js";
@@ -37,7 +37,7 @@ export class CliContext {
 
     private logLevel: LogLevel = LogLevel.Info;
     private isLocal: boolean;
-    private readonly stdoutGuard = new StdoutGuard();
+    private readonly stdoutRedirector = new StdoutRedirector();
     private jsonMode = false;
 
     constructor(stdout: NodeJS.WriteStream, stderr: NodeJS.WriteStream, { isLocal }: { isLocal?: boolean }) {
@@ -111,7 +111,7 @@ export class CliContext {
             return;
         }
         this.jsonMode = true;
-        this.stdoutGuard.redirect();
+        this.stdoutRedirector.redirect();
     }
 
     public get isJsonMode(): boolean {
@@ -123,10 +123,10 @@ export class CliContext {
      * Temporarily restores the real stdout, writes, then re-redirects.
      */
     public writeJsonToStdout(value: unknown): void {
-        this.stdoutGuard.restore();
+        this.stdoutRedirector.restore();
         process.stdout.write(JSON.stringify(value, null, 2) + "\n");
         if (this.jsonMode) {
-            this.stdoutGuard.redirect();
+            this.stdoutRedirector.redirect();
         }
     }
 
