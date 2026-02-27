@@ -535,10 +535,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
     };
 
     public Interceptor = {
-        _getReferenceToType: this.withExportedName(
-            "Interceptor",
-            (Interceptor) => () => Interceptor.getTypeNode()
-        )
+        _getReferenceToType: this.withExportedName("Interceptor", (Interceptor) => () => Interceptor.getTypeNode())
     };
 
     public getHeader = {

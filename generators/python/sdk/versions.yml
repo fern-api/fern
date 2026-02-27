@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.60.2
+  changelogEntry:
+    - summary: |
+        Fix `explode: false` query parameter serialization for array types. When an OpenAPI spec
+        sets `explode: false` on an array query parameter, the generated SDK now serializes values
+        as comma-separated strings (e.g. `tags=A,B,C`) instead of repeated keys (e.g. `tags=A&tags=B&tags=C`).
+        This applies to both regular and streaming endpoints.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 4.60.1
   changelogEntry:
     - summary: |
