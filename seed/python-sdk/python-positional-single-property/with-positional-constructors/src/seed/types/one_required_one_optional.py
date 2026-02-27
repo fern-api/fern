@@ -12,13 +12,11 @@ class OneRequiredOneOptional(UniversalBaseModel):
 
     @typing.overload
     def __init__(self, required_field: str) -> None: ...
-
     @typing.overload
     def __init__(self, *, required_field: str) -> None: ...
-
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
-            kwargs.pop('required_field', None)
+            kwargs.pop("required_field", None)
             super().__init__(required_field=args[0], **kwargs)
         else:
             super().__init__(**kwargs)

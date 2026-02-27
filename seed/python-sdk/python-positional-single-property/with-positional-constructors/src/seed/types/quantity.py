@@ -12,13 +12,11 @@ class Quantity(UniversalBaseModel):
 
     @typing.overload
     def __init__(self, quantity: float) -> None: ...
-
     @typing.overload
     def __init__(self, *, quantity: float) -> None: ...
-
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
-            kwargs.pop('quantity', None)
+            kwargs.pop("quantity", None)
             super().__init__(quantity=args[0], **kwargs)
         else:
             super().__init__(**kwargs)

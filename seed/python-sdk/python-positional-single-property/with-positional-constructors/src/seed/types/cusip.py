@@ -11,13 +11,11 @@ class Cusip(UniversalBaseModel):
 
     @typing.overload
     def __init__(self, cusip: str) -> None: ...
-
     @typing.overload
     def __init__(self, *, cusip: str) -> None: ...
-
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
-            kwargs.pop('cusip', None)
+            kwargs.pop("cusip", None)
             super().__init__(cusip=args[0], **kwargs)
         else:
             super().__init__(**kwargs)

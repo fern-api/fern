@@ -12,13 +12,11 @@ class IsinWithDiscriminator(UniversalBaseModel):
 
     @typing.overload
     def __init__(self, isin: str) -> None: ...
-
     @typing.overload
     def __init__(self, *, isin: str) -> None: ...
-
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
-            kwargs.pop('isin', None)
+            kwargs.pop("isin", None)
             super().__init__(isin=args[0], **kwargs)
         else:
             super().__init__(**kwargs)
