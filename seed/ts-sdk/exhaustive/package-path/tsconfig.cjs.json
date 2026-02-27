@@ -4,10 +4,6 @@
         "module": "CommonJS",
         "outDir": "dist/cjs"
     },
-    "include": [
-        "src/test-packagePath"
-    ],
-    "exclude": [
-        "src/test-packagePath/tests"
-    ]
+    "include": ["src/test-packagePath"],
+    "exclude": ["src/test-packagePath/tests"]
 }

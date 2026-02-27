@@ -969,7 +969,7 @@ export class ExampleTypeFactory {
                 } else if (schema.example != null) {
                     return PrimitiveExample.datetimeRfc2822(schema.example);
                 } else {
-                    return PrimitiveExample.datetimeRfc2822(Examples.DATE_TIME);
+                    return PrimitiveExample.datetimeRfc2822(Examples.DATE_TIME_RFC_2822);
                 }
             case "double":
                 if (example != null && typeof example === "number") {
