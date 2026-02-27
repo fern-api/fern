@@ -11,11 +11,13 @@ export const QueryParameterTypeReferenceDetailed: core.serialization.ObjectSchem
 > = core.serialization
     .object({
         "allow-multiple": core.serialization.boolean().optional(),
+        explode: core.serialization.boolean().optional(),
     })
     .extend(TypeReferenceDeclarationWithName);
 
 export declare namespace QueryParameterTypeReferenceDetailed {
     export interface Raw extends TypeReferenceDeclarationWithName.Raw {
         "allow-multiple"?: boolean | null;
+        explode?: boolean | null;
     }
 }
