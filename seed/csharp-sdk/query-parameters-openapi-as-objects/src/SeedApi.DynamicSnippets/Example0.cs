@@ -78,6 +78,14 @@ public class Example0
                     "filter",
                 }
                 ,
+                Tags = new List<string>(){
+                    "tags",
+                }
+                ,
+                OptionalTags = new List<string>(){
+                    "optionalTags",
+                }
+                ,
                 Neighbor = new User {
                     Name = "name",
                     Tags = new List<string>(){
