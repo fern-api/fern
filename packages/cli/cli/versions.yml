@@ -1,11 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.93.2
+- version: 3.93.3
   changelogEntry:
     - summary: |
         Move Fern definition validation into the per-generator generation loop so that
         it validates the exact definition used for generation (with generator-specific
         settings like `detectGlobalHeaders` and auth overrides applied).
       type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.2
+  changelogEntry:
+    - summary: |
+        Update AI example enhancement to use fdr-lambda endpoint.
+      type: chore
   createdAt: "2026-02-27"
   irVersion: 65
 

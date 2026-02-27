@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.61.2
+  changelogEntry:
+    - summary: |
+        Re-add `@fern-api/generator-cli` to Python SDK Docker image. The CLI was inadvertently
+        removed in 4.60.1 when JS-based generators migrated to using the generator-cli JS API
+        directly. The Python generator still relies on the CLI binary via subprocess for
+        README.md and reference.md generation.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 4.61.1
   changelogEntry:
     - summary: |
