@@ -8,7 +8,7 @@
         request/response body properties, not header parameters. Explicitly nullable header
         schemas (via `nullable: true` in the OpenAPI spec) are still respected.
       type: fix
-  createdAt: "2026-02-26"
+  createdAt: "2026-02-27"
   irVersion: 65
 
 - version: 3.91.0

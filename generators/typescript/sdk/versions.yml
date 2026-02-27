@@ -8,7 +8,7 @@
         the generated code now wraps the value with `?? undefined` to ensure null values
         are treated as "don't send the header" instead of causing type errors.
       type: fix
-  createdAt: "2026-02-26"
+  createdAt: "2026-02-27"
   irVersion: 65
 
 - version: 3.52.1
