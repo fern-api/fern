@@ -648,8 +648,8 @@ function getAuthenticationErrorMessage(error: unknown, organization: string): st
         if (statusCode === 401 || statusCode === 403) {
             // If the server provided a specific error message, surface it directly
             const body = content.body as Record<string, unknown> | undefined;
-            const serverMessage = body?.message as string | undefined;
-            if (serverMessage) {
+            const serverMessage = body?.message;
+            if (typeof serverMessage === "string" && serverMessage.length > 0) {
                 return serverMessage;
             }
 
