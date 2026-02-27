@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.1
+  changelogEntry:
+    - summary: |
+        Fix `coerce-optional-schemas-to-nullable` incorrectly making header parameters
+        nullable. HTTP headers don't have a "null" concept — they're either present with
+        a value or absent. The `coerceOptionalSchemasToNullable` option now only affects
+        request/response body properties, not header parameters. Explicitly nullable header
+        schemas (via `nullable: true` in the OpenAPI spec) are still respected.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.0
   changelogEntry:
     - summary: |
@@ -10,7 +22,6 @@
       type: feat
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.90.9
   changelogEntry:
     - summary: |
@@ -21,6 +32,7 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
+
 - version: 3.90.8
   changelogEntry:
     - summary: |
