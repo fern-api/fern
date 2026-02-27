@@ -56,6 +56,7 @@ export async function runRulesOnDocsWorkspace({
     const astVisitor = createDocsConfigFileAstVisitorForRules({
         relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
         allRuleVisitors,
+        ruleNames: rules.map((rule) => rule.name),
         addViolations: (newViolations: ValidationViolation[]) => {
             violations.push(...newViolations);
         }

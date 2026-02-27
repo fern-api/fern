@@ -1,18 +1,24 @@
 import { ApiValidationResult, DocsValidationResult } from "./printCheckReport.js";
 
-export interface CheckJsonViolation {
+export interface ApiCheckJsonViolation {
     api?: string;
     severity: string;
-    rule?: string;
+    rule: string;
+    message: string;
+}
+
+export interface DocsCheckJsonViolation {
+    severity: string;
+    rule: string;
     message: string;
 }
 
 export interface CheckJsonResult {
     success: boolean;
     results: {
-        apis?: CheckJsonViolation[];
-        docs?: CheckJsonViolation[];
-        sdks?: CheckJsonViolation[];
+        apis?: ApiCheckJsonViolation[];
+        docs?: DocsCheckJsonViolation[];
+        sdks?: ApiCheckJsonViolation[];
     };
 }
 
@@ -27,34 +33,29 @@ export function buildCheckJsonResult({
     hasErrors: boolean;
     showApiNames: boolean;
 }): CheckJsonResult {
-    const apis: CheckJsonViolation[] = [];
+    const apis: ApiCheckJsonViolation[] = [];
     for (const apiResult of apiResults) {
         for (const violation of apiResult.violations) {
-            const entry: CheckJsonViolation = {
+            const entry: ApiCheckJsonViolation = {
                 severity: violation.severity,
+                rule: violation.name,
                 message: violation.message
             };
             if (showApiNames) {
                 entry.api = apiResult.apiName;
             }
-            if (violation.name != null) {
-                entry.rule = violation.name;
-            }
             apis.push(entry);
         }
     }
 
-    const docs: CheckJsonViolation[] = [];
+    const docs: DocsCheckJsonViolation[] = [];
     if (docsResult != null) {
         for (const violation of docsResult.violations) {
-            const entry: CheckJsonViolation = {
+            docs.push({
                 severity: violation.severity,
+                rule: violation.name,
                 message: violation.message
-            };
-            if (violation.name != null) {
-                entry.rule = violation.name;
-            }
-            docs.push(entry);
+            });
         }
     }
 

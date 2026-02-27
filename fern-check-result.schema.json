@@ -26,25 +26,25 @@
                 "apis": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CheckJsonViolation"
+                        "$ref": "#/definitions/ApiCheckJsonViolation"
                     }
                 },
                 "docs": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CheckJsonViolation"
+                        "$ref": "#/definitions/DocsCheckJsonViolation"
                     }
                 },
                 "sdks": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CheckJsonViolation"
+                        "$ref": "#/definitions/ApiCheckJsonViolation"
                     }
                 }
             },
             "title": "Check Results"
         },
-        "CheckJsonViolation": {
+        "ApiCheckJsonViolation": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -55,7 +55,7 @@
                     "$ref": "#/definitions/ViolationSeverity"
                 },
                 "rule": {
-                    "$ref": "#/definitions/ValidationRuleName"
+                    "$ref": "#/definitions/ApiValidationRuleName"
                 },
                 "message": {
                     "type": "string"
@@ -66,9 +66,30 @@
                 "rule",
                 "message"
             ],
-            "title": "Check Violation"
+            "title": "API Check Violation"
         },
-        "ValidationRuleName": {
+        "DocsCheckJsonViolation": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "severity": {
+                    "$ref": "#/definitions/ViolationSeverity"
+                },
+                "rule": {
+                    "$ref": "#/definitions/DocsValidationRuleName"
+                },
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "severity",
+                "rule",
+                "message"
+            ],
+            "title": "Docs Check Violation"
+        },
+        "ApiValidationRuleName": {
             "type": "string",
             "enum": [
                 "content-type-only-for-multipart",
@@ -118,7 +139,32 @@
                 "valid-version",
                 "valid-webhook-signature"
             ],
-            "title": "Validation Rule Name"
+            "title": "API Validation Rule Name"
+        },
+        "DocsValidationRuleName": {
+            "type": "string",
+            "enum": [
+                "accent-color-contrast",
+                "all-roles-must-be-declared",
+                "filepaths-exist",
+                "no-circular-redirects",
+                "no-non-component-refs",
+                "no-openapi-v2-in-docs",
+                "only-versioned-navigation",
+                "tab-with-href",
+                "valid-docs-endpoints",
+                "valid-file-types",
+                "valid-frontmatter",
+                "valid-instance-url",
+                "valid-local-references",
+                "valid-markdown",
+                "valid-markdown-file-references",
+                "valid-markdown-links",
+                "valid-openapi-examples",
+                "validate-product-file",
+                "validate-version-file"
+            ],
+            "title": "Docs Validation Rule Name"
         },
         "ViolationSeverity": {
             "type": "string",

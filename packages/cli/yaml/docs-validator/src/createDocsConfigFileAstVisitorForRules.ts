@@ -11,10 +11,12 @@ import { ValidationViolation } from "./ValidationViolation.js";
 export function createDocsConfigFileAstVisitorForRules({
     relativeFilepath,
     allRuleVisitors,
+    ruleNames,
     addViolations
 }: {
     relativeFilepath: RelativeFilePath;
     allRuleVisitors: RuleVisitor<DocsConfigFileAstNodeTypes>[];
+    ruleNames: string[];
     addViolations: (newViolations: ValidationViolation[]) => void;
 }): DocsConfigFileAstVisitor {
     function createAstNodeVisitor<K extends keyof DocsConfigFileAstNodeTypes>(
@@ -24,20 +26,22 @@ export function createDocsConfigFileAstVisitorForRules({
             node: DocsConfigFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
-            for (const ruleVisitors of allRuleVisitors) {
-                const visitFromRule = ruleVisitors[nodeType];
-                if (visitFromRule != null) {
-                    const ruleViolations = await visitFromRule(node);
-                    addViolations(
-                        ruleViolations.map((violation) => ({
-                            name: violation.name,
-                            severity: violation.severity,
-                            relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
-                            nodePath,
-                            message: violation.message
-                        }))
-                    );
-                }
+                for (let i = 0; i < allRuleVisitors.length; i++) {
+                    const ruleVisitors = allRuleVisitors[i];
+                    const ruleName = ruleNames[i];
+                    const visitFromRule = ruleVisitors?.[nodeType];
+                    if (visitFromRule != null) {
+                        const ruleViolations = await visitFromRule(node);
+                        addViolations(
+                            ruleViolations.map((violation) => ({
+                                name: violation.name ?? ruleName ?? "unknown",
+                                severity: violation.severity,
+                                relativeFilepath: violation.relativeFilepath ?? RelativeFilePath.of(""),
+                                nodePath,
+                                message: violation.message
+                            }))
+                        );
+                    }
             }
         };
 
