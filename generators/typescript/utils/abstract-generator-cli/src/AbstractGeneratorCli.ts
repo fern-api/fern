@@ -187,6 +187,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         });
                     });
                     await typescriptProject.generateLockfile(logger);
+                    if (!(await typescriptProject.areCheckFixToolsAvailable(logger))) {
+                        await typescriptProject.installCheckFixDependencies(logger);
+                    }
                     await typescriptProject.checkFix(logger);
                     await typescriptProject.deleteGitIgnoredFiles(logger);
                     if (this.outputSrcOnly(customConfig)) {
