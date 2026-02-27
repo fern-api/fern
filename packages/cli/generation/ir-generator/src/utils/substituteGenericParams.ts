@@ -1,4 +1,13 @@
 /**
+ * Escapes special regex characters in a string so it can be used as a literal
+ * pattern inside a RegExp. Defense-in-depth: parseGeneric constrains param names
+ * to `[\w]` chars, but this ensures safety even if that invariant changes.
+ */
+function escapeRegExp(str: string): string {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
  * Substitutes generic parameter names with their corresponding argument values
  * within a type reference string. Uses a single-pass regex replacement to avoid
  * clobbering when an argument value matches a later parameter name.
@@ -35,7 +44,7 @@ export function substituteGenericParams(
     }
 
     const pattern = Array.from(paramToArg.keys())
-        .map((p) => `\\b${p}\\b`)
+        .map((p) => `\\b${escapeRegExp(p)}\\b`)
         .join("|");
     return typeReference.replace(new RegExp(pattern, "g"), (match) => paramToArg.get(match) ?? match);
 }
