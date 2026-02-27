@@ -93,9 +93,9 @@ describe("resolveLinksInObject", () => {
             docs: "See [SDKs](/docs/pages/sdks.mdx) for details",
             name: "my-endpoint"
         };
-        resolveLinksInObject(obj, markdownFilesToPathName, metadata);
-        expect(obj.docs).toBe("See [SDKs](/sdks) for details");
-        expect(obj.name).toBe("my-endpoint");
+        const result = resolveLinksInObject(obj, markdownFilesToPathName, metadata);
+        expect(result.docs).toBe("See [SDKs](/sdks) for details");
+        expect(result.name).toBe("my-endpoint");
     });
 
     it("resolves links in nested objects", () => {
@@ -109,18 +109,18 @@ describe("resolveLinksInObject", () => {
                 }
             }
         };
-        resolveLinksInObject(obj, markdownFilesToPathName, metadata);
-        expect(obj.endpoint.description).toBe("Returns [Order](/objects/order) objects");
-        expect(obj.endpoint.parameters.id.docs).toBe("See [guide](/guide)");
+        const result = resolveLinksInObject(obj, markdownFilesToPathName, metadata);
+        expect(result.endpoint.description).toBe("Returns [Order](/objects/order) objects");
+        expect(result.endpoint.parameters.id.docs).toBe("See [guide](/guide)");
     });
 
     it("resolves links in arrays", () => {
         const obj = {
             items: [{ docs: "Link to [SDKs](/docs/pages/sdks.mdx)" }, { docs: "Link to [guide](/docs/pages/guide.md)" }]
         };
-        resolveLinksInObject(obj, markdownFilesToPathName, metadata);
-        expect(obj.items[0]?.docs).toBe("Link to [SDKs](/sdks)");
-        expect(obj.items[1]?.docs).toBe("Link to [guide](/guide)");
+        const result = resolveLinksInObject(obj, markdownFilesToPathName, metadata);
+        expect(result.items[0]?.docs).toBe("Link to [SDKs](/sdks)");
+        expect(result.items[1]?.docs).toBe("Link to [guide](/guide)");
     });
 
     it("leaves non-.md strings untouched", () => {
@@ -129,9 +129,8 @@ describe("resolveLinksInObject", () => {
             version: "1.0.0",
             url: "https://example.com"
         };
-        const original = { ...obj };
-        resolveLinksInObject(obj, markdownFilesToPathName, metadata);
-        expect(obj).toEqual(original);
+        const result = resolveLinksInObject(obj, markdownFilesToPathName, metadata);
+        expect(result).toEqual(obj);
     });
 
     it("handles null and undefined values", () => {
@@ -140,10 +139,10 @@ describe("resolveLinksInObject", () => {
             other: undefined,
             name: "test"
         };
-        resolveLinksInObject(obj, markdownFilesToPathName, metadata);
-        expect(obj.docs).toBeNull();
-        expect(obj.other).toBeUndefined();
-        expect(obj.name).toBe("test");
+        const result = resolveLinksInObject(obj, markdownFilesToPathName, metadata);
+        expect(result.docs).toBeNull();
+        // undefined values are dropped by JSON serialization
+        expect(result.name).toBe("test");
     });
 
     it("handles deeply nested structure mimicking IR", () => {
@@ -175,22 +174,21 @@ describe("resolveLinksInObject", () => {
                 }
             }
         };
-        resolveLinksInObject(ir, markdownFilesToPathName, metadata);
-        expect(ir.services["service_1"]?.endpoints[0]?.docs).toBe("Creates a new [Order](/objects/order)");
-        expect(ir.services["service_1"]?.endpoints[0]?.request.body.docs).toBe(
+        const result = resolveLinksInObject(ir, markdownFilesToPathName, metadata);
+        expect(result.services["service_1"]?.endpoints[0]?.docs).toBe("Creates a new [Order](/objects/order)");
+        expect(result.services["service_1"]?.endpoints[0]?.request.body.docs).toBe(
             "See [getting started](/getting-started#setup)"
         );
-        expect(ir.types["type_1"]?.docs).toBe("Represents an [Order](/objects/order) entity");
-        expect(ir.types["type_1"]?.properties[0]?.docs).toBe("The [SDKs](/sdks) support this field");
-        expect(ir.types["type_1"]?.properties[0]?.name).toBe("orderId");
+        expect(result.types["type_1"]?.docs).toBe("Represents an [Order](/objects/order) entity");
+        expect(result.types["type_1"]?.properties[0]?.docs).toBe("The [SDKs](/sdks) support this field");
+        expect(result.types["type_1"]?.properties[0]?.name).toBe("orderId");
     });
 
     it("does not modify non-object primitives", () => {
-        resolveLinksInObject(null, markdownFilesToPathName, metadata);
-        resolveLinksInObject(undefined, markdownFilesToPathName, metadata);
-        resolveLinksInObject(42, markdownFilesToPathName, metadata);
-        resolveLinksInObject("string", markdownFilesToPathName, metadata);
-        // Should not throw
+        expect(resolveLinksInObject(null, markdownFilesToPathName, metadata)).toBeNull();
+        expect(resolveLinksInObject(undefined, markdownFilesToPathName, metadata)).toBeUndefined();
+        expect(resolveLinksInObject(42, markdownFilesToPathName, metadata)).toBe(42);
+        expect(resolveLinksInObject("string", markdownFilesToPathName, metadata)).toBe("string");
     });
 
     it("resolves links on any key name, not just 'docs'", () => {
@@ -199,10 +197,32 @@ describe("resolveLinksInObject", () => {
             summary: "Returns [Order](/docs/pages/objects/Order.mdx)",
             customField: "Check [guide](/docs/pages/guide.md)"
         };
-        resolveLinksInObject(obj, markdownFilesToPathName, metadata);
-        expect(obj.description).toBe("See [SDKs](/sdks)");
-        expect(obj.summary).toBe("Returns [Order](/objects/order)");
-        expect(obj.customField).toBe("Check [guide](/guide)");
+        const result = resolveLinksInObject(obj, markdownFilesToPathName, metadata);
+        expect(result.description).toBe("See [SDKs](/sdks)");
+        expect(result.summary).toBe("Returns [Order](/objects/order)");
+        expect(result.customField).toBe("Check [guide](/guide)");
+    });
+
+    it("does not mutate the original object", () => {
+        const obj = {
+            docs: "See [SDKs](/docs/pages/sdks.mdx) for details"
+        };
+        const result = resolveLinksInObject(obj, markdownFilesToPathName, metadata);
+        // Original should be unchanged
+        expect(obj.docs).toBe("See [SDKs](/docs/pages/sdks.mdx) for details");
+        // Result should have resolved links
+        expect(result.docs).toBe("See [SDKs](/sdks) for details");
+    });
+
+    it("returns original object when no .md references exist (fast path)", () => {
+        const obj = {
+            name: "my-api",
+            version: "1.0.0",
+            endpoints: [{ path: "/users", method: "GET" }]
+        };
+        const result = resolveLinksInObject(obj, markdownFilesToPathName, metadata);
+        // Should return the exact same reference (fast path, no serialization needed)
+        expect(result).toBe(obj);
     });
 });
 

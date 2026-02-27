@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.90.10
+  changelogEntry:
+    - summary: |
+        Optimize `.mdx/.md` link resolution in OpenAPI descriptions for large multi-spec repos.
+        The recursive JavaScript object traversal is replaced with `JSON.stringify`/`JSON.parse`
+        with a reviver, leveraging V8's native C++ implementation for significantly faster
+        processing. Also adds a fast-path that skips serialization entirely when no `.md`
+        references exist. For repos like Square with 38 API versions (~154 MB of specs),
+        this reduces link resolution time from seconds to milliseconds per spec.
+      type: fix
+    - summary: |
+        Add per-API timing logs during deferred API registration so that slow specs are
+        easily identifiable in `--log-level debug` output.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.90.9
   changelogEntry:
     - summary: |

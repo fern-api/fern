@@ -30,32 +30,41 @@ export function resolveLinksInMarkdownString(
 }
 
 /**
- * Recursively walks an object and resolves .mdx/.md file path links in all string values.
- * Rather than matching on a specific key name, this checks every string for markdown links
- * containing .mdx/.md extensions — the regex in resolveLinksInMarkdownString is the real filter.
+ * Resolves .mdx/.md file path links in all string values within an object.
+ *
+ * Uses JSON.parse with a reviver to transform matching strings during deserialization.
+ * This is significantly faster than recursive JavaScript object traversal for large objects
+ * (e.g. IR objects with tens of thousands of nodes) because V8's JSON implementation is in C++
+ * and avoids the overhead of JavaScript property enumeration and function calls per node.
+ *
+ * Returns a new object with resolved links (does not mutate the input).
  */
-export function resolveLinksInObject(
-    obj: unknown,
+export function resolveLinksInObject<T>(
+    obj: T,
     markdownFilesToPathName: Record<AbsoluteFilePath, string>,
     metadata: AbsolutePathMetadata
-): void {
+): T {
     if (obj == null || typeof obj !== "object") {
-        return;
+        return obj;
     }
-    if (Array.isArray(obj)) {
-        for (const item of obj) {
-            resolveLinksInObject(item, markdownFilesToPathName, metadata);
-        }
-        return;
+
+    // Serialize using native JSON.stringify (C++ implementation, very fast for large objects)
+    const serialized = JSON.stringify(obj);
+
+    // Fast path: if no .md references exist anywhere in the serialized object, skip processing entirely
+    if (!serialized.includes(".md")) {
+        return obj;
     }
-    const record = obj as Record<string, unknown>;
-    for (const [key, value] of Object.entries(record)) {
+
+    // Parse with a reviver that transforms matching strings during deserialization.
+    // The reviver is called for every value; for strings containing ".md", we apply
+    // the markdown link resolution regex. Non-matching values pass through unchanged.
+    return JSON.parse(serialized, (_key, value) => {
         if (typeof value === "string" && value.includes(".md")) {
-            record[key] = resolveLinksInMarkdownString(value, markdownFilesToPathName, metadata);
-        } else if (typeof value === "object") {
-            resolveLinksInObject(value, markdownFilesToPathName, metadata);
+            return resolveLinksInMarkdownString(value, markdownFilesToPathName, metadata);
         }
-    }
+        return value;
+    });
 }
 
 /**

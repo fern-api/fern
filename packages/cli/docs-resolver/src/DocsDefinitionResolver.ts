@@ -462,13 +462,26 @@ export class DocsDefinitionResolver {
                 `Processing ${this.pendingApiRegistrations.length} deferred API registrations...`
             );
             const deferredStart = performance.now();
-            for (const pending of this.pendingApiRegistrations) {
+            for (let i = 0; i < this.pendingApiRegistrations.length; i++) {
+                const pending = this.pendingApiRegistrations[i];
+                if (pending == null) {
+                    continue;
+                }
+                const apiLabel = pending.apiName ?? `api-${i}`;
+                const apiStart = performance.now();
+
                 // Resolve .mdx/.md file path links in all IR description (docs) fields
-                this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
+                const resolveStart = performance.now();
+                const resolvedIr = this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
+                const resolveTime = performance.now() - resolveStart;
+                this.taskContext.logger.debug(
+                    `[${i + 1}/${this.pendingApiRegistrations.length}] ${apiLabel}: resolved links in ${resolveTime.toFixed(0)}ms`
+                );
 
                 // Register the API with resolved descriptions
+                const registerStart = performance.now();
                 const realApiDefinitionId = await this.registerApi({
-                    ir: pending.ir,
+                    ir: resolvedIr,
                     snippetsConfig: pending.snippetsConfig,
                     playgroundConfig: pending.playgroundConfig,
                     apiName: pending.apiName,
@@ -476,12 +489,18 @@ export class DocsDefinitionResolver {
                     graphqlOperations: pending.graphqlOperations,
                     graphqlTypes: pending.graphqlTypes
                 });
+                const registerTime = performance.now() - registerStart;
 
                 // Update all apiDefinitionId references in the navigation subtree
                 updateApiDefinitionIdInTree(pending.apiReferenceNode, pending.tempApiDefinitionId, realApiDefinitionId);
+
+                const apiTime = performance.now() - apiStart;
+                this.taskContext.logger.debug(
+                    `[${i + 1}/${this.pendingApiRegistrations.length}] ${apiLabel}: registered in ${registerTime.toFixed(0)}ms, total ${apiTime.toFixed(0)}ms`
+                );
             }
             const deferredTime = performance.now() - deferredStart;
-            this.taskContext.logger.debug(`Processed deferred API registrations in ${deferredTime.toFixed(0)}ms`);
+            this.taskContext.logger.debug(`Processed ${this.pendingApiRegistrations.length} deferred API registrations in ${deferredTime.toFixed(0)}ms`);
             this.pendingApiRegistrations = [];
         }
 
@@ -2242,12 +2261,12 @@ export class DocsDefinitionResolver {
     private resolveLinksInIrDocs(
         ir: IntermediateRepresentation,
         markdownFilesToPathName: Record<AbsoluteFilePath, string>
-    ): void {
+    ): IntermediateRepresentation {
         const metadata = {
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absolutePathToMarkdownFile: this.docsWorkspace.absoluteFilePath
         };
-        resolveLinksInObject(ir, markdownFilesToPathName, metadata);
+        return resolveLinksInObject(ir, markdownFilesToPathName, metadata);
     }
 }
 
