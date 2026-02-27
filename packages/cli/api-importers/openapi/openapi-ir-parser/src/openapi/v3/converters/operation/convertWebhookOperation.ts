@@ -67,7 +67,9 @@ export function convertWebhookOperation({
     // For GET webhooks without a request body, synthesize a payload from query parameters
     if (operation.requestBody == null) {
         if (convertedParameters.queryParameters.length === 0) {
-            context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Missing a request body and no query parameters`);
+            context.logger.error(
+                `Skipping webhook ${method.toUpperCase()} ${path}: Missing a request body and no query parameters`
+            );
             return [];
         }
 
