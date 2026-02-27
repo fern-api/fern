@@ -253,6 +253,7 @@ class SnippetTestFactory:
                 boolean=lambda _: None,
                 long_=lambda _: None,
                 datetime=lambda _: "datetime",
+                datetime_rfc_2822=lambda _: "datetime",
                 date=lambda _: "date",
                 uuid_=lambda _: "uuid",
             ),

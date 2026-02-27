@@ -1,5 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.61.0
+  changelogEntry:
+    - summary: |
+        Add support for `DATE_TIME_RFC_2822` primitive type. Fields with `format: date-time-rfc-2822`
+        in OpenAPI specs now generate as `Rfc2822DateTime` (a `datetime.datetime` subclass) that
+        parses RFC 2822 date strings (e.g., "Wed, 02 Oct 2002 13:00:00 GMT") using Python's
+        `email.utils.parsedate_to_datetime`. Compatible with both Pydantic V1 (`__get_validators__`)
+        and V2 (`__get_pydantic_core_schema__`), passing mypy strict type checking.
+      type: feat
+    - summary: |
+        Fix code snippet generation for RFC 2822 datetime fields to use
+        `email.utils.parsedate_to_datetime()` with RFC 2822 format strings instead of
+        `datetime.fromisoformat()` with ISO 8601 format.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 4.60.2
   changelogEntry:
     - summary: |
@@ -10,7 +27,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 4.60.1
   changelogEntry:
     - summary: |
