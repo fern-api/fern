@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.8
+  changelogEntry:
+    - summary: |
+        Modernize generated CI workflow: merge three separate jobs (compile,
+        unit-tests, publish) into a single job to avoid redundant .NET setup,
+        restore, and build steps. Update actions/checkout to v6, install both
+        .NET 10.x and 8.x SDKs, add ContinuousIntegrationBuild flag, and
+        remove redundant duplicate checkout step. Also add CI, MSBUILDTERMINALLOGGER
+        environment variables to reduce noisy output.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 62
+
 - version: 2.22.7
   changelogEntry:
     - summary: |

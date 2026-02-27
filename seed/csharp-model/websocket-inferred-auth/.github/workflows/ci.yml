@@ -3,95 +3,45 @@ name: ci
 on: [push]
 
 env:
+  CI: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_NOLOGO: true
+  MSBUILDTERMINALLOGGER: off
 
 jobs:
-  compile:
+  ci:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
-
-      - uses: actions/checkout@master
+        uses: actions/checkout@v6
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 10.x
-
-      - name: Print .NET info
-        run: dotnet --info
+          dotnet-version: |
+            10.x
+            8.x
 
       - name: Install tools
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedWebsocketAuth/SeedWebsocketAuth.csproj
+        run: dotnet restore
 
-      - name: Build Release
-        run: dotnet build src/SeedWebsocketAuth/SeedWebsocketAuth.csproj -c Release --no-restore
+      - name: Build
+        id: build
+        run: dotnet build --no-restore -c Release /p:ContinuousIntegrationBuild=true
 
-  unit-tests:
-    runs-on: ubuntu-latest
+      - name: Test
+        run: dotnet test --no-restore --no-build -c Release /p:ContinuousIntegrationBuild=true
 
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v5
+      - name: Pack
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
+        run: dotnet pack src/SeedWebsocketAuth/SeedWebsocketAuth.csproj --no-build --no-restore -c Release
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.x
-
-      - name: Print .NET info
-        run: dotnet --info
-
-      - name: Install tools
-        run: |
-          dotnet tool restore
-
-      - name: Restore dependencies
-        run: dotnet restore src/SeedWebsocketAuth.Test/SeedWebsocketAuth.Test.csproj
-
-      - name: Build Release
-        run: dotnet build src/SeedWebsocketAuth.Test/SeedWebsocketAuth.Test.csproj -c Release --no-restore
-
-      - name: Run Tests
-        run: dotnet test src/SeedWebsocketAuth.Test/SeedWebsocketAuth.Test.csproj -c Release --no-build --no-restore
-
-
-  publish:
-    needs: [compile]
-    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v5
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.x
-
-      - name: Print .NET info
-        run: dotnet --info
-
-      - name: Install tools
-        run: dotnet tool restore
-
-      - name: Restore dependencies
-        run: dotnet restore src/SeedWebsocketAuth/SeedWebsocketAuth.csproj
-
-      - name: Build Release
-        run: dotnet build src/SeedWebsocketAuth/SeedWebsocketAuth.csproj -c Release --no-restore
-
-      - name: Publish
+      - name: Publish to NuGet.org
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/') && steps.build.outcome == 'success'
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
-        run: |
-          dotnet pack src/SeedWebsocketAuth/SeedWebsocketAuth.csproj -c Release --no-build --no-restore
-          dotnet nuget push src/SeedWebsocketAuth/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
-
+        run: dotnet nuget push src/SeedWebsocketAuth/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
