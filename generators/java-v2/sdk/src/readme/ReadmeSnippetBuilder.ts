@@ -121,13 +121,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
         }
 
-        // Add authentication snippets when OAuth client credentials are present
-        if (this.hasOAuthClientCredentials()) {
-            snippetsByFeatureId[ReadmeSnippetBuilder.AUTHENTICATION_FEATURE_ID] = [
-                this.getOAuthTokenOverrideDocumentation()
-            ];
-        }
-
         return snippetsByFeatureId;
     }
 
@@ -139,6 +132,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         if (customConfig != null && customConfig["collapse-optional-nullable"] === true) {
             // Add OptionalNullable documentation to Usage section
             addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = this.getOptionalNullableDocumentation();
+        }
+
+        // Always show OAuth token override documentation when OAuth client credentials are present
+        if (this.hasOAuthClientCredentials()) {
+            addendumsByFeatureId[ReadmeSnippetBuilder.AUTHENTICATION_FEATURE_ID] =
+                this.getOAuthTokenOverrideDocumentation();
         }
 
         return addendumsByFeatureId;

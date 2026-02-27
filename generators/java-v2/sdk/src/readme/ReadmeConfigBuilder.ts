@@ -27,15 +27,14 @@ export class ReadmeConfigBuilder {
 
         for (const feature of featureConfig.features) {
             const snippetsForFeature = snippetsByFeatureId[feature.id];
-
-            if (snippetsForFeature == null || !snippetsForFeature.length) {
-                continue;
-            }
-
             const addendumForFeature = addendumsByFeatureId[feature.id];
 
-            // For AUTHENTICATION feature, wrap snippets as markdown (not code blocks)
-            const isMarkdownFeature = feature.id === "AUTHENTICATION";
+            // Skip features that have no snippets and no addendum
+            const hasSnippets = snippetsForFeature != null && snippetsForFeature.length > 0;
+            const hasAddendum = addendumForFeature != null;
+            if (!hasSnippets && !hasAddendum) {
+                continue;
+            }
 
             // Customize description for Pagination when using custom pagination
             let description = feature.description;
@@ -59,11 +58,9 @@ export class ReadmeConfigBuilder {
                 id: feature.id,
                 advanced: feature.advanced,
                 description,
-                snippets: isMarkdownFeature
-                    ? snippetsForFeature.map((s) => ({ type: "markdown" as const, content: s }))
-                    : snippetsForFeature,
+                snippets: hasSnippets ? snippetsForFeature : undefined,
                 addendum: addendumForFeature,
-                snippetsAreOptional: false
+                snippetsAreOptional: !hasSnippets
             });
         }
 
