@@ -87,6 +87,7 @@ export abstract class AbstractRustGeneratorContext<
         this.dependencyManager.add("base64", "0.22");
 
         this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
+        this.dependencyManager.add("wiremock", "0.6", RustDependencyType.DEV);
 
         const extraDeps = this.customConfig.extraDependencies ?? {};
         for (const [name, versionOrSpec] of Object.entries(extraDeps)) {

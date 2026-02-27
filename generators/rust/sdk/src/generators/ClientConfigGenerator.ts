@@ -10,18 +10,13 @@ export class ClientConfigGenerator {
         this.context = context;
     }
 
-    public generate(unitTestModule?: string): RustFile {
+    public generate(): RustFile {
         const clientConfigStruct = this.generateClientConfigStruct();
         const defaultImpl = this.generateDefaultImpl();
 
-        const rawDeclarations = [clientConfigStruct.toString(), defaultImpl.toString()];
-        if (unitTestModule) {
-            rawDeclarations.push(unitTestModule);
-        }
-
         const module = rust.module({
             useStatements: this.generateImports(),
-            rawDeclarations
+            rawDeclarations: [clientConfigStruct.toString(), defaultImpl.toString()]
         });
 
         return new RustFile({
