@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.2
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-server-name` extension being ignored on AsyncAPI server definitions.
+        When an AsyncAPI spec uses `x-fern-server-name` to override a server's name
+        (e.g. renaming `uat` to `market_data` to avoid naming conflicts with another API),
+        both the environment ID and channel base URL now use the overridden name. This
+        fixes SDK generation errors like "Expected environment UAT to contain url for uat"
+        when the generators.yml environment URLs reference the overridden server name.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.1
   changelogEntry:
     - summary: |
