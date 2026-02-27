@@ -377,3 +377,4 @@ $client->service->withLiteralAndEnumTypes($request): string;
 </dd>
 </dl>
 </details>
+

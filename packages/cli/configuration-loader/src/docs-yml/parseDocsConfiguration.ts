@@ -1131,7 +1131,8 @@ async function convertNavigationItem({
                     : undefined,
             postman: rawConfig.postman,
             navigation:
-                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
+                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig, context)) ??
+                [],
             overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
@@ -1223,7 +1224,8 @@ function parsePageConfig(
 
 function parseApiReferenceLayoutItem(
     item: docsYml.RawSchemas.ApiReferenceLayoutItem,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    context?: TaskContext
 ): docsYml.ParsedApiReferenceLayoutItem[] {
     if (typeof item === "string") {
         return [{ type: "item", value: item }];
@@ -1242,6 +1244,15 @@ function parseApiReferenceLayoutItem(
             }
         ];
     } else if (isRawApiRefSectionConfiguration(item)) {
+        if (context != null) {
+            validateCollapsibleConfig({
+                context,
+                sectionTitle: item.section,
+                collapsed: undefined,
+                collapsible: item.collapsible ?? undefined,
+                collapsedByDefault: item.collapsedByDefault ?? undefined
+            });
+        }
         return [
             {
                 type: "section",
@@ -1249,10 +1260,14 @@ function parseApiReferenceLayoutItem(
                 referencedSubpackages: item.referencedPackages ?? [],
                 overviewAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
                 contents:
-                    item.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                    item.contents?.flatMap((value) =>
+                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                    ) ?? [],
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                collapsible: item.collapsible ?? undefined,
+                collapsedByDefault: item.collapsedByDefault ?? undefined,
                 availability: item.availability,
                 icon: resolveIconPath(item.icon, absolutePathToConfig),
                 playground: item.playground,
@@ -1300,7 +1315,9 @@ function parseApiReferenceLayoutItem(
                 package: key,
                 overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
                 contents:
-                    value.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                    value.contents?.flatMap((value) =>
+                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                    ) ?? [],
                 slug: value.slug,
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
@@ -1317,7 +1334,7 @@ function parseApiReferenceLayoutItem(
             title: undefined,
             package: key,
             overviewAbsolutePath: undefined,
-            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)),
+            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig, context)),
             hidden: false,
             slug: undefined,
             skipUrlSlug: false,

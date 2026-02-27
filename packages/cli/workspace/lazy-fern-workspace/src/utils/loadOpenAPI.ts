@@ -59,7 +59,7 @@ export async function loadOpenAPI({
 }: {
     context: TaskContext;
     absolutePathToOpenAPI: AbsoluteFilePath;
-    absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
+    absolutePathToOpenAPIOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
     absolutePathToOpenAPIOverlays: AbsoluteFilePath | undefined;
     loadAiExamples?: boolean;
 }): Promise<OpenAPI.Document> {
@@ -67,29 +67,46 @@ export async function loadOpenAPI({
         absolutePathToOpenAPI
     });
 
-    let overridesFilepath = undefined;
+    // Normalize overrides to an array for consistent processing
+    let overridesFilepaths: AbsoluteFilePath[] = [];
     if (absolutePathToOpenAPIOverrides != null) {
-        overridesFilepath = absolutePathToOpenAPIOverrides;
+        if (Array.isArray(absolutePathToOpenAPIOverrides)) {
+            overridesFilepaths = absolutePathToOpenAPIOverrides;
+        } else {
+            overridesFilepaths = [absolutePathToOpenAPIOverrides];
+        }
     } else if (
         typeof parsed === "object" &&
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] != null
     ) {
-        overridesFilepath = join(
-            dirname(absolutePathToOpenAPI),
-            // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-            RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
-        );
+        overridesFilepaths = [
+            join(
+                dirname(absolutePathToOpenAPI),
+                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+                RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
+            )
+        ];
     }
 
     let result = parsed;
 
-    if (overridesFilepath != null) {
+    // Apply each override file sequentially in order
+    // After each override, resolve refs using that override's directory as the base
+    for (const overridesFilepath of overridesFilepaths) {
         result = await mergeWithOverrides<OpenAPI.Document>({
             absoluteFilePathToOverrides: overridesFilepath,
             context,
             data: result,
             allowNullKeys: OPENAPI_EXAMPLES_KEYS
+        });
+
+        // Resolve refs after each override is applied, using the current override's path
+        // This ensures refs added by this override file are resolved relative to its location
+        result = await parseOpenAPI({
+            absolutePathToOpenAPI,
+            absolutePathToOpenAPIOverrides: overridesFilepath,
+            parsed: result
         });
     }
 
@@ -160,11 +177,16 @@ export async function loadOpenAPI({
         }
     }
 
-    if (overridesFilepath != null || absolutePathToOpenAPIOverlays != null || result !== parsed) {
+    // Need final resolution if:
+    // 1. Changes were made AND no overrides (original AI examples case), OR
+    // 2. Overlays were applied (they can add/modify references that need resolution)
+    const needsFinalResolution =
+        (result !== parsed && overridesFilepaths.length === 0) || absolutePathToOpenAPIOverlays != null;
+
+    if (needsFinalResolution) {
         return await parseOpenAPI({
             absolutePathToOpenAPI,
-            absolutePathToOpenAPIOverrides: overridesFilepath,
-            absolutePathToOpenAPIOverlays,
+            absolutePathToOpenAPIOverlays, // Include overlay path for ref resolver
             parsed: result
         });
     }

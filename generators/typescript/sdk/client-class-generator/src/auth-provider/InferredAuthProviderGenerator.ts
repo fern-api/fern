@@ -166,7 +166,12 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
-        const requestWrapper = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
+        // Only get the request wrapper if the endpoint has a wrapped request.
+        // Some endpoints (e.g., with justRequestBody or no sdkRequest) don't have wrappers.
+        const hasWrappedRequest = this.endpoint.sdkRequest != null && this.endpoint.sdkRequest.shape.type === "wrapper";
+        const requestWrapper = hasWrappedRequest
+            ? context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
+            : undefined;
         this.writeConstants(context);
         this.writeClass({ context, requestWrapper });
         this.writeOptions(context);
@@ -212,7 +217,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         requestWrapper
     }: {
         context: SdkContext;
-        requestWrapper: GeneratedRequestWrapper;
+        requestWrapper: GeneratedRequestWrapper | undefined;
     }): void {
         context.sourceFile.addClass({
             name: CLASS_NAME,
@@ -391,9 +396,9 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         requestWrapper
     }: {
         context: SdkContext;
-        requestWrapper: GeneratedRequestWrapper;
+        requestWrapper: GeneratedRequestWrapper | undefined;
     }): MethodDeclarationStructure {
-        const requestProperties = requestWrapper.getRequestProperties(context);
+        const requestProperties = requestWrapper?.getRequestProperties(context) ?? [];
 
         // Generate variable declarations and validation checks for each parameter
         const parameterStatements: (string | WriterFunction | StatementStructures)[] = [];
@@ -544,9 +549,9 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         requestWrapper
     }: {
         context: SdkContext;
-        requestWrapper: GeneratedRequestWrapper;
+        requestWrapper: GeneratedRequestWrapper | undefined;
     }): ts.Expression[] {
-        const requestProperties = requestWrapper.getRequestProperties(context);
+        const requestProperties = requestWrapper?.getRequestProperties(context) ?? [];
 
         // Build the request object
         const propertyAssignments = requestProperties.map((p) => {

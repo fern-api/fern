@@ -157,6 +157,13 @@ export class LocalTaskHandler {
 
             this.context.logger.debug(`Previous version detected: ${previousVersion}`);
 
+            if (cleanedDiff.trim().length === 0) {
+                this.context.logger.info(
+                    "No actual changes detected after filtering version-only changes. Cancelling generation."
+                );
+                return null;
+            }
+
             // Call AI to analyze the diff
             try {
                 // TODO: Need to get project for BAML client configuration
@@ -490,9 +497,18 @@ export class LocalTaskHandler {
     /**
      * Generates a git diff file for automatic versioning analysis.
      * This compares the current state against HEAD to see what changes have been made.
+     *
+     * Uses `git add -N .` (intent-to-add) before diffing so that newly created files
+     * (e.g. from a namespace rename) appear in the diff. Without this, `git diff HEAD`
+     * silently ignores untracked files, which causes namespace changes to be invisible
+     * when the copy path does not stage files (copyGeneratedFilesNoFernIgnorePreservingGit).
      */
     private async generateDiffFile(): Promise<string> {
         const diffFile = pathJoin(tmpdir(), `git-diff-${Date.now()}.patch`);
+
+        // Mark any new untracked files as intent-to-add so they appear in the diff.
+        // This is a no-op for files that are already staged.
+        await this.runGitCommand(["add", "-N", "."], this.absolutePathToLocalOutput);
 
         await this.runGitCommand(["diff", "HEAD", "--output", diffFile], this.absolutePathToLocalOutput);
 
