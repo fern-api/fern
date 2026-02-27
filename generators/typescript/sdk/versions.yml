@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.3
+  changelogEntry:
+    - summary: |
+        Fix list and set query parameters being JSON serialized instead of using exploded format.
+        Previously, query parameters with `list<T>` or `set<T>` types (including `optional<list<T>>`)
+        were encoded as a single JSON string (e.g. `?labels=%5B%22a%22%2C%22b%22%5D`). They are now
+        correctly passed as arrays to the query string serializer, producing exploded parameters
+        (e.g. `?labels=a&labels=b`), matching the expected default behavior and the Python SDK.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.52.2
   changelogEntry:
     - summary: |

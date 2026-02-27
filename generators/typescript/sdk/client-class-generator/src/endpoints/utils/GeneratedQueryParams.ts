@@ -87,10 +87,11 @@ export class GeneratedQueryParams {
         referenceToQueryParameter: ts.Expression;
         context: SdkContext;
     }): ts.Expression {
-        const listItemType =
-            queryParameter.valueType.type === "container" && queryParameter.valueType.container.type === "list"
-                ? queryParameter.valueType.container.list
-                : queryParameter.valueType;
+        // Check if the type is inherently a list/set (possibly wrapped in optional/nullable)
+        const resolvedListItemType = this.getListItemType(queryParameter.valueType, context);
+        const isListType = resolvedListItemType != null;
+
+        const listItemType = resolvedListItemType ?? queryParameter.valueType;
         const scalarNeedsTransform = this.scalarValueNeedsTransform(queryParameter.valueType, context);
         const itemNeedsTransform = this.listItemNeedsTransform(listItemType, context);
         const needsArrayCheck = scalarNeedsTransform || itemNeedsTransform;
@@ -100,6 +101,32 @@ export class GeneratedQueryParams {
             referenceToQueryParameter,
             context
         });
+
+        // If the type is inherently a list/set, produce an array value directly
+        // so that toQueryString serializes it as exploded params (e.g. ?key=a&key=b)
+        if (isListType) {
+            const arrayExpression = this.getArrayValueExpression({
+                queryParameter,
+                referenceToQueryParameter,
+                listItemType,
+                context
+            });
+            // If the list is wrapped in optional, we need a null check before calling .map()
+            if (this.isOptionalOrNullable(queryParameter.valueType) && itemNeedsTransform) {
+                return ts.factory.createConditionalExpression(
+                    ts.factory.createBinaryExpression(
+                        referenceToQueryParameter,
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                    arrayExpression,
+                    ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                    ts.factory.createIdentifier("undefined")
+                );
+            }
+            return arrayExpression;
+        }
 
         if (!queryParameter.allowMultiple) {
             return scalarExpression;
@@ -352,6 +379,47 @@ export class GeneratedQueryParams {
             return true;
         }
         return false;
+    }
+
+    private isOptionalOrNullable(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type === "container") {
+            if (typeReference.container.type === "optional" || typeReference.container.type === "nullable") {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Extracts the list/set item type from a type reference, unwrapping optional/nullable/alias wrappers.
+     * Returns undefined if the type is not a list or set.
+     */
+    private getListItemType(
+        typeReference: FernIr.TypeReference,
+        context: SdkContext
+    ): FernIr.TypeReference | undefined {
+        switch (typeReference.type) {
+            case "container":
+                switch (typeReference.container.type) {
+                    case "list":
+                        return typeReference.container.list;
+                    case "set":
+                        return typeReference.container.set;
+                    case "optional":
+                        return this.getListItemType(typeReference.container.optional, context);
+                    case "nullable":
+                        return this.getListItemType(typeReference.container.nullable, context);
+                }
+                break;
+            case "named": {
+                const typeDeclaration = context.type.getTypeDeclaration(typeReference);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.getListItemType(typeDeclaration.shape.aliasOf, context);
+                }
+                break;
+            }
+        }
+        return undefined;
     }
 
     private listItemNeedsTransform(listItemType: FernIr.TypeReference, context: SdkContext): boolean {
