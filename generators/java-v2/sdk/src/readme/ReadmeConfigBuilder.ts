@@ -34,6 +34,9 @@ export class ReadmeConfigBuilder {
 
             const addendumForFeature = addendumsByFeatureId[feature.id];
 
+            // For AUTHENTICATION feature, wrap snippets as markdown (not code blocks)
+            const isMarkdownFeature = feature.id === "AUTHENTICATION";
+
             // Customize description for Pagination when using custom pagination
             let description = feature.description;
             if (feature.id === FernGeneratorCli.StructuredFeatureId.Pagination) {
@@ -56,7 +59,9 @@ export class ReadmeConfigBuilder {
                 id: feature.id,
                 advanced: feature.advanced,
                 description,
-                snippets: snippetsForFeature,
+                snippets: isMarkdownFeature
+                    ? snippetsForFeature.map((s) => ({ type: "markdown" as const, content: s }))
+                    : snippetsForFeature,
                 addendum: addendumForFeature,
                 snippetsAreOptional: false
             });
