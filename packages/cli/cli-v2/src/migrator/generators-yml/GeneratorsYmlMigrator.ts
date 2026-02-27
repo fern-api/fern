@@ -63,7 +63,7 @@ export class GeneratorsYmlMigrator {
             };
         }
 
-        let content: string;
+        let content: string | undefined;
         try {
             content = await readFile(absoluteFilePath, "utf-8");
             const config = yaml.load(content) as generatorsYml.GeneratorsConfigurationSchema;
@@ -120,7 +120,7 @@ export class GeneratorsYmlMigrator {
 
             // Check if the error is likely caused by an unquoted value starting with @
             // (e.g. scoped npm packages like @scope/package)
-            if (error instanceof yaml.YAMLException && error.mark != null) {
+            if (error instanceof yaml.YAMLException && error.mark != null && content != null) {
                 const lines = content.split("\n");
                 const errorLine = lines[error.mark.line];
                 if (errorLine != null && /:\s+@/.test(errorLine)) {
