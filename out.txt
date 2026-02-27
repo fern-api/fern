@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "results": {
+    "apis": [
+      {
+        "severity": "warning",
+        "message": "Endpoint path /generators/{generator_id} conflicts with other endpoints:\n  - generators/cli.yml -> listCliReleases /generators/cli",
+        "api": "public-api",
+        "rule": "no-conflicting-endpoint-paths"
+      },
+      {
+        "severity": "warning",
+        "message": "Endpoint path /generators/cli conflicts with other endpoints:\n  - generators/__package__.yml -> getGenerator /generators/{generator_id}",
+        "api": "public-api",
+        "rule": "no-conflicting-endpoint-paths"
+      }
+    ]
+  }
+}

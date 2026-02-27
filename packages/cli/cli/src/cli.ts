@@ -237,6 +237,9 @@ async function tryRunCli(cliContext: CliContext) {
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
+        if ((argv as Record<string, unknown>).json === true) {
+            cliContext.enableJsonMode();
+        }
         cliContext.logFernVersionDebug();
     });
 
@@ -1121,7 +1124,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("json", {
                     boolean: true,
-                    description: "Output results as JSON to stdout (all other output goes to stderr).",
+                    description: "Output results as JSON to stdout.",
                     default: false
                 }),
         async (argv) => {
