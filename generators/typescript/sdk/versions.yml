@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.51.6
+  changelogEntry:
+    - summary: |
+        In downloadFiles mode, install only the configured formatter/linter
+        packages instead of the full dependency tree when outputting source files
+        only. This replaces the ~1.8s full `pnpm install` with a targeted
+        `pnpm add` of just the check:fix packages (e.g. @biomejs/biome,
+        prettier, oxfmt, oxlint).
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.51.5
   changelogEntry:
     - summary: |
@@ -9,7 +21,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.51.4
   changelogEntry:
     - summary: |

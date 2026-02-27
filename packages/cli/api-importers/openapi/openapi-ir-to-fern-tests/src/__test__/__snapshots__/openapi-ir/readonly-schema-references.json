@@ -1,0 +1,773 @@
+{
+  "title": "Readonly Schema References API",
+  "description": "Test schema reference resolution when respect-readonly-schemas causes schema renaming",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Create configuration",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostConfigRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostConfigRequest",
+          "schema": "ConfigCreateRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Configuration created successfully",
+        "schema": {
+          "generatedName": "PostConfigResponse",
+          "schema": "ConfigResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/config",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "provisioning": {
+                  "properties": {
+                    "enabled": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "mappings": {
+                      "value": [
+                        {
+                          "properties": {},
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastModified": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "syncStatus": {
+                      "value": "active",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                },
+                "metadata": {
+                  "properties": {
+                    "version": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "owner": {
+                      "value": {
+                        "value": "owner",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "tags": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "tags",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Get configuration",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [
+        {
+          "name": "configId",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetConfigConfigIdRequestConfigId",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetConfigConfigIdRequest",
+      "response": {
+        "description": "Configuration retrieved successfully",
+        "schema": {
+          "generatedName": "GetConfigConfigIdResponse",
+          "schema": "ConfigResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/config/{configId}",
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "configId",
+              "value": {
+                "value": {
+                  "value": "configId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "provisioning": {
+                  "properties": {
+                    "enabled": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    },
+                    "mappings": {
+                      "value": [
+                        {
+                          "properties": {},
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    },
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "lastModified": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "syncStatus": {
+                      "value": "active",
+                      "type": "enum"
+                    }
+                  },
+                  "type": "object"
+                },
+                "metadata": {
+                  "properties": {
+                    "version": {
+                      "value": {
+                        "value": 1,
+                        "type": "int"
+                      },
+                      "type": "primitive"
+                    },
+                    "owner": {
+                      "value": {
+                        "value": "owner",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "tags": {
+                      "value": [
+                        {
+                          "value": {
+                            "value": "tags",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      ],
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "IdpProvisioningConfig": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "idpProvisioningConfigEnabled",
+            "key": "enabled",
+            "schema": {
+              "generatedName": "IdpProvisioningConfigEnabled",
+              "description": "Whether provisioning is enabled",
+              "value": {
+                "description": "Whether provisioning is enabled",
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "IdpProvisioningConfigEnabled",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "idpProvisioningConfigMappings",
+            "key": "mappings",
+            "schema": {
+              "generatedName": "IdpProvisioningConfigMappings",
+              "value": {
+                "value": {
+                  "generatedName": "IdpProvisioningConfigMappingsItem",
+                  "schema": "AttributeMapping",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "IdpProvisioningConfigMappings",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "idpProvisioningConfigCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "generatedName": "IdpProvisioningConfigCreatedAt",
+              "description": "When the config was created",
+              "value": {
+                "description": "When the config was created",
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "IdpProvisioningConfigCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "idpProvisioningConfigLastModified",
+            "key": "lastModified",
+            "schema": {
+              "generatedName": "IdpProvisioningConfigLastModified",
+              "description": "When the config was last modified",
+              "value": {
+                "description": "When the config was last modified",
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "IdpProvisioningConfigLastModified",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "idpProvisioningConfigSyncStatus",
+            "key": "syncStatus",
+            "schema": {
+              "generatedName": "IdpProvisioningConfigSyncStatus",
+              "description": "Current sync status",
+              "value": {
+                "description": "Current sync status",
+                "generatedName": "IdpProvisioningConfigSyncStatus",
+                "values": [
+                  {
+                    "generatedName": "active",
+                    "value": "active",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "pending",
+                    "value": "pending",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "failed",
+                    "value": "failed",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "IdpProvisioningConfig",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ConfigResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "configResponseId",
+            "key": "id",
+            "schema": {
+              "generatedName": "ConfigResponseId",
+              "description": "Configuration ID",
+              "value": {
+                "description": "Configuration ID",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ConfigResponseId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "configResponseProvisioning",
+            "key": "provisioning",
+            "schema": {
+              "generatedName": "ConfigResponseProvisioning",
+              "value": {
+                "description": "Provisioning configuration",
+                "generatedName": "ConfigResponseProvisioning",
+                "schema": "IdpProvisioningConfig",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "configResponseMetadata",
+            "key": "metadata",
+            "schema": {
+              "generatedName": "ConfigResponseMetadata",
+              "value": {
+                "generatedName": "ConfigResponseMetadata",
+                "schema": "ConfigMetadata",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ConfigResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ConfigCreateRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "configCreateRequestEnabled",
+            "key": "enabled",
+            "schema": {
+              "generatedName": "ConfigCreateRequestEnabled",
+              "description": "Whether provisioning is enabled",
+              "value": {
+                "description": "Whether provisioning is enabled",
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "ConfigCreateRequestEnabled",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "configCreateRequestMappings",
+            "key": "mappings",
+            "schema": {
+              "generatedName": "ConfigCreateRequestMappings",
+              "value": {
+                "value": {
+                  "generatedName": "ConfigCreateRequestMappingsItem",
+                  "schema": "AttributeMapping",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "ConfigCreateRequestMappings",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ConfigCreateRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AttributeMapping": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "attributeMappingSource",
+            "key": "source",
+            "schema": {
+              "generatedName": "AttributeMappingSource",
+              "description": "Source attribute name",
+              "value": {
+                "description": "Source attribute name",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AttributeMappingSource",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "attributeMappingTarget",
+            "key": "target",
+            "schema": {
+              "generatedName": "AttributeMappingTarget",
+              "description": "Target attribute name",
+              "value": {
+                "description": "Target attribute name",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AttributeMappingTarget",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "attributeMappingRequired",
+            "key": "required",
+            "schema": {
+              "generatedName": "AttributeMappingRequired",
+              "value": {
+                "schema": {
+                  "default": false,
+                  "type": "boolean"
+                },
+                "generatedName": "AttributeMappingRequired",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "AttributeMapping",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ConfigMetadata": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "configMetadataVersion",
+            "key": "version",
+            "schema": {
+              "generatedName": "ConfigMetadataVersion",
+              "value": {
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "ConfigMetadataVersion",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "configMetadataOwner",
+            "key": "owner",
+            "schema": {
+              "generatedName": "ConfigMetadataOwner",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ConfigMetadataOwner",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "configMetadataTags",
+            "key": "tags",
+            "schema": {
+              "generatedName": "ConfigMetadataTags",
+              "value": {
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ConfigMetadataTagsItem",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "generatedName": "ConfigMetadataTags",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ConfigMetadata",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
