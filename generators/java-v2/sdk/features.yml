@@ -61,7 +61,7 @@ features:
       (A normal client's `response` is identical to a raw client's `response.body()`.)
 
   - id: AUTHENTICATION
-    description: ""
+    description:
 
   - id: WEBSOCKET
     description: |
