@@ -215,7 +215,7 @@ interface EndpointWorkItem {
 
 export interface OpenAPISourceSpec {
     absoluteFilePath: AbsoluteFilePath;
-    absoluteFilePathToOverrides?: AbsoluteFilePath | AbsoluteFilePath[];
+    absoluteFilePathToOverrides?: AbsoluteFilePath;
 }
 
 function createSafeFilename(method: string, endpointPath: string): string {
@@ -532,9 +532,6 @@ async function performAIEnhancement(
                 let specContent = await readFile(sourceSpec.absoluteFilePath, "utf-8");
 
                 if (sourceSpec.absoluteFilePathToOverrides != null) {
-                    const overridesPaths = Array.isArray(sourceSpec.absoluteFilePathToOverrides)
-                        ? sourceSpec.absoluteFilePathToOverrides
-                        : [sourceSpec.absoluteFilePathToOverrides];
                     try {
                         let parsedSpec: object;
                         try {
@@ -542,17 +539,15 @@ async function performAIEnhancement(
                         } catch {
                             parsedSpec = yaml.load(specContent, { json: true }) as object;
                         }
-                        for (const overridesPath of overridesPaths) {
-                            const overridesContent = await readFile(overridesPath, "utf-8");
-                            let parsedOverrides: object;
-                            try {
-                                parsedOverrides = JSON.parse(overridesContent);
-                            } catch {
-                                parsedOverrides = yaml.load(overridesContent, { json: true }) as object;
-                            }
-                            parsedSpec = mergeWithOverrides({ data: parsedSpec, overrides: parsedOverrides });
+                        const overridesContent = await readFile(sourceSpec.absoluteFilePathToOverrides, "utf-8");
+                        let parsedOverrides: object;
+                        try {
+                            parsedOverrides = JSON.parse(overridesContent);
+                        } catch {
+                            parsedOverrides = yaml.load(overridesContent, { json: true }) as object;
                         }
-                        specContent = yaml.dump(parsedSpec);
+                        const merged = mergeWithOverrides({ data: parsedSpec, overrides: parsedOverrides });
+                        specContent = yaml.dump(merged);
                         context.logger.debug("Applied overrides to OpenAPI spec for AI enhancement");
                     } catch (error) {
                         context.logger.debug(`Failed to apply overrides to spec: ${error}. Using raw spec.`);

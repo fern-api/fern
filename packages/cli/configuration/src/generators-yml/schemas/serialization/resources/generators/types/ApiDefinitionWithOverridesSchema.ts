@@ -5,7 +5,6 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ApiDefinitionPathSchema } from "./ApiDefinitionPathSchema.js";
 import { ApiDefinitionSettingsSchema } from "./ApiDefinitionSettingsSchema.js";
-import { OverridesSchema } from "./OverridesSchema.js";
 
 export const ApiDefinitionWithOverridesSchema: core.serialization.ObjectSchema<
     serializers.ApiDefinitionWithOverridesSchema.Raw,
@@ -13,7 +12,7 @@ export const ApiDefinitionWithOverridesSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     path: ApiDefinitionPathSchema,
     origin: core.serialization.string().optional(),
-    overrides: OverridesSchema.optional(),
+    overrides: core.serialization.string().optional(),
     audiences: core.serialization.list(core.serialization.string()).optional(),
     settings: ApiDefinitionSettingsSchema.optional(),
 });
@@ -22,7 +21,7 @@ export declare namespace ApiDefinitionWithOverridesSchema {
     export interface Raw {
         path: ApiDefinitionPathSchema.Raw;
         origin?: string | null;
-        overrides?: OverridesSchema.Raw | null;
+        overrides?: string | null;
         audiences?: string[] | null;
         settings?: ApiDefinitionSettingsSchema.Raw | null;
     }

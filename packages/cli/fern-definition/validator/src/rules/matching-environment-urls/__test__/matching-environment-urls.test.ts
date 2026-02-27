@@ -31,30 +31,35 @@ describe("matching-environment-urls", () => {
                 message: "Environment SingleUrl is missing URL for A",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             },
             {
                 message: "Environment SingleUrl is missing URL for B",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             },
             {
                 message: "Environment SingleUrl is missing URL for C",
                 nodePath: ["environments", "SingleUrl"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             },
             {
                 message: "Environment Staging is missing URL for C",
                 nodePath: ["environments", "Staging"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             },
             {
                 message: "Environment Production is missing URL for A",
                 nodePath: ["environments", "Production"],
                 relativeFilepath: RelativeFilePath.of("api.yml"),
+                name: "matching-environment-urls",
                 severity: "fatal"
             }
         ];
