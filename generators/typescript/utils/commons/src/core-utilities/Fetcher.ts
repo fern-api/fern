@@ -28,7 +28,7 @@ export interface Fetcher {
                 endpointMetadata: "endpointMetadata";
                 fetchFn: "fetchFn";
                 logging: "logging";
-                interceptors: "interceptors";
+                requestInterceptors: "requestInterceptors";
             };
         };
         Error: {
@@ -126,7 +126,7 @@ export interface Fetcher {
         _getReferenceToType: () => ts.TypeNode;
     };
 
-    readonly Interceptor: {
+    readonly RequestInterceptor: {
         _getReferenceToType: () => ts.TypeNode;
     };
 
@@ -167,7 +167,7 @@ export declare namespace Fetcher {
         endpointMetadata?: ts.Expression;
         fetchFn?: ts.Expression;
         logging?: ts.Expression;
-        interceptors?: ts.Expression;
+        requestInterceptors?: ts.Expression;
     }
 }
 
@@ -241,7 +241,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 endpointMetadata: "endpointMetadata",
                 fetchFn: "fetchFn",
                 logging: "logging",
-                interceptors: "interceptors"
+                requestInterceptors: "requestInterceptors"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -367,9 +367,12 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.logging, args.logging)
                 );
             }
-            if (args.interceptors != null) {
+            if (args.requestInterceptors != null) {
                 properties.push(
-                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.interceptors, args.interceptors)
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.requestInterceptors,
+                        args.requestInterceptors,
+                    )
                 );
             }
 
@@ -534,8 +537,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         )
     };
 
-    public Interceptor = {
-        _getReferenceToType: this.withExportedName("Interceptor", (Interceptor) => () => Interceptor.getTypeNode())
+    public RequestInterceptor = {
+        _getReferenceToType: this.withExportedName(
+            "RequestInterceptor",
+            (RequestInterceptor) => () => RequestInterceptor.getTypeNode(),
+        )
     };
 
     public getHeader = {

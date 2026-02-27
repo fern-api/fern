@@ -313,13 +313,13 @@ export class BaseClientContextImpl implements BaseClientContext {
 
         properties.push({
             kind: StructureKind.PropertySignature,
-            name: "interceptors",
+            name: "requestInterceptors",
             type: getTextOfTsNode(
-                ts.factory.createArrayTypeNode(context.coreUtilities.fetcher.Interceptor._getReferenceToType())
+                ts.factory.createArrayTypeNode(context.coreUtilities.fetcher.RequestInterceptor._getReferenceToType())
             ),
             hasQuestionToken: true,
             docs: [
-                "Interceptors that observe or modify requests and responses. Each interceptor receives the request and a `next` function to call the next interceptor in the chain."
+                "Request interceptors that observe or modify HTTP requests and responses. Each interceptor receives the request and a `next` function to call the next interceptor in the chain."
             ]
         });
 

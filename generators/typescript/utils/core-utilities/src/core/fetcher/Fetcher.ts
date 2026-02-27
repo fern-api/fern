@@ -9,8 +9,8 @@ import { getFetchFn } from "./getFetchFn";
 import { getRequestBody } from "./getRequestBody";
 import { getResponseBody } from "./getResponseBody";
 import { Headers } from "./Headers";
-import type { Interceptor, InterceptedRequest, InterceptedResponse, SendRequest } from "./Interceptor";
-import { buildInterceptorChain } from "./Interceptor";
+import type { RequestInterceptor, InterceptedRequest, InterceptedResponse, SendRequest } from "./RequestInterceptor";
+import { buildRequestInterceptorChain } from "./RequestInterceptor";
 import { makeRequest } from "./makeRequest";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 import { requestWithRetries } from "./requestWithRetries";
@@ -35,7 +35,7 @@ export declare namespace Fetcher {
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
-        interceptors?: Interceptor[];
+        requestInterceptors?: RequestInterceptor[];
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
@@ -273,7 +273,7 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
     }
 
     try {
-        const interceptors = args.interceptors ?? [];
+        const requestInterceptors = args.requestInterceptors ?? [];
 
         const coreRequest: SendRequest = async (interceptedRequest: InterceptedRequest) => {
             // Use headers from the intercepted request directly — interceptors have full control
@@ -313,7 +313,10 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             body: requestBody,
         };
 
-        const send = interceptors.length > 0 ? buildInterceptorChain(interceptors, coreRequest) : coreRequest;
+        const send =
+            requestInterceptors.length > 0
+                ? buildRequestInterceptorChain(requestInterceptors, coreRequest)
+                : coreRequest;
         const interceptedResponse = await send(interceptedRequest);
         const response = interceptedResponse.rawResponse;
 

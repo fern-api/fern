@@ -2,12 +2,13 @@
 - version: 3.53.0
   changelogEntry:
     - summary: |
-        Add interceptor support to generated TypeScript SDKs. Interceptors follow the
-        middleware pattern inspired by Azure SDK's pipeline architecture: each interceptor
-        has a `name` and a `sendRequest(request, next)` method that can observe or modify
-        requests and responses as they flow through the HTTP pipeline. This enables clean
-        OpenTelemetry tracing, custom logging, header injection, and other cross-cutting
-        concerns without replacing the entire fetch pipeline.
+        Add request interceptor support to generated TypeScript SDKs. Request interceptors
+        follow the middleware pattern inspired by Azure SDK's pipeline architecture: each
+        interceptor has a `name` and a `sendRequest(request, next)` method that can observe
+        or modify HTTP requests and responses as they flow through the pipeline. Configure
+        via the `requestInterceptors` client option. This enables clean OpenTelemetry tracing,
+        custom logging, header injection, and other cross-cutting concerns without replacing
+        the entire fetch pipeline.
       type: feat
   createdAt: "2026-02-27"
   irVersion: 65

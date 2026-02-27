@@ -1113,8 +1113,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return this.getReferenceToOption(GeneratedSdkClientClassImpl.LOGGING_FIELD_NAME);
     }
 
-    public getReferenceToInterceptors(): ts.Expression {
-        return this.getReferenceToOption("interceptors");
+    public getReferenceToRequestInterceptors(): ts.Expression {
+        return this.getReferenceToOption("requestInterceptors");
     }
 
     public getReferenceToOptions(): ts.Expression {

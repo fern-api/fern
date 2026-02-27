@@ -1,5 +1,5 @@
 /**
- * Describes an HTTP request flowing through the interceptor pipeline.
+ * Describes an HTTP request flowing through the request interceptor pipeline.
  */
 export interface InterceptedRequest {
     url: string;
@@ -9,7 +9,7 @@ export interface InterceptedRequest {
 }
 
 /**
- * Describes an HTTP response returned from the interceptor pipeline.
+ * Describes an HTTP response returned from the request interceptor pipeline.
  *
  * The `rawResponse` is the authoritative source for all response data.
  * To observe response properties, read from `rawResponse` (e.g. `rawResponse.status`).
@@ -21,21 +21,21 @@ export interface InterceptedResponse {
 
 /**
  * A function that sends a request and returns a response.
- * Used as the `next` parameter in interceptors.
+ * Used as the `next` parameter in request interceptors.
  */
 export type SendRequest = (request: InterceptedRequest) => Promise<InterceptedResponse>;
 
 /**
- * An interceptor that can observe or modify requests and responses
- * as they flow through the HTTP pipeline.
+ * A request interceptor that can observe or modify HTTP requests and responses
+ * as they flow through the pipeline.
  *
- * Interceptors follow the middleware pattern: each interceptor receives
+ * Request interceptors follow the middleware pattern: each interceptor receives
  * the request and a `next` function to call the next interceptor in
  * the chain (or the actual HTTP call if it's the last one).
  *
  * @example
  * ```typescript
- * const loggingInterceptor: Interceptor = {
+ * const loggingInterceptor: RequestInterceptor = {
  *     name: "logging",
  *     async sendRequest(request, next) {
  *         console.log(`→ ${request.method} ${request.url}`);
@@ -50,7 +50,7 @@ export type SendRequest = (request: InterceptedRequest) => Promise<InterceptedRe
  * ```typescript
  * import { context, propagation, trace } from "@opentelemetry/api";
  *
- * const tracingInterceptor: Interceptor = {
+ * const tracingInterceptor: RequestInterceptor = {
  *     name: "otel-tracing",
  *     async sendRequest(request, next) {
  *         const tracer = trace.getTracer("my-sdk");
@@ -71,8 +71,8 @@ export type SendRequest = (request: InterceptedRequest) => Promise<InterceptedRe
  * };
  * ```
  */
-export interface Interceptor {
-    /** A name for the interceptor, useful for debugging and identification. */
+export interface RequestInterceptor {
+    /** A name for the request interceptor, useful for debugging and identification. */
     name: string;
 
     /**
@@ -86,11 +86,14 @@ export interface Interceptor {
 }
 
 /**
- * Builds a composed `SendRequest` function from an array of interceptors
+ * Builds a composed `SendRequest` function from an array of request interceptors
  * and a final handler. Interceptors are applied in order: the first interceptor
  * in the array is the outermost (first to see the request, last to see the response).
  */
-export function buildInterceptorChain(interceptors: Interceptor[], finalHandler: SendRequest): SendRequest {
+export function buildRequestInterceptorChain(
+    interceptors: RequestInterceptor[],
+    finalHandler: SendRequest,
+): SendRequest {
     let handler = finalHandler;
     for (let i = interceptors.length - 1; i >= 0; i--) {
         const interceptor = interceptors[i]!;
