@@ -1281,8 +1281,8 @@ describe("${serviceName}", () => {
         }
 
         // hasPagination determines if we need { once: false } for multiple mock requests
-        // This is set after isCursorMissing is computed to ensure we don't allow multiple
-        // requests when cursor is missing (since there's no next page to request)
+        // This is set after expectedHasNextPage is computed to ensure we don't allow multiple
+        // requests when there's no next page to request
         const supportsPaginatedResponse =
             endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination);
         let hasPagination = supportsPaginatedResponse;
@@ -1305,15 +1305,19 @@ describe("${serviceName}", () => {
                 endpoint
             });
 
-        const isCursorMissing =
-            endpoint.pagination !== undefined &&
-            isPaginationCursorMissingInExample({
-                example,
-                endpoint
-            });
+        // Dynamically calculate the expected hasNextPage() value based on pagination type and example data,
+        // mirroring the SDK's actual pagination heuristic logic
+        const expectedHasNextPage =
+            endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination)
+                ? calculateExpectedHasNextPage({
+                      example,
+                      endpoint,
+                      pagination: endpoint.pagination
+                  })
+                : undefined;
 
-        // If cursor is missing, we won't be making getNextPage() calls, so don't need { once: false }
-        if (isCursorMissing) {
+        // If hasNextPage is false, we won't be making getNextPage() calls, so don't need { once: false }
+        if (expectedHasNextPage !== true) {
             hasPagination = false;
         }
 
@@ -1346,16 +1350,21 @@ describe("${serviceName}", () => {
                 const page = ${getTextOfTsNode(generatedExample.endpointInvocation)};
                 ${
                     endpoint.pagination !== undefined && paginationGeneratesPageObject(endpoint.pagination)
-                        ? isCursorMissing
+                        ? expectedHasNextPage === true
                             ? code`
-                            expect(${expectedName}).toEqual(${pageName}.data);
-                            `
-                            : code`
                             expect(${expectedName}).toEqual(${pageName}.data);
                             expect(${pageName}.hasNextPage()).toBe(true);
                             const nextPage = await ${pageName}.getNextPage();
                             expect(${expectedName}).toEqual(${nextPageName}.data);
                         `
+                            : expectedHasNextPage === false
+                              ? code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
+                            expect(${pageName}.hasNextPage()).toBe(false);
+                        `
+                              : code`
+                            expect(${expectedName}).toEqual(${pageName}.data);
+                            `
                         : code`expect(${expectedName}).toEqual(${pageName}.data);`
                 }
                 `
@@ -2203,69 +2212,131 @@ function isPaginationResultsPathMissingInExample({
     return cursor === undefined;
 }
 
+
 /**
- * Checks if the pagination cursor/next property is missing from the example response.
- * For cursor pagination, we need the "next" property; for offset pagination, we need "hasNextPage".
- * If the cursor property is missing, we shouldn't generate hasNextPage().toBe(true) assertions
- * since there won't be a cursor to indicate a next page.
+ * Extracts a property value from a JSON object by following a property path.
+ * Used for walking response/request JSON examples using wire values.
  */
-function isPaginationCursorMissingInExample({
+function getPropertyValueFromJson(
+    json: unknown,
+    property: { propertyPath: FernIr.PropertyPathItem[] | undefined; property: { name: FernIr.NameAndWireValue } }
+): unknown {
+    const segments = [
+        ...(property.propertyPath ?? []).map((item) => item.name.originalName),
+        property.property.name.wireValue
+    ];
+
+    let value: unknown = json;
+    for (const key of segments) {
+        if (value == null || typeof value !== "object" || !(key in value)) {
+            return undefined;
+        }
+        value = (value as Record<string, unknown>)[key];
+    }
+    return value;
+}
+
+/**
+ * Extracts a request property value from example data.
+ * Handles both body properties and query parameters.
+ */
+function getRequestPropertyValueFromExample(
+    example: FernIr.ExampleEndpointCall,
+    requestProperty: FernIr.RequestProperty
+): unknown {
+    const propValue = requestProperty.property;
+    if (propValue.type === "body") {
+        // Body property - walk the request JSON
+        const requestJson = example.request?.jsonExample;
+        if (requestJson == null) {
+            return undefined;
+        }
+        const segments = [
+            ...(requestProperty.propertyPath ?? []).map((item) => item.name.originalName),
+            propValue.name.wireValue
+        ];
+        let value: unknown = requestJson;
+        for (const key of segments) {
+            if (value == null || typeof value !== "object" || !(key in value)) {
+                return undefined;
+            }
+            value = (value as Record<string, unknown>)[key];
+        }
+        return value;
+    } else if (propValue.type === "query") {
+        // Query parameter - find matching query param in example
+        const queryParam = example.queryParameters.find(
+            (qp) => qp.name.wireValue === propValue.name.wireValue
+        );
+        return queryParam?.value.jsonExample;
+    }
+    return undefined;
+}
+
+/**
+ * Calculates the expected hasNextPage() value based on pagination type and example data,
+ * mirroring the SDK's actual pagination heuristic logic.
+ *
+ * For cursor pagination: hasNextPage = next != null && next !== ""
+ * For offset pagination:
+ *   - If explicit hasNextPage response property exists: use that value, falling back to base check
+ *   - If step is defined: results.length >= Math.floor(step ?? default)
+ *   - Fallback: results.length > 0
+ *
+ * Returns undefined if the value cannot be determined from the example data.
+ */
+function calculateExpectedHasNextPage({
     example,
-    endpoint
+    endpoint,
+    pagination
 }: {
     example: FernIr.ExampleEndpointCall;
     endpoint: FernIr.HttpEndpoint;
-}): boolean {
-    const pagination = endpoint.pagination;
-    if (pagination == null) {
-        return true;
-    }
-
+    pagination: FernIr.Pagination.Cursor | FernIr.Pagination.Offset;
+}): boolean | undefined {
     const responseJson = getResponseBodyJsonExample(example.response);
     if (responseJson == null) {
-        return true;
+        return undefined;
     }
 
-    let cursorProperty;
     switch (pagination.type) {
-        case "cursor":
-            cursorProperty = pagination.next;
-            break;
-        case "offset":
-            cursorProperty = pagination.hasNextPage;
-            if (cursorProperty == null) {
-                return false;
+        case "cursor": {
+            const nextValue = getPropertyValueFromJson(responseJson, pagination.next);
+            if (nextValue === undefined) {
+                return undefined;
             }
-            break;
-        case "custom":
-        case "uri":
-        case "path":
-            return false;
-        default:
-            assertNever(pagination);
-    }
-
-    if (cursorProperty == null) {
-        return true;
-    }
-
-    // Build the path segments using wire values for JSON walking
-    // JSON examples from IR are always in wire format (snake_case), so we must
-    // always use wire values to walk the JSON regardless of retainOriginalCasing
-    // or includeSerdeLayer settings (those affect generated code, not example JSON)
-    const segments = [
-        ...(cursorProperty.propertyPath ?? []).map((item) => item.name.originalName),
-        cursorProperty.property.name.wireValue
-    ];
-
-    let cursor: unknown = responseJson;
-    for (const key of segments) {
-        if (cursor == null || typeof cursor !== "object" || !(key in cursor)) {
-            return true;
+            // SDK logic: response.next != null && !(typeof response.next === "string" && response.next === "")
+            const isNonNull = nextValue != null;
+            const isEmptyString = typeof nextValue === "string" && nextValue === "";
+            return isNonNull && !isEmptyString;
         }
-        cursor = (cursor as Record<string, unknown>)[key];
-    }
+        case "offset": {
+            // Check for explicit hasNextPage response property first
+            if (pagination.hasNextPage != null) {
+                const hasNextPageValue = getPropertyValueFromJson(responseJson, pagination.hasNextPage);
+                if (hasNextPageValue != null && typeof hasNextPageValue === "boolean") {
+                    return hasNextPageValue;
+                }
+                // Fall through to base check if hasNextPage property is missing/null
+            }
 
-    // If the leaf is explicitly undefined or null, treat it as "missing"
-    return cursor === undefined || cursor === null;
+            // Get results array length
+            const resultsValue = getPropertyValueFromJson(responseJson, pagination.results);
+            const resultsLength = Array.isArray(resultsValue) ? resultsValue.length : 0;
+
+            // If step is defined: results.length >= Math.floor(step ?? default)
+            if (pagination.step != null) {
+                const stepValue = getRequestPropertyValueFromExample(example, pagination.step);
+                if (stepValue != null && typeof stepValue === "number") {
+                    return resultsLength >= Math.floor(stepValue);
+                }
+                // If step value can't be extracted, fall back to results.length > 0
+            }
+
+            // Fallback: results.length > 0
+            return resultsLength > 0;
+        }
+        default:
+            return undefined;
+    }
 }

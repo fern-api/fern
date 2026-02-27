@@ -160,7 +160,7 @@ describe("UsersClient", () => {
         expect(expected.data).toEqual(nextPage.data);
     });
 
-    test("listWithTopLevelBodyCursorPagination", async () => {
+    test("listWithTopLevelBodyCursorPagination (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { cursor: "initial_cursor", filter: "active" };
@@ -202,6 +202,37 @@ describe("UsersClient", () => {
         expect(page.hasNextPage()).toBe(true);
         const nextPage = await page.getNextPage();
         expect(expected.data).toEqual(nextPage.data);
+    });
+
+    test("listWithTopLevelBodyCursorPagination (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { cursor: "last_cursor", filter: "active" };
+        const rawResponseBody = { data: [{ name: "Charlie", id: 3 }] };
+        server
+            .mockEndpoint()
+            .post("/users/top-level-cursor")
+            .jsonBody(rawRequestBody, { ignoredFields: ["cursor"] })
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = {
+            data: [
+                {
+                    name: "Charlie",
+                    id: 3,
+                },
+            ],
+        };
+        const page = await client.users.listWithTopLevelBodyCursorPagination({
+            cursor: "last_cursor",
+            filter: "active",
+        });
+
+        expect(expected.data).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(false);
     });
 
     test("listWithOffsetPagination", async () => {
@@ -731,7 +762,7 @@ describe("UsersClient", () => {
             total_count: 0,
         };
         server
-            .mockEndpoint({ once: false })
+            .mockEndpoint()
             .get("/users/optional-data")
             .respondWith()
             .statusCode(200)

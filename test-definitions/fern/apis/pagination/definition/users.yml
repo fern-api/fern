@@ -197,6 +197,17 @@ service:
                   id: 1
                 - name: "Bob"
                   id: 2
+        - name: LastPage
+          docs: Last page of results where there is no next cursor
+          request:
+            cursor: "last_cursor"
+            filter: "active"
+          response:
+            body:
+              next_cursor: null
+              data:
+                - name: "Charlie"
+                  id: 3
 
     listWithOffsetPagination:
       pagination:

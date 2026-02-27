@@ -6,6 +6,12 @@
  *         cursor: "initial_cursor",
  *         filter: "active"
  *     }
+ *
+ * @example
+ *     {
+ *         cursor: "last_cursor",
+ *         filter: "active"
+ *     }
  */
 export interface ListUsersTopLevelBodyCursorPaginationRequest {
     /**

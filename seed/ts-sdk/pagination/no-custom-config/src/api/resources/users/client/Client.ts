@@ -256,6 +256,12 @@ export class UsersClient {
      *         cursor: "initial_cursor",
      *         filter: "active"
      *     })
+     *
+     * @example
+     *     await client.users.listWithTopLevelBodyCursorPagination({
+     *         cursor: "last_cursor",
+     *         filter: "active"
+     *     })
      */
     public async listWithTopLevelBodyCursorPagination(
         request: SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest = {},

@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generator to dynamically calculate the expected `hasNextPage()` value
+        based on pagination type and example data, instead of hardcoding `true` for all
+        pagination tests. For cursor pagination, `hasNextPage` is true when the next cursor
+        is non-null and non-empty. For offset pagination, it checks `results.length >= step`
+        (or falls back to `results.length > 0`). This prevents test failures when mock
+        responses represent a last page with no more results.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.52.2
   changelogEntry:
     - summary: |
