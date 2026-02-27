@@ -3,10 +3,8 @@ name: ci
 on: [push]
 
 env:
-  CI: true
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   DOTNET_NOLOGO: true
-  MSBUILDTERMINALLOGGER: off
 
 jobs:
   ci:
