@@ -461,7 +461,10 @@ export function buildReferenceTypeReference({
         return "unknown";
     }
 
-    const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
+    const originalSchemaName = getSchemaName(resolvedSchema) ?? schema.schema;
+    const schemaName = context.options.respectReadonlySchemas
+        ? context.getSchemaFinalName(originalSchemaName)
+        : originalSchemaName;
     const groupName = getGroupNameForSchema(resolvedSchema);
     const displayName = getDisplayName(resolvedSchema);
     // Use the reference's namespace (schema.namespace) to determine the declaration file,
