@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.0
+  changelogEntry:
+    - summary: |
+        Enable `generateSubpackageExports` by default. Generated TypeScript SDKs now include
+        subpackage export entries in `package.json`, allowing users to import subpackage clients
+        directly (e.g., `import { FooClient } from '@acme/sdk/foo'`). This enables JavaScript
+        bundlers to tree-shake unused subpackages, resulting in smaller bundle sizes.
+        To opt out, explicitly set `generateSubpackageExports: false` in your generator config.
+      type: feat
+    - summary: |
+        Add tree-shaking smoke test to verify that importing a single subpackage produces a
+        significantly smaller webpack bundle than importing the full SDK.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 3.51.6
   changelogEntry:
     - summary: |

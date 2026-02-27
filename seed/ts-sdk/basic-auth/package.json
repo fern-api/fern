@@ -23,6 +23,18 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./basicAuth": {
+            "types": "./dist/cjs/api/resources/basicAuth/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/basicAuth/exports.d.mts",
+                "default": "./dist/esm/api/resources/basicAuth/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/basicAuth/exports.d.ts",
+                "default": "./dist/cjs/api/resources/basicAuth/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/basicAuth/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

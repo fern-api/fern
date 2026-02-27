@@ -297,6 +297,7 @@ export function generateIr({
                     name: queryParameter.name,
                     schema: convertSchemaWithExampleToSchema(queryParameter.schema),
                     parameterNameOverride: queryParameter.parameterNameOverride,
+                    explode: queryParameter.explode,
                     availability: queryParameter.availability,
                     source: queryParameter.source
                 };

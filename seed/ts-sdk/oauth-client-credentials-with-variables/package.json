@@ -23,6 +23,90 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./auth": {
+            "types": "./dist/cjs/api/resources/auth/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/auth/exports.d.mts",
+                "default": "./dist/esm/api/resources/auth/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/auth/exports.d.ts",
+                "default": "./dist/cjs/api/resources/auth/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/auth/exports.js"
+        },
+        "./nestedNoAuth": {
+            "types": "./dist/cjs/api/resources/nestedNoAuth/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/nestedNoAuth/exports.d.mts",
+                "default": "./dist/esm/api/resources/nestedNoAuth/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/nestedNoAuth/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nestedNoAuth/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/nestedNoAuth/exports.js"
+        },
+        "./nestedNoAuth/api": {
+            "types": "./dist/cjs/api/resources/nestedNoAuth/resources/api/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/nestedNoAuth/resources/api/exports.d.mts",
+                "default": "./dist/esm/api/resources/nestedNoAuth/resources/api/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/nestedNoAuth/resources/api/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nestedNoAuth/resources/api/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/nestedNoAuth/resources/api/exports.js"
+        },
+        "./nested": {
+            "types": "./dist/cjs/api/resources/nested/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/nested/exports.d.mts",
+                "default": "./dist/esm/api/resources/nested/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/nested/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nested/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/nested/exports.js"
+        },
+        "./nested/api": {
+            "types": "./dist/cjs/api/resources/nested/resources/api/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/nested/resources/api/exports.d.mts",
+                "default": "./dist/esm/api/resources/nested/resources/api/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/nested/resources/api/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nested/resources/api/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/nested/resources/api/exports.js"
+        },
+        "./service": {
+            "types": "./dist/cjs/api/resources/service/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/service/exports.d.mts",
+                "default": "./dist/esm/api/resources/service/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/service/exports.d.ts",
+                "default": "./dist/cjs/api/resources/service/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/service/exports.js"
+        },
+        "./simple": {
+            "types": "./dist/cjs/api/resources/simple/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/simple/exports.d.mts",
+                "default": "./dist/esm/api/resources/simple/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/simple/exports.d.ts",
+                "default": "./dist/cjs/api/resources/simple/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/simple/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
