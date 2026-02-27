@@ -3,6 +3,36 @@ import { getLatestTag as getLatestTagFromGithub } from "@fern-api/github";
 import latestVersion from "latest-version";
 import semver from "semver";
 
+// ─── Registry API response types ────────────────────────────────────
+
+interface NpmRegistryResponse {
+    "dist-tags"?: { latest?: string };
+}
+
+interface PypiResponse {
+    info: { version: string };
+}
+
+interface MavenSolrResponse {
+    response?: { docs?: Array<{ latestVersion?: string }> };
+}
+
+interface NugetFlatContainerResponse {
+    versions?: string[];
+}
+
+interface RubyGemsResponse {
+    version?: string;
+}
+
+interface GoProxyResponse {
+    Version?: string;
+}
+
+interface CratesIoResponse {
+    crate?: { max_stable_version?: string };
+}
+
 /**
  * Computes the next semantic version for an SDK package by fetching the current version
  * from package registries or GitHub tags, then incrementing the patch version.
@@ -147,8 +177,7 @@ export async function getLatestVersionFromNpm(packageName: string): Promise<stri
                 }
             });
             if (response.ok) {
-                // biome-ignore lint/suspicious/noExplicitAny: npm registry response structure
-                const data = (await response.json()) as any;
+                const data = (await response.json()) as NpmRegistryResponse;
                 const latestTag = data["dist-tags"]?.latest;
                 if (latestTag != null) {
                     return latestTag;
@@ -175,9 +204,7 @@ export async function getLatestVersionFromPypi(packageName: string): Promise<str
         const response = await fetch(`https://pypi.org/pypi/${packageName}/json`);
 
         if (response.ok) {
-            // Extract the latest version from the response data
-            // biome-ignore lint/suspicious/noExplicitAny: Any is allowed here
-            const packageData = (await response.json()) as any;
+            const packageData = (await response.json()) as PypiResponse;
             return packageData.info.version;
         }
 
@@ -212,8 +239,7 @@ export async function getLatestVersionFromMaven(coordinate: string): Promise<str
         );
 
         if (response.ok) {
-            // biome-ignore lint/suspicious/noExplicitAny: Maven Central API response structure
-            const data = (await response.json()) as any;
+            const data = (await response.json()) as MavenSolrResponse;
             const latestVer = data.response?.docs?.[0]?.latestVersion;
             if (latestVer != null) {
                 return latestVer;
@@ -242,8 +268,7 @@ export async function getLatestVersionFromNuget(packageName: string): Promise<st
         const response = await fetch(`https://api.nuget.org/v3-flatcontainer/${packageName.toLowerCase()}/index.json`);
 
         if (response.ok) {
-            // biome-ignore lint/suspicious/noExplicitAny: NuGet API response structure
-            const data = (await response.json()) as any;
+            const data = (await response.json()) as NugetFlatContainerResponse;
             const versions: string[] = data.versions ?? [];
 
             // Filter to stable versions (no prerelease suffix containing a hyphen)
@@ -275,8 +300,7 @@ export async function getLatestVersionFromRubyGems(packageName: string): Promise
         const response = await fetch(`https://rubygems.org/api/v1/gems/${packageName}.json`);
 
         if (response.ok) {
-            // biome-ignore lint/suspicious/noExplicitAny: RubyGems API response structure
-            const data = (await response.json()) as any;
+            const data = (await response.json()) as RubyGemsResponse;
             if (data.version != null) {
                 return data.version;
             }
@@ -307,8 +331,7 @@ export async function getLatestVersionFromGoProxy(modulePath: string): Promise<s
         const response = await fetch(`https://proxy.golang.org/${encodedPath}/@latest`);
 
         if (response.ok) {
-            // biome-ignore lint/suspicious/noExplicitAny: Go proxy API response structure
-            const data = (await response.json()) as any;
+            const data = (await response.json()) as GoProxyResponse;
             if (data.Version != null) {
                 // Strip the "v" prefix that Go modules use (e.g., "v1.2.3" -> "1.2.3")
                 return data.Version.replace(/^v/, "");
@@ -339,8 +362,7 @@ export async function getLatestVersionFromCrates(packageName: string): Promise<s
         });
 
         if (response.ok) {
-            // biome-ignore lint/suspicious/noExplicitAny: Crates.io API response structure
-            const data = (await response.json()) as any;
+            const data = (await response.json()) as CratesIoResponse;
             const maxStable = data.crate?.max_stable_version;
             if (maxStable != null) {
                 return maxStable;
