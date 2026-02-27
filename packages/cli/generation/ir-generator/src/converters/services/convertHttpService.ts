@@ -57,7 +57,7 @@ const AUDIENCE_SUFFIX_SEPARATOR = "__aud_";
  * never suffixed by the OpenAPI-to-Fern converter.
  */
 function getOriginalMethodName(endpointKey: string, endpoint: RawSchemas.HttpEndpointSchema): string {
-    const separatorIndex = endpointKey.indexOf(AUDIENCE_SUFFIX_SEPARATOR);
+    const separatorIndex = endpointKey.lastIndexOf(AUDIENCE_SUFFIX_SEPARATOR);
     if (separatorIndex === -1) {
         return endpointKey;
     }
