@@ -44,7 +44,9 @@ export function convertWebhookOperation({
     });
 
     if (method !== "POST" && method !== "GET") {
-        context.logger.error(`Skipping webhook ${method.toUpperCase()} ${path}: Not POST or GET`);
+        context.logger.warn(
+            `Skipping webhook ${method.toUpperCase()} ${path}: Only POST and GET methods are currently supported`
+        );
         return [];
     }
 

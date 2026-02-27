@@ -218,8 +218,8 @@ describe("convertWebhookOperation", () => {
         });
     });
 
-    describe("unsupported HTTP methods", () => {
-        it("should skip webhooks with unsupported HTTP methods like PUT", () => {
+    describe("other HTTP methods", () => {
+        it("should skip webhooks with unsupported methods and log a warning", () => {
             const mockTaskContext = createMockTaskContext();
             const document: OpenAPIV3.Document = {
                 openapi: "3.0.0",
@@ -245,7 +245,9 @@ describe("convertWebhookOperation", () => {
             const result = convertWebhookOperation({ context, operationContext, source });
 
             expect(result).toHaveLength(0);
-            expect(mockTaskContext.logger.error).toHaveBeenCalledWith(expect.stringContaining("Not POST or GET"));
+            expect(mockTaskContext.logger.warn).toHaveBeenCalledWith(
+                expect.stringContaining("Only POST and GET methods are currently supported")
+            );
         });
     });
 
