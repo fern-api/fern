@@ -381,6 +381,27 @@ class FernAwarePydanticModel:
                 extended_fields.extend(self._get_extended_pydantic_fields(shape_union.extends))
         return extended_fields
 
+    def _is_rfc2822_datetime(self, type_reference: ir_types.TypeReference) -> bool:
+        """Check if the type reference is a DATE_TIME_RFC_2822 primitive, possibly wrapped in optional/nullable."""
+        union = type_reference.get_as_union()
+        if union.type == "primitive":
+            return union.primitive.v_1 == ir_types.PrimitiveTypeV1.DATE_TIME_RFC_2822
+        if union.type == "container":
+            container_union = union.container.get_as_union()
+            if container_union.type == "optional":
+                return self._is_rfc2822_datetime(container_union.optional)
+            if container_union.type == "nullable":
+                return self._is_rfc2822_datetime(container_union.nullable)
+        return False
+
+    def _is_optional_or_nullable(self, type_reference: ir_types.TypeReference) -> bool:
+        """Check if the type reference is wrapped in optional or nullable containers."""
+        union = type_reference.get_as_union()
+        if union.type == "container":
+            container_union = union.container.get_as_union()
+            return container_union.type in ("optional", "nullable")
+        return False
+
     def _create_pydantic_field(
         self,
         *,
@@ -392,6 +413,14 @@ class FernAwarePydanticModel:
         default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
         type_hint = self.get_type_hint_for_type_reference(type_reference)
+
+        # For RFC 2822 datetime fields, use Rfc2822DateTime type (V1/V2 compatible)
+        if self._is_rfc2822_datetime(type_reference):
+            rfc2822_hint = self._context.core_utilities.get_rfc2822_datetime_type_hint()
+            if self._is_optional_or_nullable(type_reference):
+                type_hint = AST.TypeHint.optional(rfc2822_hint)
+            else:
+                type_hint = rfc2822_hint
 
         return PydanticField(
             name=name,
