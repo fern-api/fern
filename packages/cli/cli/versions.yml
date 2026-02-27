@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.93.1
+  changelogEntry:
+    - summary: |
+        Revert cff292e8937b3c3ac66b1b6ebc6071b81860bbfd to resolve errors introduced
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.93.0
   changelogEntry:
     - summary: |

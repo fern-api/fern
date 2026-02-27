@@ -8,7 +8,7 @@ export type OpenRpcSettingsSchema = z.infer<typeof OpenRpcSettingsSchema>;
 
 export const OpenRpcSpecSchema = z.object({
     openrpc: z.string(),
-    overrides: z.union([z.string(), z.array(z.string()).nonempty()]).optional(),
+    overrides: z.string().optional(),
     settings: OpenRpcSettingsSchema.optional()
 });
 

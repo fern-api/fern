@@ -28,17 +28,10 @@ export async function loadSingleNamespaceAPIWorkspace({
     const specs: Spec[] = [];
 
     for (const definition of definitions) {
-        // Handle both single override path and array of override paths
-        let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
-        if (definition.overrides != null) {
-            if (Array.isArray(definition.overrides)) {
-                absoluteFilepathToOverrides = definition.overrides.map((override) =>
-                    join(absolutePathToWorkspace, RelativeFilePath.of(override))
-                );
-            } else {
-                absoluteFilepathToOverrides = join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides));
-            }
-        }
+        const absoluteFilepathToOverrides =
+            definition.overrides != null
+                ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
+                : undefined;
         const absoluteFilepathToOverlays =
             definition.overlays != null
                 ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
@@ -139,29 +132,19 @@ export async function loadSingleNamespaceAPIWorkspace({
                 }
             };
         }
-        // Check if override files exist
-        if (definition.overrides != null && absoluteFilepathToOverrides != null) {
-            const overridePaths = Array.isArray(absoluteFilepathToOverrides)
-                ? absoluteFilepathToOverrides
-                : [absoluteFilepathToOverrides];
-            const overrideRelativePaths = Array.isArray(definition.overrides)
-                ? definition.overrides
-                : [definition.overrides];
-
-            for (let i = 0; i < overridePaths.length; i++) {
-                const overridePath = overridePaths[i];
-                const relativeOverridePath = overrideRelativePaths[i];
-                if (overridePath != null && relativeOverridePath != null && !(await doesPathExist(overridePath))) {
-                    return {
-                        didSucceed: false,
-                        failures: {
-                            [RelativeFilePath.of(relativeOverridePath)]: {
-                                type: WorkspaceLoaderFailureType.FILE_MISSING
-                            }
-                        }
-                    };
+        if (
+            definition.overrides != null &&
+            absoluteFilepathToOverrides != null &&
+            !(await doesPathExist(absoluteFilepathToOverrides))
+        ) {
+            return {
+                didSucceed: false,
+                failures: {
+                    [RelativeFilePath.of(definition.overrides)]: {
+                        type: WorkspaceLoaderFailureType.FILE_MISSING
+                    }
                 }
-            }
+            };
         }
         if (
             definition.overlays != null &&
