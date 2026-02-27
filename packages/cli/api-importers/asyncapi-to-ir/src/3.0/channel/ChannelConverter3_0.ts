@@ -94,8 +94,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         }
 
         const baseUrl =
-            this.resolveChannelServersFromReference(this.channel.servers ?? []) ??
-            this.resolveFirstServerName();
+            this.resolveChannelServersFromReference(this.channel.servers ?? []) ?? this.resolveFirstServerName();
 
         const channelAddress = this.transformToValidPath(this.channel.address ?? this.channelPath);
         const path = constructHttpPath(channelAddress);

@@ -92,7 +92,8 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         });
         const channelAddressExtensionValue = channelAddressExtension.convert();
         const channelAddress = this.transformToValidPath(channelAddressExtensionValue ?? this.channelPath);
-        const baseUrl = this.resolveServerName(this.channel.servers?.[0]) ??
+        const baseUrl =
+            this.resolveServerName(this.channel.servers?.[0]) ??
             this.resolveServerName(Object.keys(this.context.spec.servers ?? {})[0]);
         const path = constructHttpPath(channelAddress);
         const groupName = camelCase(this.channelPath);
