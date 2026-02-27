@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.2
+  changelogEntry:
+    - summary: |
+        Make `operationId` optional for webhooks in OpenAPI 3.1 specs. When a webhook
+        does not specify an `operationId`, the webhook key name is used as the fallback
+        identifier instead of skipping the webhook entirely.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.1
   changelogEntry:
     - summary: |
