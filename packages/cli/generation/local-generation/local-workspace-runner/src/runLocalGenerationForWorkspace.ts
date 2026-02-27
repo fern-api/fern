@@ -1,4 +1,5 @@
-import { computeSemanticVersion, FernWorkspace } from "@fern-api/api-workspace-commons";
+import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
@@ -9,6 +10,7 @@ import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@
 import { cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -53,7 +55,7 @@ export async function runLocalGenerationForWorkspace({
     ai: generatorsYml.AiServicesSchema | undefined;
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
-    validateWorkspace?: (workspace: FernWorkspace) => Promise<void>;
+    validateWorkspace?: boolean;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -69,8 +71,13 @@ export async function runLocalGenerationForWorkspace({
                     generatorInvocation.apiOverride?.specs
                 );
 
-                if (validateWorkspace != null) {
-                    await validateWorkspace(fernWorkspace);
+                if (validateWorkspace) {
+                    await validateAPIWorkspaceAndLogIssues({
+                        workspace: fernWorkspace,
+                        context,
+                        logWarnings: false,
+                        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                    });
                 }
 
                 const dynamicGeneratorConfig = getDynamicGeneratorConfig({

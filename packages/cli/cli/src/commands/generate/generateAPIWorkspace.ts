@@ -1,4 +1,3 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
@@ -8,7 +7,6 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
@@ -16,7 +14,6 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues.js";
 import { GenerationMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
@@ -92,15 +89,6 @@ export async function generateWorkspace({
         return context.failAndThrow("Please run fern login");
     }
 
-    const validateWorkspace = async (fernWorkspace: FernWorkspace): Promise<void> => {
-        await validateAPIWorkspaceAndLogIssues({
-            workspace: fernWorkspace,
-            context,
-            logWarnings: false,
-            ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
-        });
-    };
-
     // Run generation for all resolved groups in parallel
     await Promise.all(
         resolvedGroupNames.map(async (resolvedGroupName) => {
@@ -148,7 +136,7 @@ export async function generateWorkspace({
                     ai,
                     replay,
                     noReplay,
-                    validateWorkspace
+                    validateWorkspace: true
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({
@@ -165,7 +153,7 @@ export async function generateWorkspace({
                     mode,
                     fernignorePath,
                     dynamicIrOnly,
-                    validateWorkspace
+                    validateWorkspace: true
                 });
             }
         })
