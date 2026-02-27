@@ -23,6 +23,30 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./auth": {
+            "types": "./dist/cjs/api/resources/auth/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/auth/exports.d.mts",
+                "default": "./dist/esm/api/resources/auth/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/auth/exports.d.ts",
+                "default": "./dist/cjs/api/resources/auth/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/auth/exports.js"
+        },
+        "./user": {
+            "types": "./dist/cjs/api/resources/user/exports.d.ts",
+            "import": {
+                "types": "./dist/esm/api/resources/user/exports.d.mts",
+                "default": "./dist/esm/api/resources/user/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/user/exports.d.ts",
+                "default": "./dist/cjs/api/resources/user/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/user/exports.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

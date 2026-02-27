@@ -8,7 +8,8 @@
     },
     "files": [
         "dist",
-        "types"
+        "types",
+        "api/resources/user.d.ts"
     ],
     "exports": {
         ".": {
@@ -17,6 +18,13 @@
             "require": "./dist/browser/cjs/index.js",
             "default": "./dist/browser/cjs/index.js",
             "types": "./types/index.d.ts"
+        },
+        "./api/resources/user": {
+            "node": "./dist/node/api/resources/user.js",
+            "import": "./dist/browser/esm/api/resources/user.js",
+            "require": "./dist/browser/cjs/api/resources/user.js",
+            "default": "./dist/browser/cjs/api/resources/user.js",
+            "types": "./types/api/resources/user/index.d.ts"
         },
         "./package.json": "./package.json"
     },
