@@ -1,10 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.93.4
+  changelogEntry:
+    - summary: |
+        Fix `getExplodeForQueryParameter` to treat `deepObject` style as having
+        a default `explode` of `true` per the OpenAPI spec. Previously,
+        `deepObject` was grouped with `spaceDelimited` and `pipeDelimited`
+        (default `explode: false`), causing `explode: true` to be incorrectly
+        preserved as non-default for `deepObject` parameters. The OpenAPI spec
+        only defines `deepObject` with `explode: true`, so it should be treated
+        as the default.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.3
+  changelogEntry:
+    - summary: |
+        Move Fern definition validation into the per-generator generation loop so that
+        it validates the exact definition used for generation (with generator-specific
+        settings like `detectGlobalHeaders` and auth overrides applied).
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.2
+  changelogEntry:
+    - summary: |
+        Update AI example enhancement to use fdr-lambda endpoint.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.1
+  changelogEntry:
+    - summary: |
+        Revert cff292e8937b3c3ac66b1b6ebc6071b81860bbfd to resolve errors introduced
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.93.0
   changelogEntry:
     - summary: |
-        Add a --json flag to `fern check` that outputs structured validation results 
-        as JSON to stdout, with all other output redirected to stderr. This enables 
-        programmatic consumption of check results by CI pipelines, editor integrations, 
+        Add a --json flag to `fern check` that outputs structured validation results
+        as JSON to stdout, with all other output redirected to stderr. This enables
+        programmatic consumption of check results by CI pipelines, editor integrations,
         and other tooling.
       type: feat
     - summary: |
@@ -179,7 +219,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.90.3
   changelogEntry:
     - summary: |

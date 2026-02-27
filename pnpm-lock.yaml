@@ -4678,6 +4678,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../workspace/commons
+      '@fern-api/api-workspace-validator':
+        specifier: workspace:*
+        version: link:../workspace/api-workspace-validator
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
@@ -4873,9 +4876,6 @@ importers:
       '@types/url-join':
         specifier: 4.0.1
         version: 4.0.1
-      '@types/validate-npm-package-name':
-        specifier: 'catalog:'
-        version: 4.0.2
       '@types/ws':
         specifier: 'catalog:'
         version: 8.18.1
@@ -4948,9 +4948,6 @@ importers:
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
-      validate-npm-package-name:
-        specifier: 'catalog:'
-        version: 5.0.1
       vitest:
         specifier: 'catalog:'
         version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
@@ -6464,6 +6461,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../../workspace/commons
+      '@fern-api/api-workspace-validator':
+        specifier: workspace:*
+        version: link:../../../workspace/api-workspace-validator
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../../../auth
@@ -6518,6 +6518,9 @@ importers:
       '@fern-api/java-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/java-v2/dynamic-snippets
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../../../workspace/lazy-fern-workspace
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../../commons/logging-execa
@@ -6642,6 +6645,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../../../workspace/commons
+      '@fern-api/api-workspace-validator':
+        specifier: workspace:*
+        version: link:../../../workspace/api-workspace-validator
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../../../auth
@@ -7221,6 +7227,67 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+
+  packages/cli/workspace/api-workspace-validator:
+    dependencies:
+      '@fern-api/api-workspace-commons':
+        specifier: workspace:*
+        version: link:../commons
+      '@fern-api/cli-logger':
+        specifier: workspace:*
+        version: link:../../cli-logger
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
+      '@fern-api/fern-definition-schema':
+        specifier: workspace:*
+        version: link:../../fern-definition/schema
+      '@fern-api/fern-definition-validator':
+        specifier: workspace:*
+        version: link:../../fern-definition/validator
+      '@fern-api/generators-validator':
+        specifier: workspace:*
+        version: link:../../yaml/generators-validator
+      '@fern-api/lazy-fern-workspace':
+        specifier: workspace:*
+        version: link:../lazy-fern-workspace
+      '@fern-api/logger':
+        specifier: workspace:*
+        version: link:../../logger
+      '@fern-api/oss-validator':
+        specifier: workspace:*
+        version: link:../oss-validator
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../task-context
+      chalk:
+        specifier: 'catalog:'
+        version: 5.6.2
+      lodash-es:
+        specifier: 'catalog:'
+        version: 4.17.23
+      validate-npm-package-name:
+        specifier: 'catalog:'
+        version: 5.0.1
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../configs
+      '@types/lodash-es':
+        specifier: 'catalog:'
+        version: 4.17.12
+      '@types/node':
+        specifier: 'catalog:'
+        version: 18.15.3
+      '@types/validate-npm-package-name':
+        specifier: 'catalog:'
+        version: 4.0.2
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
