@@ -40,6 +40,13 @@ import { convertResponseErrors } from "./convertResponseErrors.js";
 import { convertRetries } from "./convertRetries.js";
 import { getTransportForEndpoint, getTransportForService } from "./convertTransport.js";
 
+/**
+ * Separator used to create unique endpoint keys when endpoints with the same
+ * SDK method name have disjoint audiences. Must match the value in
+ * packages/cli/api-importers/openapi/openapi-ir-to-fern/src/buildServices.ts
+ */
+const AUDIENCE_SUFFIX_SEPARATOR = "__aud_";
+
 export function convertHttpService({
     rootDefaultUrl,
     rootPathParameters,
@@ -115,6 +122,13 @@ export function convertHttpService({
         encoding: convertTransportToEncoding(transport, serviceDefinition),
         transport,
         endpoints: Object.entries(serviceDefinition.endpoints).map(([endpointKey, endpoint]): HttpEndpoint => {
+            // Strip audience suffix from endpoint key to get the original SDK method name.
+            // The suffixed key is used only to avoid dictionary collisions between endpoints
+            // with the same name but disjoint audiences.
+            const endpointMethodName = endpointKey.includes(AUDIENCE_SUFFIX_SEPARATOR)
+                ? endpointKey.substring(0, endpointKey.indexOf(AUDIENCE_SUFFIX_SEPARATOR))
+                : endpointKey;
+
             const fullPathString =
                 endpoint["base-path"] != null
                     ? urlJoin(endpoint["base-path"], endpoint.path)
@@ -159,7 +173,7 @@ export function convertHttpService({
             const httpEndpoint: HttpEndpoint = {
                 ...convertDeclaration(endpoint),
                 id: "",
-                name: file.casingsGenerator.generateName(endpointKey),
+                name: file.casingsGenerator.generateName(endpointMethodName),
                 displayName: endpoint["display-name"],
                 auth:
                     typeof endpoint.auth === "boolean"
@@ -275,7 +289,16 @@ export function convertHttpService({
                 apiPlayground: undefined,
                 responseHeaders: []
             };
-            httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
+            // Use the full endpoint key (including audience suffix) for a unique ID,
+            // even though the SDK method name uses the stripped version.
+            if (endpointMethodName !== endpointKey) {
+                const joinedFernFilePath = serviceName.fernFilepath.allParts
+                    .map((part) => part.originalName)
+                    .join("/");
+                httpEndpoint.id = `endpoint_${joinedFernFilePath}.${endpointKey}`;
+            } else {
+                httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
+            }
             return httpEndpoint;
         }),
         audiences: serviceDefinition.audiences

@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: test service
+  description: test service with disjoint audiences
+  version: "1.0"
+  contact: {}
+tags: []
+servers:
+  - url: "{serverUrl}"
+    description: Server URL
+    variables:
+      serverUrl:
+        enum:
+          - https://test.api.example.dev
+          - https://test.api.example.com
+          - http://127.0.0.1:3008
+        description: Server URL
+        default: https://test.api.example.com
+paths:
+  /internal/shows:
+    post:
+      operationId: ShowsInternalController_createShow
+      x-fern-sdk-method-name: create
+      x-fern-sdk-group-name:
+        - shows
+      x-fern-audiences:
+        - internal
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - internal-shows
+      security:
+        - bearer: []
+      x-fern-server-name: test
+  /shows:
+    post:
+      operationId: ShowsController_createShow
+      x-fern-sdk-method-name: create
+      x-fern-sdk-group-name:
+        - shows
+      x-fern-audiences:
+        - public
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - shows
+      security:
+        - bearer: []
+      x-fern-server-name: test
+  /shows/speaker-providers:
+    get:
+      operationId: ShowsController_getSpeakerProviders
+      x-fern-sdk-method-name: fetchSpeakerProviders
+      x-fern-sdk-group-name:
+        - shows
+      x-fern-audiences:
+        - internal
+      parameters: []
+      responses:
+        "200":
+          description: Get all available speaker providers
+      tags:
+        - shows
+      security:
+        - bearer: []
+      x-fern-server-name: test
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer

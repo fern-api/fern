@@ -83,6 +83,13 @@ export interface FernDefinitionBuilder {
         }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: RawSchemas.SourceSchema | undefined }
     ): void;
 
+    /**
+     * Renames an existing endpoint within a file's service.
+     * Used to resolve collisions when endpoints with the same SDK method name
+     * have disjoint audiences.
+     */
+    renameEndpoint(file: RelativeFilePath, oldName: string, newName: string): void;
+
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
 
     addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void;
@@ -421,6 +428,19 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.service.source = source;
         }
         fernFile.service.endpoints[name] = schema;
+    }
+
+    public renameEndpoint(file: RelativeFilePath, oldName: string, newName: string): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.service == null || fernFile.service.endpoints[oldName] == null) {
+            return;
+        }
+        const schema = fernFile.service.endpoints[oldName];
+        if (schema == null) {
+            return;
+        }
+        delete fernFile.service.endpoints[oldName];
+        fernFile.service.endpoints[newName] = schema;
     }
 
     public addWebhook(

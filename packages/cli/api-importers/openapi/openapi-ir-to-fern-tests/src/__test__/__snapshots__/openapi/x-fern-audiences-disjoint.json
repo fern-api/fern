@@ -1,0 +1,184 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {},
+      "rawContents": "{}
+",
+    },
+    "shows.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "create__aud_internal": {
+              "audiences": [
+                "internal",
+              ],
+              "auth": [
+                {
+                  "bearer": [],
+                },
+              ],
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/internal/shows",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "create__aud_public": {
+              "audiences": [
+                "public",
+              ],
+              "auth": [
+                {
+                  "bearer": [],
+                },
+              ],
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/shows",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "fetchSpeakerProviders": {
+              "audiences": [
+                "internal",
+              ],
+              "auth": [
+                {
+                  "bearer": [],
+                },
+              ],
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/shows/speaker-providers",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create__aud_internal:
+      path: /internal/shows
+      method: POST
+      auth:
+        - bearer: []
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - {}
+      audiences:
+        - internal
+    create__aud_public:
+      path: /shows
+      method: POST
+      auth:
+        - bearer: []
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - {}
+      audiences:
+        - public
+    fetchSpeakerProviders:
+      path: /shows/speaker-providers
+      method: GET
+      auth:
+        - bearer: []
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - {}
+      audiences:
+        - internal
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "auth": "bearer",
+      "auth-schemes": {
+        "bearer": {
+          "scheme": "bearer",
+        },
+      },
+      "default-environment": "Default",
+      "display-name": "test service",
+      "environments": {
+        "Default": {
+          "audiences": undefined,
+          "default-url": undefined,
+          "url": "https%3A%2F%2Ftest.api.example.com",
+          "url-template": "{serverUrl}",
+          "variables": [
+            {
+              "default": "https://test.api.example.com",
+              "id": "serverUrl",
+              "values": [
+                "https://test.api.example.dev",
+                "https://test.api.example.com",
+                "http://127.0.0.1:3008",
+              ],
+            },
+          ],
+        },
+      },
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: test service
+environments:
+  Default:
+    url: https%3A%2F%2Ftest.api.example.com
+    url-template: '{serverUrl}'
+    variables:
+      - id: serverUrl
+        default: https://test.api.example.com
+        values:
+          - https://test.api.example.dev
+          - https://test.api.example.com
+          - http://127.0.0.1:3008
+default-environment: Default
+auth-schemes:
+  bearer:
+    scheme: bearer
+auth: bearer
+",
+  },
+}

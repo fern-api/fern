@@ -1,0 +1,184 @@
+{
+  "title": "test service",
+  "description": "test service with disjoint audiences",
+  "servers": [
+    {
+      "url": "https%3A%2F%2Ftest.api.example.com",
+      "description": "Server URL",
+      "urlTemplate": "{serverUrl}",
+      "variables": [
+        {
+          "id": "serverUrl",
+          "default": "https://test.api.example.com",
+          "values": [
+            "https://test.api.example.dev",
+            "https://test.api.example.com",
+            "http://127.0.0.1:3008"
+          ]
+        }
+      ]
+    }
+  ],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {},
+    "orderedTagIds": []
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [
+        "internal"
+      ],
+      "operationId": "ShowsInternalController_createShow",
+      "tags": [
+        "internal-shows"
+      ],
+      "sdkName": {
+        "groupName": [
+          "shows"
+        ],
+        "methodName": "create"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateShowsRequest",
+      "errors": {},
+      "servers": [
+        {
+          "name": "test"
+        }
+      ],
+      "authed": true,
+      "security": [
+        {
+          "bearer": []
+        }
+      ],
+      "method": "POST",
+      "path": "/internal/shows",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [
+        "public"
+      ],
+      "operationId": "ShowsController_createShow",
+      "tags": [
+        "shows"
+      ],
+      "sdkName": {
+        "groupName": [
+          "shows"
+        ],
+        "methodName": "create"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateShowsRequest",
+      "errors": {},
+      "servers": [
+        {
+          "name": "test"
+        }
+      ],
+      "authed": true,
+      "security": [
+        {
+          "bearer": []
+        }
+      ],
+      "method": "POST",
+      "path": "/shows",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [
+        "internal"
+      ],
+      "operationId": "ShowsController_getSpeakerProviders",
+      "tags": [
+        "shows"
+      ],
+      "sdkName": {
+        "groupName": [
+          "shows"
+        ],
+        "methodName": "fetchSpeakerProviders"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "FetchSpeakerProvidersShowsRequest",
+      "errors": {},
+      "servers": [
+        {
+          "name": "test"
+        }
+      ],
+      "authed": true,
+      "security": [
+        {
+          "bearer": []
+        }
+      ],
+      "method": "GET",
+      "path": "/shows/speaker-providers",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "bearer": {
+      "type": "bearer"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

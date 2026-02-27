@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.91.1
+  changelogEntry:
+    - summary: |
+        Fix endpoints with the same `x-fern-sdk-method-name` and `x-fern-sdk-group-name`
+        but different `x-fern-audiences` being treated as conflicts during `fern generate`.
+        Previously, the second endpoint would silently overwrite the first in the Fern
+        definition dictionary. Now, endpoints with disjoint audiences are given unique
+        internal keys so both survive through to IR generation, and audience filtering
+        correctly selects the appropriate endpoint for each audience.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.91.0
   changelogEntry:
     - summary: |
