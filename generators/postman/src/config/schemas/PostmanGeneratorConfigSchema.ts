@@ -9,7 +9,7 @@ export const PostmanGeneratorConfigSchema = z.union([
         publishing: PublishConfigSchema.optional(),
         filename: z.string().optional(),
         "collection-name": z.string().optional(),
-        "collection-description": z.string().optional()
+        description: z.string().optional()
     })
 ]);
 

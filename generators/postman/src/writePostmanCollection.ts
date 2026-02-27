@@ -62,7 +62,7 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
                     postmanGeneratorConfig?.["collection-name"] ??
                     ir.apiDisplayName ??
                     startCase(ir.apiName.originalName),
-                collectionDescription: postmanGeneratorConfig?.["collection-description"]
+                collectionDescription: postmanGeneratorConfig?.description
             });
             const rawCollectionDefinition = PostmanParsing.PostmanCollectionSchema.jsonOrThrow(_collectionDefinition, {
                 unrecognizedObjectKeys: "passthrough"

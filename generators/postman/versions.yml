@@ -4,7 +4,7 @@
   changelogEntry:
     - type: feat
       summary: |
-        Add a `collection-description` configuration that allows you to set
+        Add a `description` configuration that allows you to set
         the description of the generated Postman collection.
 
         ```yml
@@ -14,7 +14,7 @@
               - name: fernapi/fern-postman
                 version: 0.6.0
                 config:
-                  collection-description: My API description
+                  description: My API description
         ```
 
         If not specified, the description falls back to the API-level docs
