@@ -1148,8 +1148,7 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 logWarnings: argv.warnings,
                 brokenLinks: argv.brokenLinks,
                 errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi,
-                outputJson: argv.json
+                directFromOpenapi: argv.fromOpenapi
             });
         }
     );

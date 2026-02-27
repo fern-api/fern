@@ -17,8 +17,7 @@ export async function validateWorkspaces({
     brokenLinks,
     errorOnBrokenLinks,
     isLocal,
-    directFromOpenapi,
-    outputJson
+    directFromOpenapi
 }: {
     project: Project;
     cliContext: CliContext;
@@ -27,7 +26,6 @@ export async function validateWorkspaces({
     errorOnBrokenLinks: boolean;
     isLocal?: boolean;
     directFromOpenapi?: boolean;
-    outputJson?: boolean;
 }): Promise<void> {
     const apiResults: ApiValidationResult[] = [];
     let docsResult: DocsValidationResult | undefined;
@@ -140,7 +138,7 @@ export async function validateWorkspaces({
         });
     });
 
-    if (outputJson) {
+    if (cliContext.isJsonMode) {
         const showApiNames = apiResults.length > 1;
         cliContext.writeJsonToStdout(
             buildCheckJsonResult({ apiResults, docsResult, hasErrors: hasErrors || hasAnyErrors, showApiNames })

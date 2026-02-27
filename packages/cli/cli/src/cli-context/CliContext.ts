@@ -114,6 +114,10 @@ export class CliContext {
         this.stdoutGuard.redirect();
     }
 
+    public get isJsonMode(): boolean {
+        return this.jsonMode;
+    }
+
     /**
      * Write a value as formatted JSON to stdout.
      * Temporarily restores the real stdout, writes, then re-redirects.
