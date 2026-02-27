@@ -74,7 +74,7 @@ export function convertWebhookOperation({
         }
 
         const properties: ObjectPropertyWithExample[] = convertedParameters.queryParameters.map((qp) => ({
-            key: qp.parameterNameOverride ?? qp.name,
+            key: qp.name,
             schema: qp.schema,
             readonly: undefined,
             writeonly: undefined,
