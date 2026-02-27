@@ -5045,18 +5045,18 @@
         "sidebar"
       ]
     },
-    "docs.TabsAlignment": {
-      "type": "string",
-      "enum": [
-        "default",
-        "center"
-      ]
-    },
     "docs.TabsPlacement": {
       "type": "string",
       "enum": [
         "header",
         "sidebar"
+      ]
+    },
+    "docs.TabsAlignment": {
+      "type": "string",
+      "enum": [
+        "default",
+        "center"
       ]
     },
     "docs.SwitcherPlacement": {
