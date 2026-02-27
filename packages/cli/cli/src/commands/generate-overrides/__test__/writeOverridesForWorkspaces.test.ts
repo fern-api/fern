@@ -171,7 +171,7 @@ describe("generateOverridesContent", () => {
         // The function checks by uppercase method (endpoint.method = "GET")
         // so existing entries must use uppercase keys to be preserved
         const existingOverrides = {
-            path: {
+            paths: {
                 "/pets": {
                     GET: {
                         "x-fern-sdk-group-name": ["animals"],
