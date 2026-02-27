@@ -4,7 +4,7 @@ import { url } from "../../core";
 import { toJson } from "../../core/json";
 import { withFormUrlEncoded } from "./withFormUrlEncoded";
 import { withHeaders } from "./withHeaders";
-import { type WithJsonOptions, withJson } from "./withJson";
+import { withJson, type WithJsonOptions } from "./withJson";
 
 type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 
