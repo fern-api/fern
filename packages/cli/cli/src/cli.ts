@@ -67,6 +67,7 @@ import { upgrade } from "./commands/upgrade/upgrade.js";
 import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
+import { listAvailableGenerators } from "./commands/list-generators/listAvailableGenerators.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
@@ -231,6 +232,7 @@ async function tryRunCli(cliContext: CliContext) {
     addExportCommand(cli, cliContext);
     addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
+    addListGeneratorsCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1983,6 +1985,56 @@ function addBetaCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext.logger.error("CLI v2 failed:", String(error));
                 cliContext.failWithoutThrowing();
             }
+        }
+    );
+}
+
+function addListGeneratorsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "list-generators",
+        "List all available Fern generators from the registry",
+        (yargs) =>
+            yargs
+                .option("language", {
+                    string: true,
+                    alias: "l",
+                    description:
+                        "Filter by programming language (e.g., python, typescript, java, go, csharp, ruby, php, swift, rust)"
+                })
+                .option("type", {
+                    string: true,
+                    alias: "t",
+                    description: "Filter by generator type (sdk, model, server, other)"
+                })
+                .option("format", {
+                    string: true,
+                    alias: "f",
+                    choices: ["table", "json", "yaml"] as const,
+                    default: "table" as const,
+                    description: "Output format (table, json, yaml)"
+                })
+                .option("output", {
+                    string: true,
+                    alias: "o",
+                    description: "Write output to a file instead of stdout"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern list-generators",
+                properties: {
+                    language: argv.language,
+                    type: argv.type,
+                    format: argv.format,
+                    outputLocation: argv.output
+                }
+            });
+            await listAvailableGenerators({
+                cliContext,
+                languageFilter: argv.language,
+                typeFilter: argv.type,
+                format: argv.format,
+                outputLocation: argv.output
+            });
         }
     );
 }

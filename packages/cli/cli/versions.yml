@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.96.0
+  changelogEntry:
+    - summary: |
+        Add `fern list-generators` command that fetches and displays all available
+        generators from the Fern registry. Supports filtering by `--language` and
+        `--type`, output in `--format` table/json/yaml, and writing to a file with
+        `--output`.
+      type: feat
+  createdAt: "2026-02-28"
+  irVersion: 65
+
 - version: 3.95.6
   changelogEntry:
     - summary: |
