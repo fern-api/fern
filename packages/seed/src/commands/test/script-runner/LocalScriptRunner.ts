@@ -165,9 +165,10 @@ export class LocalScriptRunner extends ScriptRunner {
             return { type: "failure", message: chmodCommand.stdout };
         }
 
+        const streamOutput = this.shouldStreamOutput();
         const command = await loggingExeca(taskContext.logger, "/bin/sh", [scriptFile.path], {
             cwd: outputDir,
-            doNotPipeOutput: true,
+            doNotPipeOutput: !streamOutput,
             reject: false
         });
 
@@ -177,6 +178,9 @@ export class LocalScriptRunner extends ScriptRunner {
             taskContext.logger.error(command.stderr);
             return { type: "failure", message: command.stdout };
         } else {
+            if (!streamOutput && command.stdout) {
+                taskContext.logger.debug(command.stdout);
+            }
             return { type: "success" };
         }
     }

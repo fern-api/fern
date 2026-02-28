@@ -240,12 +240,13 @@ export class ContainerScriptRunner extends ScriptRunner {
         }
 
         // Now actually run the test script
+        const streamOutput = this.shouldStreamOutput();
         const command = await loggingExeca(
             taskContext.logger,
             this.runner,
             ["exec", containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
             {
-                doNotPipeOutput: true,
+                doNotPipeOutput: !streamOutput,
                 reject: false
             }
         );
@@ -255,6 +256,9 @@ export class ContainerScriptRunner extends ScriptRunner {
             taskContext.logger.error(command.stderr);
             return { type: "failure", message: command.stdout };
         } else {
+            if (!streamOutput && command.stdout) {
+                taskContext.logger.debug(command.stdout);
+            }
             return { type: "success" };
         }
     }
