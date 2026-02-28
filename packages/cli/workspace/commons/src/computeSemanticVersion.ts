@@ -1,5 +1,5 @@
 import type { generatorsYml } from "@fern-api/configuration";
-import { getLatestTag as getLatestTagFromGithub } from "@fern-api/github";
+import { getFileContent, getLatestTag as getLatestTagFromGithub } from "@fern-api/github";
 import latestVersion from "latest-version";
 import semver from "semver";
 
@@ -33,6 +33,10 @@ interface CratesIoResponse {
     crate?: { max_stable_version?: string };
 }
 
+interface FernMetadataJson {
+    sdkVersion?: string;
+}
+
 /**
  * Computes the next semantic version for an SDK package by fetching the current version
  * from package registries or GitHub tags, then incrementing the patch version.
@@ -49,6 +53,10 @@ interface CratesIoResponse {
  * - Go: Go Module Proxy
  * - Rust: Crates.io
  * - PHP/Swift: GitHub tags fallback only
+ *
+ * Falls back to GitHub tags, then to reading the sdkVersion from the
+ * .fern/metadata.json file in the GitHub repository (written by Fern generators
+ * during previous SDK generations).
  *
  * Supports authenticated access to private registries and repositories via environment variables:
  * - GITHUB_TOKEN: Used to authenticate GitHub API requests for private repositories
@@ -89,8 +97,13 @@ export async function computeSemanticVersion({
 }
 
 /**
- * Gets the existing version of a package from registries or GitHub tags.
- * Tries package registries first, then falls back to GitHub tags.
+ * Gets the existing version of a package from registries, GitHub tags, or
+ * the .fern/metadata.json file in the GitHub repository.
+ *
+ * Resolution order:
+ * 1. Package registry lookup (npm, PyPI, Maven, NuGet, RubyGems, Go proxy, Crates.io)
+ * 2. GitHub tags (latest tag on the repository)
+ * 3. .fern/metadata.json sdkVersion (file committed by Fern generators during previous generations)
  *
  * Supports authenticated access via environment variables:
  * - GITHUB_TOKEN: Authenticates GitHub API requests for private repositories
@@ -149,6 +162,15 @@ async function getExistingVersion({
     // Step 2: Fall back to GitHub tags
     if (githubRepository != null) {
         version = await getLatestTag(githubRepository);
+    }
+
+    if (version != null) {
+        return version;
+    }
+
+    // Step 3: Fall back to .fern/metadata.json from the GitHub repo
+    if (githubRepository != null) {
+        version = await getVersionFromMetadataJson(githubRepository);
     }
 
     return version;
@@ -372,6 +394,37 @@ export async function getLatestVersionFromCrates(packageName: string): Promise<s
         return undefined;
     } catch (error) {
         // Crate doesn't exist or network error
+        return undefined;
+    }
+}
+
+/**
+ * Fetches the sdkVersion from the .fern/metadata.json file in a GitHub repository.
+ *
+ * This is a fallback for when registry lookups and GitHub tag lookups both fail.
+ * The .fern/metadata.json file is written by Fern generators during SDK generation
+ * and contains the sdkVersion field with the version that was generated.
+ *
+ * If the GITHUB_TOKEN environment variable is set, it will be used to authenticate
+ * requests to the GitHub API, enabling access to private repositories.
+ *
+ * @param githubRepository - Repository in "owner/repo" format
+ * @returns The sdkVersion string from metadata.json, or undefined if not found
+ */
+/** @internal Exported for testing */
+export async function getVersionFromMetadataJson(githubRepository: string): Promise<string | undefined> {
+    try {
+        const content = await getFileContent(githubRepository, ".fern/metadata.json");
+        if (content != null) {
+            const metadata = JSON.parse(content) as FernMetadataJson;
+            if (metadata.sdkVersion != null) {
+                return metadata.sdkVersion;
+            }
+        }
+
+        return undefined;
+    } catch (error) {
+        // File doesn't exist, repo is private without auth, or other error
         return undefined;
     }
 }

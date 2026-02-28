@@ -8,7 +8,8 @@ import {
     getLatestVersionFromNpm,
     getLatestVersionFromNuget,
     getLatestVersionFromPypi,
-    getLatestVersionFromRubyGems
+    getLatestVersionFromRubyGems,
+    getVersionFromMetadataJson
 } from "../computeSemanticVersion.js";
 
 // ─── Helpers ────────────────────────────────────────────────────────
@@ -397,6 +398,60 @@ describe("getLatestTag", () => {
 
     it("returns undefined for invalid repository format", async () => {
         const version = await getLatestTag("invalid-no-slash");
+        expect(version).toBeUndefined();
+    });
+});
+
+vi.mock("@fern-api/github", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("@fern-api/github")>();
+    return {
+        ...actual,
+        getFileContent: vi.fn()
+    };
+});
+
+import { getFileContent } from "@fern-api/github";
+
+describe("getVersionFromMetadataJson", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("returns sdkVersion from metadata.json", async () => {
+        vi.mocked(getFileContent).mockResolvedValueOnce(
+            JSON.stringify({ sdkVersion: "1.2.3", headerPrefix: "x-acme" })
+        );
+
+        const version = await getVersionFromMetadataJson("owner/repo");
+        expect(version).toBe("1.2.3");
+        expect(getFileContent).toHaveBeenCalledWith("owner/repo", ".fern/metadata.json");
+    });
+
+    it("returns undefined when metadata.json has no sdkVersion field", async () => {
+        vi.mocked(getFileContent).mockResolvedValueOnce(JSON.stringify({ headerPrefix: "x-acme" }));
+
+        const version = await getVersionFromMetadataJson("owner/repo");
+        expect(version).toBeUndefined();
+    });
+
+    it("returns undefined when file does not exist", async () => {
+        vi.mocked(getFileContent).mockResolvedValueOnce(undefined);
+
+        const version = await getVersionFromMetadataJson("owner/repo");
+        expect(version).toBeUndefined();
+    });
+
+    it("returns undefined when getFileContent throws", async () => {
+        vi.mocked(getFileContent).mockRejectedValueOnce(new Error("404 Not Found"));
+
+        const version = await getVersionFromMetadataJson("owner/repo");
+        expect(version).toBeUndefined();
+    });
+
+    it("returns undefined when metadata.json content is invalid JSON", async () => {
+        vi.mocked(getFileContent).mockResolvedValueOnce("not valid json");
+
+        const version = await getVersionFromMetadataJson("owner/repo");
         expect(version).toBeUndefined();
     });
 });
