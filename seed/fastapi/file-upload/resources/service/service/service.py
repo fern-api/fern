@@ -163,7 +163,7 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "integer":
                 new_parameters.append(
@@ -187,11 +187,11 @@ class AbstractServiceService(AbstractFernService):
                 )
             elif parameter_name == "maybe_integer":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "optional_list_of_strings":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "list_of_objects":
                 new_parameters.append(
@@ -199,15 +199,15 @@ class AbstractServiceService(AbstractFernService):
                 )
             elif parameter_name == "optional_metadata":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "optional_object_type":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "optional_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "alias_object":
                 new_parameters.append(
@@ -441,7 +441,7 @@ class AbstractServiceService(AbstractFernService):
                 )
             elif parameter_name == "foo_bar":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -529,7 +529,7 @@ class AbstractServiceService(AbstractFernService):
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "integer":
                 new_parameters.append(
@@ -553,11 +553,11 @@ class AbstractServiceService(AbstractFernService):
                 )
             elif parameter_name == "maybe_integer":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "optional_list_of_strings":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "list_of_objects":
                 new_parameters.append(
@@ -565,15 +565,15 @@ class AbstractServiceService(AbstractFernService):
                 )
             elif parameter_name == "optional_metadata":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "optional_object_type":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "optional_id":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "list_of_objects_with_optionals":
                 new_parameters.append(
@@ -633,7 +633,7 @@ class AbstractServiceService(AbstractFernService):
                 )
             elif parameter_name == "request":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -719,7 +719,7 @@ class AbstractServiceService(AbstractFernService):
                 )
             elif parameter_name == "json":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             else:
                 new_parameters.append(parameter)
@@ -798,15 +798,15 @@ class AbstractServiceService(AbstractFernService):
                 )
             elif parameter_name == "model_type":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "open_enum":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             elif parameter_name == "maybe_name":
                 new_parameters.append(
-                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()])
+                    parameter.replace(annotation=typing.Annotated[resolved_annotation, fastapi.Body()], default=None)
                 )
             else:
                 new_parameters.append(parameter)

@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 2.1.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Optional body properties in file upload requests are now correctly treated as optional.
+        Previously, optional inline request body parameters (e.g. `optional<map<string, string>>`)
+        in file upload endpoints were generated with `fastapi.Body()` (required) instead of
+        `fastapi.Body()` with `default=None`, causing FastAPI to reject requests that omit
+        those fields.
+  createdAt: "2026-02-28"
+  irVersion: 61
+
 - version: 2.1.0
   changelogEntry:
     - type: feat

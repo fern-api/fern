@@ -1,3 +1,4 @@
+import typing
 from typing import List, Optional
 
 from ....context import FastApiGeneratorContext
@@ -80,6 +81,16 @@ class FileUploadRequestBodyParameter(EndpointParameter):
         return self._context.fastapi_params.Body(
             variable_name=self._parameter_name(), wire_value=self._request_property.name.wire_value
         )
+
+    def get_python_default(self) -> "typing.Optional[AST.Expression]":
+        value_type = self._request_property.value_type.get_as_union()
+        is_optional = value_type.type == "container" and (
+            value_type.container.get_as_union().type == "optional"
+            or value_type.container.get_as_union().type == "nullable"
+        )
+        if is_optional:
+            return AST.Expression(AST.TypeHint.none())
+        return None
 
 
 class FileUploadRequestEndpointParameters:
