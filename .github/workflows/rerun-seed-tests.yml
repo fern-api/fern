@@ -1,0 +1,17 @@
+name: Rerun Failed Seed PR Tests
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  pull-requests: read
+  checks: read
+
+jobs:
+  rerun-failed-seed-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Hello world
+        run: echo "Hello world - workflow trigger is working!"
