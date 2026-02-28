@@ -39,42 +39,48 @@ export function constructCasingsGenerator({
             let camelCaseName = withUnderscorePreservation(name, camelCase);
             let pascalCaseName = upperFirst(camelCaseName);
             let snakeCaseName = withUnderscorePreservation(name, snakeCase);
+            const { leading: nameLeading, trailing: nameTrailing } = extractUnderscoreAffixes(name);
             const camelCaseWords = words(camelCaseName);
             if (smartCasing) {
                 if (
                     !hasAdjacentCommonInitialisms(camelCaseWords) &&
                     (generationLanguage == null || CAPITALIZE_INITIALISM.includes(generationLanguage))
                 ) {
-                    camelCaseName = camelCaseWords
-                        .map((word, index) => {
-                            if (index > 0) {
-                                const pluralInitialism = maybeGetPluralInitialism(word);
-                                if (pluralInitialism != null) {
-                                    return pluralInitialism;
-                                }
-                                if (isCommonInitialism(word)) {
-                                    return word.toUpperCase();
-                                }
-                            }
-                            return word;
-                        })
-                        .join("");
-                    pascalCaseName = upperFirst(
+                    camelCaseName =
+                        nameLeading +
                         camelCaseWords
                             .map((word, index) => {
-                                const pluralInitialism = maybeGetPluralInitialism(word);
-                                if (pluralInitialism != null) {
-                                    return pluralInitialism;
-                                }
-                                if (isCommonInitialism(word)) {
-                                    return word.toUpperCase();
-                                }
-                                if (index === 0) {
-                                    return upperFirst(word);
+                                if (index > 0) {
+                                    const pluralInitialism = maybeGetPluralInitialism(word);
+                                    if (pluralInitialism != null) {
+                                        return pluralInitialism;
+                                    }
+                                    if (isCommonInitialism(word)) {
+                                        return word.toUpperCase();
+                                    }
                                 }
                                 return word;
                             })
-                            .join("")
+                            .join("") +
+                        nameTrailing;
+                    pascalCaseName = upperFirst(
+                        nameLeading +
+                            camelCaseWords
+                                .map((word, index) => {
+                                    const pluralInitialism = maybeGetPluralInitialism(word);
+                                    if (pluralInitialism != null) {
+                                        return pluralInitialism;
+                                    }
+                                    if (isCommonInitialism(word)) {
+                                        return word.toUpperCase();
+                                    }
+                                    if (index === 0) {
+                                        return upperFirst(word);
+                                    }
+                                    return word;
+                                })
+                                .join("") +
+                            nameTrailing
                     );
                 }
 
@@ -250,6 +256,9 @@ function extractUnderscoreAffixes(name: string): { leading: string; trailing: st
     const trailingMatch = name.match(/(_+)$/);
     const leading = leadingMatch?.[1] ?? "";
     const trailing = trailingMatch?.[1] ?? "";
+    if (leading.length + trailing.length >= name.length) {
+        return { leading: name, trailing: "", core: "" };
+    }
     const core = name.slice(leading.length, name.length - trailing.length || undefined);
     return { leading, trailing, core };
 }

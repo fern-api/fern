@@ -16,6 +16,9 @@ function camelCasePreservingUnderscores(name: string): string {
     if (leading === "" && trailing === "") {
         return camelCase(name);
     }
+    if (leading.length + trailing.length >= name.length) {
+        return name;
+    }
     const core = name.slice(leading.length, name.length - trailing.length || undefined);
     return `${leading}${camelCase(core)}${trailing}`;
 }
