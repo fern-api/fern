@@ -936,7 +936,7 @@ describe("convertGeneratorsConfiguration", () => {
             });
         });
 
-        it("falls back to V2 workspace-level specs when no generator override", async () => {
+        it("returns undefined when workspace is V2 but generator has no api override", async () => {
             const context = createMockTaskContext();
             const workspaceSpecs = [{ openapi: "workspace-spec.yml" }];
             const converted = await convertGeneratorsConfiguration({
@@ -963,9 +963,7 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
-                specs: workspaceSpecs
-            });
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
         });
 
         it("generator-level specs take priority over V2 workspace-level specs", async () => {

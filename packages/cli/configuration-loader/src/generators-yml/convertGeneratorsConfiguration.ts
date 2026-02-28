@@ -83,8 +83,7 @@ export async function convertGeneratorsConfiguration({
                               maybeTopLevelMetadata,
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
                               readme,
-                              context,
-                              rawApiConfiguration: rawGeneratorsConfiguration.api
+                              context
                           })
                       )
                   )
@@ -550,8 +549,7 @@ async function convertGroup({
     maybeTopLevelMetadata,
     maybeTopLevelReviewers,
     readme,
-    context,
-    rawApiConfiguration
+    context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
@@ -560,7 +558,6 @@ async function convertGroup({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
-    rawApiConfiguration: generatorsYml.ApiConfigurationSchema | undefined;
 }): Promise<generatorsYml.GeneratorGroup> {
     const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
@@ -577,8 +574,7 @@ async function convertGroup({
                     maybeTopLevelReviewers,
                     maybeGroupLevelReviewers: group.reviewers,
                     readme,
-                    context,
-                    rawApiConfiguration
+                    context
                 })
             )
         )
@@ -593,8 +589,7 @@ async function convertGenerator({
     maybeGroupLevelReviewers,
     maybeTopLevelReviewers,
     readme,
-    context,
-    rawApiConfiguration
+    context
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: generatorsYml.GeneratorInvocationSchema;
@@ -604,7 +599,6 @@ async function convertGenerator({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
-    rawApiConfiguration: generatorsYml.ApiConfigurationSchema | undefined;
 }): Promise<generatorsYml.GeneratorInvocation> {
     // Warn and correct incorrect "fern-api/" org prefix in generators.yml
     const correctedName = correctIncorrectDockerOrgWithWarning(generator.name, context);
@@ -639,16 +633,14 @@ async function convertGenerator({
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined,
-        apiOverride: getApiOverride({ generator, rawApiConfiguration })
+        apiOverride: getApiOverride({ generator })
     };
 }
 
 function getApiOverride({
-    generator,
-    rawApiConfiguration
+    generator
 }: {
     generator: generatorsYml.GeneratorInvocationSchema;
-    rawApiConfiguration: generatorsYml.ApiConfigurationSchema | undefined;
 }): generatorsYml.GeneratorInvocation["apiOverride"] {
     // Generator-level overrides take priority
     if (generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null) {
@@ -656,12 +648,6 @@ function getApiOverride({
             specs: generator.api?.specs,
             auth: generator.api?.auth,
             "auth-schemes": generator.api?.["auth-schemes"]
-        };
-    }
-
-    if (rawApiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(rawApiConfiguration)) {
-        return {
-            specs: rawApiConfiguration.specs
         };
     }
 
