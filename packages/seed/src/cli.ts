@@ -183,6 +183,9 @@ function addTestCommand(cli: Argv) {
                     fixtureName = name ?? fixtureName;
                     fixtureOutputFolder = folder;
                 }
+                if (fixtureOutputFolder == null && argv.outputFolder != null) {
+                    fixtureOutputFolder = argv.outputFolder;
+                }
 
                 await watchAndRerun({
                     generator,
