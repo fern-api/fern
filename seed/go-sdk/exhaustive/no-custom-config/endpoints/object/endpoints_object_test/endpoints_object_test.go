@@ -469,6 +469,34 @@ func TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock(
 	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnNestedWithRequiredFieldAsListWithWireMock", "POST", "/object/get-and-return-nested-with-required-field-list", nil, 1)
 }
 
+func TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock(
+	t *testing.T,
+) {
+	wiremockPort := os.Getenv("WIREMOCK_PORT")
+	if wiremockPort == "" {
+		wiremockPort = "8080"
+	}
+	WireMockBaseURL := "http://localhost:" + wiremockPort
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &types.ObjectWithUnknownField{
+		Unknown: map[string]any{
+			"$ref": "https://example.com/schema",
+		},
+	}
+	_, invocationErr := client.Endpoints.Object.GetAndReturnWithUnknownField(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestEndpointsObjectGetAndReturnWithUnknownFieldWithWireMock", "POST", "/object/get-and-return-with-unknown-field", nil, 1)
+}
+
 func TestEndpointsObjectGetAndReturnWithDatetimeLikeStringWithWireMock(
 	t *testing.T,
 ) {

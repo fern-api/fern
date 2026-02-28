@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.6
+  changelogEntry:
+    - summary: |
+        Fix TypeScript generator crash when discriminated union discriminant values start
+        with digits (e.g., "1foo", "1bar"). The generated code now prefixes such identifiers
+        with an underscore to produce valid TypeScript.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.52.5
   changelogEntry:
     - summary: |
@@ -11,7 +21,6 @@
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
-
 - version: 3.52.4
   changelogEntry:
     - summary: |

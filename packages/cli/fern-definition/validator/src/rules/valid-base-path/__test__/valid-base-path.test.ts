@@ -19,6 +19,7 @@ describe("valid-base-path", () => {
                 message: "base-path must be empty or start with a slash.",
                 nodePath: ["service"],
                 relativeFilepath: RelativeFilePath.of("no-leading-slash.yml"),
+                name: "valid-base-path",
                 severity: "fatal"
             }
         ];
