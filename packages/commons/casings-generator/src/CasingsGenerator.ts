@@ -104,9 +104,7 @@ export function constructCasingsGenerator({
                         .split(" ")
                         .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
                         .join("_");
-                snakeCaseName = preserve
-                    ? withUnderscorePreservation(name, smartSnakeFn)
-                    : smartSnakeFn(name);
+                snakeCaseName = preserve ? withUnderscorePreservation(name, smartSnakeFn) : smartSnakeFn(name);
             }
 
             return {
