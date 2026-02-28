@@ -62,7 +62,8 @@ export function convertProperties({
                 docs: propertySchema.description,
                 availability: convertedProperty.availability,
                 propertyAccess: context.getPropertyAccess(propertySchema),
-                v2Examples: convertedProperty.schema?.typeDeclaration?.v2Examples ??
+                v2Examples:
+                    convertedProperty.schema?.typeDeclaration?.v2Examples ??
                     generatePropertyV2Examples({
                         propertySchema,
                         breadcrumbs: propertyBreadcrumbs,
