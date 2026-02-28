@@ -23,6 +23,8 @@ test:
     buildCommand:
       - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
+    watchPaths:
+      - sdk/dist/cli.cjs
 
 language: swift
 generatorType: SDK

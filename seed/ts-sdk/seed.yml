@@ -25,6 +25,8 @@ test:
     buildCommand:
       - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
     runCommand: node --enable-source-maps sdk/cli/dist/cli.cjs {CONFIG_PATH}
+    watchPaths:
+      - sdk/cli/dist/cli.cjs
     env:
       NODE_ENV: test
 

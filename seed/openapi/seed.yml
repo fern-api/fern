@@ -18,6 +18,8 @@ test:
     buildCommand:
       - pnpm turbo run dist:cli --filter @fern-api/openapi-generator
     runCommand: node --enable-source-maps dist/cli.cjs openapi {CONFIG_PATH}
+    watchPaths:
+      - dist/cli.cjs
 generatorType: Documentation
 defaultOutputMode: local_files
 fixtures:
@@ -51,4 +53,4 @@ fixtures:
             schemas: 
               Operand: 
                 type: null     
-      outputFolder: custom-overrides      
+      outputFolder: custom-overrides            

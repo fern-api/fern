@@ -32,6 +32,8 @@ test:
     buildCommand:
       - pnpm turbo run dist:cli --filter @fern-typescript/express-generator-cli
     runCommand: node --enable-source-maps express/cli/dist/cli.cjs {CONFIG_PATH}
+    watchPaths:
+      - express/cli/dist/cli.cjs
     env:
       NODE_ENV: test
 

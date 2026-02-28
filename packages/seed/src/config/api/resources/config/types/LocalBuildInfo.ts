@@ -15,4 +15,10 @@ export interface LocalBuildInfo {
     runCommand: string;
     /** Environment variables to set when running the generator locally. */
     env?: Record<string, string> | undefined;
+    /**
+     * Paths to watch for changes in watch mode (relative to workingDirectory).
+     * When any of these files change (e.g. after turbo rebuilds), the generator is re-run.
+     * Example: ["sdk/cli/dist/cli.cjs"]
+     */
+    watchPaths?: string[] | undefined;
 }

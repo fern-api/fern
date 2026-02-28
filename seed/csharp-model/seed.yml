@@ -34,6 +34,8 @@ test:
     buildCommand:
       - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-model
     runCommand: node --enable-source-maps model/dist/cli.cjs {CONFIG_PATH}
+    watchPaths:
+      - model/dist/cli.cjs
 
 language: csharp
 generatorType: Model

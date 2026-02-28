@@ -22,6 +22,7 @@ import { runWithCustomFixture } from "./commands/run/runWithCustomFixture.js";
 import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test/index.js";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner/index.js";
+import { watchAndRerun } from "./commands/test/watch/watchAndRerun.js";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures.js";
 import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local/index.js";
 import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils.js";
@@ -143,11 +144,56 @@ function addTestCommand(cli: Argv) {
                     choices: ["docker", "podman"],
                     demandOption: false,
                     description: "Explicitly specify which container runtime to use (docker or podman)"
+                })
+                .option("watch", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description:
+                        "Watch generator files and re-run on changes. Requires --local, exactly one --generator, and exactly one --fixture."
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
             if (argv.generator != null) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
+            }
+
+            // Watch mode: validate constraints and delegate
+            if (argv.watch) {
+                if (!argv.local) {
+                    throw new Error("--watch requires --local");
+                }
+                if (argv.generator == null || argv.generator.length !== 1) {
+                    throw new Error("--watch requires exactly one --generator");
+                }
+                if (argv.fixture == null || argv.fixture.length !== 1) {
+                    throw new Error("--watch requires exactly one --fixture");
+                }
+
+                const generatorName = argv.generator[0];
+                const generator = generators.find((g) => g.workspaceName === generatorName);
+                if (generator == null) {
+                    throw new Error(`Generator ${generatorName} not found.`);
+                }
+
+                let fixtureName = argv.fixture[0] ?? "";
+                let fixtureOutputFolder: string | undefined;
+                if (fixtureName.includes(":")) {
+                    const [name, folder] = fixtureName.split(":", 2);
+                    fixtureName = name ?? fixtureName;
+                    fixtureOutputFolder = folder;
+                }
+
+                await watchAndRerun({
+                    generator,
+                    fixture: fixtureName,
+                    fixtureOutputFolder,
+                    outputFolder: argv.outputFolder,
+                    skipScripts: argv.skipScripts,
+                    logLevel: argv["log-level"],
+                    inspect: argv.inspect
+                });
+                return;
             }
 
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
