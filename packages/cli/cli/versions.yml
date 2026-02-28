@@ -2,9 +2,9 @@
 - version: 3.95.6
   changelogEntry:
     - summary: |
-        Disable commit signing and skip hooks for all remaining internal git
-        commits (PersistedTypescriptProject, ClonedRepository, replay-init) to
-        avoid triggering prompts (e.g. Touch ID on macOS, 1Password SSH agent).
+        Disable commit signing and skip hooks for remaining internal throwaway
+        git commits (PersistedTypescriptProject, replay-init) to avoid
+        triggering prompts (e.g. Touch ID on macOS, 1Password SSH agent).
       type: fix
   createdAt: "2026-02-28"
   irVersion: 65

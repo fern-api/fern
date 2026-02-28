@@ -83,19 +83,9 @@ export class ClonedRepository {
 
     public async commit(message?: string): Promise<void> {
         await this.git.cwd(this.clonePath);
-        // Use raw() so that `-c commit.gpgsign=false` is placed before the
-        // `commit` sub-command (it is a git-level config override, not a
-        // commit flag). This prevents commit-signing prompts (e.g. Touch ID
-        // on macOS, 1Password SSH agent) for automated commits.
-        await this.git.raw([
-            "-c",
-            "commit.gpgsign=false",
-            "commit",
-            "--allow-empty",
-            "--no-verify",
-            "-m",
-            message ?? "Automated commit"
-        ]);
+        await this.git.commit(message ?? `Automated commit`, undefined, {
+            "--allow-empty": null
+        });
     }
 
     public async commitAllChanges(message?: string): Promise<void> {
