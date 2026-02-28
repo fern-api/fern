@@ -238,6 +238,9 @@ export async function watchAndRerun({
             }
             cleanedUp = true;
             CONSOLE_LOGGER.info("\nWatch mode: shutting down...");
+            if (debounceTimer != null) {
+                clearTimeout(debounceTimer);
+            }
             for (const watcher of watchers) {
                 watcher.close();
             }
@@ -340,5 +343,5 @@ function resolveFixtureConfiguration(
         return config.find((c) => c.outputFolder === outputFolder);
     }
     // If there are multiple configurations but no output folder specified, use the first one
-    return config.length === 1 ? config[0] : undefined;
+    return config[0];
 }
