@@ -6,11 +6,14 @@ import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved.js";
 
 export interface CasingsGenerator {
-    generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;
+    generateName(
+        name: string,
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
+    ): Name;
     generateNameAndWireValue(args: {
         name: string;
         wireValue: string;
-        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema };
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean };
     }): NameAndWireValue;
 }
 
@@ -36,10 +39,19 @@ export function constructCasingsGenerator({
                 })
             });
 
-            let camelCaseName = withUnderscorePreservation(name, camelCase);
-            let pascalCaseName = upperFirst(camelCaseName);
-            let snakeCaseName = withUnderscorePreservation(name, snakeCase);
-            const { leading: nameLeading, trailing: nameTrailing } = extractUnderscoreAffixes(name);
+            const preserve = opts?.preserveUnderscores === true;
+            const applyCasing = preserve
+                ? (n: string, fn: (s: string) => string) => withUnderscorePreservation(n, fn)
+                : (_n: string, fn: (s: string) => string) => fn(_n);
+
+            let camelCaseName = applyCasing(name, camelCase);
+            let pascalCaseName = preserve
+                ? withUnderscorePreservation(name, (n) => upperFirst(camelCase(n)))
+                : upperFirst(camelCaseName);
+            let snakeCaseName = applyCasing(name, snakeCase);
+            const { leading: nameLeading, trailing: nameTrailing } = preserve
+                ? extractUnderscoreAffixes(name)
+                : { leading: "", trailing: "" };
             const camelCaseWords = words(camelCaseName);
             if (smartCasing) {
                 if (
@@ -87,12 +99,14 @@ export function constructCasingsGenerator({
                 // In smartCasing, manage numbers next to letters differently:
                 // _.snakeCase("v2") = "v_2"
                 // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
-                snakeCaseName = withUnderscorePreservation(name, (n) =>
+                const smartSnakeFn = (n: string) =>
                     n
                         .split(" ")
                         .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
-                        .join("_")
-                );
+                        .join("_");
+                snakeCaseName = preserve
+                    ? withUnderscorePreservation(name, smartSnakeFn)
+                    : smartSnakeFn(name);
             }
 
             return {
