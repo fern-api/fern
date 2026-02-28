@@ -14,7 +14,7 @@ permissions:
 jobs:
   rerun-failed-seed-tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     steps:
       - name: Find and rerun failed seed PR tests
         env:
@@ -101,6 +101,10 @@ jobs:
               else
                 echo "PR #${PR_NUMBER}: Failed to trigger rerun for run ${RUN_ID}."
               fi
+
+              # Wait 1 minute between re-runs to avoid rate limiting
+              echo "Waiting 60 seconds before next rerun..."
+              sleep 60
             done
           done
 
