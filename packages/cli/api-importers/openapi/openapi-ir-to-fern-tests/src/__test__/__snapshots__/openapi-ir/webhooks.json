@@ -81,7 +81,7 @@
     {
       "audiences": [],
       "method": "POST",
-      "operationId": "newpetPost82bd5e50",
+      "operationId": "newPet",
       "tags": [],
       "headers": [],
       "generatedPayloadName": "PostNewPetPayload",

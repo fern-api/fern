@@ -547,25 +547,25 @@
         ]
       },
       {
-        "id": "webhooks_.newpetPost82bd5e50",
+        "id": "webhooks_.newPet",
         "method": "POST",
         "name": {
-          "originalName": "newpetPost82bd5e50",
+          "originalName": "newPet",
           "camelCase": {
-            "unsafeName": "newpetPost82Bd5E50",
-            "safeName": "newpetPost82Bd5E50"
+            "unsafeName": "newPet",
+            "safeName": "newPet"
           },
           "snakeCase": {
-            "unsafeName": "newpet_post82bd5e50",
-            "safeName": "newpet_post82bd5e50"
+            "unsafeName": "new_pet",
+            "safeName": "new_pet"
           },
           "screamingSnakeCase": {
-            "unsafeName": "NEWPET_POST82BD5E50",
-            "safeName": "NEWPET_POST82BD5E50"
+            "unsafeName": "NEW_PET",
+            "safeName": "NEW_PET"
           },
           "pascalCase": {
-            "unsafeName": "NewpetPost82Bd5E50",
-            "safeName": "NewpetPost82Bd5E50"
+            "unsafeName": "NewPet",
+            "safeName": "NewPet"
           }
         },
         "headers": [],

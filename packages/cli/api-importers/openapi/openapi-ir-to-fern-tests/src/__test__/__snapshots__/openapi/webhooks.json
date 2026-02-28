@@ -39,7 +39,7 @@
             "payload": "Pet",
             "signature": undefined,
           },
-          "newpetPost82bd5e50": {
+          "newPet": {
             "audiences": [],
             "display-name": undefined,
             "examples": [
@@ -71,7 +71,7 @@
           id: 123
           name: Scratch
           tag: Cat
-  newpetPost82bd5e50:
+  newPet:
     audiences: []
     method: POST
     headers: {}
