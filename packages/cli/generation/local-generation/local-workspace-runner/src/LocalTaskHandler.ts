@@ -510,7 +510,10 @@ export class LocalTaskHandler {
         // This is a no-op for files that are already staged.
         await this.runGitCommand(["add", "-N", "."], this.absolutePathToLocalOutput);
 
-        await this.runGitCommand(["diff", "HEAD", "--output", diffFile], this.absolutePathToLocalOutput);
+        await this.runGitCommand(
+            ["diff", "HEAD", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
+            this.absolutePathToLocalOutput
+        );
 
         this.context.logger.info(`Generated git diff to file: ${diffFile}`);
         return diffFile;

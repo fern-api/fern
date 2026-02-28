@@ -37,10 +37,10 @@ export class LambdaExampleEnhancer {
         this.context = context;
 
         // Get Lambda origin - throw error if not configured
-        const lambdaOrigin = process.env.DEFAULT_FDR_LAMBDA_ORIGIN;
+        const lambdaOrigin = process.env.DEFAULT_FDR_LAMBDA_DOCS_ORIGIN;
         if (!lambdaOrigin) {
             throw new Error(
-                "DEFAULT_FDR_LAMBDA_ORIGIN environment variable is not set. AI example enhancement requires this to be configured."
+                "DEFAULT_FDR_LAMBDA_DOCS_ORIGIN environment variable is not set. AI example enhancement requires this to be configured."
             );
         }
         this.lambdaOrigin = lambdaOrigin;
