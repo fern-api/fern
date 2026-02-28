@@ -13,7 +13,7 @@ export const OpenApiSpecSchema = z.object({
     origin: z.string().optional(),
 
     /** Path to overrides file for the OpenAPI spec. */
-    overrides: z.union([z.string(), z.array(z.string()).nonempty()]).optional(),
+    overrides: z.string().optional(),
 
     /** Path to overlays file for the OpenAPI spec. */
     overlays: z.string().optional(),

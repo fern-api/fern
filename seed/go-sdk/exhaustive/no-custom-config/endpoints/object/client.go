@@ -130,6 +130,22 @@ func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 	return response.Body, nil
 }
 
+func (c *Client) GetAndReturnWithUnknownField(
+	ctx context.Context,
+	request *types.ObjectWithUnknownField,
+	opts ...option.RequestOption,
+) (*types.ObjectWithUnknownField, error) {
+	response, err := c.WithRawResponse.GetAndReturnWithUnknownField(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Tests that string fields containing datetime-like values are NOT reformatted.
 // The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
 // without being converted to "2023-08-31T14:15:22.000Z".

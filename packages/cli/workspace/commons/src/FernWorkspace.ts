@@ -1,6 +1,5 @@
-import { dependenciesYml, generatorsYml } from "@fern-api/configuration";
+import { dependenciesYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/path-utils";
-import { TaskContext } from "@fern-api/task-context";
 
 import { AbstractAPIWorkspace, FernDefinition } from "./AbstractAPIWorkspace.js";
 import { IdentifiableSource } from "./Source.js";
@@ -29,12 +28,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
         return this.definition;
     }
 
-    public async toFernWorkspace(
-        { context }: { context: TaskContext },
-        settings?: void,
-        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema,
-        generatorOverrides?: generatorsYml.OverridesSchema
-    ): Promise<FernWorkspace> {
+    public async toFernWorkspace(): Promise<FernWorkspace> {
         return this;
     }
 

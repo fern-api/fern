@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.40.3
+  changelogEntry:
+    - summary: |
+        Make OAuth authentication section a stable feature block in generated READMEs.
+        Previously, the authentication documentation was injected as an addendum to the
+        Usage block with a `## Authentication` heading, which the BlockMerger parsed as
+        a separate top-level block on subsequent merges. The authentication content is
+        now registered as a proper AUTHENTICATION feature with a stable block ID, making
+        README merges deterministic.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.40.2
   changelogEntry:
     - summary: |

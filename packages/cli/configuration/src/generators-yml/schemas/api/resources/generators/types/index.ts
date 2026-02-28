@@ -29,7 +29,6 @@ export * from "./OpenApiSpecSchema.js";
 export * from "./OpenRpcSpecSchema.js";
 export * from "./OutputMetadataAuthor.js";
 export * from "./OutputMetadataSchema.js";
-export * from "./OverridesSchema.js";
 export * from "./PathParameterOrder.js";
 export * from "./ProtobufApiDefinitionSchema.js";
 export * from "./ProtobufDefinitionSchema.js";

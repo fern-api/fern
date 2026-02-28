@@ -1,54 +1,37 @@
 import { Octokit } from "octokit";
-import semver from "semver";
 
 import { parseRepository } from "./parseRepository.js";
 
 /**
- * Returns the tag with the highest semantic version on a github repository.
- * Fetches all tags (paginated) and returns the one with the greatest semver.
+ * Returns the latest release tag on a github repository.
+ *
+ * Uses the GitHub "get latest release" endpoint, which returns the most recent
+ * non-draft, non-prerelease release. This avoids the tag ordering issue where
+ * listTags sorts by commit date rather than semantic version.
+ *
+ * If the GITHUB_TOKEN environment variable is set, it will be used to authenticate
+ * requests to the GitHub API, enabling access to private repositories.
+ *
  * @param githubRepository a string with the format `owner/repo`
+ * @param options.authToken optional GitHub auth token (defaults to process.env.GITHUB_TOKEN)
  */
-export async function getLatestTag(githubRepository: string): Promise<string | undefined> {
+export async function getLatestTag(
+    githubRepository: string,
+    options?: { authToken?: string }
+): Promise<string | undefined> {
     const { owner, repo } = parseRepository(githubRepository);
 
-    const octokit = new Octokit();
+    const token = options?.authToken ?? process.env.GITHUB_TOKEN;
+    const octokit = token != null ? new Octokit({ auth: token }) : new Octokit();
 
-    // Fetch all tags using pagination
-    const tags: string[] = [];
-    let page = 1;
-    while (true) {
-        const response = await octokit.rest.repos.listTags({
+    try {
+        const response = await octokit.rest.repos.getLatestRelease({
             owner,
-            repo,
-            per_page: 100,
-            page
+            repo
         });
-        if (response.data.length === 0) {
-            break;
-        }
-        for (const tag of response.data) {
-            tags.push(tag.name);
-        }
-        if (response.data.length < 100) {
-            break;
-        }
-        page++;
+        return response.data.tag_name;
+    } catch {
+        // No releases found (404) or other error — return undefined
+        return undefined;
     }
-
-    // Parse and find the highest semver tag
-    let highestVersion: semver.SemVer | null = null;
-    let highestTagName: string | undefined;
-
-    for (const tagName of tags) {
-        const cleaned = tagName.replace(/^v/, "");
-        const parsed = semver.parse(tagName) ?? semver.parse(cleaned);
-        if (parsed != null) {
-            if (highestVersion == null || semver.gt(parsed, highestVersion)) {
-                highestVersion = parsed;
-                highestTagName = tagName;
-            }
-        }
-    }
-
-    return highestTagName;
 }

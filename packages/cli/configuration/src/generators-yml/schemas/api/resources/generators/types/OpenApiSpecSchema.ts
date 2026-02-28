@@ -5,7 +5,7 @@ import type * as GeneratorsYml from "../../../index.js";
 export interface OpenApiSpecSchema {
     openapi: string;
     origin?: string;
-    overrides?: GeneratorsYml.OverridesSchema;
+    overrides?: string;
     overlays?: string;
     namespace?: string;
     settings?: GeneratorsYml.OpenApiSettingsSchema;

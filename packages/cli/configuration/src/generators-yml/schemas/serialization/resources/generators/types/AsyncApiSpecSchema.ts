@@ -4,7 +4,6 @@ import type * as GeneratorsYml from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { AsyncApiSettingsSchema } from "./AsyncApiSettingsSchema.js";
-import { OverridesSchema } from "./OverridesSchema.js";
 
 export const AsyncApiSpecSchema: core.serialization.ObjectSchema<
     serializers.AsyncApiSpecSchema.Raw,
@@ -12,7 +11,7 @@ export const AsyncApiSpecSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     asyncapi: core.serialization.string(),
     origin: core.serialization.string().optional(),
-    overrides: OverridesSchema.optional(),
+    overrides: core.serialization.string().optional(),
     namespace: core.serialization.string().optional(),
     settings: AsyncApiSettingsSchema.optional(),
 });
@@ -21,7 +20,7 @@ export declare namespace AsyncApiSpecSchema {
     export interface Raw {
         asyncapi: string;
         origin?: string | null;
-        overrides?: OverridesSchema.Raw | null;
+        overrides?: string | null;
         namespace?: string | null;
         settings?: AsyncApiSettingsSchema.Raw | null;
     }
