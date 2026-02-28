@@ -11,9 +11,6 @@ permissions:
   pull-requests: read
   checks: read
 
-env:
-  DO_NOT_TRACK: "1"
-
 jobs:
   rerun-failed-seed-tests:
     runs-on: ubuntu-latest
