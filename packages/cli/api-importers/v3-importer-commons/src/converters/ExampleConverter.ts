@@ -1177,8 +1177,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 };
             }
 
-            // If valid and non-coerced (but didn't use provided example), return immediately
-            if (result.isValid && !result.coerced) {
+            if (result.isValid && !result.coerced && this.example === undefined) {
                 return {
                     isValid: true,
                     coerced: false,

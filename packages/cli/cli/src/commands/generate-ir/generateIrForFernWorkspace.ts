@@ -1,11 +1,10 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues.js";
 
 export async function generateIrForFernWorkspace({
     workspace,

@@ -13,6 +13,11 @@ test:
   docker:
     image: fernapi/fern-openapi:latest
     command: pnpm turbo run dockerTagLatest --filter @fern-api/openapi-generator
+  local:
+    workingDirectory: generators/openapi
+    buildCommand:
+      - pnpm turbo run dist:cli --filter @fern-api/openapi-generator
+    runCommand: node --enable-source-maps dist/cli.cjs openapi {CONFIG_PATH}
 generatorType: Documentation
 defaultOutputMode: local_files
 fixtures:
@@ -46,4 +51,4 @@ fixtures:
             schemas: 
               Operand: 
                 type: null     
-      outputFolder: custom-overrides  
+      outputFolder: custom-overrides      

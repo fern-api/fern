@@ -262,6 +262,34 @@
     },
     {
       "audiences": [],
+      "operationId": "getCsvData",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetCsvDataRequest",
+      "response": {
+        "description": "Ids in textual format, one id per line.",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "text"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/csv-only",
+      "examples": [],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
       "operationId": "getItems",
       "tags": [],
       "pathParameters": [],

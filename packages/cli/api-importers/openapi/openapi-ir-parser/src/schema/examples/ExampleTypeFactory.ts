@@ -982,7 +982,7 @@ export class ExampleTypeFactory {
                         options
                     });
                 }
-                return PrimitiveExample.datetimeRfc2822(schema.example ?? Examples.DATE_TIME);
+                return PrimitiveExample.datetimeRfc2822(schema.example ?? Examples.DATE_TIME_RFC_2822);
             case "double":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.double(example);

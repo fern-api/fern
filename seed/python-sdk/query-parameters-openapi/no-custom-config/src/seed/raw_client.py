@@ -120,8 +120,10 @@ class RawSeedApi:
                     object_=exclude_user, annotation=User, direction="write"
                 ),
                 "filter": filter,
-                "tags": ",".join(map(str, tags)) if isinstance(tags, list) else tags,
-                "optionalTags": ",".join(map(str, optional_tags)) if isinstance(optional_tags, list) else optional_tags,
+                "tags": ",".join(map(str, tags)) if isinstance(tags, (list, tuple, set)) else tags,
+                "optionalTags": ",".join(map(str, optional_tags))
+                if isinstance(optional_tags, (list, tuple, set))
+                else optional_tags,
                 "neighbor": convert_and_respect_annotation_metadata(
                     object_=neighbor, annotation=SearchRequestNeighbor, direction="write"
                 ),
@@ -249,8 +251,10 @@ class AsyncRawSeedApi:
                     object_=exclude_user, annotation=User, direction="write"
                 ),
                 "filter": filter,
-                "tags": ",".join(map(str, tags)) if isinstance(tags, list) else tags,
-                "optionalTags": ",".join(map(str, optional_tags)) if isinstance(optional_tags, list) else optional_tags,
+                "tags": ",".join(map(str, tags)) if isinstance(tags, (list, tuple, set)) else tags,
+                "optionalTags": ",".join(map(str, optional_tags))
+                if isinstance(optional_tags, (list, tuple, set))
+                else optional_tags,
                 "neighbor": convert_and_respect_annotation_metadata(
                     object_=neighbor, annotation=SearchRequestNeighbor, direction="write"
                 ),

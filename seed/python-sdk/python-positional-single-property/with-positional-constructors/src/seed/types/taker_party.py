@@ -10,8 +10,16 @@ from .trader import Trader
 class TakerParty(UniversalBaseModel):
     trader: Trader
 
-    def __init__(self, trader: Trader, **kwargs: typing.Any) -> None:
-        super().__init__(trader=trader, **kwargs)
+    @typing.overload
+    def __init__(self, trader: Trader) -> None: ...
+    @typing.overload
+    def __init__(self, *, trader: Trader) -> None: ...
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        if args:
+            kwargs.pop("trader", None)
+            super().__init__(trader=args[0], **kwargs)
+        else:
+            super().__init__(**kwargs)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

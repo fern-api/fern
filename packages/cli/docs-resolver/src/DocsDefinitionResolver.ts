@@ -730,7 +730,9 @@ export class DocsDefinitionResolver {
             }
 
             const absoluteFilePath = join(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(pageId));
-            markdownFilesToPathName[absoluteFilePath] = slug;
+            // Use ??= to preserve the first (default version) slug when multiple versions share the same MDX file.
+            // The NodeCollector processes the pruned default version first, so its slug (without version prefix) is kept.
+            markdownFilesToPathName[absoluteFilePath] ??= slug;
         });
         return markdownFilesToPathName;
     }

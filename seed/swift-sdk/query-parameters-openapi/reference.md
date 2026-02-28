@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="/Sources/ApiClient.swift">search</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User?, optionalDeadline: Date?, keyValue: [String: String]?, optionalString: String?, nestedUser: NestedUser?, optionalUser: User?, excludeUser: User?, filter: String?, neighbor: SearchRequestNeighbor?, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
+<details><summary><code>client.<a href="/Sources/ApiClient.swift">search</a>(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User?, optionalDeadline: Date?, keyValue: [String: String]?, optionalString: String?, nestedUser: NestedUser?, optionalUser: User?, excludeUser: User?, filter: String?, tags: String?, optionalTags: String?, neighbor: SearchRequestNeighbor?, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions?) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -194,6 +194,22 @@ try await main()
 <dd>
 
 **filter:** `String?` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `String?` — List of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optionalTags:** `String?` — Optional list of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>

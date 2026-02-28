@@ -62,6 +62,7 @@ export const NoDuplicateOverridesRule: Rule = {
                                     const displayGroup =
                                         spec.namespace != null ? `${spec.namespace}.${sdkGroupName}` : sdkGroupName;
                                     violations.push({
+                                        name: "no-duplicate-overrides",
                                         severity: "fatal",
                                         relativeFilepath: relative(workspace.absoluteFilePath, spec.source.file),
                                         nodePath: ["paths", path, method],
