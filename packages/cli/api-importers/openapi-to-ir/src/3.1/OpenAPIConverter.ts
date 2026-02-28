@@ -210,10 +210,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             }
 
             const operationId = webhookItem.post.operationId ?? webhookName;
+            const operation = webhookItem.post.operationId != null
+                ? webhookItem.post
+                : { ...webhookItem.post, operationId };
             const webHookConverter = new WebhookConverter({
                 context: this.context,
                 breadcrumbs: ["webhooks", operationId],
-                operation: webhookItem.post,
+                operation,
                 method: OpenAPIV3.HttpMethods.POST,
                 path: operationId
             });
