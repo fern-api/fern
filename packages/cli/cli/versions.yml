@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.96.0
+  changelogEntry:
+    - summary: |
+        Allow underscores in `x-fern-sdk-group-name` values. Previously, leading
+        underscores (e.g. `_internal`) were stripped by lodash's `camelCase`,
+        making it impossible to use underscore-prefixed group names for marking
+        private/internal modules. Both the OpenAPI-to-Fern file name conversion
+        and the IR casings generator now preserve leading and trailing underscores.
+      type: feat
+  createdAt: "2026-02-28"
+  irVersion: 65
+
 - version: 3.95.6
   changelogEntry:
     - summary: |

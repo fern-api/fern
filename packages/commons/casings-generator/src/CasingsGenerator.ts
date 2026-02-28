@@ -36,9 +36,9 @@ export function constructCasingsGenerator({
                 })
             });
 
-            let camelCaseName = camelCase(name);
+            let camelCaseName = withUnderscorePreservation(name, camelCase);
             let pascalCaseName = upperFirst(camelCaseName);
-            let snakeCaseName = snakeCase(name);
+            let snakeCaseName = withUnderscorePreservation(name, snakeCase);
             const camelCaseWords = words(camelCaseName);
             if (smartCasing) {
                 if (
@@ -81,10 +81,12 @@ export function constructCasingsGenerator({
                 // In smartCasing, manage numbers next to letters differently:
                 // _.snakeCase("v2") = "v_2"
                 // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
-                snakeCaseName = name
-                    .split(" ")
-                    .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
-                    .join("_");
+                snakeCaseName = withUnderscorePreservation(name, (n) =>
+                    n
+                        .split(" ")
+                        .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
+                        .join("_")
+                );
             }
 
             return {
@@ -236,4 +238,29 @@ function preprocessName(name: string): string {
         (result, [pattern, replacement]) => result.replace(pattern, replacement),
         name
     );
+}
+
+/**
+ * Extracts leading and trailing underscores from a string.
+ * Lodash's camelCase/snakeCase strip these, but they are meaningful
+ * (e.g. _internal marks private/protected modules in Python, Ruby, JS).
+ */
+function extractUnderscoreAffixes(name: string): { leading: string; trailing: string; core: string } {
+    const leadingMatch = name.match(/^(_+)/);
+    const trailingMatch = name.match(/(_+)$/);
+    const leading = leadingMatch?.[1] ?? "";
+    const trailing = trailingMatch?.[1] ?? "";
+    const core = name.slice(leading.length, name.length - trailing.length || undefined);
+    return { leading, trailing, core };
+}
+
+/**
+ * Wraps a casing function to preserve leading and trailing underscores.
+ */
+function withUnderscorePreservation(name: string, casingFn: (s: string) => string): string {
+    const { leading, trailing, core } = extractUnderscoreAffixes(name);
+    if (leading === "" && trailing === "") {
+        return casingFn(name);
+    }
+    return `${leading}${casingFn(core)}${trailing}`;
 }
