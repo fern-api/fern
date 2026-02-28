@@ -389,7 +389,7 @@ function applyGithubOverrides(
                     case "push":
                         return FernFiddle.GithubOutputModeV2.push({
                             ...cfg,
-                            branch: githubBranch ?? cfg.branch
+                            branch: githubBranch
                         });
                     case "pullRequest":
                         return FernFiddle.GithubOutputModeV2.pullRequest({
