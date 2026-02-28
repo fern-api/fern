@@ -5,7 +5,7 @@ import type * as GeneratorsYml from "../../../index.js";
 export interface AsyncApiSpecSchema {
     asyncapi: string;
     origin?: string;
-    overrides?: string;
+    overrides?: GeneratorsYml.OverridesSchema;
     namespace?: string;
     settings?: GeneratorsYml.AsyncApiSettingsSchema;
 }

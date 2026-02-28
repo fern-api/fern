@@ -12,8 +12,8 @@ export interface OpenApiSpec {
     /** URL origin for fetching remote specs */
     origin?: string;
 
-    /** Path to the overrides file */
-    overrides?: AbsoluteFilePath;
+    /** Path to the overrides file(s) */
+    overrides?: AbsoluteFilePath | AbsoluteFilePath[];
 
     /** Path to the overlays file */
     overlays?: AbsoluteFilePath;
