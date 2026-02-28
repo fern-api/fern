@@ -633,15 +633,25 @@ async function convertGenerator({
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined,
-        apiOverride:
-            generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
-                ? {
-                      specs: generator.api?.specs,
-                      auth: generator.api?.auth,
-                      "auth-schemes": generator.api?.["auth-schemes"]
-                  }
-                : undefined
+        apiOverride: getApiOverride({ generator })
     };
+}
+
+function getApiOverride({
+    generator
+}: {
+    generator: generatorsYml.GeneratorInvocationSchema;
+}): generatorsYml.GeneratorInvocation["apiOverride"] {
+    // Generator-level overrides take priority
+    if (generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null) {
+        return {
+            specs: generator.api?.specs,
+            auth: generator.api?.auth,
+            "auth-schemes": generator.api?.["auth-schemes"]
+        };
+    }
+
+    return undefined;
 }
 
 function getPublishMetadata({

@@ -103,6 +103,27 @@ runs:
       run: |
         echo "end_time=$EPOCHSECONDS" >> $GITHUB_OUTPUT
 
+    # Fail CI if seed produced changes to any git-tracked files (excluding known non-deterministic paths like .mock and lock files)
+    - name: Ensure no pending git changes
+      if: always() && !cancelled()
+      shell: bash
+      run: |
+        # Parse JSON array and build exclude arguments
+        JSON_INPUT='${{ inputs.determinism-exclude-paths }}'
+        EXCLUDE_ARGS=()
+        while IFS= read -r EXCLUDE_PATTERN; do
+          EXCLUDE_ARGS+=(":(exclude)${EXCLUDE_PATTERN}")
+        done < <(echo "${JSON_INPUT}" | jq -c -r '.[]')
+
+        if ! git --no-pager diff --exit-code --quiet -- "${EXCLUDE_ARGS[@]}"; then
+          echo "::error::Seed generation produced changes to git-tracked files. Please run seed locally and commit the changes."
+          echo "Showing first 200 lines of diff:"
+          git --no-pager diff -- "${EXCLUDE_ARGS[@]}" | head -200 || true
+          exit 1
+        else
+          echo "No pending git changes after seed generation."
+        fi
+
     # Run after seed is built, do this separately so we can keep seed time collection limited to seed generation
     # Note: tests failing can be a cause of this reporting as non-deterministic
     - name: Verify Determinism

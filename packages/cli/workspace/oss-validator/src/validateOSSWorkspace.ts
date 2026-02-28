@@ -21,6 +21,11 @@ export async function runRulesOnOSSWorkspace({
     rules: Rule[];
 }): Promise<ValidationViolation[]> {
     const openApiSpecs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
-    const ruleResults = await Promise.all(rules.map((rule) => rule.run({ workspace, specs: openApiSpecs, context })));
+    const ruleResults = await Promise.all(
+        rules.map(async (rule) => {
+            const violations = await rule.run({ workspace, specs: openApiSpecs, context });
+            return violations.map((violation) => ({ ...violation, name: violation.name ?? rule.name }));
+        })
+    );
     return ruleResults.flat();
 }

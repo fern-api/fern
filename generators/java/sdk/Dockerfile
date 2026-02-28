@@ -90,6 +90,22 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     mv package tar && \
     rm tar-7.5.8.tgz
 
+# Patch minimatch to 10.2.3 to fix GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74
+# (ReDoS via combinatorial backtracking in matchOne() and nested *() extglobs)
+RUN for dir in \
+      /usr/local/lib/node_modules/glob/node_modules/minimatch \
+      /usr/local/lib/node_modules/npm/node_modules/minimatch \
+      /usr/local/lib/node_modules/npm/node_modules/glob/node_modules/minimatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/minimatch/-/minimatch-10.2.3.tgz -o minimatch-10.2.3.tgz && \
+        tar -xzf minimatch-10.2.3.tgz && \
+        mv package minimatch && \
+        rm minimatch-10.2.3.tgz; \
+      fi; \
+    done
+
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
 COPY --from=node /assets/features.yml /assets/features.yml
