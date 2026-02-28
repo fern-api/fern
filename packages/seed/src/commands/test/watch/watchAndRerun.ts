@@ -96,9 +96,7 @@ export async function watchAndRerun({
     const turboProcess = spawnTurboWatch(turboFilter, localConfig.workingDirectory);
 
     // Phase 3: Watch built artifacts and re-run on changes
-    const absoluteWatchPaths = localConfig.watchPaths.map((p) =>
-        path.resolve(localConfig.workingDirectory, p)
-    );
+    const absoluteWatchPaths = localConfig.watchPaths.map((p) => path.resolve(localConfig.workingDirectory, p));
 
     CONSOLE_LOGGER.info(`Watching paths: ${absoluteWatchPaths.join(", ")}`);
     CONSOLE_LOGGER.info("Press Ctrl+C to exit watch mode.\n");
@@ -146,9 +144,7 @@ export async function watchAndRerun({
 
             await freshScriptRunner.stop();
         } catch (error) {
-            CONSOLE_LOGGER.error(
-                `Error during re-run: ${error instanceof Error ? error.message : String(error)}`
-            );
+            CONSOLE_LOGGER.error(`Error during re-run: ${error instanceof Error ? error.message : String(error)}`);
         } finally {
             isRunning = false;
         }
@@ -162,12 +158,10 @@ export async function watchAndRerun({
 
     for (const watchPath of absoluteWatchPaths) {
         // Watch directories or files
-        const watchTarget = fs.existsSync(watchPath) && fs.statSync(watchPath).isDirectory()
-            ? watchPath
-            : path.dirname(watchPath);
-        const watchBasename = fs.existsSync(watchPath) && fs.statSync(watchPath).isDirectory()
-            ? undefined
-            : path.basename(watchPath);
+        const watchTarget =
+            fs.existsSync(watchPath) && fs.statSync(watchPath).isDirectory() ? watchPath : path.dirname(watchPath);
+        const watchBasename =
+            fs.existsSync(watchPath) && fs.statSync(watchPath).isDirectory() ? undefined : path.basename(watchPath);
 
         try {
             const watcher = fs.watch(watchTarget, { recursive: false }, (eventType, filename) => {
