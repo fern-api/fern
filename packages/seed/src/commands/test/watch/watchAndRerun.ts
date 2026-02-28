@@ -96,7 +96,11 @@ export async function watchAndRerun({
     const turboProcess = spawnTurboWatch(turboFilter, localConfig.workingDirectory);
 
     // Phase 3: Watch built artifacts and re-run on changes
-    const absoluteWatchPaths = localConfig.watchPaths.map((p) => path.resolve(localConfig.workingDirectory, p));
+    // Resolve watchPaths relative to __dirname (same as LocalTestRunner.build()) for consistency
+    const baseDir = path.join(__dirname, "../../..");
+    const absoluteWatchPaths = localConfig.watchPaths.map((p) =>
+        path.resolve(path.join(baseDir, localConfig.workingDirectory), p)
+    );
 
     CONSOLE_LOGGER.info(`Watching paths: ${absoluteWatchPaths.join(", ")}`);
     CONSOLE_LOGGER.info("Press Ctrl+C to exit watch mode.\n");
@@ -227,7 +231,12 @@ export async function watchAndRerun({
 
     // Wait forever (until Ctrl+C)
     await new Promise<void>((resolve) => {
+        let cleanedUp = false;
         const cleanup = () => {
+            if (cleanedUp) {
+                return;
+            }
+            cleanedUp = true;
             CONSOLE_LOGGER.info("\nWatch mode: shutting down...");
             for (const watcher of watchers) {
                 watcher.close();
@@ -236,6 +245,8 @@ export async function watchAndRerun({
                 clearInterval(interval);
             }
             turboProcess.kill();
+            process.removeListener("SIGINT", cleanup);
+            process.removeListener("SIGTERM", cleanup);
             scriptRunner.stop().then(resolve).catch(resolve);
         };
 
