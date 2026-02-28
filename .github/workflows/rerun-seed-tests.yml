@@ -28,7 +28,7 @@ jobs:
           MAX_FAILURES=3
 
           echo "Fetching open PRs with 'seed' label..."
-          PRS=$(gh pr list --label seed --state open --json number,headRefSha --jq '.[] | "\(.number) \(.headRefSha)"')
+          PRS=$(gh pr list --label seed --state open --json number,headRefOid --jq '.[] | "\(.number) \(.headRefOid)"')
 
           if [ -z "$PRS" ]; then
             echo "No open PRs with 'seed' label found."
@@ -49,8 +49,8 @@ jobs:
             fi
             echo "PR #${PR_NUMBER}: Has ${APPROVAL_COUNT} approval(s)."
 
-            # Get all check runs for the head SHA
-            CHECK_RUNS_JSON=$(gh api "repos/{owner}/{repo}/commits/${HEAD_SHA}/check-runs" --paginate --jq '.check_runs')
+            # Get all check runs for the head SHA (flatten paginated arrays)
+            CHECK_RUNS_JSON=$(gh api "repos/{owner}/{repo}/commits/${HEAD_SHA}/check-runs" --paginate --jq '.check_runs[]' | jq -s '.')
 
             # Check if all check runs are completed (none pending/in_progress)
             INCOMPLETE_COUNT=$(echo "$CHECK_RUNS_JSON" | jq '[.[] | select(.status != "completed")] | length')
@@ -71,15 +71,13 @@ jobs:
             echo "PR #${PR_NUMBER}: ${FAILED_COUNT} failed check(s), within acceptable range."
 
             # Get the workflow run IDs for the failed checks
-            # Each check run belongs to a check suite, which corresponds to a workflow run
             FAILED_CHECK_NAMES=$(echo "$FAILED_CHECKS" | jq -r '.[].name')
             echo "Failed checks: ${FAILED_CHECK_NAMES}"
 
-            # Get all workflow runs for this head SHA to find failed ones
-            # We need to find the run_id for re-running
-            WORKFLOW_RUNS=$(gh api "repos/{owner}/{repo}/actions/runs?head_sha=${HEAD_SHA}&status=completed" --paginate --jq '.workflow_runs')
+            # Get all workflow runs for this head SHA to find failed ones (flatten paginated arrays)
+            WORKFLOW_RUNS=$(gh api "repos/{owner}/{repo}/actions/runs?head_sha=${HEAD_SHA}&status=completed" --paginate --jq '.workflow_runs[]' | jq -s '.')
 
-            # Find runs that have failed jobs matching our failed checks
+            # Find runs that have failed jobs
             RERUN_RUN_IDS=$(echo "$WORKFLOW_RUNS" | jq -r '[.[] | select(.conclusion == "failure")] | .[].id' | sort -u)
 
             if [ -z "$RERUN_RUN_IDS" ]; then
