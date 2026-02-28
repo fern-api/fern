@@ -34,7 +34,9 @@ const mockLogger = {
 
 // Helper function to run git commands in tests
 async function runCommand(args: string[], cwd: string): Promise<void> {
-    const command = args.map((arg) => (arg.includes(" ") ? `"${arg}"` : arg)).join(" ");
+    const command = args
+        .map((arg) => (arg.includes(" ") || arg.includes("(") || arg.includes(")") ? `"${arg}"` : arg))
+        .join(" ");
     execSync(command, { cwd, stdio: "pipe" });
 }
 
@@ -1235,6 +1237,118 @@ describe("AutoVersioningService", () => {
         expect(cleaned.trim().length).toBe(0);
         // Original diff was non-empty
         expect(diff.trim().length).toBeGreaterThan(0);
+    });
+
+    // ==================== .fern/metadata.json Exclusion Tests ====================
+    // These tests verify the git diff pathspec used by LocalTaskHandler.generateDiffFile()
+    // to exclude .fern/metadata.json from the diff used for AUTO version analysis.
+
+    it("testGenerateDiff_excludesFernMetadataJson", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            await runCommand(["git", "init"], tempDir);
+            await runCommand(["git", "config", "user.name", "Test User"], tempDir);
+            await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+
+            // Create initial files
+            await fs.writeFile(path.join(tempDir, "package.json"), '{\n  "name": "test-sdk",\n  "version": "1.0.0"\n}');
+            await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
+            await fs.writeFile(path.join(tempDir, ".fern", "metadata.json"), '{"cliVersion": "0.40.0"}');
+
+            await runCommand(["git", "add", "."], tempDir);
+            await runCommand(["git", "commit", "-m", "Initial commit"], tempDir);
+
+            // Modify ONLY .fern/metadata.json (simulates a CLI version bump)
+            await fs.writeFile(path.join(tempDir, ".fern", "metadata.json"), '{"cliVersion": "0.41.0"}');
+
+            // Replicate LocalTaskHandler.generateDiffFile() behavior:
+            // 1. git add -N . (intent-to-add for new files)
+            // 2. git diff HEAD with :(exclude).fern/metadata.json
+            await runCommand(["git", "add", "-N", "."], tempDir);
+            const diffFile = path.join(tempDir, "test.patch");
+            await runCommand(
+                ["git", "diff", "HEAD", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
+                tempDir
+            );
+            const diffContent = await fs.readFile(diffFile, "utf-8");
+
+            // Diff should be empty since only .fern/metadata.json changed
+            expect(diffContent.trim()).toBe("");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testGenerateDiff_includesOtherChangesAlongsideFernMetadata", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            await runCommand(["git", "init"], tempDir);
+            await runCommand(["git", "config", "user.name", "Test User"], tempDir);
+            await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+
+            await fs.writeFile(path.join(tempDir, "package.json"), '{\n  "name": "test-sdk",\n  "version": "1.0.0"\n}');
+            await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
+            await fs.writeFile(path.join(tempDir, ".fern", "metadata.json"), '{"cliVersion": "0.40.0"}');
+            await fs.mkdir(path.join(tempDir, "src"), { recursive: true });
+            await fs.writeFile(path.join(tempDir, "src", "Client.ts"), "export class Client {}");
+
+            await runCommand(["git", "add", "."], tempDir);
+            await runCommand(["git", "commit", "-m", "Initial commit"], tempDir);
+
+            // Modify .fern/metadata.json AND a real SDK file
+            await fs.writeFile(path.join(tempDir, ".fern", "metadata.json"), '{"cliVersion": "0.41.0"}');
+            await fs.writeFile(path.join(tempDir, "src", "Client.ts"), "export class Client {\n  newMethod() {}\n}");
+
+            await runCommand(["git", "add", "-N", "."], tempDir);
+            const diffFile = path.join(tempDir, "test.patch");
+            await runCommand(
+                ["git", "diff", "HEAD", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
+                tempDir
+            );
+            const diffContent = await fs.readFile(diffFile, "utf-8");
+
+            expect(diffContent.trim()).not.toBe("");
+            expect(diffContent).toContain("Client.ts");
+            expect(diffContent).toContain("newMethod");
+            expect(diffContent).not.toContain("metadata.json");
+            expect(diffContent).not.toContain("cliVersion");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
+    });
+
+    it("testGenerateDiff_includesOtherFernDirectoryFiles", async () => {
+        const tempDir = await fs.mkdtemp(path.join(require("os").tmpdir(), "test-"));
+        try {
+            await runCommand(["git", "init"], tempDir);
+            await runCommand(["git", "config", "user.name", "Test User"], tempDir);
+            await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+
+            await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
+            await fs.writeFile(path.join(tempDir, ".fern", "metadata.json"), '{"cliVersion": "0.40.0"}');
+            await fs.writeFile(path.join(tempDir, ".fern", "replay.lock"), "lock-content-v1");
+
+            await runCommand(["git", "add", "."], tempDir);
+            await runCommand(["git", "commit", "-m", "Initial commit"], tempDir);
+
+            // Modify both .fern/metadata.json and .fern/replay.lock
+            await fs.writeFile(path.join(tempDir, ".fern", "metadata.json"), '{"cliVersion": "0.41.0"}');
+            await fs.writeFile(path.join(tempDir, ".fern", "replay.lock"), "lock-content-v2");
+
+            await runCommand(["git", "add", "-N", "."], tempDir);
+            const diffFile = path.join(tempDir, "test.patch");
+            await runCommand(
+                ["git", "diff", "HEAD", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
+                tempDir
+            );
+            const diffContent = await fs.readFile(diffFile, "utf-8");
+
+            expect(diffContent.trim()).not.toBe("");
+            expect(diffContent).toContain("replay.lock");
+            expect(diffContent).not.toContain("metadata.json");
+        } finally {
+            await fs.rm(tempDir, { recursive: true, force: true });
+        }
     });
 
     // TODO(tjb9dc): Reenable these tests, need to have them reference the LocalTaskHandler's gitDiff function (or refactor)
