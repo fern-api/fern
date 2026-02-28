@@ -266,6 +266,18 @@
             }
         },
         {
+            "example_identifier": "BackslashExample",
+            "id": {
+                "path": "/object/get-and-return-with-unknown-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedExhaustive.Types.Object;\nusing SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(\n    new ObjectWithUnknownField\n    {\n        Unknown = new Dictionary<object, object?>() { { \"$ref\", \"https://example.com/schema\" } },\n    }\n);\n"
+            }
+        },
+        {
             "example_identifier": "DatetimeLikeStringExample",
             "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",
