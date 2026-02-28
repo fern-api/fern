@@ -102,10 +102,12 @@ export async function watchAndRerun({
     CONSOLE_LOGGER.info("Press Ctrl+C to exit watch mode.\n");
 
     let isRunning = false;
+    let pendingRerun = false;
 
     const rerun = async () => {
         if (isRunning) {
-            CONSOLE_LOGGER.info("Already running, skipping...");
+            CONSOLE_LOGGER.info("Already running, queuing re-run...");
+            pendingRerun = true;
             return;
         }
         isRunning = true;
@@ -147,6 +149,10 @@ export async function watchAndRerun({
             CONSOLE_LOGGER.error(`Error during re-run: ${error instanceof Error ? error.message : String(error)}`);
         } finally {
             isRunning = false;
+            if (pendingRerun) {
+                pendingRerun = false;
+                void rerun();
+            }
         }
     };
 
@@ -194,7 +200,10 @@ export async function watchAndRerun({
                             { recursive: false },
                             (eventType, filename) => {
                                 const basename = path.basename(watchPath);
-                                if (!fs.statSync(watchPath).isDirectory() && filename !== basename) {
+                                if (
+                                    !fs.existsSync(watchPath) ||
+                                    (!fs.statSync(watchPath).isDirectory() && filename !== basename)
+                                ) {
                                     return;
                                 }
                                 if (debounceTimer != null) {
