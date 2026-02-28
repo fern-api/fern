@@ -188,7 +188,6 @@ function addTestCommand(cli: Argv) {
                     generator,
                     fixture: fixtureName,
                     fixtureOutputFolder,
-                    outputFolder: argv.outputFolder,
                     skipScripts: argv.skipScripts,
                     logLevel: argv["log-level"],
                     inspect: argv.inspect

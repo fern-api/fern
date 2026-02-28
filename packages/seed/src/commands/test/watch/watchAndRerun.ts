@@ -14,7 +14,6 @@ export interface WatchAndRerunArgs {
     generator: GeneratorWorkspace;
     fixture: string;
     fixtureOutputFolder: string | undefined;
-    outputFolder: string | undefined;
     skipScripts: boolean;
     logLevel: LogLevel;
     inspect: boolean;
@@ -31,7 +30,6 @@ export async function watchAndRerun({
     generator,
     fixture,
     fixtureOutputFolder,
-    outputFolder,
     skipScripts,
     logLevel,
     inspect
@@ -158,6 +156,7 @@ export async function watchAndRerun({
 
     // Set up file watchers with debounce
     const watchers: fs.FSWatcher[] = [];
+    const pollIntervals: ReturnType<typeof setInterval>[] = [];
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
     const DEBOUNCE_MS = 300;
 
@@ -192,7 +191,7 @@ export async function watchAndRerun({
             );
 
             // Set up a polling watcher for files that don't exist yet
-            const pollInterval = setInterval(() => {
+            const pollInterval: ReturnType<typeof setInterval> = setInterval(() => {
                 if (fs.existsSync(watchPath)) {
                     clearInterval(pollInterval);
                     try {
@@ -219,6 +218,7 @@ export async function watchAndRerun({
                     }
                 }
             }, 1000);
+            pollIntervals.push(pollInterval);
         }
     }
 
@@ -228,6 +228,9 @@ export async function watchAndRerun({
             CONSOLE_LOGGER.info("\nWatch mode: shutting down...");
             for (const watcher of watchers) {
                 watcher.close();
+            }
+            for (const interval of pollIntervals) {
+                clearInterval(interval);
             }
             turboProcess.kill();
             scriptRunner.stop().then(resolve).catch(resolve);
