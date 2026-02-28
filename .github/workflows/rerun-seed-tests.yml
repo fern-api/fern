@@ -1,0 +1,113 @@
+name: Rerun Failed Seed PR Tests
+
+on:
+  schedule:
+    # Run every 2 hours
+    - cron: "0 */2 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  pull-requests: read
+  checks: read
+
+env:
+  DO_NOT_TRACK: "1"
+
+jobs:
+  rerun-failed-seed-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Find and rerun failed seed PR tests
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          MAX_RERUN_ATTEMPTS=3
+          MIN_FAILURES=1
+          MAX_FAILURES=3
+
+          echo "Fetching open PRs with 'seed' label..."
+          PRS=$(gh pr list --label seed --state open --json number,headRefSha --jq '.[] | "\(.number) \(.headRefSha)"')
+
+          if [ -z "$PRS" ]; then
+            echo "No open PRs with 'seed' label found."
+            exit 0
+          fi
+
+          echo "$PRS" | while read -r PR_NUMBER HEAD_SHA; do
+            echo ""
+            echo "=========================================="
+            echo "Processing PR #${PR_NUMBER} (SHA: ${HEAD_SHA})"
+            echo "=========================================="
+
+            # Check if PR is approved
+            APPROVAL_COUNT=$(gh pr view "$PR_NUMBER" --json reviews --jq '[.reviews[] | select(.state == "APPROVED")] | length')
+            if [ "$APPROVAL_COUNT" -eq 0 ]; then
+              echo "PR #${PR_NUMBER}: Not approved, skipping."
+              continue
+            fi
+            echo "PR #${PR_NUMBER}: Has ${APPROVAL_COUNT} approval(s)."
+
+            # Get all check runs for the head SHA
+            CHECK_RUNS_JSON=$(gh api "repos/{owner}/{repo}/commits/${HEAD_SHA}/check-runs" --paginate --jq '.check_runs')
+
+            # Check if all check runs are completed (none pending/in_progress)
+            INCOMPLETE_COUNT=$(echo "$CHECK_RUNS_JSON" | jq '[.[] | select(.status != "completed")] | length')
+            if [ "$INCOMPLETE_COUNT" -gt 0 ]; then
+              echo "PR #${PR_NUMBER}: ${INCOMPLETE_COUNT} check(s) still running, skipping."
+              continue
+            fi
+            echo "PR #${PR_NUMBER}: All checks completed."
+
+            # Count failed check runs (conclusion is 'failure')
+            FAILED_CHECKS=$(echo "$CHECK_RUNS_JSON" | jq '[.[] | select(.conclusion == "failure")]')
+            FAILED_COUNT=$(echo "$FAILED_CHECKS" | jq 'length')
+
+            if [ "$FAILED_COUNT" -lt "$MIN_FAILURES" ] || [ "$FAILED_COUNT" -gt "$MAX_FAILURES" ]; then
+              echo "PR #${PR_NUMBER}: ${FAILED_COUNT} failed check(s), outside range [${MIN_FAILURES}, ${MAX_FAILURES}]. Skipping."
+              continue
+            fi
+            echo "PR #${PR_NUMBER}: ${FAILED_COUNT} failed check(s), within acceptable range."
+
+            # Get the workflow run IDs for the failed checks
+            # Each check run belongs to a check suite, which corresponds to a workflow run
+            FAILED_CHECK_NAMES=$(echo "$FAILED_CHECKS" | jq -r '.[].name')
+            echo "Failed checks: ${FAILED_CHECK_NAMES}"
+
+            # Get all workflow runs for this head SHA to find failed ones
+            # We need to find the run_id for re-running
+            WORKFLOW_RUNS=$(gh api "repos/{owner}/{repo}/actions/runs?head_sha=${HEAD_SHA}&status=completed" --paginate --jq '.workflow_runs')
+
+            # Find runs that have failed jobs matching our failed checks
+            RERUN_RUN_IDS=$(echo "$WORKFLOW_RUNS" | jq -r '[.[] | select(.conclusion == "failure")] | .[].id' | sort -u)
+
+            if [ -z "$RERUN_RUN_IDS" ]; then
+              echo "PR #${PR_NUMBER}: No failed workflow runs found to rerun."
+              continue
+            fi
+
+            for RUN_ID in $RERUN_RUN_IDS; do
+              # Check the run attempt count
+              RUN_ATTEMPT=$(gh api "repos/{owner}/{repo}/actions/runs/${RUN_ID}" --jq '.run_attempt')
+              echo "PR #${PR_NUMBER}: Workflow run ${RUN_ID} is on attempt ${RUN_ATTEMPT}."
+
+              if [ "$RUN_ATTEMPT" -ge "$MAX_RERUN_ATTEMPTS" ]; then
+                echo "PR #${PR_NUMBER}: Run ${RUN_ID} already at attempt ${RUN_ATTEMPT} (>= ${MAX_RERUN_ATTEMPTS}), skipping rerun."
+                continue
+              fi
+
+              echo "PR #${PR_NUMBER}: Re-running failed jobs for workflow run ${RUN_ID}..."
+              if gh run rerun "$RUN_ID" --failed; then
+                echo "PR #${PR_NUMBER}: Successfully triggered rerun for run ${RUN_ID}."
+              else
+                echo "PR #${PR_NUMBER}: Failed to trigger rerun for run ${RUN_ID}."
+              fi
+            done
+          done
+
+          echo ""
+          echo "Done processing all seed PRs."
