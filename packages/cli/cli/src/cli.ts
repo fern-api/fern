@@ -55,6 +55,7 @@ import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/g
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { listAvailableGenerators } from "./commands/list-generators/listAvailableGenerators.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
@@ -67,7 +68,6 @@ import { upgrade } from "./commands/upgrade/upgrade.js";
 import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
-import { listAvailableGenerators } from "./commands/list-generators/listAvailableGenerators.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { writeTranslationForProject } from "./commands/write-translation/writeTranslationForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";

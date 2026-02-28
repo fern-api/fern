@@ -61,9 +61,7 @@ export async function listAvailableGenerators({
         const normalizedType = typeFilter.toLowerCase();
         const validTypes = ["sdk", "model", "server", "other"];
         if (!validTypes.includes(normalizedType)) {
-            cliContext.failAndThrow(
-                `Invalid type "${typeFilter}". Valid types are: ${validTypes.join(", ")}`
-            );
+            cliContext.failAndThrow(`Invalid type "${typeFilter}". Valid types are: ${validTypes.join(", ")}`);
             return;
         }
         generators = generators.filter((g) => g.generatorType.type === normalizedType);
