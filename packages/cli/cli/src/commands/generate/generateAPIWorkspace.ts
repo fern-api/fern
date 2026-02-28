@@ -5,7 +5,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
-import { ContainerRunner } from "@fern-api/core-utils";
+import { assertNever, ContainerRunner, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
@@ -14,7 +14,7 @@ import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { GROUP_CLI_OPTION } from "../../constants.js";
-import { GenerationMode } from "./generateAPIWorkspaces.js";
+import { GenerationMode, GithubMode } from "./generateAPIWorkspaces.js";
 
 export async function generateWorkspace({
     organization,
@@ -35,7 +35,9 @@ export async function generateWorkspace({
     lfsOverride,
     fernignorePath,
     dynamicIrOnly,
-    noReplay
+    noReplay,
+    githubMode,
+    githubBranch
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -56,6 +58,8 @@ export async function generateWorkspace({
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
     noReplay: boolean;
+    githubMode: GithubMode | undefined;
+    githubBranch: string | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -115,6 +119,11 @@ export async function generateWorkspace({
             // Apply lfs-override if specified
             if (lfsOverride != null) {
                 group = applyLfsOverride(group, lfsOverride, context);
+            }
+
+            // Apply github overrides if specified
+            if (githubMode != null || githubBranch != null) {
+                group = applyGithubOverrides(group, githubMode, githubBranch, context);
             }
 
             if (resolvedGroupNames.length > 1) {
@@ -288,4 +297,121 @@ function getLanguageFromGeneratorName(generatorName: string): string {
     }
     // If we can't determine the language, use the generator name itself
     return generatorName.replace(/[^a-zA-Z0-9]/g, "-").toLowerCase();
+}
+
+/**
+ * Maps a GithubMode enum value to the discriminated union type used by FernFiddle.GithubOutputModeV2.
+ */
+type GithubOutputType = "push" | "pullRequest" | "commitAndRelease";
+
+function githubModeToOutputType(mode: GithubMode): GithubOutputType {
+    switch (mode) {
+        case "push":
+            return "push";
+        case "pull-request":
+            return "pullRequest";
+        case "release":
+            return "commitAndRelease";
+        default:
+            assertNever(mode);
+    }
+}
+
+function applyGithubOverrides(
+    group: generatorsYml.GeneratorGroup,
+    githubMode: GithubMode | undefined,
+    githubBranch: string | undefined,
+    context: TaskContext
+): generatorsYml.GeneratorGroup {
+    const modifiedGenerators: generatorsYml.GeneratorInvocation[] = [];
+
+    for (const generator of group.generators) {
+        if (generator.outputMode.type !== "githubV2") {
+            modifiedGenerators.push(generator);
+            continue;
+        }
+
+        const currentGithubConfig = generator.outputMode.githubV2;
+        const targetType: GithubOutputType =
+            githubMode != null ? githubModeToOutputType(githubMode) : currentGithubConfig.type;
+
+        if (githubBranch != null && targetType !== "push") {
+            return context.failAndThrow(
+                `--github-branch is only valid with 'push' mode. Generator '${generator.name}' would use mode '${targetType}'. ` +
+                    `Pass --github-mode push to use --github-branch.`
+            );
+        }
+
+        const newGithubConfig = visitDiscriminatedUnion(
+            currentGithubConfig,
+            "type"
+        )._visit<FernFiddle.GithubOutputModeV2>({
+            push: (cfg) => {
+                const { branch: _branch, ...base } = cfg;
+                switch (targetType) {
+                    case "push":
+                        return FernFiddle.GithubOutputModeV2.push({
+                            ...base,
+                            branch: githubBranch ?? cfg.branch
+                        });
+                    case "pullRequest":
+                        return FernFiddle.GithubOutputModeV2.pullRequest({
+                            ...base,
+                            reviewers: undefined
+                        });
+                    case "commitAndRelease":
+                        return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                    default:
+                        assertNever(targetType);
+                }
+            },
+            pullRequest: (cfg) => {
+                const { reviewers: _reviewers, ...base } = cfg;
+                switch (targetType) {
+                    case "push":
+                        return FernFiddle.GithubOutputModeV2.push({
+                            ...base,
+                            branch: githubBranch
+                        });
+                    case "pullRequest":
+                        return FernFiddle.GithubOutputModeV2.pullRequest({
+                            ...base,
+                            reviewers: cfg.reviewers
+                        });
+                    case "commitAndRelease":
+                        return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                    default:
+                        assertNever(targetType);
+                }
+            },
+            commitAndRelease: (cfg) => {
+                switch (targetType) {
+                    case "push":
+                        return FernFiddle.GithubOutputModeV2.push({
+                            ...cfg,
+                            branch: githubBranch
+                        });
+                    case "pullRequest":
+                        return FernFiddle.GithubOutputModeV2.pullRequest({
+                            ...cfg,
+                            reviewers: undefined
+                        });
+                    case "commitAndRelease":
+                        return FernFiddle.GithubOutputModeV2.commitAndRelease(cfg);
+                    default:
+                        assertNever(targetType);
+                }
+            }
+        });
+
+        modifiedGenerators.push({
+            ...generator,
+            outputMode: FernFiddle.OutputMode.githubV2(newGithubConfig)
+        });
+    }
+
+    return {
+        ...group,
+        generators: modifiedGenerators
+    };
 }

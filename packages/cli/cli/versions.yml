@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.96.0
+  changelogEntry:
+    - summary: |
+        Add `--github-mode` and `--github-branch` flags to `fern generate` to
+        override the `github.mode` and `github.branch` settings in
+        `generators.yml` without editing the file. `--github-mode` accepts
+        `push`, `pull-request`, or `release`. `--github-branch` overrides the
+        target branch and is only valid with `push` mode.
+      type: feat
+  createdAt: "2026-02-28"
+  irVersion: 65
+
 - version: 3.95.6
   changelogEntry:
     - summary: |

@@ -16,6 +16,14 @@ export const GenerationMode = {
 
 export type GenerationMode = Values<typeof GenerationMode>;
 
+export const GithubMode = {
+    Push: "push",
+    PullRequest: "pull-request",
+    Release: "release"
+} as const;
+
+export type GithubMode = Values<typeof GithubMode>;
+
 export async function generateAPIWorkspaces({
     project,
     cliContext,
@@ -34,7 +42,9 @@ export async function generateAPIWorkspaces({
     fernignorePath,
     dynamicIrOnly,
     outputDir,
-    noReplay
+    noReplay,
+    githubMode,
+    githubBranch
 }: {
     project: Project;
     cliContext: CliContext;
@@ -54,6 +64,8 @@ export async function generateAPIWorkspaces({
     dynamicIrOnly: boolean;
     outputDir: string | undefined;
     noReplay: boolean;
+    githubMode: GithubMode | undefined;
+    githubBranch: string | undefined;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -150,7 +162,9 @@ export async function generateAPIWorkspaces({
                     lfsOverride,
                     fernignorePath,
                     dynamicIrOnly,
-                    noReplay
+                    noReplay,
+                    githubMode,
+                    githubBranch
                 });
             });
         })

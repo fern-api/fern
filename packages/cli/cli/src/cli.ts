@@ -45,7 +45,7 @@ import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
-import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
+import { GenerationMode, GithubMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
 import { generateDynamicIrForWorkspaces } from "./commands/generate-dynamic-ir/generateDynamicIrForWorkspaces.js";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces.js";
@@ -692,6 +692,17 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: true,
                     hidden: true,
                     description: "Run replay after generation (use --no-replay to skip)"
+                })
+                .option("github-mode", {
+                    type: "string",
+                    choices: Object.values(GithubMode),
+                    description:
+                        "Override the github.mode for all generators in the group (push, pull-request, or release)"
+                })
+                .option("github-branch", {
+                    type: "string",
+                    description:
+                        "Override the github.branch for all generators in the group (only valid with push mode)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -729,6 +740,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.output != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("The --output flag is not supported for docs generation.");
             }
+            if (argv.githubBranch != null && argv.githubMode != null && argv.githubMode !== "push") {
+                return cliContext.failWithoutThrowing("--github-branch is only valid with --github-mode push.");
+            }
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             if (argv.api != null) {
@@ -753,7 +767,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     fernignorePath: argv.fernignore,
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
-                    noReplay: !argv.replay
+                    noReplay: !argv.replay,
+                    githubMode: argv.githubMode as GithubMode | undefined,
+                    githubBranch: argv.githubBranch
                 });
             }
             if (argv.docs != null) {
@@ -807,7 +823,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 fernignorePath: argv.fernignore,
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
-                noReplay: !argv.replay
+                noReplay: !argv.replay,
+                githubMode: argv.githubMode as GithubMode | undefined,
+                githubBranch: argv.githubBranch
             });
         }
     );
