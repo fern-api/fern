@@ -89,8 +89,9 @@ export class ExampleTypeFactory {
                 }
                 if (example != null) {
                     const allowed = schema.values.map((v) => v.value);
+                    const exampleStr = ExampleTypeFactory.truncateExample(example);
                     this.context.logger.warn(
-                        `Example value ${JSON.stringify(example)} is not a valid enum value${options.name != null ? ` for '${options.name}'` : ""}. ` +
+                        `Example value ${exampleStr} is not a valid enum value${options.name != null ? ` for '${options.name}'` : ""}. ` +
                             `Allowed values: [${allowed.join(", ")}]. Using fallback value instead.`
                     );
                 }

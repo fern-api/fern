@@ -242,6 +242,80 @@ describe("ExampleTypeFactory", () => {
             expect(result).toBeDefined();
         });
 
+        it("should NOT warn when example is null (treated same as undefined)", () => {
+            const schema = makePrimitiveSchema(
+                PrimitiveSchemaValueWithExample.string({
+                    default: undefined,
+                    pattern: undefined,
+                    format: undefined,
+                    minLength: undefined,
+                    maxLength: undefined,
+                    example: undefined
+                })
+            );
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: null,
+                options: DEFAULT_OPTIONS
+            });
+
+            expect(mockLogger.warn).not.toHaveBeenCalled();
+            expect(result).toBeDefined();
+        });
+
+        it("should preserve falsy schema.example=false via ?? operator", () => {
+            const schema = makePrimitiveSchema(
+                PrimitiveSchemaValueWithExample.boolean({
+                    default: undefined,
+                    example: false
+                })
+            );
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: "wrong-type",
+                options: DEFAULT_OPTIONS
+            });
+
+            expect(mockLogger.warn).toHaveBeenCalledOnce();
+            expect(result).toBeDefined();
+            // The ?? operator should preserve `false` (not fall through to Examples.BOOLEAN)
+            if (result?.type === "primitive" && result.value.type === "boolean") {
+                expect(result.value.value).toBe(false);
+            }
+        });
+
+        it("should preserve falsy schema.example=0 via ?? operator", () => {
+            const schema = makePrimitiveSchema(
+                PrimitiveSchemaValueWithExample.int({
+                    default: undefined,
+                    minimum: undefined,
+                    maximum: undefined,
+                    exclusiveMinimum: undefined,
+                    exclusiveMaximum: undefined,
+                    multipleOf: undefined,
+                    example: 0
+                })
+            );
+
+            const result = factory.buildExample({
+                schema,
+                exampleId: undefined,
+                example: "wrong-type",
+                options: DEFAULT_OPTIONS
+            });
+
+            expect(mockLogger.warn).toHaveBeenCalledOnce();
+            expect(result).toBeDefined();
+            // The ?? operator should preserve `0` (not fall through to Examples.INT)
+            if (result?.type === "primitive" && result.value.type === "int") {
+                expect(result.value.value).toBe(0);
+            }
+        });
+
         it("should use schema.example as fallback when example type mismatches", () => {
             const schema = makePrimitiveSchema(
                 PrimitiveSchemaValueWithExample.string({
