@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.0.10
+  changelogEntry:
+    - summary: |
+        Modernize generated CI workflow: consolidate three separate jobs
+        (compile, unit-tests, publish) into a single job, update to
+        actions/checkout@v6 and actions/setup-dotnet@v5, remove redundant
+        duplicate checkout step, and require tests to pass before publishing.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 62
+
 - version: 0.0.9
   changelogEntry:
     - summary: |

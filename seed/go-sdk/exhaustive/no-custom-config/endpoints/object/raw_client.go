@@ -280,6 +280,47 @@ func (r *RawClient) GetAndReturnNestedWithRequiredFieldAsList(
 	}, nil
 }
 
+func (r *RawClient) GetAndReturnWithUnknownField(
+	ctx context.Context,
+	request *types.ObjectWithUnknownField,
+	opts ...option.RequestOption,
+) (*core.Response[*types.ObjectWithUnknownField], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/object/get-and-return-with-unknown-field"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *types.ObjectWithUnknownField
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*types.ObjectWithUnknownField]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) GetAndReturnWithDatetimeLikeString(
 	ctx context.Context,
 	request *types.ObjectWithDatetimeLikeString,

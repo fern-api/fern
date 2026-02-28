@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.26.0
+  changelogEntry:
+    - summary: |
+        Fix backslash escaping in Go string literals. When example data contains backslashes
+        (e.g., `\$ref` in JSON schema references), the generator now correctly outputs `\\`
+        in double-quoted Go strings instead of producing invalid escape sequences.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 61
+
 - version: 1.25.0-rc4
   changelogEntry:
     - summary: |
