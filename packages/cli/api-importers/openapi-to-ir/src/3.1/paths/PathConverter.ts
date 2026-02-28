@@ -71,7 +71,16 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 operation,
                 context: this.context
             });
-            const streamingExtension = streamingExtensionConverter.convert();
+            let streamingExtension = streamingExtensionConverter.convert();
+
+            // If no x-fern-streaming extension is specified, check if the response has
+            // text/event-stream content type. This infers streaming based on the MIME type.
+            if (streamingExtension == null) {
+                const hasTextEventStream = this.operationHasTextEventStreamResponse(operation);
+                if (hasTextEventStream) {
+                    streamingExtension = { type: "stream", format: "sse", terminator: undefined };
+                }
+            }
 
             const convertedEndpoint = this.tryParseAsHttpEndpoint({
                 operationBreadcrumbs,
@@ -121,6 +130,27 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             path: this.path
         });
         return webhookConverter.convert();
+    }
+
+    private operationHasTextEventStreamResponse(operation: OpenAPIV3_1.OperationObject): boolean {
+        if (operation.responses == null) {
+            return false;
+        }
+        for (const response of Object.values(operation.responses)) {
+            const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                schemaOrReference: response,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (resolvedResponse?.content == null) {
+                continue;
+            }
+            for (const contentType of Object.keys(resolvedResponse.content)) {
+                if (contentType.includes("text/event-stream")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private tryParseAsHttpEndpoint({

@@ -62,6 +62,20 @@ export function hasTextEventStreamWithItemSchema(media: Record<string, OpenAPIV3
     return false;
 }
 
+/**
+ * Checks if the response content has text/event-stream content type.
+ * This infers streaming based on the MIME type regardless of whether
+ * schema or itemSchema is used.
+ */
+export function hasTextEventStream(media: Record<string, OpenAPIV3.MediaTypeObject>): boolean {
+    for (const contentType of Object.keys(media)) {
+        if (contentType.includes("text/event-stream")) {
+            return true;
+        }
+    }
+    return false;
+}
+
 export interface ApplicationJsonMediaObject {
     contentType?: string;
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
