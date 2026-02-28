@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
+    "@fern-api/github": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
@@ -44,7 +45,7 @@
     "js-yaml": "catalog:",
     "latest-version": "catalog:",
     "lodash-es": "catalog:",
-    "octokit": "^5.0.3",
+
     "openapi-types": "^12.1.3",
     "semver": "^7.7.3"
   },

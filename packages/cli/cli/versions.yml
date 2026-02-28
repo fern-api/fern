@@ -1,10 +1,138 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.91.4
+- version: 3.94.1
   changelogEntry:
     - summary: |
         Make `operationId` optional for webhooks in OpenAPI 3.1 specs. When a webhook
         does not specify an `operationId`, the webhook key name is used as the fallback
         identifier instead of skipping the webhook entirely.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
+- version: 3.94.0
+  changelogEntry:
+    - summary: |
+        Add package registry version lookups for all supported SDK languages during
+        AUTO version resolution with private registry authentication support.
+        Previously only npm (TypeScript) and PyPI (Python) were supported. Now also
+        queries Maven Central (Java), NuGet Gallery (C#), RubyGems.org (Ruby), Go
+        Module Proxy (Go), and Crates.io (Rust). PHP and Swift continue to use GitHub
+        tags as fallback. Additionally supports authenticated access to private package
+        registries and GitHub repositories via environment variables: GITHUB_TOKEN for
+        private repos and NPM_TOKEN for private npm packages.
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.4
+  changelogEntry:
+    - summary: |
+        Fix `getExplodeForQueryParameter` to treat `deepObject` style as having
+        a default `explode` of `true` per the OpenAPI spec. Previously,
+        `deepObject` was grouped with `spaceDelimited` and `pipeDelimited`
+        (default `explode: false`), causing `explode: true` to be incorrectly
+        preserved as non-default for `deepObject` parameters. The OpenAPI spec
+        only defines `deepObject` with `explode: true`, so it should be treated
+        as the default.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.3
+  changelogEntry:
+    - summary: |
+        Move Fern definition validation into the per-generator generation loop so that
+        it validates the exact definition used for generation (with generator-specific
+        settings like `detectGlobalHeaders` and auth overrides applied).
+      type: fix
+    - summary: |
+        Fix path-level `servers` with `x-fern-server-name` being ignored in OpenAPI 3.0 specs.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.2
+  changelogEntry:
+    - summary: |
+        Update AI example enhancement to use fdr-lambda endpoint.
+      type: chore
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.1
+  changelogEntry:
+    - summary: |
+        Revert cff292e8937b3c3ac66b1b6ebc6071b81860bbfd to resolve errors introduced
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.93.0
+  changelogEntry:
+    - summary: |
+        Add a --json flag to `fern check` that outputs structured validation results
+        as JSON to stdout, with all other output redirected to stderr. This enables
+        programmatic consumption of check results by CI pipelines, editor integrations,
+        and other tooling.
+      type: feat
+    - summary: |
+        Fix API naming in multi-API workspaces: both the JSON output and `fern check`
+        now use the workspace directory name (e.g. atoms, unified, waves).
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.92.1
+  changelogEntry:
+    - summary: |
+        prefer default version slug when multiple versions share the same MDX file.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.92.0
+  changelogEntry:
+    - summary: |
+        Add support for multiple override files in OpenAPI spec configuration. The
+        `overrides` field now accepts either a single path or an array of paths. When
+        multiple paths are provided, overrides are applied sequentially in order, allowing
+        for layered customization of OpenAPI specs.
+      type: feat
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.6
+  changelogEntry:
+    - summary: |
+        Treat all `text/*` content types (e.g. `text/csv`, `text/xml`, `text/html`) as text
+        responses in the v1 OpenAPI parser, not just `text/plain`. Previously, endpoints
+        returning content types like `text/csv` had their response silently dropped, causing
+        generated SDK methods to return `None`.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.91.5
+  changelogEntry:
+    - summary: |
+        Fix anyOf/oneOf response examples always using the first variant's values.
+        When an OpenAPI spec defines multiple anyOf variants with discriminating enum
+        fields (e.g., status: "waiting", "progress", "success"), the example converter
+        would short-circuit on the first valid variant even when the user's explicit
+        example matched a different variant. Each named example now correctly preserves
+        its distinct field values.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.91.4
+  changelogEntry:
+    - summary: |
+        Fix GET webhooks without a request body being skipped during OpenAPI parsing.
+        Previously, webhooks using the GET method with query parameters instead of a
+        request body were silently dropped with "Missing a request body". The parser
+        now synthesizes a payload from the query parameters for GET webhooks that lack
+        a request body.
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
@@ -29,7 +157,6 @@
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
-
 - version: 3.91.1
   changelogEntry:
     - summary: |
@@ -120,7 +247,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 3.90.3
   changelogEntry:
     - summary: |
