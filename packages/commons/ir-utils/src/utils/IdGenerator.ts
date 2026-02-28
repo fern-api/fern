@@ -31,6 +31,15 @@ export const IdGenerator = {
         const endpointId = httpEndpoint.name.originalName;
         return `endpoint_${joinedFernFilePath}.${endpointId}`;
     },
+    /**
+     * Generates an endpoint ID using an explicit key string instead of the
+     * endpoint's originalName. Used for audience-suffixed endpoints where the
+     * key includes the suffix for uniqueness (e.g. `create__aud_internal`).
+     */
+    generateEndpointIdFromKey: (declaredServiceName: DeclaredServiceName, endpointKey: string): string => {
+        const joinedFernFilePath = stringifyFernFilepath(declaredServiceName.fernFilepath);
+        return `endpoint_${joinedFernFilePath}.${endpointKey}`;
+    },
     generateWebhookGroupId: (fernFilepath: FernFilepath): string => {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `webhooks_${joinedFernFilePath}`;

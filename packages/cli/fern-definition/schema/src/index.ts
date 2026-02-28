@@ -1,4 +1,4 @@
-export { EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants.js";
+export { AUDIENCE_SUFFIX_SEPARATOR, EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants.js";
 export { type NodePath, type NodePathItem } from "./NodePath.js";
 export * as RawSchemas from "./schemas/index.js";
 export { type DefinitionFileSchema, type PackageMarkerFileSchema, type RootApiFileSchema } from "./schemas/index.js";

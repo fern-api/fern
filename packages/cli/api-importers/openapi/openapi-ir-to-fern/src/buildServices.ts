@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { AUDIENCE_SUFFIX_SEPARATOR, RawSchemas } from "@fern-api/fern-definition-schema";
 import { FernOpenapiIr } from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { buildEndpoint } from "./buildEndpoint.js";
@@ -7,12 +7,8 @@ import { State } from "./State.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
 import { getEndpointLocation } from "./utils/getEndpointLocation.js";
 
-/**
- * Separator used to create unique endpoint keys when endpoints with the same
- * SDK method name have disjoint audiences. The suffix is stripped during IR
- * generation so the SDK method name remains unchanged.
- */
-export const AUDIENCE_SUFFIX_SEPARATOR = "__aud_";
+// Re-export for any consumers that imported from here
+export { AUDIENCE_SUFFIX_SEPARATOR } from "@fern-api/fern-definition-schema";
 
 export interface ConvertedServicesResponse {
     schemaIdsToExclude: string[];
@@ -81,11 +77,16 @@ export function buildServices(context: OpenApiIrConverterContext): ConvertedServ
 
         // Check if this endpointId was already expanded into suffixed keys
         if (fileExpanded != null && fileExpanded.has(endpointId)) {
-            // Already expanded — only suffix if this new endpoint also has disjoint audiences.
-            // An endpoint with no audiences (wildcard) overlaps with everything, so it should
-            // not be suffixed.
+            // Already expanded — verify the new endpoint is disjoint from ALL existing
+            // variants before suffixing. An endpoint with no audiences (wildcard) overlaps
+            // with everything per audiencesAreDisjoint(), so it won't be suffixed.
             const newAudiences = convertedEndpoint.value.audiences ?? [];
-            if (newAudiences.length > 0) {
+            const isDisjointFromAll =
+                fileEndpoints != null &&
+                Array.from(fileEndpoints.entries())
+                    .filter(([key]) => key.startsWith(`${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}`))
+                    .every(([, schema]) => audiencesAreDisjoint(schema.audiences, convertedEndpoint.value.audiences));
+            if (isDisjointFromAll && newAudiences.length > 0) {
                 resolvedEndpointId = `${endpointId}${AUDIENCE_SUFFIX_SEPARATOR}${newAudiences.join("_")}`;
             }
         } else if (fileEndpoints != null && fileEndpoints.has(endpointId)) {

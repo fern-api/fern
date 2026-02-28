@@ -1,7 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
+import { AUDIENCE_SUFFIX_SEPARATOR, isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ApiAuth,
     AuthSchemesRequirement,
@@ -39,13 +39,6 @@ import { convertQueryParameter } from "./convertQueryParameter.js";
 import { convertResponseErrors } from "./convertResponseErrors.js";
 import { convertRetries } from "./convertRetries.js";
 import { getTransportForEndpoint, getTransportForService } from "./convertTransport.js";
-
-/**
- * Separator used to create unique endpoint keys when endpoints with the same
- * SDK method name have disjoint audiences. Must match the value in
- * packages/cli/api-importers/openapi/openapi-ir-to-fern/src/buildServices.ts
- */
-const AUDIENCE_SUFFIX_SEPARATOR = "__aud_";
 
 /**
  * Recovers the original SDK method name from an endpoint key that may have been
@@ -313,11 +306,10 @@ export function convertHttpService({
                 apiPlayground: undefined,
                 responseHeaders: []
             };
-            // Use the full endpoint key (including audience suffix) for a unique ID,
-            // even though the SDK method name uses the stripped version.
+            // For audience-suffixed endpoints, generate a unique ID using the full
+            // suffixed key to avoid collisions. Standard endpoints use IdGenerator.
             if (endpointMethodName !== endpointKey) {
-                const joinedFernFilePath = serviceName.fernFilepath.allParts.map((part) => part.originalName).join("/");
-                httpEndpoint.id = `endpoint_${joinedFernFilePath}.${endpointKey}`;
+                httpEndpoint.id = IdGenerator.generateEndpointIdFromKey(serviceName, endpointKey);
             } else {
                 httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             }
