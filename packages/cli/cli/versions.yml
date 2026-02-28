@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.95.7
+  changelogEntry:
+    - summary: |
+        Improve the "Misconfigured fern directory" error message to clearly
+        explain what was expected (an `api` section in `generators.yml` or a
+        `definition/` directory) instead of showing a generic, misleading
+        message. Also adds debug-level diagnostics explaining exactly which
+        checks failed during workspace loading.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
 - version: 3.95.6
   changelogEntry:
     - summary: |

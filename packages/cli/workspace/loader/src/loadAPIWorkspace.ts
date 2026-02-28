@@ -1,6 +1,7 @@
 import { getAPIDefinitionSettings, OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
 import {
     DEFINITION_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     loadGeneratorsConfiguration,
     OPENAPI_DIRECTORY
@@ -338,6 +339,28 @@ export async function loadAPIWorkspace({
     if (await isPathEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
         const apiFolderName = absolutePathToWorkspace.split("/").pop();
         context.logger.warn(`Detected empty API definiton: ${apiFolderName}. Remove to resolve error.`);
+    }
+
+    // Build a detailed diagnostic message so users know exactly what was checked
+    const hints: string[] = [];
+    if (generatorsConfiguration == null) {
+        hints.push(`No ${GENERATORS_CONFIGURATION_FILENAME} was found.`);
+    } else if (generatorsConfiguration.api == null) {
+        hints.push(
+            `${GENERATORS_CONFIGURATION_FILENAME} was found but does not contain an "api" section with API definitions.`
+        );
+    } else if (
+        generatorsConfiguration.api.type === "singleNamespace" &&
+        generatorsConfiguration.api.definitions.length === 0
+    ) {
+        hints.push(`${GENERATORS_CONFIGURATION_FILENAME} has an "api" section but it contains no definitions.`);
+    }
+    const defDirExists = await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)));
+    if (!defDirExists) {
+        hints.push(`No "${DEFINITION_DIRECTORY}/" directory was found.`);
+    }
+    if (hints.length > 0) {
+        context.logger.debug(`Workspace diagnostic: ${hints.join(" ")}`);
     }
 
     return {
