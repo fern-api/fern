@@ -476,6 +476,37 @@ describe("ObjectClient", () => {
         });
     });
 
+    test("getAndReturnWithUnknownField", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { unknown: { $ref: "https://example.com/schema" } };
+        const rawResponseBody = { unknown: { $ref: "https://example.com/schema" } };
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-unknown-field")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithUnknownField({
+            unknown: {
+                $ref: "https://example.com/schema",
+            },
+        });
+        expect(response).toEqual({
+            body: {
+                unknown: {
+                    $ref: "https://example.com/schema",
+                },
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
     test("getAndReturnWithDatetimeLikeString", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
