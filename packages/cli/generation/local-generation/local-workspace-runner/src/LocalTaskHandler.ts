@@ -312,15 +312,6 @@ export class LocalTaskHandler {
         // to prevent accidental deletion when README generation fails silently.
         const pathsToPreserve = await this.getPathsToPreserve(fernIgnorePaths);
 
-        const response = await this.runGitCommand(["config", "--list"], this.absolutePathToLocalOutput);
-        if (!response.includes("user.name")) {
-            await this.runGitCommand(["config", "user.name", "fern-api"], this.absolutePathToLocalOutput);
-            await this.runGitCommand(
-                ["config", "user.email", "info@buildwithfern.com"],
-                this.absolutePathToLocalOutput
-            );
-        }
-
         // Stage deletions `git rm -rf .`
         await this.runGitCommand(["rm", "-rf", "."], this.absolutePathToLocalOutput);
 
@@ -352,16 +343,28 @@ export class LocalTaskHandler {
         // Copy files from local output to tmp directory
         await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
 
-        // In tmp directory initialize a `.git` directory
+        // Initialize a throwaway git repo in the temp directory. This is only used to
+        // leverage git's file-tracking for resolving .fernignore paths. We inline the
+        // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
+        // Touch ID on macOS) and unnecessary overhead.
         await this.runGitCommand(["init"], tmpOutputResolutionDir);
         await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
-
-        const response = await this.runGitCommand(["config", "--list"], tmpOutputResolutionDir);
-        if (!response.includes("user.name")) {
-            await this.runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir);
-            await this.runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir);
-        }
-        await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir);
+        await this.runGitCommand(
+            [
+                "-c",
+                "user.name=fern",
+                "-c",
+                "user.email=hey@buildwithfern.com",
+                "-c",
+                "commit.gpgsign=false",
+                "commit",
+                "--allow-empty",
+                "--no-verify",
+                "-m",
+                "init"
+            ],
+            tmpOutputResolutionDir
+        );
 
         // Stage deletions `git rm -rf .`
         await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);

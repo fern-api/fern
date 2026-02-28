@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.95.5
+  changelogEntry:
+    - summary: |
+        Optimize throwaway git operations in LocalTaskHandler to avoid triggering
+        commit signing prompts (e.g. Touch ID on macOS). Internal git commits used
+        for .fernignore resolution now disable GPG/SSH signing, skip hooks, and
+        inline user config to reduce spawned git processes.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
 - version: 3.95.4
   changelogEntry:
     - summary: |
