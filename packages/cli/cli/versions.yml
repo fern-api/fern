@@ -9,7 +9,7 @@
         error. The CLI now detects this pattern and shows a hint suggesting the
         value be wrapped in double quotes.
       type: fix
-  createdAt: "2026-02-27"
+  createdAt: "2026-02-28"
   irVersion: 65
 
 - version: 3.95.1
