@@ -73,6 +73,9 @@ export async function createAndStartJob({
     return job;
 }
 
+const MAX_RATE_LIMIT_RETRIES = 3;
+const DEFAULT_RETRY_AFTER_SECONDS = 10;
+
 async function createJob({
     projectConfig,
     workspace,
@@ -108,23 +111,37 @@ async function createJob({
         publishMetadata: generatorInvocation.publishMetadata
     };
 
-    const createResponse = await remoteGenerationService.remoteGen.createJobV3({
-        apiName: workspace.definition.rootApiFile.contents.name,
-        version,
-        organizationName: organization,
-        generators: [generatorConfig],
-        uploadToS3: shouldUploadToS3({
-            outputMode: generatorInvocation.outputMode,
-            generatorInvocation,
-            absolutePathToPreview,
-            shouldLogS3Url
-        }),
-        whitelabel,
-        preview: absolutePathToPreview != null,
-        fernignoreContents
-    });
+    for (let attempt = 0; attempt <= MAX_RATE_LIMIT_RETRIES; attempt++) {
+        const createResponse = await remoteGenerationService.remoteGen.createJobV3({
+            apiName: workspace.definition.rootApiFile.contents.name,
+            version,
+            organizationName: organization,
+            generators: [generatorConfig],
+            uploadToS3: shouldUploadToS3({
+                outputMode: generatorInvocation.outputMode,
+                generatorInvocation,
+                absolutePathToPreview,
+                shouldLogS3Url
+            }),
+            whitelabel,
+            preview: absolutePathToPreview != null,
+            fernignoreContents
+        });
 
-    if (!createResponse.ok) {
+        if (createResponse.ok) {
+            return createResponse.body;
+        }
+
+        // Check for rate limiting (429) before handling other errors
+        const rateLimitRetryAfter = extractRateLimitRetryAfter(createResponse.error as unknown as Fetcher.Error);
+        if (rateLimitRetryAfter != null && attempt < MAX_RATE_LIMIT_RETRIES) {
+            context.logger.info(
+                `Rate limited creating job. Retrying in ${rateLimitRetryAfter}s (attempt ${attempt + 1}/${MAX_RATE_LIMIT_RETRIES})...`
+            );
+            await delay(rateLimitRetryAfter * 1000);
+            continue;
+        }
+
         return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
@@ -180,7 +197,10 @@ async function createJob({
         });
     }
 
-    return createResponse.body;
+    // This should be unreachable, but TypeScript needs it for exhaustiveness
+    return context.failAndThrow(
+        "Failed to create job after multiple retries. Please try again or contact support@buildwithfern.com for assistance."
+    );
 }
 
 async function writeFernDefinition({
@@ -278,6 +298,23 @@ async function startJob({
         context.logger.debug(`POST ${url} failed with ${JSON.stringify(error)}`);
         context.failAndThrow("Failed to start job", errorBody);
     }
+}
+
+/**
+ * Extracts the retryAfter value (in seconds) from a rate limit error response.
+ * Returns undefined if the error is not a rate limit error.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: allow explicit any
+function extractRateLimitRetryAfter(error: any): number | undefined {
+    if (error?.content?.reason === "status-code" && error.content.statusCode === 429) {
+        const retryAfter = error.content.body?.content?.retryAfter;
+        return typeof retryAfter === "number" ? retryAfter : DEFAULT_RETRY_AFTER_SECONDS;
+    }
+    return undefined;
+}
+
+function delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // Fiddle is on the old version of error serialization. Until we upgrade the
