@@ -44,10 +44,16 @@ import { getTransportForEndpoint, getTransportForService } from "./convertTransp
  * Recovers the original SDK method name from an endpoint key that may have been
  * suffixed with audience information to avoid dictionary collisions.
  *
- * Only strips the suffix when the part after `__aud_` exactly matches the
- * endpoint's joined audience list. This prevents accidentally mangling
- * hand-written endpoint names that happen to contain `__aud_` but were
- * never suffixed by the OpenAPI-to-Fern converter.
+ * Only strips the suffix when:
+ *   1. The key contains the `__aud_` separator, AND
+ *   2. The endpoint has at least one audience, AND
+ *   3. The text after the last `__aud_` exactly equals the endpoint's audiences
+ *      joined by `_`.
+ *
+ * This makes false positives astronomically unlikely: a hand-written endpoint
+ * name would need to contain `__aud_` AND have the part after it exactly match
+ * the endpoint's actual audience list. The `__aud_` separator was chosen
+ * specifically because it is not a valid identifier in any common language.
  */
 function getOriginalMethodName(endpointKey: string, endpoint: RawSchemas.HttpEndpointSchema): string {
     const separatorIndex = endpointKey.lastIndexOf(AUDIENCE_SUFFIX_SEPARATOR);
@@ -57,10 +63,6 @@ function getOriginalMethodName(endpointKey: string, endpoint: RawSchemas.HttpEnd
     const suffix = endpointKey.substring(separatorIndex + AUDIENCE_SUFFIX_SEPARATOR.length);
     const audiences = endpoint.audiences ?? [];
     if (audiences.length > 0 && suffix === audiences.join("_")) {
-        return endpointKey.substring(0, separatorIndex);
-    }
-    // Defensive: also strip the "default" suffix used for empty-audience endpoints
-    if (suffix === "default" && audiences.length === 0) {
         return endpointKey.substring(0, separatorIndex);
     }
     return endpointKey;
