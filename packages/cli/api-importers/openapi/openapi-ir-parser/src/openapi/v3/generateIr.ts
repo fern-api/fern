@@ -95,7 +95,11 @@ export function generateIr({
     const authHeaders = new Set(
         Object.entries(securitySchemes)
             .map(([_, securityScheme]) => {
-                if (securityScheme.type === "basic" || securityScheme.type === "bearer" || securityScheme.type === "oauth") {
+                if (
+                    securityScheme.type === "basic" ||
+                    securityScheme.type === "bearer" ||
+                    securityScheme.type === "oauth"
+                ) {
                     return "Authorization";
                 } else if (securityScheme.type === "header") {
                     return securityScheme.headerName;
