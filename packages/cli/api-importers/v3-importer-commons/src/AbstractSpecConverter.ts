@@ -140,6 +140,23 @@ export abstract class AbstractSpecConverter<
     }
 
     protected finalizeIr(): IntermediateRepresentation {
+        // Compute sdkConfig flags from actual endpoints
+        const hasStreamingEndpoints = Object.values(this.ir.services).some((service) => {
+            return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "streaming");
+        });
+        const hasPaginatedEndpoints = Object.values(this.ir.services).some((service) => {
+            return service.endpoints.some((endpoint) => endpoint.pagination != null);
+        });
+        const hasFileDownloadEndpoints = Object.values(this.ir.services).some((service) => {
+            return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
+        });
+        this.ir.sdkConfig = {
+            ...this.ir.sdkConfig,
+            hasStreamingEndpoints,
+            hasPaginatedEndpoints,
+            hasFileDownloadEndpoints
+        };
+
         let ir = {
             ...this.ir,
             apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
