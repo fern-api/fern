@@ -4,6 +4,7 @@ export * from "./filepaths-exist/index.js";
 export * from "./no-circular-redirects/index.js";
 export * from "./only-versioned-navigation/index.js";
 export * from "./tab-with-href/index.js";
+export * from "./unused-assets/index.js";
 export * from "./valid-docs-endpoints/index.js";
 export * from "./valid-file-types/index.js";
 export * from "./valid-frontmatter/index.js";

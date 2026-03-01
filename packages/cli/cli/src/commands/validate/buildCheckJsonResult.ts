@@ -14,6 +14,7 @@ export interface CheckJsonResult {
         docs?: CheckJsonViolation[];
         sdks?: CheckJsonViolation[];
     };
+    unusedAssets?: string[];
 }
 
 export function buildCheckJsonResult({
@@ -66,8 +67,28 @@ export function buildCheckJsonResult({
         results.docs = docs;
     }
 
-    return {
+    // Collect unused assets from docs violations for easy machine consumption
+    const unusedAssets: string[] = [];
+    if (docsResult != null) {
+        for (const violation of docsResult.violations) {
+            if (violation.name === "unused-assets" && violation.severity === "warning") {
+                // Extract relative path from the message "Unused asset file: <path>"
+                const match = violation.message.match(/^Unused asset file: (.+)$/);
+                if (match?.[1] != null) {
+                    unusedAssets.push(match[1]);
+                }
+            }
+        }
+    }
+
+    const result: CheckJsonResult = {
         success: !hasErrors,
         results
     };
+
+    if (unusedAssets.length > 0) {
+        result.unusedAssets = unusedAssets;
+    }
+
+    return result;
 }

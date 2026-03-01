@@ -16,7 +16,8 @@ export async function validateWorkspaces({
     brokenLinks,
     errorOnBrokenLinks,
     isLocal,
-    directFromOpenapi
+    directFromOpenapi,
+    unusedAssets
 }: {
     project: Project;
     cliContext: CliContext;
@@ -25,6 +26,7 @@ export async function validateWorkspaces({
     errorOnBrokenLinks: boolean;
     isLocal?: boolean;
     directFromOpenapi?: boolean;
+    unusedAssets?: boolean;
 }): Promise<void> {
     const apiResults: ApiValidationResult[] = [];
     let docsResult: DocsValidationResult | undefined;
@@ -44,7 +46,8 @@ export async function validateWorkspaces({
                 apiWorkspaces: project.apiWorkspaces,
                 ossWorkspaces,
                 errorOnBrokenLinks,
-                excludeRules
+                excludeRules,
+                includeUnusedAssets: unusedAssets
             });
         });
 

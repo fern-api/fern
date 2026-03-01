@@ -1,0 +1,6 @@
+instances:
+  - url: test.docs.buildwithfern.com
+
+navigation:
+  - page: Test
+    path: ./pages/test.mdx

@@ -1133,6 +1133,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Whether to use the new parser and go directly from OpenAPI to IR",
                     default: false
                 })
+                .option("unused-assets", {
+                    boolean: true,
+                    description: "Report unused asset files (images, fonts, CSS, JS, etc.) in your docs workspace.",
+                    default: false
+                })
                 .option("json", {
                     boolean: true,
                     description: "Output results as JSON to stdout.",
@@ -1145,10 +1150,11 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     defaultToAllApiWorkspaces: true
                 }),
                 cliContext,
-                logWarnings: argv.warnings,
+                logWarnings: argv.warnings || argv.unusedAssets,
                 brokenLinks: argv.brokenLinks,
                 errorOnBrokenLinks: argv.strictBrokenLinks,
-                directFromOpenapi: argv.fromOpenapi
+                directFromOpenapi: argv.fromOpenapi,
+                unusedAssets: argv.unusedAssets
             });
         }
     );

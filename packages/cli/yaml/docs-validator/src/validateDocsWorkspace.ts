@@ -16,11 +16,12 @@ export async function validateDocsWorkspace(
     apiWorkspaces: AbstractAPIWorkspace<unknown>[],
     ossWorkspaces: OSSWorkspace[],
     onlyCheckBrokenLinks?: boolean,
-    excludeRules?: string[]
+    excludeRules?: string[],
+    includeUnusedAssets?: boolean
 ): Promise<ValidationViolation[]> {
     // In the future we'll do something more sophisticated that lets you pick and choose which rules to run.
     // For right now, the only use case is to check for broken links, so only expose a choice to run that rule.
-    const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks] : getAllRules(excludeRules);
+    const rules = onlyCheckBrokenLinks ? [ValidMarkdownLinks] : getAllRules(excludeRules, includeUnusedAssets);
     return runRulesOnDocsWorkspace({ workspace, rules, context, apiWorkspaces, ossWorkspaces });
 }
 

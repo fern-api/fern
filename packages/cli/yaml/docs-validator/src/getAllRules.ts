@@ -6,6 +6,7 @@ import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js"
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation/index.js";
+import { UnusedAssetsRule } from "./rules/unused-assets/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
 import { ValidFrontmatter } from "./rules/valid-frontmatter/index.js";
@@ -36,10 +37,19 @@ const allRules = [
     // ValidMarkdownFileReferences
 ];
 
-export function getAllRules(exclusions?: string[]): Rule[] {
-    if (!exclusions) {
-        return allRules;
+/**
+ * Returns the set of rules to run during docs validation.
+ * @param exclusions - Rule names to exclude from the default set.
+ * @param includeUnusedAssets - Whether to include the opt-in unused-assets rule.
+ */
+export function getAllRules(exclusions?: string[], includeUnusedAssets?: boolean): Rule[] {
+    let rules: Rule[] = [...allRules];
+    if (includeUnusedAssets) {
+        rules.push(UnusedAssetsRule);
     }
-    const set = new Set(exclusions);
-    return allRules.filter((r) => !set.has(r.name));
+    if (exclusions) {
+        const set = new Set(exclusions);
+        rules = rules.filter((r) => !set.has(r.name));
+    }
+    return rules;
 }
