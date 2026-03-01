@@ -141,7 +141,11 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         if (operation.responses == null) {
             return false;
         }
-        for (const response of Object.values(operation.responses)) {
+        for (const [statusCode, response] of Object.entries(operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+                continue;
+            }
             const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                 schemaOrReference: response,
                 breadcrumbs: this.breadcrumbs

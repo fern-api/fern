@@ -213,7 +213,11 @@ function checkOperationForTextEventStream({
         return false;
     }
 
-    for (const response of Object.values(operation.responses)) {
+    for (const [statusCode, response] of Object.entries(operation.responses)) {
+        const statusCodeNum = parseInt(statusCode);
+        if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+            continue;
+        }
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
 
         if (resolvedResponse.content == null) {
