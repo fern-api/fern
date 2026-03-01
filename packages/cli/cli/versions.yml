@@ -9,11 +9,12 @@
         error. Now a warning is emitted during validation.
       type: fix
     - summary: |
-        Fix incorrect construction of the auth-header filter set in the v1
-        OpenAPI parser. `new Set(...array)` was used instead of
-        `new Set(array)`, which caused the set to contain individual characters
-        instead of full header names, so duplicate Authorization headers from
-        path parameters were never filtered out.
+        Fix incorrect construction of Sets using `new Set(...array)` instead of
+        `new Set(array)` in three places: the auth-header filter in the v1
+        OpenAPI parser (`generateIr.ts`), the headers-to-ignore set in
+        `buildGlobalHeaders.ts`, and enum value comparison in
+        `isSchemaEqual.ts`. The spread caused Sets to contain individual
+        characters instead of full strings.
       type: fix
   createdAt: "2026-03-01"
   irVersion: 65
