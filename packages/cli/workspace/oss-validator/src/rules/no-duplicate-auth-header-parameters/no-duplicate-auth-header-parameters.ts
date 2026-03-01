@@ -153,7 +153,8 @@ function getAuthHeaderNames(
 function resolveParam(
     param: unknown,
     // biome-ignore lint/suspicious/noExplicitAny: OpenAPI document type
-    api: any
+    api: any,
+    visited: Set<string> = new Set()
 ): ResolvedParam | undefined {
     if (typeof param !== "object" || param == null) {
         return undefined;
@@ -164,12 +165,16 @@ function resolveParam(
     // Handle $ref
     if (typeof paramObj.$ref === "string") {
         const refPath = paramObj.$ref;
+        if (visited.has(refPath)) {
+            return undefined; // Circular reference detected
+        }
         if (refPath.startsWith("#/components/parameters/")) {
             const paramName = refPath.substring("#/components/parameters/".length);
             const components = api.components as { parameters?: Record<string, unknown> } | undefined;
             const resolved = components?.parameters?.[paramName];
             if (resolved != null) {
-                return resolveParam(resolved, api);
+                visited.add(refPath);
+                return resolveParam(resolved, api, visited);
             }
         }
         return undefined;
