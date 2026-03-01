@@ -789,37 +789,39 @@
             "body": {
               "value": {
                 "docs": "Response with both JSON and SSE content types",
-                "payload": {
+                "responseBodyType": {
                   "name": {
-                    "originalName": "CompletionChunk",
+                    "originalName": "Completion",
                     "camelCase": {
-                      "unsafeName": "completionChunk",
-                      "safeName": "completionChunk"
+                      "unsafeName": "completion",
+                      "safeName": "completion"
                     },
                     "snakeCase": {
-                      "unsafeName": "completion_chunk",
-                      "safeName": "completion_chunk"
+                      "unsafeName": "completion",
+                      "safeName": "completion"
                     },
                     "screamingSnakeCase": {
-                      "unsafeName": "COMPLETION_CHUNK",
-                      "safeName": "COMPLETION_CHUNK"
+                      "unsafeName": "COMPLETION",
+                      "safeName": "COMPLETION"
                     },
                     "pascalCase": {
-                      "unsafeName": "CompletionChunk",
-                      "safeName": "CompletionChunk"
+                      "unsafeName": "Completion",
+                      "safeName": "Completion"
                     }
                   },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
                   },
-                  "typeId": "type_:CompletionChunk",
+                  "typeId": "type_:Completion",
                   "type": "named"
                 },
-                "type": "sse"
+                "type": "response"
               },
-              "type": "streaming"
-            }
+              "type": "json"
+            },
+            "statusCode": 200,
+            "docs": "Response with both JSON and SSE content types"
           },
           "errors": [],
           "userSpecifiedExamples": [],
@@ -1310,7 +1312,7 @@
           "type": "body"
         },
         "response": {
-          "type": "streaming"
+          "type": "json"
         },
         "examples": []
       }

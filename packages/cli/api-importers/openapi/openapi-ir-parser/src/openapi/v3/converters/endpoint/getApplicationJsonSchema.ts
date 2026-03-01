@@ -63,17 +63,13 @@ export function hasTextEventStreamWithItemSchema(media: Record<string, OpenAPIV3
 }
 
 /**
- * Checks if the response content has text/event-stream content type.
- * This infers streaming based on the MIME type regardless of whether
- * schema or itemSchema is used.
+ * Checks if the response content has text/event-stream as the sole content type.
+ * When multiple content types are present (e.g., both application/json and text/event-stream),
+ * we don't infer streaming — the user should use x-fern-streaming to explicitly configure it.
  */
 export function hasTextEventStream(media: Record<string, OpenAPIV3.MediaTypeObject>): boolean {
-    for (const contentType of Object.keys(media)) {
-        if (contentType.includes("text/event-stream")) {
-            return true;
-        }
-    }
-    return false;
+    const contentTypes = Object.keys(media);
+    return contentTypes.length === 1 && contentTypes[0] != null && contentTypes[0].includes("text/event-stream");
 }
 
 export interface ApplicationJsonMediaObject {

@@ -132,6 +132,11 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
         return webhookConverter.convert();
     }
 
+    /**
+     * Checks if the operation has a response where text/event-stream is the only content type.
+     * When multiple content types are present (e.g., both application/json and text/event-stream),
+     * we don't infer streaming — the user should use x-fern-streaming to explicitly configure it.
+     */
     private operationHasTextEventStreamResponse(operation: OpenAPIV3_1.OperationObject): boolean {
         if (operation.responses == null) {
             return false;
@@ -144,10 +149,9 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             if (resolvedResponse?.content == null) {
                 continue;
             }
-            for (const contentType of Object.keys(resolvedResponse.content)) {
-                if (contentType.includes("text/event-stream")) {
-                    return true;
-                }
+            const contentTypes = Object.keys(resolvedResponse.content);
+            if (contentTypes.length === 1 && contentTypes[0]?.includes("text/event-stream")) {
+                return true;
             }
         }
         return false;
