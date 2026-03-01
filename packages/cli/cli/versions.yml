@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.97.0
+- version: 3.98.0
   changelogEntry:
     - summary: |
         Infer streaming from `text/event-stream` MIME type in OpenAPI specs. Endpoints
@@ -9,6 +9,17 @@
   createdAt: "2026-02-28"
   irVersion: 65
 
+- version: 3.97.0
+  changelogEntry:
+    - summary: |
+        Warn when user-provided examples in OpenAPI specs don't match their schema types.
+        Previously, if an example value had the wrong type (e.g., a number where a string
+        was expected, or an invalid enum value), Fern would silently replace it with a
+        generated fallback. Now, the CLI emits a warning identifying the mismatched field,
+        the expected type, and the actual value so users can fix their specs.
+      type: feat
+  createdAt: "2026-03-01"
+  irVersion: 65
 - version: 3.96.1
   changelogEntry:
     - summary: |
