@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.97.1
+  changelogEntry:
+    - summary: |
+        Improve error handling for `fern docs preview list`. Previously, all API
+        errors were reported with a generic "Failed to fetch docs URLs" message.
+        Now the CLI distinguishes between authorization errors and other failures,
+        guiding users to run `fern login` or set the FERN_TOKEN environment variable
+        when authentication is the issue.
+      type: fix
+  createdAt: "2026-03-01"
+  irVersion: 65
+
 - version: 3.97.0
   changelogEntry:
     - summary: |
