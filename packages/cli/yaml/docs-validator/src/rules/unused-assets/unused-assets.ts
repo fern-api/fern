@@ -1,5 +1,4 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { readdir, readFile, stat } from "fs/promises";
 import yaml from "js-yaml";
@@ -346,6 +345,14 @@ async function collectImageRefsFromMarkdown(
     await collectImageRefsFromMarkdownFile(absPath, fernFolder, referenced);
 }
 
+/**
+ * Regex patterns for extracting file references from markdown content.
+ * Covers standard markdown images, HTML img tags, and MDX/JSX src attributes.
+ */
+const MARKDOWN_IMAGE_REGEX = /!\[[^\]]*\]\(([^)]+)\)/g;
+const HTML_IMG_SRC_REGEX = /<img[^>]+src=["']([^"']+)["']/gi;
+const JSX_SRC_REGEX = /src=["']([^"']+)["']/gi;
+
 async function collectImageRefsFromMarkdownFile(
     absPath: AbsoluteFilePath,
     fernFolder: AbsoluteFilePath,
@@ -356,12 +363,33 @@ async function collectImageRefsFromMarkdownFile(
     }
     try {
         const content = (await readFile(absPath, "utf8")).toString();
-        const { filepaths } = parseImagePaths(content, {
-            absolutePathToFernFolder: fernFolder,
-            absolutePathToMarkdownFile: absPath
-        });
-        for (const fp of filepaths) {
-            referenced.add(fp);
+        const mdDir = dirname(absPath);
+        const patterns = [MARKDOWN_IMAGE_REGEX, HTML_IMG_SRC_REGEX, JSX_SRC_REGEX];
+        for (const pattern of patterns) {
+            // Reset lastIndex for global regexes
+            pattern.lastIndex = 0;
+            let match: RegExpExecArray | null;
+            while ((match = pattern.exec(content)) != null) {
+                const rawPath = match[1]?.trim();
+                if (rawPath == null || rawPath.length === 0) {
+                    continue;
+                }
+                // Skip URLs and data URIs
+                if (
+                    rawPath.startsWith("http://") ||
+                    rawPath.startsWith("https://") ||
+                    rawPath.startsWith("//") ||
+                    rawPath.startsWith("data:")
+                ) {
+                    continue;
+                }
+                // Resolve relative to the markdown file's directory
+                const resolved = resolve(mdDir, rawPath);
+                referenced.add(resolved);
+                // Also try resolving relative to fern folder
+                const resolvedFromFern = resolve(fernFolder, rawPath);
+                referenced.add(resolvedFromFern);
+            }
         }
     } catch {
         // ignore parse errors
