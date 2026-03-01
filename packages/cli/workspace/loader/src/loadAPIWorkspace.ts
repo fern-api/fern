@@ -346,14 +346,11 @@ export async function loadAPIWorkspace({
     if (generatorsConfiguration == null) {
         hints.push(`No ${GENERATORS_CONFIGURATION_FILENAME} was found.`);
     } else if (generatorsConfiguration.api == null) {
+        hints.push(`${GENERATORS_CONFIGURATION_FILENAME} was found but does not contain an "api" section.`);
+    } else {
         hints.push(
-            `${GENERATORS_CONFIGURATION_FILENAME} was found but does not contain an "api" section with API definitions.`
+            `${GENERATORS_CONFIGURATION_FILENAME} has an "api" section but no valid API specs could be resolved from it.`
         );
-    } else if (
-        generatorsConfiguration.api.type === "singleNamespace" &&
-        generatorsConfiguration.api.definitions.length === 0
-    ) {
-        hints.push(`${GENERATORS_CONFIGURATION_FILENAME} has an "api" section but it contains no definitions.`);
     }
     const defDirExists = await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)));
     if (!defDirExists) {

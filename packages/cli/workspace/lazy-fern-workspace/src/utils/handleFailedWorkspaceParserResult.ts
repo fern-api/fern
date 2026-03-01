@@ -41,7 +41,7 @@ function handleWorkspaceParserFailureForFile({
         case WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY:
             logger.error(
                 "No API definition found. Expected one of the following:\n" +
-                    "  - An api section in generators.yml with path(s) to your OpenAPI/AsyncAPI spec(s)\n" +
+                    "  - An api section in generators.yml pointing to your API spec(s)\n" +
                     "  - A definition/ directory with Fern Definition files\n" +
                     "For more information, see https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
             );
