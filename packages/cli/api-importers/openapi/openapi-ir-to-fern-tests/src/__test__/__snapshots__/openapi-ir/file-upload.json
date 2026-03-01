@@ -277,6 +277,102 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "summary": "Create conversation and upload files",
+      "audiences": [],
+      "operationId": "createConversation",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateConversationRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "name",
+            "schema": {
+              "value": {
+                "generatedName": "CreateConversationRequestName",
+                "value": {
+                  "generatedName": "CreateConversationRequestName",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Name of the conversation.",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "description": "Name of the conversation.",
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          },
+          {
+            "key": "description",
+            "schema": {
+              "value": {
+                "generatedName": "CreateConversationRequestDescription",
+                "value": {
+                  "generatedName": "CreateConversationRequestDescription",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "description": "Description of the conversation.",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "description": "Description of the conversation.",
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          },
+          {
+            "key": "file",
+            "schema": {
+              "isOptional": true,
+              "isArray": false,
+              "description": "An optional file to attach.",
+              "type": "file"
+            },
+            "description": "An optional file to attach.",
+            "exploded": false
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "fullExamples": [],
+        "type": "multipart"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "Create a new conversation and upload files to it.",
+      "authed": false,
+      "method": "POST",
+      "path": "/conversations",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],

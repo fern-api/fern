@@ -79,3 +79,29 @@ paths:
                 contentType: "application/json"
               data:
                 explode: true
+  /conversations:
+    post:
+      summary: Create conversation and upload files
+      operationId: createConversation
+      description: Create a new conversation and upload files to it.
+      requestBody:
+        required: false
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: []
+              properties:
+                name:
+                  type: string
+                  description: Name of the conversation.
+                description:
+                  type: string
+                  description: Description of the conversation.
+                file:
+                  type: string
+                  format: binary
+                  description: An optional file to attach.
+      responses:
+        '201':
+          description: Conversation created successfully.
