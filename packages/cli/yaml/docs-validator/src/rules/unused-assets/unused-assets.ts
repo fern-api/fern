@@ -204,7 +204,8 @@ async function collectReferencedAssets(
     ): Promise<void> {
         if (Array.isArray(navigation)) {
             // Check if tabbed
-            const isTabbed = navigation.length > 0 && (navigation[0] as Record<string, unknown>)?.tab != null;
+            const isTabbed =
+                navigation.length > 0 && (navigation[0] as unknown as Record<string, unknown>)?.tab != null;
             if (isTabbed) {
                 for (const tab of navigation as docsYml.RawSchemas.TabbedNavigationConfig) {
                     if ("layout" in tab && Array.isArray(tab.layout)) {
