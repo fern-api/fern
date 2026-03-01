@@ -4,6 +4,25 @@ import { EndpointSdkName, SdkGroupName } from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase } from "lodash-es";
 
+/**
+ * Wraps camelCase to preserve leading/trailing underscores that lodash strips.
+ * E.g. "_internal" -> "_internal" instead of "internal"
+ */
+function camelCasePreservingUnderscores(name: string): string {
+    const leadingMatch = name.match(/^(_+)/);
+    const trailingMatch = name.match(/(_+)$/);
+    const leading = leadingMatch?.[1] ?? "";
+    const trailing = trailingMatch?.[1] ?? "";
+    if (leading === "" && trailing === "") {
+        return camelCase(name);
+    }
+    if (leading.length + trailing.length >= name.length) {
+        return name;
+    }
+    const core = name.slice(leading.length, name.length - trailing.length || undefined);
+    return `${leading}${camelCase(core)}${trailing}`;
+}
+
 function cleanSdkGroupName(groupName: SdkGroupName): SdkGroupName {
     const maybeNamespace = groupName.find((group) => typeof group === "object" && group.type === "namespace");
     const noNamespace = groupName.filter((group) => typeof group === "string" || group.type !== "namespace");
@@ -18,12 +37,12 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
     const fileNames: string[] = [];
     for (const [index, group] of cleanedGroupName.entries()) {
         if (typeof group === "string") {
-            fileNames.push(camelCase(group));
+            fileNames.push(camelCasePreservingUnderscores(group));
         } else if (typeof group === "object") {
             switch (group.type) {
                 case "namespace": {
                     if (index < cleanedGroupName.length - 1) {
-                        fileNames.push(camelCase(group.name));
+                        fileNames.push(camelCasePreservingUnderscores(group.name));
                     } else {
                         // For the last namespace, make it a true namespace (ie. a directory with it's contents in the root package marker)
                         fileNames.push(...[group.name, FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION]);

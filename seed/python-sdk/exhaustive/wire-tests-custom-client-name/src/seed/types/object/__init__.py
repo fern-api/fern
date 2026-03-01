@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
         ObjectWithMapOfMap,
         ObjectWithOptionalField,
         ObjectWithRequiredField,
+        ObjectWithUnknownField,
         OptionalAlias,
     )
     from .errors import (
@@ -34,6 +35,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectWithOptionalFieldError": ".errors",
     "ObjectWithRequiredField": ".types",
     "ObjectWithRequiredFieldError": ".errors",
+    "ObjectWithUnknownField": ".types",
     "OptionalAlias": ".types",
 }
 
@@ -71,5 +73,6 @@ __all__ = [
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",
     "ObjectWithRequiredFieldError",
+    "ObjectWithUnknownField",
     "OptionalAlias",
 ]

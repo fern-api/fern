@@ -12,8 +12,8 @@ public class Example36
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnLongAsync(
-            1000000L
+        await client.Endpoints.Primitive.GetAndReturnStringAsync(
+            "string"
         );
     }
 

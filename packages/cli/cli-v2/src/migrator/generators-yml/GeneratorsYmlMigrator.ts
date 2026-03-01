@@ -63,8 +63,9 @@ export class GeneratorsYmlMigrator {
             };
         }
 
+        let content: string | undefined;
         try {
-            const content = await readFile(absoluteFilePath, "utf-8");
+            content = await readFile(absoluteFilePath, "utf-8");
             const config = yaml.load(content) as generatorsYml.GeneratorsConfigurationSchema;
 
             if (config == null || typeof config !== "object") {
@@ -115,7 +116,30 @@ export class GeneratorsYmlMigrator {
                 absoluteFilePath
             };
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
+            let message = error instanceof Error ? error.message : String(error);
+
+            // When the YAML error reason indicates a "bad indentation" or anchor issue and
+            // the offending line contains a value starting with @, it is almost certainly an
+            // unquoted scoped npm package name (e.g. @scope/package).  The @ character is a
+            // reserved YAML anchor symbol, so the parser emits a confusing indentation error
+            // instead of a clear "invalid character" message.
+            if (
+                error instanceof yaml.YAMLException &&
+                error.mark != null &&
+                content != null &&
+                (error.reason === "bad indentation of a mapping entry" ||
+                    error.reason === "unexpected end of the stream within a flow collection")
+            ) {
+                const lines = content.split("\n");
+                const errorLine =
+                    error.mark.line >= 0 && error.mark.line < lines.length ? lines[error.mark.line] : undefined;
+                if (errorLine != null && /:\s+@/.test(errorLine)) {
+                    message +=
+                        '\n\nHint: Values starting with "@" (such as scoped npm packages) must be wrapped in quotes.' +
+                        '\n  Example: package-name: "@scope/package"';
+                }
+            }
+
             return {
                 success: false,
                 warnings: [

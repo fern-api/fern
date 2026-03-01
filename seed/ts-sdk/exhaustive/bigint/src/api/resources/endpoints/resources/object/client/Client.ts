@@ -521,6 +521,75 @@ export class ObjectClient {
     }
 
     /**
+     * @param {SeedExhaustive.types.ObjectWithUnknownField} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithUnknownField({
+     *         unknown: {
+     *             "$ref": "https://example.com/schema"
+     *         }
+     *     })
+     */
+    public getAndReturnWithUnknownField(
+        request: SeedExhaustive.types.ObjectWithUnknownField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithUnknownField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithUnknownField(request, requestOptions));
+    }
+
+    private async __getAndReturnWithUnknownField(
+        request: SeedExhaustive.types.ObjectWithUnknownField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithUnknownField>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-unknown-field",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: _response.body as SeedExhaustive.types.ObjectWithUnknownField,
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/object/get-and-return-with-unknown-field",
+        );
+    }
+
+    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".

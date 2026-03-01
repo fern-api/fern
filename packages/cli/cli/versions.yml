@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.96.0
+- version: 3.97.0
   changelogEntry:
     - summary: |
         Warn when user-provided examples in OpenAPI specs don't match their schema types.
@@ -8,9 +8,116 @@
         generated fallback. Now, the CLI emits a warning identifying the mismatched field,
         the expected type, and the actual value so users can fix their specs.
       type: feat
+  createdAt: "2026-03-01"
+  irVersion: 65
+
+- version: 3.96.1
+  changelogEntry:
+    - summary: |
+        Improve the "Misconfigured fern directory" error message to clearly
+        explain what was expected (an `api` section in `generators.yml` or a
+        `definition/` directory) instead of showing a generic, misleading
+        message. Also adds debug-level diagnostics explaining exactly which
+        checks failed during workspace loading.
+      type: fix
+  createdAt: "2026-03-01"
+  irVersion: 65
+
+- version: 3.96.0
+  changelogEntry:
+    - summary: |
+        Allow underscores in `x-fern-sdk-group-name` values. Previously, leading
+        underscores (e.g. `_internal`) were stripped by lodash's `camelCase`,
+        making it impossible to use underscore-prefixed group names for marking
+        private/internal modules. Both the OpenAPI-to-Fern file name conversion
+        and the IR casings generator now preserve leading and trailing underscores.
+      type: feat
   createdAt: "2026-02-28"
   irVersion: 65
 
+- version: 3.95.7
+  changelogEntry:
+    - summary: |
+        Fix `fern check` not detecting when an OpenAPI spec declares an explicit
+        header parameter (e.g. `Authorization`) that conflicts with a header
+        already implied by a security scheme (e.g. Bearer token auth). Previously
+        `fern check` silently passed and generation would fail with a confusing
+        error. Now a warning is emitted during validation.
+      type: fix
+    - summary: |
+        Fix incorrect construction of Sets using `new Set(...array)` instead of
+        `new Set(array)` in three places: the auth-header filter in the v1
+        OpenAPI parser (`generateIr.ts`), the headers-to-ignore set in
+        `buildGlobalHeaders.ts`, and enum value comparison in
+        `isSchemaEqual.ts`. The spread caused Sets to contain individual
+        characters instead of full strings.
+      type: fix
+  createdAt: "2026-03-01"
+  irVersion: 65
+
+- version: 3.95.6
+  changelogEntry:
+    - summary: |
+        Disable commit signing and skip hooks for remaining internal throwaway
+        git commits (PersistedTypescriptProject, replay-init) to avoid
+        triggering prompts (e.g. Touch ID on macOS, 1Password SSH agent).
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
+- version: 3.95.5
+  changelogEntry:
+    - summary: |
+        Optimize throwaway git operations in LocalTaskHandler to avoid triggering
+        commit signing prompts (e.g. Touch ID on macOS). Internal git commits used
+        for .fernignore resolution now disable GPG/SSH signing, skip hooks, and
+        inline user config to reduce spawned git processes.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
+- version: 3.95.4
+  changelogEntry:
+    - summary: |
+        Improve YAML parsing error message when scoped npm package names (e.g.
+        `@scope/package`) are used without quotes in `generators.yml`. The `@`
+        character is a reserved YAML anchor symbol, so unquoted values like
+        `package-name: @fixa-dev/server` produce a confusing "bad indentation"
+        error. The CLI now detects this pattern and shows a hint suggesting the
+        value be wrapped in double quotes.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+
+- version: 3.95.3
+  changelogEntry:
+    - summary: |
+        Revert AI example enhancement to use fdr-lambda-docs endpoint instead of the new registry.
+      type: chore
+  createdAt: "2026-02-28"
+  irVersion: 65
+
+- version: 3.95.2
+  changelogEntry:
+    - summary: |
+        Exclude `.fern/metadata.json` from the git diff used for AUTO version analysis.
+        Previously, changes to `.fern/metadata.json` (which includes `cliVersion`)
+        were counted as meaningful SDK changes, causing CLI-only version bumps to
+        trigger unnecessary SDK releases. The diff now uses
+        `:(exclude).fern/metadata.json` so that metadata-only changes result in an
+        empty diff and generation is skipped.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
+- version: 3.95.1
+  changelogEntry:
+    - summary: |
+        Make `operationId` optional for webhooks in OpenAPI 3.1 specs. When a webhook
+        does not specify an `operationId`, the webhook key name is used as the fallback
+        identifier instead of skipping the webhook entirely.
+      type: fix
+  createdAt: "2026-02-28"
+  irVersion: 65
 - version: 3.95.0
   changelogEntry:
     - summary: |
@@ -21,7 +128,6 @@
       type: feat
   createdAt: "2026-02-27"
   irVersion: 65
-
 - version: 3.94.0
   changelogEntry:
     - summary: |
@@ -149,7 +255,6 @@
       type: fix
   createdAt: "2026-02-27"
   irVersion: 65
-
 - version: 3.91.3
   changelogEntry:
     - summary: |
