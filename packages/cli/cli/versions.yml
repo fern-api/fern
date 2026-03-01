@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.95.7
+  changelogEntry:
+    - summary: |
+        Fix `fern check` not detecting when an OpenAPI spec declares an explicit
+        header parameter (e.g. `Authorization`) that conflicts with a header
+        already implied by a security scheme (e.g. Bearer token auth). Previously
+        `fern check` silently passed and generation would fail with a confusing
+        error. Now a warning is emitted during validation.
+      type: fix
+    - summary: |
+        Fix incorrect construction of the auth-header filter set in the v1
+        OpenAPI parser. `new Set(...array)` was used instead of
+        `new Set(array)`, which caused the set to contain individual characters
+        instead of full header names, so duplicate Authorization headers from
+        path parameters were never filtered out.
+      type: fix
+  createdAt: "2026-03-01"
+  irVersion: 65
+
 - version: 3.95.6
   changelogEntry:
     - summary: |
