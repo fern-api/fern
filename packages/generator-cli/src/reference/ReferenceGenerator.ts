@@ -23,22 +23,18 @@ export class ReferenceGenerator {
 
     public async generate({ output }: { output: fs.WriteStream | NodeJS.Process["stdout"] }): Promise<void> {
         const writer = new StreamWriter(output);
-        await writer.writeLine("# Reference");
-
-        if (this.referenceConfig.rootSection != null) {
-            await this.writeRootSection({
-                section: this.referenceConfig.rootSection,
-                writer
-            });
-        }
-        for (const section of this.referenceConfig.sections) {
-            await this.writeSection({ section, writer });
-        }
+        await this.writeReferenceContent({ writer });
         await writer.end();
     }
 
     public async generateToString(): Promise<string> {
         const writer = new StringWriter();
+        await this.writeReferenceContent({ writer });
+        await writer.end();
+        return writer.toString();
+    }
+
+    private async writeReferenceContent({ writer }: { writer: Writer }): Promise<void> {
         await writer.writeLine("# Reference");
 
         if (this.referenceConfig.rootSection != null) {
@@ -50,8 +46,6 @@ export class ReferenceGenerator {
         for (const section of this.referenceConfig.sections) {
             await this.writeSection({ section, writer });
         }
-        await writer.end();
-        return writer.toString();
     }
 
     private async writeRootSection({
