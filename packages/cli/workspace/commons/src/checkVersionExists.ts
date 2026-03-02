@@ -56,48 +56,6 @@ export function getPackageNameFromGeneratorConfig(
 /** Timeout for registry HTTP calls (ms). Prevents slow registries from delaying generation start. */
 const REGISTRY_TIMEOUT_MS = 5_000;
 
-// ─── Registry info (custom URL + auth) ──────────────────────────────
-
-interface RegistryInfo {
-    /** Custom registry URL, if configured (undefined = use public default). */
-    url?: string;
-    /** Auth token for the registry, if configured. */
-    token?: string;
-}
-
-/**
- * Extracts the registry URL and auth token from the raw output config.
- * Each registry location stores them in slightly different fields.
- * @internal Exported for testing
- */
-export function getRegistryInfoFromOutput(generatorInvocation: generatorsYml.GeneratorInvocation): RegistryInfo {
-    const output = generatorInvocation.raw?.output;
-    if (typeof output !== "object" || output == null) {
-        return {};
-    }
-    const o = output as unknown as Record<string, unknown>;
-    const url = typeof o.url === "string" ? resolveEnvVar(o.url) : undefined;
-    // npm/pypi/crates use "token"; nuget/rubygems use "api-key"; maven uses "password"
-    const rawToken =
-        typeof o.token === "string" ? o.token : typeof o["api-key"] === "string" ? (o["api-key"] as string) : undefined;
-    const token = rawToken != null ? resolveEnvVar(rawToken) : undefined;
-    return { url, token };
-}
-
-/**
- * Resolves a value that may be an environment variable reference (e.g. `${NPM_TOKEN}`).
- * If the value matches the `${VAR}` pattern, looks it up in `process.env`.
- * Returns `undefined` if the env var is not set.
- * @internal Exported for testing
- */
-export function resolveEnvVar(value: string): string | undefined {
-    const match = value.match(/^\$\{(.+)\}$/);
-    if (match?.[1] != null) {
-        return process.env[match[1]];
-    }
-    return value;
-}
-
 // ─── Registry API response types ────────────────────────────────────
 
 interface NpmRegistryVersionResponse {
@@ -131,13 +89,8 @@ interface GoProxyVersionResponse {
  * - **downloadFiles**: Skipped entirely (no publishing involved).
  *
  * This is a best-effort check — network errors, timeouts, or unsupported registries
- * are silently ignored so that generation is not blocked unnecessarily.
- *
- * Private registry support:
- * - **npm**: Reads the custom registry URL and token from the output config.
- *   Falls back to `NPM_TOKEN` env var for auth if no config token is set.
- * - **Other registries**: If a custom URL is configured, the check is skipped
- *   because private registries have varying APIs.
+ * are silently ignored so that generation is not blocked unnecessarily. Only public
+ * registries are checked; private/custom registries are not supported.
  *
  * @param version - The version being published (e.g., "1.2.3")
  * @param packageName - The package name (e.g., "@acme/sdk")
@@ -178,21 +131,13 @@ export async function checkVersionDoesNotAlreadyExist({
     }
 
     const language = generatorInvocation.language;
-    const registryInfo = getRegistryInfoFromOutput(generatorInvocation);
-
-    context.logger.debug(
-        `Checking ${getRegistryName(language)} for ${resolvedPackageName}@${version}` +
-            (registryInfo.url != null ? ` (registry: ${registryInfo.url})` : "") +
-            (registryInfo.token != null ? " (with auth)" : "")
-    );
 
     let exists: boolean;
     try {
         exists = await doesVersionExistOnRegistry({
             packageName: resolvedPackageName,
             version,
-            language,
-            registryInfo
+            language
         });
     } catch (error) {
         // Best-effort check — if we can't reach the registry, don't block generation.
@@ -221,7 +166,7 @@ export async function checkVersionDoesNotAlreadyExist({
 // ─── Registry version checking ──────────────────────────────────────
 
 /**
- * Checks whether a specific version of a package exists on the relevant registry.
+ * Checks whether a specific version of a package exists on the relevant public registry.
  *
  * @returns true if the version exists, false otherwise
  * @internal Exported for testing
@@ -229,71 +174,50 @@ export async function checkVersionDoesNotAlreadyExist({
 export async function doesVersionExistOnRegistry({
     packageName,
     version,
-    language,
-    registryInfo
+    language
 }: {
     packageName: string;
     version: string;
     language: string;
-    registryInfo?: RegistryInfo;
 }): Promise<boolean> {
-    const info = registryInfo ?? {};
     switch (language) {
         case "typescript":
-            return await doesNpmVersionExist(packageName, version, info);
+            return await doesNpmVersionExist(packageName, version);
         case "python":
-            return await doesPypiVersionExist(packageName, version, info);
+            return await doesPypiVersionExist(packageName, version);
         case "java":
-            return await doesMavenVersionExist(packageName, version, info);
+            return await doesMavenVersionExist(packageName, version);
         case "csharp":
-            return await doesNugetVersionExist(packageName, version, info);
+            return await doesNugetVersionExist(packageName, version);
         case "ruby":
-            return await doesRubyGemsVersionExist(packageName, version, info);
+            return await doesRubyGemsVersionExist(packageName, version);
         case "go":
-            return await doesGoVersionExist(packageName, version, info);
+            return await doesGoVersionExist(packageName, version);
         case "rust":
-            return await doesCratesVersionExist(packageName, version, info);
+            return await doesCratesVersionExist(packageName, version);
         default:
             return false;
     }
 }
 
 /**
- * Checks if a specific version of an npm package exists.
- * Uses the npm registry's version-specific endpoint which returns 200 if the version exists.
- * Supports private registries via NPM_TOKEN.
+ * Checks if a specific version of an npm package exists on the public npm registry.
  * @internal Exported for testing
  */
-export async function doesNpmVersionExist(
-    packageName: string,
-    version: string,
-    registryInfo: RegistryInfo = {}
-): Promise<boolean> {
+export async function doesNpmVersionExist(packageName: string, version: string): Promise<boolean> {
     const encodedName = encodeURIComponent(packageName).replace(/^%40/, "@");
     const headers: Record<string, string> = {
         accept: "application/json"
     };
-    // Auth: prefer token from output config, fall back to NPM_TOKEN env var
-    const npmToken = registryInfo.token ?? process.env.NPM_TOKEN;
+    const npmToken = process.env.NPM_TOKEN;
     if (npmToken != null) {
         headers.authorization = `Bearer ${npmToken}`;
     }
-    const baseUrl = registryInfo.url ?? "https://registry.npmjs.org";
-    // Strip trailing slash for consistent URL construction
-    const registryUrl = baseUrl.replace(/\/+$/, "");
-    const url = `${registryUrl}/${encodedName}/${version}`;
-    const response = await fetch(url, {
+    const response = await fetch(`https://registry.npmjs.org/${encodedName}/${version}`, {
         headers,
         signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
     });
     if (!response.ok) {
-        // 401/403 means auth failed — we can't tell whether the version exists.
-        // Throw so the caller logs a debug message instead of silently passing.
-        if (response.status === 401 || response.status === 403) {
-            throw new Error(
-                `Registry returned ${response.status} for ${url} — unable to verify version (auth may be missing or invalid)`
-            );
-        }
         return false;
     }
     const data = (await response.json()) as NpmRegistryVersionResponse;
@@ -305,16 +229,7 @@ export async function doesNpmVersionExist(
  * PyPI provides a version-specific JSON endpoint.
  * @internal Exported for testing
  */
-export async function doesPypiVersionExist(
-    packageName: string,
-    version: string,
-    registryInfo: RegistryInfo = {}
-): Promise<boolean> {
-    if (registryInfo.url != null) {
-        // Private PyPI registries use the simple API: GET /{package}/ and parse version links.
-        // However, the format varies widely — skip the check for private registries.
-        return false;
-    }
+export async function doesPypiVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://pypi.org/pypi/${packageName}/${version}/json`, {
         signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
     });
@@ -326,15 +241,7 @@ export async function doesPypiVersionExist(
  * Searches Maven Central for the specific group:artifact:version combination.
  * @internal Exported for testing
  */
-export async function doesMavenVersionExist(
-    coordinate: string,
-    version: string,
-    registryInfo: RegistryInfo = {}
-): Promise<boolean> {
-    if (registryInfo.url != null) {
-        // Private Maven registries (Artifactory, Nexus) have varying APIs — skip the check.
-        return false;
-    }
+export async function doesMavenVersionExist(coordinate: string, version: string): Promise<boolean> {
     const parts = coordinate.split(":");
     if (parts.length < 2 || !parts[0] || !parts[1]) {
         return false;
@@ -358,15 +265,7 @@ export async function doesMavenVersionExist(
  * Uses the NuGet V3 flat container API to list all versions, then checks for the target.
  * @internal Exported for testing
  */
-export async function doesNugetVersionExist(
-    packageName: string,
-    version: string,
-    registryInfo: RegistryInfo = {}
-): Promise<boolean> {
-    if (registryInfo.url != null) {
-        // Private NuGet feeds have varying APIs — skip the check.
-        return false;
-    }
+export async function doesNugetVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://api.nuget.org/v3-flatcontainer/${packageName.toLowerCase()}/index.json`, {
         signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
     });
@@ -383,15 +282,7 @@ export async function doesNugetVersionExist(
  * Uses the RubyGems version-specific endpoint.
  * @internal Exported for testing
  */
-export async function doesRubyGemsVersionExist(
-    packageName: string,
-    version: string,
-    registryInfo: RegistryInfo = {}
-): Promise<boolean> {
-    if (registryInfo.url != null) {
-        // Private RubyGems servers have varying APIs — skip the check.
-        return false;
-    }
+export async function doesRubyGemsVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://rubygems.org/api/v2/rubygems/${packageName}/versions/${version}.json`, {
         signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
     });
@@ -403,11 +294,7 @@ export async function doesRubyGemsVersionExist(
  * Uses the Go Module Proxy's version-specific info endpoint.
  * @internal Exported for testing
  */
-export async function doesGoVersionExist(
-    modulePath: string,
-    version: string,
-    _registryInfo: RegistryInfo = {}
-): Promise<boolean> {
+export async function doesGoVersionExist(modulePath: string, version: string): Promise<boolean> {
     // Go module proxy requires case-encoding: uppercase letters become "!" + lowercase
     const encodedPath = modulePath.replace(/[A-Z]/g, (c) => "!" + c.toLowerCase());
     // Go versions require "v" prefix
@@ -427,15 +314,7 @@ export async function doesGoVersionExist(
  * Uses the Crates.io version-specific endpoint.
  * @internal Exported for testing
  */
-export async function doesCratesVersionExist(
-    packageName: string,
-    version: string,
-    registryInfo: RegistryInfo = {}
-): Promise<boolean> {
-    if (registryInfo.url != null) {
-        // Private crate registries have varying APIs — skip the check.
-        return false;
-    }
+export async function doesCratesVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://crates.io/api/v1/crates/${packageName}/${version}`, {
         headers: {
             "user-agent": "fern-cli (https://buildwithfern.com)"

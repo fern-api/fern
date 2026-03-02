@@ -82,13 +82,11 @@ export async function runRemoteGenerationForGenerator({
 
     // Fail fast if the target version already exists on the package registry.
     // Only check when the user explicitly provided a version (not auto-computed).
-    // Use the env-var-substituted invocation so that private registry URLs and
-    // auth tokens (e.g. ${CODEARTIFACT_AUTH_TOKEN}) are already resolved.
     if (!isPreview && version != null) {
         await checkVersionDoesNotAlreadyExist({
             version,
             packageName,
-            generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
+            generatorInvocation,
             context: interactiveTaskContext
         });
     }
