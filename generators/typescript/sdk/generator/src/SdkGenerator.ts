@@ -2143,8 +2143,7 @@ export class SdkGenerator {
                 const queryKeyFnName = `${functionPrefix}QueryKey`;
                 if (hasRequestParams) {
                     lines.push(`export function ${queryKeyFnName}(...args: ${paramsTypeName}): QueryKey {`);
-                    lines.push(`    const [request] = args;`);
-                    lines.push(`    return [${keySegments.join(", ")}, request ?? {}] as const;`);
+                    lines.push(`    return [${keySegments.join(", ")}, ...args] as const;`);
                 } else {
                     lines.push(`export function ${queryKeyFnName}(): QueryKey {`);
                     lines.push(`    return [${keySegments.join(", ")}] as const;`);

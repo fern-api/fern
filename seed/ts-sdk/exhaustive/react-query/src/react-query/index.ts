@@ -200,8 +200,7 @@ type EndpointsHttpMethodsTestGetParams = Parameters<ClientInstance["endpoints"][
 type EndpointsHttpMethodsTestGetReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testGet"]>;
 
 export function EndpointsHttpMethodsTestGetQueryKey(...args: EndpointsHttpMethodsTestGetParams): QueryKey {
-    const [request] = args;
-    return ["SeedExhaustiveClient", "endpoints", "httpMethods", "testGet", request ?? {}] as const;
+    return ["SeedExhaustiveClient", "endpoints", "httpMethods", "testGet", ...args] as const;
 }
 
 export function EndpointsHttpMethodsTestGetOptions(
@@ -406,8 +405,7 @@ type EndpointsPaginationListItemsParams = Parameters<ClientInstance["endpoints"]
 type EndpointsPaginationListItemsReturnType = ReturnType<ClientInstance["endpoints"]["pagination"]["listItems"]>;
 
 export function EndpointsPaginationListItemsQueryKey(...args: EndpointsPaginationListItemsParams): QueryKey {
-    const [request] = args;
-    return ["SeedExhaustiveClient", "endpoints", "pagination", "listItems", request ?? {}] as const;
+    return ["SeedExhaustiveClient", "endpoints", "pagination", "listItems", ...args] as const;
 }
 
 export function EndpointsPaginationListItemsInfiniteOptions(
@@ -443,8 +441,7 @@ type EndpointsParamsGetWithPathParams = Parameters<ClientInstance["endpoints"]["
 type EndpointsParamsGetWithPathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["getWithPath"]>;
 
 export function EndpointsParamsGetWithPathQueryKey(...args: EndpointsParamsGetWithPathParams): QueryKey {
-    const [request] = args;
-    return ["SeedExhaustiveClient", "endpoints", "params", "getWithPath", request ?? {}] as const;
+    return ["SeedExhaustiveClient", "endpoints", "params", "getWithPath", ...args] as const;
 }
 
 export function EndpointsParamsGetWithPathOptions(
@@ -463,8 +460,7 @@ type EndpointsParamsGetWithInlinePathReturnType = ReturnType<
 >;
 
 export function EndpointsParamsGetWithInlinePathQueryKey(...args: EndpointsParamsGetWithInlinePathParams): QueryKey {
-    const [request] = args;
-    return ["SeedExhaustiveClient", "endpoints", "params", "getWithInlinePath", request ?? {}] as const;
+    return ["SeedExhaustiveClient", "endpoints", "params", "getWithInlinePath", ...args] as const;
 }
 
 export function EndpointsParamsGetWithInlinePathOptions(
@@ -481,8 +477,7 @@ type EndpointsParamsGetWithQueryParams = Parameters<ClientInstance["endpoints"][
 type EndpointsParamsGetWithQueryReturnType = ReturnType<ClientInstance["endpoints"]["params"]["getWithQuery"]>;
 
 export function EndpointsParamsGetWithQueryQueryKey(...args: EndpointsParamsGetWithQueryParams): QueryKey {
-    const [request] = args;
-    return ["SeedExhaustiveClient", "endpoints", "params", "getWithQuery", request ?? {}] as const;
+    return ["SeedExhaustiveClient", "endpoints", "params", "getWithQuery", ...args] as const;
 }
 
 export function EndpointsParamsGetWithQueryOptions(
@@ -505,8 +500,7 @@ type EndpointsParamsGetWithAllowMultipleQueryReturnType = ReturnType<
 export function EndpointsParamsGetWithAllowMultipleQueryQueryKey(
     ...args: EndpointsParamsGetWithAllowMultipleQueryParams
 ): QueryKey {
-    const [request] = args;
-    return ["SeedExhaustiveClient", "endpoints", "params", "getWithAllowMultipleQuery", request ?? {}] as const;
+    return ["SeedExhaustiveClient", "endpoints", "params", "getWithAllowMultipleQuery", ...args] as const;
 }
 
 export function EndpointsParamsGetWithAllowMultipleQueryOptions(
@@ -529,8 +523,7 @@ type EndpointsParamsGetWithPathAndQueryReturnType = ReturnType<
 export function EndpointsParamsGetWithPathAndQueryQueryKey(
     ...args: EndpointsParamsGetWithPathAndQueryParams
 ): QueryKey {
-    const [request] = args;
-    return ["SeedExhaustiveClient", "endpoints", "params", "getWithPathAndQuery", request ?? {}] as const;
+    return ["SeedExhaustiveClient", "endpoints", "params", "getWithPathAndQuery", ...args] as const;
 }
 
 export function EndpointsParamsGetWithPathAndQueryOptions(
@@ -553,8 +546,7 @@ type EndpointsParamsGetWithInlinePathAndQueryReturnType = ReturnType<
 export function EndpointsParamsGetWithInlinePathAndQueryQueryKey(
     ...args: EndpointsParamsGetWithInlinePathAndQueryParams
 ): QueryKey {
-    const [request] = args;
-    return ["SeedExhaustiveClient", "endpoints", "params", "getWithInlinePathAndQuery", request ?? {}] as const;
+    return ["SeedExhaustiveClient", "endpoints", "params", "getWithInlinePathAndQuery", ...args] as const;
 }
 
 export function EndpointsParamsGetWithInlinePathAndQueryOptions(
