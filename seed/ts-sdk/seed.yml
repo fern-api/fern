@@ -136,6 +136,12 @@ fixtures:
     - outputFolder: multiple-exports
       customConfig:
         generateSubpackageExports: true
+    - outputFolder: react-query
+      customConfig:
+        generateReactQuery: true
+        extraDevDependencies:
+          "@tanstack/react-query": "^5.0.0"
+          react: "^18.0.0"
   error-property:
     - outputFolder: no-custom-config
       customConfig: null

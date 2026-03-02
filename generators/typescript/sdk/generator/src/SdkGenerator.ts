@@ -2074,8 +2074,13 @@ export class SdkGenerator {
             const servicePath: string[] = [];
             if (!packageId.isRoot) {
                 const package_ = this.packageResolver.resolvePackage(packageId);
-                for (const part of package_.fernFilepath.packagePath) {
-                    servicePath.push(part.camelCase.safeName);
+                // Use allParts (not packagePath) to capture the full nested path
+                // e.g. for endpoints/container, allParts = ["endpoints", "container"]
+                // while packagePath would only give ["endpoints"]
+                for (const part of package_.fernFilepath.allParts) {
+                    // Use unsafeName for client accessor chains (e.g. client.endpoints.enum)
+                    // safeName would add trailing underscore for reserved words (enum_ vs enum)
+                    servicePath.push(part.camelCase.unsafeName);
                 }
             }
 
@@ -2096,25 +2101,6 @@ export class SdkGenerator {
         lines.push(`import { ${rootClientName} } from "../Client";`);
         lines.push(``);
 
-        // Collect all unique request wrapper type names we need to import
-        const requestTypeImports = new Set<string>();
-        for (const { endpoint } of endpointEntries) {
-            if (endpoint.sdkRequest != null) {
-                const requestTypeName =
-                    endpoint.sdkRequest.shape.type === "wrapper"
-                        ? endpoint.sdkRequest.shape.wrapperName.pascalCase.safeName
-                        : undefined;
-                if (requestTypeName != null) {
-                    requestTypeImports.add(requestTypeName);
-                }
-            }
-        }
-
-        if (requestTypeImports.size > 0) {
-            lines.push(`import type { ${this.namespaceExport} } from "../api/index";`);
-            lines.push(``);
-        }
-
         // Type alias for the client
         lines.push(`type ClientInstance = InstanceType<typeof ${rootClientName}>;`);
         lines.push(``);
@@ -2133,25 +2119,21 @@ export class SdkGenerator {
             // Build the client accessor chain
             const clientAccess = servicePath.length > 0 ? `client.${servicePath.join(".")}` : "client";
 
-            // Determine request parameter type and name
-            let requestParamType: string | undefined;
-            let requestParamOptional = true;
-            if (endpoint.sdkRequest != null) {
-                if (endpoint.sdkRequest.shape.type === "wrapper") {
-                    const wrapperName = endpoint.sdkRequest.shape.wrapperName.pascalCase.safeName;
-                    requestParamType = `${this.namespaceExport}.${wrapperName}`;
-                } else {
-                    // For "justRequestBody" type, use the type reference directly
-                    requestParamType = `${this.namespaceExport}.${endpoint.name.pascalCase.safeName}Request`;
-                }
-                // Check if the request has required fields
-                if (endpoint.sdkRequest.shape.type === "wrapper") {
-                    // Request wrapper may have required fields - treat as optionally required
-                    requestParamOptional = false;
-                } else {
-                    requestParamOptional = false;
-                }
+            // Check if endpoint has any required parameters (body, path params, etc.)
+            const hasRequestParams = endpoint.sdkRequest != null || endpoint.allPathParameters.length > 0;
+            const clientTypeAccess = `ClientInstance${servicePath.map((s) => `["${s}"]`).join("")}`;
+            const endpointMethodType = `${clientTypeAccess}["${endpointName}"]`;
+            const paramsTypeName = `${functionPrefix}Params`;
+            const returnTypeName = `${functionPrefix}ReturnType`;
+
+            if (hasRequestParams) {
+                // Use Parameters<> to infer the exact request type (supports wrapper + justRequestBody)
+                // and also captures any optional request options parameters.
+                lines.push(`type ${paramsTypeName} = Parameters<${endpointMethodType}>;`);
             }
+            // ReturnType alias for the endpoint method - needed for explicit return type annotations
+            lines.push(`type ${returnTypeName} = ReturnType<${endpointMethodType}>;`);
+            lines.push(``);
 
             // Query key segments for cache invalidation
             const keySegments = [`"${rootClientName}"`, ...servicePath.map((s) => `"${s}"`), `"${endpointName}"`];
@@ -2159,10 +2141,9 @@ export class SdkGenerator {
             if (isGetMethod) {
                 // Generate queryKey function
                 const queryKeyFnName = `${functionPrefix}QueryKey`;
-                if (requestParamType != null) {
-                    lines.push(
-                        `export function ${queryKeyFnName}(request${requestParamOptional ? "?" : ""}: ${requestParamType}): QueryKey {`
-                    );
+                if (hasRequestParams) {
+                    lines.push(`export function ${queryKeyFnName}(...args: ${paramsTypeName}): QueryKey {`);
+                    lines.push(`    const [request] = args;`);
                     lines.push(`    return [${keySegments.join(", ")}, request ?? {}] as const;`);
                 } else {
                     lines.push(`export function ${queryKeyFnName}(): QueryKey {`);
@@ -2174,28 +2155,26 @@ export class SdkGenerator {
                 if (hasPagination) {
                     // Generate infiniteQueryOptions
                     const infiniteFnName = `${functionPrefix}InfiniteOptions`;
-                    if (requestParamType != null) {
+                    const infiniteReturnType = `{ queryKey: QueryKey; queryFn: () => ${returnTypeName}; initialPageParam: unknown; getNextPageParam: (lastPage: Awaited<${returnTypeName}>) => unknown }`;
+                    if (hasRequestParams) {
                         lines.push(
-                            `export function ${infiniteFnName}(client: ClientInstance, request${requestParamOptional ? "?" : ""}: ${requestParamType}) {`
+                            `export function ${infiniteFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${infiniteReturnType} {`
                         );
                     } else {
-                        lines.push(`export function ${infiniteFnName}(client: ClientInstance) {`);
+                        lines.push(
+                            `export function ${infiniteFnName}(client: ClientInstance): ${infiniteReturnType} {`
+                        );
                     }
                     lines.push(`    return {`);
-                    if (requestParamType != null) {
-                        lines.push(`        queryKey: ${queryKeyFnName}(request),`);
-                        lines.push(
-                            `        queryFn: () => ${clientAccess}.${endpointName}(request${requestParamOptional ? "!" : ""}),`
-                        );
+                    if (hasRequestParams) {
+                        lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
+                        lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(...args),`);
                     } else {
                         lines.push(`        queryKey: ${queryKeyFnName}(),`);
                         lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(),`);
                     }
                     lines.push(`        initialPageParam: undefined as unknown,`);
-                    lines.push(
-                        `        getNextPageParam: (lastPage: Awaited<ReturnType<typeof ${clientAccess}.${endpointName}>>) => {`
-                    );
-                    lines.push(`            // Implement pagination logic based on your API response`);
+                    lines.push(`        getNextPageParam: (_lastPage: Awaited<${returnTypeName}>): unknown => {`);
                     lines.push(`            return undefined;`);
                     lines.push(`        },`);
                     lines.push(`    };`);
@@ -2205,19 +2184,18 @@ export class SdkGenerator {
 
                 // Generate queryOptions (always for GET)
                 const queryFnName = `${functionPrefix}Options`;
-                if (requestParamType != null) {
+                const queryReturnType = `{ queryKey: QueryKey; queryFn: () => ${returnTypeName} }`;
+                if (hasRequestParams) {
                     lines.push(
-                        `export function ${queryFnName}(client: ClientInstance, request${requestParamOptional ? "?" : ""}: ${requestParamType}) {`
+                        `export function ${queryFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${queryReturnType} {`
                     );
                 } else {
-                    lines.push(`export function ${queryFnName}(client: ClientInstance) {`);
+                    lines.push(`export function ${queryFnName}(client: ClientInstance): ${queryReturnType} {`);
                 }
                 lines.push(`    return {`);
-                if (requestParamType != null) {
-                    lines.push(`        queryKey: ${queryKeyFnName}(request),`);
-                    lines.push(
-                        `        queryFn: () => ${clientAccess}.${endpointName}(request${requestParamOptional ? "!" : ""}),`
-                    );
+                if (hasRequestParams) {
+                    lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
+                    lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(...args),`);
                 } else {
                     lines.push(`        queryKey: ${queryKeyFnName}(),`);
                     lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(),`);
@@ -2228,13 +2206,17 @@ export class SdkGenerator {
             } else {
                 // Non-GET = mutation
                 const mutationFnName = `${functionPrefix}MutationOptions`;
-                lines.push(`export function ${mutationFnName}(client: ClientInstance) {`);
-                lines.push(`    return {`);
-                if (requestParamType != null) {
+                if (hasRequestParams) {
+                    const mutationReturnType = `{ mutationFn: (...args: ${paramsTypeName}) => ${returnTypeName} }`;
+                    lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
+                    lines.push(`    return {`);
                     lines.push(
-                        `        mutationFn: (request: ${requestParamType}) => ${clientAccess}.${endpointName}(request),`
+                        `        mutationFn: (...args: ${paramsTypeName}) => ${clientAccess}.${endpointName}(...args),`
                     );
                 } else {
+                    const mutationReturnType = `{ mutationFn: () => ${returnTypeName} }`;
+                    lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
+                    lines.push(`    return {`);
                     lines.push(`        mutationFn: () => ${clientAccess}.${endpointName}(),`);
                 }
                 lines.push(`    };`);
@@ -2250,7 +2232,7 @@ export class SdkGenerator {
         // Create the source file in the project
         this.rootDirectory.createSourceFile(`/${filepath}`, fileContent, { overwrite: true });
 
-        return { reactQueryExportPath: reactQueryDir.replace(/^src\//, "") };
+        return { reactQueryExportPath: "react-query" };
     }
 
     private generateSubpackageExports() {

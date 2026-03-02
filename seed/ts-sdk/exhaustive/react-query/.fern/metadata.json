@@ -1,0 +1,13 @@
+{
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "latest",
+    "generatorConfig": {
+        "generateReactQuery": true,
+        "extraDevDependencies": {
+            "@tanstack/react-query": "^5.0.0",
+            "react": "^18.0.0"
+        }
+    },
+    "sdkVersion": "0.0.1"
+}
