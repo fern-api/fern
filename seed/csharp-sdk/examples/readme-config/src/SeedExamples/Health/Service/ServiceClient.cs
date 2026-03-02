@@ -28,7 +28,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/ping",
                     Headers = _headers,
@@ -96,7 +95,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/check/{0}", ValueConvert.ToPathParameterString(id)),
                     Headers = _headers,

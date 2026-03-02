@@ -26,7 +26,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/optional-args",
             Headers = _headers,
@@ -92,7 +91,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/inline-type",
             Headers = _headers,
@@ -154,7 +152,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/with-json-property",
             Headers = _headers,
@@ -216,7 +213,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/with-literal-enum",
             Headers = _headers,
@@ -280,7 +276,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "",
             Headers = _headers,
@@ -338,7 +333,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/just-file",
             Headers = _headers,
@@ -384,7 +378,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/just-file-with-query-params",
             QueryString = _queryString,
@@ -428,7 +421,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/just-file-with-optional-query-params",
             QueryString = _queryString,
@@ -467,7 +459,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/with-content-type",
             Headers = _headers,
@@ -512,7 +503,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "/with-form-encoding",
             Headers = _headers,
@@ -556,7 +546,6 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "",
             Headers = _headers,
@@ -664,7 +653,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/snippet",
                     Headers = _headers,

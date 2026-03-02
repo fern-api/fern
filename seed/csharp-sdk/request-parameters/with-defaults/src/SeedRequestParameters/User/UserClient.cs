@@ -47,7 +47,6 @@ public partial class UserClient : IUserClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/user",
                     QueryString = _queryString,
@@ -125,7 +124,6 @@ public partial class UserClient : IUserClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/user/username",
                     Body = request,
@@ -184,7 +182,6 @@ public partial class UserClient : IUserClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/user/username-referenced",
                     Body = request.Body,
@@ -228,7 +225,6 @@ public partial class UserClient : IUserClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/user/username-optional",
                     Body = request,

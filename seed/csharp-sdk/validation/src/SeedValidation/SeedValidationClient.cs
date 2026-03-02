@@ -45,7 +45,6 @@ public partial class SeedValidationClient : ISeedValidationClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/create",
                     Body = request,
@@ -114,7 +113,6 @@ public partial class SeedValidationClient : ISeedValidationClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "",
                     QueryString = _queryString,

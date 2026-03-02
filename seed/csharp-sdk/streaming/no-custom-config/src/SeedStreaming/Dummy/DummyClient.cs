@@ -28,7 +28,6 @@ public partial class DummyClient : IDummyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "generate",
                     Body = request,
@@ -94,7 +93,6 @@ public partial class DummyClient : IDummyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "generate-stream",
                     Body = request,

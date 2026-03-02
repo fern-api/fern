@@ -38,7 +38,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/resources",
                     QueryString = _queryString,
@@ -107,7 +106,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/api/resources/{0}",
@@ -178,7 +176,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/api/resources/search",
                     Body = request,
@@ -253,7 +250,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/users",
                     QueryString = _queryString,
@@ -322,7 +318,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/api/users/{0}",
@@ -388,7 +383,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/api/users",
                     Body = request,
@@ -452,7 +446,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
                         "/api/users/{0}",
@@ -524,7 +517,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/connections",
                     QueryString = _queryString,
@@ -592,7 +584,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/api/connections/{0}",
@@ -669,7 +660,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/clients",
                     QueryString = _queryString,
@@ -738,7 +728,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/api/clients/{0}",
@@ -1026,7 +1015,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
                         "/api/users/{0}",

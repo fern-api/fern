@@ -28,7 +28,6 @@ public partial class NoAuthClient : INoAuthClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/no-auth",
                     Body = request,

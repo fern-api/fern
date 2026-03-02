@@ -28,7 +28,6 @@ public partial class OrganizationClient : IOrganizationClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/organizations/",
                     Body = request,

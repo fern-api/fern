@@ -27,7 +27,6 @@ public partial class DummyClient : IDummyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "dummy",
                     Headers = _headers,
