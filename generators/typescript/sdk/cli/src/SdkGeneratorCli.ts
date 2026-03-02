@@ -98,6 +98,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             linter: parsed?.linter ?? "biome",
             formatter: parsed?.formatter ?? "biome",
             generateSubpackageExports: parsed?.generateSubpackageExports ?? true,
+            generateReactQuery: parsed?.generateReactQuery ?? false,
             offsetSemantics: parsed?.offsetSemantics ?? "item-index",
             customPagerName: parsed?.customPagerName ?? "CustomPager"
         };
@@ -245,6 +246,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 formatter: customConfig.formatter,
                 linter: customConfig.linter,
                 generateSubpackageExports: customConfig.generateSubpackageExports ?? true,
+                generateReactQuery: customConfig.generateReactQuery ?? false,
                 offsetSemantics: customConfig.offsetSemantics,
                 customPagerName: customConfig.customPagerName ?? "CustomPager"
             }

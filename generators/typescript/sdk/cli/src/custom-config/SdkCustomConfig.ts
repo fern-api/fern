@@ -61,6 +61,7 @@ export interface SdkCustomConfig {
     formatter: "prettier" | "biome" | "oxfmt" | "none";
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     generateSubpackageExports: boolean | undefined;
+    generateReactQuery: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
     customPagerName: string | undefined;
 }

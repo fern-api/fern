@@ -33,6 +33,7 @@ export declare namespace TypescriptProject {
         linter: "biome" | "oxlint" | "none";
         generateSubpackageExports?: boolean;
         subpackageExportPaths?: Array<{ key: string; relPath: string }>;
+        reactQueryExportPath?: string;
     }
 }
 
@@ -120,6 +121,7 @@ export abstract class TypescriptProject {
     private readonly linter: "biome" | "oxlint" | "none";
     protected readonly generateSubpackageExports: boolean;
     protected readonly subpackageExportPaths: Array<{ key: string; relPath: string }>;
+    protected readonly reactQueryExportPath: string | undefined;
 
     private readonly runScripts: boolean;
 
@@ -143,7 +145,8 @@ export abstract class TypescriptProject {
         formatter,
         linter,
         generateSubpackageExports,
-        subpackageExportPaths
+        subpackageExportPaths,
+        reactQueryExportPath
     }: TypescriptProject.Init) {
         this.npmPackage = npmPackage;
         this.runScripts = runScripts;
@@ -165,6 +168,7 @@ export abstract class TypescriptProject {
         this.linter = linter;
         this.generateSubpackageExports = generateSubpackageExports ?? false;
         this.subpackageExportPaths = subpackageExportPaths ?? [];
+        this.reactQueryExportPath = reactQueryExportPath;
     }
 
     protected async addCommonFilesToVolume(): Promise<void> {
@@ -187,6 +191,9 @@ export abstract class TypescriptProject {
         }
         if (this.generateSubpackageExports) {
             exports.push(...this.subpackageExportPaths.map((p) => p.relPath));
+        }
+        if (this.reactQueryExportPath != null) {
+            exports.push(this.reactQueryExportPath);
         }
         return exports;
     }

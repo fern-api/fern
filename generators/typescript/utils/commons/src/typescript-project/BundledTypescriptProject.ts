@@ -200,16 +200,18 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
                     bundleFilename: BundledTypescriptProject.API_BUNDLE_FILENAME,
                     pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`
                 }),
-                ...this.getFoldersForExports().reduce(
-                    (acc, folder) => ({
+                ...this.getFoldersForExports().reduce((acc, folder) => {
+                    const isReactQueryExport =
+                        this.reactQueryExportPath != null && folder === this.reactQueryExportPath;
+                    const exportKey = isReactQueryExport ? "react-query" : folder;
+                    return {
                         ...acc,
-                        [`./${folder}`]: this.getExportsForBundle({
+                        [`./${exportKey}`]: this.getExportsForBundle({
                             bundleFilename: this.getBundleForNonExportedFolder(folder),
                             pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}/index.d.ts`
                         })
-                    }),
-                    {}
-                ),
+                    };
+                }, {}),
                 "./package.json": "./package.json"
             },
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
