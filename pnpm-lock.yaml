@@ -57,150 +57,6 @@ catalogs:
     '@fern-fern/generators-sdk':
       specifier: 0.114.0-5745f9e74
       version: 0.114.0-5745f9e74
-    '@fern-fern/ir-v1-model':
-      specifier: 0.0.2
-      version: 0.0.2
-    '@fern-fern/ir-v10-model':
-      specifier: 0.0.1
-      version: 0.0.1
-    '@fern-fern/ir-v11-model':
-      specifier: 0.0.2
-      version: 0.0.2
-    '@fern-fern/ir-v12-model':
-      specifier: 0.0.12
-      version: 0.0.12
-    '@fern-fern/ir-v13-model':
-      specifier: 0.0.1
-      version: 0.0.1
-    '@fern-fern/ir-v14-model':
-      specifier: 0.0.1
-      version: 0.0.1
-    '@fern-fern/ir-v15-model':
-      specifier: 0.0.1
-      version: 0.0.1
-    '@fern-fern/ir-v16-model':
-      specifier: 0.0.4
-      version: 0.0.4
-    '@fern-fern/ir-v17-model':
-      specifier: 0.0.1
-      version: 0.0.1
-    '@fern-fern/ir-v18-model':
-      specifier: 0.0.1
-      version: 0.0.1
-    '@fern-fern/ir-v19-model':
-      specifier: 0.0.5
-      version: 0.0.5
-    '@fern-fern/ir-v2-model':
-      specifier: 0.0.2
-      version: 0.0.2
-    '@fern-fern/ir-v20-model':
-      specifier: 0.0.2
-      version: 0.0.2
-    '@fern-fern/ir-v21-model':
-      specifier: 0.0.1
-      version: 0.0.1
-    '@fern-fern/ir-v22-model':
-      specifier: 0.0.22
-      version: 0.0.22
-    '@fern-fern/ir-v23-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v24-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v25-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v26-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v27-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v28-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v29-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v3-model':
-      specifier: 0.0.4
-      version: 0.0.4
-    '@fern-fern/ir-v30-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v31-sdk':
-      specifier: 1.0.0
-      version: 1.0.0
-    '@fern-fern/ir-v32-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v33-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v34-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v35-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v36-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v37-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v38-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v39-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v4-model':
-      specifier: 0.0.4
-      version: 0.0.4
-    '@fern-fern/ir-v40-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v41-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v42-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v43-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v44-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v45-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v46-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v47-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v48-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v49-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v5-model':
-      specifier: 0.0.3
-      version: 0.0.3
-    '@fern-fern/ir-v50-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v51-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
-    '@fern-fern/ir-v52-sdk':
-      specifier: 1.0.1
-      version: 1.0.1
     '@fern-fern/ir-v53-sdk':
       specifier: 1.0.1
       version: 1.0.1
@@ -222,9 +78,6 @@ catalogs:
     '@fern-fern/ir-v59-sdk':
       specifier: 1.0.1
       version: 1.0.1
-    '@fern-fern/ir-v6-model':
-      specifier: 0.0.33
-      version: 0.0.33
     '@fern-fern/ir-v60-sdk':
       specifier: 1.0.1
       version: 1.0.1
@@ -237,15 +90,6 @@ catalogs:
     '@fern-fern/ir-v63-sdk':
       specifier: 1.0.2
       version: 1.0.2
-    '@fern-fern/ir-v7-model':
-      specifier: 0.0.2
-      version: 0.0.2
-    '@fern-fern/ir-v8-model':
-      specifier: 0.0.1
-      version: 0.0.1
-    '@fern-fern/ir-v9-model':
-      specifier: 0.0.1
-      version: 0.0.1
     '@fern-fern/legacy-docs-config':
       specifier: 0.0.58
       version: 0.0.58
@@ -6213,150 +6057,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../workspace/loader
-      '@fern-fern/ir-v1-model':
-        specifier: 'catalog:'
-        version: 0.0.2
-      '@fern-fern/ir-v10-model':
-        specifier: 'catalog:'
-        version: 0.0.1
-      '@fern-fern/ir-v11-model':
-        specifier: 'catalog:'
-        version: 0.0.2
-      '@fern-fern/ir-v12-model':
-        specifier: 'catalog:'
-        version: 0.0.12
-      '@fern-fern/ir-v13-model':
-        specifier: 'catalog:'
-        version: 0.0.1
-      '@fern-fern/ir-v14-model':
-        specifier: 'catalog:'
-        version: 0.0.1
-      '@fern-fern/ir-v15-model':
-        specifier: 'catalog:'
-        version: 0.0.1
-      '@fern-fern/ir-v16-model':
-        specifier: 'catalog:'
-        version: 0.0.4
-      '@fern-fern/ir-v17-model':
-        specifier: 'catalog:'
-        version: 0.0.1
-      '@fern-fern/ir-v18-model':
-        specifier: 'catalog:'
-        version: 0.0.1
-      '@fern-fern/ir-v19-model':
-        specifier: 'catalog:'
-        version: 0.0.5
-      '@fern-fern/ir-v2-model':
-        specifier: 'catalog:'
-        version: 0.0.2
-      '@fern-fern/ir-v20-model':
-        specifier: 'catalog:'
-        version: 0.0.2
-      '@fern-fern/ir-v21-model':
-        specifier: 'catalog:'
-        version: 0.0.1
-      '@fern-fern/ir-v22-model':
-        specifier: 'catalog:'
-        version: 0.0.22
-      '@fern-fern/ir-v23-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v24-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v25-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v26-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v27-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v28-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v29-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v3-model':
-        specifier: 'catalog:'
-        version: 0.0.4
-      '@fern-fern/ir-v30-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v31-sdk':
-        specifier: 'catalog:'
-        version: 1.0.0
-      '@fern-fern/ir-v32-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v33-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v34-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v35-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v36-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v37-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v38-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v39-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v4-model':
-        specifier: 'catalog:'
-        version: 0.0.4
-      '@fern-fern/ir-v40-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v41-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v42-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v43-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v44-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v45-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v46-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v47-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v48-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v49-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v5-model':
-        specifier: 'catalog:'
-        version: 0.0.3
-      '@fern-fern/ir-v50-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v51-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
-      '@fern-fern/ir-v52-sdk':
-        specifier: 'catalog:'
-        version: 1.0.1
       '@fern-fern/ir-v53-sdk':
         specifier: 'catalog:'
         version: 1.0.1
@@ -6378,9 +6078,6 @@ importers:
       '@fern-fern/ir-v59-sdk':
         specifier: 'catalog:'
         version: 1.0.1
-      '@fern-fern/ir-v6-model':
-        specifier: 'catalog:'
-        version: 0.0.33
       '@fern-fern/ir-v60-sdk':
         specifier: 'catalog:'
         version: 1.0.1
@@ -6393,15 +6090,6 @@ importers:
       '@fern-fern/ir-v63-sdk':
         specifier: 'catalog:'
         version: 1.0.2
-      '@fern-fern/ir-v7-model':
-        specifier: 'catalog:'
-        version: 0.0.2
-      '@fern-fern/ir-v8-model':
-        specifier: 'catalog:'
-        version: 0.0.1
-      '@fern-fern/ir-v9-model':
-        specifier: 'catalog:'
-        version: 0.0.1
       lodash-es:
         specifier: 'catalog:'
         version: 4.17.23
@@ -9780,180 +9468,6 @@ packages:
     resolution: {integrity: sha512-Yt7BP8kL6dxtErzyMdM9jrW936GaxMsS1WDa7MiwzMPnOoOT96hN+yWP0CTysmTDKNoWR2VQPzESaoN6eN0Awg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-v1-model@0.0.2':
-    resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
-
-  '@fern-fern/ir-v10-model@0.0.1':
-    resolution: {integrity: sha512-EIgBfomxMmfSsoj9klRHQwPFZRN4CkrMRTO82+lvLFKQXcMCS2+XwhZpon0Rwc3bBOtcvNlwAMBDCnrk8dS+HA==}
-
-  '@fern-fern/ir-v11-model@0.0.2':
-    resolution: {integrity: sha512-uRY5XcjkHer+EQs1t+C+NJImzbsUuFTdLqBnJkJ7tElgpBJk4UgNz10g2i8eUZZshnarYe8znv7Qjb1SgkDszA==}
-
-  '@fern-fern/ir-v12-model@0.0.12':
-    resolution: {integrity: sha512-GKOwrZdOrjiEEhuh57uJ2Ktyz/OtMuQqlFTCeWas4zZ4bIoKiC70AG+dZpq1ZdjxHqJY6NIcKRaolyzFUY3KuQ==}
-
-  '@fern-fern/ir-v13-model@0.0.1':
-    resolution: {integrity: sha512-NROmOEc4SQNtCDebq8F/jXNh2jDlLoRmLVP2J+k50A0kHxJHjFR+/xFjGk8AgJ94CCQhqpIFjFre5ZRzJJz55A==}
-
-  '@fern-fern/ir-v14-model@0.0.1':
-    resolution: {integrity: sha512-5fbV8qcixjdI/UWwSXp5TXv0JjjHClFqFtYudt43s1LnVWe6F3rFrZ9vvLYk52aT8HAJ0h8qBtp8jSeMMh9H3A==}
-
-  '@fern-fern/ir-v15-model@0.0.1':
-    resolution: {integrity: sha512-Xx4+ZRD1IsooGGvzBLznQ3b4b3BatSRByg5Cg3FLRI/jtMWYLQvvFQjk0l/tM/hCgBLbB8q9tgZuSHtoRGvDRA==}
-
-  '@fern-fern/ir-v16-model@0.0.4':
-    resolution: {integrity: sha512-qoDNLKrwvD8dj9TQHgVueI0thWaP4Fo9joEVlLw8WfmkE8r9HIvETTmjky6S2ZT9LIFxP6Q75oLWx9wQNww5Qg==}
-
-  '@fern-fern/ir-v17-model@0.0.1':
-    resolution: {integrity: sha512-rD41ZEO09ifOJjbw8iBVV1HGAoFO/CH2S1kZesY5gmf//cMqeYwoB8SzNZEtnjqOVQWmM5ZcJr0tjpS5fWyCxw==}
-
-  '@fern-fern/ir-v18-model@0.0.1':
-    resolution: {integrity: sha512-i5RiyMVJj81TGKj4Czb8if0AdAwudzWYFPdHhloxhDEvWeDwpcPWquuwvXb4WnbIZNBHZqp08ogGyxj8ic7F9w==}
-
-  '@fern-fern/ir-v19-model@0.0.5':
-    resolution: {integrity: sha512-g90iMgsSGuf916Z24XuyuNfFwmsclnjKzfHOiSl6DPes7tXAjVGdXYusx/WSExtkF/TanhUj/tpR0//VVI36VA==}
-
-  '@fern-fern/ir-v2-model@0.0.2':
-    resolution: {integrity: sha512-KSwoIRXbWDPqiERaQ6c1KOkYJbPFIAAz5ro6vRERIM1UJK+E0H1cr6R52wISATessP4IQjryxhcpe44VxLGaxg==}
-
-  '@fern-fern/ir-v20-model@0.0.2':
-    resolution: {integrity: sha512-WJRufgZx47EJB+F0tQGnCPIXjeKWjBHnMjc0HP/qQeF2oauqm56vi7HTUwBUW1Y+lq+LCKETjJ5y67Ua8lZBTw==}
-
-  '@fern-fern/ir-v21-model@0.0.1':
-    resolution: {integrity: sha512-elKiKGulSlSAwTponNNCgcjlXuul3Njqw//wxzr1v3bE84lFLdoeDn+stKng51QuvZPwg/eLyXv4uMdZ0IZ9Yg==}
-
-  '@fern-fern/ir-v22-model@0.0.22':
-    resolution: {integrity: sha512-5u+RnhNKfH/0lYdZCRvx4b8waL8FiaVqwB9L4otRfH/nR6Wjb8006KR35+LQNrhlzkrqgXd7NJ7/0Aedv+1Bbw==}
-
-  '@fern-fern/ir-v23-sdk@1.0.0':
-    resolution: {integrity: sha512-BQu7cnRQzotj5wH+1GcmdgA5BgOptnEAqnYHJIwn1UR371a66nk2U1gVmtlpQ3JOEv6+cHyJCIKoJJz5Fr62hQ==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v24-sdk@1.0.0':
-    resolution: {integrity: sha512-aQRvOAurqyPNLxzVK98o5YtOzF+FTPqZvvsXAC+G1wHviVFKoQS6x0upP3ashzgEBNlT3AMMRbk9HzqD8kr8sA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v25-sdk@1.0.0':
-    resolution: {integrity: sha512-XeX37JvdfJ+7j28TrVX6PLiC8RmCkvnDsHIDsS49D79rrB2F+YzLmGREMUUbYX3oxJ38OF11j7zMjI+K+yLgWA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v26-sdk@1.0.0':
-    resolution: {integrity: sha512-yLCnKxquHtbnYEytvoYJrhT/KhVKVupS56mzdL+u0LtDbNoJYjh7Coqm7hoZXxPrBKfP5nZN9usGLZVwy8JwHA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v27-sdk@1.0.0':
-    resolution: {integrity: sha512-mf3jsbEY7wrEPai84ZgQ/4u54JINqmW+uTXVW3z1NYbwPK/omJcxDox4ygKlzFjaa4rG858BJ6r/HUttMEbsMA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v28-sdk@1.0.0':
-    resolution: {integrity: sha512-9GvFcna8dMvSS+lc7X49Ez6EHjU8VSEjMISdgemKyJcFLyqOdYxotR+ZEMLv3OttF3hIcamgYiyTtvVbc1cbdQ==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v29-sdk@1.0.0':
-    resolution: {integrity: sha512-zpsbNQxIou5PuCSws8kXWbzNr0Np2SDIAXogi+leIleiGA/1woXYUpDEx9H4sd1gKVFgZWEe3sQvl2bwRysm7Q==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v3-model@0.0.4':
-    resolution: {integrity: sha512-K29rw+4l+LLTRaLN6D8GOOWVxTFgbYyuYdbp0h63wl5vYR/oaNynNRDSIbBAufbFy23IE/drM7drk5oBGWfU2A==}
-
-  '@fern-fern/ir-v30-sdk@1.0.0':
-    resolution: {integrity: sha512-6LsT9FaUPYW3I767lrjZufvbUa7eAwmiSm5JOVlH1rwHorbuq22D/hdCUl69o6mDW5V6RCjvfzDwiYOPpJLMxA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v31-sdk@1.0.0':
-    resolution: {integrity: sha512-+VZIHJ1bjBNr2tqPEuPv2llUox3ersgxWaujqOOMom+7hOl/+VGnvLSpLfCZtsWvW+9x+gXhfwBiqFtCu2jueA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v32-sdk@1.0.1':
-    resolution: {integrity: sha512-g6n/sXxeObFKGbm7xCv14/KnXKzQDP0ZQFCM4CwLiraMkL328nRPJqheD9bT7tqB4UtdqLFbJdEh2C3xdmQi9A==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v33-sdk@1.0.1':
-    resolution: {integrity: sha512-ffvjja5um8ZXLCRY/KKTMiPDNMsxAC0IGSQw5zpfsGY1FJZDmFIJw65CN+EEgcqMIeX9MVNYiuNC3P150YTNmA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v34-sdk@1.0.1':
-    resolution: {integrity: sha512-vTyfSHpO8Ngd1V4ASf0drOUZu0VIR3ulHIC0bveoHE3S9O+5QVssBXs0LmL6dbdCWMwBic5/L8w0PEibM1GnVA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v35-sdk@1.0.1':
-    resolution: {integrity: sha512-Zm3acSCjSrY8QyJm1ywk0qFaaLQ+jmIdrI4Z3KiwTyNRH3jEmr516+pG8zr4PO+HNZMm7Q+9qnjEu2MNQvPegQ==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v36-sdk@1.0.1':
-    resolution: {integrity: sha512-KYla6CLrQgS1lTvRHVp7vuGgP9lZ1fcohpXHtoqCIin7zOlrAFYRfqRESVJa0afk3T2XWNNfTGHQXV10vslspA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v37-sdk@1.0.1':
-    resolution: {integrity: sha512-1UjVsHeQbaVGmwvhK/OqCF3ZLipBbbeaFIVRa97+0fIN0hrWs0Q/WsxoXkft9E2X5hmJ4WbryrtrlBehyI2bcw==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v38-sdk@1.0.1':
-    resolution: {integrity: sha512-folDF8KXTpdhpdyeiW/6Sh72LXcf6N+HEEXsDwBffdjbq97CDo4dTXu8D3qtKH9k2irhBHPomet0WtVkODe/kg==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v39-sdk@1.0.1':
-    resolution: {integrity: sha512-E5MLsdq6wn7IQjxYrmTXDIUeSAfWfIoicVsIEefQsl4rB298YDvoGZd0t2MNlI1J70cLDql5ENmAP7i4TVld5Q==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v4-model@0.0.4':
-    resolution: {integrity: sha512-Xc3VO//QbgITVm6FCPUe4mTfNeTdP8t+zC4a0F0fBz/5iL8rhRhYbdrWvfafJdrF2Hi+LtwvbAFAUPKKLqH1ZQ==}
-
-  '@fern-fern/ir-v40-sdk@1.0.1':
-    resolution: {integrity: sha512-0UBVDKoBVG4NO7Zc04Jo1lJfZ0gNu7OP1LrIor1F5/eeYRZUSpFJZFFmtS8UFe73jMlV5LEu5hYDt5l/LozPRQ==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v41-sdk@1.0.1':
-    resolution: {integrity: sha512-3FcOMDdwDVWFgTAaWgn3iHX5r055Iq5Tk2vOwtUl2IhgXWjc+aTjPbriq/sXH0+OcEME0gggeIa7C2t/myGi2Q==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v42-sdk@1.0.1':
-    resolution: {integrity: sha512-qxouEI9pjJD8QadgXkakdpoBD/gOiNtQAkE7MuYk/klvTPd5iuSSANkNjdPXadsI4vqESItUQrpNMFD+CcaKtg==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v43-sdk@1.0.1':
-    resolution: {integrity: sha512-DzuHF+duzjlCibZlMYxqOBjb6dl2FVLC8AtZ65RN9u3gZtk4EPm0Em6SfeAORmy5pS0P+zyQdH/SJysoqbACTA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v44-sdk@1.0.1':
-    resolution: {integrity: sha512-e7adqM2Fb1AFvNEU/pxEgDzuU1iQdfv6LiTBby+xOHaYRcT1WGDZKMSmqFH3BSadEKwTB7RIJMtF76+kkYXBHA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v45-sdk@1.0.1':
-    resolution: {integrity: sha512-zivY4kDwk5+dj7w3NF2NVF8Tofm3TJOxcOoL7lL3TfFr8dkHovmWUnrx4OBQjhZjrUo5gG3sQx4LYGiE3NDq3g==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v46-sdk@1.0.1':
-    resolution: {integrity: sha512-BMueJfgREAhUvlxu5U6INJTqx5I5By8Yxk8lupToRZ4k5rViylM/WbzqXlGHGQdBi0tO6XQ4a71/XlazBW+4EA==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v47-sdk@1.0.1':
-    resolution: {integrity: sha512-AMClUqorMvPdCO0kpire5UYcS4ShgPgTOMZ+Gmgk+tqW0qL7HIskcjsKueqlIsgxYEee4ew26kCnmx1slEvcJQ==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v48-sdk@1.0.1':
-    resolution: {integrity: sha512-GpmGHPt4eF4WAe5npXIjNvrNbqKf65b2RRII5pygm80hRe5ZAByHkBO3LJKTHRzUilKbo+oUjHl/OQqpi/JR5A==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v49-sdk@1.0.1':
-    resolution: {integrity: sha512-tpZdV7n8FcnEJxWy4DzplpBe9q97/7MVVw0plDnp+ONs8gxDB+k7y3jUqWTLl+/uh1ZusfThGMOLaMgK7Lj70Q==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v5-model@0.0.3':
-    resolution: {integrity: sha512-X3Lk1p5w+O/isbJ/UdIVo9JCE7jyj8B20l+ffsArqmxPgHwKpFCTVTjHZQVLDEAfQXDDfj89PfjQg5N8TN+aSA==}
-
-  '@fern-fern/ir-v50-sdk@1.0.1':
-    resolution: {integrity: sha512-7jiGWQ/g9D6DJEIkJ23LM80c4SwEx4bPkIVjSybnMZ2TsMal6zCWEj3yVO/gHTFJba54VHriMY+b+CQKYKsfyQ==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v51-sdk@1.0.1':
-    resolution: {integrity: sha512-g+baTFvfChx6MJqeBETkizwaaNAH9KyGo/F891f4hGOv0tMKtytjDPByEz3VJ3XXe5VZS54z9UAhECJyuhAuGw==}
-    engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v52-sdk@1.0.1':
-    resolution: {integrity: sha512-i4wJd5eZJ6IJUJ6p8MIzWa9vu1P/YJUxbRjmmzENx7ULPM+Ub5oaQf0Q/ckw27Htm9ztmCb5Habmj/hEstHDMQ==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-fern/ir-v53-sdk@1.0.1':
     resolution: {integrity: sha512-SVNbkGBVgE/PkgurqqdFEYkmYBGNZzD2Qh8wF9nApp1NH2Wipte5zbzngl78snGTk/e9DN6+mYHfgQPzv6Pi4w==}
     engines: {node: '>=18.0.0'}
@@ -9985,9 +9499,6 @@ packages:
     resolution: {integrity: sha512-8qEWF6LW+Hr4Ssk8CjnyKcPNnEAKWQYid0sSLHhpsytCHuoywmId3i8/UsCkj2PCYqd+L2zX1xOQ+nATTVxeAQ==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-fern/ir-v6-model@0.0.33':
-    resolution: {integrity: sha512-I3KLvdrRzSrh5CcpU0v/Mjn4ywZhzVwhqJC8IDIQiP1yPvsCnjgbTBNwLRG8KdJqHfLOgdt/hfVzjeuFugSlGA==}
-
   '@fern-fern/ir-v60-sdk@1.0.1':
     resolution: {integrity: sha512-0j4MrX0nR9lU5YVFBZGEkxOKVNH4ScNqCR5Ah4vDHzv1Y0pQJcxus7nz4pwL6gi3WSyLENXqxWumXuoJNtD2LA==}
     engines: {node: '>=18.0.0'}
@@ -10003,15 +9514,6 @@ packages:
   '@fern-fern/ir-v63-sdk@1.0.2':
     resolution: {integrity: sha512-M1P2yW/KKSfAWjzW0jffPelONtBt72AwwmsutM0WVio0W8BI6PlLC9Tf9xbgYt8HBeN0IP7Hh6rQfxdXeWLRtw==}
     engines: {node: '>=18.0.0'}
-
-  '@fern-fern/ir-v7-model@0.0.2':
-    resolution: {integrity: sha512-YLm+eUW97/wghZR8COZ5P0kGPis27L3hqG7+Cy+lyhqx4qv5Gw/jck0gaskZ3KqOWbigVfblo0ukW9P5TaW0Iw==}
-
-  '@fern-fern/ir-v8-model@0.0.1':
-    resolution: {integrity: sha512-sFkOeRUCGQIal29ZWiCLirEgWNR14MQyYzCX90bsfjfrO0HcALkQEcs1KHoban6teZK/JoZz9rLfEe9tzON9JQ==}
-
-  '@fern-fern/ir-v9-model@0.0.1':
-    resolution: {integrity: sha512-1YZPEsD3yY9mebNfCzBgv67RQDVxtUdkFhhPk0fOWW5lxaZaEJ7JruqDEMhauPj/v6qJuBzq4sqLMzxrsJsuNA==}
 
   '@fern-fern/legacy-docs-config@0.0.58':
     resolution: {integrity: sha512-uSGlM9UFgNsILEHxKRUm5Vi06nna9+XZTMm245o0pmLdrucHfoO9N558e6khDYtfBxPIJVGUf1C1Et04mKX0kg==}
@@ -16525,102 +16027,6 @@ snapshots:
 
   '@fern-fern/ir-sdk@65.3.0': {}
 
-  '@fern-fern/ir-v1-model@0.0.2': {}
-
-  '@fern-fern/ir-v10-model@0.0.1': {}
-
-  '@fern-fern/ir-v11-model@0.0.2': {}
-
-  '@fern-fern/ir-v12-model@0.0.12': {}
-
-  '@fern-fern/ir-v13-model@0.0.1': {}
-
-  '@fern-fern/ir-v14-model@0.0.1': {}
-
-  '@fern-fern/ir-v15-model@0.0.1': {}
-
-  '@fern-fern/ir-v16-model@0.0.4': {}
-
-  '@fern-fern/ir-v17-model@0.0.1': {}
-
-  '@fern-fern/ir-v18-model@0.0.1': {}
-
-  '@fern-fern/ir-v19-model@0.0.5': {}
-
-  '@fern-fern/ir-v2-model@0.0.2': {}
-
-  '@fern-fern/ir-v20-model@0.0.2': {}
-
-  '@fern-fern/ir-v21-model@0.0.1': {}
-
-  '@fern-fern/ir-v22-model@0.0.22': {}
-
-  '@fern-fern/ir-v23-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v24-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v25-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v26-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v27-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v28-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v29-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v3-model@0.0.4': {}
-
-  '@fern-fern/ir-v30-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v31-sdk@1.0.0': {}
-
-  '@fern-fern/ir-v32-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v33-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v34-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v35-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v36-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v37-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v38-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v39-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v4-model@0.0.4': {}
-
-  '@fern-fern/ir-v40-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v41-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v42-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v43-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v44-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v45-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v46-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v47-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v48-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v49-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v5-model@0.0.3': {}
-
-  '@fern-fern/ir-v50-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v51-sdk@1.0.1': {}
-
-  '@fern-fern/ir-v52-sdk@1.0.1': {}
-
   '@fern-fern/ir-v53-sdk@1.0.1': {}
 
   '@fern-fern/ir-v54-sdk@1.0.1': {}
@@ -16645,8 +16051,6 @@ snapshots:
 
   '@fern-fern/ir-v59-sdk@1.0.1': {}
 
-  '@fern-fern/ir-v6-model@0.0.33': {}
-
   '@fern-fern/ir-v60-sdk@1.0.1': {}
 
   '@fern-fern/ir-v61-sdk@1.0.1': {}
@@ -16654,12 +16058,6 @@ snapshots:
   '@fern-fern/ir-v62-sdk@1.0.1': {}
 
   '@fern-fern/ir-v63-sdk@1.0.2': {}
-
-  '@fern-fern/ir-v7-model@0.0.2': {}
-
-  '@fern-fern/ir-v8-model@0.0.1': {}
-
-  '@fern-fern/ir-v9-model@0.0.1': {}
 
   '@fern-fern/legacy-docs-config@0.0.58': {}
 

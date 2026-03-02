@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.0
+  changelogEntry:
+    - summary: |
+        Deprecate IR versions <= 52. Cuts down on binary size, build time, and migrations.
+
+        **Breaking changes**: To upgrade to this version of the CLI, generators now have
+        minimal versions they need to be upgraded to with `fern generator upgrade --include-major`:
+        - Python SDK: upgrade to v3.3.0-rc0+
+        - TypeScript SDK: upgrade to v0.38.0-rc0+
+        - Java SDK: upgrade to v2.5.0+
+        - Go SDK: upgrade to v0.28.3+
+        - C# SDK: upgrade to v0.5.0+
+        - Ruby SDK: upgrade to v1.0.0-rc1+
+        - Other generators: upgrade to versions that support IR v53+
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.98.6
   changelogEntry:
     - summary: |
