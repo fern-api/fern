@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.98.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping properties from `oneOf`/`anyOf` variants inside `allOf`.
+        When an `allOf` element is a bare `oneOf`/`anyOf` (commonly used for mutual exclusion
+        patterns like `content` vs `templateId`), the importer now extracts properties from
+        each variant as optional properties on the parent object. Also filters out properties
+        with `not: {}` schema (meaning "property must not exist").
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.98.1
   changelogEntry:
     - summary: |
