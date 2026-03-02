@@ -407,6 +407,9 @@ export class ReconnectingWebSocket {
     }
 
     private _handleAbort = () => {
+        if (this._closeCalled) {
+            return;
+        }
         this._debug("abort signal fired");
         this._shouldReconnect = false;
         this._closeCalled = true;
