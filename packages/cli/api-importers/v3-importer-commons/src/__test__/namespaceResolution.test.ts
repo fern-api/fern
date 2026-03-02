@@ -2,7 +2,7 @@ import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
 import { TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
-import { AbstractConverterContext, Spec } from "../AbstractConverterContext.js";
+import { AbstractConverterContext } from "../AbstractConverterContext.js";
 import { SchemaConverter } from "../converters/schema/SchemaConverter.js";
 import { ErrorCollector } from "../ErrorCollector.js";
 
