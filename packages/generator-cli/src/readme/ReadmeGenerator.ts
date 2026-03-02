@@ -55,6 +55,21 @@ export class ReadmeGenerator {
         await writer.end();
     }
 
+    public async generateReadmeToString(): Promise<string> {
+        const blocks = await this.generateBlocks();
+        const mergedBlocks = await this.mergeBlocks({ blocks });
+
+        const writer = new StringWriter();
+        await this.writeHeader({ writer });
+        await this.writeTableOfContents({ writer, blocks: mergedBlocks });
+        await this.writeBlocks({
+            writer,
+            blocks: mergedBlocks
+        });
+        await writer.end();
+        return writer.toString();
+    }
+
     private async generateBlocks(): Promise<Block[]> {
         const blocks: Block[] = [];
 

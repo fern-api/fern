@@ -37,6 +37,23 @@ export class ReferenceGenerator {
         await writer.end();
     }
 
+    public async generateToString(): Promise<string> {
+        const writer = new StringWriter();
+        await writer.writeLine("# Reference");
+
+        if (this.referenceConfig.rootSection != null) {
+            await this.writeRootSection({
+                section: this.referenceConfig.rootSection,
+                writer
+            });
+        }
+        for (const section of this.referenceConfig.sections) {
+            await this.writeSection({ section, writer });
+        }
+        await writer.end();
+        return writer.toString();
+    }
+
     private async writeRootSection({
         section,
         writer
