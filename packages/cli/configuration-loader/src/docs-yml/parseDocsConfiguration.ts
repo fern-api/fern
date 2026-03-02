@@ -138,6 +138,18 @@ export async function parseDocsConfiguration({
         metadataPromise
     ]);
 
+    // Validate incompatible tabs configuration: sidebar placement + center alignment
+    const resolvedTheme = convertThemeConfig(rawDocsConfiguration.theme);
+    const tabsObj =
+        resolvedTheme?.tabs != null && typeof resolvedTheme.tabs === "object" ? resolvedTheme.tabs : undefined;
+    const effectivePlacement = tabsObj?.placement ?? layout?.tabsPlacement ?? "sidebar";
+    const effectiveAlignment = tabsObj?.alignment ?? layout?.tabsAlignment ?? "left";
+    if (effectivePlacement === "sidebar" && effectiveAlignment === "center") {
+        context.logger.warn(
+            "Tabs alignment 'center' is not supported when tabs placement is 'sidebar'. The alignment will be ignored."
+        );
+    }
+
     return {
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
@@ -174,7 +186,7 @@ export async function parseDocsConfiguration({
         typography,
         layout: convertLayoutConfig(layout),
         settings: convertSettingsConfig(rawDocsConfiguration.settings),
-        theme: convertThemeConfig(rawDocsConfiguration.theme),
+        theme: resolvedTheme,
         analyticsConfig: {
             ...rawDocsConfiguration.analytics,
             intercom: rawDocsConfiguration.analytics?.intercom
