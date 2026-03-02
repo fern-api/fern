@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-<<<<<<< patrick/ir/sever-versions-1-52
 - version: 4.0.0
   changelogEntry:
     - summary: |
@@ -17,8 +16,7 @@
       type: chore
   createdAt: "2026-03-02"
   irVersion: 65
-    
-=======
+
 - version: 3.98.4
   changelogEntry:
     - summary: |
@@ -30,8 +28,6 @@
       type: fix
   createdAt: "2026-03-02"
   irVersion: 65
-
->>>>>>> main
 - version: 3.98.3
   changelogEntry:
     - summary: |
