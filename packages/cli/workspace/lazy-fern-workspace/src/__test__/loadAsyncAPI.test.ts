@@ -180,3 +180,199 @@ describe("loadAsyncAPI", () => {
         expect(result.channels).toHaveProperty("/events");
     });
 });
+
+describe("loadAsyncAPI — external $ref resolution", () => {
+    let tempDir: string;
+    const context = createMockTaskContext();
+
+    beforeEach(async () => {
+        tempDir = join(tmpdir(), `load-asyncapi-ext-ref-test-${Date.now()}`);
+        await mkdir(tempDir, { recursive: true });
+    });
+
+    afterEach(async () => {
+        await rm(tempDir, { recursive: true, force: true });
+    });
+
+    it("resolves a simple external file ref (no JSON pointer)", async () => {
+        // external.yml contains a plain schema object
+        const externalSchema = { type: "object", properties: { id: { type: "string" } } };
+        await writeFile(join(tempDir, "external.yml"), yaml.dump(externalSchema));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/items": {
+                    publish: {
+                        message: {
+                            payload: { $ref: "./external.yml" }
+                        }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+        const payload = ((channels["/items"] as Record<string, unknown>)["publish"] as Record<string, unknown>)[
+            "message"
+        ] as Record<string, unknown>;
+
+        // The $ref should have been replaced with the inline schema
+        expect(payload["payload"]).toEqual(externalSchema);
+        expect(payload["payload"]).not.toHaveProperty("$ref");
+    });
+
+    it("resolves an external file ref with a JSON pointer fragment", async () => {
+        // schemas.yml holds multiple named schemas; we reference just one
+        const schemasFile = {
+            SpeakV1Encoding: {
+                type: "object",
+                properties: { encoding: { type: "string" } }
+            },
+            OtherType: { type: "string" }
+        };
+        await writeFile(join(tempDir, "schemas.yml"), yaml.dump(schemasFile));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/speak": {
+                    publish: {
+                        message: {
+                            payload: { $ref: "./schemas.yml#/SpeakV1Encoding" }
+                        }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+        const payload = ((channels["/speak"] as Record<string, unknown>)["publish"] as Record<string, unknown>)[
+            "message"
+        ] as Record<string, unknown>;
+
+        // Only the SpeakV1Encoding entry, not the whole file
+        expect(payload["payload"]).toEqual(schemasFile.SpeakV1Encoding);
+        expect(payload["payload"]).not.toHaveProperty("$ref");
+    });
+
+    it("resolves nested (transitive) external refs", async () => {
+        // level2.yml is referenced by level1.yml which is referenced by the main doc
+        const level2Schema = { type: "string", description: "deeply nested" };
+        await writeFile(join(tempDir, "level2.yml"), yaml.dump(level2Schema));
+
+        const level1Content = {
+            NestedType: { $ref: "./level2.yml" }
+        };
+        await writeFile(join(tempDir, "level1.yml"), yaml.dump(level1Content));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/data": {
+                    publish: {
+                        message: {
+                            payload: { $ref: "./level1.yml#/NestedType" }
+                        }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+        const payload = ((channels["/data"] as Record<string, unknown>)["publish"] as Record<string, unknown>)[
+            "message"
+        ] as Record<string, unknown>;
+
+        // The transitive chain should resolve all the way to level2Schema
+        expect(payload["payload"]).toEqual(level2Schema);
+        expect(payload["payload"]).not.toHaveProperty("$ref");
+    });
+
+    it("preserves internal $refs and resolves only external ones", async () => {
+        const externalSchema = { type: "object", properties: { name: { type: "string" } } };
+        await writeFile(join(tempDir, "external.yml"), yaml.dump(externalSchema));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            components: {
+                schemas: {
+                    InternalFoo: { type: "integer" }
+                }
+            },
+            channels: {
+                "/a": {
+                    publish: {
+                        message: {
+                            // internal ref — must survive unchanged
+                            payload: { $ref: "#/components/schemas/InternalFoo" }
+                        }
+                    }
+                },
+                "/b": {
+                    publish: {
+                        message: {
+                            // external ref — must be inlined
+                            payload: { $ref: "./external.yml" }
+                        }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+
+        const payloadA = (
+            ((channels["/a"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        const payloadB = (
+            ((channels["/b"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        // Internal ref preserved
+        expect(payloadA["$ref"]).toBe("#/components/schemas/InternalFoo");
+
+        // External ref inlined
+        expect(payloadB).toEqual(externalSchema);
+        expect(payloadB["$ref"]).toBeUndefined();
+    });
+});
