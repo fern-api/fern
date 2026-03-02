@@ -654,7 +654,15 @@
       "name": "listItems - default",
       "request": {
         "urlPathTemplate": "/pagination",
-        "method": "GET"
+        "method": "GET",
+        "queryParameters": {
+          "cursor": {
+            "equalTo": "cursor"
+          },
+          "limit": {
+            "equalTo": "1"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -743,7 +751,15 @@
       "name": "getWithQuery - default",
       "request": {
         "urlPathTemplate": "/params",
-        "method": "GET"
+        "method": "GET",
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -770,7 +786,15 @@
       "name": "getWithAllowMultipleQuery - default",
       "request": {
         "urlPathTemplate": "/params",
-        "method": "GET"
+        "method": "GET",
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          },
+          "number": {
+            "equalTo": "1"
+          }
+        }
       },
       "response": {
         "status": 200,
@@ -802,6 +826,11 @@
           "param": {
             "equalTo": "param"
           }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
+          }
         }
       },
       "response": {
@@ -832,6 +861,11 @@
         "pathParameters": {
           "param": {
             "equalTo": "param"
+          }
+        },
+        "queryParameters": {
+          "query": {
+            "equalTo": "query"
           }
         }
       },
