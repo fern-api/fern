@@ -233,9 +233,9 @@ var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
 var response = await ${this.getMethodCall(headerEndpoint)}(
     ...,
     new ${this.requestOptionsName} {
-        AdditionalHeaders = new List<KeyValuePair<string, string?>>
+        AdditionalHeaders = new Dictionary<string, string?>
         {
-            new KeyValuePair<string, string?>("X-Custom-Header", "custom-value")
+            { "X-Custom-Header", "custom-value" }
         }
     }
 );
@@ -252,9 +252,9 @@ var response = await ${this.getMethodCall(headerEndpoint)}(
 var response = await ${this.getMethodCall(queryParameterEndpoint)}(
     ...,
     new ${this.requestOptionsName} {
-        AdditionalQueryParameters = new List<KeyValuePair<string, string>>
+        AdditionalQueryParameters = new Dictionary<string, string>
         {
-            new KeyValuePair<string, string>("custom_param", "custom-value")
+            { "custom_param", "custom-value" }
         }
     }
 );
