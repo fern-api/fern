@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.1
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-global-headers` ignoring the `optional` field in the legacy
+        OpenAPI importer. Previously, all global headers were defaulted to
+        `optional<string>` regardless of whether `optional: false` or no `optional`
+        field was specified. Now headers without `optional: true` are correctly
+        treated as required `string` types.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 4.0.0
   changelogEntry:
     - summary: |
@@ -14,18 +26,6 @@
         - Ruby SDK: upgrade to v1.0.0-rc1+
         - Other generators: upgrade to versions that support IR v53+
       type: chore
-  createdAt: "2026-03-02"
-  irVersion: 65
-
-- version: 4.0.1
-  changelogEntry:
-    - summary: |
-        Fix `x-fern-global-headers` ignoring the `optional` field in the legacy
-        OpenAPI importer. Previously, all global headers were defaulted to
-        `optional<string>` regardless of whether `optional: false` or no `optional`
-        field was specified. Now headers without `optional: true` are correctly
-        treated as required `string` types.
-      type: fix
   createdAt: "2026-03-02"
   irVersion: 65
 
