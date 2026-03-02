@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.18.0
+  changelogEntry:
+    - summary: |
+        Add WebSocket (WSS) support with typed channel clients using tokio-tungstenite.
+        Generates per-channel client structs with typed send/receive methods, auto-reconnection,
+        and serde-based message serialization. Includes WebSocketClient runtime, feature-gated
+        dependency management, and integration into the SDK generation pipeline.
+      type: feat
+  createdAt: "2026-02-16"
+  irVersion: 62
+
 - version: 0.17.4
   changelogEntry:
     - summary: |

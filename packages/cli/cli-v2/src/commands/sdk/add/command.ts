@@ -1,17 +1,17 @@
 import { schemas } from "@fern-api/config";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import chalk from "chalk";
-import { readFile, writeFile } from "fs/promises";
 import inquirer from "inquirer";
-import { type Document, parseDocument } from "yaml";
 import type { Argv } from "yargs";
-import { FERN_YML_FILENAME, REF_KEY } from "../../../config/fern-yml/constants.js";
+import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
+import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { LANGUAGE_TO_DOCKER_IMAGE } from "../../../sdk/config/converter/constants.js";
 import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, LANGUAGES, type Language } from "../../../sdk/config/Language.js";
+import type { Target } from "../../../sdk/config/Target.js";
 import { Icons } from "../../../ui/format.js";
 import { Version } from "../../../version.js";
 import { command } from "../../_internal/command.js";
@@ -48,21 +48,25 @@ export class AddCommand {
             });
         }
 
+        const existingTargets = workspace.sdks?.targets ?? [];
+
         if (!context.isTTY || args.yes) {
-            return this.handleWithFlags({ context, args, fernYmlPath });
+            return this.handleWithFlags({ context, args, fernYmlPath, existingTargets });
         }
 
-        return this.handleInteractive({ context, args, fernYmlPath });
+        return this.handleInteractive({ context, args, fernYmlPath, existingTargets });
     }
 
     private async handleWithFlags({
         context,
         args,
-        fernYmlPath
+        fernYmlPath,
+        existingTargets
     }: {
         context: Context;
         args: AddCommand.Args;
         fernYmlPath: AbsoluteFilePath;
+        existingTargets: Target[];
     }): Promise<void> {
         if (args.target == null) {
             throw new CliError({
@@ -71,17 +75,12 @@ export class AddCommand {
         }
 
         const language = this.parseLanguage(args.target);
+        this.checkForDuplicate({ existingTargets, language });
+
         const output = args.output != null ? this.parseOutput(args.output) : { path: `./sdks/${language}` };
         const version = args.stable ? await this.resolveStableVersion({ context, language }) : undefined;
 
-        await this.addTargetToFernYml({
-            context,
-            fernYmlPath,
-            language,
-            output,
-            version,
-            group: args.group
-        });
+        await this.addTarget({ fernYmlPath, language, output, version, group: args.group });
 
         context.stderr.info(`${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
     }
@@ -89,27 +88,22 @@ export class AddCommand {
     private async handleInteractive({
         context,
         args,
-        fernYmlPath
+        fernYmlPath,
+        existingTargets
     }: {
         context: Context;
         args: AddCommand.Args;
         fernYmlPath: AbsoluteFilePath;
+        existingTargets: Target[];
     }): Promise<void> {
         const language = args.target != null ? this.parseLanguage(args.target) : await this.promptLanguage();
 
-        await this.checkForDuplicate({ fernYmlPath, language });
+        this.checkForDuplicate({ existingTargets, language });
 
         const output = args.output != null ? this.parseOutput(args.output) : { path: `./sdks/${language}` };
         const version = args.stable ? await this.resolveStableVersion({ context, language }) : undefined;
 
-        await this.addTargetToFernYml({
-            context,
-            fernYmlPath,
-            language,
-            output,
-            version,
-            group: args.group
-        });
+        await this.addTarget({ fernYmlPath, language, output, version, group: args.group });
 
         context.stderr.info(`${Icons.success} Added '${language}' to ${FERN_YML_FILENAME}`);
     }
@@ -174,139 +168,41 @@ export class AddCommand {
         }
     }
 
-    private async checkForDuplicate({
-        fernYmlPath,
-        language
-    }: {
-        fernYmlPath: AbsoluteFilePath;
-        language: Language;
-    }): Promise<void> {
-        const { targetsFilePath, document } = await this.resolveTargetsFile(fernYmlPath);
-        const targetsPath = this.resolveTargetsPath({ document, isRefTarget: targetsFilePath !== fernYmlPath });
-        if (document.hasIn([...targetsPath, language])) {
+    private checkForDuplicate({ existingTargets, language }: { existingTargets: Target[]; language: Language }): void {
+        if (existingTargets.some((t) => t.name === language)) {
             throw new CliError({
                 message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`
             });
         }
     }
 
-    /**
-     * Adds a new SDK target to the fern.yml (or the file that actually
-     * contains the `targets` key, if the `sdks` section uses a `$ref`).
-     *
-     * Uses the `yaml` library's Document API so that in-line comments and
-     * formatting in the original file are preserved.
-     */
-    private async addTargetToFernYml({
-        context,
+    private async addTarget({
         fernYmlPath,
         language,
         output,
         version,
         group
     }: {
-        context: Context;
         fernYmlPath: AbsoluteFilePath;
         language: Language;
         output: schemas.OutputSchema;
         version: string | undefined;
         group: string | undefined;
     }): Promise<void> {
-        const { targetsFilePath, document } = await this.resolveTargetsFile(fernYmlPath);
+        const editor = await FernYmlEditor.load({ fernYmlPath });
 
-        // Find the targets map. If we followed a $ref from `sdks`, the resolved
-        // file's root IS the sdks object; otherwise it's `.sdks.targets`.
-        const isRefTarget = targetsFilePath !== fernYmlPath;
-
-        const targetsPath = this.resolveTargetsPath({ document, isRefTarget });
-        if (document.hasIn([...targetsPath, language])) {
-            throw new CliError({
-                message: `Target '${language}' already exists in ${FERN_YML_FILENAME}.`
-            });
-        }
-
-        // Build the new target node.
-        const newTarget: Record<string, unknown> = {};
+        const newTarget: FernYmlEditor.TargetSchema = {
+            output: this.buildOutputForYaml(output)
+        };
         if (version != null) {
             newTarget.version = version;
         }
-        newTarget.output = this.buildOutputForYaml(output);
         if (group != null) {
             newTarget.group = [group];
         }
 
-        // Ensure the parent path exists in the document (i.e. similar to 'mkdir -p').
-        this.ensureMapPath(document, targetsPath);
-
-        // Add the new target using the Document API in order to preserve comments.
-        document.setIn([...targetsPath, language], document.createNode(newTarget));
-
-        await writeFile(targetsFilePath, document.toString(), "utf-8");
-    }
-
-    /**
-     * Resolves the file that actually contains the `targets` key.
-     *
-     * If the `sdks` value in fern.yml is a `$ref`, we follow it and return
-     * the referenced file's Document instead.
-     */
-    private async resolveTargetsFile(
-        fernYmlPath: AbsoluteFilePath
-    ): Promise<{ targetsFilePath: AbsoluteFilePath; document: Document }> {
-        const content = await readFile(fernYmlPath, "utf-8");
-        const document = parseDocument(content);
-        const doc = document.toJS() as Record<string, unknown>;
-
-        if (doc == null || typeof doc !== "object") {
-            throw new CliError({
-                message: `Invalid ${FERN_YML_FILENAME}: expected a YAML object; run 'fern init' to initialize a new file.`
-            });
-        }
-
-        // Check if sdks uses a $ref.
-        const sdksValue = doc.sdks;
-        if (sdksValue != null && typeof sdksValue === "object" && REF_KEY in sdksValue) {
-            const refPath = (sdksValue as Record<string, unknown>)[REF_KEY];
-            if (typeof refPath === "string") {
-                const resolvedPath = join(dirname(fernYmlPath), RelativeFilePath.of(refPath));
-                if (await doesPathExist(resolvedPath)) {
-                    const refContent = await readFile(resolvedPath, "utf-8");
-                    const refDocument = parseDocument(refContent);
-                    return { targetsFilePath: resolvedPath, document: refDocument };
-                }
-            }
-        }
-
-        return { targetsFilePath: fernYmlPath, document };
-    }
-
-    /**
-     * Determines the YAML path to the targets map within a document.
-     *
-     * If we resolved a `$ref`, the referenced file's root is the sdks config
-     * so `targets` is at the root level. Otherwise `targets` is nested under
-     * `sdks`.
-     */
-    private resolveTargetsPath({ document, isRefTarget }: { document: Document; isRefTarget: boolean }): string[] {
-        if (isRefTarget) {
-            // Referenced file should always have targets at root.
-            return ["targets"];
-        }
-        return ["sdks", "targets"];
-    }
-
-    /**
-     * Ensures that the map path exists in the document, creating intermediate
-     * maps as needed.
-     */
-    private ensureMapPath(document: Document, path: (string | number)[]): void {
-        for (let i = 1; i <= path.length; i++) {
-            const subPath = path.slice(0, i);
-            const existing = document.getIn(subPath);
-            if (existing == null) {
-                document.setIn(subPath, document.createNode({}));
-            }
-        }
+        editor.addTarget(language, newTarget);
+        await editor.save();
     }
 
     private buildOutputForYaml(output: schemas.OutputSchema): string | Record<string, unknown> {

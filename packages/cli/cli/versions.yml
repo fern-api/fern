@@ -1,12 +1,44 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.99.0
+- version: 4.0.2
   changelogEntry:
     - summary: |
         Nest tabs configuration under `theme.tabs` as an object with `style`,
         `alignment`, and `placement` properties. `theme.tabs: bubble` (string)
         is still supported for backward compatibility. The `layout.tabs-placement`
         and `layout.tabs-alignment` fields are preserved for backward compat.
+        Warn when sidebar placement is combined with center alignment since
+        centering is only supported for header tabs.
       type: feat
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.0.1
+  changelogEntry:
+    - summary: |
+        Fix `x-fern-global-headers` ignoring the `optional` field in the legacy
+        OpenAPI importer. Previously, all global headers were defaulted to
+        `optional<string>` regardless of whether `optional: false` or no `optional`
+        field was specified. Now headers without `optional: true` are correctly
+        treated as required `string` types.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.0.0
+  changelogEntry:
+    - summary: |
+        Deprecate IR versions <= 52. Cuts down on binary size, build time, and migrations.
+
+        **Breaking changes**: To upgrade to this version of the CLI, generators now have
+        minimal versions they need to be upgraded to with `fern generator upgrade --include-major`:
+        - Python SDK: upgrade to v3.3.0-rc0+
+        - TypeScript SDK: upgrade to v0.38.0-rc0+
+        - Java SDK: upgrade to v2.5.0+
+        - Go SDK: upgrade to v0.28.3+
+        - C# SDK: upgrade to v0.5.0+
+        - Ruby SDK: upgrade to v1.0.0-rc1+
+        - Other generators: upgrade to versions that support IR v53+
+      type: chore
   createdAt: "2026-03-02"
   irVersion: 65
 

@@ -32,5 +32,3 @@ tokio-test = "0.4"
 default = ["experimental"]
 advanced = ["sse"]
 experimental = ["reqwest/blocking", "tokio/process"]
-multipart = []
-sse = []

@@ -5,7 +5,7 @@
 //! - **BasicAuth**
 //! - **Errors**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod basic_auth;
 pub mod errors;
@@ -18,10 +18,9 @@ impl BasicAuthEnvironmentVariablesClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            basic_auth: BasicAuthClient::new(config.clone())?
+            basic_auth: BasicAuthClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use basic_auth::BasicAuthClient;

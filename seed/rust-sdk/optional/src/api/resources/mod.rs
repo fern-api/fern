@@ -4,7 +4,7 @@
 //!
 //! - **Optional**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod optional;
 pub struct ObjectsWithImportsClient {
@@ -16,10 +16,9 @@ impl ObjectsWithImportsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            optional: OptionalClient::new(config.clone())?
+            optional: OptionalClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use optional::OptionalClient;

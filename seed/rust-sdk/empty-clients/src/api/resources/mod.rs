@@ -4,7 +4,7 @@
 //!
 //! - **Level1**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod level_1;
 pub struct EmptyClientsClient {
@@ -15,10 +15,8 @@ impl EmptyClientsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            
         })
     }
-
 }
 
 pub use level_1::Level1Client;
