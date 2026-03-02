@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.98.6
+  changelogEntry:
+    - summary: |
+        Fix namespace resolution bugs in docs types pipeline. `removeSchemaFromInlinedTypes`
+        now correctly namespaces the ID before comparing against namespaced dictionary keys,
+        preventing duplicate type declarations when a namespace is set. Also fix
+        `SchemaConverter.convertDeclaredTypeName` to use the raw (un-namespaced) schema name
+        for display name generation, preventing incorrect type names like `EntityManagerTeam`
+        instead of `Team`.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.98.5
   changelogEntry:
     - summary: |
