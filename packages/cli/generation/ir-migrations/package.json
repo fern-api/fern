@@ -31,6 +31,7 @@
     "generate:version-map": "tsx scripts/generate-version-map.ts",
     "generate:version-map:force": "tsx scripts/generate-version-map.ts --force",
     "prebuild": "pnpm generate:version-map",
+    "pretest": "pnpm generate:version-map",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
