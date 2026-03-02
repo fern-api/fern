@@ -133,6 +133,10 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+  websocket:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
   license:
     - customConfig: null
       outputFolder: basic
