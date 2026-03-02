@@ -85,7 +85,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
@@ -164,7 +164,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
@@ -247,7 +247,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
@@ -345,7 +345,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
@@ -446,7 +446,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
@@ -563,7 +563,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
@@ -644,7 +644,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.ObjectWithUnknownField.parseOrThrow(_response.body, {
@@ -728,7 +728,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.ObjectWithDatetimeLikeString.parseOrThrow(_response.body, {

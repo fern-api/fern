@@ -69,7 +69,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -145,7 +145,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersMixedTypePaginationResponse,
@@ -218,7 +218,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -298,7 +298,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersTopLevelCursorPaginationResponse,
@@ -382,7 +382,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -461,7 +461,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -535,7 +535,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -612,7 +612,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -689,7 +689,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -763,7 +763,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersExtendedResponse,
@@ -835,7 +835,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersExtendedOptionalListResponse,
@@ -907,7 +907,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.UsernameCursor,
@@ -980,7 +980,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.UsernameCursor | undefined,
@@ -1053,7 +1053,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.UsernameContainer,
@@ -1126,7 +1126,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     if (_response.body == null) {
-                        return { data: undefined, rawResponse: _response.rawResponse };
+                        return { data: undefined as any, rawResponse: _response.rawResponse };
                     }
                     return {
                         data: _response.body as SeedPagination.ListUsersOptionalDataPaginationResponse,

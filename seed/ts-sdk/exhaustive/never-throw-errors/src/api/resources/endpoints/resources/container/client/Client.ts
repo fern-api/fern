@@ -71,7 +71,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as string[]) : undefined,
+                    body: _response.body != null ? (_response.body as string[]) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -154,7 +154,7 @@ export class ContainerClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithRequiredField[])
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -224,7 +224,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as string[]) : undefined,
+                    body: _response.body != null ? (_response.body as string[]) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -305,7 +305,7 @@ export class ContainerClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithRequiredField[])
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -377,7 +377,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as Record<string, string>) : undefined,
+                    body: _response.body != null ? (_response.body as Record<string, string>) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -460,7 +460,7 @@ export class ContainerClient {
                     body:
                         _response.body != null
                             ? (_response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -543,7 +543,7 @@ export class ContainerClient {
                     body:
                         _response.body != null
                             ? (_response.body as Record<string, SeedExhaustive.types.MixedType>)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -626,7 +626,7 @@ export class ContainerClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

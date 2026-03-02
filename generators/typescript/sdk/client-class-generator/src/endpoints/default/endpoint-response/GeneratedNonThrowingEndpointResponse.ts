@@ -176,7 +176,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                       ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                       this.getOkResponseBody(context),
                       ts.factory.createToken(ts.SyntaxKind.ColonToken),
-                      ts.factory.createIdentifier("undefined")
+                      ts.factory.createAsExpression(
+                          ts.factory.createIdentifier("undefined"),
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                      )
                   )
                 : ts.factory.createIdentifier("undefined");
 

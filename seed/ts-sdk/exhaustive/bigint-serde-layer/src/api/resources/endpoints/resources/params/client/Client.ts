@@ -62,7 +62,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.params.getWithPath.Response.parseOrThrow(_response.body, {
@@ -133,7 +133,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.params.getWithInlinePath.Response.parseOrThrow(_response.body, {
@@ -466,7 +466,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.params.modifyWithPath.Response.parseOrThrow(_response.body, {
@@ -544,7 +544,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.params.modifyWithInlinePath.Response.parseOrThrow(_response.body, {
@@ -621,7 +621,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {

@@ -83,7 +83,7 @@ export class MigrationClient {
                                   skipValidation: true,
                                   breadcrumbsPrefix: ["response"],
                               })
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

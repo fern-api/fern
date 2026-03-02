@@ -690,7 +690,7 @@ export class ServiceClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.service.optionalArgs.Response.parseOrThrow(_response.body, {
@@ -767,7 +767,7 @@ export class ServiceClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.service.withInlineType.Response.parseOrThrow(_response.body, {
@@ -847,7 +847,7 @@ export class ServiceClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.service.withJsonProperty.Response.parseOrThrow(_response.body, {
@@ -981,7 +981,7 @@ export class ServiceClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.service.withLiteralAndEnumTypes.Response.parseOrThrow(_response.body, {

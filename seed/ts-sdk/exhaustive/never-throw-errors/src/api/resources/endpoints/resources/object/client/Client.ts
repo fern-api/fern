@@ -96,7 +96,7 @@ export class ObjectClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithOptionalField)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -177,7 +177,7 @@ export class ObjectClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithRequiredField)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -262,7 +262,7 @@ export class ObjectClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithMapOfMap)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -362,7 +362,7 @@ export class ObjectClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.NestedObjectWithOptionalField)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -467,7 +467,7 @@ export class ObjectClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.NestedObjectWithRequiredField)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -588,7 +588,7 @@ export class ObjectClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.NestedObjectWithRequiredField)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -673,7 +673,7 @@ export class ObjectClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithUnknownField)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -759,7 +759,7 @@ export class ObjectClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithDatetimeLikeString)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

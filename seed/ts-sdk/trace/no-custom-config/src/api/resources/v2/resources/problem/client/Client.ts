@@ -64,7 +64,7 @@ export class ProblemClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedTrace.v2.LightweightProblemInfoV2[],
@@ -130,7 +130,7 @@ export class ProblemClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as SeedTrace.v2.ProblemInfoV2[], rawResponse: _response.rawResponse };
         }
@@ -191,7 +191,7 @@ export class ProblemClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as SeedTrace.v2.ProblemInfoV2, rawResponse: _response.rawResponse };
         }
@@ -262,7 +262,7 @@ export class ProblemClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as SeedTrace.v2.ProblemInfoV2, rawResponse: _response.rawResponse };
         }

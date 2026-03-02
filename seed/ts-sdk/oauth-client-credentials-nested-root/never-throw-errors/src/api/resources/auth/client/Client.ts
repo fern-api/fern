@@ -76,7 +76,7 @@ export class AuthClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedOauthClientCredentials.auth.TokenResponse)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

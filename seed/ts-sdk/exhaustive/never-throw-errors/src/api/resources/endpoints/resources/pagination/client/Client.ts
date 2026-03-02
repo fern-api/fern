@@ -87,7 +87,7 @@ export class PaginationClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.endpoints.PaginatedResponse)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

@@ -81,7 +81,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
@@ -151,7 +151,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
@@ -225,7 +225,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithMapOfMap,
@@ -314,7 +314,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.NestedObjectWithOptionalField,
@@ -406,7 +406,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
@@ -514,7 +514,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
@@ -586,7 +586,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithUnknownField,
@@ -661,7 +661,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithDatetimeLikeString,

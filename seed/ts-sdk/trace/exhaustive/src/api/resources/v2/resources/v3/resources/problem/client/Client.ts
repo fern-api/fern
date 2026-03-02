@@ -85,7 +85,7 @@ export class ProblemClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[])
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -159,7 +159,10 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as SeedTrace.v2.v3.ProblemInfoV2[]) : undefined,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedTrace.v2.v3.ProblemInfoV2[])
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -236,7 +239,8 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as SeedTrace.v2.v3.ProblemInfoV2) : undefined,
+                    body:
+                        _response.body != null ? (_response.body as SeedTrace.v2.v3.ProblemInfoV2) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -318,7 +322,8 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as SeedTrace.v2.v3.ProblemInfoV2) : undefined,
+                    body:
+                        _response.body != null ? (_response.body as SeedTrace.v2.v3.ProblemInfoV2) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

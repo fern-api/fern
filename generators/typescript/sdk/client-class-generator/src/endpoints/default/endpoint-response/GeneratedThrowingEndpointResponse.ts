@@ -1043,7 +1043,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                 [
                                     ts.factory.createPropertyAssignment(
                                         ts.factory.createIdentifier("data"),
-                                        ts.factory.createIdentifier("undefined")
+                                        ts.factory.createAsExpression(
+                                            ts.factory.createIdentifier("undefined"),
+                                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                                        )
                                     ),
                                     ts.factory.createPropertyAssignment(
                                         ts.factory.createIdentifier("rawResponse"),

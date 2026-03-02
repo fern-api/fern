@@ -71,7 +71,10 @@ export class PutClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as SeedExhaustive.endpoints.PutResponse) : undefined,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedExhaustive.endpoints.PutResponse)
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

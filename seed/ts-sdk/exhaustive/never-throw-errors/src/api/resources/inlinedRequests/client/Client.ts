@@ -97,7 +97,7 @@ export class InlinedRequestsClient {
                     body:
                         _response.body != null
                             ? (_response.body as SeedExhaustive.types.ObjectWithOptionalField)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

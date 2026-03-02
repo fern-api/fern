@@ -59,7 +59,7 @@ export class ServiceClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }

@@ -47,6 +47,9 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
+                if (_response.body == null) {
+                    return { data: undefined, rawResponse: _response.rawResponse };
+                }
                 return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
@@ -93,6 +96,9 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
+                if (_response.body == null) {
+                    return { data: undefined, rawResponse: _response.rawResponse };
+                }
                 return {
                     data: _response.body,
                     rawResponse: _response.rawResponse,
@@ -138,6 +144,9 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
+                if (_response.body == null) {
+                    return { data: undefined, rawResponse: _response.rawResponse };
+                }
                 return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
@@ -182,6 +191,9 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
+                if (_response.body == null) {
+                    return { data: undefined, rawResponse: _response.rawResponse };
+                }
                 return {
                     data: _response.body,
                     rawResponse: _response.rawResponse,
@@ -229,6 +241,9 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
+                if (_response.body == null) {
+                    return { data: undefined, rawResponse: _response.rawResponse };
+                }
                 return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
@@ -275,6 +290,9 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
+                if (_response.body == null) {
+                    return { data: undefined, rawResponse: _response.rawResponse };
+                }
                 return {
                     data: _response.body,
                     rawResponse: _response.rawResponse,
@@ -322,6 +340,9 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
+                if (_response.body == null) {
+                    return { data: undefined, rawResponse: _response.rawResponse };
+                }
                 return {
                     data: _response.body,
                     rawResponse: _response.rawResponse,
@@ -369,6 +390,9 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
+                if (_response.body == null) {
+                    return { data: undefined, rawResponse: _response.rawResponse };
+                }
                 return {
                     data: _response.body,
                     rawResponse: _response.rawResponse,

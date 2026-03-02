@@ -64,7 +64,7 @@ export class NoAuthClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as boolean) : undefined,
+                    body: _response.body != null ? (_response.body as boolean) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

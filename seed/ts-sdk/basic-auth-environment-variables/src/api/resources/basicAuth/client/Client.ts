@@ -61,7 +61,7 @@ export class BasicAuthClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
         }
@@ -136,7 +136,7 @@ export class BasicAuthClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
         }

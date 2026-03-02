@@ -86,7 +86,7 @@ export class SubmissionClient {
                                   skipValidation: true,
                                   breadcrumbsPrefix: ["response"],
                               })
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -169,7 +169,7 @@ export class SubmissionClient {
                                   skipValidation: true,
                                   breadcrumbsPrefix: ["response"],
                               })
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -315,7 +315,7 @@ export class SubmissionClient {
                                   skipValidation: true,
                                   breadcrumbsPrefix: ["response"],
                               })
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

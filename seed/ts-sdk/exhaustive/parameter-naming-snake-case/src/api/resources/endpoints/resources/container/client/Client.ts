@@ -65,7 +65,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as string[], rawResponse: _response.rawResponse };
         }
@@ -134,7 +134,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
@@ -197,7 +197,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as string[], rawResponse: _response.rawResponse };
         }
@@ -259,7 +259,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
@@ -324,7 +324,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as Record<string, string>, rawResponse: _response.rawResponse };
         }
@@ -388,7 +388,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
@@ -460,7 +460,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as Record<string, SeedExhaustive.types.MixedType>,
@@ -525,7 +525,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,

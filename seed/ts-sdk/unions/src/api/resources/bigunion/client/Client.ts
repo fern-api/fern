@@ -57,7 +57,7 @@ export class BigunionClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as SeedUnions.BigUnion, rawResponse: _response.rawResponse };
         }
@@ -116,7 +116,7 @@ export class BigunionClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
         }
@@ -183,7 +183,7 @@ export class BigunionClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as Record<string, boolean>, rawResponse: _response.rawResponse };
         }

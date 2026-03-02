@@ -70,7 +70,7 @@ export class HomepageClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as SeedTrace.ProblemId[]) : undefined,
+                    body: _response.body != null ? (_response.body as SeedTrace.ProblemId[]) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

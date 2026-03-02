@@ -69,7 +69,7 @@ export class EnumClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.WeatherReport.parseOrThrow(_response.body, {

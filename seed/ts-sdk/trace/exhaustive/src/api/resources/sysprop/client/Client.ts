@@ -154,7 +154,7 @@ export class SyspropClient {
                     body:
                         _response.body != null
                             ? (_response.body as Record<SeedTrace.Language, number | undefined>)
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

@@ -54,7 +54,7 @@ export class UsersClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedPaginationUriPath.ListUsersUriPaginationResponse,
@@ -106,7 +106,7 @@ export class UsersClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: _response.body as SeedPaginationUriPath.ListUsersPathPaginationResponse,

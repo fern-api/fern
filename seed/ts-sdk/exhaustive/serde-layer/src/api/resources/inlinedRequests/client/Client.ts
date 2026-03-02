@@ -88,7 +88,7 @@ export class InlinedRequestsClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {

@@ -71,7 +71,10 @@ export class EnumClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as SeedExhaustive.types.WeatherReport) : undefined,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedExhaustive.types.WeatherReport)
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

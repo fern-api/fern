@@ -71,7 +71,7 @@ export class SubmissionClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
@@ -146,7 +146,7 @@ export class SubmissionClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
@@ -269,7 +269,7 @@ export class SubmissionClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {

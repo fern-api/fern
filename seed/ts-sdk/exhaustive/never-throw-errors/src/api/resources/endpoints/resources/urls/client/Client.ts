@@ -59,7 +59,7 @@ export class UrlsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as string) : undefined,
+                    body: _response.body != null ? (_response.body as string) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -117,7 +117,7 @@ export class UrlsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as string) : undefined,
+                    body: _response.body != null ? (_response.body as string) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -175,7 +175,7 @@ export class UrlsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as string) : undefined,
+                    body: _response.body != null ? (_response.body as string) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -233,7 +233,7 @@ export class UrlsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body != null ? (_response.body as string) : undefined,
+                    body: _response.body != null ? (_response.body as string) : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

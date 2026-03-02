@@ -68,7 +68,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnString.Response.parseOrThrow(_response.body, {
@@ -140,7 +140,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnInt.Response.parseOrThrow(_response.body, {
@@ -212,7 +212,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnLong.Response.parseOrThrow(_response.body, {
@@ -284,7 +284,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnDouble.Response.parseOrThrow(_response.body, {
@@ -356,7 +356,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnBool.Response.parseOrThrow(_response.body, {
@@ -428,7 +428,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnDatetime.Response.parseOrThrow(_response.body, {
@@ -500,7 +500,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnDate.Response.parseOrThrow(_response.body, {
@@ -572,7 +572,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnUuid.Response.parseOrThrow(_response.body, {
@@ -644,7 +644,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.endpoints.primitive.getAndReturnBase64.Response.parseOrThrow(_response.body, {

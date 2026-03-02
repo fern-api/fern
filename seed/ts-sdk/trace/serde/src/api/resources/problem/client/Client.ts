@@ -146,7 +146,7 @@ export class ProblemClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.CreateProblemResponse.parseOrThrow(_response.body, {
@@ -297,7 +297,7 @@ export class ProblemClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
@@ -457,7 +457,7 @@ export class ProblemClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return {
                 data: serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {

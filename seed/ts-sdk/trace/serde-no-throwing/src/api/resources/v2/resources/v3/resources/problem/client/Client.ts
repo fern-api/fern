@@ -86,7 +86,7 @@ export class ProblemClient {
                                   skipValidation: true,
                                   breadcrumbsPrefix: ["response"],
                               })
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -163,7 +163,7 @@ export class ProblemClient {
                                   skipValidation: true,
                                   breadcrumbsPrefix: ["response"],
                               })
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -243,7 +243,7 @@ export class ProblemClient {
                                   skipValidation: true,
                                   breadcrumbsPrefix: ["response"],
                               })
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -328,7 +328,7 @@ export class ProblemClient {
                                   skipValidation: true,
                                   breadcrumbsPrefix: ["response"],
                               })
-                            : undefined,
+                            : (undefined as any),
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

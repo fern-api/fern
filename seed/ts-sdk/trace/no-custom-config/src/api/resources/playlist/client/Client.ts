@@ -87,7 +87,7 @@ export class PlaylistClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as SeedTrace.Playlist, rawResponse: _response.rawResponse };
         }
@@ -172,7 +172,7 @@ export class PlaylistClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as SeedTrace.Playlist[], rawResponse: _response.rawResponse };
         }
@@ -244,7 +244,7 @@ export class PlaylistClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as SeedTrace.Playlist, rawResponse: _response.rawResponse };
         }
@@ -338,7 +338,7 @@ export class PlaylistClient {
         });
         if (_response.ok) {
             if (_response.body == null) {
-                return { data: undefined, rawResponse: _response.rawResponse };
+                return { data: undefined as any, rawResponse: _response.rawResponse };
             }
             return { data: _response.body as SeedTrace.Playlist | undefined, rawResponse: _response.rawResponse };
         }
