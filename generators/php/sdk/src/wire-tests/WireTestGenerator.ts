@@ -385,18 +385,25 @@ export class WireTestGenerator {
     }
 
     private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-        if (!dynamicEndpoint?.examples?.[0]?.queryParameters) {
+        let basePath = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts || []) {
+            basePath += `{${part.pathParameter}}${part.tail}`;
+        }
+        if (!basePath.startsWith("/")) {
+            basePath = "/" + basePath;
+        }
+
+        const mappingKey = this.wiremockMappingKey(endpoint.method, basePath);
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+
+        if (!wiremockMapping?.request.queryParameters) {
             return "null";
         }
 
-        const queryParams = dynamicEndpoint.examples[0].queryParameters;
         const entries: string[] = [];
-
-        for (const [key, value] of Object.entries(queryParams)) {
-            if (value !== null && value !== undefined) {
-                entries.push(`'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`);
-            }
+        for (const [key, value] of Object.entries(wiremockMapping.request.queryParameters)) {
+            const queryParam = value as { equalTo: string };
+            entries.push(`'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(queryParam.equalTo)}'`);
         }
 
         if (entries.length === 0) {

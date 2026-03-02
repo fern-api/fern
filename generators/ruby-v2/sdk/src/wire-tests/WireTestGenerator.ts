@@ -400,36 +400,34 @@ export class WireTestGenerator {
 
     /**
      * Builds the query params code for verification.
-     * Only includes REQUIRED query params to avoid mismatches with optional params
-     * that may not be included in the generated snippet.
+     * Uses query parameters from the wiremock mapping, which includes all query params
+     * (both required and optional) that have values in the example.
      */
     private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
+        let basePath =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
 
-        if (!dynamicEndpointExample?.queryParameters) {
+        if (!basePath.startsWith("/")) {
+            basePath = `/${basePath}`;
+        }
+
+        const mappingKey = this.wiremockMappingKey({
+            requestMethod: endpoint.method,
+            requestUrlPathTemplate: basePath
+        });
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+
+        if (!wiremockMapping?.request.queryParameters) {
             return "nil";
         }
 
-        // Build a set of required query param wire names
-        const requiredQueryParamNames = new Set<string>();
-        for (const queryParam of endpoint.queryParameters) {
-            // A query param is required if it's not optional (no container wrapper)
-            const isOptional =
-                queryParam.valueType.type === "container" && queryParam.valueType.container.type === "optional";
-            if (!isOptional) {
-                requiredQueryParamNames.add(queryParam.name.wireValue);
-            }
-        }
-
         const queryParamEntries: string[] = [];
-        for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
-            // Only include required params OR params that have values in the example
-            // but prioritize required params to avoid verifying optional params
-            if (paramValue != null && requiredQueryParamNames.has(paramName)) {
-                const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
-                queryParamEntries.push(`${key} => ${value}`);
-            }
+        for (const [paramName, paramValue] of Object.entries(wiremockMapping.request.queryParameters)) {
+            const queryParam = paramValue as { equalTo: string };
+            const key = JSON.stringify(paramName);
+            const value = JSON.stringify(queryParam.equalTo);
+            queryParamEntries.push(`${key} => ${value}`);
         }
 
         if (queryParamEntries.length === 0) {

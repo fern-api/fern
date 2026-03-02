@@ -736,19 +736,30 @@ export class WireTestGenerator {
     }
 
     private buildQueryParamsMap(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
+        let basePath =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
 
-        if (!dynamicEndpointExample?.queryParameters) {
+        if (!basePath.startsWith("/")) {
+            basePath = `/${basePath}`;
+        }
+
+        const mappingKey = this.wiremockMappingKey({
+            requestMethod: endpoint.method,
+            requestUrlPathTemplate: basePath
+        });
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+
+        if (!wiremockMapping?.request.queryParameters) {
             return "nil";
         }
 
         const queryParamEntries: string[] = [];
-        for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
-            if (paramValue != null) {
-                const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
-                queryParamEntries.push(`${key}: ${value}`);
-            }
+        for (const [paramName, paramValue] of Object.entries(wiremockMapping.request.queryParameters)) {
+            const queryParam = paramValue as { equalTo: string };
+            const key = JSON.stringify(paramName);
+            const value = JSON.stringify(queryParam.equalTo);
+            queryParamEntries.push(`${key}: ${value}`);
         }
 
         if (queryParamEntries.length === 0) {

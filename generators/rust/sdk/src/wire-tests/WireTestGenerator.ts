@@ -447,19 +447,30 @@ export class WireTestGenerator {
      * Returns "None" if no query params, otherwise Some(HashMap::from([...]))
      */
     private buildQueryParamsMap(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpointExample = this.getDynamicEndpointExample(endpoint);
+        let basePath =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts.map((part) => `{${part.pathParameter}}${part.tail}`).join("");
 
-        if (!dynamicEndpointExample?.queryParameters) {
+        if (!basePath.startsWith("/")) {
+            basePath = `/${basePath}`;
+        }
+
+        const mappingKey = this.wiremockMappingKey({
+            requestMethod: endpoint.method,
+            requestUrlPathTemplate: basePath
+        });
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+
+        if (!wiremockMapping?.request.queryParameters) {
             return "None";
         }
 
         const queryParamEntries: string[] = [];
-        for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
-            if (paramValue != null) {
-                const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
-                queryParamEntries.push(`(${key}.to_string(), ${value}.to_string())`);
-            }
+        for (const [paramName, paramValue] of Object.entries(wiremockMapping.request.queryParameters)) {
+            const queryParam = paramValue as { equalTo: string };
+            const key = JSON.stringify(paramName);
+            const value = JSON.stringify(queryParam.equalTo);
+            queryParamEntries.push(`(${key}.to_string(), ${value}.to_string())`);
         }
 
         if (queryParamEntries.length === 0) {

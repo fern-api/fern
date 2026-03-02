@@ -621,18 +621,23 @@ export class WireTestGenerator {
     // =============================================================================
 
     private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-        if (!dynamicEndpoint?.examples?.[0]?.queryParameters) {
+        const basePath = this.buildPathTemplate(endpoint);
+        const mappingKey = this.wiremockMappingKey({
+            requestMethod: endpoint.method,
+            requestUrlPathTemplate: basePath
+        });
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+
+        if (!wiremockMapping?.request.queryParameters) {
             return "None";
         }
 
-        const queryParams = dynamicEndpoint.examples[0].queryParameters;
         const entries: string[] = [];
-
-        for (const [key, value] of Object.entries(queryParams)) {
-            if (value != null) {
-                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(String(value))}"`);
-            }
+        for (const [key, value] of Object.entries(wiremockMapping.request.queryParameters)) {
+            const queryParam = value as { equalTo: string };
+            entries.push(
+                `"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(queryParam.equalTo)}"`
+            );
         }
 
         if (entries.length === 0) {

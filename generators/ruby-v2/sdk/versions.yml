@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.4
+  changelogEntry:
+    - summary: |
+        Wire tests now include query parameters in WireMock request matching and verification.
+        Previously, only required query parameters were included in verification. Now all query
+        parameters from the example (including pagination parameters like cursor and limit) are
+        included in both the WireMock stub mapping and the verify_request_count call.
+      type: feat
+  createdAt: "2026-03-02"
+  irVersion: 61
+
 - version: 1.0.3
   changelogEntry:
     - summary: |
