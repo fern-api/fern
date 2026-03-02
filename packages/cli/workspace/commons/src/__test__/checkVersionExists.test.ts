@@ -11,7 +11,9 @@ import {
     doesRubyGemsVersionExist,
     doesVersionExistOnRegistry,
     getPackageNameFromGeneratorConfig,
-    getRegistryName
+    getRegistryInfoFromOutput,
+    getRegistryName,
+    resolveEnvVar
 } from "../checkVersionExists.js";
 
 // ─── Helpers ────────────────────────────────────────────────────────
@@ -127,6 +129,38 @@ describe("doesNpmVersionExist", () => {
         );
     });
 
+    it("uses custom registry URL from registryInfo", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
+        await doesNpmVersionExist("@acme/sdk", "1.0.0", {
+            url: "https://custom.registry.example.com/npm/"
+        });
+        expect(fetch).toHaveBeenCalledWith(expect.stringContaining("custom.registry.example.com"), expect.any(Object));
+    });
+
+    it("strips trailing slashes from custom registry URL", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
+        await doesNpmVersionExist("pkg", "1.0.0", {
+            url: "https://custom.registry.example.com///"
+        });
+        const calledUrl = vi.mocked(fetch).mock.calls[0]?.[0] as string;
+        expect(calledUrl).not.toContain("///");
+        expect(calledUrl).toMatch(/example\.com\/pkg/);
+    });
+
+    it("prefers registryInfo.token over NPM_TOKEN env var", async () => {
+        process.env.NPM_TOKEN = "env-token";
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
+        await doesNpmVersionExist("pkg", "1.0.0", { token: "config-token" });
+        expect(fetch).toHaveBeenCalledWith(
+            expect.any(String),
+            expect.objectContaining({
+                headers: expect.objectContaining({
+                    authorization: "Bearer config-token"
+                })
+            })
+        );
+    });
+
     it("passes AbortSignal for timeout", async () => {
         vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
         await doesNpmVersionExist("pkg", "1.0.0");
@@ -168,6 +202,11 @@ describe("doesPypiVersionExist", () => {
         vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 404));
         expect(await doesPypiVersionExist("nonexistent", "1.0.0")).toBe(false);
     });
+
+    it("returns false (skips check) for private registry", async () => {
+        expect(await doesPypiVersionExist("pkg", "1.0.0", { url: "https://private.pypi.example.com" })).toBe(false);
+        expect(fetch).not.toHaveBeenCalled();
+    });
 });
 
 describe("doesMavenVersionExist", () => {
@@ -194,6 +233,13 @@ describe("doesMavenVersionExist", () => {
 
     it("returns false for invalid coordinate (no colon)", async () => {
         expect(await doesMavenVersionExist("invalid-no-colon", "1.0.0")).toBe(false);
+        expect(fetch).not.toHaveBeenCalled();
+    });
+
+    it("returns false (skips check) for private registry", async () => {
+        expect(
+            await doesMavenVersionExist("com.example:lib", "1.0.0", { url: "https://artifactory.example.com" })
+        ).toBe(false);
         expect(fetch).not.toHaveBeenCalled();
     });
 });
@@ -223,6 +269,11 @@ describe("doesNugetVersionExist", () => {
         await doesNugetVersionExist("Newtonsoft.Json", "1.0.0");
         expect(fetch).toHaveBeenCalledWith(expect.stringContaining("newtonsoft.json"), expect.any(Object));
     });
+
+    it("returns false (skips check) for private registry", async () => {
+        expect(await doesNugetVersionExist("MyPkg", "1.0.0", { url: "https://private.nuget.example.com" })).toBe(false);
+        expect(fetch).not.toHaveBeenCalled();
+    });
 });
 
 describe("doesRubyGemsVersionExist", () => {
@@ -243,6 +294,13 @@ describe("doesRubyGemsVersionExist", () => {
     it("returns false on 404", async () => {
         vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 404));
         expect(await doesRubyGemsVersionExist("rails", "999.0.0")).toBe(false);
+    });
+
+    it("returns false (skips check) for private registry", async () => {
+        expect(await doesRubyGemsVersionExist("mygem", "1.0.0", { url: "https://private.gems.example.com" })).toBe(
+            false
+        );
+        expect(fetch).not.toHaveBeenCalled();
     });
 });
 
@@ -310,6 +368,13 @@ describe("doesCratesVersionExist", () => {
                 })
             })
         );
+    });
+
+    it("returns false (skips check) for private registry", async () => {
+        expect(await doesCratesVersionExist("mycrate", "1.0.0", { url: "https://private.crates.example.com" })).toBe(
+            false
+        );
+        expect(fetch).not.toHaveBeenCalled();
     });
 });
 
@@ -644,5 +709,116 @@ describe("getPackageNameFromGeneratorConfig", () => {
             // biome-ignore lint/suspicious/noExplicitAny: test stub
         } as any;
         expect(getPackageNameFromGeneratorConfig(invocation)).toBeUndefined();
+    });
+});
+
+// ─── getRegistryInfoFromOutput ──────────────────────────────────────
+
+describe("getRegistryInfoFromOutput", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    it("returns empty object when raw is undefined", () => {
+        const invocation = {
+            raw: undefined
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getRegistryInfoFromOutput(invocation)).toEqual({});
+    });
+
+    it("returns empty object when output is not an object", () => {
+        const invocation = {
+            raw: { output: "string" }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getRegistryInfoFromOutput(invocation)).toEqual({});
+    });
+
+    it("reads url and token from npm output", () => {
+        const invocation = {
+            raw: {
+                output: {
+                    location: "npm",
+                    url: "https://custom.npm.example.com",
+                    token: "secret-token",
+                    "package-name": "@acme/sdk"
+                }
+            }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getRegistryInfoFromOutput(invocation)).toEqual({
+            url: "https://custom.npm.example.com",
+            token: "secret-token"
+        });
+    });
+
+    it("reads api-key as token for NuGet output", () => {
+        const invocation = {
+            raw: { output: { location: "nuget", "api-key": "nuget-key", "package-name": "MyPkg" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getRegistryInfoFromOutput(invocation)).toEqual({
+            url: undefined,
+            token: "nuget-key"
+        });
+    });
+
+    it("resolves env var references in url", () => {
+        process.env.MY_REGISTRY_URL = "https://resolved.example.com";
+        const invocation = {
+            raw: { output: { url: "${MY_REGISTRY_URL}", "package-name": "pkg" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getRegistryInfoFromOutput(invocation).url).toBe("https://resolved.example.com");
+        delete process.env.MY_REGISTRY_URL;
+    });
+
+    it("resolves env var references in token", () => {
+        process.env.MY_TOKEN = "resolved-token";
+        const invocation = {
+            raw: { output: { token: "${MY_TOKEN}", "package-name": "pkg" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getRegistryInfoFromOutput(invocation).token).toBe("resolved-token");
+        delete process.env.MY_TOKEN;
+    });
+
+    it("returns undefined for unset env var reference", () => {
+        delete process.env.MISSING_VAR;
+        const invocation = {
+            raw: { output: { url: "${MISSING_VAR}", "package-name": "pkg" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getRegistryInfoFromOutput(invocation).url).toBeUndefined();
+    });
+});
+
+// ─── resolveEnvVar ──────────────────────────────────────────────────
+
+describe("resolveEnvVar", () => {
+    it("returns plain string as-is", () => {
+        expect(resolveEnvVar("plain-value")).toBe("plain-value");
+    });
+
+    it("resolves ${VAR} from process.env", () => {
+        process.env.TEST_RESOLVE_VAR = "resolved";
+        expect(resolveEnvVar("${TEST_RESOLVE_VAR}")).toBe("resolved");
+        delete process.env.TEST_RESOLVE_VAR;
+    });
+
+    it("returns undefined for unset env var", () => {
+        delete process.env.UNSET_VAR;
+        expect(resolveEnvVar("${UNSET_VAR}")).toBeUndefined();
+    });
+
+    it("does not resolve partial env var patterns", () => {
+        expect(resolveEnvVar("prefix-${VAR}")).toBe("prefix-${VAR}");
+    });
+
+    it("does not resolve $VAR without braces", () => {
+        process.env.NO_BRACES = "value";
+        expect(resolveEnvVar("$NO_BRACES")).toBe("$NO_BRACES");
+        delete process.env.NO_BRACES;
     });
 });
