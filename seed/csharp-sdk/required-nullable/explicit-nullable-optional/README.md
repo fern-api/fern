@@ -141,9 +141,9 @@ If you would like to send additional headers as part of the request, use the `Ad
 var response = await client.GetFooAsync(
     ...,
     new RequestOptions {
-        AdditionalHeaders = new List<KeyValuePair<string, string?>>
+        AdditionalHeaders = new Dictionary<string, string?>
         {
-            new KeyValuePair<string, string?>("X-Custom-Header", "custom-value")
+            { "X-Custom-Header", "custom-value" }
         }
     }
 );
@@ -157,9 +157,9 @@ If you would like to send additional query parameters as part of the request, us
 var response = await client.GetFooAsync(
     ...,
     new RequestOptions {
-        AdditionalQueryParameters = new List<KeyValuePair<string, string>>
+        AdditionalQueryParameters = new Dictionary<string, string>
         {
-            new KeyValuePair<string, string>("custom_param", "custom-value")
+            { "custom_param", "custom-value" }
         }
     }
 );
