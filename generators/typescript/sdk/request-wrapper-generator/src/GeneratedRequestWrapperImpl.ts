@@ -310,20 +310,24 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getDocs(context: SdkContext): string | undefined {
-        const examples = getExampleEndpointCalls(this.endpoint);
-        if (examples.length === 0) {
+        const exampleCalls = getExampleEndpointCalls(this.endpoint);
+        if (exampleCalls.length === 0) {
             return undefined;
         }
 
-        return examples
-            .map((example) => {
-                const generatedExample = this.generateExample(example);
-                const exampleStr =
-                    "@example\n" +
-                    getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
-                return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
-            })
-            .join("\n\n");
+        const uniqueExamples: string[] = [];
+        for (const example of exampleCalls) {
+            const generatedExample = this.generateExample(example);
+            let exampleStr =
+                "@example\n" +
+                getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
+            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+            // Only add if it doesn't already exist
+            if (!uniqueExamples.includes(exampleStr)) {
+                uniqueExamples.push(exampleStr);
+            }
+        }
+        return uniqueExamples.join("\n\n");
     }
 
     private getInlineProperty(

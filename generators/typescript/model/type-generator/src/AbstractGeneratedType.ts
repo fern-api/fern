@@ -77,7 +77,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
             groups.push(this.docs);
         }
         for (const example of this.examples) {
-            const exampleStr =
+            let exampleStr =
                 "@example\n" +
                 getTextOfTsNode(
                     this.buildExample(example.shape, context, {
@@ -87,7 +87,11 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
                         isForResponse: opts?.isForResponse
                     })
                 );
-            groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
+            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+            // Only add if it doesn't already exist
+            if (!groups.includes(exampleStr)) {
+                groups.push(exampleStr);
+            }
         }
         if (groups.length === 0) {
             return undefined;
