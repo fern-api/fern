@@ -393,6 +393,12 @@ export class WireTestGenerator {
             basePath = "/" + basePath;
         }
 
+        // Strip URL fragment - fragments are never sent to the server in HTTP requests
+        const fragmentIndex = basePath.indexOf("#");
+        if (fragmentIndex !== -1) {
+            basePath = basePath.substring(0, fragmentIndex);
+        }
+
         const mappingKey = this.wiremockMappingKey(endpoint.method, basePath);
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
 
@@ -434,6 +440,12 @@ export class WireTestGenerator {
         }
         if (!basePath.startsWith("/")) {
             basePath = "/" + basePath;
+        }
+
+        // Strip URL fragment - fragments are never sent to the server in HTTP requests
+        const fragmentIndex = basePath.indexOf("#");
+        if (fragmentIndex !== -1) {
+            basePath = basePath.substring(0, fragmentIndex);
         }
 
         const mappingKey = this.wiremockMappingKey(endpoint.method, basePath);
