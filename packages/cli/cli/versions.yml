@@ -17,7 +17,7 @@
   createdAt: "2026-03-02"
   irVersion: 65
 
-- version: 3.98.6
+- version: 4.0.1
   changelogEntry:
     - summary: |
         Fix `x-fern-global-headers` ignoring the `optional` field in the legacy
