@@ -23,17 +23,22 @@ export async function getFileContent(
     const token = options?.authToken ?? process.env.GITHUB_TOKEN;
     const octokit = token != null ? new Octokit({ auth: token }) : new Octokit();
 
-    const response = await octokit.rest.repos.getContent({
-        owner,
-        repo,
-        path: filePath
-    });
+    try {
+        const response = await octokit.rest.repos.getContent({
+            owner,
+            repo,
+            path: filePath
+        });
 
-    // getContent returns a file object with content when the path is a file
-    const data = response.data;
-    if (!Array.isArray(data) && data.type === "file" && data.content != null) {
-        return Buffer.from(data.content, "base64").toString("utf-8");
+        // getContent returns a file object with content when the path is a file
+        const data = response.data;
+        if (!Array.isArray(data) && data.type === "file" && data.content != null) {
+            return Buffer.from(data.content, "base64").toString("utf-8");
+        }
+
+        return undefined;
+    } catch (error) {
+        // File doesn't exist (404), repo is private without auth (403), or other error
+        return undefined;
     }
-
-    return undefined;
 }
