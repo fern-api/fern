@@ -1,3 +1,4 @@
+import { StringWriter as CoreStringWriter } from "@fern-api/core-utils";
 import fs from "fs";
 
 export abstract class Writer {
@@ -81,15 +82,15 @@ export class StreamWriter extends Writer {
 }
 
 export class StringWriter extends Writer {
-    private content: string;
+    private delegate: CoreStringWriter;
 
     constructor() {
         super();
-        this.content = "";
+        this.delegate = new CoreStringWriter();
     }
 
     public async write(content: string): Promise<void> {
-        this.content += content;
+        this.delegate.write(content);
     }
 
     public async end(): Promise<void> {
@@ -97,6 +98,6 @@ export class StringWriter extends Writer {
     }
 
     public toString(): string {
-        return this.content;
+        return this.delegate.toString();
     }
 }

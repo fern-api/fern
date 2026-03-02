@@ -8228,6 +8228,9 @@ importers:
 
   packages/generator-cli:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../commons/core-utils
       '@fern-api/replay':
         specifier: ^0.6.2
         version: 0.6.2

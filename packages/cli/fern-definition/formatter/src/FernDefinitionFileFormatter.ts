@@ -1,4 +1,4 @@
-import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils";
+import { assertNever, assertNeverNoThrow, StringWriter } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import * as YAML from "yaml";
 
@@ -28,7 +28,7 @@ export class FernDefinitionFileFormatter {
         if (this.formatted == null) {
             const { header, body } = await this.splitFileAtHeader();
 
-            const writer = new FileWriter();
+            const writer = new StringWriter();
 
             if (!this.fileContents.includes("yaml-language-server")) {
                 writer.writeLine(LANG_SERVER_BANNER);
@@ -46,7 +46,7 @@ export class FernDefinitionFileFormatter {
             while (!reader.isEof()) {
                 location = this.writeNextLine({ nextLine: reader.readNextLine(), writer, location });
             }
-            this.formatted = await this.prettierFormat(writer.getContent());
+            this.formatted = await this.prettierFormat(writer.toString());
         }
         return this.formatted;
     }
@@ -83,7 +83,7 @@ export class FernDefinitionFileFormatter {
         location: previousLocation
     }: {
         nextLine: string;
-        writer: FileWriter;
+        writer: StringWriter;
         location: FernFileCursorLocation;
     }): FernFileCursorLocation {
         const newCursorLocation = this.getNewCursorLocation({ previousLocation, line: nextLine });
@@ -199,24 +199,5 @@ class LineReader {
             throw new Error("EOF");
         }
         return nextLine;
-    }
-}
-
-class FileWriter {
-    private content = "";
-
-    public write(content: string): void {
-        this.content += content;
-    }
-
-    public writeLine(content?: string): void {
-        if (content != null) {
-            this.write(content);
-        }
-        this.write("\n");
-    }
-
-    public getContent(): string {
-        return this.content;
     }
 }
