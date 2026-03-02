@@ -706,9 +706,9 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.writeLine();
                 }
 
-                writer.writeTextStatement(
-                    `await ExceptionOccurred.RaiseEvent(new Exception($"Unknown message type: {message.Type}")).ConfigureAwait(false)`
-                );
+                writer.write(`await UnknownMessage.RaiseEvent((`);
+                writer.writeNode(this.System.Text.Json.JsonElement);
+                writer.writeTextStatement(`)message.Value!).ConfigureAwait(false)`);
             })
         });
     }
@@ -741,6 +741,17 @@ export class WebSocketClientGenerator extends WithGeneration {
                     })
                 })
             ]
+        });
+
+        incomingMessageClass.addField({
+            enclosingType: incomingMessageClass,
+            summary: "Sentinel value for unknown/unrecognized event types",
+            origin: incomingMessageClass.explicit("_unknownType"),
+            access: ast.Access.Internal,
+            static_: true,
+            readonly: true,
+            type: this.Primitive.string,
+            initializer: this.csharp.codeblock(`"_unknown"`)
         });
 
         const typeField = incomingMessageClass.addField({
@@ -820,7 +831,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     }
                 });
                 writer.writeLine();
-                writer.writeTextStatement("return null");
+                writer.writeTextStatement("return new IncomingMessage(_unknownType, document.RootElement.Clone())");
             })
         });
 
@@ -954,6 +965,18 @@ export class WebSocketClientGenerator extends WithGeneration {
                 type: each.eventType
             });
         }
+
+        cls.addField({
+            origin: cls.explicit("UnknownMessage"),
+            readonly: true,
+            initializer: this.csharp.codeblock((writer) => writer.write(`new()`)),
+            access: ast.Access.Public,
+            doc: this.csharp.xmlDocBlockOf({
+                summary:
+                    "Event handler for unknown/unrecognized message types. \nUse UnknownMessage.Subscribe(...) to handle messages from newer server versions."
+            }),
+            type: this.Types.WebSocketEvent(this.System.Text.Json.JsonElement)
+        });
     }
 
     /**
@@ -1021,6 +1044,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 for (const event of this.events) {
                     writer.writeTextStatement(`${event.name}.Dispose()`);
                 }
+                writer.writeTextStatement(`UnknownMessage.Dispose()`);
             })
         });
     }

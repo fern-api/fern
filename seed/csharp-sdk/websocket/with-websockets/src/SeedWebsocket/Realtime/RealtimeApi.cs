@@ -58,6 +58,12 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     public readonly Event<FlushedEvent> FlushedEvent = new();
 
     /// <summary>
+    /// Event handler for unknown/unrecognized message types.
+    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
+    /// </summary>
+    public readonly Event<JsonElement> UnknownMessage = new();
+
+    /// <summary>
     /// Constructor with options
     /// </summary>
     public RealtimeApi(RealtimeApi.Options options)
@@ -106,6 +112,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         ReceiveEvent3.Dispose();
         TranscriptEvent.Dispose();
         FlushedEvent.Dispose();
+        UnknownMessage.Dispose();
     }
 
     /// <summary>
@@ -163,9 +170,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
             return;
         }
 
-        await ExceptionOccurred
-            .RaiseEvent(new Exception($"Unknown message type: {message.Type}"))
-            .ConfigureAwait(false);
+        await UnknownMessage.RaiseEvent((JsonElement)message.Value!).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -239,6 +244,11 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     [JsonConverter(typeof(RealtimeApi.IncomingMessage.JsonConverter))]
     internal class IncomingMessage
     {
+        /// <summary>
+        /// Sentinel value for unknown/unrecognized event types
+        /// </summary>
+        internal static readonly string _unknownType = "_unknown";
+
         private IncomingMessage(string type, object? value)
         {
             Type = type;
@@ -288,7 +298,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
                     catch (JsonException) { }
                 }
 
-                return null;
+                return new IncomingMessage(_unknownType, document.RootElement.Clone());
             }
 
             public override void Write(

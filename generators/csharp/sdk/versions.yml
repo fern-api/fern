@@ -10,6 +10,9 @@
     - summary: |
         Set the default environment on the WebSocket Options class when environments are defined, so the Environment property is pre-populated with the configured default. Previously the property had no default, which could lead to misconfiguration.
       type: fix
+    - summary: |
+        Add forward-compatible UnknownMessage event to WebSocket clients. When the server sends an event type not recognized by the SDK, it is now dispatched to the UnknownMessage event handler (as a JsonElement) instead of raising an exception. This allows SDKs to gracefully handle new server event types without requiring regeneration.
+      type: feat
   createdAt: "2026-03-02"
   irVersion: 62
 

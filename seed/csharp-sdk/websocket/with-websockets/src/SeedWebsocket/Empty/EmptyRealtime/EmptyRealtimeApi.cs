@@ -22,6 +22,12 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     }
 
     /// <summary>
+    /// Event handler for unknown/unrecognized message types.
+    /// Use UnknownMessage.Subscribe(...) to handle messages from newer server versions.
+    /// </summary>
+    public readonly Event<JsonElement> UnknownMessage = new();
+
+    /// <summary>
     /// Default constructor
     /// </summary>
     public EmptyRealtimeApi() { }
@@ -60,7 +66,10 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     /// <summary>
     /// Disposes of event subscriptions
     /// </summary>
-    private void DisposeEvents() { }
+    private void DisposeEvents()
+    {
+        UnknownMessage.Dispose();
+    }
 
     /// <summary>
     /// Dispatches incoming WebSocket messages
@@ -79,9 +88,7 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
             return;
         }
 
-        await ExceptionOccurred
-            .RaiseEvent(new Exception($"Unknown message type: {message.Type}"))
-            .ConfigureAwait(false);
+        await UnknownMessage.RaiseEvent((JsonElement)message.Value!).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -123,6 +130,11 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
     [JsonConverter(typeof(EmptyRealtimeApi.IncomingMessage.JsonConverter))]
     internal class IncomingMessage
     {
+        /// <summary>
+        /// Sentinel value for unknown/unrecognized event types
+        /// </summary>
+        internal static readonly string _unknownType = "_unknown";
+
         private IncomingMessage(string type, object? value)
         {
             Type = type;
@@ -164,7 +176,7 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
                     catch (JsonException) { }
                 }
 
-                return null;
+                return new IncomingMessage(_unknownType, document.RootElement.Clone());
             }
 
             public override void Write(
