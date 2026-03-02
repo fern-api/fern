@@ -29,7 +29,8 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # (async parser bypasses maxNumberLength constraint, leading to potential DoS)
 RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
     curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.6/jackson-core-2.18.6.jar \
-      -o /opt/gradle/lib/jackson-core-2.18.6.jar
+      -o /opt/gradle/lib/jackson-core-2.18.6.jar && \
+    echo "e7e1bfa50f0a79db37e6aa37db111cf03aebf4a484b359d21127ab43ab2398c6  /opt/gradle/lib/jackson-core-2.18.6.jar" | sha256sum -c -
 
 # Update packages to get latest security fixes and remove unnecessary packages
 # Amazon Linux 2023 uses dnf instead of apt-get
