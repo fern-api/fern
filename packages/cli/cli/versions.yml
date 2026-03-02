@@ -17,6 +17,19 @@
   createdAt: "2026-03-02"
   irVersion: 65
 
+- version: 3.98.5
+  changelogEntry:
+    - summary: |
+        Support namespace resolution in docs types. When multiple OpenAPI specs
+        define types with the same name (e.g., `Team` in both EntityManager and
+        TaskManager specs), the docs type converter now respects `x-fern-sdk-namespace`
+        to namespace TypeIds (e.g., `entity_manager:Team`), preventing collisions.
+        The namespace is resolved from `generators.yml` configuration or directly
+        from the `x-fern-sdk-namespace` extension in the OpenAPI/AsyncAPI spec.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.98.4
   changelogEntry:
     - summary: |
