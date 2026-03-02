@@ -29,6 +29,21 @@ function mockFetchError(): never {
     throw new TypeError("fetch failed");
 }
 
+function mockFetchTimeout(): never {
+    throw new DOMException("The operation was aborted due to timeout", "TimeoutError");
+}
+
+function mockFetchJsonError(ok = true, status = 200): Response {
+    return {
+        ok,
+        status,
+        json: () => {
+            throw new SyntaxError("Unexpected token < in JSON at position 0");
+        },
+        text: () => Promise.resolve("<html>Server Error</html>")
+    } as unknown as Response;
+}
+
 /** Minimal GeneratorInvocation stub for publish output mode */
 function makePublishInvocation(language: string) {
     return {
@@ -143,6 +158,56 @@ describe("doesNpmVersionExist", () => {
         vi.mocked(fetch).mockImplementationOnce(mockFetchError);
         await expect(doesNpmVersionExist("pkg", "1.0.0")).rejects.toThrow("fetch failed");
     });
+
+    it("throws on timeout (not caught internally)", async () => {
+        vi.mocked(fetch).mockImplementationOnce(mockFetchTimeout);
+        await expect(doesNpmVersionExist("pkg", "1.0.0")).rejects.toThrow("timeout");
+    });
+
+    it("returns false on 500 server error", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 500));
+        expect(await doesNpmVersionExist("pkg", "1.0.0")).toBe(false);
+    });
+
+    it("returns false on 401 unauthorized", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 401));
+        expect(await doesNpmVersionExist("pkg", "1.0.0")).toBe(false);
+    });
+
+    it("returns false on 403 forbidden", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 403));
+        expect(await doesNpmVersionExist("pkg", "1.0.0")).toBe(false);
+    });
+
+    it("returns false when response has empty body", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, true, 200));
+        expect(await doesNpmVersionExist("pkg", "1.0.0")).toBe(false);
+    });
+
+    it("returns false when response has unexpected shape", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ name: "pkg", dist: {} }, true, 200));
+        expect(await doesNpmVersionExist("pkg", "1.0.0")).toBe(false);
+    });
+
+    it("throws when json() throws (non-JSON response)", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchJsonError(true, 200));
+        await expect(doesNpmVersionExist("pkg", "1.0.0")).rejects.toThrow("Unexpected token");
+    });
+
+    it("encodes scoped package names correctly", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
+        await doesNpmVersionExist("@scope/pkg", "1.0.0");
+        const calledUrl = vi.mocked(fetch).mock.calls[0]?.[0] as string;
+        expect(calledUrl).toBe("https://registry.npmjs.org/@scope%2Fpkg/1.0.0");
+    });
+
+    it("does not send auth header when NPM_TOKEN is not set", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
+        await doesNpmVersionExist("pkg", "1.0.0");
+        const calledOptions = vi.mocked(fetch).mock.calls[0]?.[1] as RequestInit;
+        const headers = calledOptions.headers as Record<string, string>;
+        expect(headers.authorization).toBeUndefined();
+    });
 });
 
 describe("doesPypiVersionExist", () => {
@@ -167,6 +232,16 @@ describe("doesPypiVersionExist", () => {
     it("returns false on 404", async () => {
         vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 404));
         expect(await doesPypiVersionExist("nonexistent", "1.0.0")).toBe(false);
+    });
+
+    it("returns false on 500 server error", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 500));
+        expect(await doesPypiVersionExist("pkg", "1.0.0")).toBe(false);
+    });
+
+    it("throws on timeout (not caught internally)", async () => {
+        vi.mocked(fetch).mockImplementationOnce(mockFetchTimeout);
+        await expect(doesPypiVersionExist("pkg", "1.0.0")).rejects.toThrow("timeout");
     });
 });
 
@@ -196,6 +271,26 @@ describe("doesMavenVersionExist", () => {
         expect(await doesMavenVersionExist("invalid-no-colon", "1.0.0")).toBe(false);
         expect(fetch).not.toHaveBeenCalled();
     });
+
+    it("returns false on 500 server error", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 500));
+        expect(await doesMavenVersionExist("com.example:lib", "1.0.0")).toBe(false);
+    });
+
+    it("returns false when response has no numFound", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ response: {} }));
+        expect(await doesMavenVersionExist("com.example:lib", "1.0.0")).toBe(false);
+    });
+
+    it("returns false when response field is missing entirely", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}));
+        expect(await doesMavenVersionExist("com.example:lib", "1.0.0")).toBe(false);
+    });
+
+    it("returns false for coordinate with empty parts", async () => {
+        expect(await doesMavenVersionExist(":lib", "1.0.0")).toBe(false);
+        expect(await doesMavenVersionExist("com.example:", "1.0.0")).toBe(false);
+    });
 });
 
 describe("doesNugetVersionExist", () => {
@@ -223,6 +318,16 @@ describe("doesNugetVersionExist", () => {
         await doesNugetVersionExist("Newtonsoft.Json", "1.0.0");
         expect(fetch).toHaveBeenCalledWith(expect.stringContaining("newtonsoft.json"), expect.any(Object));
     });
+
+    it("returns false on 500 server error", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 500));
+        expect(await doesNugetVersionExist("MyPkg", "1.0.0")).toBe(false);
+    });
+
+    it("returns false when versions field is missing", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}));
+        expect(await doesNugetVersionExist("MyPkg", "1.0.0")).toBe(false);
+    });
 });
 
 describe("doesRubyGemsVersionExist", () => {
@@ -243,6 +348,11 @@ describe("doesRubyGemsVersionExist", () => {
     it("returns false on 404", async () => {
         vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 404));
         expect(await doesRubyGemsVersionExist("rails", "999.0.0")).toBe(false);
+    });
+
+    it("returns false on 500 server error", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 500));
+        expect(await doesRubyGemsVersionExist("rails", "1.0.0")).toBe(false);
     });
 });
 
@@ -277,6 +387,24 @@ describe("doesGoVersionExist", () => {
         vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 404));
         expect(await doesGoVersionExist("nonexistent.com/mod", "1.0.0")).toBe(false);
     });
+
+    it("returns false on 500 server error", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 500));
+        expect(await doesGoVersionExist("golang.org/x/text", "1.0.0")).toBe(false);
+    });
+
+    it("returns false when Version field is missing", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}));
+        expect(await doesGoVersionExist("golang.org/x/text", "1.0.0")).toBe(false);
+    });
+
+    it("does not add extra v prefix when version already starts with v", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ Version: "v1.0.0" }));
+        await doesGoVersionExist("golang.org/x/text", "v1.0.0");
+        expect(fetch).toHaveBeenCalledWith(expect.stringContaining("v1.0.0.info"), expect.any(Object));
+        // Should NOT have vv1.0.0
+        expect(fetch).not.toHaveBeenCalledWith(expect.stringContaining("vv1.0.0"), expect.any(Object));
+    });
 });
 
 describe("doesCratesVersionExist", () => {
@@ -310,6 +438,21 @@ describe("doesCratesVersionExist", () => {
                 })
             })
         );
+    });
+
+    it("returns false on 500 server error", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 500));
+        expect(await doesCratesVersionExist("serde", "1.0.0")).toBe(false);
+    });
+
+    it("returns false when version.num is missing", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: {} }));
+        expect(await doesCratesVersionExist("serde", "1.0.0")).toBe(false);
+    });
+
+    it("returns false when version field is missing entirely", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}));
+        expect(await doesCratesVersionExist("serde", "1.0.0")).toBe(false);
     });
 });
 
@@ -350,6 +493,22 @@ describe("doesVersionExistOnRegistry", () => {
         });
         expect(result).toBe(false);
         expect(fetch).not.toHaveBeenCalled();
+    });
+
+    it.each([
+        ["java", "Maven Central"],
+        ["csharp", "NuGet"],
+        ["ruby", "RubyGems"],
+        ["go", "Go Module Proxy"],
+        ["rust", "crates.io"]
+    ])("routes %s to %s", async (language) => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 404));
+        await doesVersionExistOnRegistry({
+            packageName: language === "java" ? "com.example:lib" : language === "go" ? "golang.org/x/text" : "pkg",
+            version: "1.0.0",
+            language
+        });
+        expect(fetch).toHaveBeenCalledTimes(1);
     });
 });
 
@@ -582,6 +741,110 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         expect(ctx._warnMessages).toHaveLength(0);
         expect(ctx._debugMessages).toHaveLength(1);
         expect(ctx._debugMessages[0]).toContain("Could not verify");
+    });
+
+    it("silently continues on timeout error (best-effort)", async () => {
+        vi.mocked(fetch).mockImplementationOnce(mockFetchTimeout);
+        const ctx = makeMockContext();
+        await checkVersionDoesNotAlreadyExist({
+            version: "1.0.0",
+            packageName: "@acme/sdk",
+            generatorInvocation: makePublishInvocation("typescript"),
+            context: ctx
+        });
+        expect(ctx._failMessages).toHaveLength(0);
+        expect(ctx._debugMessages).toHaveLength(1);
+        expect(ctx._debugMessages[0]).toContain("Could not verify");
+        expect(ctx._debugMessages[0]).toContain("timeout");
+    });
+
+    it("silently continues when registry returns non-JSON (best-effort)", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchJsonError(true, 200));
+        const ctx = makeMockContext();
+        await checkVersionDoesNotAlreadyExist({
+            version: "1.0.0",
+            packageName: "@acme/sdk",
+            generatorInvocation: makePublishInvocation("typescript"),
+            context: ctx
+        });
+        expect(ctx._failMessages).toHaveLength(0);
+        expect(ctx._debugMessages).toHaveLength(1);
+        expect(ctx._debugMessages[0]).toContain("Could not verify");
+    });
+
+    it("does not fail when registry returns 500 (version not found = proceeds)", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 500));
+        const ctx = makeMockContext();
+        await checkVersionDoesNotAlreadyExist({
+            version: "1.0.0",
+            packageName: "@acme/sdk",
+            generatorInvocation: makePublishInvocation("typescript"),
+            context: ctx
+        });
+        // 500 → doesNpmVersionExist returns false → no failure, generation proceeds
+        expect(ctx._failMessages).toHaveLength(0);
+        expect(ctx._warnMessages).toHaveLength(0);
+    });
+
+    it("gracefully handles all supported languages on network error", async () => {
+        const languages = ["typescript", "python", "java", "csharp", "ruby", "go", "rust"];
+        for (const lang of languages) {
+            vi.mocked(fetch).mockImplementationOnce(mockFetchError);
+            const ctx = makeMockContext();
+            await checkVersionDoesNotAlreadyExist({
+                version: "1.0.0",
+                packageName: lang === "java" ? "com.example:lib" : "pkg",
+                generatorInvocation: makePublishInvocation(lang),
+                context: ctx
+            });
+            expect(ctx._failMessages).toHaveLength(0);
+            expect(ctx._debugMessages).toHaveLength(1);
+            expect(ctx._debugMessages[0]).toContain("Could not verify");
+        }
+    });
+
+    it("gracefully handles unknown language (no registry check, no error)", async () => {
+        const ctx = makeMockContext();
+        await checkVersionDoesNotAlreadyExist({
+            version: "1.0.0",
+            packageName: "pkg",
+            generatorInvocation: makePublishInvocation("swift"),
+            context: ctx
+        });
+        expect(fetch).not.toHaveBeenCalled();
+        expect(ctx._failMessages).toHaveLength(0);
+        expect(ctx._warnMessages).toHaveLength(0);
+    });
+
+    it("error message includes registry name and version info", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "2.5.0" }));
+        const ctx = makeMockContext();
+        await expect(
+            checkVersionDoesNotAlreadyExist({
+                version: "2.5.0",
+                packageName: "@fern-api/sdk",
+                generatorInvocation: makePublishInvocation("typescript"),
+                context: ctx
+            })
+        ).rejects.toThrow();
+        expect(ctx._failMessages[0]).toContain("2.5.0");
+        expect(ctx._failMessages[0]).toContain("@fern-api/sdk");
+        expect(ctx._failMessages[0]).toContain("npm");
+        expect(ctx._failMessages[0]).toContain("omit the --version flag");
+    });
+
+    it("warning message includes registry name for githubV2", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, true, 200));
+        const ctx = makeMockContext();
+        await checkVersionDoesNotAlreadyExist({
+            version: "1.0.0",
+            packageName: "requests",
+            generatorInvocation: makeGithubV2Invocation("owner", "repo", "python"),
+            context: ctx
+        });
+        expect(ctx._warnMessages).toHaveLength(1);
+        expect(ctx._warnMessages[0]).toContain("PyPI");
+        expect(ctx._warnMessages[0]).toContain("CI pipeline");
     });
 });
 
