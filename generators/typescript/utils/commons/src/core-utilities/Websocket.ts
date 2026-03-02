@@ -75,9 +75,7 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
                         ts.factory.createPropertyAssignment("options", args.options)
                     ];
                     if (args.abortSignal != null) {
-                        properties.push(
-                            ts.factory.createPropertyAssignment("abortSignal", args.abortSignal)
-                        );
+                        properties.push(ts.factory.createPropertyAssignment("abortSignal", args.abortSignal));
                     }
                     return ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
                         ts.factory.createObjectLiteralExpression(properties)

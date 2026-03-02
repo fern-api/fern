@@ -65,7 +65,7 @@ export class RealtimeClient {
             options: {
                 debug: debug ?? false,
                 maxRetries: reconnectAttempts ?? 30,
-                connectionTimeout: connectionTimeoutInSeconds !== null ? connectionTimeoutInSeconds * 1000 : undefined,
+                connectionTimeout: connectionTimeoutInSeconds != null ? connectionTimeoutInSeconds * 1000 : undefined,
             },
             abortSignal: abortSignal,
         });

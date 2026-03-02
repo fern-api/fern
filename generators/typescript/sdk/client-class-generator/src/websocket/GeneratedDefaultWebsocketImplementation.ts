@@ -564,7 +564,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             ts.factory.createIdentifier(
                                 GeneratedDefaultWebsocketImplementation.CONNECTION_TIMEOUT_PROPERTY_NAME
                             ),
-                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
                             ts.factory.createNull()
                         ),
                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
@@ -582,9 +582,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             ]),
             headers: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.HEADERS_VARIABLE_NAME),
             queryParameters: this.getMergedQueryParameters(),
-            abortSignal: ts.factory.createIdentifier(
-                GeneratedDefaultWebsocketImplementation.ABORT_SIGNAL_PROPERTY_NAME
-            )
+            abortSignal: ts.factory.createIdentifier(GeneratedDefaultWebsocketImplementation.ABORT_SIGNAL_PROPERTY_NAME)
         });
     }
 
