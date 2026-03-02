@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.9
+  changelogEntry:
+    - summary: |
+        Deduplicate `@example` JSDoc blocks in request wrapper and type declaration
+        comments. When multiple examples produce identical output, only the first is
+        kept. The endpoint method docs already had this deduplication; this fix extends
+        it to request wrappers and type declarations.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.52.8
   changelogEntry:
     - summary: |

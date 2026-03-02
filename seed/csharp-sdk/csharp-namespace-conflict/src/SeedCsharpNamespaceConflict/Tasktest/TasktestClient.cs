@@ -29,7 +29,6 @@ public partial class TasktestClient : ITasktestClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "hello",
                     Headers = _headers,

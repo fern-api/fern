@@ -30,7 +30,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/params/path/{0}",
@@ -95,7 +94,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/params/path/{0}",
@@ -161,7 +159,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
                     Path = string.Format(
                         "/params/path/{0}",
@@ -227,7 +224,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
                     Path = string.Format(
                         "/params/path/{0}",
@@ -294,7 +290,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new StreamRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "/params/path/{0}",
@@ -405,7 +400,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/params",
                     QueryString = _queryString,
@@ -458,7 +452,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/params",
                     QueryString = _queryString,
@@ -512,7 +505,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/params/path-query/{0}",
@@ -567,7 +559,6 @@ public partial class ParamsClient : IParamsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/params/path-query/{0}",

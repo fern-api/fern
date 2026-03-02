@@ -56,7 +56,6 @@ public partial class SeedApiClient : ISeedApiClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "documents/upload",
                     Body = request,
@@ -124,7 +123,6 @@ public partial class SeedApiClient : ISeedApiClient
             .SendRequestAsync(
                 new StreamRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "documents/upload",
                     Body = request,

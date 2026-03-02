@@ -28,7 +28,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "movie",
                     Body = request,
@@ -91,7 +90,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "movie",
                     Body = request,
@@ -154,7 +152,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "movie",
                     Body = request,
@@ -217,7 +214,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "movie",
                     Body = request,
@@ -280,7 +276,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "movie",
                     Body = request,
@@ -343,7 +338,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "movie",
                     Body = request,
@@ -406,7 +400,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "movie",
                     Body = request,
