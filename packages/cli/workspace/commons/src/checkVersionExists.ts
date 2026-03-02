@@ -28,6 +28,10 @@ interface GoProxyVersionResponse {
     Version?: string;
 }
 
+interface GithubRefResponse {
+    ref?: string;
+}
+
 /**
  * Checks whether the specified version already exists on the target package registry
  * (or as a GitHub tag for GitHub output modes) for the given generator invocation.
@@ -148,8 +152,23 @@ export async function doesGithubTagExist(githubRepository: string, version: stri
             headers,
             signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
         });
-        if (response.ok) {
-            return true;
+        if (!response.ok) {
+            continue;
+        }
+        // The GitHub REST API does prefix matching on refs — e.g. requesting
+        // "tags/v1.0.0" may return "tags/v1.0.0-beta" as well. We need to
+        // verify the exact ref name in the response body.
+        const data = await response.json();
+        const expectedRef = `refs/tags/${tag}`;
+        if (Array.isArray(data)) {
+            if (data.some((item: GithubRefResponse) => item.ref === expectedRef)) {
+                return true;
+            }
+        } else {
+            const single = data as GithubRefResponse;
+            if (single.ref === expectedRef) {
+                return true;
+            }
         }
     }
     return false;

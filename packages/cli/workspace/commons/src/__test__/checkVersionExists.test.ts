@@ -323,7 +323,7 @@ describe("doesGithubTagExist", () => {
     });
 
     it("returns true when v-prefixed tag exists", async () => {
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, true, 200)); // v1.0.0 found
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ ref: "refs/tags/v1.0.0" }, true, 200));
         expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(true);
         // Should try v1.0.0 first
         expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/git/ref/tags/v1.0.0"), expect.any(Object));
@@ -332,7 +332,7 @@ describe("doesGithubTagExist", () => {
     it("returns true when non-v tag exists (fallback)", async () => {
         vi.mocked(fetch)
             .mockResolvedValueOnce(mockFetchResponse({}, false, 404)) // v1.0.0 not found
-            .mockResolvedValueOnce(mockFetchResponse({}, true, 200)); // 1.0.0 found
+            .mockResolvedValueOnce(mockFetchResponse({ ref: "refs/tags/1.0.0" }, true, 200)); // 1.0.0 found
         expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(true);
     });
 
@@ -343,9 +343,25 @@ describe("doesGithubTagExist", () => {
         expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(false);
     });
 
+    it("returns false on prefix-match false positive (v1.0.0-beta exists but v1.0.0 does not)", async () => {
+        // GitHub API returns 200 with prefix-matched refs
+        vi.mocked(fetch)
+            .mockResolvedValueOnce(mockFetchResponse([{ ref: "refs/tags/v1.0.0-beta" }], true, 200)) // v1.0.0 prefix matches v1.0.0-beta
+            .mockResolvedValueOnce(mockFetchResponse([{ ref: "refs/tags/1.0.0-beta" }], true, 200)); // 1.0.0 prefix matches 1.0.0-beta
+        expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(false);
+    });
+
+    it("returns true when exact match is among prefix-matched results", async () => {
+        // GitHub API returns array with multiple prefix-matched refs including the exact match
+        vi.mocked(fetch).mockResolvedValueOnce(
+            mockFetchResponse([{ ref: "refs/tags/v1.0.0" }, { ref: "refs/tags/v1.0.0-beta" }], true, 200)
+        );
+        expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(true);
+    });
+
     it("sends auth header when GITHUB_TOKEN is set", async () => {
         process.env.GITHUB_TOKEN = "gh-token";
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, true, 200));
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ ref: "refs/tags/v1.0.0" }, true, 200));
         await doesGithubTagExist("owner/repo", "1.0.0");
         expect(fetch).toHaveBeenCalledWith(
             expect.any(String),
@@ -528,8 +544,8 @@ describe("checkVersionDoesNotAlreadyExist", () => {
     });
 
     it("checks GitHub tags for githubV2 output mode", async () => {
-        // GitHub tag check: v1.0.0 found
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, true, 200));
+        // GitHub tag check: v1.0.0 found (exact match)
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ ref: "refs/tags/v1.0.0" }, true, 200));
         const ctx = makeMockContext();
         await expect(
             checkVersionDoesNotAlreadyExist({
