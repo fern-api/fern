@@ -57,6 +57,7 @@ export async function runLocalGenerationForWorkspace({
     noReplay?: boolean;
     validateWorkspace?: boolean;
 }): Promise<void> {
+    const userProvidedVersion = version; // Capture before Promise.all — shared `version` is mutated inside the loop
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
@@ -87,14 +88,13 @@ export async function runLocalGenerationForWorkspace({
                 });
 
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-                const explicitVersion = version; // Save before auto-compute overwrites it
                 version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
                 // Fail fast if the target version already exists on the package registry.
                 // Only check when the user explicitly provided a version (not auto-computed).
-                if (absolutePathToPreview == null && explicitVersion != null) {
+                if (absolutePathToPreview == null && userProvidedVersion != null) {
                     await checkVersionDoesNotAlreadyExist({
-                        version: explicitVersion,
+                        version: userProvidedVersion,
                         packageName,
                         generatorInvocation,
                         context: interactiveTaskContext

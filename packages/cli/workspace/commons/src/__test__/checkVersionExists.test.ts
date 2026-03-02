@@ -555,6 +555,26 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         expect(ctx._debugMessages).toHaveLength(1);
     });
 
+    it("falls through to registry check when GitHub tag check errors", async () => {
+        // GitHub tag check: throws network error
+        vi.mocked(fetch)
+            .mockImplementationOnce(mockFetchError) // GitHub tag check fails
+            .mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" })); // npm registry returns version exists
+
+        const ctx = makeMockContext();
+        await expect(
+            checkVersionDoesNotAlreadyExist({
+                version: "1.0.0",
+                packageName: "@acme/sdk",
+                generatorInvocation: makeGithubV2Invocation("owner", "repo", "typescript"),
+                context: ctx
+            })
+        ).rejects.toThrow("already exists on the npm");
+        // Should have debug message from GitHub error AND fail from registry check
+        expect(ctx._debugMessages).toHaveLength(1);
+        expect(ctx._debugMessages[0]).toContain("GitHub");
+    });
+
     it("checks both GitHub tags AND registry for githubV2 with language", async () => {
         // GitHub tag check: neither v1.0.0 nor 1.0.0 exist
         vi.mocked(fetch)

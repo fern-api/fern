@@ -75,7 +75,7 @@ export async function checkVersionDoesNotAlreadyExist({
             context.logger.debug(
                 `Could not verify tag availability on GitHub: ${error instanceof Error ? error.message : String(error)}`
             );
-            return;
+            tagExists = false;
         }
         if (tagExists) {
             context.failAndThrow(
