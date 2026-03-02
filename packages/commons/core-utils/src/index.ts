@@ -38,6 +38,7 @@ export { parseEndpointLocator } from "./parseEndpointLocator.js";
 export { PLATFORM, type Platform } from "./platform.js";
 export { removeSuffix } from "./removeSuffix.js";
 export { replaceEnvVariables } from "./replaceEnvVars.js";
+export { StringWriter } from "./StringWriter.js";
 export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry.js";
 export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
