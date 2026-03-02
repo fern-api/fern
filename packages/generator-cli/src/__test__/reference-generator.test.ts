@@ -1,4 +1,3 @@
-import { PassThrough } from "stream";
 import type { FernGeneratorCli } from "../configuration/sdk/index.js";
 import { ReferenceGenerator } from "../reference/ReferenceGenerator.js";
 
@@ -31,13 +30,7 @@ describe("ReferenceGenerator", () => {
             };
 
             const generator = new ReferenceGenerator({ referenceConfig: config });
-            const output = new PassThrough();
-            const chunks: Buffer[] = [];
-
-            output.on("data", (chunk) => chunks.push(chunk));
-
-            await generator.generate({ output: output as any });
-            const result = Buffer.concat(chunks).toString();
+            const result = await generator.generateToString();
 
             // Snapshot the output for visual inspection
             await expect(result).toMatchFileSnapshot("./__snapshots__/html-encoding-code-blocks.md");
@@ -79,13 +72,7 @@ describe("ReferenceGenerator", () => {
             };
 
             const generator = new ReferenceGenerator({ referenceConfig: config });
-            const output = new PassThrough();
-            const chunks: Buffer[] = [];
-
-            output.on("data", (chunk) => chunks.push(chunk));
-
-            await generator.generate({ output: output as any });
-            const result = Buffer.concat(chunks).toString();
+            const result = await generator.generateToString();
 
             // Snapshot the output for visual inspection
             await expect(result).toMatchFileSnapshot("./__snapshots__/no-encoding-parameter-backticks.md");
@@ -125,13 +112,7 @@ describe("ReferenceGenerator", () => {
             };
 
             const generator = new ReferenceGenerator({ referenceConfig: config });
-            const output = new PassThrough();
-            const chunks: Buffer[] = [];
-
-            output.on("data", (chunk) => chunks.push(chunk));
-
-            await generator.generate({ output: output as any });
-            const result = Buffer.concat(chunks).toString();
+            const result = await generator.generateToString();
 
             // Snapshot the output for visual inspection
             await expect(result).toMatchFileSnapshot("./__snapshots__/linked-parameter-no-encoding.md");
@@ -166,13 +147,7 @@ describe("ReferenceGenerator", () => {
             };
 
             const generator = new ReferenceGenerator({ referenceConfig: config });
-            const output = new PassThrough();
-            const chunks: Buffer[] = [];
-
-            output.on("data", (chunk) => chunks.push(chunk));
-
-            await generator.generate({ output: output as any });
-            const result = Buffer.concat(chunks).toString();
+            const result = await generator.generateToString();
 
             // Snapshot the output for visual inspection
             await expect(result).toMatchFileSnapshot("./__snapshots__/linked-return-value-encoding.md");
@@ -338,13 +313,7 @@ describe("ReferenceGenerator", () => {
             };
 
             const generator = new ReferenceGenerator({ referenceConfig: config });
-            const output = new PassThrough();
-            const chunks: Buffer[] = [];
-
-            output.on("data", (chunk) => chunks.push(chunk));
-
-            await generator.generate({ output: output as any });
-            const result = Buffer.concat(chunks).toString();
+            const result = await generator.generateToString();
 
             // Snapshot the comprehensive output
             await expect(result).toMatchFileSnapshot("./__snapshots__/comprehensive-reference.md");

@@ -1,6 +1,6 @@
-import { fail } from "node:assert";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { fail } from "../utils/fail.js";
 
 import { type TypesOf } from "../utils/type-extractor.js";
 import { is } from "../utils/type-guards.js";

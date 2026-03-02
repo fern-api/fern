@@ -8,7 +8,7 @@ export const GetBasicSolutionFileResponse: core.serialization.ObjectSchema<
     serializers.v2.GetBasicSolutionFileResponse.Raw,
     SeedTrace.v2.GetBasicSolutionFileResponse
 > = core.serialization.object({
-    solutionFileByLanguage: core.serialization.record(
+    solutionFileByLanguage: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.FileInfoV2).optional(),
     ),

@@ -1,7 +1,12 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import {
+    checkVersionDoesNotAlreadyExist,
+    computeSemanticVersion,
+    getPackageNameFromGeneratorConfig
+} from "@fern-api/api-workspace-commons";
+import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -9,6 +14,7 @@ import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@
 import { cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -37,7 +43,8 @@ export async function runLocalGenerationForWorkspace({
     runner,
     ai,
     replay,
-    noReplay
+    noReplay,
+    validateWorkspace
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -52,7 +59,30 @@ export async function runLocalGenerationForWorkspace({
     ai: generatorsYml.AiServicesSchema | undefined;
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
+    validateWorkspace?: boolean;
 }): Promise<void> {
+    // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
+    // This avoids wasted work when one generator would fail the version check.
+    const userProvidedVersion = version;
+    if (userProvidedVersion != null) {
+        if (absolutePathToPreview != null) {
+            context.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${userProvidedVersion} may already exist on the package registry.`
+            );
+        } else {
+            for (const generatorInvocation of generatorGroup.generators) {
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                await checkVersionDoesNotAlreadyExist({
+                    version: userProvidedVersion,
+                    packageName,
+                    generatorInvocation,
+                    context
+                });
+            }
+        }
+    }
+
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
@@ -66,6 +96,15 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
                     generatorInvocation.apiOverride?.specs
                 );
+
+                if (validateWorkspace) {
+                    await validateAPIWorkspaceAndLogIssues({
+                        workspace: fernWorkspace,
+                        context,
+                        logWarnings: false,
+                        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                    });
+                }
 
                 const dynamicGeneratorConfig = getDynamicGeneratorConfig({
                     apiName: fernWorkspace.definition.rootApiFile.contents.name,
@@ -342,39 +381,9 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
-function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
-    // Check output.package-name for npm/PyPI/etc.
-    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
-        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
-        if (packageName != null) {
-            return packageName;
-        }
-
-        // Check output.coordinate for Maven (Java)
-        const coordinate = (generatorInvocation.raw.output as { coordinate?: string }).coordinate;
-        if (coordinate != null) {
-            return coordinate;
-        }
-    }
-
-    // Check config.package_name if output.package-name is not set
-    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
-        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
-        if (packageName != null) {
-            return packageName;
-        }
-
-        // go-sdk generator uses module.path to set the package name
-        const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
-        if (modulePath != null) {
-            return modulePath;
-        }
-    }
-    return undefined;
-}
 function resolveAbsolutePathToLocalPreview(
     absolutePathToPreview: AbsoluteFilePath | undefined,
-    generatorInvocation: GeneratorInvocation
+    generatorInvocation: generatorsYml.GeneratorInvocation
 ): AbsoluteFilePath | undefined {
     if (absolutePathToPreview == null) {
         return undefined;

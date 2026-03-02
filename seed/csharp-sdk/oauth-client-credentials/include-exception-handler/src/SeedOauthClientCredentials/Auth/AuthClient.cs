@@ -39,7 +39,6 @@ public partial class AuthClient : IAuthClient
                     .SendRequestAsync(
                         new FormRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/token",
                             Body = request,
@@ -110,7 +109,6 @@ public partial class AuthClient : IAuthClient
                     .SendRequestAsync(
                         new FormRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/token",
                             Body = request,

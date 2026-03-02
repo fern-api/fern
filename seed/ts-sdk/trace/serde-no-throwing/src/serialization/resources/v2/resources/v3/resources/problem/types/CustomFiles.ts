@@ -12,7 +12,7 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFile
         .union("type", {
             basic: BasicCustomFiles,
             custom: core.serialization.object({
-                value: core.serialization.record(Language, Files.optional()),
+                value: core.serialization.partialRecord(Language, Files.optional()),
             }),
         })
         .transform<SeedTrace.v2.v3.CustomFiles>({

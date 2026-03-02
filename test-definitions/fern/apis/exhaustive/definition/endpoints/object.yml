@@ -59,6 +59,21 @@ service:
       request: list<objects.NestedObjectWithRequiredField>
       response: objects.NestedObjectWithRequiredField
 
+    getAndReturnWithUnknownField:
+      path: /get-and-return-with-unknown-field
+      method: POST
+      request: objects.ObjectWithUnknownField
+      response: objects.ObjectWithUnknownField
+      examples:
+        - name: BackslashExample
+          request:
+            unknown:
+              "\\$ref": "https://example.com/schema"
+          response:
+            body:
+              unknown:
+                "\\$ref": "https://example.com/schema"
+
     getAndReturnWithDatetimeLikeString:
       docs: |
         Tests that string fields containing datetime-like values are NOT reformatted.

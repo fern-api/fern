@@ -12,6 +12,7 @@ from ...types.object.types.object_with_datetime_like_string import ObjectWithDat
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.object.types.object_with_unknown_field import ObjectWithUnknownField
 from .raw_client import AsyncRawObjectClient, RawObjectClient
 
 # this is used as the default value for optional parameters
@@ -418,6 +419,36 @@ class ObjectClient:
         _response = self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
         )
+        return _response.data
+
+    def get_and_return_with_unknown_field(
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectWithUnknownField:
+        """
+        Parameters
+        ----------
+        unknown : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithUnknownField
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_unknown_field(
+            unknown={"$ref": "https://example.com/schema"},
+        )
+        """
+        _response = self._raw_client.get_and_return_with_unknown_field(unknown=unknown, request_options=request_options)
         return _response.data
 
     def get_and_return_with_datetime_like_string(
@@ -915,6 +946,46 @@ class AsyncObjectClient:
         """
         _response = await self._raw_client.get_and_return_nested_with_required_field_as_list(
             request=request, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_with_unknown_field(
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectWithUnknownField:
+        """
+        Parameters
+        ----------
+        unknown : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithUnknownField
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_unknown_field(
+                unknown={"$ref": "https://example.com/schema"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_unknown_field(
+            unknown=unknown, request_options=request_options
         )
         return _response.data
 

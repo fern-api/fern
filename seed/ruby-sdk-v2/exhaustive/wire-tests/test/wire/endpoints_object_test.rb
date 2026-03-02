@@ -229,6 +229,24 @@ class EndpointsObjectWireTest < WireMockTestCase
     )
   end
 
+  def test_endpoints_object_get_and_return_with_unknown_field_with_wiremock
+    test_id = "endpoints.object.get_and_return_with_unknown_field.0"
+
+    @client.endpoints.object.get_and_return_with_unknown_field(request_options: {
+                                                                 additional_headers: {
+                                                                   "X-Test-Id" => "endpoints.object.get_and_return_with_unknown_field.0"
+                                                                 }
+                                                               })
+
+    verify_request_count(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/object/get-and-return-with-unknown-field",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
   def test_endpoints_object_get_and_return_with_datetime_like_string_with_wiremock
     test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"
 

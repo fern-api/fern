@@ -382,7 +382,17 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Build the Java SDK distribution tar (Gradle)
-        run: cd generators/java && ./gradlew :sdk:distTar
+        run: |
+          cd generators/java
+          for attempt in 1 2 3; do
+            if ./gradlew :sdk:distTar; then
+              exit 0
+            fi
+            echo "::warning::Gradle build attempt $attempt/3 failed. Retrying in 15 seconds..."
+            sleep 15
+          done
+          echo "::error::Gradle build failed after 3 attempts"
+          exit 1
 
       - name: Build the Java v2 SDK CLI (TypeScript/Node)
         run: pnpm turbo run dist:cli --filter @fern-api/java-sdk

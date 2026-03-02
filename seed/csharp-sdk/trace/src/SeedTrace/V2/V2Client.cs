@@ -37,7 +37,6 @@ public partial class V2Client : IV2Client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "",
                     Headers = _headers,

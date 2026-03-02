@@ -16,7 +16,7 @@ import { getFernAsyncExtension } from "../../extensions/getFernAsyncExtension.js
 import { FernStreamingExtension, getFernStreamingExtension } from "../../extensions/getFernStreamingExtension.js";
 import { getFernPaginationExtension } from "../../extensions/getPaginationExtension.js";
 import { OperationContext, PathItemContext } from "../contexts.js";
-import { hasTextEventStreamWithItemSchema } from "../endpoint/getApplicationJsonSchema.js";
+import { hasTextEventStream } from "../endpoint/getApplicationJsonSchema.js";
 import { convertAsyncSyncOperation } from "./convertAsyncSyncOperation.js";
 import { convertHttpOperation } from "./convertHttpOperation.js";
 import { convertStreamingOperation } from "./convertStreamingOperation.js";
@@ -98,11 +98,11 @@ export function convertOperation({
 
     let streamingExtension: FernStreamingExtension | undefined = getFernStreamingExtension(operation);
 
-    // If no streaming extension is specified, check if the response has text/event-stream with itemSchema
-    // This is the OAS 3.2 standard for SSE endpoints
+    // If no streaming extension is specified, check if the response has text/event-stream content type.
+    // This infers streaming based on the MIME type.
     if (streamingExtension == null) {
-        const hasItemSchemaStreaming = checkOperationForItemSchemaStreaming({ operation, context });
-        if (hasItemSchemaStreaming) {
+        const hasEventStreamResponse = checkOperationForTextEventStream({ operation, context });
+        if (hasEventStreamResponse) {
             streamingExtension = { type: "stream", format: "sse", terminator: undefined };
         }
     }
@@ -199,10 +199,10 @@ function getBaseBreadcrumbs({
 }
 
 /**
- * Checks if the operation has a response with text/event-stream content type
- * that uses itemSchema instead of schema. This is the OAS 3.2 standard for SSE endpoints.
+ * Checks if the operation has a response with text/event-stream content type.
+ * This infers streaming based on the MIME type.
  */
-function checkOperationForItemSchemaStreaming({
+function checkOperationForTextEventStream({
     operation,
     context
 }: {
@@ -213,14 +213,18 @@ function checkOperationForItemSchemaStreaming({
         return false;
     }
 
-    for (const response of Object.values(operation.responses)) {
+    for (const [statusCode, response] of Object.entries(operation.responses)) {
+        const statusCodeNum = parseInt(statusCode);
+        if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+            continue;
+        }
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
 
         if (resolvedResponse.content == null) {
             continue;
         }
 
-        if (hasTextEventStreamWithItemSchema(resolvedResponse.content)) {
+        if (hasTextEventStream(resolvedResponse.content)) {
             return true;
         }
     }

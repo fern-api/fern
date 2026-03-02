@@ -35,7 +35,6 @@ public partial class UsersClient : IUsersClient
         var httpRequest = await _client.CreateHttpRequestAsync(
             new JsonRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
                 QueryString = _queryString,

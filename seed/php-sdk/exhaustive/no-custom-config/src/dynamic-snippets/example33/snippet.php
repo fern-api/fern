@@ -10,7 +10,7 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->uploadWithPath(
-    'upload-path',
-    ,
+$client->endpoints->params->modifyWithPath(
+    'param',
+    'string',
 );

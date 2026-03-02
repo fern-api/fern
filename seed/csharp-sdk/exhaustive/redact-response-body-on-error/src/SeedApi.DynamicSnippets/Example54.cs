@@ -12,7 +12,12 @@ public class Example54
             }
         );
 
-        await client.NoReqBody.PostWithNoRequestBodyAsync();
+        await client.NoAuth.PostWithNoAuthAsync(
+            new Dictionary<string, object>()
+            {
+                ["key"] = "value",
+            }
+        );
     }
 
 }

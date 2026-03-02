@@ -18,6 +18,7 @@ from ...types.object.types.object_with_datetime_like_string import ObjectWithDat
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
+from ...types.object.types.object_with_unknown_field import ObjectWithUnknownField
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -328,6 +329,45 @@ class RawObjectClient:
                     NestedObjectWithRequiredField,
                     construct_type(
                         type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_and_return_with_unknown_field(
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ObjectWithUnknownField]:
+        """
+        Parameters
+        ----------
+        unknown : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ObjectWithUnknownField]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-unknown-field",
+            method="POST",
+            json={
+                "unknown": unknown,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithUnknownField,
+                    construct_type(
+                        type_=ObjectWithUnknownField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -695,6 +735,45 @@ class AsyncRawObjectClient:
                     NestedObjectWithRequiredField,
                     construct_type(
                         type_=NestedObjectWithRequiredField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_and_return_with_unknown_field(
+        self, *, unknown: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ObjectWithUnknownField]:
+        """
+        Parameters
+        ----------
+        unknown : typing.Any
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ObjectWithUnknownField]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-unknown-field",
+            method="POST",
+            json={
+                "unknown": unknown,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithUnknownField,
+                    construct_type(
+                        type_=ObjectWithUnknownField,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

@@ -7,7 +7,7 @@ export interface ProblemInfo {
     problemDescription: SeedTrace.ProblemDescription;
     problemName: string;
     problemVersion: number;
-    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
+    files: Partial<Record<SeedTrace.Language, SeedTrace.ProblemFiles>>;
     inputParams: SeedTrace.VariableTypeAndName[];
     outputType: SeedTrace.VariableType;
     testcases: SeedTrace.TestCaseWithExpectedResult[];

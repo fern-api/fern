@@ -14,6 +14,7 @@ pub mod types_object_nested_object_with_required_field;
 pub mod types_object_double_optional;
 pub mod types_object_optional_alias;
 pub mod types_object_object_with_datetime_like_string;
+pub mod types_object_object_with_unknown_field;
 pub mod types_union_animal;
 pub mod types_union_dog;
 pub mod types_union_cat;
@@ -41,6 +42,7 @@ pub use types_object_nested_object_with_required_field::{NestedObjectWithRequire
 pub use types_object_double_optional::{DoubleOptional};
 pub use types_object_optional_alias::{OptionalAlias};
 pub use types_object_object_with_datetime_like_string::{ObjectWithDatetimeLikeString};
+pub use types_object_object_with_unknown_field::{ObjectWithUnknownField};
 pub use types_union_animal::{Animal};
 pub use types_union_dog::{Dog};
 pub use types_union_cat::{Cat};
