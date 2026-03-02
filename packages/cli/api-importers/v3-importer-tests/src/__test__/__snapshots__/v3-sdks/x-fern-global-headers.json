@@ -2200,7 +2200,7 @@
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
     "hasPaginatedEndpoints": false,
-    "hasStreamingEndpoints": false,
+    "hasStreamingEndpoints": true,
     "isAuthMandatory": true,
     "platformHeaders": {
       "language": "",
