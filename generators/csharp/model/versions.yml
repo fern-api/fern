@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.0.11
+  changelogEntry:
+    - summary: |
+        Mark the `Stringify` extension methods on `Enum` and `IStringEnum` as
+        `[Obsolete]`. Use `ValueConvert.ToString()` instead.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 62
+
 - version: 0.0.10
   changelogEntry:
     - summary: |

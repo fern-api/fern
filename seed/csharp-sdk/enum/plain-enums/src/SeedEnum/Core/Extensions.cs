@@ -5,6 +5,7 @@ namespace SeedEnum.Core;
 
 internal static class Extensions
 {
+    [global::System.Obsolete("Use ValueConvert.ToString() instead.")]
     public static string Stringify(this Enum value)
     {
         var field = value.GetType().GetField(value.ToString());
