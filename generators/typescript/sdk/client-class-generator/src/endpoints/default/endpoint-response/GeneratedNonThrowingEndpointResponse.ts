@@ -167,9 +167,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                 ? ts.factory.createConditionalExpression(
                       ts.factory.createBinaryExpression(
                           ts.factory.createPropertyAccessExpression(
-                              ts.factory.createIdentifier(
-                                  GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
-                              ),
+                              ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                               context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
                           ),
                           ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
