@@ -152,20 +152,91 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderAsyncClientSnippet(endpoint: EndpointWithFilepath): string {
-        const methodCall = this.getMethodCall(endpoint);
-        const hasParams = this.endpointHasParameters(endpoint.endpoint);
+        const constructorArgs = this.getClientConstructorArgs();
+        const syncSnippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
+        const methodCallBlock = syncSnippet != null ? this.extractMethodCallFromSyncSnippet(syncSnippet) : undefined;
+
+        let asyncBody: string;
+        if (methodCallBlock != null) {
+            const indentedMethodCall = methodCallBlock
+                .split("\n")
+                .map((line, idx) => {
+                    if (idx === 0) {
+                        return `    await ${line}`;
+                    }
+                    if (line.trim() === "") {
+                        return "";
+                    }
+                    return `    ${line}`;
+                })
+                .join("\n");
+            asyncBody = indentedMethodCall;
+        } else {
+            const methodCall = this.getMethodCall(endpoint);
+            const hasParams = this.endpointHasParameters(endpoint.endpoint);
+            asyncBody = `    await ${methodCall}(${hasParams ? "..." : ""})`;
+        }
+
         return this.writeCode(
             `import asyncio
 
 from ${this.packageName} import ${this.asyncClientClassName}
 
-client = ${this.asyncClientClassName}(...)
+client = ${this.asyncClientClassName}(
+${constructorArgs}
+)
 
-async def main():
-    await ${methodCall}(${hasParams ? "..." : ""})
+
+async def main() -> None:
+${asyncBody}
+
 
 asyncio.run(main())`
         );
+    }
+
+    private extractMethodCallFromSyncSnippet(syncSnippet: string): string | undefined {
+        const match = syncSnippet.match(/\)\n\s*(client\..*)/s);
+        if (match?.[1] == null) {
+            return undefined;
+        }
+        return match[1].trimEnd();
+    }
+
+    private getClientConstructorArgs(): string {
+        const args: string[] = [];
+
+        // Add auth args from IR
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    args.push(`    ${scheme.token.snakeCase.unsafeName}="YOUR_${scheme.token.screamingSnakeCase.unsafeName}",`);
+                    break;
+                case "basic":
+                    args.push(`    ${scheme.username.snakeCase.unsafeName}="YOUR_${scheme.username.screamingSnakeCase.unsafeName}",`);
+                    args.push(`    ${scheme.password.snakeCase.unsafeName}="YOUR_${scheme.password.screamingSnakeCase.unsafeName}",`);
+                    break;
+                case "header": {
+                    const headerName = scheme.name.name.snakeCase.unsafeName;
+                    const headerScreaming = scheme.name.name.screamingSnakeCase.unsafeName;
+                    args.push(`    ${headerName}="YOUR_${headerScreaming}",`);
+                    break;
+                }
+                case "oauth":
+                    args.push(`    client_id="YOUR_CLIENT_ID",`);
+                    args.push(`    client_secret="YOUR_CLIENT_SECRET",`);
+                    break;
+            }
+        }
+
+        // Add environment arg
+        if (this.context.ir.environments != null) {
+            // Has environments - don't add explicit base_url
+        } else {
+            args.push(`    base_url="https://yourhost.com/path/to/api",`);
+        }
+
+        return args.join("\n");
     }
 
     private renderExceptionHandlingSnippet(endpoint: EndpointWithFilepath): string {
@@ -259,7 +330,7 @@ for page in pager.iter_pages():
             `from ${this.packageName} import ${this.clientClassName}
 
 client = ${this.clientClassName}(...)
-response = client.with_raw_response.${this.getEndpointAccessPath(endpoint)}(${hasParams ? "..." : ""})
+response = ${this.getRawResponseMethodCall(endpoint)}(${hasParams ? "..." : ""})
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object`
@@ -382,6 +453,15 @@ client = ${this.clientClassName}(
         const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => part.snakeCase.unsafeName);
         const methodName = endpoint.endpoint.name.snakeCase.unsafeName;
         return clientAccessParts.length > 0 ? `${clientAccessParts.join(".")}.${methodName}` : methodName;
+    }
+
+    private getRawResponseMethodCall(endpoint: EndpointWithFilepath): string {
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => part.snakeCase.unsafeName);
+        const methodName = endpoint.endpoint.name.snakeCase.unsafeName;
+        if (clientAccessParts.length > 0) {
+            return `client.${clientAccessParts.join(".")}.with_raw_response.${methodName}`;
+        }
+        return `client.with_raw_response.${methodName}`;
     }
 
     private endpointHasParameters(endpoint: FernIr.HttpEndpoint): boolean {

@@ -596,13 +596,13 @@ export class TypeInstantiation extends AstNode {
             writer.write("[]");
             return;
         }
-        writer.writeLine("[");
-        writer.indent();
-        for (const element of value) {
+        writer.write("[");
+        value.forEach((element, index) => {
+            if (index > 0) {
+                writer.write(", ");
+            }
             writer.writeNode(TypeInstantiation.unknown(element));
-            writer.writeLine(",");
-        }
-        writer.dedent();
+        });
         writer.write("]");
     }
 
@@ -612,14 +612,14 @@ export class TypeInstantiation extends AstNode {
             writer.write("{}");
             return;
         }
-        writer.writeLine("{");
-        writer.indent();
-        for (const [key, val] of entries) {
+        writer.write("{");
+        entries.forEach(([key, val], index) => {
+            if (index > 0) {
+                writer.write(", ");
+            }
             writer.write(`"${key}": `);
             writer.writeNode(TypeInstantiation.unknown(val));
-            writer.writeLine(",");
-        }
-        writer.dedent();
+        });
         writer.write("}");
     }
 }

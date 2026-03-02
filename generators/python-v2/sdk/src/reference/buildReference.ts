@@ -85,8 +85,13 @@ function getEndpointReference({
     const returnTypeStr = getReturnTypeString({ endpoint });
 
     // Use prerendered snippet if available, otherwise fallback to abbreviated form
-    const snippet =
+    let snippet =
         endpointSnippets[endpoint.id] ?? `${accessPath}.${methodName}(${parameters.length > 0 ? "..." : ""})`;
+
+    // Fix the snippet's method path if it doesn't match the expected access path
+    snippet = fixSnippetMethodPath({ snippet, accessPath, methodName });
+
+    const hasUserParameters = parameters.length > 0;
 
     // Add request_options parameter
     parameters.push({
@@ -107,7 +112,7 @@ function getEndpointReference({
                     location: sourceFilePath != null ? { path: sourceFilePath } : undefined
                 },
                 {
-                    text: `(...)`
+                    text: hasUserParameters ? `(...)` : `()`
                 }
             ],
             returnValue: returnTypeStr != null ? { text: returnTypeStr } : undefined
@@ -281,4 +286,24 @@ function isRootServiceId({
 
 function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
     return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+}
+
+function fixSnippetMethodPath({
+    snippet,
+    accessPath,
+    methodName
+}: {
+    snippet: string;
+    accessPath: string;
+    methodName: string;
+}): string {
+    const expectedMethodCall = `${accessPath}.${methodName}(`;
+    if (snippet.includes(expectedMethodCall)) {
+        return snippet;
+    }
+    const wrongMethodCall = `client.${methodName}(`;
+    if (accessPath !== "client" && snippet.includes(wrongMethodCall)) {
+        return snippet.replace(wrongMethodCall, expectedMethodCall);
+    }
+    return snippet;
 }
