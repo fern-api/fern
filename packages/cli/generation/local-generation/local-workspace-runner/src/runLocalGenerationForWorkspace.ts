@@ -1,4 +1,4 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import { checkVersionDoesNotAlreadyExist, computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
@@ -88,6 +88,16 @@ export async function runLocalGenerationForWorkspace({
 
                 const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
                 version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
+                // Fail fast if the target version already exists on the package registry
+                if (absolutePathToPreview == null) {
+                    await checkVersionDoesNotAlreadyExist({
+                        version,
+                        packageName,
+                        generatorInvocation,
+                        context: interactiveTaskContext
+                    });
+                }
 
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
