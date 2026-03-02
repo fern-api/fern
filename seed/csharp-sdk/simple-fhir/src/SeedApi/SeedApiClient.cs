@@ -45,7 +45,6 @@ public partial class SeedApiClient : ISeedApiClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "account/{0}",

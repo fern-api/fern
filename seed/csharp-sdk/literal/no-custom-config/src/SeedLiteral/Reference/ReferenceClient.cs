@@ -28,7 +28,6 @@ public partial class ReferenceClient : IReferenceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "reference",
                     Body = request,

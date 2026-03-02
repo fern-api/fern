@@ -39,7 +39,6 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/test-headers/custom-header",
                     Body = request.Body,

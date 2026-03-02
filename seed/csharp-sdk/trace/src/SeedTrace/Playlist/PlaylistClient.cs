@@ -34,7 +34,6 @@ public partial class PlaylistClient : IPlaylistClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "/v2/playlist/{0}/create",
@@ -110,7 +109,6 @@ public partial class PlaylistClient : IPlaylistClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/v2/playlist/{0}/all",
@@ -177,7 +175,6 @@ public partial class PlaylistClient : IPlaylistClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/v2/playlist/{0}/{1}",
@@ -245,7 +242,6 @@ public partial class PlaylistClient : IPlaylistClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
                     Path = string.Format(
                         "/v2/playlist/{0}/{1}",
@@ -422,7 +418,6 @@ public partial class PlaylistClient : IPlaylistClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
                         "/v2/playlist/{0}/{1}",
