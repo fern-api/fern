@@ -3,6 +3,7 @@
 channel:
   path: /realtime/{session_id}
   auth: true
+  connect-method-name: createRealtimeConnection
   path-parameters:
     session_id: string
   query-parameters:

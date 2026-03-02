@@ -36,7 +36,7 @@ export class RealtimeClient {
         this._options = normalizeClientOptions(options);
     }
 
-    public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
+    public async createRealtimeConnection(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
         const {
             sessionId,
             model,
