@@ -196,6 +196,21 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
             this.schema.allOf.length >= 1;
 
         if (shouldMergeAllOf) {
+            // Check if any allOf element is a bare oneOf/anyOf used for mutual exclusion
+            // (e.g., oneOf with variants containing `not: {}` properties).
+            // In this case, skip merging and let ObjectSchemaConverter handle it properly
+            // by extracting properties from each variant as optional.
+            const hasBareOneOfOrAnyOf = (this.schema.allOf ?? []).some((elem) => {
+                if (this.context.isReferenceObject(elem)) {
+                    return false;
+                }
+                return (elem.oneOf != null || elem.anyOf != null) && elem.type == null && elem.properties == null;
+            });
+
+            if (hasBareOneOfOrAnyOf) {
+                return undefined;
+            }
+
             let mergedSchema: Record<string, unknown> = {};
             for (const allOfSchema of this.schema.allOf ?? []) {
                 if (this.context.isReferenceObject(allOfSchema)) {
