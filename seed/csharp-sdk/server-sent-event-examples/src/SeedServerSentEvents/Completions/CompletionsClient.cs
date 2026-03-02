@@ -31,7 +31,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream",
                     Body = request,
@@ -99,7 +98,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream-events",
                     Body = request,

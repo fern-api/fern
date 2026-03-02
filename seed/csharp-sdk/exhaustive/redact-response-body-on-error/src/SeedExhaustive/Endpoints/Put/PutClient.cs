@@ -29,7 +29,6 @@ public partial class PutClient : IPutClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
                     Path = string.Format("{0}", ValueConvert.ToPathParameterString(request.Id)),
                     Headers = _headers,

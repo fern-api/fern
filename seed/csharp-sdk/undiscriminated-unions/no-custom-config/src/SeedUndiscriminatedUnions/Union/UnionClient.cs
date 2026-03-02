@@ -47,7 +47,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
@@ -129,7 +128,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/metadata",
                     Headers = _headers,
@@ -193,7 +191,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
                     Path = "/metadata",
                     Body = request,
@@ -256,7 +253,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/call",
                     Body = request,
@@ -321,7 +317,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/duplicate",
                     Body = request,
@@ -397,7 +392,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/nested",
                     Body = request,
@@ -460,7 +454,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/camel-case",
                     Body = request,

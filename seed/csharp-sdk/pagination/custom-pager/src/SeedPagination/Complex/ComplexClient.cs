@@ -41,7 +41,6 @@ public partial class ComplexClient : IComplexClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "{0}/conversations/search",

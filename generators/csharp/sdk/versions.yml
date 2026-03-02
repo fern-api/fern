@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.22.9
+  changelogEntry:
+    - summary: |
+        Make `BaseUrl` optional in `BaseRequest` and omit it from generated
+        endpoint code unless required (e.g. multiple-base-URL environments).
+        The `RawClient` now falls back to `Options.BaseUrl` when `BaseUrl` is
+        not set on the request, removing the redundant
+        `BaseUrl = _client.Options.BaseUrl` from every generated API call.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 62
+
 - version: 2.22.8
   changelogEntry:
     - summary: |

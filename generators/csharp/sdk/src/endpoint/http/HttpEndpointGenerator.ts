@@ -616,7 +616,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.popScope();
     }
 
-    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
+    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock | undefined {
         if (endpoint.baseUrl != null && this.context.ir.environments?.environments.type === "multipleBaseUrls") {
             const baseUrl = this.context.ir.environments?.environments.baseUrls.find(
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
@@ -625,7 +625,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 return this.csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
             }
         }
-        return this.csharp.codeblock("_client.Options.BaseUrl");
+        return undefined;
     }
 
     private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {

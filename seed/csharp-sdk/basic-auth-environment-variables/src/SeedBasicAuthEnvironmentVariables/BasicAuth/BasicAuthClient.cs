@@ -27,7 +27,6 @@ public partial class BasicAuthClient : IBasicAuthClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "basic-auth",
                     Headers = _headers,
@@ -103,7 +102,6 @@ public partial class BasicAuthClient : IBasicAuthClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "basic-auth",
                     Body = request,

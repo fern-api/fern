@@ -49,7 +49,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -131,7 +130,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -209,7 +207,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     Body = request,
@@ -294,7 +291,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -379,7 +375,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -457,7 +452,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/inline-users",
                     Body = request,
@@ -541,7 +535,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -629,7 +622,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -711,7 +703,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -795,7 +786,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -875,7 +865,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,
@@ -953,7 +942,6 @@ public partial class InlineUsersClient_ : IInlineUsersClient_
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/inline-users",
                     QueryString = _queryString,

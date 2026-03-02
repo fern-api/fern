@@ -3,7 +3,7 @@ import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForI
 import { isPlainObject } from "../../utils/isPlainObject";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { getSchemaUtils } from "../schema-utils/index";
-import type { BaseRecordSchema, RecordSchema } from "./types";
+import type { BasePartialRecordSchema, BaseRecordSchema, PartialRecordSchema, RecordSchema } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const _hasOwn = Object.prototype.hasOwnProperty;
@@ -13,6 +13,59 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
     valueSchema: Schema<RawValue, ParsedValue>,
 ): RecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> {
     const baseSchema: BaseRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> = {
+        parse: (raw, opts) => {
+            return validateAndTransformRecord({
+                value: raw,
+                isKeyNumeric: keySchema.getType() === SchemaType.NUMBER,
+                transformKey: (key) =>
+                    keySchema.parse(key, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                    }),
+                transformValue: (value, key) =>
+                    valueSchema.parse(value, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                    }),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+            });
+        },
+        json: (parsed, opts) => {
+            return validateAndTransformRecord({
+                value: parsed,
+                isKeyNumeric: keySchema.getType() === SchemaType.NUMBER,
+                transformKey: (key) =>
+                    keySchema.json(key, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                    }),
+                transformValue: (value, key) =>
+                    valueSchema.json(value, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                    }),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+            });
+        },
+        getType: () => SchemaType.RECORD,
+    };
+
+    return {
+        ...maybeSkipValidation(baseSchema),
+        ...getSchemaUtils(baseSchema),
+    };
+}
+
+export function partialRecord<
+    RawKey extends string | number,
+    RawValue,
+    ParsedValue,
+    ParsedKey extends string | number,
+>(
+    keySchema: Schema<RawKey, ParsedKey>,
+    valueSchema: Schema<RawValue, ParsedValue>,
+): PartialRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> {
+    const baseSchema: BasePartialRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> = {
         parse: (raw, opts) => {
             return validateAndTransformRecord({
                 value: raw,
