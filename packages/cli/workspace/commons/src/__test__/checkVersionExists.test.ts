@@ -3,7 +3,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
     checkVersionDoesNotAlreadyExist,
     doesCratesVersionExist,
-    doesGithubTagExist,
     doesGoVersionExist,
     doesMavenVersionExist,
     doesNpmVersionExist,
@@ -11,7 +10,6 @@ import {
     doesPypiVersionExist,
     doesRubyGemsVersionExist,
     doesVersionExistOnRegistry,
-    getGithubRepository,
     getRegistryName
 } from "../checkVersionExists.js";
 
@@ -63,11 +61,15 @@ function makeGithubV2Invocation(owner: string, repo: string, language?: string) 
 /** Mock TaskContext that tracks calls */
 function makeMockContext() {
     const debugMessages: string[] = [];
+    const warnMessages: string[] = [];
     const failMessages: string[] = [];
     return {
         logger: {
             debug: (msg: string) => {
                 debugMessages.push(msg);
+            },
+            warn: (msg: string) => {
+                warnMessages.push(msg);
             }
         },
         failAndThrow: (msg: string): never => {
@@ -75,6 +77,7 @@ function makeMockContext() {
             throw new Error(msg);
         },
         _debugMessages: debugMessages,
+        _warnMessages: warnMessages,
         _failMessages: failMessages
         // biome-ignore lint/suspicious/noExplicitAny: test stub for TaskContext
     } as any;
@@ -309,81 +312,6 @@ describe("doesCratesVersionExist", () => {
     });
 });
 
-// ─── doesGithubTagExist ─────────────────────────────────────────────
-
-describe("doesGithubTagExist", () => {
-    beforeEach(() => {
-        vi.stubGlobal("fetch", vi.fn());
-        delete process.env.GITHUB_TOKEN;
-    });
-
-    afterEach(() => {
-        vi.restoreAllMocks();
-        vi.unstubAllGlobals();
-    });
-
-    it("returns true when v-prefixed tag exists", async () => {
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ ref: "refs/tags/v1.0.0" }, true, 200));
-        expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(true);
-        // Should try v1.0.0 first
-        expect(fetch).toHaveBeenCalledWith(expect.stringContaining("/git/ref/tags/v1.0.0"), expect.any(Object));
-    });
-
-    it("returns true when non-v tag exists (fallback)", async () => {
-        vi.mocked(fetch)
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404)) // v1.0.0 not found
-            .mockResolvedValueOnce(mockFetchResponse({ ref: "refs/tags/1.0.0" }, true, 200)); // 1.0.0 found
-        expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(true);
-    });
-
-    it("returns false when no tag variant exists", async () => {
-        vi.mocked(fetch)
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404))
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404));
-        expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(false);
-    });
-
-    it("returns false on prefix-match false positive (v1.0.0-beta exists but v1.0.0 does not)", async () => {
-        // GitHub API returns 200 with prefix-matched refs
-        vi.mocked(fetch)
-            .mockResolvedValueOnce(mockFetchResponse([{ ref: "refs/tags/v1.0.0-beta" }], true, 200)) // v1.0.0 prefix matches v1.0.0-beta
-            .mockResolvedValueOnce(mockFetchResponse([{ ref: "refs/tags/1.0.0-beta" }], true, 200)); // 1.0.0 prefix matches 1.0.0-beta
-        expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(false);
-    });
-
-    it("returns true when exact match is among prefix-matched results", async () => {
-        // GitHub API returns array with multiple prefix-matched refs including the exact match
-        vi.mocked(fetch).mockResolvedValueOnce(
-            mockFetchResponse([{ ref: "refs/tags/v1.0.0" }, { ref: "refs/tags/v1.0.0-beta" }], true, 200)
-        );
-        expect(await doesGithubTagExist("owner/repo", "1.0.0")).toBe(true);
-    });
-
-    it("sends auth header when GITHUB_TOKEN is set", async () => {
-        process.env.GITHUB_TOKEN = "gh-token";
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ ref: "refs/tags/v1.0.0" }, true, 200));
-        await doesGithubTagExist("owner/repo", "1.0.0");
-        expect(fetch).toHaveBeenCalledWith(
-            expect.any(String),
-            expect.objectContaining({
-                headers: expect.objectContaining({
-                    authorization: "Bearer gh-token"
-                })
-            })
-        );
-    });
-
-    it("handles version with v prefix (tries v1.0.0 and 1.0.0)", async () => {
-        vi.mocked(fetch)
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404))
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404));
-        await doesGithubTagExist("owner/repo", "v1.0.0");
-        // First call should try "v1.0.0", second should try "1.0.0"
-        expect(vi.mocked(fetch).mock.calls[0]?.[0]).toContain("tags/v1.0.0");
-        expect(vi.mocked(fetch).mock.calls[1]?.[0]).toContain("tags/1.0.0");
-    });
-});
-
 // ─── doesVersionExistOnRegistry (routing) ───────────────────────────
 
 describe("doesVersionExistOnRegistry", () => {
@@ -421,25 +349,6 @@ describe("doesVersionExistOnRegistry", () => {
         });
         expect(result).toBe(false);
         expect(fetch).not.toHaveBeenCalled();
-    });
-});
-
-// ─── getGithubRepository ────────────────────────────────────────────
-
-describe("getGithubRepository", () => {
-    it("extracts owner/repo from githubV2 output mode", () => {
-        const invocation = makeGithubV2Invocation("myorg", "my-sdk");
-        expect(getGithubRepository(invocation)).toBe("myorg/my-sdk");
-    });
-
-    it("returns undefined for non-GitHub output modes", () => {
-        const invocation = makePublishInvocation("typescript");
-        expect(getGithubRepository(invocation)).toBeUndefined();
-    });
-
-    it("returns undefined for download output mode", () => {
-        const invocation = makeDownloadInvocation("typescript");
-        expect(getGithubRepository(invocation)).toBeUndefined();
     });
 });
 
@@ -543,78 +452,36 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         expect(ctx._debugMessages[0]).toContain("Could not verify");
     });
 
-    it("checks GitHub tags for githubV2 output mode", async () => {
-        // GitHub tag check: v1.0.0 found (exact match)
-        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ ref: "refs/tags/v1.0.0" }, true, 200));
-        const ctx = makeMockContext();
-        await expect(
-            checkVersionDoesNotAlreadyExist({
-                version: "1.0.0",
-                packageName: undefined,
-                generatorInvocation: makeGithubV2Invocation("owner", "repo"),
-                context: ctx
-            })
-        ).rejects.toThrow("already exists as a tag");
-        expect(ctx._failMessages[0]).toContain("GitHub");
-    });
-
-    it("silently continues when GitHub tag check fails with network error", async () => {
-        vi.mocked(fetch).mockImplementationOnce(mockFetchError);
+    it("logs warning (not error) for githubV2 output mode when version exists", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
         const ctx = makeMockContext();
         await checkVersionDoesNotAlreadyExist({
             version: "1.0.0",
-            packageName: undefined,
-            generatorInvocation: makeGithubV2Invocation("owner", "repo"),
+            packageName: "@acme/sdk",
+            generatorInvocation: makeGithubV2Invocation("owner", "repo", "typescript"),
+            context: ctx
+        });
+        // Should warn, not fail
+        expect(ctx._failMessages).toHaveLength(0);
+        expect(ctx._warnMessages).toHaveLength(1);
+        expect(ctx._warnMessages[0]).toContain("already exists");
+        expect(ctx._warnMessages[0]).toContain("CI pipeline");
+    });
+
+    it("does not warn for githubV2 when version does not exist", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({}, false, 404));
+        const ctx = makeMockContext();
+        await checkVersionDoesNotAlreadyExist({
+            version: "1.0.0",
+            packageName: "@acme/sdk",
+            generatorInvocation: makeGithubV2Invocation("owner", "repo", "typescript"),
             context: ctx
         });
         expect(ctx._failMessages).toHaveLength(0);
-        expect(ctx._debugMessages).toHaveLength(1);
+        expect(ctx._warnMessages).toHaveLength(0);
     });
 
-    it("falls through to registry check when GitHub tag check errors", async () => {
-        // GitHub tag check: throws network error
-        vi.mocked(fetch)
-            .mockImplementationOnce(mockFetchError) // GitHub tag check fails
-            .mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" })); // npm registry returns version exists
-
-        const ctx = makeMockContext();
-        await expect(
-            checkVersionDoesNotAlreadyExist({
-                version: "1.0.0",
-                packageName: "@acme/sdk",
-                generatorInvocation: makeGithubV2Invocation("owner", "repo", "typescript"),
-                context: ctx
-            })
-        ).rejects.toThrow("already exists on the npm");
-        // Should have debug message from GitHub error AND fail from registry check
-        expect(ctx._debugMessages).toHaveLength(1);
-        expect(ctx._debugMessages[0]).toContain("GitHub");
-    });
-
-    it("checks both GitHub tags AND registry for githubV2 with language", async () => {
-        // GitHub tag check: neither v1.0.0 nor 1.0.0 exist
-        vi.mocked(fetch)
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404)) // v1.0.0
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404)) // 1.0.0
-            .mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" })); // npm version found
-
-        const ctx = makeMockContext();
-        await expect(
-            checkVersionDoesNotAlreadyExist({
-                version: "1.0.0",
-                packageName: "@acme/sdk",
-                generatorInvocation: makeGithubV2Invocation("owner", "repo", "typescript"),
-                context: ctx
-            })
-        ).rejects.toThrow("already exists on the npm");
-    });
-
-    it("skips registry check when language is null", async () => {
-        // GitHub tag check: no tags found
-        vi.mocked(fetch)
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404))
-            .mockResolvedValueOnce(mockFetchResponse({}, false, 404));
-
+    it("skips check for githubV2 when language is null", async () => {
         const ctx = makeMockContext();
         await checkVersionDoesNotAlreadyExist({
             version: "1.0.0",
@@ -622,8 +489,22 @@ describe("checkVersionDoesNotAlreadyExist", () => {
             generatorInvocation: makeGithubV2Invocation("owner", "repo"),
             context: ctx
         });
-        // Only 2 fetch calls (GitHub tag checks), no registry check
-        expect(fetch).toHaveBeenCalledTimes(2);
+        expect(fetch).not.toHaveBeenCalled();
         expect(ctx._failMessages).toHaveLength(0);
+        expect(ctx._warnMessages).toHaveLength(0);
+    });
+
+    it("silently continues for githubV2 on network error (best-effort)", async () => {
+        vi.mocked(fetch).mockImplementationOnce(mockFetchError);
+        const ctx = makeMockContext();
+        await checkVersionDoesNotAlreadyExist({
+            version: "1.0.0",
+            packageName: "@acme/sdk",
+            generatorInvocation: makeGithubV2Invocation("owner", "repo", "typescript"),
+            context: ctx
+        });
+        expect(ctx._failMessages).toHaveLength(0);
+        expect(ctx._warnMessages).toHaveLength(0);
+        expect(ctx._debugMessages).toHaveLength(1);
     });
 });

@@ -28,14 +28,15 @@ interface GoProxyVersionResponse {
     Version?: string;
 }
 
-interface GithubRefResponse {
-    ref?: string;
-}
-
 /**
  * Checks whether the specified version already exists on the target package registry
- * (or as a GitHub tag for GitHub output modes) for the given generator invocation.
- * If it does, the task context will fail with an actionable error message.
+ * for the given generator invocation.
+ *
+ * Behavior by output mode:
+ * - **publish / publishV2**: Fails immediately if the version already exists on the registry.
+ * - **githubV2**: Logs a warning if the version already exists on the registry (since GitHub CI
+ *   may publish to a package registry downstream, but the generation itself shouldn't be blocked).
+ * - **downloadFiles**: Skipped entirely (no publishing involved).
  *
  * This is a best-effort check — network errors, timeouts, or unsupported registries
  * are silently ignored so that generation is not blocked unnecessarily.
@@ -69,28 +70,10 @@ export async function checkVersionDoesNotAlreadyExist({
         return;
     }
 
-    // Check GitHub tags for GitHub output modes
-    const githubRepository = getGithubRepository(generatorInvocation);
-    if (githubRepository != null) {
-        let tagExists: boolean;
-        try {
-            tagExists = await doesGithubTagExist(githubRepository, version);
-        } catch (error) {
-            context.logger.debug(
-                `Could not verify tag availability on GitHub: ${error instanceof Error ? error.message : String(error)}`
-            );
-            tagExists = false;
-        }
-        if (tagExists) {
-            context.failAndThrow(
-                `Version ${version} already exists as a tag on GitHub repository ${githubRepository}. ` +
-                    `Please use a different version number. ` +
-                    `If you want to automatically increment the version, omit the --version flag.`
-            );
-        }
-    }
+    // Determine whether to fail or just warn based on output mode
+    const isPublishMode =
+        generatorInvocation.outputMode.type === "publishV2" || generatorInvocation.outputMode.type === "publish";
 
-    // Check package registries for publish output modes
     if (generatorInvocation.language == null || packageName == null) {
         return;
     }
@@ -109,69 +92,19 @@ export async function checkVersionDoesNotAlreadyExist({
         return;
     }
     if (exists) {
-        context.failAndThrow(
-            `Version ${version} of ${packageName} already exists on the ${getRegistryName(language)} registry. ` +
-                `Please use a different version number. ` +
-                `If you want to automatically increment the version, omit the --version flag.`
-        );
-    }
-}
-
-// ─── GitHub tag checking ────────────────────────────────────────────
-
-/**
- * Extracts the GitHub repository ("owner/repo") from a generator invocation's output mode,
- * if the output mode targets GitHub.
- */
-/** @internal Exported for testing */
-export function getGithubRepository(generatorInvocation: generatorsYml.GeneratorInvocation): string | undefined {
-    if (generatorInvocation.outputMode.type === "githubV2") {
-        return `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`;
-    }
-    return undefined;
-}
-
-/**
- * Checks whether a specific tag exists on a GitHub repository.
- * Uses the GitHub REST API (unauthenticated, or with GITHUB_TOKEN if set).
- */
-/** @internal Exported for testing */
-export async function doesGithubTagExist(githubRepository: string, version: string): Promise<boolean> {
-    const headers: Record<string, string> = {
-        accept: "application/vnd.github+json"
-    };
-    const githubToken = process.env.GITHUB_TOKEN;
-    if (githubToken != null) {
-        headers.authorization = `Bearer ${githubToken}`;
-    }
-    // Try common tag formats: "vX.Y.Z" and "X.Y.Z"
-    const tagsToCheck = version.startsWith("v") ? [version, version.slice(1)] : [`v${version}`, version];
-
-    for (const tag of tagsToCheck) {
-        const response = await fetch(`https://api.github.com/repos/${githubRepository}/git/ref/tags/${tag}`, {
-            headers,
-            signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
-        });
-        if (!response.ok) {
-            continue;
-        }
-        // The GitHub REST API does prefix matching on refs — e.g. requesting
-        // "tags/v1.0.0" may return "tags/v1.0.0-beta" as well. We need to
-        // verify the exact ref name in the response body.
-        const data = await response.json();
-        const expectedRef = `refs/tags/${tag}`;
-        if (Array.isArray(data)) {
-            if (data.some((item: GithubRefResponse) => item.ref === expectedRef)) {
-                return true;
-            }
+        if (isPublishMode) {
+            context.failAndThrow(
+                `Version ${version} of ${packageName} already exists on the ${getRegistryName(language)} registry. ` +
+                    `Please use a different version number. ` +
+                    `If you want to automatically increment the version, omit the --version flag.`
+            );
         } else {
-            const single = data as GithubRefResponse;
-            if (single.ref === expectedRef) {
-                return true;
-            }
+            context.logger.warn(
+                `Version ${version} of ${packageName} already exists on the ${getRegistryName(language)} registry. ` +
+                    `If your CI pipeline publishes this version, it may fail.`
+            );
         }
     }
-    return false;
 }
 
 // ─── Registry version checking ──────────────────────────────────────
