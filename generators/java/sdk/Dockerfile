@@ -25,6 +25,12 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar \
        /opt/gradle/lib/kotlin-stdlib-*.jar
 
+# Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
+# (async parser bypasses maxNumberLength constraint, leading to potential DoS)
+RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.6/jackson-core-2.18.6.jar \
+      -o /opt/gradle/lib/jackson-core-2.18.6.jar
+
 # Update packages to get latest security fixes and remove unnecessary packages
 # Amazon Linux 2023 uses dnf instead of apt-get
 # Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only
