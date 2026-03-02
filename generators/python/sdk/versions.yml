@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.61.3
+- version: 4.62.0
   changelogEntry:
     - summary: |
         Wire tests now include query parameters in WireMock request matching and verification.
