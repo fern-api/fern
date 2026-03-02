@@ -25,7 +25,7 @@ class RawRealtimeClient:
         self._client_wrapper = client_wrapper
 
     @contextmanager
-    def create_realtime_connection(
+    def connect(
         self,
         session_id: str,
         *,
@@ -97,7 +97,7 @@ class AsyncRawRealtimeClient:
         self._client_wrapper = client_wrapper
 
     @asynccontextmanager
-    async def create_realtime_connection(
+    async def connect(
         self,
         session_id: str,
         *,

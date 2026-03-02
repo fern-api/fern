@@ -13,7 +13,9 @@ export declare namespace RealtimeSocket {
         | SeedWebsocket.ReceiveEvent
         | SeedWebsocket.ReceiveSnakeCase
         | SeedWebsocket.ReceiveEvent2
-        | SeedWebsocket.ReceiveEvent3;
+        | SeedWebsocket.ReceiveEvent3
+        | SeedWebsocket.TranscriptEvent
+        | SeedWebsocket.FlushedEvent;
     type EventHandlers = {
         open?: () => void;
         message?: (message: Response) => void;
