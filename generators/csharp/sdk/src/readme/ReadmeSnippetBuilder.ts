@@ -233,9 +233,9 @@ var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
 var response = await ${this.getMethodCall(headerEndpoint)}(
     ...,
     new ${this.requestOptionsName} {
-        AdditionalHeaders = new Headers
+        AdditionalHeaders = new List<KeyValuePair<string, string?>>
         {
-            { "X-Custom-Header", "custom-value" }
+            new KeyValuePair<string, string?>("X-Custom-Header", "custom-value")
         }
     }
 );
