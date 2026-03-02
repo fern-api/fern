@@ -736,18 +736,25 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
-     * Creates Send methods for each client-to-server message type.
+     * Creates Send methods for each client-to-server message type, along with
+     * private SendJsonAsync and SendBinaryAsync helper methods.
      *
-     * Each method:
-     * - Accepts a strongly-typed message parameter
-     * - Serializes the message to JSON
-     * - Sends it through the WebSocket connection via _client.SendInstant
-     *
-     * @returns Array of Send method definitions
+     * Each public Send method delegates to the appropriate private helper:
+     * - SendJsonAsync<T> for JSON-serialized messages
+     * - SendBinaryAsync for raw byte[] messages
      */
     private createSendMessageMethods(cls: ast.Class): void {
+        let hasBinaryMessages = false;
+        let hasJsonMessages = false;
+
         this.messages.forEach((each) => {
             const isBinaryMessage = is.Value.byte(each.type);
+            if (isBinaryMessage) {
+                hasBinaryMessages = true;
+            } else {
+                hasJsonMessages = true;
+            }
+
             cls.addMethod({
                 access: ast.Access.Public,
                 isAsync: true,
@@ -761,18 +768,57 @@ export class WebSocketClientGenerator extends WithGeneration {
                 doc: this.csharp.xmlDocBlockOf({
                     summary: `Sends a ${each.name} message to the server`
                 }),
-
                 body: this.csharp.codeblock((writer) => {
                     if (isBinaryMessage) {
-                        writer.writeTextStatement(`await _client.SendInstant(message).ConfigureAwait(false)`);
+                        writer.writeTextStatement(`await SendBinaryAsync(message).ConfigureAwait(false)`);
                     } else {
-                        writer.writeLine(`await _client.SendInstant(`);
-                        writer.writeNode(this.Types.JsonUtils);
-                        writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
+                        writer.writeTextStatement(`await SendJsonAsync(message).ConfigureAwait(false)`);
                     }
                 })
             });
         });
+
+        if (hasJsonMessages) {
+            cls.addMethod({
+                access: ast.Access.Private,
+                isAsync: true,
+                name: `SendJsonAsync`,
+                parameters: [
+                    this.csharp.parameter({
+                        name: "message",
+                        type: this.Primitive.object
+                    })
+                ],
+                doc: this.csharp.xmlDocBlockOf({
+                    summary: "Serializes and sends a JSON message to the server"
+                }),
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeLine(`await _client.SendInstant(`);
+                    writer.writeNode(this.Types.JsonUtils);
+                    writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
+                })
+            });
+        }
+
+        if (hasBinaryMessages) {
+            cls.addMethod({
+                access: ast.Access.Private,
+                isAsync: true,
+                name: `SendBinaryAsync`,
+                parameters: [
+                    this.csharp.parameter({
+                        name: "message",
+                        type: this.Value.binary
+                    })
+                ],
+                doc: this.csharp.xmlDocBlockOf({
+                    summary: "Sends a binary message to the server"
+                }),
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeTextStatement(`await _client.SendInstant(message).ConfigureAwait(false)`);
+                })
+            });
+        }
     }
 
     /**

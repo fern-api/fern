@@ -176,6 +176,14 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     }
 
     /// <summary>
+    /// Serializes and sends a JSON message to the server
+    /// </summary>
+    private async Task SendJsonAsync(object message)
+    {
+        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Asynchronously establishes a WebSocket connection.
     /// </summary>
     public async Task ConnectAsync()
@@ -216,7 +224,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendEvent message)
     {
-        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -224,7 +232,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendSnakeCase message)
     {
-        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message).ConfigureAwait(false);
     }
 
     /// <summary>
@@ -232,7 +240,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     public async Task Send(SendEvent2 message)
     {
-        await _client.SendInstant(JsonUtils.Serialize(message)).ConfigureAwait(false);
+        await SendJsonAsync(message).ConfigureAwait(false);
     }
 
     /// <summary>
