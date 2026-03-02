@@ -1,4 +1,70 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.0.0
+  changelogEntry:
+    - summary: |
+        Deprecate IR versions <= 52. Cuts down on binary size, build time, and migrations.
+
+        **Breaking changes**: To upgrade to this version of the CLI, generators now have
+        minimal versions they need to be upgraded to with `fern generator upgrade --include-major`:
+        - Python SDK: upgrade to v3.3.0-rc0+
+        - TypeScript SDK: upgrade to v0.38.0-rc0+
+        - Java SDK: upgrade to v2.5.0+
+        - Go SDK: upgrade to v0.28.3+
+        - C# SDK: upgrade to v0.5.0+
+        - Ruby SDK: upgrade to v1.0.0-rc1+
+        - Other generators: upgrade to versions that support IR v53+
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.98.5
+  changelogEntry:
+    - summary: |
+        Support namespace resolution in docs types. When multiple OpenAPI specs
+        define types with the same name (e.g., `Team` in both EntityManager and
+        TaskManager specs), the docs type converter now respects `x-fern-sdk-namespace`
+        to namespace TypeIds (e.g., `entity_manager:Team`), preventing collisions.
+        The namespace is resolved from `generators.yml` configuration or directly
+        from the `x-fern-sdk-namespace` extension in the OpenAPI/AsyncAPI spec.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.98.4
+  changelogEntry:
+    - summary: |
+        Fix docs pipeline (v3-importer-commons) dropping properties from `oneOf`/`anyOf` variants
+        inside `allOf`. The old OpenAPI importer was fixed in 3.98.2, but the docs/register pipeline
+        used a separate v3-importer-commons path that still had the same bug. Properties like `content`
+        and `templateId` in mutual exclusion patterns (`not: {}`) are now correctly surfaced as optional
+        properties in generated docs.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+- version: 3.98.3
+  changelogEntry:
+    - summary: |
+        `fern generate` now fails fast when trying to publish a version that already
+        exists on the target package registry (npm, PyPI, Maven Central, NuGet,
+        RubyGems, Go Module Proxy, crates.io). Previously, generation would run the
+        full pipeline before discovering the version conflict at publish time. The
+        check runs before IR generation for both local and remote generation, saving
+        significant time.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.98.2
+  changelogEntry:
+    - summary: |
+        Fix OpenAPI importer dropping properties from `oneOf`/`anyOf` variants inside `allOf`.
+        When an `allOf` element is a bare `oneOf`/`anyOf` (commonly used for mutual exclusion
+        patterns like `content` vs `templateId`), the importer now extracts properties from
+        each variant as optional properties on the parent object. Also filters out properties
+        with `not: {}` schema (meaning "property must not exist").
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
 - version: 3.98.1
   changelogEntry:
     - summary: |
