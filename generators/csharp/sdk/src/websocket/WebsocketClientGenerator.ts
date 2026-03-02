@@ -1,5 +1,5 @@
 import { CSharpFile } from "@fern-api/csharp-base";
-import { ast, is, WithGeneration, Writer } from "@fern-api/csharp-codegen";
+import { ast, is, WithGeneration, Writer, writeObjectDeserializationLoop } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -808,37 +808,17 @@ export class WebSocketClientGenerator extends WithGeneration {
                 this.csharp.parameter({ name: "options", type: this.System.Text.Json.JsonSerializerOptions })
             ],
             body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement("var document = JsonDocument.ParseValue(ref reader)");
-                writer.writeLine();
-
-                const events = this.events;
-                writer.write("var types = new (string Key, System.Type Type)[] { ");
-                events.forEach((event, index) => {
-                    const isLast = index === events.length - 1;
-                    writer.write(`("${event.name}", typeof(`);
-                    writer.writeNode(event.type);
-                    writer.write("))");
-                    if (!isLast) {
-                        writer.write(", ");
+                writeObjectDeserializationLoop(writer, {
+                    entries: this.events
+                        .filter((event): event is typeof event & { name: string } => event.name != null)
+                        .map((event) => ({
+                            key: event.name,
+                            writeType: (w) => w.writeNode(event.type)
+                        })),
+                    onMatch: (w) => {
+                        w.writeTextStatement("return new IncomingMessage(key, value)");
                     }
                 });
-                writer.writeTextStatement(" }");
-                writer.writeLine();
-
-                writer.writeLine("foreach (var (key, type) in types)");
-                writer.pushScope();
-                writer.writeLine("try");
-                writer.pushScope();
-                writer.writeTextStatement("var value = document.Deserialize(type, options)");
-                writer.writeLine("if (value != null)");
-                writer.pushScope();
-                writer.writeTextStatement("return new IncomingMessage(key, value)");
-                writer.popScope();
-                writer.popScope();
-                writer.writeLine("catch (Exception)");
-                writer.pushScope();
-                writer.popScope();
-                writer.popScope();
                 writer.writeLine();
                 writer.writeTextStatement("return null");
             })

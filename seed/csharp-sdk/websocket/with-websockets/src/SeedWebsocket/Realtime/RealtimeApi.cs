@@ -285,7 +285,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
                             return new IncomingMessage(key, value);
                         }
                     }
-                    catch (Exception) { }
+                    catch (JsonException) { }
                 }
 
                 return null;

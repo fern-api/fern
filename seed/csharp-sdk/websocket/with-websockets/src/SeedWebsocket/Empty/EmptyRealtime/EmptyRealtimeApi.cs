@@ -161,7 +161,7 @@ public partial class EmptyRealtimeApi : IAsyncDisposable, IDisposable, INotifyPr
                             return new IncomingMessage(key, value);
                         }
                     }
-                    catch (Exception) { }
+                    catch (JsonException) { }
                 }
 
                 return null;
