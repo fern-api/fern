@@ -14,6 +14,7 @@ type FernFilepath = FernIr.FernFilepath;
 function join(...segments: string[]): string {
     return segments.filter(Boolean).join("/");
 }
+
 import * as ast from "../ast/index.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
 import { Type } from "../ast/types/IType.js";
