@@ -1,3 +1,4 @@
+import type { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile, writeFile } from "fs/promises";
 import { type Document, parseDocument } from "yaml";
@@ -8,6 +9,16 @@ export namespace FernYmlEditor {
     export interface Config {
         /** Path to the fern.yml file. */
         fernYmlPath: AbsoluteFilePath;
+    }
+
+    /**
+     * Type for adding a target to fern.yml. Mirrors the writable fields
+     * of `SdkTargetSchema`.
+     */
+    export interface TargetSchema extends Omit<schemas.SdkTargetSchema, "output"> {
+        // Note that `output` is intentionally widened to accept the pre-serialized
+        // YAML representation that `AddCommand.buildOutputForYaml` produces.
+        output: schemas.OutputSchema | Record<string, unknown>;
     }
 }
 
@@ -79,29 +90,45 @@ export class FernYmlEditor {
         });
     }
 
+    /**
+     * Adds a new target entry. Creates intermediate maps (sdks, targets)
+     * if they don't exist.
+     */
+    public addTarget(name: string, value: FernYmlEditor.TargetSchema): void {
+        this.ensureMapPath(this.targetsPath);
+        this.document.setIn([...this.targetsPath, name], this.document.createNode(value));
+    }
+
     /** Sets the version field for an existing target. */
     public setTargetVersion(name: string, version: string): void {
+        this.assertTargetExists(name);
+        this.document.setIn([...this.targetsPath, name, "version"], version);
+    }
+
+    /** Sets the generator-specific config for an existing target. */
+    public setTargetConfig(name: string, config: Record<string, unknown>): void {
+        this.assertTargetExists(name);
+        this.document.setIn([...this.targetsPath, name, "config"], this.document.createNode(config));
+    }
+
+    /** Removes the generator-specific config from an existing target. */
+    public deleteTargetConfig(name: string): void {
+        this.assertTargetExists(name);
+        this.document.deleteIn([...this.targetsPath, name, "config"]);
+    }
+
+    /** Writes the document back to disk, preserving formatting. */
+    public async save(): Promise<void> {
+        await writeFile(this.filePath, this.document.toString(), "utf-8");
+    }
+
+    private assertTargetExists(name: string): void {
         const existing = this.document.getIn([...this.targetsPath, name]);
         if (existing == null) {
             throw new CliError({
                 message: `Target '${name}' not found in SDK configuration.`
             });
         }
-        this.document.setIn([...this.targetsPath, name, "version"], version);
-    }
-
-    /**
-     * Adds a new target entry. Creates intermediate maps (sdks, targets)
-     * if they don't exist.
-     */
-    public addTarget(name: string, value: Record<string, unknown>): void {
-        this.ensureMapPath(this.targetsPath);
-        this.document.setIn([...this.targetsPath, name], this.document.createNode(value));
-    }
-
-    /** Writes the document back to disk, preserving formatting. */
-    public async save(): Promise<void> {
-        await writeFile(this.filePath, this.document.toString(), "utf-8");
     }
 
     /**

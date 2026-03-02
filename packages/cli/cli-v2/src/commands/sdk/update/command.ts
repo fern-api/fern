@@ -6,6 +6,7 @@ import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
+import { LegacyGeneratorMigrator } from "../../../sdk/migrator/LegacyGeneratorMigrator.js";
 import { SdkUpdater } from "../../../sdk/updater/SdkUpdater.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
@@ -74,13 +75,38 @@ export class UpdateCommand {
 
         // Apply updates via FernYmlEditor.
         const editor = await FernYmlEditor.load({ fernYmlPath });
+        const migrator = new LegacyGeneratorMigrator({
+            logger: context.stderr,
+            cachePath: context.cache.migrations.absoluteFilePath
+        });
+        const migrationInfo = new Map<string, LegacyGeneratorMigrator.MigrationInfo>();
+
         for (const update of selectedUpdates) {
             editor.setTargetVersion(update.name, update.latestVersion);
+
+            // Run generator config migrations for this version upgrade.
+            const target = targets.find((t) => t.name === update.name);
+            if (target != null) {
+                try {
+                    const result = await migrator.migrate({
+                        target,
+                        editor,
+                        from: update.currentVersion,
+                        to: update.latestVersion
+                    });
+                    if (result != null) {
+                        migrationInfo.set(update.name, result);
+                    }
+                } catch (error) {
+                    const message = error instanceof Error ? error.message : String(error);
+                    context.stderr.warn(chalk.yellow(`  Warning: migrations failed for ${target.name}: ${message}`));
+                }
+            }
         }
         await editor.save();
 
         // Print results.
-        this.printAppliedUpdates({ context, updates: selectedUpdates });
+        this.printAppliedUpdates({ context, updates: selectedUpdates, migrationInfo });
         this.printUpToDate({ context, upToDate });
         this.printSkippedMajorUpgrades({ context, skippedMajorUpgrades });
     }
@@ -90,22 +116,6 @@ export class UpdateCommand {
     }: {
         updates: SdkUpdater.TargetUpdate[];
     }): Promise<SdkUpdater.TargetUpdate[]> {
-        if (updates.length === 1) {
-            const update = updates[0];
-            if (update == null) {
-                return [];
-            }
-            const { confirm } = await inquirer.prompt<{ confirm: boolean }>([
-                {
-                    type: "confirm",
-                    name: "confirm",
-                    message: `Update ${update.name} from ${chalk.dim(update.currentVersion)} to ${chalk.green(update.latestVersion)}?`,
-                    default: true
-                }
-            ]);
-            return confirm ? [update] : [];
-        }
-
         const { selected } = await inquirer.prompt<{ selected: string[] }>([
             {
                 type: "checkbox",
@@ -122,18 +132,33 @@ export class UpdateCommand {
         return updates.filter((u) => selected.includes(u.name));
     }
 
-    private printAppliedUpdates({ context, updates }: { context: Context; updates: SdkUpdater.TargetUpdate[] }): void {
+    private printAppliedUpdates({
+        context,
+        updates,
+        migrationInfo
+    }: {
+        context: Context;
+        updates: SdkUpdater.TargetUpdate[];
+        migrationInfo: Map<string, LegacyGeneratorMigrator.MigrationInfo>;
+    }): void {
         if (updates.length === 0) {
             return;
         }
 
-        context.stderr.info("");
         context.stderr.info(`${Icons.success} ${chalk.green("Updated SDK targets:")}`);
 
         for (const update of updates) {
             context.stderr.info(
                 chalk.green(`  ${update.name}: ${chalk.dim(update.currentVersion)} \u2192 ${update.latestVersion}`)
             );
+            const migration = migrationInfo.get(update.name);
+            if (migration != null) {
+                context.stderr.info(
+                    chalk.dim(
+                        `    Applied ${migration.migrationsApplied} config migration(s): ${migration.appliedVersions.join(", ")}`
+                    )
+                );
+            }
             if (update.changelogUrl != null) {
                 context.stderr.info(chalk.dim(`    Changelog: ${update.changelogUrl}`));
             }

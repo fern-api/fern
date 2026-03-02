@@ -5161,6 +5161,9 @@ importers:
       '@fern-api/login':
         specifier: workspace:*
         version: link:../login
+      '@fern-api/migrations-base':
+        specifier: workspace:*
+        version: link:../../migrations-base
       '@fern-api/openapi-ir-parser':
         specifier: workspace:*
         version: link:../api-importers/openapi/openapi-ir-parser
@@ -5206,6 +5209,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
+      '@types/semver':
+        specifier: 'catalog:'
+        version: 7.7.1
       '@types/uuid':
         specifier: ^9.0.7
         version: 9.0.8
@@ -5239,6 +5245,9 @@ importers:
       posthog-node:
         specifier: ^5.14.0
         version: 5.24.7
+      semver:
+        specifier: ^7.6.2
+        version: 7.7.4
       tsup:
         specifier: 'catalog:'
         version: 8.5.1(jiti@2.6.1)(postcss@8.5.6)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.3.3)

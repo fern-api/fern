@@ -191,11 +191,12 @@ export class AddCommand {
     }): Promise<void> {
         const editor = await FernYmlEditor.load({ fernYmlPath });
 
-        const newTarget: Record<string, unknown> = {};
+        const newTarget: FernYmlEditor.TargetSchema = {
+            output: this.buildOutputForYaml(output)
+        };
         if (version != null) {
             newTarget.version = version;
         }
-        newTarget.output = this.buildOutputForYaml(output);
         if (group != null) {
             newTarget.group = [group];
         }
