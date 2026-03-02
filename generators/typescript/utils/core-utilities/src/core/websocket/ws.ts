@@ -383,7 +383,8 @@ export class ReconnectingWebSocket {
                 if (this._queryParameters && Object.keys(this._queryParameters).length > 0) {
                     const queryString = toQueryString(this._queryParameters, { arrayFormat: "repeat" });
                     if (queryString) {
-                        url = `${url}?${queryString}`;
+                        const separator = url.includes("?") ? "&" : "?";
+                        url = `${url}${separator}${queryString}`;
                     }
                 }
                 this._ws = new WebSocket(url, this._protocols, options);

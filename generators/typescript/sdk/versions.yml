@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.9
+  changelogEntry:
+    - summary: |
+        Fix WebSocket URL construction when the base URL already contains query parameters.
+        Previously, additional query parameters were always appended with `?`, which produced
+        an invalid URL (e.g., `wss://host/path?existing=1?new=2`). The fix now checks for an
+        existing query string and uses `&` as the separator when one is already present.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.52.8
   changelogEntry:
     - summary: |
