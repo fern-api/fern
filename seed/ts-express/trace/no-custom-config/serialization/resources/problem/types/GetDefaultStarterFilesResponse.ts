@@ -8,7 +8,7 @@ export const GetDefaultStarterFilesResponse: core.serialization.ObjectSchema<
     serializers.GetDefaultStarterFilesResponse.Raw,
     SeedTrace.GetDefaultStarterFilesResponse
 > = core.serialization.object({
-    files: core.serialization.record(
+    files: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.ProblemFiles).optional(),
     ),

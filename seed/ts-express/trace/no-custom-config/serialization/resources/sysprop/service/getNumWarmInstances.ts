@@ -7,7 +7,7 @@ import * as serializers from "../../../index";
 export const Response: core.serialization.Schema<
     serializers.sysprop.getNumWarmInstances.Response.Raw,
     Partial<Record<SeedTrace.Language, number>>
-> = core.serialization.record(
+> = core.serialization.partialRecord(
     core.serialization.lazy(() => serializers.Language),
     core.serialization.number().optional(),
 );

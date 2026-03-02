@@ -9,7 +9,7 @@ export const CustomFiles: core.serialization.Schema<serializers.v2.v3.CustomFile
         .union("type", {
             basic: core.serialization.lazyObject(() => serializers.v2.v3.BasicCustomFiles),
             custom: core.serialization.object({
-                value: core.serialization.record(
+                value: core.serialization.partialRecord(
                     core.serialization.lazy(() => serializers.Language),
                     core.serialization.lazyObject(() => serializers.v2.v3.Files).optional(),
                 ),
