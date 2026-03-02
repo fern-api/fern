@@ -27,7 +27,7 @@ except (TypeError, ValueError):
 def _get_wiremock_base_url() -> str:
     """Returns the WireMock base URL from the WIREMOCK_URL environment variable."""
     return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
-    
+
 
 
 def get_client(test_id: str) -> SeedServerSentEvents:
