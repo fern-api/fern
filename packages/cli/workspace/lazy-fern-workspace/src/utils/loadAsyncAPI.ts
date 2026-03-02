@@ -6,7 +6,7 @@ import yaml from "js-yaml";
 import { dirname } from "path";
 
 import { mergeWithOverrides } from "../loaders/mergeWithOverrides.js";
-import { buildExternalRefRegistry, clearFileCache, resolveExternalRefs } from "./resolveExternalRefs.js";
+import { buildExternalRefRegistry, resolveExternalRefs } from "./resolveExternalRefs.js";
 
 export async function loadAsyncAPI({
     context,
@@ -25,17 +25,9 @@ export async function loadAsyncAPI({
     // their inline content (or converted to internal refs) — so the cast is safe.
     const baseDir = dirname(absoluteFilePath);
     const registry = buildExternalRefRegistry(parsed, baseDir);
-    let bundled: AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
-    try {
-        bundled = (await resolveExternalRefs(parsed, baseDir, absoluteFilePath, registry)) as
-            | AsyncAPIV2.DocumentV2
-            | AsyncAPIV3.DocumentV3;
-    } finally {
-        // Release the file cache so we don't hold stale data across unrelated
-        // loadAsyncAPI calls (the cache is module-scoped for perf within a
-        // single bundling pass).
-        clearFileCache();
-    }
+    const bundled = (await resolveExternalRefs(parsed, baseDir, absoluteFilePath, registry)) as
+        | AsyncAPIV2.DocumentV2
+        | AsyncAPIV3.DocumentV3;
 
     // Normalize overrides to an array for consistent processing
     let overridesFilepaths: AbsoluteFilePath[] = [];

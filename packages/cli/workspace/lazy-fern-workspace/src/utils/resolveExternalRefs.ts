@@ -3,14 +3,19 @@ import yaml from "js-yaml";
 import { dirname, resolve } from "path";
 
 // ---------------------------------------------------------------------------
-// File cache — avoids re-reading + re-parsing the same YAML file from disk
-// when multiple $ref nodes target the same file (possibly with different
-// JSON pointers).
+// Helpers
 // ---------------------------------------------------------------------------
 
-const fileCache = new Map<string, unknown>();
+/** Returns `true` for HTTP/HTTPS URL refs that should be left for the
+ *  downstream converter (`AbstractSpecConverter.resolveAllExternalRefs`)
+ *  to handle via `fetch()`. */
+function isUrlRef(ref: string): boolean {
+    return ref.startsWith("http://") || ref.startsWith("https://");
+}
 
-async function readAndParseFile(absolutePath: string): Promise<unknown> {
+/** Read and parse a YAML/JSON file, using `fileCache` to avoid redundant I/O
+ *  within a single bundling pass. */
+async function readAndParseFile(absolutePath: string, fileCache: Map<string, unknown>): Promise<unknown> {
     const cached = fileCache.get(absolutePath);
     if (cached !== undefined) {
         return cached;
@@ -19,14 +24,6 @@ async function readAndParseFile(absolutePath: string): Promise<unknown> {
     const parsed: unknown = yaml.load(contents);
     fileCache.set(absolutePath, parsed);
     return parsed;
-}
-
-/**
- * Clear the file cache. Exposed primarily for tests so that each test run
- * starts with a clean slate.
- */
-export function clearFileCache(): void {
-    fileCache.clear();
 }
 
 // ---------------------------------------------------------------------------
@@ -107,7 +104,7 @@ function isExternalRefValue(value: unknown): boolean {
         return false;
     }
     const ref = (value as Record<string, unknown>)["$ref"];
-    return typeof ref === "string" && ref.length > 0 && !ref.startsWith("#");
+    return typeof ref === "string" && ref.length > 0 && !ref.startsWith("#") && !isUrlRef(ref);
 }
 
 /**
@@ -179,6 +176,7 @@ function findInternalRef(
  * @param registry        - Ref registry built by `buildExternalRefRegistry`
  * @param applyRegistry   - Whether to attempt registry-based ref conversion
  * @param visited         - Cycle-detection set (do not pass externally)
+ * @param fileCache       - Per-call file cache (do not pass externally)
  */
 export async function resolveExternalRefs(
     obj: unknown,
@@ -186,7 +184,8 @@ export async function resolveExternalRefs(
     mainFileAbsPath: string,
     registry: Map<string, string>,
     applyRegistry = false,
-    visited: Set<string> = new Set()
+    visited: Set<string> = new Set(),
+    fileCache: Map<string, unknown> = new Map()
 ): Promise<unknown> {
     if (obj == null || typeof obj !== "object") {
         return obj;
@@ -194,14 +193,16 @@ export async function resolveExternalRefs(
 
     if (Array.isArray(obj)) {
         return Promise.all(
-            obj.map((item) => resolveExternalRefs(item, baseDir, mainFileAbsPath, registry, applyRegistry, visited))
+            obj.map((item) =>
+                resolveExternalRefs(item, baseDir, mainFileAbsPath, registry, applyRegistry, visited, fileCache)
+            )
         );
     }
 
     const record = obj as Record<string, unknown>;
 
     const ref = record["$ref"];
-    if (typeof ref === "string" && !ref.startsWith("#")) {
+    if (typeof ref === "string" && !ref.startsWith("#") && !isUrlRef(ref)) {
         const { jsonPointer, absolutePath: absoluteRefPath } = parseExternalRef(ref, baseDir);
 
         // Collect sibling properties (keys other than $ref). AsyncAPI 3.x and
@@ -231,7 +232,7 @@ export async function resolveExternalRefs(
         const newVisited = new Set(visited);
         newVisited.add(cacheKey);
 
-        let parsed: unknown = await readAndParseFile(absoluteRefPath);
+        let parsed: unknown = await readAndParseFile(absoluteRefPath, fileCache);
 
         if (jsonPointer !== "") {
             const keys = jsonPointer.split("/").filter((k) => k !== "");
@@ -258,7 +259,7 @@ export async function resolveExternalRefs(
 
         // Recursively resolve the loaded content, now with registry active
         const refDir = dirname(absoluteRefPath);
-        const resolved = await resolveExternalRefs(parsed, refDir, mainFileAbsPath, registry, true, newVisited);
+        const resolved = await resolveExternalRefs(parsed, refDir, mainFileAbsPath, registry, true, newVisited, fileCache);
 
         // Merge sibling properties onto the resolved content. Sibling props
         // take precedence (they act as overrides per AsyncAPI 3.x / OAS 3.1).
@@ -271,7 +272,7 @@ export async function resolveExternalRefs(
     // No external $ref — recursively process every property value
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(record)) {
-        result[key] = await resolveExternalRefs(value, baseDir, mainFileAbsPath, registry, applyRegistry, visited);
+        result[key] = await resolveExternalRefs(value, baseDir, mainFileAbsPath, registry, applyRegistry, visited, fileCache);
     }
     return result;
 }

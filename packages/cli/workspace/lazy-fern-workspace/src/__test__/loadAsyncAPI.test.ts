@@ -5,7 +5,6 @@ import { tmpdir } from "os";
 import { join } from "path";
 
 import { loadAsyncAPI } from "../utils/loadAsyncAPI.js";
-import { clearFileCache } from "../utils/resolveExternalRefs.js";
 import { createMockTaskContext } from "./helpers/createMockTaskContext.js";
 
 // loadAsyncAPI returns DocumentV2 | DocumentV3; our fixtures are plain objects
@@ -192,7 +191,6 @@ describe("loadAsyncAPI — external $ref resolution", () => {
     });
 
     afterEach(async () => {
-        clearFileCache();
         await rm(tempDir, { recursive: true, force: true });
     });
 
@@ -429,5 +427,97 @@ describe("loadAsyncAPI — external $ref resolution", () => {
         expect(resolved["description"]).toBe("Overridden description from main doc");
         // Extra sibling properties should be preserved
         expect(resolved["x-custom"]).toBe("custom-value");
+    });
+
+    it("uses file cache for multiple refs to the same file", async () => {
+        // A single external file referenced twice with different JSON pointers
+        const schemasFile = {
+            TypeA: { type: "string", description: "Type A" },
+            TypeB: { type: "integer", description: "Type B" }
+        };
+        await writeFile(join(tempDir, "schemas.yml"), yaml.dump(schemasFile));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/a": {
+                    publish: {
+                        message: {
+                            payload: { $ref: "./schemas.yml#/TypeA" }
+                        }
+                    }
+                },
+                "/b": {
+                    publish: {
+                        message: {
+                            payload: { $ref: "./schemas.yml#/TypeB" }
+                        }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+
+        const payloadA = (
+            ((channels["/a"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        const payloadB = (
+            ((channels["/b"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        // Both pointers should resolve correctly from the same cached file
+        expect(payloadA).toEqual(schemasFile.TypeA);
+        expect(payloadA["$ref"]).toBeUndefined();
+        expect(payloadB).toEqual(schemasFile.TypeB);
+        expect(payloadB["$ref"]).toBeUndefined();
+    });
+
+    it("leaves HTTP/HTTPS $ref values untouched for downstream resolution", async () => {
+        const doc = {
+            asyncapi: "3.0.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                testChannel: {
+                    address: "/test",
+                    messages: {
+                        sendMessage: {
+                            $ref: "https://example.com/specs/asyncapi.json#/components/messages/sendMessage"
+                        }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+        const messages = (channels["testChannel"] as Record<string, unknown>)["messages"] as Record<string, unknown>;
+        const sendMessage = messages["sendMessage"] as Record<string, unknown>;
+
+        // URL refs should be preserved as-is for AbstractSpecConverter.resolveAllExternalRefs
+        expect(sendMessage["$ref"]).toBe(
+            "https://example.com/specs/asyncapi.json#/components/messages/sendMessage"
+        );
     });
 });
