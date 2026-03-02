@@ -113,8 +113,8 @@ export async function checkVersionDoesNotAlreadyExist({
  * Checks whether a specific version of a package exists on the relevant registry.
  *
  * @returns true if the version exists, false otherwise
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export async function doesVersionExistOnRegistry({
     packageName,
     version,
@@ -148,8 +148,8 @@ export async function doesVersionExistOnRegistry({
  * Checks if a specific version of an npm package exists.
  * Uses the npm registry's version-specific endpoint which returns 200 if the version exists.
  * Supports private registries via NPM_TOKEN.
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export async function doesNpmVersionExist(packageName: string, version: string): Promise<boolean> {
     const encodedName = encodeURIComponent(packageName).replace(/^%40/, "@");
     const headers: Record<string, string> = {
@@ -173,8 +173,8 @@ export async function doesNpmVersionExist(packageName: string, version: string):
 /**
  * Checks if a specific version of a PyPI package exists.
  * PyPI provides a version-specific JSON endpoint.
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export async function doesPypiVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://pypi.org/pypi/${packageName}/${version}/json`, {
         signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
@@ -185,8 +185,8 @@ export async function doesPypiVersionExist(packageName: string, version: string)
 /**
  * Checks if a specific version of a Maven artifact exists.
  * Searches Maven Central for the specific group:artifact:version combination.
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export async function doesMavenVersionExist(coordinate: string, version: string): Promise<boolean> {
     const parts = coordinate.split(":");
     if (parts.length < 2 || !parts[0] || !parts[1]) {
@@ -209,8 +209,8 @@ export async function doesMavenVersionExist(coordinate: string, version: string)
 /**
  * Checks if a specific version of a NuGet package exists.
  * Uses the NuGet V3 flat container API to list all versions, then checks for the target.
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export async function doesNugetVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://api.nuget.org/v3-flatcontainer/${packageName.toLowerCase()}/index.json`, {
         signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
@@ -226,8 +226,8 @@ export async function doesNugetVersionExist(packageName: string, version: string
 /**
  * Checks if a specific version of a Ruby gem exists.
  * Uses the RubyGems version-specific endpoint.
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export async function doesRubyGemsVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://rubygems.org/api/v2/rubygems/${packageName}/versions/${version}.json`, {
         signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
@@ -238,8 +238,8 @@ export async function doesRubyGemsVersionExist(packageName: string, version: str
 /**
  * Checks if a specific version of a Go module exists.
  * Uses the Go Module Proxy's version-specific info endpoint.
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export async function doesGoVersionExist(modulePath: string, version: string): Promise<boolean> {
     // Go module proxy requires case-encoding: uppercase letters become "!" + lowercase
     const encodedPath = modulePath.replace(/[A-Z]/g, (c) => "!" + c.toLowerCase());
@@ -258,8 +258,8 @@ export async function doesGoVersionExist(modulePath: string, version: string): P
 /**
  * Checks if a specific version of a Rust crate exists.
  * Uses the Crates.io version-specific endpoint.
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export async function doesCratesVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://crates.io/api/v1/crates/${packageName}/${version}`, {
         headers: {
@@ -276,8 +276,8 @@ export async function doesCratesVersionExist(packageName: string, version: strin
 
 /**
  * Returns a human-readable registry name for the given language.
+ * @internal Exported for testing
  */
-/** @internal Exported for testing */
 export function getRegistryName(language: string): string {
     switch (language) {
         case "typescript":

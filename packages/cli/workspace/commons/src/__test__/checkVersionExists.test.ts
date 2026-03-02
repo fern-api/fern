@@ -378,7 +378,6 @@ describe("checkVersionDoesNotAlreadyExist", () => {
     beforeEach(() => {
         vi.stubGlobal("fetch", vi.fn());
         delete process.env.NPM_TOKEN;
-        delete process.env.GITHUB_TOKEN;
     });
 
     afterEach(() => {
@@ -398,6 +397,18 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         expect(ctx._failMessages).toHaveLength(0);
     });
 
+    it("skips check when packageName is undefined", async () => {
+        const ctx = makeMockContext();
+        await checkVersionDoesNotAlreadyExist({
+            version: "1.0.0",
+            packageName: undefined,
+            generatorInvocation: makePublishInvocation("typescript"),
+            context: ctx
+        });
+        expect(fetch).not.toHaveBeenCalled();
+        expect(ctx._failMessages).toHaveLength(0);
+    });
+
     it("skips check for downloadFiles output mode", async () => {
         const ctx = makeMockContext();
         await checkVersionDoesNotAlreadyExist({
@@ -409,7 +420,7 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         expect(fetch).not.toHaveBeenCalled();
     });
 
-    it("calls failAndThrow when registry version exists", async () => {
+    it("calls failAndThrow when registry version exists (publishV2)", async () => {
         vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
         const ctx = makeMockContext();
         await expect(
@@ -450,6 +461,25 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         expect(ctx._failMessages).toHaveLength(0);
         expect(ctx._debugMessages).toHaveLength(1);
         expect(ctx._debugMessages[0]).toContain("Could not verify");
+    });
+
+    it("calls failAndThrow for legacy publish output mode", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
+        const ctx = makeMockContext();
+        const invocation = {
+            language: "typescript",
+            outputMode: { type: "publish" as const }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub for GeneratorInvocation
+        } as any;
+        await expect(
+            checkVersionDoesNotAlreadyExist({
+                version: "1.0.0",
+                packageName: "@acme/sdk",
+                generatorInvocation: invocation,
+                context: ctx
+            })
+        ).rejects.toThrow("already exists");
+        expect(ctx._failMessages).toHaveLength(1);
     });
 
     it("logs warning (not error) for githubV2 output mode when version exists", async () => {
