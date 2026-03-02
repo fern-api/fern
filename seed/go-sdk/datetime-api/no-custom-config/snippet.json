@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/get-and-return-with-datetime-alias-with-docs",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints.getAndReturnWithDatetimeAliasWithDocs"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/datetime-api/fern\"\n\tfernclient \"github.com/datetime-api/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Endpoints.GetAndReturnWithDatetimeAliasWithDocs(\n\tcontext.TODO(),\n\t\u0026fern.ObjectWithDatetimeAlias{},\n)\n"
+            }
+        }
+    ]
+}

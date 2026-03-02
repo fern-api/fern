@@ -1,0 +1,26 @@
+types:
+  Error:
+    properties:
+      code:
+        docs: Error code.
+        type: integer
+      message:
+        docs: Error message.
+        type: string
+    source:
+      openapi: openapi.yml
+
+  DatetimeAlias:
+    docs: This is a datetime alias that includes intent-specific docs.
+    type: datetime
+
+  ObjectWithDatetimeAlias:
+    properties:
+      dateTime:
+        type: datetime
+      datetimeAlias:
+        type: DatetimeAlias
+      optionalDatetime:
+        type: optional<datetime>
+      optionalDatetimeAlias:
+        type: optional<DatetimeAlias>

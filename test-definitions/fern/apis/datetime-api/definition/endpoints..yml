@@ -1,0 +1,29 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getAndReturnWithDatetimeAliasWithDocs:
+      docs: |
+        This endpoint tests that datetime alias fields with intent-specific docs are properly handled.
+        The dateTime field should preserve its exact value "2023-08-31T14:15:22Z" without being reformatted.
+      path: /get-and-return-with-datetime-alias-with-docs
+      method: POST
+      request: root.ObjectWithDatetimeAlias
+      response: root.ObjectWithDatetimeAlias
+      examples:
+        - name: DatetimeLikeStringExample
+          request:
+            datetimeLikeString: "2023-08-31T14:15:22Z"
+            actualDatetime: "2023-08-31T14:15:22Z"
+          response:
+            body:
+              datetimeLikeString: "2023-08-31T14:15:22Z"
+              actualDatetime: "2023-08-31T14:15:22Z"
+        - name: DatetimeAliasExampleWithoutTimeZone
+          request:
+            dateTime: "2023-08-31T14:15:22"
+          response:
+            body:
+              dateTime: "2023-08-31T14:15:22"

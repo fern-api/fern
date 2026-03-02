@@ -1,0 +1,4 @@
+display-name: Datetime API
+error-discrimination:
+  strategy: status-code
+name: api
