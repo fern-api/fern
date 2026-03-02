@@ -63,6 +63,7 @@ import { WebhooksHelperDeclarationReferencer } from "./declaration-referencers/W
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer.js";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer.js";
 import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator.js";
+import { ReactQueryGenerator } from "./react-query/ReactQueryGenerator.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent.js";
 import { TestGenerator } from "./test-generator/TestGenerator.js";
@@ -686,11 +687,20 @@ export class SdkGenerator {
 
         const subpackageExportPaths = this.config.generateSubpackageExports ? this.getSubpackageExportPaths() : [];
 
-        let reactQueryExportPath: string | undefined;
+        let reactQueryExportPaths: string[] | undefined;
         if (this.config.generateReactQuery) {
-            const result = this.generateReactQuery();
+            const reactQueryGenerator = new ReactQueryGenerator({
+                context: this.context,
+                rootClientName: this.sdkClientClassDeclarationReferencer.getExportedName({ isRoot: true }),
+                rootDirectory: this.rootDirectory,
+                relativePackagePath: this.relativePackagePath,
+                intermediateRepresentation: this.intermediateRepresentation,
+                packageResolver: this.packageResolver,
+                getAllPackageIds: () => this.getAllPackageIds()
+            });
+            const result = reactQueryGenerator.generate();
             if (result != null) {
-                reactQueryExportPath = result.reactQueryExportPath;
+                reactQueryExportPaths = result.reactQueryExportPaths;
             }
             this.context.logger.debug("Generated React Query options");
         }
@@ -698,7 +708,7 @@ export class SdkGenerator {
         // Add @tanstack/react-query peer dependency if React Query is enabled
         const extraPeerDependencies = { ...this.config.extraPeerDependencies };
         const extraPeerDependenciesMeta = { ...this.config.extraPeerDependenciesMeta };
-        if (reactQueryExportPath != null) {
+        if (reactQueryExportPaths != null) {
             extraPeerDependencies["@tanstack/react-query"] = ">=5.0.0";
             extraPeerDependencies["react"] = ">=18.0.0";
             extraPeerDependenciesMeta["@tanstack/react-query"] = { optional: true };
@@ -727,7 +737,7 @@ export class SdkGenerator {
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
                   subpackageExportPaths,
-                  reactQueryExportPath
+                  reactQueryExportPaths
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -753,7 +763,7 @@ export class SdkGenerator {
                   formatter: this.config.formatter,
                   generateSubpackageExports: this.config.generateSubpackageExports,
                   subpackageExportPaths,
-                  reactQueryExportPath
+                  reactQueryExportPaths
               });
     }
 
@@ -2051,187 +2061,6 @@ export class SdkGenerator {
         }
 
         return paths;
-    }
-
-    private generateReactQuery(): { reactQueryExportPath: string } | undefined {
-        this.context.logger.debug("Generating React Query options...");
-
-        const rootClientName = this.sdkClientClassDeclarationReferencer.getExportedName({ isRoot: true });
-
-        // Collect all endpoints across services
-        const endpointEntries: Array<{
-            service: FernIr.HttpService;
-            endpoint: FernIr.HttpEndpoint;
-            packageId: PackageId;
-            servicePath: string[];
-        }> = [];
-
-        this.forEachService((service, packageId) => {
-            if (service.endpoints.length === 0) {
-                return;
-            }
-
-            const servicePath: string[] = [];
-            if (!packageId.isRoot) {
-                const package_ = this.packageResolver.resolvePackage(packageId);
-                // Use allParts (not packagePath) to capture the full nested path
-                // e.g. for endpoints/container, allParts = ["endpoints", "container"]
-                // while packagePath would only give ["endpoints"]
-                for (const part of package_.fernFilepath.allParts) {
-                    // Use unsafeName for client accessor chains (e.g. client.endpoints.enum)
-                    // safeName would add trailing underscore for reserved words (enum_ vs enum)
-                    servicePath.push(part.camelCase.unsafeName);
-                }
-            }
-
-            for (const endpoint of service.endpoints) {
-                endpointEntries.push({ service, endpoint, packageId, servicePath });
-            }
-        });
-
-        if (endpointEntries.length === 0) {
-            return undefined;
-        }
-
-        // Build the react-query/index.ts file content
-        const lines: string[] = [];
-        lines.push(`// This file was auto-generated by Fern from our API Definition.`);
-        lines.push(``);
-        lines.push(`import type { QueryKey } from "@tanstack/react-query";`);
-        lines.push(`import { ${rootClientName} } from "../Client";`);
-        lines.push(``);
-
-        // Type alias for the client
-        lines.push(`type ClientInstance = InstanceType<typeof ${rootClientName}>;`);
-        lines.push(``);
-
-        for (const { endpoint, servicePath } of endpointEntries) {
-            const endpointName = endpoint.name.camelCase.safeName;
-            const isGetMethod = endpoint.method === "GET";
-            const hasPagination = endpoint.pagination != null;
-
-            // Build a unique prefix from service path + endpoint name
-            const pathSegments = [...servicePath];
-            const prefixParts = pathSegments.map((s) => s.charAt(0).toUpperCase() + s.slice(1));
-            const capitalizedEndpointName = endpointName.charAt(0).toUpperCase() + endpointName.slice(1);
-            const functionPrefix = [...prefixParts, capitalizedEndpointName].join("");
-
-            // Build the client accessor chain
-            const clientAccess = servicePath.length > 0 ? `client.${servicePath.join(".")}` : "client";
-
-            // Check if endpoint has any required parameters (body, path params, etc.)
-            const hasRequestParams = endpoint.sdkRequest != null || endpoint.allPathParameters.length > 0;
-            const clientTypeAccess = `ClientInstance${servicePath.map((s) => `["${s}"]`).join("")}`;
-            const endpointMethodType = `${clientTypeAccess}["${endpointName}"]`;
-            const paramsTypeName = `${functionPrefix}Params`;
-            const returnTypeName = `${functionPrefix}ReturnType`;
-
-            if (hasRequestParams) {
-                // Use Parameters<> to infer the exact request type (supports wrapper + justRequestBody)
-                // and also captures any optional request options parameters.
-                lines.push(`type ${paramsTypeName} = Parameters<${endpointMethodType}>;`);
-            }
-            // ReturnType alias for the endpoint method - needed for explicit return type annotations
-            lines.push(`type ${returnTypeName} = ReturnType<${endpointMethodType}>;`);
-            lines.push(``);
-
-            // Query key segments for cache invalidation
-            const keySegments = [`"${rootClientName}"`, ...servicePath.map((s) => `"${s}"`), `"${endpointName}"`];
-
-            if (isGetMethod) {
-                // Generate queryKey function
-                const queryKeyFnName = `${functionPrefix}QueryKey`;
-                if (hasRequestParams) {
-                    lines.push(`export function ${queryKeyFnName}(...args: ${paramsTypeName}): QueryKey {`);
-                    lines.push(`    return [${keySegments.join(", ")}, ...args] as const;`);
-                } else {
-                    lines.push(`export function ${queryKeyFnName}(): QueryKey {`);
-                    lines.push(`    return [${keySegments.join(", ")}] as const;`);
-                }
-                lines.push(`}`);
-                lines.push(``);
-
-                if (hasPagination) {
-                    // Generate infiniteQueryOptions
-                    const infiniteFnName = `${functionPrefix}InfiniteOptions`;
-                    const infiniteReturnType = `{ queryKey: QueryKey; queryFn: () => ${returnTypeName}; initialPageParam: unknown; getNextPageParam: (lastPage: Awaited<${returnTypeName}>) => unknown }`;
-                    if (hasRequestParams) {
-                        lines.push(
-                            `export function ${infiniteFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${infiniteReturnType} {`
-                        );
-                    } else {
-                        lines.push(
-                            `export function ${infiniteFnName}(client: ClientInstance): ${infiniteReturnType} {`
-                        );
-                    }
-                    lines.push(`    return {`);
-                    if (hasRequestParams) {
-                        lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
-                        lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(...args),`);
-                    } else {
-                        lines.push(`        queryKey: ${queryKeyFnName}(),`);
-                        lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(),`);
-                    }
-                    lines.push(`        initialPageParam: undefined as unknown,`);
-                    lines.push(`        getNextPageParam: (_lastPage: Awaited<${returnTypeName}>): unknown => {`);
-                    lines.push(`            return undefined;`);
-                    lines.push(`        },`);
-                    lines.push(`    };`);
-                    lines.push(`}`);
-                    lines.push(``);
-                }
-
-                // Generate queryOptions (always for GET)
-                const queryFnName = `${functionPrefix}Options`;
-                const queryReturnType = `{ queryKey: QueryKey; queryFn: () => ${returnTypeName} }`;
-                if (hasRequestParams) {
-                    lines.push(
-                        `export function ${queryFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${queryReturnType} {`
-                    );
-                } else {
-                    lines.push(`export function ${queryFnName}(client: ClientInstance): ${queryReturnType} {`);
-                }
-                lines.push(`    return {`);
-                if (hasRequestParams) {
-                    lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
-                    lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(...args),`);
-                } else {
-                    lines.push(`        queryKey: ${queryKeyFnName}(),`);
-                    lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(),`);
-                }
-                lines.push(`    };`);
-                lines.push(`}`);
-                lines.push(``);
-            } else {
-                // Non-GET = mutation
-                const mutationFnName = `${functionPrefix}MutationOptions`;
-                if (hasRequestParams) {
-                    const mutationReturnType = `{ mutationFn: (...args: ${paramsTypeName}) => ${returnTypeName} }`;
-                    lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
-                    lines.push(`    return {`);
-                    lines.push(
-                        `        mutationFn: (...args: ${paramsTypeName}) => ${clientAccess}.${endpointName}(...args),`
-                    );
-                } else {
-                    const mutationReturnType = `{ mutationFn: () => ${returnTypeName} }`;
-                    lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
-                    lines.push(`    return {`);
-                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointName}(),`);
-                }
-                lines.push(`    };`);
-                lines.push(`}`);
-                lines.push(``);
-            }
-        }
-
-        const fileContent = lines.join("\n");
-        const reactQueryDir = `${this.relativePackagePath}/react-query`;
-        const filepath = `${reactQueryDir}/index.ts`;
-
-        // Create the source file in the project
-        this.rootDirectory.createSourceFile(`/${filepath}`, fileContent, { overwrite: true });
-
-        return { reactQueryExportPath: "react-query" };
     }
 
     private generateSubpackageExports() {

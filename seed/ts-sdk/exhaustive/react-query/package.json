@@ -220,6 +220,171 @@
             },
             "default": "./dist/cjs/react-query/index.js"
         },
+        "./react-query/endpoints/container": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/container/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/container/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/container/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/container/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/container/index.js"
+        },
+        "./react-query/endpoints/contentType": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/contentType/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/contentType/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/contentType/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/contentType/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/contentType/index.js"
+        },
+        "./react-query/endpoints/enum": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/enum/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/enum/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/enum/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/enum/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/enum/index.js"
+        },
+        "./react-query/endpoints/httpMethods": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/httpMethods/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/httpMethods/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/httpMethods/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/httpMethods/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/httpMethods/index.js"
+        },
+        "./react-query/endpoints/object": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/object/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/object/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/object/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/object/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/object/index.js"
+        },
+        "./react-query/endpoints/pagination": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/pagination/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/pagination/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/pagination/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/pagination/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/pagination/index.js"
+        },
+        "./react-query/endpoints/params": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/params/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/params/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/params/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/params/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/params/index.js"
+        },
+        "./react-query/endpoints/primitive": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/primitive/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/primitive/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/primitive/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/primitive/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/primitive/index.js"
+        },
+        "./react-query/endpoints/put": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/put/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/put/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/put/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/put/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/put/index.js"
+        },
+        "./react-query/endpoints/union": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/union/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/union/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/union/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/union/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/union/index.js"
+        },
+        "./react-query/endpoints/urls": {
+            "import": {
+                "types": "./dist/esm/react-query/endpoints/urls/index.d.mts",
+                "default": "./dist/esm/react-query/endpoints/urls/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/endpoints/urls/index.d.ts",
+                "default": "./dist/cjs/react-query/endpoints/urls/index.js"
+            },
+            "default": "./dist/cjs/react-query/endpoints/urls/index.js"
+        },
+        "./react-query/inlinedRequests": {
+            "import": {
+                "types": "./dist/esm/react-query/inlinedRequests/index.d.mts",
+                "default": "./dist/esm/react-query/inlinedRequests/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/inlinedRequests/index.d.ts",
+                "default": "./dist/cjs/react-query/inlinedRequests/index.js"
+            },
+            "default": "./dist/cjs/react-query/inlinedRequests/index.js"
+        },
+        "./react-query/noAuth": {
+            "import": {
+                "types": "./dist/esm/react-query/noAuth/index.d.mts",
+                "default": "./dist/esm/react-query/noAuth/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/noAuth/index.d.ts",
+                "default": "./dist/cjs/react-query/noAuth/index.js"
+            },
+            "default": "./dist/cjs/react-query/noAuth/index.js"
+        },
+        "./react-query/noReqBody": {
+            "import": {
+                "types": "./dist/esm/react-query/noReqBody/index.d.mts",
+                "default": "./dist/esm/react-query/noReqBody/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/noReqBody/index.d.ts",
+                "default": "./dist/cjs/react-query/noReqBody/index.js"
+            },
+            "default": "./dist/cjs/react-query/noReqBody/index.js"
+        },
+        "./react-query/reqWithHeaders": {
+            "import": {
+                "types": "./dist/esm/react-query/reqWithHeaders/index.d.mts",
+                "default": "./dist/esm/react-query/reqWithHeaders/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/react-query/reqWithHeaders/index.d.ts",
+                "default": "./dist/cjs/react-query/reqWithHeaders/index.js"
+            },
+            "default": "./dist/cjs/react-query/reqWithHeaders/index.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [

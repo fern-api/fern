@@ -202,8 +202,10 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}.js";
                 }),
                 ...this.getFoldersForExports().reduce((acc, folder) => {
                     const isReactQueryExport =
-                        this.reactQueryExportPath != null && folder === this.reactQueryExportPath;
-                    const exportKey = isReactQueryExport ? "react-query" : folder;
+                        this.reactQueryExportPaths != null && this.reactQueryExportPaths.includes(folder);
+                    const exportKey = isReactQueryExport
+                        ? `react-query${folder === "react-query" ? "" : folder.slice("react-query".length)}`
+                        : folder;
                     return {
                         ...acc,
                         [`./${exportKey}`]: this.getExportsForBundle({

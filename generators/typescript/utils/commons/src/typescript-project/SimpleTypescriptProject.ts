@@ -244,12 +244,12 @@ export class SimpleTypescriptProject extends TypescriptProject {
                             : undefined;
                         const isSubpackageExport = subpackageExport !== undefined;
                         const isReactQueryExport =
-                            this.reactQueryExportPath != null && folder === this.reactQueryExportPath;
+                            this.reactQueryExportPaths != null && this.reactQueryExportPaths.includes(folder);
                         const fileName = isSubpackageExport ? "exports" : "index";
-                        const exportKey = isReactQueryExport
-                            ? "react-query"
-                            : isSubpackageExport
-                              ? subpackageExport.key
+                        const exportKey = isSubpackageExport
+                            ? subpackageExport.key
+                            : isReactQueryExport
+                              ? `react-query${folder === "react-query" ? "" : folder.slice("react-query".length)}`
                               : folder;
                         const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.js`;
                         const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.d.ts`;
