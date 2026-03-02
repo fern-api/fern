@@ -82,13 +82,20 @@ export async function runRemoteGenerationForGenerator({
 
     // Fail fast if the target version already exists on the package registry.
     // Only check when the user explicitly provided a version (not auto-computed).
-    if (!isPreview && version != null) {
-        await checkVersionDoesNotAlreadyExist({
-            version,
-            packageName,
-            generatorInvocation,
-            context: interactiveTaskContext
-        });
+    if (version != null) {
+        if (isPreview) {
+            interactiveTaskContext.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${version} may already exist on the package registry.`
+            );
+        } else {
+            await checkVersionDoesNotAlreadyExist({
+                version,
+                packageName,
+                generatorInvocation,
+                context: interactiveTaskContext
+            });
+        }
     }
 
     const ir = generateIntermediateRepresentation({

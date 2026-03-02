@@ -64,15 +64,22 @@ export async function runLocalGenerationForWorkspace({
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
     const userProvidedVersion = version;
-    if (absolutePathToPreview == null && userProvidedVersion != null) {
-        for (const generatorInvocation of generatorGroup.generators) {
-            const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-            await checkVersionDoesNotAlreadyExist({
-                version: userProvidedVersion,
-                packageName,
-                generatorInvocation,
-                context
-            });
+    if (userProvidedVersion != null) {
+        if (absolutePathToPreview != null) {
+            context.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${userProvidedVersion} may already exist on the package registry.`
+            );
+        } else {
+            for (const generatorInvocation of generatorGroup.generators) {
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                await checkVersionDoesNotAlreadyExist({
+                    version: userProvidedVersion,
+                    packageName,
+                    generatorInvocation,
+                    context
+                });
+            }
         }
     }
 
