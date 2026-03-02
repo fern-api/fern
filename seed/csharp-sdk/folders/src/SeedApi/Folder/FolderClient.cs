@@ -33,7 +33,6 @@ public partial class FolderClient : IFolderClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     Headers = _headers,

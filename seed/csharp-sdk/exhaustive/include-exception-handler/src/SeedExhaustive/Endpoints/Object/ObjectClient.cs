@@ -43,7 +43,6 @@ public partial class ObjectClient : IObjectClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-optional-field",
                             Body = request,
@@ -117,7 +116,6 @@ public partial class ObjectClient : IObjectClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-required-field",
                             Body = request,
@@ -189,7 +187,6 @@ public partial class ObjectClient : IObjectClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-map-of-map",
                             Body = request,
@@ -261,7 +258,6 @@ public partial class ObjectClient : IObjectClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-nested-with-optional-field",
                             Body = request,
@@ -336,7 +332,6 @@ public partial class ObjectClient : IObjectClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = string.Format(
                                 "/object/get-and-return-nested-with-required-field/{0}",
@@ -413,7 +408,6 @@ public partial class ObjectClient : IObjectClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-nested-with-required-field-list",
                             Body = request,
@@ -487,7 +481,6 @@ public partial class ObjectClient : IObjectClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-unknown-field",
                             Body = request,
@@ -561,7 +554,6 @@ public partial class ObjectClient : IObjectClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/object/get-and-return-with-datetime-like-string",
                             Body = request,

@@ -38,7 +38,6 @@ public partial class DataserviceClient : IDataserviceClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "foo",
                             Headers = _headers,

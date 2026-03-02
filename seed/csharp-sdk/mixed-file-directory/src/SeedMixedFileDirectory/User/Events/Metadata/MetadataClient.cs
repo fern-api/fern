@@ -33,7 +33,6 @@ public partial class MetadataClient : IMetadataClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/events/metadata/",
                     QueryString = _queryString,

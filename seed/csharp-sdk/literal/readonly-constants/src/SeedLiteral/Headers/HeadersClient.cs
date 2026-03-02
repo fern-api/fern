@@ -30,7 +30,6 @@ public partial class HeadersClient : IHeadersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "headers",
                     Body = request,
