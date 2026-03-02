@@ -1323,7 +1323,6 @@
                   "amount": 1.1,
                   "createdAt": "2024-01-15T09:30:00Z",
                   "currency": "string",
-                  "customerId": "string",
                   "id": "ps_abc123",
                   "status": "pending",
                 },
