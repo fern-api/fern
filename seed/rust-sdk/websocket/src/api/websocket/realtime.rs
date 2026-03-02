@@ -14,6 +14,10 @@ pub enum RealtimeServerMessage {
     ReceiveEvent2(ReceiveEvent2),
     #[serde(rename = "receive3")]
     ReceiveEvent3(ReceiveEvent3),
+    #[serde(rename = "receive_transcript")]
+    TranscriptEvent(TranscriptEvent),
+    #[serde(rename = "receive_flushed")]
+    FlushedEvent(FlushedEvent),
 }
 pub struct RealtimeClient {
     ws: WebSocketClient,
