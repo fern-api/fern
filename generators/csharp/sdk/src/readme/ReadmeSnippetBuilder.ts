@@ -227,9 +227,7 @@ var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
     }
 
     private buildAdditionalHeadersSnippets(): string[] {
-        const headerEndpoints = this.getEndpointsForFeature(
-            ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID
-        );
+        const headerEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID);
         return headerEndpoints.map((headerEndpoint) =>
             this.writeCode(`
 var response = await ${this.getMethodCall(headerEndpoint)}(
@@ -246,9 +244,7 @@ var response = await ${this.getMethodCall(headerEndpoint)}(
     }
 
     private buildAdditionalQueryParametersSnippets(): string[] {
-        const queryParameterEndpoints = this.getEndpointsForFeature(
-            ReadmeSnippetBuilder.ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID
-        );
+        const queryParameterEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID);
         return queryParameterEndpoints.map((queryParameterEndpoint) =>
             this.writeCode(`
 var response = await ${this.getMethodCall(queryParameterEndpoint)}(
