@@ -101,6 +101,9 @@ export class ReconnectingWebSocket {
         this._headers = headers;
         this._queryParameters = queryParameters;
         this._abortSignal = abortSignal;
+        if (this._abortSignal) {
+            this._abortSignal.addEventListener("abort", this._handleAbort, { once: true });
+        }
         if (this._options.startClosed) {
             this._shouldReconnect = false;
         }
@@ -402,6 +405,22 @@ export class ReconnectingWebSocket {
                 this._connectTimeout = setTimeout(() => this._handleTimeout(), connectionTimeout);
             });
     }
+
+    private _handleAbort = () => {
+        this._debug("abort signal fired");
+        this._shouldReconnect = false;
+        this._closeCalled = true;
+        this._clearTimeouts();
+        if (this._ws) {
+            this._removeListeners();
+            try {
+                this._ws.close(1000, "aborted");
+                this._handleClose(new Events.CloseEvent(1000, "aborted", this));
+            } catch (_error) {
+                // ignore
+            }
+        }
+    };
 
     private _handleTimeout() {
         this._debug("timeout event");
