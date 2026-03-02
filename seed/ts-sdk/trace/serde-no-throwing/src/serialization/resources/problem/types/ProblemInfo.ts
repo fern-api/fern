@@ -30,7 +30,7 @@ export declare namespace ProblemInfo {
         problemDescription: ProblemDescription.Raw;
         problemName: string;
         problemVersion: number;
-        files: Partial<Record<Language.Raw, ProblemFiles.Raw>>;
+        files: Partial<Record<Language.Raw, ProblemFiles.Raw | null | undefined>>;
         inputParams: VariableTypeAndName.Raw[];
         outputType: serializers.VariableType.Raw;
         testcases: TestCaseWithExpectedResult.Raw[];

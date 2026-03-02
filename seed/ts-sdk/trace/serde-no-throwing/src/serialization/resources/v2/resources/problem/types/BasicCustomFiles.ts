@@ -22,7 +22,7 @@ export declare namespace BasicCustomFiles {
     export interface Raw {
         methodName: string;
         signature: NonVoidFunctionSignature.Raw;
-        additionalFiles: Partial<Record<Language.Raw, Files.Raw>>;
+        additionalFiles: Partial<Record<Language.Raw, Files.Raw | null | undefined>>;
         basicTestCaseTemplate: BasicTestCaseTemplate.Raw;
     }
 }

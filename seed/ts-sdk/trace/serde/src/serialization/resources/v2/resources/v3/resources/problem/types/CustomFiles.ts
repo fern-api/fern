@@ -29,6 +29,6 @@ export declare namespace CustomFiles {
 
     export interface Custom {
         type: "custom";
-        value: Partial<Record<Language.Raw, Files.Raw>>;
+        value: Partial<Record<Language.Raw, Files.Raw | null | undefined>>;
     }
 }
