@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.folder_a.service.get_direct_thread();
+client.folder_a.service.get_direct_thread
 ```
 </dd>
 </dl>
@@ -70,7 +70,7 @@ client.folder_a.service.get_direct_thread();
 <dd>
 
 ```ruby
-client.folder_d.service.get_direct_thread();
+client.folder_d.service.get_direct_thread
 ```
 </dd>
 </dl>
@@ -112,10 +112,10 @@ client.folder_d.service.get_direct_thread();
 
 ```ruby
 client.foo.find(
-  optional_string: 'optionalString',
-  public_property: 'publicProperty',
+  optional_string: "optionalString",
+  public_property: "publicProperty",
   private_property: 1
-);
+)
 ```
 </dd>
 </dl>

@@ -11,6 +11,7 @@ import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
+import com.seed.exhaustive.types.types.ObjectWithUnknownField;
 import java.util.List;
 
 public class ObjectClient {
@@ -112,6 +113,17 @@ public class ObjectClient {
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnNestedWithRequiredFieldAsList(request, requestOptions)
+                .body();
+    }
+
+    public ObjectWithUnknownField getAndReturnWithUnknownField(ObjectWithUnknownField request) {
+        return this.rawClient.getAndReturnWithUnknownField(request).body();
+    }
+
+    public ObjectWithUnknownField getAndReturnWithUnknownField(
+            ObjectWithUnknownField request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithUnknownField(request, requestOptions)
                 .body();
     }
 

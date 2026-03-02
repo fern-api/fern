@@ -45,7 +45,6 @@ public partial class SeedCsharpReadonlyRequestClient : ISeedCsharpReadonlyReques
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/vendors/batch",
                     Body = request,

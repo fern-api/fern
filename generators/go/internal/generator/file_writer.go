@@ -80,6 +80,7 @@ type fileWriter struct {
 	useReaderForBytesRequest     bool
 	gettersPassByValue           bool
 	exportAllRequestsAtRoot      bool
+	omitEmptyRequestWrappers     bool
 	unionVersion                 UnionVersion
 	customPagerName              string
 	scope                        *gospec.Scope
@@ -133,6 +134,7 @@ func newFileWriter(
 	useReaderForBytesRequest bool,
 	gettersPassByValue bool,
 	exportAllRequestsAtRoot bool,
+	omitEmptyRequestWrappers bool,
 	unionVersion UnionVersion,
 	customPagerName string,
 	types map[common.TypeId]*ir.TypeDeclaration,
@@ -180,6 +182,7 @@ func newFileWriter(
 		useReaderForBytesRequest:     useReaderForBytesRequest,
 		gettersPassByValue:           gettersPassByValue,
 		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
+		omitEmptyRequestWrappers:     omitEmptyRequestWrappers,
 		unionVersion:                 unionVersion,
 		customPagerName:              customPagerName,
 		scope:                        scope,
@@ -433,6 +436,7 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
 		f.exportAllRequestsAtRoot,
+		f.omitEmptyRequestWrappers,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,
@@ -525,23 +529,43 @@ func (f *fileWriter) GenerateGetterSetterTestFile() (*File, error) {
 		)
 	}
 
-	// Write JSON marshaling tests for types that have them
-	for typeName, hasLiterals := range f.jsonMarshalingTests {
-		testWriter.WriteJSONMarshalingTests(typeName, hasLiterals)
+	// Write JSON marshaling tests for types that have them (sorted for deterministic output)
+	jsonTestNames := make([]string, 0, len(f.jsonMarshalingTests))
+	for typeName := range f.jsonMarshalingTests {
+		jsonTestNames = append(jsonTestNames, typeName)
+	}
+	sort.Strings(jsonTestNames)
+	for _, typeName := range jsonTestNames {
+		testWriter.WriteJSONMarshalingTests(typeName, f.jsonMarshalingTests[typeName])
 	}
 
-	// Write String() method tests for types that have them
+	// Write String() method tests for types that have them (sorted for deterministic output)
+	stringTestNames := make([]string, 0, len(f.stringMethodTests))
 	for typeName := range f.stringMethodTests {
+		stringTestNames = append(stringTestNames, typeName)
+	}
+	sort.Strings(stringTestNames)
+	for _, typeName := range stringTestNames {
 		testWriter.WriteStringMethodTests(typeName)
 	}
 
-	// Write enum tests for enum types
-	for typeName, enumValues := range f.enumTests {
-		testWriter.WriteEnumTests(typeName, enumValues)
+	// Write enum tests for enum types (sorted for deterministic output)
+	enumTestNames := make([]string, 0, len(f.enumTests))
+	for typeName := range f.enumTests {
+		enumTestNames = append(enumTestNames, typeName)
+	}
+	sort.Strings(enumTestNames)
+	for _, typeName := range enumTestNames {
+		testWriter.WriteEnumTests(typeName, f.enumTests[typeName])
 	}
 
-	// Write GetExtraProperties() tests for types that have them
+	// Write GetExtraProperties() tests for types that have them (sorted for deterministic output)
+	extraPropsTestNames := make([]string, 0, len(f.extraPropertiesTests))
 	for typeName := range f.extraPropertiesTests {
+		extraPropsTestNames = append(extraPropsTestNames, typeName)
+	}
+	sort.Strings(extraPropsTestNames)
+	for _, typeName := range extraPropsTestNames {
 		testWriter.WriteExtraPropertiesTests(typeName)
 	}
 
@@ -907,6 +931,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.useReaderForBytesRequest,
 		f.gettersPassByValue,
 		f.exportAllRequestsAtRoot,
+		f.omitEmptyRequestWrappers,
 		f.unionVersion,
 		f.customPagerName,
 		f.types,

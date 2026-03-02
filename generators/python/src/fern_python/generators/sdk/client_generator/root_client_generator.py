@@ -74,6 +74,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
     _INFERRED_AUTH_PROVIDER_LOCAL_VAR_NAME = "inferred_auth_token_provider"
 
+    LOGGING_CONSTRUCTOR_PARAMETER_NAME = "logging"
+    LOGGING_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Configure logging for the SDK. Accepts a LogConfig dict with 'level' (debug/info/warn/error), "
+        "'logger' (custom logger implementation), and 'silent' (boolean, defaults to True) fields. "
+        "You can also pass a pre-configured Logger instance."
+    )
+
     _RESERVED_CONSTRUCTOR_PARAM_NAMES = {
         "base_url",
         "environment",
@@ -86,6 +93,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         "client_secret",
         "token",
         "_token_getter_override",
+        "logging",
     }
 
     def _get_wrapper_bearer_token_kwarg_name(self, *, client_wrapper_generator: ClientWrapperGenerator) -> str:
@@ -173,6 +181,8 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             # like os.getenv("...").
             use_kwargs_snippets=(has_inferred_auth or is_oauth_client_credentials),
             base_url_example_value=base_url_example_value,
+            sync_init_parameters=self._get_constructor_parameters(is_async=False),
+            async_init_parameters=self._get_constructor_parameters(is_async=True),
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -742,6 +752,23 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 )
             )
+
+        log_config_ref = self._context.core_utilities.get_reference_to_log_config()
+        logger_ref = self._context.core_utilities.get_reference_to_logger()
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(
+                    AST.TypeHint.union(
+                        AST.TypeHint(log_config_ref),
+                        AST.TypeHint(logger_ref),
+                    )
+                ),
+                private_member_name=None,
+                initializer=AST.Expression(AST.TypeHint.none()),
+                docs=RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_DOCS,
+            )
+        )
 
         parameters.extend(self._get_literal_header_parameters())
 
@@ -1408,6 +1435,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         )
 
+        client_wrapper_constructor_kwargs.append(
+            (
+                ClientWrapperGenerator.LOGGING_PARAMETER_NAME,
+                AST.Expression(RootClientGenerator.LOGGING_CONSTRUCTOR_PARAMETER_NAME),
+            )
+        )
+
         for literal_header in constructor_info.literal_headers:
             client_wrapper_constructor_kwargs.append(
                 (
@@ -1533,11 +1567,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             oauth_token_override: bool = False,
             use_kwargs_snippets: bool = False,
             base_url_example_value: Optional[AST.Expression] = None,
+            sync_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
+            async_init_parameters: Optional[Sequence[ConstructorParameter]] = None,
         ):
             self._module_path = module_path
             self._class_name = class_name
             self._async_class_name = async_class_name
             self._constructor_parameters: List[ConstructorParameter] = list(constructor_parameters)
+            self._sync_init_parameters: Optional[List[ConstructorParameter]] = (
+                list(sync_init_parameters) if sync_init_parameters is not None else None
+            )
+            self._async_init_parameters: Optional[List[ConstructorParameter]] = (
+                list(async_init_parameters) if async_init_parameters is not None else None
+            )
             self._oauth_token_override = oauth_token_override
             self._use_kwargs_snippets = use_kwargs_snippets
             self._base_url_example_value = base_url_example_value
@@ -1694,7 +1736,15 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
             return GeneratedRootClient(
                 async_instantiations=async_instantiations,
-                async_client=RootClient(class_reference=async_class_reference, parameters=self._constructor_parameters),
+                async_client=RootClient(
+                    class_reference=async_class_reference,
+                    parameters=self._constructor_parameters,
+                    init_parameters=self._async_init_parameters,
+                ),
                 sync_instantiations=sync_instantiations,
-                sync_client=RootClient(class_reference=sync_class_reference, parameters=self._constructor_parameters),
+                sync_client=RootClient(
+                    class_reference=sync_class_reference,
+                    parameters=self._constructor_parameters,
+                    init_parameters=self._sync_init_parameters,
+                ),
             )

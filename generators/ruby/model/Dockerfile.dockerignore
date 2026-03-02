@@ -1,4 +1,0 @@
-*
-!packages/generators/docker/cache_heavy_deps.sh
-!generators/ruby/model/dist
-**/.DS_Store

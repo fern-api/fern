@@ -1,39 +1,9 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src",
     "types": ["node", "vitest/globals"]
   },
-  "include": ["./src/**/*", "./src/**/*.json"],
-  "references": [
-    {
-      "path": "../../../commons/core-utils"
-    },
-    {
-      "path": "../../../commons/fs-utils"
-    },
-    {
-      "path": "../../cli-logger"
-    },
-    {
-      "path": "../../configuration-loader"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../../logger"
-    },
-    {
-      "path": "../../task-context"
-    },
-    {
-      "path": "../commons"
-    },
-    {
-      "path": "../lazy-fern-workspace"
-    }
-  ]
+  "include": ["./src/**/*", "./src/**/*.json"]
 }

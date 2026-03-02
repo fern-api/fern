@@ -33,7 +33,6 @@ public partial class TestGroupClient : ITestGroupClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "optional-request-body/{0}",

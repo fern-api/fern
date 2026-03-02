@@ -386,7 +386,13 @@ public class ServiceWireTest {
                                 .nodes(Optional.of(Arrays.asList(
                                         Node.builder()
                                                 .name("name")
-                                                .nodes(Optional.of(new ArrayList<Node>()))
+                                                .nodes(Optional.of(Arrays.asList(
+                                                        Node.builder()
+                                                                .name("name")
+                                                                .build(),
+                                                        Node.builder()
+                                                                .name("name")
+                                                                .build())))
                                                 .trees(Optional.of(Arrays.asList(
                                                         Tree.builder()
                                                                 .nodes(Optional.of(new ArrayList<Node>()))
@@ -397,7 +403,13 @@ public class ServiceWireTest {
                                                 .build(),
                                         Node.builder()
                                                 .name("name")
-                                                .nodes(Optional.of(new ArrayList<Node>()))
+                                                .nodes(Optional.of(Arrays.asList(
+                                                        Node.builder()
+                                                                .name("name")
+                                                                .build(),
+                                                        Node.builder()
+                                                                .name("name")
+                                                                .build())))
                                                 .trees(Optional.of(Arrays.asList(
                                                         Tree.builder()
                                                                 .nodes(Optional.of(new ArrayList<Node>()))
@@ -457,7 +469,13 @@ public class ServiceWireTest {
                                                                 .name("name")
                                                                 .contents("contents")
                                                                 .build())))
-                                                .directories(Optional.of(new ArrayList<Directory>()))
+                                                .directories(Optional.of(Arrays.asList(
+                                                        Directory.builder()
+                                                                .name("name")
+                                                                .build(),
+                                                        Directory.builder()
+                                                                .name("name")
+                                                                .build())))
                                                 .build(),
                                         Directory.builder()
                                                 .name("name")
@@ -470,7 +488,13 @@ public class ServiceWireTest {
                                                                 .name("name")
                                                                 .contents("contents")
                                                                 .build())))
-                                                .directories(Optional.of(new ArrayList<Directory>()))
+                                                .directories(Optional.of(Arrays.asList(
+                                                        Directory.builder()
+                                                                .name("name")
+                                                                .build(),
+                                                        Directory.builder()
+                                                                .name("name")
+                                                                .build())))
                                                 .build())))
                                 .build())
                         .moment(Moment.builder()

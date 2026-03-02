@@ -6,13 +6,5 @@
     "types": ["node", "vitest/globals"],
     "composite": false
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../commons/github"
-    },
-    {
-      "path": "../commons/fs-utils"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

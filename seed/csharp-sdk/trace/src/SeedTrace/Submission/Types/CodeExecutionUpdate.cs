@@ -593,40 +593,62 @@ public record CodeExecutionUpdate
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "buildingExecutor" => json.Deserialize<SeedTrace.BuildingExecutorResponse?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.BuildingExecutorResponse"
-                    ),
-                "running" => json.Deserialize<SeedTrace.RunningResponse?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.RunningResponse"),
-                "errored" => json.Deserialize<SeedTrace.ErroredResponse?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ErroredResponse"),
-                "stopped" => json.Deserialize<SeedTrace.StoppedResponse?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.StoppedResponse"),
-                "graded" => json.Deserialize<SeedTrace.GradedResponse?>(options)
+                "buildingExecutor" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.BuildingExecutorResponse?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.BuildingExecutorResponse"
+                        ),
+                "running" => jsonWithoutDiscriminator.Deserialize<SeedTrace.RunningResponse?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.RunningResponse"),
+                "errored" => jsonWithoutDiscriminator.Deserialize<SeedTrace.ErroredResponse?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.ErroredResponse"),
+                "stopped" => jsonWithoutDiscriminator.Deserialize<SeedTrace.StoppedResponse?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.StoppedResponse"),
+                "graded" => jsonWithoutDiscriminator.Deserialize<SeedTrace.GradedResponse?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.GradedResponse"),
-                "gradedV2" => json.Deserialize<SeedTrace.GradedResponseV2?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.GradedResponseV2"),
-                "workspaceRan" => json.Deserialize<SeedTrace.WorkspaceRanResponse?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.WorkspaceRanResponse"
-                    ),
-                "recording" => json.Deserialize<SeedTrace.RecordingResponseNotification?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.RecordingResponseNotification"
-                    ),
-                "recorded" => json.Deserialize<SeedTrace.RecordedResponseNotification?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.RecordedResponseNotification"
-                    ),
-                "invalidRequest" => json.Deserialize<SeedTrace.InvalidRequestResponse?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.InvalidRequestResponse"
-                    ),
-                "finished" => json.Deserialize<SeedTrace.FinishedResponse?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.FinishedResponse"),
+                "gradedV2" => jsonWithoutDiscriminator.Deserialize<SeedTrace.GradedResponseV2?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.GradedResponseV2"),
+                "workspaceRan" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.WorkspaceRanResponse?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.WorkspaceRanResponse"
+                        ),
+                "recording" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.RecordingResponseNotification?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.RecordingResponseNotification"
+                        ),
+                "recorded" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.RecordedResponseNotification?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.RecordedResponseNotification"
+                        ),
+                "invalidRequest" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.InvalidRequestResponse?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.InvalidRequestResponse"
+                        ),
+                "finished" => jsonWithoutDiscriminator.Deserialize<SeedTrace.FinishedResponse?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.FinishedResponse"),
                 _ => json.Deserialize<object?>(options),
             };
             return new CodeExecutionUpdate(discriminator, value);

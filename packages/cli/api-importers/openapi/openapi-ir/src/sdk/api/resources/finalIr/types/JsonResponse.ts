@@ -8,4 +8,5 @@ export interface JsonResponse
         FernOpenapiIr.WithStatusCode {
     schema: FernOpenapiIr.Schema;
     responseProperty: string | undefined;
+    terminator: string | undefined;
 }

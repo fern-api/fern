@@ -8,11 +8,12 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .api_error import ApiError
     from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
-    from .datetime_utils import serialize_datetime
+    from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
     from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
+    from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
     from .pagination import AsyncPager, SyncPager
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
@@ -35,12 +36,18 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AsyncHttpResponse": ".http_response",
     "AsyncPager": ".pagination",
     "BaseClientWrapper": ".client_wrapper",
+    "ConsoleLogger": ".logging",
     "FieldMetadata": ".serialization",
     "File": ".file",
     "HttpClient": ".http_client",
     "HttpResponse": ".http_response",
+    "ILogger": ".logging",
     "IS_PYDANTIC_V2": ".pydantic_utilities",
+    "LogConfig": ".logging",
+    "LogLevel": ".logging",
+    "Logger": ".logging",
     "RequestOptions": ".request_options",
+    "Rfc2822DateTime": ".datetime_utils",
     "SyncClientWrapper": ".client_wrapper",
     "SyncPager": ".pagination",
     "UncheckedBaseModel": ".unchecked_base_model",
@@ -50,9 +57,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "construct_type": ".unchecked_base_model",
     "convert_and_respect_annotation_metadata": ".serialization",
     "convert_file_dict_to_httpx_tuples": ".file",
+    "create_logger": ".logging",
     "encode_query": ".query_encoder",
     "jsonable_encoder": ".jsonable_encoder",
     "parse_obj_as": ".pydantic_utilities",
+    "parse_rfc2822_datetime": ".datetime_utils",
     "remove_none_from_dict": ".remove_none_from_dict",
     "serialize_datetime": ".datetime_utils",
     "universal_field_validator": ".pydantic_utilities",
@@ -90,12 +99,18 @@ __all__ = [
     "AsyncHttpResponse",
     "AsyncPager",
     "BaseClientWrapper",
+    "ConsoleLogger",
     "FieldMetadata",
     "File",
     "HttpClient",
     "HttpResponse",
+    "ILogger",
     "IS_PYDANTIC_V2",
+    "LogConfig",
+    "LogLevel",
+    "Logger",
     "RequestOptions",
+    "Rfc2822DateTime",
     "SyncClientWrapper",
     "SyncPager",
     "UncheckedBaseModel",
@@ -105,9 +120,11 @@ __all__ = [
     "construct_type",
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
+    "create_logger",
     "encode_query",
     "jsonable_encoder",
     "parse_obj_as",
+    "parse_rfc2822_datetime",
     "remove_none_from_dict",
     "serialize_datetime",
     "universal_field_validator",

@@ -28,12 +28,12 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
 client.user.create_user(
-  name: 'name',
+  name: "name",
   age: 1
-);
+)
 ```
 
 ## Environments

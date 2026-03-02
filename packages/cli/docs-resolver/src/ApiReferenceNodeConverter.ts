@@ -8,6 +8,16 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
 import urlJoin from "url-join";
 
+// TODO: Remove these when the new fdr-sdk is integrated
+type ApiReferenceNodeWithCollapsibleConfig = FernNavigation.V1.ApiReferenceNode & {
+    collapsible?: boolean;
+    collapsedByDefault?: boolean;
+};
+type ApiPackageNodeWithCollapsibleConfig = FernNavigation.V1.ApiPackageNode & {
+    collapsible?: boolean;
+    collapsedByDefault?: boolean;
+};
+
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
@@ -141,6 +151,8 @@ export class ApiReferenceNodeConverter {
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
             overviewPageId,
+            collapsible: undefined,
+            collapsedByDefault: undefined,
             paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
             icon: this.resolveIconFileId(this.apiSection.icon),
@@ -162,7 +174,8 @@ export class ApiReferenceNodeConverter {
             viewers: this.apiSection.viewers,
             orphaned: this.apiSection.orphaned,
             featureFlags: this.apiSection.featureFlags
-        };
+            // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
+        } as ApiReferenceNodeWithCollapsibleConfig;
     }
 
     public getTagDescriptionContent(): Map<AbsoluteFilePath, string> {
@@ -331,6 +344,8 @@ export class ApiReferenceNodeConverter {
                 icon: this.resolveIconFileId(pkg.icon),
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
+                collapsible: undefined,
+                collapsedByDefault: undefined,
                 availability: pkgAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
@@ -340,7 +355,7 @@ export class ApiReferenceNodeConverter {
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
                 featureFlags: pkg.featureFlags
-            };
+            } as ApiPackageNodeWithCollapsibleConfig;
         } else {
             this.taskContext.logger.warn(
                 cannotFindSubpackageByLocatorError(pkg.package, this.#holder.subpackageLocators)
@@ -361,6 +376,8 @@ export class ApiReferenceNodeConverter {
                 icon: this.resolveIconFileId(pkg.icon),
                 hidden: this.hideChildren || pkg.hidden,
                 overviewPageId,
+                collapsible: undefined,
+                collapsedByDefault: undefined,
                 availability: pkgAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
@@ -370,7 +387,7 @@ export class ApiReferenceNodeConverter {
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
                 featureFlags: pkg.featureFlags
-            };
+            } as ApiPackageNodeWithCollapsibleConfig;
         }
     }
 
@@ -444,6 +461,8 @@ export class ApiReferenceNodeConverter {
             icon: this.resolveIconFileId(section.icon),
             hidden: this.hideChildren || section.hidden,
             overviewPageId,
+            collapsible: section.collapsible,
+            collapsedByDefault: section.collapsedByDefault,
             availability: sectionAvailability,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
@@ -453,7 +472,7 @@ export class ApiReferenceNodeConverter {
             viewers: section.viewers,
             orphaned: section.orphaned,
             featureFlags: section.featureFlags
-        };
+        } as ApiPackageNodeWithCollapsibleConfig;
     }
 
     #convertUnknownIdentifier(
@@ -491,6 +510,8 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 overviewPageId: this.createTagDescriptionPageId(subpackage),
+                collapsible: undefined,
+                collapsedByDefault: undefined,
                 availability: parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
@@ -500,7 +521,7 @@ export class ApiReferenceNodeConverter {
                 viewers: undefined,
                 orphaned: undefined,
                 featureFlags: undefined
-            };
+            } as ApiPackageNodeWithCollapsibleConfig;
         }
 
         // if the unknownIdentifier is not a subpackage, it could be an http endpoint, websocket, or webhook.
@@ -1053,6 +1074,8 @@ export class ApiReferenceNodeConverter {
                     icon: undefined,
                     hidden: this.hideChildren,
                     overviewPageId: tagDescriptionPageId,
+                    collapsible: undefined,
+                    collapsedByDefault: undefined,
                     availability: parentAvailability,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
@@ -1062,7 +1085,7 @@ export class ApiReferenceNodeConverter {
                     viewers: undefined,
                     orphaned: undefined,
                     featureFlags: undefined
-                });
+                } as ApiPackageNodeWithCollapsibleConfig);
             }
         });
 
@@ -1168,7 +1191,7 @@ export class ApiReferenceNodeConverter {
                     };
                 });
 
-                const sectionNode: FernNavigation.V1.ApiPackageNode = {
+                const sectionNode = {
                     id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${namespace}:${operationType}`),
                     type: "apiPackage",
                     children,
@@ -1177,6 +1200,8 @@ export class ApiReferenceNodeConverter {
                     icon: undefined,
                     hidden: this.hideChildren,
                     overviewPageId: undefined,
+                    collapsible: undefined,
+                    collapsedByDefault: undefined,
                     availability: parentAvailability,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: undefined,
@@ -1186,13 +1211,13 @@ export class ApiReferenceNodeConverter {
                     viewers: undefined,
                     orphaned: undefined,
                     featureFlags: undefined
-                };
+                } as ApiPackageNodeWithCollapsibleConfig;
 
                 namespaceChildren.push(sectionNode);
             }
 
             // Create the namespace section containing the operation type sections
-            const namespaceNode: FernNavigation.V1.ApiPackageNode = {
+            const namespaceNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:namespace:${namespace}`),
                 type: "apiPackage",
                 children: namespaceChildren,
@@ -1201,6 +1226,8 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 overviewPageId: undefined,
+                collapsible: undefined,
+                collapsedByDefault: undefined,
                 availability: parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
@@ -1210,7 +1237,7 @@ export class ApiReferenceNodeConverter {
                 viewers: undefined,
                 orphaned: undefined,
                 featureFlags: undefined
-            };
+            } as ApiPackageNodeWithCollapsibleConfig;
 
             sections.push(namespaceNode);
         }
@@ -1246,7 +1273,7 @@ export class ApiReferenceNodeConverter {
                 };
             });
 
-            const sectionNode: FernNavigation.V1.ApiPackageNode = {
+            const sectionNode = {
                 id: this.#idgen.get(`${this.apiDefinitionId}:graphql:${operationType}`),
                 type: "apiPackage",
                 children,
@@ -1255,6 +1282,8 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: this.hideChildren,
                 overviewPageId: undefined,
+                collapsible: undefined,
+                collapsedByDefault: undefined,
                 availability: parentAvailability,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
@@ -1264,7 +1293,7 @@ export class ApiReferenceNodeConverter {
                 viewers: undefined,
                 orphaned: undefined,
                 featureFlags: undefined
-            };
+            } as ApiPackageNodeWithCollapsibleConfig;
 
             sections.push(sectionNode);
         }

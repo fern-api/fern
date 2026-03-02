@@ -28,7 +28,6 @@ public partial class ImdbClient : IImdbClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/movies/create-movie",
                     Body = request,
@@ -91,7 +90,6 @@ public partial class ImdbClient : IImdbClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/movies/{0}",

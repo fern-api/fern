@@ -1,3 +1,0 @@
-// service_
-"/create"
-"/"

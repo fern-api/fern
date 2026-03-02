@@ -30,7 +30,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(endpointParam)),
                     Headers = _headers,

@@ -1,3 +1,4 @@
+import { checkVersionDoesNotAlreadyExist, computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
@@ -77,7 +78,25 @@ export async function runRemoteGenerationForGenerator({
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions
     });
 
-    const resolvedVersion = version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }));
+    const resolvedVersion = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
+    // Fail fast if the target version already exists on the package registry.
+    // Only check when the user explicitly provided a version (not auto-computed).
+    if (version != null) {
+        if (isPreview) {
+            interactiveTaskContext.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${version} may already exist on the package registry.`
+            );
+        } else {
+            await checkVersionDoesNotAlreadyExist({
+                version,
+                packageName,
+                generatorInvocation,
+                context: interactiveTaskContext
+            });
+        }
+    }
 
     const ir = generateIntermediateRepresentation({
         workspace,
@@ -221,7 +240,7 @@ export async function runRemoteGenerationForGenerator({
         organization,
         generatorInvocation: generatorInvocationWithEnvVarSubstitutions,
         context: interactiveTaskContext,
-        version,
+        version: resolvedVersion,
         intermediateRepresentation: {
             ...ir,
             fdrApiDefinitionId,
@@ -327,64 +346,6 @@ function getPublishConfig({
     });
 }
 
-async function computeSemanticVersion({
-    fdr,
-    packageName,
-    generatorInvocation
-}: {
-    fdr: FdrClient;
-    packageName: string | undefined;
-    generatorInvocation: generatorsYml.GeneratorInvocation;
-}): Promise<string | undefined> {
-    if (generatorInvocation.language == null) {
-        return undefined;
-    }
-    let language: FdrAPI.sdks.Language;
-    switch (generatorInvocation.language) {
-        case "csharp":
-            language = "Csharp";
-            break;
-        case "go":
-            language = "Go";
-            break;
-        case "java":
-            language = "Java";
-            break;
-        case "python":
-            language = "Python";
-            break;
-        case "ruby":
-            language = "Ruby";
-            break;
-        case "typescript":
-            language = "TypeScript";
-            break;
-        case "php":
-            language = "Php";
-            break;
-        case "swift":
-            language = "Swift";
-            break;
-        default:
-            return undefined;
-    }
-    if (packageName == null) {
-        return undefined;
-    }
-    const response = await fdr.sdks.versions.computeSemanticVersion({
-        githubRepository:
-            generatorInvocation.outputMode.type === "githubV2"
-                ? `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`
-                : undefined,
-        language,
-        package: packageName
-    });
-    if (!response.ok) {
-        return undefined;
-    }
-    return response.body.version;
-}
-
 function convertToFdrApiDefinitionSources(
     sources: IdentifiableSource[]
 ): Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.Source> {
@@ -396,18 +357,6 @@ function convertToFdrApiDefinitionSources(
             }
         ])
     );
-}
-
-/**
- * Type guard to check if a GitHub configuration is a self-hosted configuration
- */
-function isGithubSelfhosted(
-    github: generatorsYml.GithubConfigurationSchema | undefined
-): github is generatorsYml.GithubSelfhostedSchema {
-    if (github == null) {
-        return false;
-    }
-    return "uri" in github && "token" in github;
 }
 
 const emptyReadmeConfig: FernIr.ReadmeConfig = {

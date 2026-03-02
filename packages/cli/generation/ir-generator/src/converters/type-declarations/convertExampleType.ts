@@ -633,6 +633,22 @@ function convertPrimitiveExample({
                 })
             );
         },
+        dateTimeRfc2822: () => {
+            if (typeof example !== "string") {
+                return ExampleTypeReferenceShape.primitive(
+                    ExamplePrimitive.datetime({
+                        datetime: new Date(Examples.DATE_TIME),
+                        raw: Examples.DATE_TIME
+                    })
+                );
+            }
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.datetime({
+                    datetime: new Date(example),
+                    raw: example
+                })
+            );
+        },
         _other: () => {
             throw new Error("Unknown primitive type: " + typeBeingExemplified);
         }

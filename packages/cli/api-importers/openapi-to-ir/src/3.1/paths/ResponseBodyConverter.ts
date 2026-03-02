@@ -85,7 +85,17 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         if (this.streamingExtension.type === "stream") {
             const schemaId = [...this.group, this.method, "Response", this.statusCode].join("_");
             const contentTypes = Object.keys(this.responseBody.content ?? {});
-            for (const contentType of contentTypes) {
+
+            // When format is SSE, prefer text/event-stream content type over others
+            const sortedContentTypes =
+                this.streamingExtension.format === "sse"
+                    ? [
+                          ...contentTypes.filter((type) => type.includes("text/event-stream")),
+                          ...contentTypes.filter((type) => !type.includes("text/event-stream"))
+                      ]
+                    : contentTypes;
+
+            for (const contentType of sortedContentTypes) {
                 const mediaTypeObject = this.responseBody.content?.[contentType];
                 if (mediaTypeObject == null) {
                     continue;
@@ -222,7 +232,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                 StreamingResponse.json({
                     docs: description,
                     payload: convertedStreamingSchema.type,
-                    terminator: undefined,
+                    terminator: this.streamingExtension?.terminator,
                     v2Examples: convertedStreamingSchema.schema?.typeDeclaration.v2Examples
                 })
             ),
@@ -253,7 +263,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         StreamingResponse.json({
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
-                            terminator: undefined,
+                            terminator: this.streamingExtension?.terminator,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,
@@ -273,7 +283,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
                         StreamingResponse.sse({
                             docs: this.responseBody.description,
                             payload: convertedSchema.type,
-                            terminator: undefined,
+                            terminator: this.streamingExtension?.terminator,
                             v2Examples: this.convertMediaTypeObjectExamples({
                                 mediaTypeObject,
                                 generateOptionalProperties: true,

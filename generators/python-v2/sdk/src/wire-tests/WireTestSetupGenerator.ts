@@ -139,9 +139,8 @@ except (TypeError, ValueError):
 
 
 def _get_wiremock_base_url() -> str:
-    """Returns the WireMock base URL using the dynamically assigned port."""
-    port = os.environ.get("WIREMOCK_PORT", "8080")
-    return f"http://localhost:{port}"
+    """Returns the WireMock base URL from the WIREMOCK_URL environment variable."""
+    return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
 
 
 def get_client(test_id: str) -> ${clientClassName}:
@@ -255,7 +254,7 @@ import subprocess
 import pytest
 
 _STARTED: bool = False
-_WIREMOCK_PORT: str = "8080"  # Default, will be updated after container starts
+_WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
 _PROJECT_NAME: str = "${projectName}"
 
 # This file lives at tests/conftest.py, so the project root is one level up.
@@ -281,7 +280,7 @@ def _get_wiremock_port() -> str:
 
 def _start_wiremock() -> None:
     """Starts the WireMock container using docker-compose."""
-    global _STARTED, _WIREMOCK_PORT
+    global _STARTED, _WIREMOCK_URL
     if _STARTED:
         return
 
@@ -294,8 +293,9 @@ def _start_wiremock() -> None:
             text=True,
         )
         _WIREMOCK_PORT = _get_wiremock_port()
-        os.environ["WIREMOCK_PORT"] = _WIREMOCK_PORT
-        print(f"WireMock container is ready on port {_WIREMOCK_PORT}")
+        _WIREMOCK_URL = f"http://localhost:{_WIREMOCK_PORT}"
+        os.environ["WIREMOCK_URL"] = _WIREMOCK_URL
+        print(f"WireMock container is ready at {_WIREMOCK_URL}")
         _STARTED = True
     except subprocess.CalledProcessError as e:
         print(f"Failed to start WireMock: {e.stderr}")
@@ -394,21 +394,8 @@ def pytest_unconfigure(config: pytest.Config) -> None:
      */
     private getClientImport(): string {
         const clientClassName = this.getClientClassName();
-        const modulePath = this.getModulePath();
+        const modulePath = this.context.getModulePath();
         return `from ${modulePath}.client import ${clientClassName}`;
-    }
-
-    /**
-     * Gets the full module path including package_path if set.
-     */
-    private getModulePath(): string {
-        const orgName = this.context.config.organization;
-        const packagePath = this.context.customConfig.package_path;
-        if (packagePath) {
-            const packagePathDotted = packagePath.replace(/\//g, ".");
-            return `${orgName}.${packagePathDotted}`;
-        }
-        return orgName;
     }
 
     /**
@@ -434,7 +421,7 @@ def pytest_unconfigure(config: pytest.Config) -> None:
         if (environments?.environments.type === "multipleBaseUrls") {
             const envConfig = environments.environments;
             const environmentClassName = this.getEnvironmentClassName();
-            const modulePath = this.getModulePath();
+            const modulePath = this.context.getModulePath();
 
             // Build kwargs for all base URLs using dynamic base_url variable
             const baseUrlKwargsDynamic = envConfig.baseUrls
@@ -512,11 +499,14 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "oauth":
-                // OAuth typically uses client credentials
-                if (scheme.configuration) {
-                    // For client credentials OAuth, we need client_id and client_secret
-                    // The actual parameter names depend on the OAuth configuration
-                    params.push(`        _token_getter_override=lambda: "test_token",`);
+                // OAuth uses either client credentials or a token provider
+                if (scheme.configuration?.type === "clientCredentials") {
+                    // For client credentials OAuth, use client_id and client_secret
+                    params.push(`        client_id="test_client_id",`);
+                    params.push(`        client_secret="test_client_secret",`);
+                } else {
+                    // For other OAuth types, use a token callback
+                    params.push(`        token=lambda: "test_token",`);
                 }
                 break;
 

@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
-client.get_account(account_id: 'account_id');
+client.get_account(account_id: "account_id")
 ```
 
 ## Environments

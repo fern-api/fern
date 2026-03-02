@@ -7,7 +7,14 @@ type IntermediateRepresentation = FernIr.IntermediateRepresentation;
 type TypeId = FernIr.TypeId;
 type FernFilepath = FernIr.FernFilepath;
 
-import { join } from "path";
+/**
+ * Browser-compatible path join for C# project paths.
+ * Joins path segments with "/" separator, filtering empty segments.
+ */
+function join(...segments: string[]): string {
+    return segments.filter(Boolean).join("/");
+}
+
 import * as ast from "../ast/index.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
 import { Type } from "../ast/types/IType.js";
@@ -155,6 +162,8 @@ export class Generation {
         enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
         useDefaultRequestParameterValues: () => this.customConfig["use-default-request-parameter-values"] ?? false,
+        /** When true, redacts the response body in deserialization error exceptions and adds a custom ToString override to the base API exception. Default: false. */
+        redactResponseBodyOnError: () => this.customConfig["redact-response-body-on-error"] ?? false,
         /** Temporary mapping of websocket environment configurations. Default: {}. */
         temporaryWebsocketEnvironments: () => this.customConfig["temporary-websocket-environments"] ?? {},
         /** Custom name for the base API exception class. Default: "" (auto-generated). */

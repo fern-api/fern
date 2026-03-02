@@ -28,7 +28,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/api/users/{0}",
@@ -93,7 +92,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/api/users",
                     Body = request,
@@ -157,7 +155,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
                         "/api/users/{0}",
@@ -230,7 +227,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/users",
                     QueryString = _queryString,
@@ -300,7 +296,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/users/search",
                     QueryString = _queryString,
@@ -363,7 +358,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/api/profiles/complex",
                     Body = request,
@@ -426,7 +420,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/api/profiles/complex/{0}",
@@ -492,7 +485,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = string.Format(
                         "/api/profiles/complex/{0}",
@@ -558,7 +550,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/api/test/deserialization",
                     Body = request,
@@ -629,7 +620,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/api/users/filter",
                     QueryString = _queryString,
@@ -692,7 +682,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/api/users/{0}/notifications",
@@ -758,7 +747,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Put,
                     Path = string.Format(
                         "/api/users/{0}/tags",
@@ -824,7 +812,6 @@ public partial class NullableOptionalClient : INullableOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/api/search",
                     Body = request,

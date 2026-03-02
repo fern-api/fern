@@ -1,35 +1,8 @@
 {
   "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "lib",
     "rootDir": "src"
   },
-  "include": ["./src/**/*"],
-  "references": [
-    {
-      "path": "../../task-context"
-    },
-    {
-      "path": "../../../commons/path-utils"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir-to-fern"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir-parser"
-    },
-    {
-      "path": "../../api-importers/openapi/openapi-ir"
-    },
-    {
-      "path": "../../fern-definition/schema"
-    },
-    {
-      "path": "../../../commons/core-utils"
-    },
-    {
-      "path": "../../configuration"
-    }
-  ]
+  "include": ["./src/**/*"]
 }

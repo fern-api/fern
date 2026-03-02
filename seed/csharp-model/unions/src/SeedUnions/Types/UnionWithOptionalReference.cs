@@ -219,8 +219,6 @@ public record UnionWithOptionalReference
         internal Foo? Value { get; set; }
 
         public override string ToString() => Value?.ToString() ?? "null";
-
-        public static implicit operator UnionWithOptionalReference.Foo(Foo? value) => new(value);
     }
 
     /// <summary>
@@ -237,7 +235,5 @@ public record UnionWithOptionalReference
         internal Bar? Value { get; set; }
 
         public override string ToString() => Value?.ToString() ?? "null";
-
-        public static implicit operator UnionWithOptionalReference.Bar(Bar? value) => new(value);
     }
 }

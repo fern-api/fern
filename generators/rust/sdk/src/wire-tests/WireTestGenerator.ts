@@ -179,7 +179,7 @@ export class WireTestGenerator {
 
             // Test body - use centralized wire_test_utils module
             lines.push(`    wire_test_utils::reset_wiremock_requests().await.unwrap();`);
-            lines.push(`    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;`);
+            lines.push(`    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();`);
             lines.push(``);
 
             // Client setup (parsed from snippet)

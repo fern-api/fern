@@ -12,6 +12,7 @@ import httpx
 from .file import File, convert_file_dict_to_httpx_tuples
 from .force_multipart import FORCE_MULTIPART
 from .jsonable_encoder import jsonable_encoder
+from .logging import LogConfig, Logger, create_logger
 from .query_encoder import encode_query
 from .remove_none_from_dict import remove_none_from_dict as remove_none_from_dict
 from .request_options import RequestOptions
@@ -120,6 +121,32 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
 def _should_retry(response: httpx.Response) -> bool:
     retryable_400s = [429, 408, 409]
     return response.status_code >= 500 or response.status_code in retryable_400s
+
+
+_SENSITIVE_HEADERS = frozenset(
+    {
+        "authorization",
+        "www-authenticate",
+        "x-api-key",
+        "api-key",
+        "apikey",
+        "x-api-token",
+        "x-auth-token",
+        "auth-token",
+        "cookie",
+        "set-cookie",
+        "proxy-authorization",
+        "proxy-authenticate",
+        "x-csrf-token",
+        "x-xsrf-token",
+        "x-session-token",
+        "x-access-token",
+    }
+)
+
+
+def _redact_headers(headers: typing.Dict[str, str]) -> typing.Dict[str, str]:
+    return {k: ("[REDACTED]" if k.lower() in _SENSITIVE_HEADERS else v) for k, v in headers.items()}
 
 
 def _build_url(base_url: str, path: typing.Optional[str]) -> str:
@@ -238,11 +265,13 @@ class HttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
         self.httpx_client = httpx_client
+        self.logger = create_logger(logging_config)
 
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
         base_url = maybe_base_url
@@ -315,18 +344,30 @@ class HttpClient:
             )
         )
 
+        _request_url = _build_url(base_url, path)
+        _request_headers = jsonable_encoder(
+            remove_none_from_dict(
+                {
+                    **self.base_headers(),
+                    **(headers if headers is not None else {}),
+                    **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                }
+            )
+        )
+
+        if self.logger.is_debug():
+            self.logger.debug(
+                "Making HTTP request",
+                method=method,
+                url=_request_url,
+                headers=_redact_headers(_request_headers),
+                has_body=json_body is not None or data_body is not None,
+            )
+
         response = self.httpx_client.request(
             method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self.base_headers(),
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
-                    }
-                )
-            ),
+            url=_request_url,
+            headers=_request_headers,
             params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
@@ -351,6 +392,24 @@ class HttpClient:
                     request_options=request_options,
                     retries=retries + 1,
                     omit=omit,
+                )
+
+        if self.logger.is_debug():
+            if 200 <= response.status_code < 400:
+                self.logger.debug(
+                    "HTTP request succeeded",
+                    method=method,
+                    url=_request_url,
+                    status_code=response.status_code,
+                )
+
+        if self.logger.is_error():
+            if response.status_code >= 400:
+                self.logger.error(
+                    "HTTP request failed with error status",
+                    method=method,
+                    url=_request_url,
+                    status_code=response.status_code,
                 )
 
         return response
@@ -418,18 +477,29 @@ class HttpClient:
             )
         )
 
+        _request_url = _build_url(base_url, path)
+        _request_headers = jsonable_encoder(
+            remove_none_from_dict(
+                {
+                    **self.base_headers(),
+                    **(headers if headers is not None else {}),
+                    **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                }
+            )
+        )
+
+        if self.logger.is_debug():
+            self.logger.debug(
+                "Making streaming HTTP request",
+                method=method,
+                url=_request_url,
+                headers=_redact_headers(_request_headers),
+            )
+
         with self.httpx_client.stream(
             method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **self.base_headers(),
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
+            url=_request_url,
+            headers=_request_headers,
             params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
@@ -449,12 +519,14 @@ class AsyncHttpClient:
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
         async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
+        logging_config: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
         self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
+        self.logger = create_logger(logging_config)
 
     async def _get_headers(self) -> typing.Dict[str, str]:
         if self.async_base_headers is not None:
@@ -535,19 +607,30 @@ class AsyncHttpClient:
             )
         )
 
-        # Add the input to each of these and do None-safety checks
+        _request_url = _build_url(base_url, path)
+        _request_headers = jsonable_encoder(
+            remove_none_from_dict(
+                {
+                    **_headers,
+                    **(headers if headers is not None else {}),
+                    **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
+                }
+            )
+        )
+
+        if self.logger.is_debug():
+            self.logger.debug(
+                "Making HTTP request",
+                method=method,
+                url=_request_url,
+                headers=_redact_headers(_request_headers),
+                has_body=json_body is not None or data_body is not None,
+            )
+
         response = await self.httpx_client.request(
             method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **_headers,
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
-                    }
-                )
-            ),
+            url=_request_url,
+            headers=_request_headers,
             params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,
@@ -573,6 +656,25 @@ class AsyncHttpClient:
                     retries=retries + 1,
                     omit=omit,
                 )
+
+        if self.logger.is_debug():
+            if 200 <= response.status_code < 400:
+                self.logger.debug(
+                    "HTTP request succeeded",
+                    method=method,
+                    url=_request_url,
+                    status_code=response.status_code,
+                )
+
+        if self.logger.is_error():
+            if response.status_code >= 400:
+                self.logger.error(
+                    "HTTP request failed with error status",
+                    method=method,
+                    url=_request_url,
+                    status_code=response.status_code,
+                )
+
         return response
 
     @asynccontextmanager
@@ -641,18 +743,29 @@ class AsyncHttpClient:
             )
         )
 
+        _request_url = _build_url(base_url, path)
+        _request_headers = jsonable_encoder(
+            remove_none_from_dict(
+                {
+                    **_headers,
+                    **(headers if headers is not None else {}),
+                    **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                }
+            )
+        )
+
+        if self.logger.is_debug():
+            self.logger.debug(
+                "Making streaming HTTP request",
+                method=method,
+                url=_request_url,
+                headers=_redact_headers(_request_headers),
+            )
+
         async with self.httpx_client.stream(
             method=method,
-            url=_build_url(base_url, path),
-            headers=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        **_headers,
-                        **(headers if headers is not None else {}),
-                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
-                    }
-                )
-            ),
+            url=_request_url,
+            headers=_request_headers,
             params=_encoded_params if _encoded_params else None,
             json=json_body,
             data=data_body,

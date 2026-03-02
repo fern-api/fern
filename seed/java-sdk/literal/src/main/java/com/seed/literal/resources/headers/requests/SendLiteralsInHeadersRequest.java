@@ -81,6 +81,10 @@ public final class SendLiteralsInHeadersRequest {
 
     public interface _FinalStage {
         SendLiteralsInHeadersRequest build();
+
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -108,6 +112,18 @@ public final class SendLiteralsInHeadersRequest {
         @java.lang.Override
         public SendLiteralsInHeadersRequest build() {
             return new SendLiteralsInHeadersRequest(query, additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

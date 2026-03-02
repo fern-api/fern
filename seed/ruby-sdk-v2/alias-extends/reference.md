@@ -13,9 +13,9 @@
 
 ```ruby
 client.extended_inline_request_body(
-  parent: 'parent',
-  child: 'child'
-);
+  parent: "parent",
+  child: "child"
+)
 ```
 </dd>
 </dl>
@@ -49,3 +49,4 @@ client.extended_inline_request_body(
 </dd>
 </dl>
 </details>
+

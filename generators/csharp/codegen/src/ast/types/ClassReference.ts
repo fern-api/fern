@@ -1,7 +1,7 @@
-import { fail } from "node:assert";
 import { type Generation } from "../../context/generation-info.js";
 import { type Origin } from "../../context/model-navigator.js";
 import { type TypeScope } from "../../context/name-registry.js";
+import { fail } from "../../utils/fail.js";
 import { type ClassInstantiation } from "../code/ClassInstantiation.js";
 import { Literal } from "../code/Literal.js";
 import { Node } from "../core/AstNode.js";

@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: "<token>")
 
-client.users.list_with_uri_pagination();
+client.users.list_with_uri_pagination
 ```
 
 ## Environments

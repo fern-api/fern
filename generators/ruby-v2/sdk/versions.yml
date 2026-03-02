@@ -1,5 +1,101 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.4
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of a hardcoded constant. Docker Compose
+        now uses dynamic port mapping (`0:8080`) to avoid port conflicts when running
+        multiple SDK tests in parallel. Falls back to `http://localhost:8080` if the
+        variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 61
+
+- version: 1.0.3
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 61
+- version: 1.0.2
+  changelogEntry:
+    - summary: |
+        Rename `Union#member?` to `Union#type_member?` to avoid rubocop-minitest's
+        `Minitest/AssertIncludes` cop incorrectly autocorrecting `assert obj.member?(x)`
+        to `assert_includes obj, x`. The autocorrected form calls `Module#include?` which
+        raises `TypeError: wrong argument type Class (expected Module)` on union type tests.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
+- version: 1.0.1
+  changelogEntry:
+    - summary: |
+        Fix wire test generator to respect `clientModuleName` custom config instead of hardcoding `Client`.
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 61
+
+- version: 1.0.0
+  changelogEntry:
+    - summary: |
+        💎 The Ruby SDK generator v2 is officially stable! 🎉🥂 After 87 release candidates,
+        this ground-up rewrite ships with a modern AST-based architecture and full feature
+        parity. 🔒 Stable, production-ready, and 100% backward-compatible with the legacy
+        generator — existing configs, gem names, and modules just work. ✅
+
+        ✨ **Highlights**
+        - 🔐 Bearer, API key, OAuth 2.0 & inferred auth with automatic token refresh
+        - 🌐 Exponential-backoff retries, per-request `base_url` override, multipart uploads
+        - 📄 Discriminated & undiscriminated unions, correct non-snake_case wire serialization
+        - 📦 Cursor & offset pagination with lazy iterators, custom pager support
+        - 🏗️ YARD docs, RuboCop-clean output, CI with RubyGems OIDC publishing, wire tests
+        - ⚙️ Rich config: `moduleName`, `requirePaths`, `extraDependencies`, `enableWireTests`, and more
+        - 🌍 Multiple named environments and multi-URL environment support
+        - 🚀 RubyGems OIDC publishing and self-hosted mode with `.fernignore` support
+      type: feat
+  createdAt: "2026-02-19"
+  irVersion: 61
+
+- version: 1.0.0-rc87
+  changelogEntry:
+    - summary: |
+        Add support for `useDefaultRequestParameterValues` custom config option. When enabled,
+        query parameters and headers with IR-defined default values use Ruby's `params.fetch(:key, default)`
+        idiom instead of conditional assignment, matching the behavior of other Fern generators.
+      type: feat
+  createdAt: "2026-02-17"
+  irVersion: 61
+
+- version: 1.0.0-rc86
+  changelogEntry:
+    - summary: |
+        Fix RuboCop style offenses in generated dynamic snippets. Generated Ruby snippets now use
+        double-quoted strings, omit trailing semicolons, and drop empty parentheses on no-arg
+        method calls. Also normalizes CRLF line endings to LF and adds RuboCop exclusions for
+        snippet-only cops (FrozenStringLiteralComment, FirstHashElementIndentation) in the
+        generated .rubocop.yml.
+      type: fix
+    - summary: |
+        Change RuboCop Naming/VariableNumber enforced style from snake_case to normalcase in the
+        generated .rubocop.yml. This eliminates false positives on API-derived identifiers that
+        contain numbers (e.g., :recaptcha_v2, :sha256, :line1, :pkcs7) without requiring
+        underscores before digit sequences.
+      type: fix
+    - summary: |
+        Fix seed.yml Docker build command using incorrect package filter (@fern-api/fern-ruby-sdk
+        instead of @fern-api/ruby-sdk).
+      type: fix
+    - summary: |
+        Use %w[] syntax for arrays of simple strings in generated snippets, eliminating
+        Style/WordArray RuboCop offenses.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 61
+
 - version: 1.0.0-rc85
   changelogEntry:
     - summary: |
@@ -840,7 +936,7 @@
   changelogEntry:
     - type: feat
       summary: >-
-        Introduce a revamped Ruby SDK generator with several improvements 
+        Introduce a revamped Ruby SDK generator with several improvements
         to be detailed in a larger post.
   irVersion: 39
 

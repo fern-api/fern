@@ -19,7 +19,7 @@ from .object import (
     ObjectWithRequiredFieldError,
     OptionalAlias,
 )
-from .union import Animal, Cat, Dog, ErrorWithUnionBody
+from .union import Animal, Cat, Dog, ErrorWithUnionBody, MixedType
 
 __all__ = [
     "Animal",
@@ -28,6 +28,7 @@ __all__ = [
     "DoubleOptional",
     "ErrorWithEnumBody",
     "ErrorWithUnionBody",
+    "MixedType",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",

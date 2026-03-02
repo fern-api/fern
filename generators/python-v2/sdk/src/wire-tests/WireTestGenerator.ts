@@ -205,6 +205,12 @@ export class WireTestGenerator {
                 continue;
             }
 
+            // Skip bytes request body endpoints — the IR example system has no
+            // ExampleRequestBody variant for bytes, so we can't produce a proper example.
+            if (endpoint.requestBody?.type === "bytes") {
+                continue;
+            }
+
             // Always use static IR examples to match WireMock mappings
             // WireMock mappings are generated from static IR examples, so we must use the same examples
             const staticExample = this.getStaticIrExample(endpoint);
@@ -306,8 +312,8 @@ export class WireTestGenerator {
         node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
         // Import ApiError from the SDK's core module for error response tests
-        const orgName = this.context.config.organization;
-        node.addReference(python.reference({ name: "ApiError", modulePath: [orgName, "core"] }));
+        const modulePath = this.context.getModulePath();
+        node.addReference(python.reference({ name: "ApiError", modulePath: [modulePath, "core"] }));
 
         return node;
     }
@@ -387,11 +393,12 @@ export class WireTestGenerator {
             }
 
             // Verify request count using test ID for filtering
-            // When testing the inferred auth token endpoint, expect 2 requests:
-            // 1. The automatic token fetch request
+            // When testing the auth token endpoint itself, expect 2 requests:
+            // 1. The automatic token fetch request (from OAuth/inferred auth)
             // 2. The actual API call being tested
             // For all other endpoints, expect 1 request (the auth token fetch goes to a different endpoint)
-            const expectedRequestCount = this.isInferredAuthTokenEndpoint(endpoint) ? 2 : 1;
+            const expectedRequestCount =
+                this.isInferredAuthTokenEndpoint(endpoint) || this.isOAuthTokenEndpoint(endpoint) ? 2 : 1;
             statements.push(
                 python.codeBlock(
                     `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, ${expectedRequestCount})`
@@ -436,6 +443,27 @@ export class WireTestGenerator {
         for (const scheme of this.context.ir.auth.schemes) {
             if (scheme.type === "inferred") {
                 const tokenEndpointId = scheme.tokenEndpoint.endpoint.endpointId;
+                if (endpoint.id === tokenEndpointId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if an endpoint is the OAuth token endpoint.
+     * When testing the token endpoint with OAuth client credentials, expect 2 requests:
+     * 1. The automatic token fetch request (from the OAuth token provider)
+     * 2. The actual API call being tested
+     */
+    private isOAuthTokenEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        if (!this.context.ir.auth?.schemes) {
+            return false;
+        }
+        for (const scheme of this.context.ir.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration?.type === "clientCredentials") {
+                const tokenEndpointId = scheme.configuration.tokenEndpoint.endpointReference.endpointId;
                 if (endpoint.id === tokenEndpointId) {
                     return true;
                 }
@@ -626,7 +654,7 @@ export class WireTestGenerator {
     private getClientModulePath(): string[] {
         // The client is imported from the root package module
         // e.g., "from seed import SeedExhaustive" -> modulePath is ["seed"]
-        return [this.context.config.organization];
+        return [this.context.getModulePath()];
     }
 
     private getClientClassName(): string {

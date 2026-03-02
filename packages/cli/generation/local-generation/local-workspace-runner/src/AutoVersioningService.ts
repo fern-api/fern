@@ -47,10 +47,10 @@ export class AutoVersioningService {
      *
      * @param diffContent The git diff content
      * @param mappedMagicVersion The magic version after language transformations (e.g., "v505.503.4455" for Go)
-     * @return The previous version if found
-     * @throws AutoVersioningException if no previous version can be extracted from the diff
+     * @return The previous version if found, or undefined if all magic version occurrences are in new files
+     * @throws AutoVersioningException if the magic version is not found at all in the diff
      */
-    public extractPreviousVersion(diffContent: string, mappedMagicVersion: string): string {
+    public extractPreviousVersion(diffContent: string, mappedMagicVersion: string): string | undefined {
         const lines = diffContent.split("\n");
 
         let currentFile = "unknown";
@@ -83,16 +83,23 @@ export class AutoVersioningService {
                 }
 
                 const extracted = this.extractPreviousVersionFromDiffLine(matchingMinusLine);
-                this.logger.debug(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
-                return extracted;
+                if (extracted != undefined) {
+                    this.logger.debug(`Extracted previous version from diff (file: ${currentFile}): ${extracted}`);
+                    return extracted;
+                }
+                this.logger.debug(
+                    `Could not parse version from matching minus line (file: ${currentFile}); continuing search.`
+                );
+                continue;
             }
         }
 
         if (magicVersionOccurrences > 0) {
-            throw new AutoVersioningException(
+            this.logger.info(
                 `Found placeholder version in the diff but no matching previous version lines were found in any hunk. ` +
-                    `This may indicate new files or a format change. occurrences=${magicVersionOccurrences}, pairsFound=0`
+                    `This indicates a new SDK repository with no previous version. occurrences=${magicVersionOccurrences}`
             );
+            return undefined;
         }
 
         throw new AutoVersioningException(
@@ -444,10 +451,9 @@ export class AutoVersioningService {
      * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
      *
      * @param lineWithMagicVersion A line from git diff containing the magic version
-     * @return The inferred previous version if found
-     * @throws AutoVersioningException if no valid version can be extracted
+     * @return The inferred previous version if found, or undefined if the version cannot be parsed
      */
-    private extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string {
+    private extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string | undefined {
         const prevVersionPattern = /[-].*?([v]?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?)/;
         const matcher = lineWithMagicVersion.match(prevVersionPattern);
 
@@ -457,6 +463,7 @@ export class AutoVersioningService {
             return version;
         }
 
-        throw new AutoVersioningException("Could not extract previous version from diff line: " + lineWithMagicVersion);
+        this.logger.warn("Could not extract previous version from diff line: " + lineWithMagicVersion);
+        return undefined;
     }
 }

@@ -47,6 +47,8 @@ await client.search({
         tags: ["tags", "tags"]
     },
     filter: "filter",
+    tags: "tags",
+    optionalTags: "optionalTags",
     neighbor: {
         name: "name",
         tags: ["tags", "tags"]
@@ -90,3 +92,4 @@ await client.search({
 </dd>
 </dl>
 </details>
+

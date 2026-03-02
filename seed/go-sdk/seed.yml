@@ -17,7 +17,7 @@ buildScripts:
         if [ -f wiremock/docker-compose.test.yml ]; then
           docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
           docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
-          export WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+          export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
         fi
         go test -v ./...
         TEST_EXIT_CODE=$?
@@ -268,9 +268,13 @@ fixtures:
         module:
           path: github.com/go-undiscriminated-union-wire-tests/fern
   exhaustive:
-    - outputFolder: .
+    - outputFolder: no-custom-config
       customConfig:
         enableWireTests: true
+    - outputFolder: omit-empty-request-wrappers
+      customConfig:
+        enableWireTests: true
+        omitEmptyRequestWrappers: true
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:
@@ -280,7 +284,7 @@ scripts:
           if [ -f wiremock/docker-compose.test.yml ]; then
             docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
             docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
-            export WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
+            export WIREMOCK_URL=http://localhost:$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
           fi
           CGO_ENABLED=0 go test ./...
           TEST_EXIT_CODE=$?
@@ -324,3 +328,7 @@ allowedFailures:
   - file-upload-openapi
 
   - pagination-custom:.
+
+  # TODO: Go generator doesn't support DATE_TIME_RFC_2822 primitive yet.
+  - exhaustive:no-custom-config
+  - exhaustive:omit-empty-request-wrappers

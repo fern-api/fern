@@ -9,6 +9,7 @@ on:
         type: string
 
 env:
+  DO_NOT_TRACK: "1"
   PACKAGE_NAME: "@fern-api/snippets-core"
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
 

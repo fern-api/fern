@@ -9,9 +9,15 @@ import com.seed.paginationUriPath.core.RequestOptions;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathApiException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathException;
 import com.seed.paginationUriPath.core.SeedPaginationUriPathHttpResponse;
+import com.seed.paginationUriPath.core.pagination.PathPage;
+import com.seed.paginationUriPath.core.pagination.SyncPagingIterable;
+import com.seed.paginationUriPath.core.pagination.UriPage;
 import com.seed.paginationUriPath.resources.users.types.ListUsersPathPaginationResponse;
 import com.seed.paginationUriPath.resources.users.types.ListUsersUriPaginationResponse;
+import com.seed.paginationUriPath.resources.users.types.User;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,12 +36,11 @@ public class AsyncRawUsersClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersUriPaginationResponse>>
-            listWithUriPagination() {
+    public CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> listWithUriPagination() {
         return listWithUriPagination(null);
     }
 
-    public CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersUriPaginationResponse>> listWithUriPagination(
+    public CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> listWithUriPagination(
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -56,7 +61,7 @@ public class AsyncRawUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersUriPaginationResponse>> future =
+        CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -64,9 +69,23 @@ public class AsyncRawUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
+                        ListUsersUriPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, ListUsersUriPaginationResponse.class);
+                        Optional<String> startingAfter = parsedResponse.getNext();
+                        List<User> result = parsedResponse.getData();
                         future.complete(new SeedPaginationUriPathHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, ListUsersUriPaginationResponse.class),
+                                UriPage.create(
+                                        parsedResponse,
+                                        startingAfter,
+                                        result,
+                                        ListUsersUriPaginationResponse.class,
+                                        _response -> _response.getNext(),
+                                        _response -> _response.getData(),
+                                        "GET",
+                                        null,
+                                        Headers.of("Accept", "application/json"),
+                                        clientOptions,
+                                        requestOptions),
                                 response));
                         return;
                     }
@@ -89,12 +108,11 @@ public class AsyncRawUsersClient {
         return future;
     }
 
-    public CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersPathPaginationResponse>>
-            listWithPathPagination() {
+    public CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> listWithPathPagination() {
         return listWithPathPagination(null);
     }
 
-    public CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersPathPaginationResponse>> listWithPathPagination(
+    public CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> listWithPathPagination(
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -115,7 +133,7 @@ public class AsyncRawUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedPaginationUriPathHttpResponse<ListUsersPathPaginationResponse>> future =
+        CompletableFuture<SeedPaginationUriPathHttpResponse<SyncPagingIterable<User>>> future =
                 new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
@@ -123,9 +141,23 @@ public class AsyncRawUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
+                        ListUsersPathPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                                responseBodyString, ListUsersPathPaginationResponse.class);
+                        Optional<String> startingAfter = parsedResponse.getNext();
+                        List<User> result = parsedResponse.getData();
                         future.complete(new SeedPaginationUriPathHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString, ListUsersPathPaginationResponse.class),
+                                PathPage.create(
+                                        parsedResponse,
+                                        startingAfter,
+                                        result,
+                                        ListUsersPathPaginationResponse.class,
+                                        _response -> _response.getNext(),
+                                        _response -> _response.getData(),
+                                        "GET",
+                                        null,
+                                        Headers.of("Accept", "application/json"),
+                                        clientOptions,
+                                        requestOptions),
                                 response));
                         return;
                     }

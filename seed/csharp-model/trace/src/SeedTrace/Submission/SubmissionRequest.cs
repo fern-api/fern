@@ -319,22 +319,31 @@ public record SubmissionRequest
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "initializeProblemRequest" => json.Deserialize<SeedTrace.InitializeProblemRequest?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.InitializeProblemRequest"
-                    ),
+                "initializeProblemRequest" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.InitializeProblemRequest?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.InitializeProblemRequest"
+                        ),
                 "initializeWorkspaceRequest" => new { },
-                "submitV2" => json.Deserialize<SeedTrace.SubmitRequestV2?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.SubmitRequestV2"),
-                "workspaceSubmit" => json.Deserialize<SeedTrace.WorkspaceSubmitRequest?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.WorkspaceSubmitRequest"
-                    ),
-                "stop" => json.Deserialize<SeedTrace.StopRequest?>(options)
+                "submitV2" => jsonWithoutDiscriminator.Deserialize<SeedTrace.SubmitRequestV2?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.SubmitRequestV2"),
+                "workspaceSubmit" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.WorkspaceSubmitRequest?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.WorkspaceSubmitRequest"
+                        ),
+                "stop" => jsonWithoutDiscriminator.Deserialize<SeedTrace.StopRequest?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.StopRequest"),
                 _ => json.Deserialize<object?>(options),
             };

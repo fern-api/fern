@@ -259,6 +259,10 @@ public final class MyOtherRequest {
     public interface _FinalStage {
         MyOtherRequest build();
 
+        _FinalStage additionalProperty(String key, Object value);
+
+        _FinalStage additionalProperties(Map<String, Object> additionalProperties);
+
         _FinalStage maybeFile(Optional<File> maybeFile);
 
         _FinalStage maybeFile(File maybeFile);
@@ -624,6 +628,18 @@ public final class MyOtherRequest {
                     listOfAliasObject,
                     aliasListOfObject,
                     additionalProperties);
+        }
+
+        @java.lang.Override
+        public Builder additionalProperty(String key, Object value) {
+            this.additionalProperties.put(key, value);
+            return this;
+        }
+
+        @java.lang.Override
+        public Builder additionalProperties(Map<String, Object> additionalProperties) {
+            this.additionalProperties.putAll(additionalProperties);
+            return this;
         }
     }
 }

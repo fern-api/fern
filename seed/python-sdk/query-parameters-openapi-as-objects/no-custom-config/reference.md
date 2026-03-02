@@ -58,6 +58,8 @@ client.search(
         tags=["tags", "tags"],
     ),
     filter="filter",
+    tags="tags",
+    optional_tags="optionalTags",
     neighbor=User(
         name="name",
         tags=["tags", "tags"],
@@ -195,6 +197,22 @@ client.search(
 <dd>
 
 **filter:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — List of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` — Optional list of tags. Serialized as a comma-separated list.
     
 </dd>
 </dl>

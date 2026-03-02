@@ -148,6 +148,7 @@ public final class BuilderGenerator {
                     .addAnnotation(JsonAnySetter.class)
                     .initializer("new $T<>()", HashMap.class)
                     .build());
+            addAdditionalPropertiesBuilderMethods(builderImplTypeSpec, nestedBuilderClassName, true);
         }
 
         List<PoetTypeWithClassName> stagedBuilderTypes = new ArrayList<>();
@@ -230,6 +231,7 @@ public final class BuilderGenerator {
                     .addAnnotation(JsonAnySetter.class)
                     .initializer("new $T<>()", HashMap.class)
                     .build());
+            addAdditionalPropertiesBuilderMethods(builderImplTypeSpec, nestedBuilderClassName, false);
         }
 
         return PoetTypeWithClassName.of(nestedBuilderClassName, builderImplTypeSpec.build());
@@ -373,6 +375,60 @@ public final class BuilderGenerator {
         return methodBuilder;
     }
 
+    private String getAdditionalPropertyMethodName() {
+        boolean hasConflict = allPropertyCamelCaseNames.contains("additionalProperty");
+        return hasConflict ? "_additionalProperty" : "additionalProperty";
+    }
+
+    private String getAdditionalPropertiesMethodName() {
+        boolean hasConflict = allPropertyCamelCaseNames.contains("additionalProperties");
+        return hasConflict ? "_additionalProperties" : "additionalProperties";
+    }
+
+    private void addAdditionalPropertiesBuilderMethods(
+            TypeSpec.Builder builderTypeSpec, ClassName returnClass, boolean isOverridden) {
+        // Single key-value setter
+        MethodSpec.Builder singleSetter = MethodSpec.methodBuilder(getAdditionalPropertyMethodName())
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(String.class, "key")
+                .addParameter(Object.class, "value")
+                .addStatement("this.$L.put(key, value)", additionalPropertiesFieldName)
+                .addStatement("return this");
+        if (isOverridden) {
+            singleSetter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        builderTypeSpec.addMethod(singleSetter.build());
+
+        // Bulk setter
+        MethodSpec.Builder bulkSetter = MethodSpec.methodBuilder(getAdditionalPropertiesMethodName())
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnClass)
+                .addParameter(
+                        ParameterizedTypeName.get(Map.class, String.class, Object.class), additionalPropertiesFieldName)
+                .addStatement("this.$L.putAll($L)", additionalPropertiesFieldName, additionalPropertiesFieldName)
+                .addStatement("return this");
+        if (isOverridden) {
+            bulkSetter.addAnnotation(ClassName.get("", "java.lang.Override"));
+        }
+        builderTypeSpec.addMethod(bulkSetter.build());
+    }
+
+    private void addAdditionalPropertiesInterfaceMethods(TypeSpec.Builder interfaceBuilder, ClassName returnClass) {
+        interfaceBuilder.addMethod(MethodSpec.methodBuilder(getAdditionalPropertyMethodName())
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .returns(returnClass)
+                .addParameter(String.class, "key")
+                .addParameter(Object.class, "value")
+                .build());
+        interfaceBuilder.addMethod(MethodSpec.methodBuilder(getAdditionalPropertiesMethodName())
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .returns(returnClass)
+                .addParameter(
+                        ParameterizedTypeName.get(Map.class, String.class, Object.class), additionalPropertiesFieldName)
+                .build());
+    }
+
     private MethodSpec.Builder getFromSetter() {
         return MethodSpec.methodBuilder(StageBuilderConstants.FROM_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
@@ -394,6 +450,10 @@ public final class BuilderGenerator {
                         objectClassName.nestedClass(StageBuilderConstants.FINAL_STAGE_CLASS_NAME))
                 .addModifiers(Modifier.PUBLIC)
                 .addMethod(getBaseBuildMethod().addModifiers(Modifier.ABSTRACT).build());
+
+        if (this.supportAdditionalProperties) {
+            addAdditionalPropertiesInterfaceMethods(finalStageBuilder, finalStageClassName);
+        }
 
         List<EnrichedObjectPropertyWithField> finalStageProperties = stagedBuilderConfig.finalStage();
         for (EnrichedObjectPropertyWithField enrichedProperty : finalStageProperties) {

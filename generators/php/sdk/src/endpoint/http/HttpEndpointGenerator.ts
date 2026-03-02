@@ -683,9 +683,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const body = endpoint.response.body;
         return php.codeblock((writer) => {
             body._visit({
-                bytes: () => this.context.logger.error("Bytes not supported"),
+                bytes: () => {
+                    writer.controlFlow(
+                        "if",
+                        php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
+                    );
+                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    writer.endControlFlow();
+                },
                 streamParameter: () => this.context.logger.error("Stream parameters not supported"),
-                fileDownload: () => this.context.logger.error("File download not supported"),
+                fileDownload: () => {
+                    writer.controlFlow(
+                        "if",
+                        php.codeblock(`${STATUS_CODE_VARIABLE_NAME} >= 200 && ${STATUS_CODE_VARIABLE_NAME} < 400`)
+                    );
+                    writer.writeTextStatement(`return ${RESPONSE_VARIABLE_NAME}->getBody()->getContents()`);
+                    writer.endControlFlow();
+                },
                 json: (_reference) => {
                     writer.controlFlow(
                         "if",

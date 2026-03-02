@@ -1,6 +1,16 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Webhook } from "@fern-api/openapi-ir";
+import {
+    AsymmetricAlgorithm,
+    Webhook,
+    WebhookPayloadComponent,
+    WebhookPayloadFormat,
+    WebhookSignatureAlgorithm,
+    WebhookSignatureEncoding,
+    WebhookSignatureVerification,
+    WebhookTimestamp,
+    WebhookTimestampFormat
+} from "@fern-api/openapi-ir";
 import { join, RelativeFilePath } from "@fern-api/path-utils";
 import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader.js";
@@ -43,6 +53,7 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                 namespace: maybeWebhookNamespace,
                 declarationDepth: 0
             }),
+            signature: convertSignatureVerification(webhook.signatureVerification),
             examples:
                 webhook.examples != null
                     ? webhook.examples.map((exampleWebhookCall) => {
@@ -246,4 +257,146 @@ function getWebhookLocation({
         namespaceOverride: webhook.namespace,
         location: getUnresolvedWebhookLocation({ webhook, context })
     });
+}
+
+function convertSignatureVerification(
+    signatureVerification: WebhookSignatureVerification | undefined
+): RawSchemas.WebhookSignatureSchema | undefined {
+    if (signatureVerification == null) {
+        return undefined;
+    }
+
+    switch (signatureVerification.type) {
+        case "hmac":
+            return {
+                type: "hmac",
+                header: signatureVerification.header,
+                algorithm: convertSignatureAlgorithm(signatureVerification.algorithm),
+                encoding: convertSignatureEncoding(signatureVerification.encoding),
+                "signature-prefix": signatureVerification.signaturePrefix,
+                "payload-format": convertPayloadFormat(signatureVerification.payloadFormat),
+                timestamp: convertTimestamp(signatureVerification.timestamp)
+            };
+        case "asymmetric":
+            return {
+                type: "asymmetric",
+                header: signatureVerification.header,
+                "asymmetric-algorithm": convertAsymmetricAlgorithm(signatureVerification.asymmetricAlgorithm),
+                encoding: convertSignatureEncoding(signatureVerification.encoding),
+                "signature-prefix": signatureVerification.signaturePrefix,
+                "jwks-url": signatureVerification.jwksUrl,
+                "key-id-header": signatureVerification.keyIdHeader,
+                timestamp: convertTimestamp(signatureVerification.timestamp)
+            };
+        default:
+            return undefined;
+    }
+}
+
+function convertSignatureAlgorithm(
+    algorithm: WebhookSignatureAlgorithm | undefined
+): RawSchemas.WebhookSignatureAlgorithmSchema | undefined {
+    if (algorithm == null) {
+        return undefined;
+    }
+    switch (algorithm) {
+        case "sha256":
+            return "sha256";
+        case "sha1":
+            return "sha1";
+        case "sha384":
+            return "sha384";
+        case "sha512":
+            return "sha512";
+        default:
+            return undefined;
+    }
+}
+
+function convertSignatureEncoding(
+    encoding: WebhookSignatureEncoding | undefined
+): RawSchemas.WebhookSignatureEncodingSchema | undefined {
+    if (encoding == null) {
+        return undefined;
+    }
+    switch (encoding) {
+        case "base64":
+            return "base64";
+        case "hex":
+            return "hex";
+        default:
+            return undefined;
+    }
+}
+
+function convertAsymmetricAlgorithm(algorithm: AsymmetricAlgorithm): RawSchemas.AsymmetricAlgorithmSchema {
+    switch (algorithm) {
+        case "rsa-sha256":
+            return "rsa-sha256";
+        case "rsa-sha384":
+            return "rsa-sha384";
+        case "rsa-sha512":
+            return "rsa-sha512";
+        case "ecdsa-sha256":
+            return "ecdsa-sha256";
+        case "ecdsa-sha384":
+            return "ecdsa-sha384";
+        case "ecdsa-sha512":
+            return "ecdsa-sha512";
+        case "ed25519":
+            return "ed25519";
+        default:
+            return "rsa-sha256";
+    }
+}
+
+function convertPayloadFormat(
+    payloadFormat: WebhookPayloadFormat | undefined
+): RawSchemas.WebhookPayloadFormatSchema | undefined {
+    if (payloadFormat == null) {
+        return undefined;
+    }
+    return {
+        components: payloadFormat.components.map(convertPayloadComponent),
+        delimiter: payloadFormat.delimiter
+    };
+}
+
+function convertPayloadComponent(component: WebhookPayloadComponent): RawSchemas.WebhookPayloadComponentSchema {
+    switch (component) {
+        case "body":
+            return "body";
+        case "timestamp":
+            return "timestamp";
+        case "notification-url":
+            return "notification-url";
+        case "message-id":
+            return "message-id";
+        default:
+            return "body";
+    }
+}
+
+function convertTimestampFormat(format: WebhookTimestampFormat): RawSchemas.WebhookTimestampFormatSchema | undefined {
+    switch (format) {
+        case "unix-seconds":
+            return "unix-seconds";
+        case "unix-millis":
+            return "unix-millis";
+        case "iso8601":
+            return "iso8601";
+        default:
+            return undefined;
+    }
+}
+
+function convertTimestamp(timestamp: WebhookTimestamp | undefined): RawSchemas.WebhookTimestampSchema | undefined {
+    if (timestamp == null) {
+        return undefined;
+    }
+    return {
+        header: timestamp.header,
+        format: timestamp.format != null ? convertTimestampFormat(timestamp.format) : undefined,
+        tolerance: timestamp.tolerance
+    };
 }

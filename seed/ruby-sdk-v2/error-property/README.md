@@ -28,9 +28,9 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = Seed::Client.new();
+client = Seed::Client.new
 
-client.property_based_error.throw_error();
+client.property_based_error.throw_error
 ```
 
 ## Environments

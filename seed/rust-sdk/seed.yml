@@ -41,7 +41,7 @@ customFixtureConfig:
     packageVersion: "0.1.0"
 
 fixtures:
-  simple:
+  simple-api:
     - customConfig: null
       outputFolder: basic
     - customConfig:

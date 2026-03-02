@@ -32,7 +32,6 @@ public partial class PathParamClient : IPathParamClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "path/{0}/{1}",

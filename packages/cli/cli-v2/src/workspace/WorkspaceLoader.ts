@@ -6,6 +6,8 @@ import type { AiConfig } from "../ai/config/AiConfig.js";
 import type { ApiDefinition } from "../api/config/ApiDefinition.js";
 import { ApiDefinitionConverter } from "../api/config/converter/ApiDefinitionConverter.js";
 import { FernYmlSchemaLoader } from "../config/fern-yml/FernYmlSchemaLoader.js";
+import { DocsConfigConverter } from "../docs/config/converter/DocsConfigConverter.js";
+import type { DocsConfig } from "../docs/config/DocsConfig.js";
 import { ValidationError } from "../errors/ValidationError.js";
 import { SdkConfigConverter } from "../sdk/config/converter/SdkConfigConverter.js";
 import { SdkConfig } from "../sdk/config/SdkConfig.js";
@@ -57,9 +59,12 @@ export class WorkspaceLoader {
 
     public async load({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<WorkspaceLoader.Result> {
         const ai = this.convertAi({ fernYml });
-        const apis = await this.convertApis({ fernYml });
-        const cliVersion = await this.convertCliVersion({ fernYml });
-        const sdks = await this.convertSdks({ fernYml });
+        const docs = this.convertDocs({ fernYml });
+        const [apis, cliVersion, sdks] = await Promise.all([
+            this.convertApis({ fernYml }),
+            this.convertCliVersion({ fernYml }),
+            this.convertSdks({ fernYml })
+        ]);
         if (this.issues.length > 0) {
             return {
                 success: false,
@@ -68,10 +73,12 @@ export class WorkspaceLoader {
         }
 
         const workspace: Workspace = {
+            absoluteFilePath: fernYml.absoluteFilePath,
             ai,
             apis,
             org: fernYml.data.org,
             cliVersion,
+            docs,
             sdks
         };
 
@@ -116,6 +123,16 @@ export class WorkspaceLoader {
 
     private async convertCliVersion({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<string> {
         return fernYml.data.cli?.version ?? Version;
+    }
+
+    private convertDocs({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): DocsConfig | undefined {
+        const docsConverter = new DocsConfigConverter();
+        const docsResult = docsConverter.convert({ fernYml });
+        if (!docsResult.success) {
+            this.issues.push(...docsResult.issues);
+            return undefined;
+        }
+        return docsResult.config;
     }
 
     private async convertSdks({ fernYml }: { fernYml: FernYmlSchemaLoader.Success }): Promise<SdkConfig | undefined> {

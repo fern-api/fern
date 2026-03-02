@@ -432,8 +432,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(this.Types.BaseApiException);
                     writer.write('("Failed to deserialize response", ');
                     writer.write(`${this.names.variables.response}.StatusCode, `);
-                    writer.write(`${this.names.variables.responseBody}, `);
-                    writer.write("e");
+                    if (this.settings.redactResponseBodyOnError) {
+                        writer.write("null, ");
+                        writer.write("e");
+                    } else {
+                        writer.write(`${this.names.variables.responseBody}, `);
+                        writer.write("e");
+                    }
                     writer.writeTextStatement(")");
                     writer.popScope();
                 },
@@ -611,7 +616,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.popScope();
     }
 
-    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
+    private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock | undefined {
         if (endpoint.baseUrl != null && this.context.ir.environments?.environments.type === "multipleBaseUrls") {
             const baseUrl = this.context.ir.environments?.environments.baseUrls.find(
                 (baseUrlWithId) => baseUrlWithId.id === endpoint.baseUrl
@@ -620,7 +625,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 return this.csharp.codeblock(`_client.Options.Environment.${baseUrl.name.pascalCase.safeName}`);
             }
         }
-        return this.csharp.codeblock("_client.Options.BaseUrl");
+        return undefined;
     }
 
     private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
@@ -772,16 +777,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(payloadType);
                     writer.writeTextStatement(`>(${jsonString})`);
                     writer.popScope();
-                    writer.writeLine("catch (System.Text.Json.JsonException)");
-                    writer.pushScope();
-                    writer.writeStatement(
-                        "throw new ",
-                        exceptionClass,
-                        `($"Unable to deserialize JSON response '`,
-                        jsonString,
-                        `'")`
-                    );
-                    writer.popScope();
+                    if (context.generation.settings.redactResponseBodyOnError) {
+                        writer.writeLine("catch (System.Text.Json.JsonException e)");
+                        writer.pushScope();
+                        writer.writeStatement(
+                            "throw new ",
+                            exceptionClass,
+                            `("Failed to deserialize streaming response", e)`
+                        );
+                        writer.popScope();
+                    } else {
+                        writer.writeLine("catch (System.Text.Json.JsonException)");
+                        writer.pushScope();
+                        writer.writeStatement(
+                            "throw new ",
+                            exceptionClass,
+                            `($"Unable to deserialize JSON response '`,
+                            jsonString,
+                            `'")`
+                        );
+                        writer.popScope();
+                    }
                 }
 
                 value._visit({
@@ -996,7 +1012,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeNode(this.Types.BaseApiException);
                     writer.write('("Failed to deserialize response", ');
                     writer.write(`${this.names.variables.response}.StatusCode, `);
-                    writer.write(`${this.names.variables.responseBody}`);
+                    if (this.settings.redactResponseBodyOnError) {
+                        writer.write("null, ");
+                        writer.write("e");
+                    } else {
+                        writer.write(`${this.names.variables.responseBody}`);
+                    }
                     writer.writeTextStatement(")");
                     writer.popScope();
 

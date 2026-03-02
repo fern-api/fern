@@ -64,6 +64,7 @@ type Config struct {
 	UseReaderForBytesRequest     bool
 	GettersPassByValue           bool
 	ExportAllRequestsAtRoot      bool
+	OmitEmptyRequestWrappers     bool
 	Organization                 string
 	CoordinatorURL               string
 	CoordinatorTaskID            string
@@ -235,6 +236,7 @@ func newConfig(configFilename string) (*Config, error) {
 		UseReaderForBytesRequest:     *customConfig.UseReaderForBytesRequest,
 		GettersPassByValue:           *customConfig.GettersPassByValue,
 		ExportAllRequestsAtRoot:      *customConfig.ExportAllRequestsAtRoot,
+		OmitEmptyRequestWrappers:     *customConfig.OmitEmptyRequestWrappers,
 		Organization:                 config.Organization,
 		AlwaysSendRequiredProperties: *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                   config.Whitelabel,
@@ -299,6 +301,7 @@ type customConfig struct {
 	UseReaderForBytesRequest     *bool         `json:"useReaderForBytesRequest,omitempty"`
 	GettersPassByValue           *bool         `json:"gettersPassByValue,omitempty"`
 	ExportAllRequestsAtRoot      *bool         `json:"exportAllRequestsAtRoot,omitempty"`
+	OmitEmptyRequestWrappers     *bool         `json:"omitEmptyRequestWrappers,omitempty"`
 	ClientName                   string        `json:"clientName,omitempty"`
 	ClientConstructorName        string        `json:"clientConstructorName,omitempty"`
 	ImportPath                   string        `json:"importPath,omitempty"`
@@ -458,6 +461,9 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.ExportAllRequestsAtRoot == nil {
 		customConfig.ExportAllRequestsAtRoot = gospec.Ptr(false)
+	}
+	if customConfig.OmitEmptyRequestWrappers == nil {
+		customConfig.OmitEmptyRequestWrappers = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"

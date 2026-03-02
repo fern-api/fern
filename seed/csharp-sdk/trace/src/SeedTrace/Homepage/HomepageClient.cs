@@ -27,7 +27,6 @@ public partial class HomepageClient : IHomepageClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/homepage-problems",
                     Headers = _headers,
@@ -105,7 +104,6 @@ public partial class HomepageClient : IHomepageClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/homepage-problems",
                     Body = request,

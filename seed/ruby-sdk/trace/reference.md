@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.v_2.test();
+client.v_2.test
 ```
 </dd>
 </dl>
@@ -55,9 +55,9 @@ client.v_2.test();
 
 ```ruby
 client.admin.update_test_submission_status(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   request: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -114,10 +114,10 @@ client.admin.update_test_submission_status(
 
 ```ruby
 client.admin.send_test_submission_update(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  update_time: '2024-01-15T09:30:00Z',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  update_time: "2024-01-15T09:30:00Z",
   update_info: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -174,9 +174,9 @@ client.admin.send_test_submission_update(
 
 ```ruby
 client.admin.update_workspace_submission_status(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   request: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -233,10 +233,10 @@ client.admin.update_workspace_submission_status(
 
 ```ruby
 client.admin.send_workspace_submission_update(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  update_time: '2024-01-15T09:30:00Z',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  update_time: "2024-01-15T09:30:00Z",
   update_info: {}
-);
+)
 ```
 </dd>
 </dl>
@@ -293,8 +293,8 @@ client.admin.send_workspace_submission_update(
 
 ```ruby
 client.admin.store_traced_test_case(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  test_case_id: 'testCaseId',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  test_case_id: "testCaseId",
   result: {
     result: {
       expected_result: {},
@@ -303,10 +303,10 @@ client.admin.store_traced_test_case(
       },
       passed: true
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   },
   trace_responses: [{
-    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     return_value: {},
     expression_location: {
@@ -316,7 +316,7 @@ client.admin.store_traced_test_case(
     stack: {
       num_stack_frames: 1,
       top_stack_frame: {
-        method_name: 'methodName',
+        method_name: "methodName",
         line_number: 1,
         scopes: [{
           variables: {
@@ -329,9 +329,9 @@ client.admin.store_traced_test_case(
         }]
       }
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   }, {
-    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     return_value: {},
     expression_location: {
@@ -341,7 +341,7 @@ client.admin.store_traced_test_case(
     stack: {
       num_stack_frames: 1,
       top_stack_frame: {
-        method_name: 'methodName',
+        method_name: "methodName",
         line_number: 1,
         scopes: [{
           variables: {
@@ -354,9 +354,9 @@ client.admin.store_traced_test_case(
         }]
       }
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   }]
-);
+)
 ```
 </dd>
 </dl>
@@ -429,14 +429,14 @@ client.admin.store_traced_test_case(
 
 ```ruby
 client.admin.store_traced_test_case_v_2(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  test_case_id: 'testCaseId',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+  test_case_id: "testCaseId",
   request: [{
-    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     file: {
-      filename: 'filename',
-      directory: 'directory'
+      filename: "filename",
+      directory: "directory"
     },
     return_value: {},
     expression_location: {
@@ -446,7 +446,7 @@ client.admin.store_traced_test_case_v_2(
     stack: {
       num_stack_frames: 1,
       top_stack_frame: {
-        method_name: 'methodName',
+        method_name: "methodName",
         line_number: 1,
         scopes: [{
           variables: {
@@ -459,13 +459,13 @@ client.admin.store_traced_test_case_v_2(
         }]
       }
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   }, {
-    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     file: {
-      filename: 'filename',
-      directory: 'directory'
+      filename: "filename",
+      directory: "directory"
     },
     return_value: {},
     expression_location: {
@@ -475,7 +475,7 @@ client.admin.store_traced_test_case_v_2(
     stack: {
       num_stack_frames: 1,
       top_stack_frame: {
-        method_name: 'methodName',
+        method_name: "methodName",
         line_number: 1,
         scopes: [{
           variables: {
@@ -488,9 +488,9 @@ client.admin.store_traced_test_case_v_2(
         }]
       }
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   }]
-);
+)
 ```
 </dd>
 </dl>
@@ -555,17 +555,17 @@ client.admin.store_traced_test_case_v_2(
 
 ```ruby
 client.admin.store_traced_workspace(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   workspace_run_details: {
     exception: {
-      exception_type: 'exceptionType',
-      exception_message: 'exceptionMessage',
-      exception_stacktrace: 'exceptionStacktrace'
+      exception_type: "exceptionType",
+      exception_message: "exceptionMessage",
+      exception_stacktrace: "exceptionStacktrace"
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   },
   trace_responses: [{
-    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     return_value: {},
     expression_location: {
@@ -575,7 +575,7 @@ client.admin.store_traced_workspace(
     stack: {
       num_stack_frames: 1,
       top_stack_frame: {
-        method_name: 'methodName',
+        method_name: "methodName",
         line_number: 1,
         scopes: [{
           variables: {
@@ -588,9 +588,9 @@ client.admin.store_traced_workspace(
         }]
       }
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   }, {
-    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     return_value: {},
     expression_location: {
@@ -600,7 +600,7 @@ client.admin.store_traced_workspace(
     stack: {
       num_stack_frames: 1,
       top_stack_frame: {
-        method_name: 'methodName',
+        method_name: "methodName",
         line_number: 1,
         scopes: [{
           variables: {
@@ -613,9 +613,9 @@ client.admin.store_traced_workspace(
         }]
       }
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   }]
-);
+)
 ```
 </dd>
 </dl>
@@ -680,13 +680,13 @@ client.admin.store_traced_workspace(
 
 ```ruby
 client.admin.store_traced_workspace_v_2(
-  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
   request: [{
-    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     file: {
-      filename: 'filename',
-      directory: 'directory'
+      filename: "filename",
+      directory: "directory"
     },
     return_value: {},
     expression_location: {
@@ -696,7 +696,7 @@ client.admin.store_traced_workspace_v_2(
     stack: {
       num_stack_frames: 1,
       top_stack_frame: {
-        method_name: 'methodName',
+        method_name: "methodName",
         line_number: 1,
         scopes: [{
           variables: {
@@ -709,13 +709,13 @@ client.admin.store_traced_workspace_v_2(
         }]
       }
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   }, {
-    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     line_number: 1,
     file: {
-      filename: 'filename',
-      directory: 'directory'
+      filename: "filename",
+      directory: "directory"
     },
     return_value: {},
     expression_location: {
@@ -725,7 +725,7 @@ client.admin.store_traced_workspace_v_2(
     stack: {
       num_stack_frames: 1,
       top_stack_frame: {
-        method_name: 'methodName',
+        method_name: "methodName",
         line_number: 1,
         scopes: [{
           variables: {
@@ -738,9 +738,9 @@ client.admin.store_traced_workspace_v_2(
         }]
       }
     },
-    stdout: 'stdout'
+    stdout: "stdout"
   }]
-);
+)
 ```
 </dd>
 </dl>
@@ -797,7 +797,7 @@ client.admin.store_traced_workspace_v_2(
 <dd>
 
 ```ruby
-client.homepage.get_homepage_problems();
+client.homepage.get_homepage_problems
 ```
 </dd>
 </dl>
@@ -837,7 +837,7 @@ client.homepage.get_homepage_problems();
 <dd>
 
 ```ruby
-client.homepage.set_homepage_problems(request: ['string', 'string']);
+client.homepage.set_homepage_problems(request: %w[string string])
 ```
 </dd>
 </dl>
@@ -886,7 +886,7 @@ client.homepage.set_homepage_problems(request: ['string', 'string']);
 <dd>
 
 ```ruby
-client.migration.get_attempted_migrations(admin_key_header: 'admin-key-header');
+client.migration.get_attempted_migrations(admin_key_header: "admin-key-header")
 ```
 </dd>
 </dl>
@@ -951,11 +951,11 @@ Create a new playlist
 ```ruby
 client.playlist.create_playlist(
   service_param: 1,
-  datetime: '2024-01-15T09:30:00Z',
-  optional_datetime: '2024-01-15T09:30:00Z',
-  name: 'name',
-  problems: ['problems', 'problems']
-);
+  datetime: "2024-01-15T09:30:00Z",
+  optional_datetime: "2024-01-15T09:30:00Z",
+  name: "name",
+  problems: %w[problems problems]
+)
 ```
 </dd>
 </dl>
@@ -1044,9 +1044,9 @@ Returns the user's playlists
 client.playlist.get_playlists(
   service_param: 1,
   limit: 1,
-  other_field: 'otherField',
-  multi_line_docs: 'multiLineDocs'
-);
+  other_field: "otherField",
+  multi_line_docs: "multiLineDocs"
+)
 ```
 </dd>
 </dl>
@@ -1153,8 +1153,8 @@ Returns a playlist
 ```ruby
 client.playlist.get_playlist(
   service_param: 1,
-  playlist_id: 'playlistId'
-);
+  playlist_id: "playlistId"
+)
 ```
 </dd>
 </dl>
@@ -1226,12 +1226,12 @@ Updates a playlist
 ```ruby
 client.playlist.update_playlist(
   service_param: 1,
-  playlist_id: 'playlistId',
+  playlist_id: "playlistId",
   request: {
-    name: 'name',
-    problems: ['problems', 'problems']
+    name: "name",
+    problems: %w[problems problems]
   }
-);
+)
 ```
 </dd>
 </dl>
@@ -1311,8 +1311,8 @@ Deletes a playlist
 ```ruby
 client.playlist.delete_playlist(
   service_param: 1,
-  playlist_id: 'playlist_id'
-);
+  playlist_id: "playlist_id"
+)
 ```
 </dd>
 </dl>
@@ -1384,48 +1384,48 @@ Creates a problem
 
 ```ruby
 client.problem.create_problem(
-  problem_name: 'problemName',
+  problem_name: "problemName",
   problem_description: {
     boards: [{}, {}]
   },
   files: {
     JAVA: {
       solution_file: {
-        filename: 'filename',
-        contents: 'contents'
+        filename: "filename",
+        contents: "contents"
       },
       read_only_files: [{
-        filename: 'filename',
-        contents: 'contents'
+        filename: "filename",
+        contents: "contents"
       }, {
-        filename: 'filename',
-        contents: 'contents'
+        filename: "filename",
+        contents: "contents"
       }]
     }
   },
   input_params: [{
     variable_type: {},
-    name: 'name'
+    name: "name"
   }, {
     variable_type: {},
-    name: 'name'
+    name: "name"
   }],
   output_type: {},
   testcases: [{
     test_case: {
-      id: 'id',
+      id: "id",
       params: [{}, {}]
     },
     expected_result: {}
   }, {
     test_case: {
-      id: 'id',
+      id: "id",
       params: [{}, {}]
     },
     expected_result: {}
   }],
-  method_name: 'methodName'
-);
+  method_name: "methodName"
+)
 ```
 </dd>
 </dl>
@@ -1488,49 +1488,49 @@ Updates a problem
 
 ```ruby
 client.problem.update_problem(
-  problem_id: 'problemId',
-  problem_name: 'problemName',
+  problem_id: "problemId",
+  problem_name: "problemName",
   problem_description: {
     boards: [{}, {}]
   },
   files: {
     JAVA: {
       solution_file: {
-        filename: 'filename',
-        contents: 'contents'
+        filename: "filename",
+        contents: "contents"
       },
       read_only_files: [{
-        filename: 'filename',
-        contents: 'contents'
+        filename: "filename",
+        contents: "contents"
       }, {
-        filename: 'filename',
-        contents: 'contents'
+        filename: "filename",
+        contents: "contents"
       }]
     }
   },
   input_params: [{
     variable_type: {},
-    name: 'name'
+    name: "name"
   }, {
     variable_type: {},
-    name: 'name'
+    name: "name"
   }],
   output_type: {},
   testcases: [{
     test_case: {
-      id: 'id',
+      id: "id",
       params: [{}, {}]
     },
     expected_result: {}
   }, {
     test_case: {
-      id: 'id',
+      id: "id",
       params: [{}, {}]
     },
     expected_result: {}
   }],
-  method_name: 'methodName'
-);
+  method_name: "methodName"
+)
 ```
 </dd>
 </dl>
@@ -1600,7 +1600,7 @@ Soft deletes a problem
 <dd>
 
 ```ruby
-client.problem.delete_problem(problem_id: 'problemId');
+client.problem.delete_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -1665,14 +1665,14 @@ Returns default starter files for problem
 client.problem.get_default_starter_files(
   input_params: [{
     variable_type: {},
-    name: 'name'
+    name: "name"
   }, {
     variable_type: {},
-    name: 'name'
+    name: "name"
   }],
   output_type: {},
-  method_name: 'methodName'
-);
+  method_name: "methodName"
+)
 ```
 </dd>
 </dl>
@@ -1758,7 +1758,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```ruby
-client.submission.create_execution_session(language: 'JAVA');
+client.submission.create_execution_session(language: "JAVA")
 ```
 </dd>
 </dl>
@@ -1820,7 +1820,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```ruby
-client.submission.get_execution_session(session_id: 'sessionId');
+client.submission.get_execution_session(session_id: "sessionId")
 ```
 </dd>
 </dl>
@@ -1882,7 +1882,7 @@ Stops execution session.
 <dd>
 
 ```ruby
-client.submission.stop_execution_session(session_id: 'sessionId');
+client.submission.stop_execution_session(session_id: "sessionId")
 ```
 </dd>
 </dl>
@@ -1930,7 +1930,7 @@ client.submission.stop_execution_session(session_id: 'sessionId');
 <dd>
 
 ```ruby
-client.submission.get_execution_sessions_state();
+client.submission.get_execution_sessions_state
 ```
 </dd>
 </dl>
@@ -1972,9 +1972,9 @@ client.submission.get_execution_sessions_state();
 
 ```ruby
 client.sysprop.set_num_warm_instances(
-  language: 'JAVA',
+  language: "JAVA",
   num_warm_instances: 1
-);
+)
 ```
 </dd>
 </dl>
@@ -2030,7 +2030,7 @@ client.sysprop.set_num_warm_instances(
 <dd>
 
 ```ruby
-client.sysprop.get_num_warm_instances();
+client.sysprop.get_num_warm_instances
 ```
 </dd>
 </dl>
@@ -2085,7 +2085,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```ruby
-client.v_2.problem.get_lightweight_problems();
+client.v_2.problem.get_lightweight_problems
 ```
 </dd>
 </dl>
@@ -2139,7 +2139,7 @@ Returns latest versions of all problems
 <dd>
 
 ```ruby
-client.v_2.problem.get_problems();
+client.v_2.problem.get_problems
 ```
 </dd>
 </dl>
@@ -2193,7 +2193,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_latest_problem(problem_id: 'problemId');
+client.v_2.problem.get_latest_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -2256,9 +2256,9 @@ Returns requested version of a problem
 
 ```ruby
 client.v_2.problem.get_problem_version(
-  problem_id: 'problemId',
+  problem_id: "problemId",
   problem_version: 1
-);
+)
 ```
 </dd>
 </dl>
@@ -2329,7 +2329,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```ruby
-client.v_2.problem.get_lightweight_problems();
+client.v_2.problem.get_lightweight_problems
 ```
 </dd>
 </dl>
@@ -2383,7 +2383,7 @@ Returns latest versions of all problems
 <dd>
 
 ```ruby
-client.v_2.problem.get_problems();
+client.v_2.problem.get_problems
 ```
 </dd>
 </dl>
@@ -2437,7 +2437,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_latest_problem(problem_id: 'problemId');
+client.v_2.problem.get_latest_problem(problem_id: "problemId")
 ```
 </dd>
 </dl>
@@ -2500,9 +2500,9 @@ Returns requested version of a problem
 
 ```ruby
 client.v_2.problem.get_problem_version(
-  problem_id: 'problemId',
+  problem_id: "problemId",
   problem_version: 1
-);
+)
 ```
 </dd>
 </dl>

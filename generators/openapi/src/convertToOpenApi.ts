@@ -4,6 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { convertServices } from "./converters/servicesConverter.js";
 import { convertType } from "./converters/typeConverter.js";
 import { constructEndpointSecurity, constructSecuritySchemes } from "./security.js";
+import { convertAvailabilityStatus } from "./utils/convertAvailability.js";
 import { Mode } from "./writeOpenApi.js";
 
 export function convertToOpenApi({
@@ -21,10 +22,17 @@ export function convertToOpenApi({
     Object.values(ir.types).forEach((typeDeclaration) => {
         // convert type to open api schema
         const convertedType = convertType(typeDeclaration, ir);
-        schemas[convertedType.schemaName] = {
+        const schema: Record<string, unknown> = {
             title: convertedType.schemaName,
             ...convertedType.openApiSchema
         };
+        if (typeDeclaration.availability != null) {
+            const availabilityValue = convertAvailabilityStatus(typeDeclaration.availability.status);
+            if (availabilityValue != null) {
+                schema["x-fern-availability"] = availabilityValue;
+            }
+        }
+        schemas[convertedType.schemaName] = schema as OpenAPIV3.SchemaObject;
         // populates typesByName map
         typesByName[getDeclaredTypeNameKey(typeDeclaration.name)] = typeDeclaration;
     });

@@ -42,7 +42,7 @@ customFixtureConfig:
     deriveClone: true
 
 fixtures:
-  simple:
+  simple-api:
     - customConfig: null
       outputFolder: basic
   types:

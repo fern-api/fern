@@ -28,7 +28,6 @@ public partial class SubmissionClient : ISubmissionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "/sessions/create-session/{0}",
@@ -93,7 +92,6 @@ public partial class SubmissionClient : ISubmissionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/sessions/{0}",
@@ -159,7 +157,6 @@ public partial class SubmissionClient : ISubmissionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/sessions/execution-sessions-state",
                     Headers = _headers,
@@ -263,7 +260,6 @@ public partial class SubmissionClient : ISubmissionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
                         "/sessions/stop/{0}",

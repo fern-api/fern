@@ -237,9 +237,15 @@ public record UserOrAdminDiscriminated
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "user" => json.Deserialize<SeedPropertyAccess.User?>(options)
+                "user" => jsonWithoutDiscriminator.Deserialize<SeedPropertyAccess.User?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.User"),
                 "admin" => json.GetProperty("admin").Deserialize<SeedPropertyAccess.Admin?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedPropertyAccess.Admin"),

@@ -1,4 +1,190 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.40.4
+  changelogEntry:
+    - summary: |
+        Bump Jackson from 2.18.2 to 2.18.6 to fix GHSA-72hv-8253-57qq
+        (Number Length Constraint Bypass in Async Parser leading to potential DoS).
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.40.3
+  changelogEntry:
+    - summary: |
+        Make OAuth authentication section a stable feature block in generated READMEs.
+        Previously, the authentication documentation was injected as an addendum to the
+        Usage block with a `## Authentication` heading, which the BlockMerger parsed as
+        a separate top-level block on subsequent merges. The authentication content is
+        now registered as a proper AUTHENTICATION feature with a stable block ID, making
+        README merges deterministic.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.40.2
+  changelogEntry:
+    - summary: |
+        Patch minimatch to 10.2.3 in container to fix GHSA-7r86-cg39-jmmj (ReDoS via
+        combinatorial backtracking in matchOne()) and GHSA-23c5-xmqv-rm74 (ReDoS via
+        nested *() extglobs).
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.40.1
+  changelogEntry:
+    - summary: |
+        Fix `Rfc2822DateTimeDeserializer` visibility. The class was generated
+        with package-private access, causing compilation errors when types in
+        other packages referenced it via `@JsonDeserialize(using = ...)`.
+        The class is now `public`.
+      type: fix
+    - summary: |
+        Fix URI/path pagination generating `String` instead of `Optional<String>`
+        for the next page token. `UriPage.create` and `PathPage.create` expect
+        `Optional<String>`, but `getNestedPropertySnippet` was unwrapping the
+        optional via `.orElse(null)`. The generator now builds the getter chain
+        directly to preserve the `Optional<String>` type.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.40.0
+  changelogEntry:
+    - summary: |
+        Add `DATE_TIME_RFC_2822` primitive type support. Fields with
+        `format: date-time-rfc-2822` (e.g. Twilio's `dateCreated`, `dateSent`,
+        `dateUpdated`) now generate as `OffsetDateTime` with a per-field
+        `@JsonDeserialize(using = Rfc2822DateTimeDeserializer.class)` annotation
+        that parses RFC 2822 dates via `DateTimeFormatter.RFC_1123_DATE_TIME`.
+      type: feat
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.39.1
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 65
+
+- version: 3.39.0
+  changelogEntry:
+    - summary: |
+        Add support for logging to the generated SDK.
+        Users can configure logging by passing a `LogConfig` to the client builder's `.logging()` method.
+
+        ```java
+        import com.example.api.AcmeApiClient;
+        import com.example.api.core.LogConfig;
+        import com.example.api.core.LogLevel;
+        import com.example.api.core.ConsoleLogger;
+
+        AcmeApiClient client = AcmeApiClient.builder()
+            .token("YOUR_TOKEN")
+            .logging(LogConfig.builder()
+                .level(LogLevel.DEBUG)        // INFO is the default
+                .logger(new ConsoleLogger())  // ConsoleLogger is the default
+                .silent(false)                // true is the default, set to false to enable logging
+                .build())
+            .build();
+        ```
+
+        The `LogConfig` builder accepts the following properties:
+        - `level(LogLevel)`: The log level to use. Defaults to `LogLevel.INFO`.
+        - `logger(ILogger)`: The logger implementation to use. Defaults to `ConsoleLogger`.
+        - `silent(boolean)`: Whether to silence the logger. Defaults to `true`.
+
+        The `LogLevel` enum supports the following values:
+        - `DEBUG`
+        - `INFO`
+        - `WARN`
+        - `ERROR`
+
+        To provide a custom logger, implement the `ILogger` interface
+        with `debug`, `info`, `warn`, and `error` methods.
+
+        HTTP request and response details (method, URL, status code, headers, body) are
+        logged via a `LoggingInterceptor` added to the OkHttp client. Sensitive headers
+        (`authorization`, `x-api-key`, `cookie`, `x-csrf-token`, etc.) are automatically
+        redacted in logs.
+      type: feat
+  createdAt: "2026-02-25"
+  irVersion: 65
+
+- version: 3.38.1
+  changelogEntry:
+    - summary: |
+        Preserve existing README.md when the generator does not produce one. Previously,
+        `overwriteLocalContents` deleted all files before copying generator output, so if
+        README generation failed silently the file was removed from the target repository.
+        The method now skips deleting README.md when the source directory does not include it.
+      type: fix
+  createdAt: "2026-02-23"
+  irVersion: 65
+
+- version: 3.38.0
+  changelogEntry:
+    - summary: |
+        Add support for URI and path-based pagination. Endpoints using `uri` or `path`
+        pagination now generate correct paging iterables that follow next page links
+        from the response body.
+      type: feat
+  createdAt: "2026-02-12"
+  irVersion: 65
+
+- version: 3.37.1
+  changelogEntry:
+    - summary: |
+        Update container packages to fix 8 security vulnerabilities: gnupg2-minimal (CVE-2026-24882),
+        curl-minimal and libcurl-minimal (CVE-2025-13034, CVE-2025-14017, CVE-2025-14524, CVE-2025-14819,
+        CVE-2025-15079, CVE-2025-15224), alsa-lib (CVE-2026-25068), expat (CVE-2026-25210),
+        openssh and openssh-clients (CVE-2025-61984, CVE-2025-61985), and npm tar (GHSA-83g3-92jg-28cx).
+      type: fix
+  createdAt: "2026-02-20"
+  irVersion: 63
+
+- version: 3.37.0
+  changelogEntry:
+    - summary: |
+        Add `additionalProperty(String key, Object value)` and `additionalProperties(Map<String, Object>)`
+        methods to generated builders, allowing users to set arbitrary extra fields programmatically.
+        Previously, additional properties were only populated during JSON deserialization.
+      type: feat
+  createdAt: "2026-02-18"
+  irVersion: 63
+
+- version: 3.36.3
+  changelogEntry:
+    - summary: Use correct Long literals (3600L) instead of int literals (3600) for `Optional<Long>` expires_in fields in OAuth token suppliers
+      type: fix
+  createdAt: "2026-02-17"
+  irVersion: 63
+
+- version: 3.36.2
+  changelogEntry:
+    - summary: |
+        Disable OkHttp callTimeout for streaming (SSE) endpoints. The default 60-second
+        callTimeout was terminating SSE connections after ~1 minute instead of allowing
+        them to stream indefinitely. Streaming endpoints now set callTimeout to 0 (disabled)
+        so the iterator blocks on each next() call waiting for new events until the connection
+        is closed or an error occurs.
+      type: fix
+  createdAt: "2026-02-17"
+  irVersion: 63
+
+- version: 3.36.1
+  changelogEntry:
+    - summary: |
+        Handle Optional access tokens and Long type compatibility in OAuth token supplier.
+        The generator now unwraps `Optional<String>` access tokens with `orElseThrow` and
+        uses `Long` literals for the default `expires_in` fallback value.
+      type: fix
+  createdAt: "2026-02-13"
+  irVersion: 63
+
 - version: 3.36.0
   changelogEntry:
     - summary: |

@@ -15,7 +15,7 @@
 ```php
 $client->completions->stream(
     new StreamCompletionRequest([
-        'query' => 'query',
+        'query' => 'foo',
     ]),
 );
 ```
@@ -87,3 +87,4 @@ $client->completions->streamWithoutTerminator(
 </dd>
 </dl>
 </details>
+

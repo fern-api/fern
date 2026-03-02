@@ -6,8 +6,22 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import StreamedCompletion
-_dynamic_imports: typing.Dict[str, str] = {"StreamedCompletion": ".types"}
+    from .types import (
+        CompletionEvent,
+        ErrorEvent,
+        StreamEvent,
+        StreamEvent_Completion,
+        StreamEvent_Error,
+        StreamedCompletion,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "CompletionEvent": ".types",
+    "ErrorEvent": ".types",
+    "StreamEvent": ".types",
+    "StreamEvent_Completion": ".types",
+    "StreamEvent_Error": ".types",
+    "StreamedCompletion": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +45,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["StreamedCompletion"]
+__all__ = [
+    "CompletionEvent",
+    "ErrorEvent",
+    "StreamEvent",
+    "StreamEvent_Completion",
+    "StreamEvent_Error",
+    "StreamedCompletion",
+]
