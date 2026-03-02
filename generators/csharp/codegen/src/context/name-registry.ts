@@ -14,7 +14,7 @@
  *
  */
 
-import { fail } from "node:assert";
+import { fail } from "../utils/fail.js";
 import { type Field as AstField, ClassReference } from "../ast/index.js";
 import { Generation } from "../context/generation-info.js";
 import { Origin } from "../context/model-navigator.js";

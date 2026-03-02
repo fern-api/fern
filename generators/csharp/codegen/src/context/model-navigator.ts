@@ -1,4 +1,4 @@
-import { fail } from "node:assert";
+import { fail } from "../utils/fail.js";
 import { FernIr as DynamicFernIr } from "@fern-api/dynamic-ir-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 

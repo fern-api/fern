@@ -1,4 +1,4 @@
-import { fail } from "assert";
+import { fail } from "../../utils/fail.js";
 import { type Generation } from "../../context/generation-info.js";
 import { type Provenance } from "../../context/model-navigator.js";
 import { is } from "../../utils/type-guards.js";

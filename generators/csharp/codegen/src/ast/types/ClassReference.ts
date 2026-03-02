@@ -1,4 +1,4 @@
-import { fail } from "node:assert";
+import { fail } from "../../utils/fail.js";
 import { type Generation } from "../../context/generation-info.js";
 import { type Origin } from "../../context/model-navigator.js";
 import { type TypeScope } from "../../context/name-registry.js";

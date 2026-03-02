@@ -1,4 +1,4 @@
-import { fail } from "node:assert";
+import { fail } from "../../utils/fail.js";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { type Generation } from "../../context/generation-info.js";

@@ -1,4 +1,4 @@
-import { fail } from "node:assert";
+import { fail } from "./fail.js";
 import { Literal } from "../ast/code/Literal.js";
 import { AstNode } from "../ast/core/AstNode.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
