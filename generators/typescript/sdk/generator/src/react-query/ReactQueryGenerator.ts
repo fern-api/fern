@@ -76,11 +76,30 @@ export class ReactQueryGenerator {
         const reactQueryDir = `${this.relativePackagePath}/react-query`;
         const exportPaths: string[] = [];
 
+        // Build a set of service paths that also have children (for conflict detection)
+        const servicePathKeys = new Set(serviceGroups.map((g) => g.servicePath.map((p) => p.unsafeName).join("/")));
+        const hasChildServices = (group: ServiceGroup): boolean => {
+            const key = group.servicePath.map((p) => p.unsafeName).join("/");
+            for (const otherKey of servicePathKeys) {
+                if (otherKey !== key && otherKey.startsWith(key + "/")) {
+                    return true;
+                }
+            }
+            // Root service with any other services counts as having children
+            if (key === "" && servicePathKeys.size > 1) {
+                return true;
+            }
+            return false;
+        };
+
         // Generate per-service files
         for (const group of serviceGroups) {
             const serviceFileContent = this.generateServiceFile(group);
             const serviceDirPath = this.getServiceDirPath(group.servicePath);
-            const filepath = `${reactQueryDir}/${serviceDirPath}/index.ts`;
+            // If this service also has child sub-services, use _service.ts to avoid
+            // overwriting with the barrel index.ts
+            const fileName = hasChildServices(group) ? "_service.ts" : "index.ts";
+            const filepath = `${reactQueryDir}/${serviceDirPath}/${fileName}`;
 
             this.rootDirectory.createSourceFile(`/${filepath}`, serviceFileContent, { overwrite: true });
             exportPaths.push(`react-query/${serviceDirPath}`);
@@ -153,9 +172,11 @@ export class ReactQueryGenerator {
     private generateServiceFile(group: ServiceGroup): string {
         const servicePath = group.servicePath;
         // Calculate relative import path to Client from this service file's location
-        // Service file is at react-query/{servicePath}/index.ts
+        // Service file is at react-query/{serviceDirPath}/index.ts
         // Client is at src/Client.ts (same level as react-query/)
-        const depth = servicePath.length + 1; // +1 for the react-query directory itself
+        // Use getServiceDirPath to account for the "root" directory added for root-level services
+        const serviceDirPath = this.getServiceDirPath(servicePath);
+        const depth = serviceDirPath.split("/").length + 1; // +1 for the react-query directory itself
         const clientImportPath = "../".repeat(depth) + "Client";
 
         const lines: string[] = [];
@@ -353,22 +374,11 @@ export class ReactQueryGenerator {
 
                 const barrelPath = currentPath.length === 0 ? "index.ts" : `${currentPath.join("/")}/index.ts`;
 
-                // If this node is also a service AND has children, the barrel needs to
-                // re-export its own service content + child namespaces.
-                // We put the service content in a separate _self.ts file and re-export.
                 if (node.isService && currentPath.length > 0) {
-                    // This directory is both a service and has sub-services
-                    // Not common but handle it: put self exports first, then child namespaces
-                    const selfLines = [...lines];
-                    // The service endpoints are in index.ts of this directory
-                    // But we need index.ts for the barrel. Move endpoints to _service.ts
-                    // Actually, for simplicity, just put everything in index.ts:
-                    // export the service functions directly + namespace re-exports
-                    // This is fine since endpoint function names won't collide with namespace names
-                    // We'll handle this by making the service file NOT index.ts but a separate file
-                    // No - let's keep it simple. The barrel IS the service file with added re-exports.
-                    // We don't need separate files here.
-                    barrelFiles.push({ path: barrelPath, content: selfLines.join("\n") });
+                    // This service has both its own endpoints and child sub-services.
+                    // The endpoints are in _service.ts, so re-export them alongside child namespaces.
+                    lines.splice(lines.length - 1, 0, `export * from "./_service.js";`);
+                    barrelFiles.push({ path: barrelPath, content: lines.join("\n") });
                 } else {
                     barrelFiles.push({ path: barrelPath, content: lines.join("\n") });
                 }
