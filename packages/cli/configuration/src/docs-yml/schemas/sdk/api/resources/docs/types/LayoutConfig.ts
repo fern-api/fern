@@ -63,7 +63,7 @@ export interface LayoutConfig {
     /**
      * Set the horizontal alignment of the tabs.
      *
-     * @default: `default`
+     * @default: `left`
      *
      * When set to `center`, the header tabs will be horizontally centered.
      */
