@@ -201,6 +201,48 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
                 if (this.context.isReferenceObject(allOfSchema)) {
                     return undefined;
                 }
+
+                // Handle bare oneOf/anyOf elements used for mutual exclusion patterns
+                // (e.g., oneOf with variants containing `not: {}` properties).
+                // Flatten variant properties into the merged schema as optional properties.
+                const variants =
+                    (allOfSchema as OpenAPIV3_1.SchemaObject).oneOf ?? (allOfSchema as OpenAPIV3_1.SchemaObject).anyOf;
+                if (variants != null && allOfSchema.type == null && allOfSchema.properties == null) {
+                    const flattenedProperties: Record<string, unknown> = {};
+                    for (const variantSchemaOrRef of variants) {
+                        const variantSchema = this.context.isReferenceObject(variantSchemaOrRef)
+                            ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                                  schemaOrReference: variantSchemaOrRef,
+                                  breadcrumbs: this.breadcrumbs
+                              })
+                            : variantSchemaOrRef;
+                        if (variantSchema == null) {
+                            continue;
+                        }
+                        for (const [key, propertySchema] of Object.entries(variantSchema.properties ?? {})) {
+                            // Filter out properties with `not: {}` schema (meaning "property must not exist")
+                            if (
+                                !this.context.isReferenceObject(
+                                    propertySchema as OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+                                ) &&
+                                "not" in (propertySchema as OpenAPIV3_1.SchemaObject)
+                            ) {
+                                continue;
+                            }
+                            if (!(key in flattenedProperties)) {
+                                flattenedProperties[key] = propertySchema;
+                            }
+                        }
+                    }
+                    if (Object.keys(flattenedProperties).length > 0) {
+                        // Add flattened properties as optional on the merged schema
+                        const existingProperties = (mergedSchema.properties as Record<string, unknown>) ?? {};
+                        mergedSchema.properties = { ...existingProperties, ...flattenedProperties };
+                        // Do not add to required — variant properties are optional on the parent
+                    }
+                    continue;
+                }
+
                 mergedSchema = mergeWith(mergedSchema, allOfSchema, (objValue, srcValue) => {
                     if (srcValue === allOfSchema) {
                         return objValue;
