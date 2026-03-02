@@ -27,7 +27,6 @@ public partial class RetriesClient : IRetriesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users",
                     Headers = _headers,

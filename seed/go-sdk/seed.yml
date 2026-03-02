@@ -328,3 +328,7 @@ allowedFailures:
   - file-upload-openapi
 
   - pagination-custom:.
+
+  # TODO: Go generator doesn't support DATE_TIME_RFC_2822 primitive yet.
+  - exhaustive:no-custom-config
+  - exhaustive:omit-empty-request-wrappers

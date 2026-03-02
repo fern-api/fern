@@ -79,3 +79,4 @@ await client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents 
 </dd>
 </dl>
 </details>
+

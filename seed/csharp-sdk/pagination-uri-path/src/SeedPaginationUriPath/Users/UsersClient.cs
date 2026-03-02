@@ -29,7 +29,6 @@ public partial class UsersClient : IUsersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/uri",
                     Headers = _headers,
@@ -94,7 +93,6 @@ public partial class UsersClient : IUsersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/path",
                     Headers = _headers,

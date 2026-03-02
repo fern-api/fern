@@ -1,11 +1,10 @@
+import { logViolations } from "@fern-api/api-workspace-validator";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { validateDocsWorkspace } from "@fern-api/docs-validator";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
-
-import { logViolations } from "./logViolations.js";
 
 export interface CollectedDocsViolations {
     violations: ValidationViolation[];

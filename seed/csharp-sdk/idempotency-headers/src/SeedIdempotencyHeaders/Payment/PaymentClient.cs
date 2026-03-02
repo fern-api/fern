@@ -29,7 +29,6 @@ public partial class PaymentClient : IPaymentClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/payment",
                     Body = request,
@@ -109,7 +108,6 @@ public partial class PaymentClient : IPaymentClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
                         "/payment/{0}",

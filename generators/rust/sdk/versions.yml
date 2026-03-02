@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.17.3
+- version: 0.17.4
   changelogEntry:
     - summary: |
         Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
@@ -10,7 +10,16 @@
         assigned port and sets `WIREMOCK_URL` automatically. Falls back to
         `http://localhost:8080` if the variable is not set.
       type: chore
-  createdAt: "2026-02-25"
+  createdAt: "2026-03-02"
+  irVersion: 62
+
+- version: 0.17.3
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
   irVersion: 62
 - version: 0.17.2
   changelogEntry:

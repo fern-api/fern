@@ -317,12 +317,6 @@ async function downloadFilesWithFernIgnoreInExistingRepo({
     const absolutePathToFernignore = join(absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME));
     const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
 
-    const gitConfigResponse = await runGitCommand(["config", "--list"], absolutePathToLocalOutput, context);
-    if (!gitConfigResponse.includes("user.name")) {
-        await runGitCommand(["config", "user.name", "fern-api"], absolutePathToLocalOutput, context);
-        await runGitCommand(["config", "user.email", "info@buildwithfern.com"], absolutePathToLocalOutput, context);
-    }
-
     await runGitCommand(["rm", "-rf", "."], absolutePathToLocalOutput, context);
 
     await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl, outputPath: absolutePathToLocalOutput });
@@ -349,15 +343,29 @@ async function downloadFilesWithFernIgnoreInTempRepo({
 
     await cp(absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
 
+    // Initialize a throwaway git repo in the temp directory. This is only used to
+    // leverage git's file-tracking for resolving .fernignore paths. We inline the
+    // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
+    // Touch ID on macOS) and unnecessary overhead.
     await runGitCommand(["init"], tmpOutputResolutionDir, context);
     await runGitCommand(["add", "."], tmpOutputResolutionDir, context);
-
-    const gitConfigResponse = await runGitCommand(["config", "--list"], tmpOutputResolutionDir, context);
-    if (!gitConfigResponse.includes("user.name")) {
-        await runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir, context);
-        await runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir, context);
-    }
-    await runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir, context);
+    await runGitCommand(
+        [
+            "-c",
+            "user.name=fern",
+            "-c",
+            "user.email=hey@buildwithfern.com",
+            "-c",
+            "commit.gpgsign=false",
+            "commit",
+            "--allow-empty",
+            "--no-verify",
+            "-m",
+            "init"
+        ],
+        tmpOutputResolutionDir,
+        context
+    );
 
     await runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir, context);
 

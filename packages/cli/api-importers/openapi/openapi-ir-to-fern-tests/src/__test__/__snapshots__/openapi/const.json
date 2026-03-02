@@ -38,7 +38,7 @@
                   "properties": {
                     "breed": "optional<string>",
                     "name": "string",
-                    "type": "CreatePetRequestType",
+                    "type": "literal<"pet">",
                   },
                 },
                 "content-type": "application/json",
@@ -62,15 +62,6 @@
           },
         },
         "types": {
-          "CreatePetRequestType": {
-            "enum": [
-              "pet",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
           "Pet": {
             "docs": undefined,
             "inline": undefined,
@@ -78,62 +69,16 @@
               "breed": "optional<string>",
               "id": "integer",
               "name": "string",
-              "status": "PetStatus",
-              "type": "PetType",
+              "status": "literal<"active">",
+              "type": "literal<"pet">",
             },
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PetStatus": {
-            "enum": [
-              "active",
-            ],
-            "inline": true,
-            "source": {
-              "openapi": "../openapi.yml",
-            },
-          },
-          "PetType": {
-            "enum": [
-              "pet",
-            ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
           },
         },
       },
-      "rawContents": "types:
-  CreatePetRequestType:
-    enum:
-      - pet
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  PetType:
-    enum:
-      - pet
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  PetStatus:
-    enum:
-      - active
-    inline: true
-    source:
-      openapi: ../openapi.yml
-  Pet:
-    properties:
-      id: integer
-      type: PetType
-      name: string
-      breed: optional<string>
-      status: PetStatus
-    source:
-      openapi: ../openapi.yml
-service:
+      "rawContents": "service:
   auth: false
   base-path: ''
   endpoints:
@@ -147,7 +92,7 @@ service:
         name: CreatePetRequest
         body:
           properties:
-            type: CreatePetRequestType
+            type: literal<"pet">
             name: string
             breed: optional<string>
         content-type: application/json
@@ -168,6 +113,16 @@ service:
               status: active
   source:
     openapi: ../openapi.yml
+types:
+  Pet:
+    properties:
+      id: integer
+      type: literal<"pet">
+      name: string
+      breed: optional<string>
+      status: literal<"active">
+    source:
+      openapi: ../openapi.yml
 ",
     },
   },

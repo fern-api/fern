@@ -45,7 +45,6 @@ public partial class SeedApiClient : ISeedApiClient
             .SendRequestAsync(
                 new FormRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "submit",
                     Body = request,

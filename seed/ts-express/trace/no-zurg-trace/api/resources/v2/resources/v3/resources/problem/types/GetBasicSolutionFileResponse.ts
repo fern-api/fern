@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../../../../../index";
 
 export interface GetBasicSolutionFileResponse {
-    solutionFileByLanguage: Record<SeedTrace.Language, SeedTrace.v2.v3.FileInfoV2 | undefined>;
+    solutionFileByLanguage: Partial<Record<SeedTrace.Language, SeedTrace.v2.v3.FileInfoV2>>;
 }

@@ -8,7 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .api_error import ApiError
     from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
-    from .datetime_utils import serialize_datetime
+    from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
     from .events import EventEmitterMixin, EventType
     from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
     from .http_client import AsyncHttpClient, HttpClient
@@ -49,6 +49,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LogLevel": ".logging",
     "Logger": ".logging",
     "RequestOptions": ".request_options",
+    "Rfc2822DateTime": ".datetime_utils",
     "SyncClientWrapper": ".client_wrapper",
     "UniversalBaseModel": ".pydantic_utilities",
     "UniversalRootModel": ".pydantic_utilities",
@@ -59,6 +60,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "get_status_code": ".websocket_compat",
     "jsonable_encoder": ".jsonable_encoder",
     "parse_obj_as": ".pydantic_utilities",
+    "parse_rfc2822_datetime": ".datetime_utils",
     "remove_none_from_dict": ".remove_none_from_dict",
     "serialize_datetime": ".datetime_utils",
     "universal_field_validator": ".pydantic_utilities",
@@ -109,6 +111,7 @@ __all__ = [
     "LogLevel",
     "Logger",
     "RequestOptions",
+    "Rfc2822DateTime",
     "SyncClientWrapper",
     "UniversalBaseModel",
     "UniversalRootModel",
@@ -119,6 +122,7 @@ __all__ = [
     "get_status_code",
     "jsonable_encoder",
     "parse_obj_as",
+    "parse_rfc2822_datetime",
     "remove_none_from_dict",
     "serialize_datetime",
     "universal_field_validator",

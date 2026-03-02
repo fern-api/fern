@@ -31,7 +31,6 @@ public partial class ApiClient : IApiClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/nested-no-auth/get-something",
                     Headers = _headers,

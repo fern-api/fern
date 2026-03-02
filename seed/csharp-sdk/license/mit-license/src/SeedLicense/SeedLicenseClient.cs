@@ -46,7 +46,6 @@ public partial class SeedLicenseClient : ISeedLicenseClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/",
                     Headers = _headers,

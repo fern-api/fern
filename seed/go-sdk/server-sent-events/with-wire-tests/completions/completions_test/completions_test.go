@@ -73,7 +73,7 @@ func TestCompletionsStreamWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 	)
 	request := &sse.StreamCompletionRequest{
-		Query: "query",
+		Query: "foo",
 	}
 	_, invocationErr := client.Completions.Stream(
 		context.TODO(),

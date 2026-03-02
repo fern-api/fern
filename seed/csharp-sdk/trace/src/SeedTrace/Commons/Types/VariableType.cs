@@ -514,6 +514,12 @@ public record VariableType
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "integerType" => new { },
@@ -521,9 +527,9 @@ public record VariableType
                 "booleanType" => new { },
                 "stringType" => new { },
                 "charType" => new { },
-                "listType" => json.Deserialize<SeedTrace.ListType?>(options)
+                "listType" => jsonWithoutDiscriminator.Deserialize<SeedTrace.ListType?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ListType"),
-                "mapType" => json.Deserialize<SeedTrace.MapType?>(options)
+                "mapType" => jsonWithoutDiscriminator.Deserialize<SeedTrace.MapType?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.MapType"),
                 "binaryTreeType" => new { },
                 "singlyLinkedListType" => new { },

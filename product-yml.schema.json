@@ -951,6 +951,26 @@
             }
           ]
         },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {

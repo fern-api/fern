@@ -25,7 +25,6 @@ public partial class MultipartFormClient : IMultipartFormClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new SeedEnum.Core.MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "multipart",
             Headers = _headers,

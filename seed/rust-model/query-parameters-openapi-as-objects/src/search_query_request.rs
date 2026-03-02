@@ -34,6 +34,11 @@ pub struct SearchQueryRequest {
     #[serde(rename = "excludeUser")]
     pub exclude_user: Vec<Option<User>>,
     pub filter: Vec<Option<String>>,
+    /// List of tags. Serialized as a comma-separated list.
+    pub tags: Vec<Option<String>>,
+    /// Optional list of tags. Serialized as a comma-separated list.
+    #[serde(rename = "optionalTags")]
+    pub optional_tags: Vec<Option<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub neighbor: Option<SearchRequestNeighbor>,
     #[serde(rename = "neighborRequired")]
