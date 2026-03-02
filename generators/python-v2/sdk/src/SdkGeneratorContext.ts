@@ -4,6 +4,7 @@ import { AbstractPythonGeneratorContext, PythonProject } from "@fern-api/python-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PythonGeneratorAgent } from "./PythonGeneratorAgent.js";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCustomConfigSchema> {
@@ -21,6 +22,7 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
         this.generatorAgent = new PythonGeneratorAgent({
             logger: this.logger,
             config: this.config,
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
             ir: this.ir
         });
     }
