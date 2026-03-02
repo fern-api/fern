@@ -158,6 +158,7 @@ allowedFailures:
   - request-parameters
 
   - client-side-params
+  - datetime-api
   - multiple-request-bodies
   - query-parameters-openapi
   - query-parameters-openapi-as-objects

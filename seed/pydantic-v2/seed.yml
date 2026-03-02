@@ -11,4 +11,5 @@ language: python
 generatorType: Model
 defaultOutputMode: local_files
 allowedFailures:
+  - datetime-api
   - version

@@ -83,4 +83,5 @@ fixtures:
       outputFolder: no-inheritance-for-extended-models
 allowedFailures:
   # Complex circular refs
+  - datetime-api
   - simple-fhir

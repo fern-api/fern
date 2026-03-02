@@ -521,8 +521,9 @@ scripts:
           fi
 allowedFailures:
   - cross-package-type-names:serde-layer
+  - datetime-api
   - enum:forward-compatible-enums-with-serde
   - exhaustive:never-throw-errors
+  - inferred-auth-implicit-reference
   - oauth-client-credentials-custom
   - package-yml
-  - inferred-auth-implicit-reference

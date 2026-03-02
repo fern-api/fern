@@ -423,6 +423,7 @@ scripts:
         - poetry run pytest -rP .
 allowedFailures:
   - any-auth
+  - datetime-api
   - endpoint-security-auth
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports

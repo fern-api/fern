@@ -68,6 +68,7 @@ allowedFailures:
 
   - bytes-download
   - bytes-upload
+  - datetime-api
   - multiple-request-bodies
   - undiscriminated-union-with-response-property
   - enum

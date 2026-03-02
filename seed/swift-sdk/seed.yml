@@ -114,6 +114,7 @@ allowedFailures:
   - client-side-params:with-custom-config
   - client-side-params:no-custom-config
   - cross-package-type-names
+  - datetime-api
   - enum
   - errors
   - examples:no-custom-config

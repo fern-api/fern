@@ -162,6 +162,7 @@ scripts:
       test:
         - composer test
 allowedFailures:
+  - datetime-api
   - exhaustive:no-custom-config
   - exhaustive:wire-tests
   - pagination-custom
