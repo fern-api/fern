@@ -65,7 +65,6 @@ public partial class SeedExamplesClient : ISeedExamplesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
@@ -128,7 +127,6 @@ public partial class SeedExamplesClient : ISeedExamplesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,

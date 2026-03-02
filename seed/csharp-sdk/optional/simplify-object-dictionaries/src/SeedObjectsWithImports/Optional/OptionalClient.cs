@@ -28,7 +28,6 @@ public partial class OptionalClient : IOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "send-optional-body",
                     Body = request,
@@ -91,7 +90,6 @@ public partial class OptionalClient : IOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "send-optional-typed-body",
                     Body = request,
@@ -158,7 +156,6 @@ public partial class OptionalClient : IOptionalClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "deploy/{0}/versions/{1}",

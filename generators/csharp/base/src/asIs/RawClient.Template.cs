@@ -260,9 +260,15 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
+<% if (hasBaseUrl) { %>
+    private string BuildUrl(global::<%= namespace%>.BaseRequest request)
+    {
+        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl ?? Options.BaseUrl;
+<% } else { %>
     private static string BuildUrl(global::<%= namespace%>.BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
+<% } %>
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";

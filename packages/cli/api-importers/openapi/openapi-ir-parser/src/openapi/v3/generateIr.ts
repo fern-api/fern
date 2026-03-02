@@ -93,14 +93,20 @@ export function generateIr({
     );
     const security: GlobalSecurity | undefined = openApi.security?.filter((requirement) => requirement != null);
     const authHeaders = new Set(
-        ...Object.entries(securitySchemes).map(([_, securityScheme]) => {
-            if (securityScheme.type === "basic" || securityScheme.type === "bearer") {
-                return "Authorization";
-            } else if (securityScheme.type === "header") {
-                return securityScheme.headerName;
-            }
-            return null;
-        })
+        Object.entries(securitySchemes)
+            .map(([_, securityScheme]) => {
+                if (
+                    securityScheme.type === "basic" ||
+                    securityScheme.type === "bearer" ||
+                    securityScheme.type === "oauth"
+                ) {
+                    return "Authorization";
+                } else if (securityScheme.type === "header") {
+                    return securityScheme.headerName;
+                }
+                return null;
+            })
+            .filter((header): header is string => header != null)
     );
     const variables = getVariableDefinitions(openApi, options.preserveSchemaIds);
     const globalHeaders = getGlobalHeaders(openApi);

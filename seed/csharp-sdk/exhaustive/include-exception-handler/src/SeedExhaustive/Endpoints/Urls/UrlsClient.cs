@@ -39,7 +39,6 @@ public partial class UrlsClient : IUrlsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/urls/MixedCase",
                             Headers = _headers,
@@ -107,7 +106,6 @@ public partial class UrlsClient : IUrlsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/urls/no-ending-slash",
                             Headers = _headers,
@@ -175,7 +173,6 @@ public partial class UrlsClient : IUrlsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/urls/with-ending-slash/",
                             Headers = _headers,
@@ -243,7 +240,6 @@ public partial class UrlsClient : IUrlsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/urls/with_underscores",
                             Headers = _headers,

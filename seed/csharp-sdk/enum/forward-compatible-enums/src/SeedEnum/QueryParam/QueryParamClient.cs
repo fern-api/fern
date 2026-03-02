@@ -39,7 +39,6 @@ public partial class QueryParamClient : IQueryParamClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "query",
                     QueryString = _queryString,
@@ -97,7 +96,6 @@ public partial class QueryParamClient : IQueryParamClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "query-list",
                     QueryString = _queryString,

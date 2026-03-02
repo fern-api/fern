@@ -5,11 +5,6 @@
  *     {
  *         page: 1
  *     }
- *
- * @example
- *     {
- *         page: 1
- *     }
  */
 export interface ListUsersOptionalDataRequest {
     /** Defaults to first page */

@@ -1176,6 +1176,52 @@ $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithUnknownField($request) -> ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithUnknownField(
+    new ObjectWithUnknownField([
+        'unknown' => [
+            '$ref' => "https://example.com/schema",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDatetimeLikeString($request) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

@@ -33,7 +33,6 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/req-bodies/object",
                     Body = request,

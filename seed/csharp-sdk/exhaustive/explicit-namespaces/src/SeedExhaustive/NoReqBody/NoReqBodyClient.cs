@@ -29,7 +29,6 @@ public partial class NoReqBodyClient : INoReqBodyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/no-req-body",
                     Headers = _headers,
@@ -90,7 +89,6 @@ public partial class NoReqBodyClient : INoReqBodyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/no-req-body",
                     Headers = _headers,

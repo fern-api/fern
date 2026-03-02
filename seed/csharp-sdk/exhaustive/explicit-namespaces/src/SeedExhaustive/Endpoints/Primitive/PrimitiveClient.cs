@@ -29,7 +29,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/string",
                     Body = request,
@@ -92,7 +91,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/integer",
                     Body = request,
@@ -155,7 +153,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/long",
                     Body = request,
@@ -218,7 +215,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/double",
                     Body = request,
@@ -281,7 +277,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/boolean",
                     Body = request,
@@ -344,7 +339,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/datetime",
                     Body = request,
@@ -407,7 +401,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/date",
                     Body = request,
@@ -470,7 +463,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/uuid",
                     Body = request,
@@ -533,7 +525,6 @@ public partial class PrimitiveClient : IPrimitiveClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/primitive/base64",
                     Body = request,

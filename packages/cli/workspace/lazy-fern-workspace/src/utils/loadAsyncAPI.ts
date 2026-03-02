@@ -13,16 +13,31 @@ export async function loadAsyncAPI({
 }: {
     context: TaskContext;
     absoluteFilePath: AbsoluteFilePath;
-    absoluteFilePathToOverrides: AbsoluteFilePath | undefined;
+    absoluteFilePathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
 }): Promise<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3> {
     const contents = (await readFile(absoluteFilePath)).toString();
     const parsed = (await yaml.load(contents)) as AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3;
+
+    // Normalize overrides to an array for consistent processing
+    let overridesFilepaths: AbsoluteFilePath[] = [];
     if (absoluteFilePathToOverrides != null) {
-        return await mergeWithOverrides<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3>({
-            absoluteFilePathToOverrides,
+        if (Array.isArray(absoluteFilePathToOverrides)) {
+            overridesFilepaths = absoluteFilePathToOverrides;
+        } else {
+            overridesFilepaths = [absoluteFilePathToOverrides];
+        }
+    }
+
+    let result = parsed;
+
+    // Apply each override file sequentially in order
+    for (const overridesFilepath of overridesFilepaths) {
+        result = await mergeWithOverrides<AsyncAPIV2.DocumentV2 | AsyncAPIV3.DocumentV3>({
+            absoluteFilePathToOverrides: overridesFilepath,
             context,
-            data: parsed
+            data: result
         });
     }
-    return parsed;
+
+    return result;
 }

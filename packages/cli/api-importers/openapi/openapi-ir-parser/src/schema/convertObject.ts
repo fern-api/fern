@@ -178,9 +178,60 @@ export function convertObject({
                 }
                 return property;
             });
-            const allOfSchema = convertSchema(allOfElement, false, false, context, breadcrumbs, source, namespace);
-            if (allOfSchema.type === "object") {
-                inlinedParentProperties.push(...allOfSchema.properties);
+
+            // When an inline allOf element is a oneOf/anyOf (no type, no properties of its own),
+            // extract properties from each variant and make them optional.
+            // This handles patterns like allOf + oneOf used for mutual exclusion (e.g. content vs templateId).
+            const variants = allOfElement.oneOf ?? allOfElement.anyOf;
+            if (variants != null && allOfElement.type == null && allOfElement.properties == null) {
+                const seenKeys = new Set(inlinedParentProperties.map((p) => p.key));
+                for (const variantSchema of variants) {
+                    const resolvedVariantSchema = isReferenceObject(variantSchema)
+                        ? context.resolveSchemaReference(variantSchema)
+                        : variantSchema;
+                    // Filter out properties with `not: {}` schema (meaning "property must not exist")
+                    const filteredSchema = filterNotProperties(resolvedVariantSchema);
+                    const convertedVariantSchema = convertSchema(
+                        filteredSchema,
+                        false,
+                        false,
+                        context,
+                        breadcrumbs,
+                        source,
+                        namespace
+                    );
+                    if (convertedVariantSchema.type === "object") {
+                        for (const property of convertedVariantSchema.properties) {
+                            if (seenKeys.has(property.key)) {
+                                continue;
+                            }
+                            seenKeys.add(property.key);
+                            if (property.schema.type !== "optional" && property.schema.type !== "nullable") {
+                                inlinedParentProperties.push({
+                                    ...property,
+                                    schema: SchemaWithExample.optional({
+                                        nameOverride: undefined,
+                                        generatedName: "",
+                                        title: undefined,
+                                        value: property.schema,
+                                        description: undefined,
+                                        availability: property.availability,
+                                        namespace: undefined,
+                                        groupName: undefined,
+                                        inline: undefined
+                                    })
+                                });
+                            } else {
+                                inlinedParentProperties.push(property);
+                            }
+                        }
+                    }
+                }
+            } else {
+                const allOfSchema = convertSchema(allOfElement, false, false, context, breadcrumbs, source, namespace);
+                if (allOfSchema.type === "object") {
+                    inlinedParentProperties.push(...allOfSchema.properties);
+                }
             }
         }
     }
@@ -421,6 +472,26 @@ function getNonIgnoredProperties({
             return !shouldIgnore;
         })
     );
+}
+
+/**
+ * Filters out properties with `not: {}` schema from an OpenAPI schema object.
+ * In OpenAPI/JSON Schema, `not: {}` means "does not match any schema", effectively
+ * meaning the property must not be present. This pattern is commonly used in oneOf
+ * variants for mutual exclusion (e.g., content vs templateId).
+ */
+function filterNotProperties(schema: OpenAPIV3.SchemaObject): OpenAPIV3.SchemaObject {
+    if (schema.properties == null) {
+        return schema;
+    }
+    const filteredProperties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject> = {};
+    for (const [key, propertySchema] of Object.entries(schema.properties)) {
+        if (!isReferenceObject(propertySchema) && "not" in propertySchema) {
+            continue;
+        }
+        filteredProperties[key] = propertySchema;
+    }
+    return { ...schema, properties: filteredProperties };
 }
 
 function getAllProperties({

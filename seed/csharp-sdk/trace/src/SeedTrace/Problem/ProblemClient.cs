@@ -28,7 +28,6 @@ public partial class ProblemClient : IProblemClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/problem-crud/create",
                     Body = request,
@@ -92,7 +91,6 @@ public partial class ProblemClient : IProblemClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = string.Format(
                         "/problem-crud/update/{0}",
@@ -160,7 +158,6 @@ public partial class ProblemClient : IProblemClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/problem-crud/default-starter-files",
                     Body = request,
@@ -419,7 +416,6 @@ public partial class ProblemClient : IProblemClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = string.Format(
                         "/problem-crud/delete/{0}",

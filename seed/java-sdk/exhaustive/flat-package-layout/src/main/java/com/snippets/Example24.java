@@ -1,7 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.endpoints.types.ListItemsRequest;
+import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
+import java.time.OffsetDateTime;
 
 public class Example24 {
     public static void main(String[] args) {
@@ -11,7 +12,10 @@ public class Example24 {
                 .build();
 
         client.endpoints()
-                .pagination()
-                .listItems(ListItemsRequest.builder().cursor("cursor").limit(1).build());
+                .object()
+                .getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString.builder()
+                        .datetimeLikeString("2023-08-31T14:15:22Z")
+                        .actualDatetime(OffsetDateTime.parse("2023-08-31T14:15:22Z"))
+                        .build());
     }
 }

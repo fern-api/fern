@@ -21,4 +21,5 @@ __exportStar(require("./ObjectWithDatetimeLikeString.js"), exports);
 __exportStar(require("./ObjectWithMapOfMap.js"), exports);
 __exportStar(require("./ObjectWithOptionalField.js"), exports);
 __exportStar(require("./ObjectWithRequiredField.js"), exports);
+__exportStar(require("./ObjectWithUnknownField.js"), exports);
 __exportStar(require("./OptionalAlias.js"), exports);

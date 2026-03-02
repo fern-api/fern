@@ -27,7 +27,7 @@ class HeaderWithCount {
 /* 75% of endpoints must have header present, for it to be considered a global header*/
 const GLOBAL_HEADER_PERCENTAGE_THRESHOLD = 0.75;
 
-const HEADERS_TO_IGNORE = new Set(...["authorization"]);
+const HEADERS_TO_IGNORE = new Set(["authorization"]);
 
 export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     if (context.globalHeaderOverrides != null) {

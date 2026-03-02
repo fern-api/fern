@@ -30,7 +30,6 @@ public partial class ProblemClient : IProblemClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/problems-v2/lightweight-problem-info",
                     Headers = _headers,
@@ -93,7 +92,6 @@ public partial class ProblemClient : IProblemClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/problems-v2/problem-info",
                     Headers = _headers,
@@ -155,7 +153,6 @@ public partial class ProblemClient : IProblemClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/problems-v2/problem-info/{0}",
@@ -221,7 +218,6 @@ public partial class ProblemClient : IProblemClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/problems-v2/problem-info/{0}/version/{1}",
