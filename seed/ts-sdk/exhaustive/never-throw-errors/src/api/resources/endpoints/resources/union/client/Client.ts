@@ -75,7 +75,7 @@ export class UnionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.Animal,
+                    body: _response.body != null ? (_response.body as SeedExhaustive.types.Animal) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

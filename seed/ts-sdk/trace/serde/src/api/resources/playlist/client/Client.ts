@@ -90,6 +90,9 @@ export class PlaylistClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.Playlist.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -181,6 +184,9 @@ export class PlaylistClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -259,6 +265,9 @@ export class PlaylistClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.Playlist.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -368,6 +377,9 @@ export class PlaylistClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",

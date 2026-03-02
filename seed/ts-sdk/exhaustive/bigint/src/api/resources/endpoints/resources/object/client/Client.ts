@@ -80,6 +80,9 @@ export class ObjectClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                 rawResponse: _response.rawResponse,
@@ -147,6 +150,9 @@ export class ObjectClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
                 rawResponse: _response.rawResponse,
@@ -218,6 +224,9 @@ export class ObjectClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithMapOfMap,
                 rawResponse: _response.rawResponse,
@@ -304,6 +313,9 @@ export class ObjectClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.NestedObjectWithOptionalField,
                 rawResponse: _response.rawResponse,
@@ -393,6 +405,9 @@ export class ObjectClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
                 rawResponse: _response.rawResponse,
@@ -498,6 +513,9 @@ export class ObjectClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
                 rawResponse: _response.rawResponse,
@@ -567,6 +585,9 @@ export class ObjectClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithUnknownField,
                 rawResponse: _response.rawResponse,
@@ -639,6 +660,9 @@ export class ObjectClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithDatetimeLikeString,
                 rawResponse: _response.rawResponse,

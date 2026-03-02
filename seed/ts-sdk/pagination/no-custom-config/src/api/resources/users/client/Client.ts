@@ -68,6 +68,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -141,6 +144,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersMixedTypePaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -211,6 +217,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -288,6 +297,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersTopLevelCursorPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -369,6 +381,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -445,6 +460,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -516,6 +534,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -590,6 +611,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -664,6 +688,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -735,6 +762,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersExtendedResponse,
                         rawResponse: _response.rawResponse,
@@ -804,6 +834,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersExtendedOptionalListResponse,
                         rawResponse: _response.rawResponse,
@@ -873,6 +906,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.UsernameCursor,
                         rawResponse: _response.rawResponse,
@@ -943,6 +979,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.UsernameCursor | undefined,
                         rawResponse: _response.rawResponse,
@@ -1013,6 +1052,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.UsernameContainer,
                         rawResponse: _response.rawResponse,
@@ -1083,6 +1125,9 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.ListUsersOptionalDataPaginationResponse,
                         rawResponse: _response.rawResponse,

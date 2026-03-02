@@ -1024,7 +1024,45 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
         if (this.endpoint.response?.body != null) {
-            return this.getReturnStatementsForOkResponseBody(context);
+            const bodyStatements = this.getReturnStatementsForOkResponseBody(context);
+            // Add a runtime guard for 204 No Content responses: if the response body is null/undefined,
+            // return early with undefined data instead of attempting to deserialize an empty body.
+            const noContentGuard = ts.factory.createIfStatement(
+                ts.factory.createBinaryExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
+                        context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                    ),
+                    ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
+                    ts.factory.createNull()
+                ),
+                ts.factory.createBlock(
+                    [
+                        ts.factory.createReturnStatement(
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("data"),
+                                        ts.factory.createIdentifier("undefined")
+                                    ),
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("rawResponse"),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier(
+                                                GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                                            ),
+                                            ts.factory.createIdentifier("rawResponse")
+                                        )
+                                    )
+                                ],
+                                false
+                            )
+                        )
+                    ],
+                    true
+                )
+            );
+            return [noContentGuard, ...bodyStatements];
         }
 
         const dataInitializer =

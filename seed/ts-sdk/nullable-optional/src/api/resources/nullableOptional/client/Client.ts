@@ -58,6 +58,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
         }
 
@@ -125,6 +128,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
         }
 
@@ -195,6 +201,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.UserResponse, rawResponse: _response.rawResponse };
         }
 
@@ -258,6 +267,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
         }
 
@@ -321,6 +333,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
         }
 
@@ -466,6 +481,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
         }
 
@@ -517,6 +535,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
         }
 
@@ -607,6 +628,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.ComplexProfile, rawResponse: _response.rawResponse };
         }
 
@@ -716,6 +740,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedNullableOptional.DeserializationTestResponse,
                 rawResponse: _response.rawResponse,
@@ -780,6 +807,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedNullableOptional.UserResponse[], rawResponse: _response.rawResponse };
         }
 
@@ -831,6 +861,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedNullableOptional.NotificationMethod | null,
                 rawResponse: _response.rawResponse,
@@ -900,6 +933,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string[], rawResponse: _response.rawResponse };
         }
 
@@ -960,6 +996,9 @@ export class NullableOptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedNullableOptional.SearchResult[] | null,
                 rawResponse: _response.rawResponse,

@@ -70,6 +70,9 @@ export class SubmissionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -142,6 +145,9 @@ export class SubmissionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -262,6 +268,9 @@ export class SubmissionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",

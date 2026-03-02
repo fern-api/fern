@@ -73,6 +73,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -154,6 +157,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -232,6 +238,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -319,6 +328,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -403,6 +415,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -482,6 +497,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -564,6 +582,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -646,6 +667,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
                         rawResponse: _response.rawResponse,
@@ -725,6 +749,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersExtendedResponse,
                         rawResponse: _response.rawResponse,
@@ -802,6 +829,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse,
                         rawResponse: _response.rawResponse,
@@ -874,6 +904,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.UsernameCursor,
                         rawResponse: _response.rawResponse,
@@ -944,6 +977,9 @@ export class InlineUsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
+                    if (_response.body == null) {
+                        return { data: undefined, rawResponse: _response.rawResponse };
+                    }
                     return {
                         data: _response.body as SeedPagination.inlineUsers.UsernameContainer,
                         rawResponse: _response.rawResponse,

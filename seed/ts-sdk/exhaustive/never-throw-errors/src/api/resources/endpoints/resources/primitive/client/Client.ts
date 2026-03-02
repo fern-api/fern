@@ -67,7 +67,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as string,
+                    body: _response.body != null ? (_response.body as string) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -133,7 +133,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as number,
+                    body: _response.body != null ? (_response.body as number) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -199,7 +199,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as number,
+                    body: _response.body != null ? (_response.body as number) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -265,7 +265,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as number,
+                    body: _response.body != null ? (_response.body as number) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -331,7 +331,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as boolean,
+                    body: _response.body != null ? (_response.body as boolean) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -399,7 +399,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as string,
+                    body: _response.body != null ? (_response.body as string) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -465,7 +465,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as string,
+                    body: _response.body != null ? (_response.body as string) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -531,7 +531,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as string,
+                    body: _response.body != null ? (_response.body as string) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -597,7 +597,7 @@ export class PrimitiveClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as string,
+                    body: _response.body != null ? (_response.body as string) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

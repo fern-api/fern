@@ -152,7 +152,7 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.CreateProblemResponse,
+                    body: _response.body != null ? (_response.body as SeedTrace.CreateProblemResponse) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -305,7 +305,7 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.UpdateProblemResponse,
+                    body: _response.body != null ? (_response.body as SeedTrace.UpdateProblemResponse) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -472,7 +472,10 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.GetDefaultStarterFilesResponse,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedTrace.GetDefaultStarterFilesResponse)
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

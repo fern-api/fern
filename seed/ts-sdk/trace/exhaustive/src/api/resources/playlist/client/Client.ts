@@ -93,7 +93,7 @@ export class PlaylistClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.Playlist,
+                    body: _response.body != null ? (_response.body as SeedTrace.Playlist) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -183,7 +183,7 @@ export class PlaylistClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.Playlist[],
+                    body: _response.body != null ? (_response.body as SeedTrace.Playlist[]) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -257,7 +257,7 @@ export class PlaylistClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.Playlist,
+                    body: _response.body != null ? (_response.body as SeedTrace.Playlist) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -363,7 +363,7 @@ export class PlaylistClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.Playlist | undefined,
+                    body: _response.body != null ? (_response.body as SeedTrace.Playlist | undefined) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

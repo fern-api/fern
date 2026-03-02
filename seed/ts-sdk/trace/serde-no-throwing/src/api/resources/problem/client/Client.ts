@@ -150,13 +150,16 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.CreateProblemResponse.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body:
+                        _response.body != null
+                            ? serializers.CreateProblemResponse.parseOrThrow(_response.body, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  skipValidation: true,
+                                  breadcrumbsPrefix: ["response"],
+                              })
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -306,13 +309,16 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body:
+                        _response.body != null
+                            ? serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  skipValidation: true,
+                                  breadcrumbsPrefix: ["response"],
+                              })
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -470,13 +476,16 @@ export class ProblemClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body:
+                        _response.body != null
+                            ? serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  skipValidation: true,
+                                  breadcrumbsPrefix: ["response"],
+                              })
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

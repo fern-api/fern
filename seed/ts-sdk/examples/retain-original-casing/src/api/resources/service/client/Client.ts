@@ -56,6 +56,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedExamples.Movie, rawResponse: _response.rawResponse };
         }
 
@@ -129,6 +132,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedExamples.MovieId, rawResponse: _response.rawResponse };
         }
 
@@ -191,6 +197,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedExamples.Metadata, rawResponse: _response.rawResponse };
         }
 
@@ -403,6 +412,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedExamples.Response, rawResponse: _response.rawResponse };
         }
 

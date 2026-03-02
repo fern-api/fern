@@ -77,6 +77,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.Resource[], rawResponse: _response.rawResponse };
         }
 
@@ -139,6 +142,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.Resource, rawResponse: _response.rawResponse };
         }
 
@@ -207,6 +213,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.SearchResponse, rawResponse: _response.rawResponse };
         }
 
@@ -287,6 +296,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedClientSideParams.PaginatedUserResponse,
                 rawResponse: _response.rawResponse,
@@ -352,6 +364,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
         }
 
@@ -424,6 +439,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
         }
 
@@ -499,6 +517,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
         }
 
@@ -608,6 +629,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.Connection[], rawResponse: _response.rawResponse };
         }
 
@@ -668,6 +692,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.Connection, rawResponse: _response.rawResponse };
         }
 
@@ -753,6 +780,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedClientSideParams.PaginatedClientResponse,
                 rawResponse: _response.rawResponse,
@@ -818,6 +848,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedClientSideParams.Client, rawResponse: _response.rawResponse };
         }
 

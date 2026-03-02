@@ -77,13 +77,16 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body:
+                        _response.body != null
+                            ? serializers.ExecutionSessionResponse.parseOrThrow(_response.body, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  skipValidation: true,
+                                  breadcrumbsPrefix: ["response"],
+                              })
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -157,13 +160,16 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body:
+                        _response.body != null
+                            ? serializers.submission.getExecutionSession.Response.parseOrThrow(_response.body, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  skipValidation: true,
+                                  breadcrumbsPrefix: ["response"],
+                              })
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -300,13 +306,16 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body:
+                        _response.body != null
+                            ? serializers.GetExecutionSessionStateResponse.parseOrThrow(_response.body, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  skipValidation: true,
+                                  breadcrumbsPrefix: ["response"],
+                              })
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

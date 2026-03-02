@@ -71,7 +71,10 @@ export class NoReqBodyClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedExhaustive.types.ObjectWithOptionalField)
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -129,7 +132,7 @@ export class NoReqBodyClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as string,
+                    body: _response.body != null ? (_response.body as string) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

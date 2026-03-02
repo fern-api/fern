@@ -167,6 +167,9 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.User.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",

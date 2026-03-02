@@ -94,7 +94,10 @@ export class InlinedRequestsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedExhaustive.types.ObjectWithOptionalField)
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

@@ -51,6 +51,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedCrossPackageTypeNames.folderD.Response,
                 rawResponse: _response.rawResponse,

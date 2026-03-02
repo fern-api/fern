@@ -58,6 +58,9 @@ export class HttpMethodsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
@@ -119,6 +122,9 @@ export class HttpMethodsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                 rawResponse: _response.rawResponse,
@@ -186,6 +192,9 @@ export class HttpMethodsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                 rawResponse: _response.rawResponse,
@@ -267,6 +276,9 @@ export class HttpMethodsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                 rawResponse: _response.rawResponse,
@@ -326,6 +338,9 @@ export class HttpMethodsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
         }
 

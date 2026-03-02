@@ -54,6 +54,9 @@ export class UrlsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.urls.withMixedCase.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -110,6 +113,9 @@ export class UrlsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.urls.noEndingSlash.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -166,6 +172,9 @@ export class UrlsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.urls.withEndingSlash.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -222,6 +231,9 @@ export class UrlsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.urls.withUnderscores.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",

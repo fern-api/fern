@@ -70,6 +70,9 @@ export class EventsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedMixedFileDirectory.user.Event[], rawResponse: _response.rawResponse };
         }
 

@@ -140,13 +140,16 @@ export class SyspropClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body:
+                        _response.body != null
+                            ? serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  skipValidation: true,
+                                  breadcrumbsPrefix: ["response"],
+                              })
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

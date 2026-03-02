@@ -63,6 +63,9 @@ export class OptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
@@ -117,6 +120,9 @@ export class OptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
@@ -182,6 +188,9 @@ export class OptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedObjectsWithImports.DeployResponse,
                 rawResponse: _response.rawResponse,

@@ -141,6 +141,9 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedTrace.CreateProblemResponse, rawResponse: _response.rawResponse };
         }
 
@@ -277,6 +280,9 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedTrace.UpdateProblemResponse, rawResponse: _response.rawResponse };
         }
 
@@ -422,6 +428,9 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedTrace.GetDefaultStarterFilesResponse,
                 rawResponse: _response.rawResponse,

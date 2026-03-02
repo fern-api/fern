@@ -65,13 +65,16 @@ export class HomepageClient {
             return {
                 data: {
                     ok: true,
-                    body: serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body:
+                        _response.body != null
+                            ? serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  skipValidation: true,
+                                  breadcrumbsPrefix: ["response"],
+                              })
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

@@ -72,6 +72,9 @@ export class UnionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.types.Animal.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",

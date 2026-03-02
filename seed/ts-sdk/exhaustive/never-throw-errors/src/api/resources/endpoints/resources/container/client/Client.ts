@@ -71,7 +71,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as string[],
+                    body: _response.body != null ? (_response.body as string[]) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -151,7 +151,10 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedExhaustive.types.ObjectWithRequiredField[])
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -221,7 +224,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as string[],
+                    body: _response.body != null ? (_response.body as string[]) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -299,7 +302,10 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedExhaustive.types.ObjectWithRequiredField[])
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -371,7 +377,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as Record<string, string>,
+                    body: _response.body != null ? (_response.body as Record<string, string>) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -451,7 +457,10 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                    body:
+                        _response.body != null
+                            ? (_response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>)
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -531,7 +540,10 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as Record<string, SeedExhaustive.types.MixedType>,
+                    body:
+                        _response.body != null
+                            ? (_response.body as Record<string, SeedExhaustive.types.MixedType>)
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -611,7 +623,10 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined)
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

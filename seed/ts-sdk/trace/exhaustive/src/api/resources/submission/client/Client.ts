@@ -82,7 +82,7 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.ExecutionSessionResponse,
+                    body: _response.body != null ? (_response.body as SeedTrace.ExecutionSessionResponse) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -162,7 +162,10 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.ExecutionSessionResponse | undefined,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedTrace.ExecutionSessionResponse | undefined)
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -311,7 +314,10 @@ export class SubmissionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.GetExecutionSessionStateResponse,
+                    body:
+                        _response.body != null
+                            ? (_response.body as SeedTrace.GetExecutionSessionStateResponse)
+                            : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

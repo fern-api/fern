@@ -71,6 +71,9 @@ export class SeedApiClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedApi.Foo, rawResponse: _response.rawResponse };
         }
 
@@ -136,6 +139,9 @@ export class SeedApiClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedApi.Foo, rawResponse: _response.rawResponse };
         }
 

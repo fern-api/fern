@@ -79,7 +79,7 @@ export class MigrationClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.Migration[],
+                    body: _response.body != null ? (_response.body as SeedTrace.Migration[]) : undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

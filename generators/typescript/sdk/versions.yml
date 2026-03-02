@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.9
+  changelogEntry:
+    - summary: |
+        Don't attempt to decode 204 No Content responses. When an endpoint has a defined
+        response body type but the server returns a 204 with no body, the generated SDK
+        now returns `undefined` instead of attempting to deserialize the empty response,
+        which would previously throw a parse error.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.52.8
   changelogEntry:
     - summary: |

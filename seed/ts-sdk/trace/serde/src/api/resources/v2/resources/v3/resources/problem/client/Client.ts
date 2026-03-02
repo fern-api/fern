@@ -64,6 +64,9 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.v2.v3.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -133,6 +136,9 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.v2.v3.problem.getProblems.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -200,6 +206,9 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.v2.v3.ProblemInfoV2.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -277,6 +286,9 @@ export class ProblemClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.v2.v3.ProblemInfoV2.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",

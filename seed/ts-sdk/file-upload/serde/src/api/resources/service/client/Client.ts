@@ -689,6 +689,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.service.optionalArgs.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -763,6 +766,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.service.withInlineType.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -840,6 +846,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.service.withJsonProperty.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -971,6 +980,9 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.service.withLiteralAndEnumTypes.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",

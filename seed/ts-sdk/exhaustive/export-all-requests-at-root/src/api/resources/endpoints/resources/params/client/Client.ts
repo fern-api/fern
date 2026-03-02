@@ -60,6 +60,9 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
@@ -119,6 +122,9 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
@@ -437,6 +443,9 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
@@ -500,6 +509,9 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
@@ -565,6 +577,9 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
                 rawResponse: _response.rawResponse,

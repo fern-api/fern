@@ -68,6 +68,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
                     _response.body,
@@ -149,6 +152,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -218,6 +224,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
                     _response.body,
@@ -292,6 +301,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -363,6 +375,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -436,6 +451,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
                     _response.body,
@@ -517,6 +535,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Response.parseOrThrow(
                     _response.body,
@@ -591,6 +612,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",

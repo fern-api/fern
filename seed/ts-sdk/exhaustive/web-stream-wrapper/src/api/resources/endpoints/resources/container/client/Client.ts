@@ -64,6 +64,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string[], rawResponse: _response.rawResponse };
         }
 
@@ -130,6 +133,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
                 rawResponse: _response.rawResponse,
@@ -190,6 +196,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as string[], rawResponse: _response.rawResponse };
         }
 
@@ -249,6 +258,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
                 rawResponse: _response.rawResponse,
@@ -311,6 +323,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as Record<string, string>, rawResponse: _response.rawResponse };
         }
 
@@ -372,6 +387,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
                 rawResponse: _response.rawResponse,
@@ -441,6 +459,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as Record<string, SeedExhaustive.types.MixedType>,
                 rawResponse: _response.rawResponse,
@@ -503,6 +524,9 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
                 rawResponse: _response.rawResponse,

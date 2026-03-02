@@ -159,10 +159,31 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     }
 
     private getReturnValueForOkResponse(context: SdkContext): ts.Expression | undefined {
-        return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
+        // For endpoints with a defined response body, use a conditional to guard against
+        // 204 No Content responses: if the body is null/undefined, return undefined data
+        // instead of attempting to deserialize an empty body.
+        const bodyExpression =
             this.endpoint.response?.body != null
-                ? this.getOkResponseBody(context)
-                : ts.factory.createIdentifier("undefined"),
+                ? ts.factory.createConditionalExpression(
+                      ts.factory.createBinaryExpression(
+                          ts.factory.createPropertyAccessExpression(
+                              ts.factory.createIdentifier(
+                                  GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME
+                              ),
+                              context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                          ),
+                          ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                          ts.factory.createNull()
+                      ),
+                      ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                      this.getOkResponseBody(context),
+                      ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                      ts.factory.createIdentifier("undefined")
+                  )
+                : ts.factory.createIdentifier("undefined");
+
+        return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
+            bodyExpression,
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedNonThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
                 context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.headers

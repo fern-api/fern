@@ -62,6 +62,9 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
         }
 
@@ -117,6 +120,9 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
         }
 
@@ -172,6 +178,9 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
         }
 
@@ -227,6 +236,9 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
         }
 
@@ -282,6 +294,9 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
         }
 
@@ -339,6 +354,9 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
         }
 
@@ -396,6 +414,9 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
+            if (_response.body == null) {
+                return { data: undefined, rawResponse: _response.rawResponse };
+            }
             return { data: _response.body as SeedEndpointSecurityAuth.User[], rawResponse: _response.rawResponse };
         }
 
