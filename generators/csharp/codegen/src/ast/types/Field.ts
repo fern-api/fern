@@ -1,6 +1,6 @@
-import { fail } from "assert";
 import { type Generation } from "../../context/generation-info.js";
 import { type Origin } from "../../context/model-navigator.js";
+import { fail } from "../../utils/fail.js";
 import { is } from "../../utils/type-guards.js";
 import { type ClassInstantiation } from "../code/ClassInstantiation.js";
 import { MemberNode } from "../core/AstNode.js";

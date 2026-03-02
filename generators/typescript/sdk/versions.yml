@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.3
+  changelogEntry:
+    - summary: |
+        Add `ignoredFields` support to `formUrlEncodedBody` in wire test mock server.
+        Paginated POST endpoints using `application/x-www-form-urlencoded` content type
+        (e.g. Twilio) now correctly ignore pagination cursor fields when matching request
+        bodies in wire tests, matching the existing behavior for JSON body endpoints.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.53.2
   changelogEntry:
     - summary: |

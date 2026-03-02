@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.1
+  changelogEntry:
+    - summary: |
+        Replace Node.js built-in imports (`assert`, `path`) in csharp-codegen with
+        browser-compatible alternatives, enabling the dynamic snippets package to
+        run in browser environments without Node.js polyfills.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 62
+
+- version: 2.23.0
+  changelogEntry:
+    - summary: |
+        Add AdditionalQueryParameters and AdditionalHeaders documentation
+        sections to the generated README.md, so users can discover how to
+        pass extra query parameters and headers via RequestOptions.
+      type: feat
+  createdAt: "2026-03-02"
+  irVersion: 62
+
 - version: 2.22.9
   changelogEntry:
     - summary: |
@@ -10,7 +30,6 @@
       type: chore
   createdAt: "2026-03-02"
   irVersion: 62
-
 - version: 2.22.8
   changelogEntry:
     - summary: |
