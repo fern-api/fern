@@ -64,20 +64,22 @@ export async function checkVersionDoesNotAlreadyExist({
 
     const language = generatorInvocation.language;
 
+    let exists: boolean;
     try {
-        const exists = await doesVersionExistOnRegistry({ packageName, version, language });
-        if (exists) {
-            context.failAndThrow(
-                `Version ${version} of ${packageName} already exists on the ${getRegistryName(language)} registry. ` +
-                    `Please use a different version number. ` +
-                    `If you want to automatically increment the version, omit the --version flag.`
-            );
-        }
+        exists = await doesVersionExistOnRegistry({ packageName, version, language });
     } catch (error) {
         // Best-effort check — if we can't reach the registry, don't block generation.
         // The error will surface later during the actual publish step.
         context.logger.debug(
             `Could not verify version availability on ${getRegistryName(language)}: ${error instanceof Error ? error.message : String(error)}`
+        );
+        return;
+    }
+    if (exists) {
+        context.failAndThrow(
+            `Version ${version} of ${packageName} already exists on the ${getRegistryName(language)} registry. ` +
+                `Please use a different version number. ` +
+                `If you want to automatically increment the version, omit the --version flag.`
         );
     }
 }
