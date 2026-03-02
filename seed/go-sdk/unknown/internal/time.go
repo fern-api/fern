@@ -127,9 +127,14 @@ func (d *DateTime) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
+	// Attempt RFC3339 first, then fall back to the common ISO8601
+	// variant without a timezone (e.g. "2006-01-02T15:04:05").
 	parsedTime, err := time.Parse(time.RFC3339, raw)
 	if err != nil {
-		return err
+		parsedTime, err = time.Parse("2006-01-02T15:04:05", raw)
+		if err != nil {
+			return err
+		}
 	}
 
 	*d = DateTime{t: &parsedTime}
