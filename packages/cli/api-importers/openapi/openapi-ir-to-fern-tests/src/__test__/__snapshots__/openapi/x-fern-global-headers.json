@@ -290,11 +290,11 @@ service:
         "strategy": "status-code",
       },
       "headers": {
-          "another_header": {
-            "env": "MY_HEADER_ENV",
-            "name": undefined,
-            "type": "string",
-          },
+        "another_header": {
+          "env": "MY_HEADER_ENV",
+          "name": undefined,
+          "type": "string",
+        },
         "my-api-key": {
           "env": undefined,
           "name": "api-key-alias",
