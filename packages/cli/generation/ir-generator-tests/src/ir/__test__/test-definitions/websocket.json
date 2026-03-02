@@ -1728,7 +1728,7 @@
                 }
             },
             "displayName": null,
-            "connectMethodName": "createRealtimeConnection",
+            "connectMethodName": null,
             "headers": [],
             "pathParameters": [
                 {
