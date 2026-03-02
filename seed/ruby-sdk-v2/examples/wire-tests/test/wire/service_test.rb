@@ -79,7 +79,7 @@ class ServiceWireTest < WireMockTestCase
       test_id: test_id,
       method: "GET",
       url_path: "/metadata",
-      query_params: nil,
+      query_params: { "shallow" => "false", "tag" => "development" },
       expected: 1
     )
   end

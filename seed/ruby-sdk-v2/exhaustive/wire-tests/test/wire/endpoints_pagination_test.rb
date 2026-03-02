@@ -31,7 +31,7 @@ class EndpointsPaginationWireTest < WireMockTestCase
       test_id: test_id,
       method: "GET",
       url_path: "/pagination",
-      query_params: nil,
+      query_params: { "cursor" => "cursor", "limit" => "1" },
       expected: 1
     )
   end
