@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using SeedWebsocket.Core;
 using SeedWebsocket.Core.WebSockets;
 
@@ -112,8 +113,11 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     /// </summary>
     private async Task OnTextMessage(Stream stream)
     {
-        var json = await JsonSerializer.DeserializeAsync<JsonDocument>(stream);
-        if (json == null)
+        var message = await JsonSerializer.DeserializeAsync<IncomingMessage>(
+            stream,
+            JsonOptions.JsonSerializerOptions
+        );
+        if (message == null)
         {
             await ExceptionOccurred
                 .RaiseEvent(new Exception("Invalid message - Not valid JSON"))
@@ -121,57 +125,46 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
             return;
         }
 
-        // deserialize the message to find the correct event
+        if (message.Type == "ReceiveEvent")
         {
-            if (JsonUtils.TryDeserialize(json, out ReceiveEvent? message))
-            {
-                await ReceiveEvent.RaiseEvent(message!).ConfigureAwait(false);
-                return;
-            }
+            await ReceiveEvent.RaiseEvent((ReceiveEvent)message.Value!).ConfigureAwait(false);
+            return;
         }
 
+        if (message.Type == "ReceiveSnakeCase")
         {
-            if (JsonUtils.TryDeserialize(json, out ReceiveSnakeCase? message))
-            {
-                await ReceiveSnakeCase.RaiseEvent(message!).ConfigureAwait(false);
-                return;
-            }
+            await ReceiveSnakeCase
+                .RaiseEvent((ReceiveSnakeCase)message.Value!)
+                .ConfigureAwait(false);
+            return;
         }
 
+        if (message.Type == "ReceiveEvent2")
         {
-            if (JsonUtils.TryDeserialize(json, out ReceiveEvent2? message))
-            {
-                await ReceiveEvent2.RaiseEvent(message!).ConfigureAwait(false);
-                return;
-            }
+            await ReceiveEvent2.RaiseEvent((ReceiveEvent2)message.Value!).ConfigureAwait(false);
+            return;
         }
 
+        if (message.Type == "ReceiveEvent3")
         {
-            if (JsonUtils.TryDeserialize(json, out ReceiveEvent3? message))
-            {
-                await ReceiveEvent3.RaiseEvent(message!).ConfigureAwait(false);
-                return;
-            }
+            await ReceiveEvent3.RaiseEvent((ReceiveEvent3)message.Value!).ConfigureAwait(false);
+            return;
         }
 
+        if (message.Type == "TranscriptEvent")
         {
-            if (JsonUtils.TryDeserialize(json, out TranscriptEvent? message))
-            {
-                await TranscriptEvent.RaiseEvent(message!).ConfigureAwait(false);
-                return;
-            }
+            await TranscriptEvent.RaiseEvent((TranscriptEvent)message.Value!).ConfigureAwait(false);
+            return;
         }
 
+        if (message.Type == "FlushedEvent")
         {
-            if (JsonUtils.TryDeserialize(json, out FlushedEvent? message))
-            {
-                await FlushedEvent.RaiseEvent(message!).ConfigureAwait(false);
-                return;
-            }
+            await FlushedEvent.RaiseEvent((FlushedEvent)message.Value!).ConfigureAwait(false);
+            return;
         }
 
         await ExceptionOccurred
-            .RaiseEvent(new Exception($"Unknown message: {json.ToString()}"))
+            .RaiseEvent(new Exception($"Unknown message type: {message.Type}"))
             .ConfigureAwait(false);
     }
 
@@ -241,6 +234,75 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     public async Task Send(SendEvent2 message)
     {
         await SendJsonAsync(message).ConfigureAwait(false);
+    }
+
+    [JsonConverter(typeof(RealtimeApi.IncomingMessage.JsonConverter))]
+    internal class IncomingMessage
+    {
+        private IncomingMessage(string type, object? value)
+        {
+            Type = type;
+            Value = value;
+        }
+
+        /// <summary>
+        /// Type discriminator
+        /// </summary>
+        internal string Type { get; }
+
+        /// <summary>
+        /// Union value
+        /// </summary>
+        internal object? Value { get; }
+
+        internal sealed class JsonConverter : JsonConverter<RealtimeApi.IncomingMessage>
+        {
+            public override RealtimeApi.IncomingMessage? Read(
+                ref Utf8JsonReader reader,
+                System.Type typeToConvert,
+                JsonSerializerOptions options
+            )
+            {
+                var document = JsonDocument.ParseValue(ref reader);
+
+                var types = new (string Key, System.Type Type)[]
+                {
+                    ("ReceiveEvent", typeof(ReceiveEvent)),
+                    ("ReceiveSnakeCase", typeof(ReceiveSnakeCase)),
+                    ("ReceiveEvent2", typeof(ReceiveEvent2)),
+                    ("ReceiveEvent3", typeof(ReceiveEvent3)),
+                    ("TranscriptEvent", typeof(TranscriptEvent)),
+                    ("FlushedEvent", typeof(FlushedEvent)),
+                };
+
+                foreach (var (key, type) in types)
+                {
+                    try
+                    {
+                        var value = document.Deserialize(type, options);
+                        if (value != null)
+                        {
+                            return new IncomingMessage(key, value);
+                        }
+                    }
+                    catch (Exception) { }
+                }
+
+                return null;
+            }
+
+            public override void Write(
+                Utf8JsonWriter writer,
+                RealtimeApi.IncomingMessage value,
+                JsonSerializerOptions options
+            )
+            {
+                if (value.Value != null)
+                {
+                    JsonSerializer.Serialize(writer, value.Value, value.Value.GetType(), options);
+                }
+            }
+        }
     }
 
     /// <summary>

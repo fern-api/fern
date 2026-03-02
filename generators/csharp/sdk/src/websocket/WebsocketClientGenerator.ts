@@ -662,13 +662,9 @@ export class WebSocketClientGenerator extends WithGeneration {
     /**
      * Creates the OnTextMessage method for handling incoming WebSocket messages.
      *
-     * This method:
-     * - Deserializes incoming JSON messages
-     * - Attempts to match messages to known event types
-     * - Raises appropriate events when messages are successfully parsed
-     * - Handles unknown message types by raising exceptions
-     *
-     * @returns The OnTextMessage method definition
+     * Deserializes the stream into an IncomingMessage (undiscriminated union wrapper)
+     * via its JsonConverter, then dispatches to the correct event handler based on
+     * the matched type.
      */
     private createOnTextMessageMethod(cls: ast.Class) {
         cls.addMethod({
@@ -685,54 +681,188 @@ export class WebSocketClientGenerator extends WithGeneration {
                 })
             ],
             body: this.csharp.codeblock((writer) => {
-                // deserialize the json message
-                writer.write(`var json = await `);
+                writer.write(`var message = await `);
                 writer.writeNode(this.System.Text.Json.JsonSerializer);
-                writer.write(`.DeserializeAsync<`);
-                writer.writeNode(this.System.Text.Json.JsonDocument);
-                writer.writeTextStatement(`>(stream)`);
-                writer.writeLine(`if(json == null)`);
+                writer.write(`.DeserializeAsync<IncomingMessage>(stream, `);
+                writer.writeNode(this.Types.JsonOptions);
+                writer.writeTextStatement(`.JsonSerializerOptions)`);
+                writer.writeLine(`if (message == null)`);
                 writer.pushScope();
                 writer.writeTextStatement(
                     `await ExceptionOccurred.RaiseEvent(new Exception("Invalid message - Not valid JSON")).ConfigureAwait(false)`
                 );
                 writer.writeTextStatement(`return`);
                 writer.popScope();
-
-                // there is no empirical way to determine the correct event type from the IR
-                // so the only option is to try each event model until one is successful
-                // iterate thru the event models and try to deserialize the message to the correct event
-
                 writer.writeLine();
-                writer.writeLine("// deserialize the message to find the correct event");
 
                 for (const event of this.events) {
+                    writer.writeLine(`if (message.Type == "${event.name}")`);
                     writer.pushScope();
-                    writer.write(
-                        `if(`,
-                        this.Types.JsonUtils,
-                        `.TryDeserialize(json`,
-                        `, out `,
-                        event.name,
-                        `? message))`
-                    );
-                    writer.pushScope();
-
-                    writer.writeTextStatement(`await ${event.name}.RaiseEvent(message!).ConfigureAwait(false)`);
+                    writer.write(`await ${event.name}.RaiseEvent((`);
+                    writer.writeNode(event.type);
+                    writer.writeTextStatement(`)message.Value!).ConfigureAwait(false)`);
                     writer.writeTextStatement(`return`);
-
                     writer.popScope();
-                    writer.popScope();
-
                     writer.writeLine();
                 }
 
-                // if no event was found, raise an exception
                 writer.writeTextStatement(
-                    `await ExceptionOccurred.RaiseEvent(new Exception($"Unknown message: {json.ToString()}")).ConfigureAwait(false)`
+                    `await ExceptionOccurred.RaiseEvent(new Exception($"Unknown message type: {message.Type}")).ConfigureAwait(false)`
                 );
             })
         });
+    }
+
+    /**
+     * Creates the IncomingMessage undiscriminated union wrapper class.
+     *
+     * This nested class encapsulates WebSocket event deserialization by trying
+     * each server event type via a custom JsonConverter. The converter iterates
+     * through registered event types and returns the first successful match.
+     */
+    private createIncomingMessageClass(cls: ast.Class): ast.Class {
+        const incomingMessageRef = this.csharp.classReference({
+            origin: cls.explicit("IncomingMessage"),
+            enclosingType: this.classReference
+        });
+
+        const incomingMessageClass = this.csharp.class_({
+            origin: cls.explicit("IncomingMessage"),
+            access: ast.Access.Internal,
+            namespace: this.classReference.namespace,
+            enclosingType: this.classReference,
+            annotations: [
+                this.csharp.annotation({
+                    reference: this.System.Text.Json.Serialization.JsonConverter(),
+                    argument: this.csharp.codeblock((writer) => {
+                        writer.write("typeof(");
+                        writer.writeNode(incomingMessageRef);
+                        writer.write(".JsonConverter)");
+                    })
+                })
+            ]
+        });
+
+        const typeField = incomingMessageClass.addField({
+            enclosingType: incomingMessageClass,
+            summary: "Type discriminator",
+            origin: incomingMessageClass.explicit("Type"),
+            access: ast.Access.Internal,
+            type: this.Primitive.string,
+            get: "internal",
+            set: false
+        });
+
+        const valueField = incomingMessageClass.addField({
+            enclosingType: incomingMessageClass,
+            summary: "Union value",
+            origin: incomingMessageClass.explicit("Value"),
+            access: ast.Access.Internal,
+            type: this.Primitive.object.asOptional(),
+            get: "internal",
+            set: false
+        });
+
+        incomingMessageClass.addConstructor({
+            access: ast.Access.Private,
+            parameters: [
+                this.csharp.parameter({ name: "type", type: this.Primitive.string }),
+                this.csharp.parameter({ name: "value", type: this.Primitive.object.asOptional() })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement(`${typeField.name} = type`);
+                writer.writeTextStatement(`${valueField.name} = value`);
+            })
+        });
+
+        this.createIncomingMessageJsonConverter(incomingMessageClass, incomingMessageRef);
+
+        return incomingMessageClass;
+    }
+
+    /**
+     * Creates the JsonConverter for the IncomingMessage undiscriminated union.
+     *
+     * The Read method tries each server event type in order, returning the first
+     * successful deserialization. This follows the same pattern as the existing
+     * UndiscriminatedUnionGenerator's object parsing logic.
+     */
+    private createIncomingMessageJsonConverter(parentClass: ast.Class, parentRef: ast.ClassReference): void {
+        const converterClass = this.csharp.class_({
+            origin: parentClass.explicit("JsonConverter"),
+            access: ast.Access.Internal,
+            sealed: true,
+            namespace: parentRef.namespace,
+            enclosingType: parentRef,
+            parentClassReference: this.System.Text.Json.Serialization.JsonConverter(parentRef)
+        });
+
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: parentRef.asOptional(),
+            name: "Read",
+            parameters: [
+                this.csharp.parameter({ ref: true, name: "reader", type: this.System.Text.Json.Utf8JsonReader }),
+                this.csharp.parameter({ name: "typeToConvert", type: this.System.Type }),
+                this.csharp.parameter({ name: "options", type: this.System.Text.Json.JsonSerializerOptions })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement("var document = JsonDocument.ParseValue(ref reader)");
+                writer.writeLine();
+
+                const events = this.events;
+                writer.write("var types = new (string Key, System.Type Type)[] { ");
+                events.forEach((event, index) => {
+                    const isLast = index === events.length - 1;
+                    writer.write(`("${event.name}", typeof(`);
+                    writer.writeNode(event.type);
+                    writer.write("))");
+                    if (!isLast) {
+                        writer.write(", ");
+                    }
+                });
+                writer.writeTextStatement(" }");
+                writer.writeLine();
+
+                writer.writeLine("foreach (var (key, type) in types)");
+                writer.pushScope();
+                writer.writeLine("try");
+                writer.pushScope();
+                writer.writeTextStatement("var value = document.Deserialize(type, options)");
+                writer.writeLine("if (value != null)");
+                writer.pushScope();
+                writer.writeTextStatement("return new IncomingMessage(key, value)");
+                writer.popScope();
+                writer.popScope();
+                writer.writeLine("catch (Exception)");
+                writer.pushScope();
+                writer.popScope();
+                writer.popScope();
+                writer.writeLine();
+                writer.writeTextStatement("return null");
+            })
+        });
+
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            name: "Write",
+            parameters: [
+                this.csharp.parameter({ name: "writer", type: this.System.Text.Json.Utf8JsonWriter }),
+                this.csharp.parameter({ name: "value", type: parentRef }),
+                this.csharp.parameter({ name: "options", type: this.System.Text.Json.JsonSerializerOptions })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine("if (value.Value != null)");
+                writer.pushScope();
+                writer.writeNode(this.System.Text.Json.JsonSerializer);
+                writer.writeTextStatement(".Serialize(writer, value.Value, value.Value.GetType(), options)");
+                writer.popScope();
+            })
+        });
+
+        parentClass.addNestedClass(converterClass);
     }
 
     /**
@@ -1086,6 +1216,9 @@ export class WebSocketClientGenerator extends WithGeneration {
 
         // Add event fields forwarded from _client
         this.createClientEventForwarders(cls);
+
+        // Add IncomingMessage undiscriminated union wrapper for event dispatch
+        cls.addNestedClass(this.createIncomingMessageClass(cls));
 
         // Add OnTextMessage method (private, passed to WebSocketClient constructor)
         this.createOnTextMessageMethod(cls);
