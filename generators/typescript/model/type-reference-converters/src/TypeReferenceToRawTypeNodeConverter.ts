@@ -107,26 +107,20 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
         const keyType = this.convert({ ...params, typeReference: map.keyType });
         const optionalValueTypeNode = valueType.isOptional ? valueType : this.optional(map.valueType, params);
         return this.generateNonOptionalTypeReferenceNode({
-            typeNode: ts.factory.createTypeReferenceNode("Partial", [
-                ts.factory.createTypeReferenceNode("Record", [keyType.typeNode, optionalValueTypeNode.typeNode])
-            ]),
+            typeNode: ts.factory.createTypeReferenceNode("Record", [keyType.typeNode, optionalValueTypeNode.typeNode]),
             requestTypeNode: this.generateReadWriteOnlyTypes
                 ? keyType.requestTypeNode || optionalValueTypeNode.requestTypeNode
-                    ? ts.factory.createTypeReferenceNode("Partial", [
-                          ts.factory.createTypeReferenceNode("Record", [
-                              keyType.requestTypeNode ?? keyType.typeNode,
-                              optionalValueTypeNode.requestTypeNode ?? optionalValueTypeNode.typeNode
-                          ])
+                    ? ts.factory.createTypeReferenceNode("Record", [
+                          keyType.requestTypeNode ?? keyType.typeNode,
+                          optionalValueTypeNode.requestTypeNode ?? optionalValueTypeNode.typeNode
                       ])
                     : undefined
                 : undefined,
             responseTypeNode: this.generateReadWriteOnlyTypes
                 ? keyType.responseTypeNode || optionalValueTypeNode.responseTypeNode
-                    ? ts.factory.createTypeReferenceNode("Partial", [
-                          ts.factory.createTypeReferenceNode("Record", [
-                              keyType.responseTypeNode ?? keyType.typeNode,
-                              optionalValueTypeNode.responseTypeNode ?? optionalValueTypeNode.typeNode
-                          ])
+                    ? ts.factory.createTypeReferenceNode("Record", [
+                          keyType.responseTypeNode ?? keyType.typeNode,
+                          optionalValueTypeNode.responseTypeNode ?? optionalValueTypeNode.typeNode
                       ])
                     : undefined
                 : undefined

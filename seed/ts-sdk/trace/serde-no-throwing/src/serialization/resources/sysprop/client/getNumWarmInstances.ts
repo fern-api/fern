@@ -11,5 +11,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.record(Language, core.serialization.number().optional());
 
 export declare namespace Response {
-    export type Raw = Partial<Record<Language.Raw, number | null | undefined>>;
+    export type Raw = Record<Language.Raw, number | null | undefined>;
 }
