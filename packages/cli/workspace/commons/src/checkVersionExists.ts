@@ -75,7 +75,7 @@ export function getRegistryInfoFromOutput(generatorInvocation: generatorsYml.Gen
     if (typeof output !== "object" || output == null) {
         return {};
     }
-    const o = output as Record<string, unknown>;
+    const o = output as unknown as Record<string, unknown>;
     const url = typeof o.url === "string" ? resolveEnvVar(o.url) : undefined;
     // npm/pypi/crates use "token"; nuget/rubygems use "api-key"; maven uses "password"
     const rawToken =
