@@ -5055,7 +5055,7 @@
     "docs.TabsAlignment": {
       "type": "string",
       "enum": [
-        "default",
+        "left",
         "center"
       ]
     },

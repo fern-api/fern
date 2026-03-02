@@ -5,8 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const TabsAlignment: core.serialization.Schema<serializers.TabsAlignment.Raw, FernDocsConfig.TabsAlignment> =
-    core.serialization.enum_(["default", "center"]);
+    core.serialization.enum_(["left", "center"]);
 
 export declare namespace TabsAlignment {
-    export type Raw = "default" | "center";
+    export type Raw = "left" | "center";
 }

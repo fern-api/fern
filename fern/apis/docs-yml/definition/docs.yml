@@ -864,7 +864,7 @@ types:
 
   TabsAlignment:
     enum:
-      - default
+      - left
       - center
 
   TabsThemeConfig:

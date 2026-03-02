@@ -468,7 +468,7 @@ function convertLayoutConfig(
         hideFeedback: layout.hideFeedback ?? false,
         // tabsAlignment is not yet in the FDR SDK type; cast to forward-compat
         // until the fern-platform companion PR merges and the SDK is updated.
-        tabsAlignment: layout.tabsAlignment === "center" ? "CENTER" : "DEFAULT"
+        tabsAlignment: layout.tabsAlignment === "center" ? "CENTER" : "LEFT"
     } as docsYml.ParsedDocsConfiguration["layout"];
 }
 
