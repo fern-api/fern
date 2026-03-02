@@ -31,7 +31,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/list-of-primitives",
                     Body = request,
@@ -96,7 +95,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/list-of-objects",
                     Body = request,
@@ -161,7 +159,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/set-of-primitives",
                     Body = request,
@@ -226,7 +223,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/set-of-objects",
                     Body = request,
@@ -293,7 +289,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-prim",
                     Body = request,
@@ -358,7 +353,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-object",
                     Body = request,
@@ -425,7 +419,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-union",
                     Body = request,
@@ -492,7 +485,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/opt-objects",
                     Body = request,

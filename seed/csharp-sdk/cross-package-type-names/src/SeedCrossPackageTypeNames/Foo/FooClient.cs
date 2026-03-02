@@ -34,7 +34,6 @@ public partial class FooClient : IFooClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,

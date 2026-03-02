@@ -28,7 +28,6 @@ public partial class UnknownClient : IUnknownClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     Body = request,
@@ -91,7 +90,6 @@ public partial class UnknownClient : IUnknownClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/with-object",
                     Body = request,

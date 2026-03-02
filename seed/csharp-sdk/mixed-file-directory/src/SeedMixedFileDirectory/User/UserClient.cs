@@ -36,7 +36,6 @@ public partial class UserClient : IUserClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/",
                     QueryString = _queryString,

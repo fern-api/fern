@@ -45,7 +45,6 @@ public partial class System : ISystem
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
@@ -108,7 +107,6 @@ public partial class System : ISystem
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
@@ -240,7 +238,6 @@ public partial class System : ISystem
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/users/empty",
                     Body = request,

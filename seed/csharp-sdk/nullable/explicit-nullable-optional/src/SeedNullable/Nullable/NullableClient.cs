@@ -36,7 +36,6 @@ public partial class NullableClient : INullableClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users",
                     QueryString = _queryString,
@@ -99,7 +98,6 @@ public partial class NullableClient : INullableClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/users",
                     Body = request,
@@ -162,7 +160,6 @@ public partial class NullableClient : INullableClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Delete,
                     Path = "/users",
                     Body = request,

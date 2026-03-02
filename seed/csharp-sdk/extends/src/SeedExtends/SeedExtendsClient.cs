@@ -54,7 +54,6 @@ public partial class SeedExtendsClient : ISeedExtendsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/extends/extended-inline-request-body",
                     Body = request,
