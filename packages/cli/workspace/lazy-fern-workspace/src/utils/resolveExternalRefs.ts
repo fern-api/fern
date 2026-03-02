@@ -65,11 +65,8 @@ export function buildExternalRefRegistry(doc: unknown, baseDir: string): Map<str
                 continue;
             }
             const ref = (value as Record<string, unknown>)["$ref"] as string;
-            const hashIndex = ref.indexOf("#");
-            const filePath = hashIndex >= 0 ? ref.slice(0, hashIndex) : ref;
-            const pointer = hashIndex >= 0 ? ref.slice(hashIndex + 1) : "";
-            const absPath = resolve(baseDir, filePath);
-            registry.set(`${absPath}#${pointer}`, `${internalPrefix}/${key}`);
+            const { jsonPointer, absolutePath } = parseExternalRef(ref, baseDir);
+            registry.set(`${absolutePath}#${jsonPointer}`, `${internalPrefix}/${key}`);
         }
     }
 
@@ -90,6 +87,20 @@ export function buildExternalRefRegistry(doc: unknown, baseDir: string): Map<str
 // ---------------------------------------------------------------------------
 // Internal helpers
 // ---------------------------------------------------------------------------
+
+interface ParsedRef {
+    filePath: string;
+    jsonPointer: string;
+    absolutePath: string;
+}
+
+function parseExternalRef(ref: string, baseDir: string): ParsedRef {
+    const hashIndex = ref.indexOf("#");
+    const filePath = hashIndex >= 0 ? ref.slice(0, hashIndex) : ref;
+    const jsonPointer = hashIndex >= 0 ? ref.slice(hashIndex + 1) : "";
+    const absolutePath = resolve(baseDir, filePath);
+    return { filePath, jsonPointer, absolutePath };
+}
 
 function isExternalRefValue(value: unknown): boolean {
     if (value == null || typeof value !== "object" || Array.isArray(value)) {
@@ -191,10 +202,7 @@ export async function resolveExternalRefs(
 
     const ref = record["$ref"];
     if (typeof ref === "string" && !ref.startsWith("#")) {
-        const hashIndex = ref.indexOf("#");
-        const filePath = hashIndex >= 0 ? ref.slice(0, hashIndex) : ref;
-        const jsonPointer = hashIndex >= 0 ? ref.slice(hashIndex + 1) : "";
-        const absoluteRefPath = resolve(baseDir, filePath);
+        const { jsonPointer, absolutePath: absoluteRefPath } = parseExternalRef(ref, baseDir);
 
         // Collect sibling properties (keys other than $ref). AsyncAPI 3.x and
         // OpenAPI 3.1+ allow meaningful sibling keywords alongside $ref (e.g.
