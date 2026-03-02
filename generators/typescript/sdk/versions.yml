@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.54.0
+  changelogEntry:
+    - summary: |
+        Add React Query (TanStack Query v5) support. When `generateReactQuery: true` is set in the
+        generator config, the SDK generates `queryOptions()`, `mutationOptions()`, and
+        `infiniteQueryOptions()` functions exported via the `./react-query` subpath
+        (e.g. `import { UsersListOptions } from "@company/sdk/react-query"`).
+        GET endpoints produce `queryOptions` (and `infiniteQueryOptions` for paginated endpoints),
+        while non-GET endpoints produce `mutationOptions`. Each query function also exports a
+        companion `QueryKey` factory for cache invalidation. `@tanstack/react-query` and `react`
+        are added as optional peer dependencies.
+      type: feat
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.53.3
   changelogEntry:
     - summary: |
