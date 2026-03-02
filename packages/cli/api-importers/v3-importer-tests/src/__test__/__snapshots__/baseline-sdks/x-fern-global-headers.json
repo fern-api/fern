@@ -208,19 +208,13 @@
         "wireValue": "another_header"
       },
       "valueType": {
-        "container": {
-          "optional": {
-            "primitive": {
-              "v1": "STRING",
-              "v2": {
-                "type": "string"
-              }
-            },
-            "type": "primitive"
-          },
-          "type": "optional"
+        "primitive": {
+          "v1": "STRING",
+          "v2": {
+            "type": "string"
+          }
         },
-        "type": "container"
+        "type": "primitive"
       },
       "env": "MY_HEADER_ENV",
       "v2Examples": {
@@ -1508,11 +1502,8 @@
           "wireValue": "another_header"
         },
         "typeReference": {
-          "value": {
-            "value": "STRING",
-            "type": "primitive"
-          },
-          "type": "optional"
+          "value": "STRING",
+          "type": "primitive"
         }
       },
       {
