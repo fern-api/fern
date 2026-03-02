@@ -302,7 +302,7 @@ export class WireMock {
         };
 
         // Add postServeActions for certain mappings
-        if (endpoint.method === "GET" && !mapping.request.pathParameters && !mapping.request.queryParameters) {
+        if (endpoint.method === "GET" && !mapping.request.pathParameters) {
             mapping.postServeActions = [];
         }
 
