@@ -37,7 +37,7 @@ async function main() {
     await tsup.build({
         ...commonConfig,
         entry: ["src/api.ts"],
-        noExternal: ["@fern-api/github", "@fern-api/fs-utils"],
+        noExternal: ["@fern-api/core-utils", "@fern-api/github", "@fern-api/fs-utils"],
         external: ["@fern-api/replay", "@octokit/rest", "es-toolkit", "tmp-promise"],
         clean: false
     });
