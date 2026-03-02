@@ -635,9 +635,7 @@ export class WireTestGenerator {
         const entries: string[] = [];
         for (const [key, value] of Object.entries(wiremockMapping.request.queryParameters)) {
             const queryParam = value as { equalTo: string };
-            entries.push(
-                `"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(queryParam.equalTo)}"`
-            );
+            entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(queryParam.equalTo)}"`);
         }
 
         if (entries.length === 0) {
