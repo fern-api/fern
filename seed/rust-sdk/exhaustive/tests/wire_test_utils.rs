@@ -26,11 +26,14 @@ use std::collections::HashMap;
 use std::process::Command;
 use std::sync::Once;
 
-/// Returns the WireMock base URL from the WIREMOCK_URL environment variable.
+/// The base URL for WireMock
 pub fn get_wiremock_base_url() -> String {
     std::env::var("WIREMOCK_URL").unwrap_or_else(|_| "http://localhost:8080".to_string())
 }
 
+fn get_wiremock_admin_url() -> String {
+    format!("{}/__admin", get_wiremock_base_url())
+}
 const WIREMOCK_COMPOSE_FILE: &str = "wiremock/docker-compose.test.yml";
 
 static START: Once = Once::new();
@@ -38,7 +41,7 @@ static START: Once = Once::new();
 /// Check if WireMock is already running by hitting the health endpoint
 fn is_wiremock_running() -> bool {
     Command::new("curl")
-        .args(["-s", "-f", &format!("{}/__admin/health", get_wiremock_base_url())])
+        .args(["-s", "-f", &format!("{}/health", get_wiremock_admin_url())])
         .stdout(std::process::Stdio::null())
         .stderr(std::process::Stdio::null())
         .status()
