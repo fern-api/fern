@@ -14,7 +14,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { ContainerRunner, haveSameNullishness, undefinedIfNullish, undefinedIfSomeNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
-import { formatBootstrapSummary, replayInit } from "@fern-api/generator-cli";
+import { formatBootstrapSummary, replayInit, replayResolve } from "@fern-api/generator-cli";
 import {
     initializeAPI,
     initializeDocs,
@@ -2049,6 +2049,7 @@ function addReplayCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         describe: false, // hidden from --help
         builder: (yargs) => {
             addReplayInitCommand(yargs, cliContext);
+            addReplayResolveCommand(yargs, cliContext);
             return yargs;
         },
         handler: () => {
@@ -2149,6 +2150,78 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 cliContext.failAndThrow(
                     `Failed to initialize Replay: ${error instanceof Error ? error.message : String(error)}`
                 );
+            }
+        }
+    );
+}
+
+function addReplayResolveCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "resolve [directory]",
+        false, // hidden from --help
+        (yargs) =>
+            yargs
+                .positional("directory", {
+                    type: "string",
+                    default: ".",
+                    description: "SDK directory containing .fern/replay.lock"
+                })
+                .option("no-check-markers", {
+                    type: "boolean",
+                    default: false,
+                    description: "Skip checking for remaining conflict markers before committing"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern replay resolve"
+            });
+
+            const outputDir = resolve(cwd(), argv.directory ?? ".");
+
+            try {
+                const result = await replayResolve({
+                    outputDir,
+                    checkMarkers: !argv.noCheckMarkers
+                });
+
+                switch (result.phase) {
+                    case "applied":
+                        cliContext.logger.info(
+                            `Applied ${result.patchesApplied} unresolved patch(es) to your working tree.`
+                        );
+                        if (result.unresolvedFiles && result.unresolvedFiles.length > 0) {
+                            cliContext.logger.info(`\nFiles with conflict markers:`);
+                            for (const file of result.unresolvedFiles) {
+                                cliContext.logger.info(`  ${file}`);
+                            }
+                            cliContext.logger.info(
+                                `\nResolve the conflicts in your editor, then run \`fern replay resolve\` again to finalize.`
+                            );
+                        }
+                        break;
+                    case "committed":
+                        cliContext.logger.info(
+                            `Resolved ${result.patchesResolved} patch(es) and committed. Push when ready.`
+                        );
+                        break;
+                    case "nothing-to-resolve":
+                        cliContext.logger.info("No unresolved patches found.");
+                        break;
+                    default:
+                        if (!result.success) {
+                            if (result.reason === "unresolved-conflicts" && result.unresolvedFiles) {
+                                cliContext.logger.warn(`Some files still have conflict markers:`);
+                                for (const file of result.unresolvedFiles) {
+                                    cliContext.logger.warn(`  ${file}`);
+                                }
+                                cliContext.logger.warn(`Resolve them first, then run \`fern replay resolve\` again.`);
+                            } else {
+                                cliContext.failAndThrow(`Resolve failed: ${result.reason ?? "unknown error"}`);
+                            }
+                        }
+                }
+            } catch (error) {
+                cliContext.failAndThrow(`Failed to resolve: ${error instanceof Error ? error.message : String(error)}`);
             }
         }
     );
