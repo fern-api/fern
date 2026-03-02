@@ -1961,7 +1961,7 @@ func urlTagForType(
 		`json:"-"`,
 	}
 	structTags = append(structTags, fmt.Sprintf(tagFormat, "url", wireValue))
-	if formatStructTag := maybeFormatStructTag(valueType); formatStructTag != "" {
+	if formatStructTag := maybeFormatStructTag(valueType, types); formatStructTag != "" {
 		structTags = append(structTags, formatStructTag)
 	}
 	return fmt.Sprintf("`%s`", strings.Join(structTags, " "))
@@ -1986,7 +1986,7 @@ func structTagForType(
 	for _, tag := range ignoreTags {
 		structTags = append(structTags, fmt.Sprintf(`%s:"-"`, tag))
 	}
-	if formatStructTag := maybeFormatStructTag(valueType); formatStructTag != "" {
+	if formatStructTag := maybeFormatStructTag(valueType, types); formatStructTag != "" {
 		structTags = append(structTags, formatStructTag)
 	}
 	if len(structTags) == 0 {
@@ -2260,24 +2260,31 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool, types map[common.Ty
 // maybeFormatStructTag returns the layout struct tag for [optional] date types.
 // Note that we don't need to include a custom layout for DateTime because that
 // is the default format used for time.Time types.
-func maybeFormatStructTag(valueType *ir.TypeReference) string {
+func maybeFormatStructTag(valueType *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) string {
 	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		return `format:"date"`
+	}
+	// Resolve named type aliases (e.g. DateAlias -> date).
+	if valueType.Named != nil && types != nil {
+		typeDeclaration := types[valueType.Named.TypeId]
+		if typeDeclaration != nil && typeDeclaration.Shape.Alias != nil {
+			return maybeFormatStructTag(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
 	}
 	if valueType.Type != "container" {
 		return ""
 	}
 	switch valueType.Container.Type {
 	case "list":
-		return maybeFormatStructTag(valueType.Container.List)
+		return maybeFormatStructTag(valueType.Container.List, types)
 	case "map":
-		return maybeFormatStructTag(valueType.Container.Map.ValueType)
+		return maybeFormatStructTag(valueType.Container.Map.ValueType, types)
 	case "nullable":
-		return maybeFormatStructTag(valueType.Container.Nullable)
+		return maybeFormatStructTag(valueType.Container.Nullable, types)
 	case "optional":
-		return maybeFormatStructTag(valueType.Container.Optional)
+		return maybeFormatStructTag(valueType.Container.Optional, types)
 	case "set":
-		return maybeFormatStructTag(valueType.Container.Set)
+		return maybeFormatStructTag(valueType.Container.Set, types)
 	}
 	return ""
 }
