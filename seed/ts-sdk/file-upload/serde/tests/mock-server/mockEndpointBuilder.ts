@@ -2,9 +2,9 @@ import { type DefaultBodyType, type HttpHandler, HttpResponse, type HttpResponse
 
 import { url } from "../../src/core";
 import { toJson } from "../../src/core/json";
-import { withFormUrlEncoded, type WithFormUrlEncodedOptions } from "./withFormUrlEncoded";
+import { type WithFormUrlEncodedOptions, withFormUrlEncoded } from "./withFormUrlEncoded";
 import { withHeaders } from "./withHeaders";
-import { withJson, type WithJsonOptions } from "./withJson";
+import { type WithJsonOptions, withJson } from "./withJson";
 
 type HttpMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 
