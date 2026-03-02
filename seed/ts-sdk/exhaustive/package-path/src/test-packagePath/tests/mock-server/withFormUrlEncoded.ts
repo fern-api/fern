@@ -1,14 +1,6 @@
 import { type HttpResponseResolver, passthrough } from "msw";
 
-import { toJson } from "../../src/core/json";
-
-export interface WithFormUrlEncodedOptions {
-    /**
-     * List of field names to ignore when comparing request bodies.
-     * This is useful for pagination cursor fields that change between requests.
-     */
-    ignoredFields?: string[];
-}
+import { toJson } from "../../core/json";
 
 export interface WithFormUrlEncodedOptions {
     /**
