@@ -74,6 +74,24 @@ service:
               unknown:
                 "\\$ref": "https://example.com/schema"
 
+    getAndReturnWithDatetimeAlias:
+      docs: |
+        Tests that datetime alias fields are properly serialized/deserialized
+        using custom datetime helpers (e.g. internal.DateTime in Go).
+      path: /get-and-return-with-datetime-alias
+      method: POST
+      request: objects.ObjectWithDatetimeAlias
+      response: objects.ObjectWithDatetimeAlias
+      examples:
+        - name: DatetimeAliasExample
+          request:
+            datetime: "2024-01-15T09:30:00Z"
+            datetimeAlias: "2024-01-15T09:30:00Z"
+          response:
+            body:
+              datetime: "2024-01-15T09:30:00Z"
+              datetimeAlias: "2024-01-15T09:30:00Z"
+
     getAndReturnWithDatetimeLikeString:
       docs: |
         Tests that string fields containing datetime-like values are NOT reformatted.

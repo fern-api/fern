@@ -54,6 +54,28 @@ types:
         type: datetime
         docs: An actual datetime field for comparison
 
+  DatetimeAlias:
+    docs: An alias for datetime that should be treated identically to datetime for serialization.
+    type: datetime
+
+  ObjectWithDatetimeAlias:
+    docs: |
+      Tests that datetime alias fields use custom datetime serialization helpers
+      (e.g. internal.DateTime in Go) rather than default serialization.
+    properties:
+      datetime:
+        type: datetime
+        docs: A direct datetime field for comparison
+      datetimeAlias:
+        type: DatetimeAlias
+        docs: A datetime alias field that should serialize identically to datetime
+      optionalDatetime:
+        type: optional<datetime>
+        docs: An optional datetime field
+      optionalDatetimeAlias:
+        type: optional<DatetimeAlias>
+        docs: An optional datetime alias field
+
   ObjectWithUnknownField:
     docs: |
       Tests that unknown/any values containing backslashes in map keys
