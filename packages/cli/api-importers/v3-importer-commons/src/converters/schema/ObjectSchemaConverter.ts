@@ -108,6 +108,80 @@ export class ObjectSchemaConverter extends AbstractConverter<
                 hasAdditionalProperties = true;
             }
 
+            // Handle bare oneOf/anyOf elements used for mutual exclusion patterns
+            // (e.g., oneOf with variants containing `not: {}` properties).
+            // Extract properties from each variant as optional properties on the parent object.
+            const variants = allOfSchema.oneOf ?? allOfSchema.anyOf;
+            if (variants != null && allOfSchema.type == null && allOfSchema.properties == null) {
+                const seenKeys = new Set(properties.map((p) => p.name.wireValue));
+                for (const [variantIndex, variantSchemaOrRef] of variants.entries()) {
+                    const variantBreadcrumbs = [
+                        ...breadcrumbs,
+                        allOfSchema.oneOf != null ? "oneOf" : "anyOf",
+                        variantIndex.toString()
+                    ];
+                    const variantSchema = this.context.isReferenceObject(variantSchemaOrRef)
+                        ? this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                              schemaOrReference: variantSchemaOrRef,
+                              breadcrumbs: variantBreadcrumbs
+                          })
+                        : variantSchemaOrRef;
+                    if (variantSchema == null) {
+                        continue;
+                    }
+
+                    // Filter out properties with `not: {}` schema (meaning "property must not exist")
+                    const filteredProperties: Record<string, OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject> =
+                        {};
+                    for (const [key, propertySchema] of Object.entries(variantSchema.properties ?? {})) {
+                        if (!this.context.isReferenceObject(propertySchema) && "not" in propertySchema) {
+                            continue;
+                        }
+                        filteredProperties[key] = propertySchema;
+                    }
+
+                    // All properties from oneOf/anyOf variants are optional on the parent object
+                    // since only one variant's properties are present at a time
+                    const filteredKeys = Object.keys(filteredProperties).filter((key) => !seenKeys.has(key));
+                    if (filteredKeys.length === 0) {
+                        continue;
+                    }
+
+                    const filteredPropertiesForConvert: Record<
+                        string,
+                        OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+                    > = {};
+                    for (const key of filteredKeys) {
+                        const prop = filteredProperties[key];
+                        if (prop != null) {
+                            filteredPropertiesForConvert[key] = prop;
+                            seenKeys.add(key);
+                        }
+                    }
+
+                    const {
+                        convertedProperties: variantProperties,
+                        inlinedTypesFromProperties: inlinedTypesFromVariant,
+                        referencedTypes: variantReferencedTypes,
+                        propertiesByAudience: variantPropertiesByAudience
+                    } = convertProperties({
+                        properties: filteredPropertiesForConvert,
+                        required: [], // All variant properties are optional on the parent
+                        breadcrumbs: variantBreadcrumbs,
+                        context: this.context,
+                        errorCollector: this.context.errorCollector
+                    });
+
+                    properties.push(...variantProperties);
+                    inlinedTypes = { ...inlinedTypes, ...inlinedTypesFromVariant };
+                    propertiesByAudience = { ...propertiesByAudience, ...variantPropertiesByAudience };
+                    variantReferencedTypes.forEach((typeId) => {
+                        referencedTypes.add(typeId);
+                    });
+                }
+                continue;
+            }
+
             const {
                 convertedProperties: allOfProperties,
                 inlinedTypesFromProperties: inlinedTypesFromAllOf,
