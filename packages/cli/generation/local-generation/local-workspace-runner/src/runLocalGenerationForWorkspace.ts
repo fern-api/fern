@@ -1,8 +1,12 @@
-import { checkVersionDoesNotAlreadyExist, computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import {
+    checkVersionDoesNotAlreadyExist,
+    computeSemanticVersion,
+    getPackageNameFromGeneratorConfig
+} from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -367,39 +371,9 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
-function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
-    // Check output.package-name for npm/PyPI/etc.
-    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
-        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
-        if (packageName != null) {
-            return packageName;
-        }
-
-        // Check output.coordinate for Maven (Java)
-        const coordinate = (generatorInvocation.raw.output as { coordinate?: string }).coordinate;
-        if (coordinate != null) {
-            return coordinate;
-        }
-    }
-
-    // Check config.package_name if output.package-name is not set
-    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
-        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
-        if (packageName != null) {
-            return packageName;
-        }
-
-        // go-sdk generator uses module.path to set the package name
-        const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
-        if (modulePath != null) {
-            return modulePath;
-        }
-    }
-    return undefined;
-}
 function resolveAbsolutePathToLocalPreview(
     absolutePathToPreview: AbsoluteFilePath | undefined,
-    generatorInvocation: GeneratorInvocation
+    generatorInvocation: generatorsYml.GeneratorInvocation
 ): AbsoluteFilePath | undefined {
     if (absolutePathToPreview == null) {
         return undefined;

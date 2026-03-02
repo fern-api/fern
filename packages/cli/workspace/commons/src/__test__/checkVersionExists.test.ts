@@ -10,6 +10,7 @@ import {
     doesPypiVersionExist,
     doesRubyGemsVersionExist,
     doesVersionExistOnRegistry,
+    getPackageNameFromGeneratorConfig,
     getRegistryName
 } from "../checkVersionExists.js";
 
@@ -397,7 +398,7 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         expect(ctx._failMessages).toHaveLength(0);
     });
 
-    it("skips check when packageName is undefined", async () => {
+    it("skips check when packageName is undefined and raw config has no package name", async () => {
         const ctx = makeMockContext();
         await checkVersionDoesNotAlreadyExist({
             version: "1.0.0",
@@ -407,6 +408,50 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         });
         expect(fetch).not.toHaveBeenCalled();
         expect(ctx._failMessages).toHaveLength(0);
+    });
+
+    it("falls back to raw config package name when packageName is undefined", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(mockFetchResponse({ version: "1.0.0" }));
+        const ctx = makeMockContext();
+        const invocation = {
+            language: "typescript",
+            outputMode: { type: "publishV2" as const },
+            raw: { output: { "package-name": "@acme/sdk" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub for GeneratorInvocation
+        } as any;
+        await expect(
+            checkVersionDoesNotAlreadyExist({
+                version: "1.0.0",
+                packageName: undefined,
+                generatorInvocation: invocation,
+                context: ctx
+            })
+        ).rejects.toThrow("already exists");
+        expect(ctx._failMessages).toHaveLength(1);
+        expect(ctx._failMessages[0]).toContain("@acme/sdk");
+    });
+
+    it("falls back to raw config Maven coordinate when packageName is undefined", async () => {
+        vi.mocked(fetch).mockResolvedValueOnce(
+            mockFetchResponse({ response: { numFound: 1, docs: [{ v: "1.0.0" }] } })
+        );
+        const ctx = makeMockContext();
+        const invocation = {
+            language: "java",
+            outputMode: { type: "publishV2" as const },
+            raw: { output: { coordinate: "com.example:lib" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub for GeneratorInvocation
+        } as any;
+        await expect(
+            checkVersionDoesNotAlreadyExist({
+                version: "1.0.0",
+                packageName: undefined,
+                generatorInvocation: invocation,
+                context: ctx
+            })
+        ).rejects.toThrow("already exists");
+        expect(ctx._failMessages).toHaveLength(1);
+        expect(ctx._failMessages[0]).toContain("com.example:lib");
     });
 
     it("skips check for downloadFiles output mode", async () => {
@@ -536,5 +581,68 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         expect(ctx._failMessages).toHaveLength(0);
         expect(ctx._warnMessages).toHaveLength(0);
         expect(ctx._debugMessages).toHaveLength(1);
+    });
+});
+
+// ─── getPackageNameFromGeneratorConfig ───────────────────────────────
+
+describe("getPackageNameFromGeneratorConfig", () => {
+    it("returns package-name from output", () => {
+        const invocation = {
+            raw: { output: { "package-name": "@acme/sdk" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBe("@acme/sdk");
+    });
+
+    it("returns coordinate from output (Maven)", () => {
+        const invocation = {
+            raw: { output: { coordinate: "com.example:lib" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBe("com.example:lib");
+    });
+
+    it("returns package_name from config as fallback", () => {
+        const invocation = {
+            raw: { config: { package_name: "my_package" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBe("my_package");
+    });
+
+    it("returns module.path from config for Go", () => {
+        const invocation = {
+            raw: { config: { module: { path: "github.com/acme/go-sdk" } } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBe("github.com/acme/go-sdk");
+    });
+
+    it("prefers output.package-name over config.package_name", () => {
+        const invocation = {
+            raw: {
+                output: { "package-name": "@acme/sdk" },
+                config: { package_name: "fallback" }
+            }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBe("@acme/sdk");
+    });
+
+    it("returns undefined when raw is undefined", () => {
+        const invocation = {
+            raw: undefined
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBeUndefined();
+    });
+
+    it("returns undefined when no package name fields are set", () => {
+        const invocation = {
+            raw: { output: { location: "npm" }, config: { other: "value" } }
+            // biome-ignore lint/suspicious/noExplicitAny: test stub
+        } as any;
+        expect(getPackageNameFromGeneratorConfig(invocation)).toBeUndefined();
     });
 });

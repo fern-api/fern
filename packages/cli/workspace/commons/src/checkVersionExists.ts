@@ -1,6 +1,56 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 
+/**
+ * Resolves the package name from the raw generator configuration.
+ *
+ * This is necessary because `generatorsYml.getPackageName()` returns `undefined`
+ * for `publish` / `publishV2` output modes (the package name lives in the raw
+ * output config, not in the Fiddle output-mode object). The local generation
+ * path already used a similar helper; this shared version ensures the remote
+ * path can also resolve the name.
+ *
+ * Lookup order:
+ * 1. `output["package-name"]` — npm, PyPI, NuGet, RubyGems, crates.io
+ * 2. `output.coordinate`      — Maven (Java)
+ * 3. `config.package_name`    — fallback (some generators)
+ * 4. `config.module.path`     — Go SDK generator
+ *
+ * @internal Exported for testing and reuse in generation paths
+ */
+export function getPackageNameFromGeneratorConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): string | undefined {
+    // Check output.package-name for npm/PyPI/etc.
+    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
+        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
+        if (packageName != null) {
+            return packageName;
+        }
+
+        // Check output.coordinate for Maven (Java)
+        const coordinate = (generatorInvocation.raw.output as { coordinate?: string }).coordinate;
+        if (coordinate != null) {
+            return coordinate;
+        }
+    }
+
+    // Check config.package_name if output.package-name is not set
+    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
+        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
+        if (packageName != null) {
+            return packageName;
+        }
+
+        // go-sdk generator uses module.path to set the package name
+        const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
+        if (modulePath != null) {
+            return modulePath;
+        }
+    }
+    return undefined;
+}
+
 // ─── Constants ──────────────────────────────────────────────────────
 
 /** Timeout for registry HTTP calls (ms). Prevents slow registries from delaying generation start. */
@@ -74,7 +124,11 @@ export async function checkVersionDoesNotAlreadyExist({
     const isPublishMode =
         generatorInvocation.outputMode.type === "publishV2" || generatorInvocation.outputMode.type === "publish";
 
-    if (generatorInvocation.language == null || packageName == null) {
+    // Fallback to raw config when the Fiddle output-mode doesn't carry a package name
+    // (this is the case for publish / publishV2 output modes).
+    const resolvedPackageName = packageName ?? getPackageNameFromGeneratorConfig(generatorInvocation);
+
+    if (generatorInvocation.language == null || resolvedPackageName == null) {
         return;
     }
 
@@ -82,7 +136,7 @@ export async function checkVersionDoesNotAlreadyExist({
 
     let exists: boolean;
     try {
-        exists = await doesVersionExistOnRegistry({ packageName, version, language });
+        exists = await doesVersionExistOnRegistry({ packageName: resolvedPackageName, version, language });
     } catch (error) {
         // Best-effort check — if we can't reach the registry, don't block generation.
         // The error will surface later during the actual publish step.
@@ -94,13 +148,13 @@ export async function checkVersionDoesNotAlreadyExist({
     if (exists) {
         if (isPublishMode) {
             context.failAndThrow(
-                `Version ${version} of ${packageName} already exists on the ${getRegistryName(language)} registry. ` +
+                `Version ${version} of ${resolvedPackageName} already exists on the ${getRegistryName(language)} registry. ` +
                     `Please use a different version number. ` +
                     `If you want to automatically increment the version, omit the --version flag.`
             );
         } else {
             context.logger.warn(
-                `Version ${version} of ${packageName} already exists on the ${getRegistryName(language)} registry. ` +
+                `Version ${version} of ${resolvedPackageName} already exists on the ${getRegistryName(language)} registry. ` +
                     `If your CI pipeline publishes this version, it may fail.`
             );
         }
