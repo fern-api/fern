@@ -268,6 +268,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     private string BuildUrl(BaseRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl ?? Options.BaseUrl;
+
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
