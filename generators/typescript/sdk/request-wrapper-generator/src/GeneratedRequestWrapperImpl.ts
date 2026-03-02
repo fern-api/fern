@@ -1,6 +1,7 @@
 import { noop, SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
+    deduplicateExamples,
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
     getPropertyKey,
@@ -315,19 +316,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             return undefined;
         }
 
-        const uniqueExamples: string[] = [];
-        for (const example of exampleCalls) {
+        const allExamples = exampleCalls.map((example) => {
             const generatedExample = this.generateExample(example);
-            let exampleStr =
+            const exampleStr =
                 "@example\n" +
                 getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
-            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
-            // Only add if it doesn't already exist
-            if (!uniqueExamples.includes(exampleStr)) {
-                uniqueExamples.push(exampleStr);
-            }
-        }
-        return uniqueExamples.join("\n\n");
+            return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+        });
+        return deduplicateExamples(allExamples).join("\n\n");
     }
 
     private getInlineProperty(
