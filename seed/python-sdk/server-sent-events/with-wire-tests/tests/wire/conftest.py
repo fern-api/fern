@@ -29,7 +29,6 @@ def _get_wiremock_base_url() -> str:
     return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
 
 
-
 def get_client(test_id: str) -> SeedServerSentEvents:
     """
     Creates a configured client instance for wire tests.
