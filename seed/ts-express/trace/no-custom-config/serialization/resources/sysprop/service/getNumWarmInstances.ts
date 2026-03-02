@@ -6,12 +6,12 @@ import * as serializers from "../../../index";
 
 export const Response: core.serialization.Schema<
     serializers.sysprop.getNumWarmInstances.Response.Raw,
-    Record<SeedTrace.Language, number | undefined>
+    Partial<Record<SeedTrace.Language, number>>
 > = core.serialization.record(
     core.serialization.lazy(() => serializers.Language),
     core.serialization.number().optional(),
 );
 
 export declare namespace Response {
-    export type Raw = Record<serializers.Language.Raw, number | null | undefined>;
+    export type Raw = Partial<Record<serializers.Language.Raw, number>>;
 }

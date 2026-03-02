@@ -14,6 +14,6 @@ export const GetFunctionSignatureResponse: core.serialization.ObjectSchema<
 
 export declare namespace GetFunctionSignatureResponse {
     export interface Raw {
-        functionByLanguage: Record<Language.Raw, string | null | undefined>;
+        functionByLanguage: Partial<Record<Language.Raw, string>>;
     }
 }

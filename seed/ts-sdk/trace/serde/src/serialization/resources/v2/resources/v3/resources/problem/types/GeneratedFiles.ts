@@ -17,8 +17,8 @@ export const GeneratedFiles: core.serialization.ObjectSchema<
 
 export declare namespace GeneratedFiles {
     export interface Raw {
-        generatedTestCaseFiles: Record<Language.Raw, Files.Raw | null | undefined>;
-        generatedTemplateFiles: Record<Language.Raw, Files.Raw | null | undefined>;
-        other: Record<Language.Raw, Files.Raw | null | undefined>;
+        generatedTestCaseFiles: Partial<Record<Language.Raw, Files.Raw>>;
+        generatedTemplateFiles: Partial<Record<Language.Raw, Files.Raw>>;
+        other: Partial<Record<Language.Raw, Files.Raw>>;
     }
 }

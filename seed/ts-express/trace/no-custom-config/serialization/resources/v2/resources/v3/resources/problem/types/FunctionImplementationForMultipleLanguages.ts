@@ -16,9 +16,6 @@ export const FunctionImplementationForMultipleLanguages: core.serialization.Obje
 
 export declare namespace FunctionImplementationForMultipleLanguages {
     export interface Raw {
-        codeByLanguage: Record<
-            serializers.Language.Raw,
-            serializers.v2.v3.FunctionImplementation.Raw | null | undefined
-        >;
+        codeByLanguage: Partial<Record<serializers.Language.Raw, serializers.v2.v3.FunctionImplementation.Raw>>;
     }
 }

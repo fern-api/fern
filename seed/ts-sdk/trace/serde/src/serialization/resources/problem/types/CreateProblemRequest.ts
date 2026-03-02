@@ -26,7 +26,7 @@ export declare namespace CreateProblemRequest {
     export interface Raw {
         problemName: string;
         problemDescription: ProblemDescription.Raw;
-        files: Record<Language.Raw, ProblemFiles.Raw | null | undefined>;
+        files: Partial<Record<Language.Raw, ProblemFiles.Raw>>;
         inputParams: VariableTypeAndName.Raw[];
         outputType: serializers.VariableType.Raw;
         testcases: TestCaseWithExpectedResult.Raw[];

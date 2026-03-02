@@ -21,7 +21,7 @@ export declare namespace BasicCustomFiles {
     export interface Raw {
         methodName: string;
         signature: serializers.v2.NonVoidFunctionSignature.Raw;
-        additionalFiles: Record<serializers.Language.Raw, serializers.v2.Files.Raw | null | undefined>;
+        additionalFiles: Partial<Record<serializers.Language.Raw, serializers.v2.Files.Raw>>;
         basicTestCaseTemplate: serializers.v2.BasicTestCaseTemplate.Raw;
     }
 }
