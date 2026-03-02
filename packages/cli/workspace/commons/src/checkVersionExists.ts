@@ -180,6 +180,12 @@ export async function checkVersionDoesNotAlreadyExist({
     const language = generatorInvocation.language;
     const registryInfo = getRegistryInfoFromOutput(generatorInvocation);
 
+    context.logger.debug(
+        `Checking ${getRegistryName(language)} for ${resolvedPackageName}@${version}` +
+            (registryInfo.url != null ? ` (registry: ${registryInfo.url})` : "") +
+            (registryInfo.token != null ? " (with auth)" : "")
+    );
+
     let exists: boolean;
     try {
         exists = await doesVersionExistOnRegistry({
@@ -275,11 +281,19 @@ export async function doesNpmVersionExist(
     const baseUrl = registryInfo.url ?? "https://registry.npmjs.org";
     // Strip trailing slash for consistent URL construction
     const registryUrl = baseUrl.replace(/\/+$/, "");
-    const response = await fetch(`${registryUrl}/${encodedName}/${version}`, {
+    const url = `${registryUrl}/${encodedName}/${version}`;
+    const response = await fetch(url, {
         headers,
         signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
     });
     if (!response.ok) {
+        // 401/403 means auth failed — we can't tell whether the version exists.
+        // Throw so the caller logs a debug message instead of silently passing.
+        if (response.status === 401 || response.status === 403) {
+            throw new Error(
+                `Registry returned ${response.status} for ${url} — unable to verify version (auth may be missing or invalid)`
+            );
+        }
         return false;
     }
     const data = (await response.json()) as NpmRegistryVersionResponse;

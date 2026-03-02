@@ -569,8 +569,9 @@ describe("checkVersionDoesNotAlreadyExist", () => {
             context: ctx
         });
         expect(ctx._failMessages).toHaveLength(0);
-        expect(ctx._debugMessages).toHaveLength(1);
-        expect(ctx._debugMessages[0]).toContain("Could not verify");
+        expect(ctx._debugMessages).toHaveLength(2);
+        expect(ctx._debugMessages[0]).toContain("Checking");
+        expect(ctx._debugMessages[1]).toContain("Could not verify");
     });
 
     it("calls failAndThrow for legacy publish output mode", async () => {
@@ -645,7 +646,8 @@ describe("checkVersionDoesNotAlreadyExist", () => {
         });
         expect(ctx._failMessages).toHaveLength(0);
         expect(ctx._warnMessages).toHaveLength(0);
-        expect(ctx._debugMessages).toHaveLength(1);
+        expect(ctx._debugMessages).toHaveLength(2);
+        expect(ctx._debugMessages[0]).toContain("Checking");
     });
 });
 
