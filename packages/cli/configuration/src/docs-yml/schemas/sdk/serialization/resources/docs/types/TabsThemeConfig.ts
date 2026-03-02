@@ -3,12 +3,28 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { TabsAlignment } from "./TabsAlignment.js";
+import { TabsPlacement } from "./TabsPlacement.js";
+
+const TabsThemeStyle = core.serialization.enum_(["default", "bubble"]);
+
+const TabsThemeObjectConfig = core.serialization.object({
+    style: TabsThemeStyle.optional(),
+    alignment: TabsAlignment.optional(),
+    placement: TabsPlacement.optional(),
+});
 
 export const TabsThemeConfig: core.serialization.Schema<
     serializers.TabsThemeConfig.Raw,
     FernDocsConfig.TabsThemeConfig
-> = core.serialization.enum_(["default", "bubble"]);
+> = core.serialization.undiscriminatedUnion([TabsThemeStyle, TabsThemeObjectConfig]);
 
 export declare namespace TabsThemeConfig {
-    export type Raw = "default" | "bubble";
+    export type Raw = RawStyle | RawObject;
+    export type RawStyle = "default" | "bubble";
+    export interface RawObject {
+        style?: RawStyle | null;
+        alignment?: TabsAlignment.Raw | null;
+        placement?: TabsPlacement.Raw | null;
+    }
 }

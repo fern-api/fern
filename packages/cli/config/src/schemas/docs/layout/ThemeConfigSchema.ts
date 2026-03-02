@@ -12,10 +12,17 @@ export const BodyThemeConfigSchema = z.object({
 
 export type BodyThemeConfigSchema = z.infer<typeof BodyThemeConfigSchema>;
 
-export const TabsThemeConfigSchema = z.object({
-    showNavigationLinks: z.boolean().optional()
-});
+export const TabsThemeStyleSchema = z.enum(["default", "bubble"]);
+export type TabsThemeStyleSchema = z.infer<typeof TabsThemeStyleSchema>;
 
+export const TabsThemeObjectConfigSchema = z.object({
+    style: TabsThemeStyleSchema.optional(),
+    alignment: z.enum(["left", "center"]).optional(),
+    placement: z.enum(["header", "sidebar"]).optional()
+});
+export type TabsThemeObjectConfigSchema = z.infer<typeof TabsThemeObjectConfigSchema>;
+
+export const TabsThemeConfigSchema = z.union([TabsThemeStyleSchema, TabsThemeObjectConfigSchema]);
 export type TabsThemeConfigSchema = z.infer<typeof TabsThemeConfigSchema>;
 
 export const ThemeConfigSchema = z.object({

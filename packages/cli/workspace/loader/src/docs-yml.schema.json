@@ -5385,10 +5385,13 @@
       ]
     },
     "docs.TabsThemeConfig": {
-      "type": "string",
-      "enum": [
-        "default",
-        "bubble"
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.TabsThemeStyle"
+        },
+        {
+          "$ref": "#/definitions/docs.TabsThemeObjectConfig"
+        }
       ]
     },
     "docs.PageActionsThemeConfig": {
@@ -5608,6 +5611,49 @@
           }
         }
       ]
+    },
+    "docs.TabsThemeStyle": {
+      "type": "string",
+      "enum": [
+        "default",
+        "bubble"
+      ]
+    },
+    "docs.TabsThemeObjectConfig": {
+      "type": "object",
+      "properties": {
+        "style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsThemeStyle"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "alignment": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsAlignment"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

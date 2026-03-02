@@ -4,5 +4,7 @@ export {
     BodyThemeConfigSchema,
     SidebarThemeConfigSchema,
     TabsThemeConfigSchema,
+    TabsThemeObjectConfigSchema,
+    TabsThemeStyleSchema,
     ThemeConfigSchema
 } from "./ThemeConfigSchema.js";

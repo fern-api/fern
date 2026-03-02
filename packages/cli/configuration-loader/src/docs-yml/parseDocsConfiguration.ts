@@ -395,9 +395,26 @@ function convertThemeConfig(
         return undefined;
     }
 
+    // theme.tabs can be a string ("default"|"bubble") or an object { style?, alignment?, placement? }
+    let resolvedTabs: string | Record<string, unknown> | undefined;
+    if (theme.tabs != null && typeof theme.tabs === "object") {
+        const tabsObj = theme.tabs as docsYml.RawSchemas.TabsThemeObjectConfig;
+        resolvedTabs = {
+            style: tabsObj.style ?? "default",
+            alignment: tabsObj.alignment === "center" ? "CENTER" : "LEFT",
+            placement: tabsObj.placement === "header"
+                ? "HEADER"
+                : tabsObj.placement === "sidebar"
+                  ? "SIDEBAR"
+                  : undefined
+        };
+    } else {
+        resolvedTabs = (theme.tabs as string | undefined) ?? "default";
+    }
+
     return {
         sidebar: theme.sidebar ?? "default",
-        tabs: theme.tabs ?? "default",
+        tabs: resolvedTabs as string,
         body: theme.body ?? "default",
         pageActions: theme.pageActions ?? "default",
         footerNav: theme.footerNav ?? "default",
