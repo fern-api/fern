@@ -413,7 +413,7 @@ function convertThemeConfig(
         const tabsObj = theme.tabs as docsYml.RawSchemas.TabsThemeObjectConfig;
         resolvedTabs = {
             style: tabsObj.style ?? "default",
-            alignment: tabsObj.alignment ?? "left",
+            alignment: tabsObj.alignment,
             placement: tabsObj.placement
         };
     } else {
