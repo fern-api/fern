@@ -3,6 +3,33 @@ import yaml from "js-yaml";
 import { dirname, resolve } from "path";
 
 // ---------------------------------------------------------------------------
+// File cache — avoids re-reading + re-parsing the same YAML file from disk
+// when multiple $ref nodes target the same file (possibly with different
+// JSON pointers).
+// ---------------------------------------------------------------------------
+
+const fileCache = new Map<string, unknown>();
+
+async function readAndParseFile(absolutePath: string): Promise<unknown> {
+    const cached = fileCache.get(absolutePath);
+    if (cached !== undefined) {
+        return cached;
+    }
+    const contents = await readFile(absolutePath, "utf-8");
+    const parsed: unknown = yaml.load(contents);
+    fileCache.set(absolutePath, parsed);
+    return parsed;
+}
+
+/**
+ * Clear the file cache. Exposed primarily for tests so that each test run
+ * starts with a clean slate.
+ */
+export function clearFileCache(): void {
+    fileCache.clear();
+}
+
+// ---------------------------------------------------------------------------
 // Registry
 // ---------------------------------------------------------------------------
 
@@ -169,11 +196,22 @@ export async function resolveExternalRefs(
         const jsonPointer = hashIndex >= 0 ? ref.slice(hashIndex + 1) : "";
         const absoluteRefPath = resolve(baseDir, filePath);
 
+        // Collect sibling properties (keys other than $ref). AsyncAPI 3.x and
+        // OpenAPI 3.1+ allow meaningful sibling keywords alongside $ref (e.g.
+        // "description" overriding the referenced schema's description).
+        const siblingProperties: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(record)) {
+            if (key !== "$ref") {
+                siblingProperties[key] = value;
+            }
+        }
+        const hasSiblings = Object.keys(siblingProperties).length > 0;
+
         // When inside a loaded file, prefer converting to an internal ref
         if (applyRegistry) {
             const internalRef = findInternalRef(absoluteRefPath, jsonPointer, mainFileAbsPath, registry);
             if (internalRef !== null) {
-                return { $ref: internalRef };
+                return { $ref: internalRef, ...siblingProperties };
             }
         }
 
@@ -185,8 +223,7 @@ export async function resolveExternalRefs(
         const newVisited = new Set(visited);
         newVisited.add(cacheKey);
 
-        const fileContents = await readFile(absoluteRefPath, "utf-8");
-        let parsed: unknown = yaml.load(fileContents);
+        let parsed: unknown = await readAndParseFile(absoluteRefPath);
 
         if (jsonPointer !== "") {
             const keys = jsonPointer.split("/").filter((k) => k !== "");
@@ -213,7 +250,14 @@ export async function resolveExternalRefs(
 
         // Recursively resolve the loaded content, now with registry active
         const refDir = dirname(absoluteRefPath);
-        return resolveExternalRefs(parsed, refDir, mainFileAbsPath, registry, true, newVisited);
+        const resolved = await resolveExternalRefs(parsed, refDir, mainFileAbsPath, registry, true, newVisited);
+
+        // Merge sibling properties onto the resolved content. Sibling props
+        // take precedence (they act as overrides per AsyncAPI 3.x / OAS 3.1).
+        if (hasSiblings && resolved != null && typeof resolved === "object" && !Array.isArray(resolved)) {
+            return { ...(resolved as Record<string, unknown>), ...siblingProperties };
+        }
+        return resolved;
     }
 
     // No external $ref — recursively process every property value
