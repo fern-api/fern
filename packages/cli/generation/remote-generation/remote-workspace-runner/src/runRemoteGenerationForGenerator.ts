@@ -80,10 +80,11 @@ export async function runRemoteGenerationForGenerator({
 
     const resolvedVersion = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
-    // Fail fast if the target version already exists on the package registry
-    if (!isPreview) {
+    // Fail fast if the target version already exists on the package registry.
+    // Only check when the user explicitly provided a version (not auto-computed).
+    if (!isPreview && version != null) {
         await checkVersionDoesNotAlreadyExist({
-            version: resolvedVersion,
+            version,
             packageName,
             generatorInvocation,
             context: interactiveTaskContext

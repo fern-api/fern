@@ -1,6 +1,11 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 
+// ─── Constants ──────────────────────────────────────────────────────
+
+/** Timeout for registry HTTP calls (ms). Prevents slow registries from delaying generation start. */
+const REGISTRY_TIMEOUT_MS = 5_000;
+
 // ─── Registry API response types ────────────────────────────────────
 
 interface NpmRegistryVersionResponse {
@@ -25,11 +30,14 @@ interface GoProxyVersionResponse {
 
 /**
  * Checks whether the specified version already exists on the target package registry
- * for the given generator invocation. If it does, the task context will fail with an
- * actionable error message.
+ * (or as a GitHub tag for GitHub output modes) for the given generator invocation.
+ * If it does, the task context will fail with an actionable error message.
  *
- * This is a best-effort check — network errors or unsupported registries are silently
- * ignored so that generation is not blocked unnecessarily.
+ * This is a best-effort check — network errors, timeouts, or unsupported registries
+ * are silently ignored so that generation is not blocked unnecessarily.
+ *
+ * NOTE: Private registries (beyond npm via NPM_TOKEN) are not supported. If a package
+ * lives on a private registry, the check will return "not found" and silently pass.
  *
  * @param version - The version being published (e.g., "1.2.3")
  * @param packageName - The package name (e.g., "@acme/sdk")
@@ -47,18 +55,39 @@ export async function checkVersionDoesNotAlreadyExist({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     context: TaskContext;
 }): Promise<void> {
-    // Only check when an explicit version is provided
+    // Only check when an explicit version is provided (not auto-computed)
     if (version == null) {
-        return;
-    }
-
-    // Only check for SDK languages with package registries
-    if (generatorInvocation.language == null || packageName == null) {
         return;
     }
 
     // Skip check for download-only mode (no publishing)
     if (generatorInvocation.outputMode.type === "downloadFiles") {
+        return;
+    }
+
+    // Check GitHub tags for GitHub output modes
+    const githubRepository = getGithubRepository(generatorInvocation);
+    if (githubRepository != null) {
+        let tagExists: boolean;
+        try {
+            tagExists = await doesGithubTagExist(githubRepository, version);
+        } catch (error) {
+            context.logger.debug(
+                `Could not verify tag availability on GitHub: ${error instanceof Error ? error.message : String(error)}`
+            );
+            return;
+        }
+        if (tagExists) {
+            context.failAndThrow(
+                `Version ${version} already exists as a tag on GitHub repository ${githubRepository}. ` +
+                    `Please use a different version number. ` +
+                    `If you want to automatically increment the version, omit the --version flag.`
+            );
+        }
+    }
+
+    // Check package registries for publish output modes
+    if (generatorInvocation.language == null || packageName == null) {
         return;
     }
 
@@ -84,12 +113,57 @@ export async function checkVersionDoesNotAlreadyExist({
     }
 }
 
+// ─── GitHub tag checking ────────────────────────────────────────────
+
+/**
+ * Extracts the GitHub repository ("owner/repo") from a generator invocation's output mode,
+ * if the output mode targets GitHub.
+ */
+/** @internal Exported for testing */
+export function getGithubRepository(generatorInvocation: generatorsYml.GeneratorInvocation): string | undefined {
+    if (generatorInvocation.outputMode.type === "githubV2") {
+        return `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`;
+    }
+    return undefined;
+}
+
+/**
+ * Checks whether a specific tag exists on a GitHub repository.
+ * Uses the GitHub REST API (unauthenticated, or with GITHUB_TOKEN if set).
+ */
+/** @internal Exported for testing */
+export async function doesGithubTagExist(githubRepository: string, version: string): Promise<boolean> {
+    const headers: Record<string, string> = {
+        accept: "application/vnd.github+json"
+    };
+    const githubToken = process.env.GITHUB_TOKEN;
+    if (githubToken != null) {
+        headers.authorization = `Bearer ${githubToken}`;
+    }
+    // Try common tag formats: "vX.Y.Z" and "X.Y.Z"
+    const tagsToCheck = version.startsWith("v") ? [version, version.slice(1)] : [`v${version}`, version];
+
+    for (const tag of tagsToCheck) {
+        const response = await fetch(`https://api.github.com/repos/${githubRepository}/git/ref/tags/${tag}`, {
+            headers,
+            signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
+        });
+        if (response.ok) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// ─── Registry version checking ──────────────────────────────────────
+
 /**
  * Checks whether a specific version of a package exists on the relevant registry.
  *
  * @returns true if the version exists, false otherwise
  */
-async function doesVersionExistOnRegistry({
+/** @internal Exported for testing */
+export async function doesVersionExistOnRegistry({
     packageName,
     version,
     language
@@ -121,8 +195,10 @@ async function doesVersionExistOnRegistry({
 /**
  * Checks if a specific version of an npm package exists.
  * Uses the npm registry's version-specific endpoint which returns 200 if the version exists.
+ * Supports private registries via NPM_TOKEN.
  */
-async function doesNpmVersionExist(packageName: string, version: string): Promise<boolean> {
+/** @internal Exported for testing */
+export async function doesNpmVersionExist(packageName: string, version: string): Promise<boolean> {
     const encodedName = encodeURIComponent(packageName).replace(/^%40/, "@");
     const headers: Record<string, string> = {
         accept: "application/json"
@@ -131,7 +207,10 @@ async function doesNpmVersionExist(packageName: string, version: string): Promis
     if (npmToken != null) {
         headers.authorization = `Bearer ${npmToken}`;
     }
-    const response = await fetch(`https://registry.npmjs.org/${encodedName}/${version}`, { headers });
+    const response = await fetch(`https://registry.npmjs.org/${encodedName}/${version}`, {
+        headers,
+        signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
+    });
     if (!response.ok) {
         return false;
     }
@@ -143,8 +222,11 @@ async function doesNpmVersionExist(packageName: string, version: string): Promis
  * Checks if a specific version of a PyPI package exists.
  * PyPI provides a version-specific JSON endpoint.
  */
-async function doesPypiVersionExist(packageName: string, version: string): Promise<boolean> {
-    const response = await fetch(`https://pypi.org/pypi/${packageName}/${version}/json`);
+/** @internal Exported for testing */
+export async function doesPypiVersionExist(packageName: string, version: string): Promise<boolean> {
+    const response = await fetch(`https://pypi.org/pypi/${packageName}/${version}/json`, {
+        signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
+    });
     return response.ok;
 }
 
@@ -152,7 +234,8 @@ async function doesPypiVersionExist(packageName: string, version: string): Promi
  * Checks if a specific version of a Maven artifact exists.
  * Searches Maven Central for the specific group:artifact:version combination.
  */
-async function doesMavenVersionExist(coordinate: string, version: string): Promise<boolean> {
+/** @internal Exported for testing */
+export async function doesMavenVersionExist(coordinate: string, version: string): Promise<boolean> {
     const parts = coordinate.split(":");
     if (parts.length < 2 || !parts[0] || !parts[1]) {
         return false;
@@ -161,7 +244,8 @@ async function doesMavenVersionExist(coordinate: string, version: string): Promi
     const artifactId = parts[1];
 
     const response = await fetch(
-        `https://search.maven.org/solrsearch/select?q=g:${encodeURIComponent(groupId)}+AND+a:${encodeURIComponent(artifactId)}+AND+v:${encodeURIComponent(version)}&rows=1&wt=json`
+        `https://search.maven.org/solrsearch/select?q=g:${encodeURIComponent(groupId)}+AND+a:${encodeURIComponent(artifactId)}+AND+v:${encodeURIComponent(version)}&rows=1&wt=json`,
+        { signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS) }
     );
     if (!response.ok) {
         return false;
@@ -174,8 +258,11 @@ async function doesMavenVersionExist(coordinate: string, version: string): Promi
  * Checks if a specific version of a NuGet package exists.
  * Uses the NuGet V3 flat container API to list all versions, then checks for the target.
  */
-async function doesNugetVersionExist(packageName: string, version: string): Promise<boolean> {
-    const response = await fetch(`https://api.nuget.org/v3-flatcontainer/${packageName.toLowerCase()}/index.json`);
+/** @internal Exported for testing */
+export async function doesNugetVersionExist(packageName: string, version: string): Promise<boolean> {
+    const response = await fetch(`https://api.nuget.org/v3-flatcontainer/${packageName.toLowerCase()}/index.json`, {
+        signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
+    });
     if (!response.ok) {
         return false;
     }
@@ -188,8 +275,11 @@ async function doesNugetVersionExist(packageName: string, version: string): Prom
  * Checks if a specific version of a Ruby gem exists.
  * Uses the RubyGems version-specific endpoint.
  */
-async function doesRubyGemsVersionExist(packageName: string, version: string): Promise<boolean> {
-    const response = await fetch(`https://rubygems.org/api/v2/rubygems/${packageName}/versions/${version}.json`);
+/** @internal Exported for testing */
+export async function doesRubyGemsVersionExist(packageName: string, version: string): Promise<boolean> {
+    const response = await fetch(`https://rubygems.org/api/v2/rubygems/${packageName}/versions/${version}.json`, {
+        signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
+    });
     return response.ok;
 }
 
@@ -197,12 +287,15 @@ async function doesRubyGemsVersionExist(packageName: string, version: string): P
  * Checks if a specific version of a Go module exists.
  * Uses the Go Module Proxy's version-specific info endpoint.
  */
-async function doesGoVersionExist(modulePath: string, version: string): Promise<boolean> {
+/** @internal Exported for testing */
+export async function doesGoVersionExist(modulePath: string, version: string): Promise<boolean> {
     // Go module proxy requires case-encoding: uppercase letters become "!" + lowercase
     const encodedPath = modulePath.replace(/[A-Z]/g, (c) => "!" + c.toLowerCase());
     // Go versions require "v" prefix
     const goVersion = version.startsWith("v") ? version : `v${version}`;
-    const response = await fetch(`https://proxy.golang.org/${encodedPath}/@v/${goVersion}.info`);
+    const response = await fetch(`https://proxy.golang.org/${encodedPath}/@v/${goVersion}.info`, {
+        signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
+    });
     if (!response.ok) {
         return false;
     }
@@ -214,11 +307,13 @@ async function doesGoVersionExist(modulePath: string, version: string): Promise<
  * Checks if a specific version of a Rust crate exists.
  * Uses the Crates.io version-specific endpoint.
  */
-async function doesCratesVersionExist(packageName: string, version: string): Promise<boolean> {
+/** @internal Exported for testing */
+export async function doesCratesVersionExist(packageName: string, version: string): Promise<boolean> {
     const response = await fetch(`https://crates.io/api/v1/crates/${packageName}/${version}`, {
         headers: {
             "user-agent": "fern-cli (https://buildwithfern.com)"
-        }
+        },
+        signal: AbortSignal.timeout(REGISTRY_TIMEOUT_MS)
     });
     if (!response.ok) {
         return false;
@@ -230,7 +325,8 @@ async function doesCratesVersionExist(packageName: string, version: string): Pro
 /**
  * Returns a human-readable registry name for the given language.
  */
-function getRegistryName(language: string): string {
+/** @internal Exported for testing */
+export function getRegistryName(language: string): string {
     switch (language) {
         case "typescript":
             return "npm";
