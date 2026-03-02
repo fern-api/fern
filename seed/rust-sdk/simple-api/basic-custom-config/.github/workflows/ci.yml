@@ -1,0 +1,73 @@
+name: ci
+
+on: [push]
+
+env:
+  RUSTFLAGS: "-A warnings"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Check
+        run: cargo check
+
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Compile
+        run: cargo build
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Setup WireMock server
+        run: |
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -f wiremock/docker-compose.test.yml down 2>/dev/null || true
+            docker compose -f wiremock/docker-compose.test.yml up -d --wait
+          fi
+
+      - name: Test
+        run: RUN_WIRE_TESTS=true cargo test -- --test-threads=1
+
+      - name: Teardown WireMock server
+        if: always()
+        run: |
+          if [ -f wiremock/docker-compose.test.yml ]; then
+            docker compose -f wiremock/docker-compose.test.yml down
+          fi
+
+  publish:
+    needs: [check, compile, test]
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: actions-rust-lang/setup-rust-toolchain@v1
+
+      - name: Publish
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+        run: cargo publish

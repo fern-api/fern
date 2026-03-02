@@ -693,6 +693,21 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return `${prefix}${schemaId}`;
     }
 
+    /**
+     * Strips the namespace prefix from a schema ID if present.
+     * Returns the raw schema name suitable for display name generation.
+     */
+    public getRawSchemaId(schemaId: string): string {
+        if (this.namespace == null) {
+            return schemaId;
+        }
+        const prefix = `${this.namespace}:`;
+        if (schemaId.startsWith(prefix)) {
+            return schemaId.slice(prefix.length);
+        }
+        return schemaId;
+    }
+
     public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
         const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
         if (!schemaMatch || !schemaMatch[1]) {
@@ -751,7 +766,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
         id: string;
         inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }): Record<TypeId, SchemaConverter.ConvertedSchema> {
-        return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== id));
+        const namespacedId = this.getNamespacedSchemaId(id);
+        return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== namespacedId));
     }
 
     public static maybeTrimPrefix(value: string, prefix: string): string {

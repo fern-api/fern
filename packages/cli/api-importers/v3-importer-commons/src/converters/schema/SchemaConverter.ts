@@ -539,10 +539,11 @@ export class SchemaConverter extends AbstractConverter<AbstractConverterContext<
     }
 
     public convertDeclaredTypeName(): FernIr.DeclaredTypeName {
+        const rawId = this.context.getRawSchemaId(this.id);
         return {
             typeId: this.context.getNamespacedSchemaId(this.id),
             fernFilepath: this.context.createFernFilepath(),
-            name: this.context.casingsGenerator.generateName(this.id),
+            name: this.context.casingsGenerator.generateName(rawId),
             displayName: this.nameOverride
         };
     }

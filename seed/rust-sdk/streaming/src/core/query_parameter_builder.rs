@@ -301,3 +301,308 @@ fn tokenize_query(input: &str) -> Vec<String> {
 
     tokens
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use chrono::{NaiveDate, TimeZone, Utc};
+
+    // ===========================
+    // QueryBuilder tests
+    // ===========================
+
+    #[test]
+    fn test_empty_builder_returns_none() {
+        let result = QueryBuilder::new().build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_string_param_some() {
+        let result = QueryBuilder::new()
+            .string("name", Some("alice".to_string()))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("name".to_string(), "alice".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_string_param_none_skipped() {
+        let result = QueryBuilder::new().string("name", None::<String>).build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_int_param() {
+        let result = QueryBuilder::new().int("page", Some(42i64)).build();
+        assert_eq!(result, Some(vec![("page".to_string(), "42".to_string())]));
+    }
+
+    #[test]
+    fn test_int_param_none_skipped() {
+        let result = QueryBuilder::new().int("page", None::<i64>).build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_float_param() {
+        let result = QueryBuilder::new().float("score", Some(3.14f64)).build();
+        assert_eq!(
+            result,
+            Some(vec![("score".to_string(), "3.14".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_bool_param() {
+        let result = QueryBuilder::new().bool("active", Some(true)).build();
+        assert_eq!(
+            result,
+            Some(vec![("active".to_string(), "true".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_uuid_param() {
+        let id = uuid::Uuid::parse_str("550e8400-e29b-41d4-a716-446655440000").unwrap();
+        let result = QueryBuilder::new().uuid("id", Some(id)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "id".to_string(),
+                "550e8400-e29b-41d4-a716-446655440000".to_string()
+            )])
+        );
+    }
+
+    #[test]
+    fn test_datetime_param_formats_rfc3339() {
+        let dt = Utc.with_ymd_and_hms(2024, 1, 15, 9, 30, 0).unwrap();
+        let result = QueryBuilder::new().datetime("since", Some(dt)).build();
+        assert_eq!(
+            result,
+            Some(vec![(
+                "since".to_string(),
+                "2024-01-15T09:30:00Z".to_string()
+            )])
+        );
+    }
+
+    #[test]
+    fn test_date_param_converts_to_midnight_utc() {
+        let date = NaiveDate::from_ymd_opt(2024, 1, 15).unwrap();
+        let result = QueryBuilder::new().date("on", Some(date)).build();
+        assert_eq!(
+            result,
+            Some(vec![("on".to_string(), "2024-01-15T00:00:00Z".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_string_array_multiple_entries() {
+        let result = QueryBuilder::new()
+            .string_array(
+                "tag",
+                vec!["a".to_string(), "b".to_string(), "c".to_string()],
+            )
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("tag".to_string(), "a".to_string()),
+                ("tag".to_string(), "b".to_string()),
+                ("tag".to_string(), "c".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_int_array() {
+        let result = QueryBuilder::new()
+            .int_array("ids", vec![1i64, 2, 3])
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("ids".to_string(), "1".to_string()),
+                ("ids".to_string(), "2".to_string()),
+                ("ids".to_string(), "3".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_float_array() {
+        let result = QueryBuilder::new()
+            .float_array("scores", vec![1.1f64, 2.2])
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("scores".to_string(), "1.1".to_string()),
+                ("scores".to_string(), "2.2".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_bool_array() {
+        let result = QueryBuilder::new()
+            .bool_array("flags", vec![true, false])
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("flags".to_string(), "true".to_string()),
+                ("flags".to_string(), "false".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_serialize_strips_json_quotes() {
+        let result = QueryBuilder::new()
+            .serialize("status", Some("active"))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("status".to_string(), "active".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_serialize_none_skipped() {
+        let result = QueryBuilder::new()
+            .serialize::<String>("status", None)
+            .build();
+        assert!(result.is_none());
+    }
+
+    #[test]
+    fn test_serialize_numeric_no_quotes() {
+        let result = QueryBuilder::new().serialize("count", Some(42)).build();
+        assert_eq!(result, Some(vec![("count".to_string(), "42".to_string())]));
+    }
+
+    #[test]
+    fn test_serialize_array_skips_null() {
+        let values: Vec<Option<&str>> = vec![Some("a"), None, Some("b")];
+        let result = QueryBuilder::new().serialize_array("items", values).build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("items".to_string(), "a".to_string()),
+                ("items".to_string(), "b".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_method_chaining() {
+        let result = QueryBuilder::new()
+            .string("name", Some("alice".to_string()))
+            .int("page", Some(1i64))
+            .bool("active", Some(true))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![
+                ("name".to_string(), "alice".to_string()),
+                ("page".to_string(), "1".to_string()),
+                ("active".to_string(), "true".to_string()),
+            ])
+        );
+    }
+
+    #[test]
+    fn test_big_int_param() {
+        let big = num_bigint::BigInt::from(999_999_999_999i64);
+        let result = QueryBuilder::new().big_int("value", Some(big)).build();
+        assert_eq!(
+            result,
+            Some(vec![("value".to_string(), "999999999999".to_string())])
+        );
+    }
+
+    // ===========================
+    // parse_structured_query tests
+    // ===========================
+
+    #[test]
+    fn test_parse_simple_key_value() {
+        let result = parse_structured_query("status:active").unwrap();
+        assert_eq!(result, vec![("status".to_string(), "active".to_string())]);
+    }
+
+    #[test]
+    fn test_parse_comma_separated_values() {
+        let result = parse_structured_query("type:sensor,camera").unwrap();
+        assert_eq!(
+            result,
+            vec![
+                ("type".to_string(), "sensor".to_string()),
+                ("type".to_string(), "camera".to_string()),
+            ]
+        );
+    }
+
+    #[test]
+    fn test_parse_multiple_terms() {
+        let result = parse_structured_query("status:active type:sensor").unwrap();
+        assert_eq!(
+            result,
+            vec![
+                ("status".to_string(), "active".to_string()),
+                ("type".to_string(), "sensor".to_string()),
+            ]
+        );
+    }
+
+    #[test]
+    fn test_parse_quoted_value() {
+        let result = parse_structured_query("location:\"New York\"").unwrap();
+        assert_eq!(
+            result,
+            vec![("location".to_string(), "New York".to_string())]
+        );
+    }
+
+    #[test]
+    fn test_parse_bare_word_returns_error() {
+        let result = parse_structured_query("bareword");
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_structured_query_builder_fallback() {
+        // When parsing fails, structured_query falls back to simple param
+        let result = QueryBuilder::new()
+            .structured_query("q", Some("bareword".to_string()))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("q".to_string(), "bareword".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_structured_query_builder_parses() {
+        let result = QueryBuilder::new()
+            .structured_query("q", Some("status:active".to_string()))
+            .build();
+        assert_eq!(
+            result,
+            Some(vec![("status".to_string(), "active".to_string())])
+        );
+    }
+
+    #[test]
+    fn test_structured_query_none_skipped() {
+        let result = QueryBuilder::new()
+            .structured_query("q", None::<String>)
+            .build();
+        assert!(result.is_none());
+    }
+}

@@ -208,6 +208,60 @@ describe("Namespace Resolution", () => {
         });
     });
 
+    describe("getRawSchemaId", () => {
+        it("returns schemaId as-is when no namespace is set", () => {
+            const context = createContext();
+            expect(context.getRawSchemaId("Team")).toBe("Team");
+        });
+
+        it("strips namespace prefix when namespace is set", () => {
+            const context = createContext("entity_manager");
+            expect(context.getRawSchemaId("entity_manager:Team")).toBe("Team");
+        });
+
+        it("returns raw id when id is not namespaced", () => {
+            const context = createContext("entity_manager");
+            expect(context.getRawSchemaId("Team")).toBe("Team");
+        });
+
+        it("does not strip a different namespace prefix", () => {
+            const context = createContext("entity_manager");
+            expect(context.getRawSchemaId("task_manager:Team")).toBe("task_manager:Team");
+        });
+    });
+
+    describe("removeSchemaFromInlinedTypes", () => {
+        it("removes entry with namespaced key when raw id is passed and namespace is set", () => {
+            const context = createContext("entity_manager");
+            // biome-ignore lint/suspicious/noExplicitAny: test mock — only testing key filtering
+            const mockSchema = {} as any;
+            const inlinedTypes: Record<string, SchemaConverter.ConvertedSchema> = {
+                "entity_manager:Request": mockSchema,
+                "entity_manager:Other": mockSchema
+            };
+            const result = context.removeSchemaFromInlinedTypes({
+                id: "Request",
+                inlinedTypes
+            });
+            expect(Object.keys(result)).toEqual(["entity_manager:Other"]);
+        });
+
+        it("removes entry when no namespace is set", () => {
+            const context = createContext();
+            // biome-ignore lint/suspicious/noExplicitAny: test mock — only testing key filtering
+            const mockSchema = {} as any;
+            const inlinedTypes: Record<string, SchemaConverter.ConvertedSchema> = {
+                Request: mockSchema,
+                Other: mockSchema
+            };
+            const result = context.removeSchemaFromInlinedTypes({
+                id: "Request",
+                inlinedTypes
+            });
+            expect(Object.keys(result)).toEqual(["Other"]);
+        });
+    });
+
     describe("typeReferenceToDeclaredTypeName", () => {
         it("preserves namespaced typeId and raw display name from TypeReference", () => {
             const context = createContext("entity_manager");
