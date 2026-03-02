@@ -28,16 +28,15 @@
 //! - [`prelude`] - Common imports for convenience
 
 pub mod api;
-pub mod error;
-pub mod core;
-pub mod config;
 pub mod client;
-pub mod prelude;
+pub mod config;
+pub mod core;
 pub mod environment;
+pub mod error;
+pub mod prelude;
 
-pub use error::{ApiError};
-pub use environment::{*};
-pub use core::{*};
-pub use config::{*};
-pub use client::{*};
-
+pub use client::*;
+pub use config::*;
+pub use core::*;
+pub use environment::*;
+pub use error::ApiError;

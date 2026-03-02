@@ -1,8 +1,7 @@
-pub mod type_id;
-pub mod r#type;
 pub mod object;
+pub mod r#type;
+pub mod type_id;
 
-pub use type_id::{TypeId};
-pub use r#type::{Type};
-pub use object::{Object};
-
+pub use object::Object;
+pub use r#type::Type;
+pub use type_id::TypeId;

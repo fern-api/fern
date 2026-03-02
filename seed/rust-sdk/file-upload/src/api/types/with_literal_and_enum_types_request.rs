@@ -13,33 +13,34 @@ pub struct WithLiteralAndEnumTypesRequest {
 }
 impl WithLiteralAndEnumTypesRequest {
     pub fn to_multipart(self) -> reqwest::multipart::Form {
-    let mut form = reqwest::multipart::Form::new();
+        let mut form = reqwest::multipart::Form::new();
 
-    form = form.part(
-        "file",
-        reqwest::multipart::Part::bytes(self.file.clone())
-            .file_name("file")
-            .mime_str("application/octet-stream").unwrap()
-    );
+        form = form.part(
+            "file",
+            reqwest::multipart::Part::bytes(self.file.clone())
+                .file_name("file")
+                .mime_str("application/octet-stream")
+                .unwrap(),
+        );
 
-    if let Some(ref value) = self.model_type {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("model_type", json_str);
+        if let Some(ref value) = self.model_type {
+            if let Ok(json_str) = serde_json::to_string(value) {
+                form = form.text("model_type", json_str);
+            }
         }
-    }
 
-    if let Some(ref value) = self.open_enum {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("open_enum", json_str);
+        if let Some(ref value) = self.open_enum {
+            if let Ok(json_str) = serde_json::to_string(value) {
+                form = form.text("open_enum", json_str);
+            }
         }
-    }
 
-    if let Some(ref value) = self.maybe_name {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("maybe_name", json_str);
+        if let Some(ref value) = self.maybe_name {
+            if let Ok(json_str) = serde_json::to_string(value) {
+                form = form.text("maybe_name", json_str);
+            }
         }
-    }
 
-    form
-}
+        form
+    }
 }

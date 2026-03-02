@@ -5,10 +5,10 @@
 //! - **RealtimeNoAuth**
 //! - **Realtime**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
-pub mod realtime_no_auth;
 pub mod realtime;
+pub mod realtime_no_auth;
 pub struct WebsocketBearerAuthClient {
     pub config: ClientConfig,
 }
@@ -17,11 +17,9 @@ impl WebsocketBearerAuthClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            
         })
     }
-
 }
 
-pub use realtime_no_auth::RealtimeNoAuthClient;
 pub use realtime::RealtimeClient;
+pub use realtime_no_auth::RealtimeNoAuthClient;
