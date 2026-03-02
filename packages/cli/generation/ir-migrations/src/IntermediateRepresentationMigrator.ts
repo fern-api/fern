@@ -133,20 +133,20 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         const minSupportedVersion = MINIMUM_SUPPORTED_IR_VERSION;
 
         if (versionNum < minSupportedVersion) {
-            let errorMessage = `IR version ${targetVersion} is no longer supported on CLI versions v4.x.x+. Minimum supported version is v${minSupportedVersion}.`;
-
             if (targetGenerator != null) {
                 const minVersion = this.getMinimumGeneratorVersion(targetGenerator.name);
                 if (minVersion != null) {
-                    errorMessage += ` Please upgrade ${targetGenerator.name} to version ${minVersion} or later using 'fern generator upgrade --include-major'.`;
-                } else {
-                    errorMessage += ` Please upgrade your generator to a version that supports IR v${minSupportedVersion} or later using 'fern generator upgrade --include-major'.`;
+                    throw new Error(
+                        `${targetGenerator.name}@${targetGenerator.version} is not compatible with CLI v4.x.x+. ` +
+                            `Please upgrade to ${targetGenerator.name}@${minVersion} or later using `fern generator upgrade --include-major`.`
+                    );
                 }
-            } else {
-                errorMessage += ` Please upgrade your generator to a newer version using 'fern generator upgrade --include-major'.`;
             }
 
-            throw new Error(errorMessage);
+            throw new Error(
+                "This generator version is not compatible with CLI v4.x.x+. " +
+                    "Please upgrade your generator using `fern generator upgrade --include-major`."
+            );
         }
     }
 
