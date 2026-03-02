@@ -21,6 +21,10 @@ export declare namespace RealtimeClient {
         debug?: boolean;
         /** Number of reconnect attempts. Defaults to 30. */
         reconnectAttempts?: number;
+        /** The timeout for establishing the WebSocket connection in seconds. */
+        connectionTimeoutInSeconds?: number;
+        /** A signal to abort the WebSocket connection. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -32,7 +36,17 @@ export class RealtimeClient {
     }
 
     public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
-        const { session_id: sessionId, model, temperature, queryParams, headers, debug, reconnectAttempts } = args;
+        const {
+            session_id: sessionId,
+            model,
+            temperature,
+            queryParams,
+            headers,
+            debug,
+            reconnectAttempts,
+            connectionTimeoutInSeconds,
+            abortSignal,
+        } = args;
         const _queryParams: Record<string, unknown> = {
             model,
             temperature,
@@ -48,7 +62,12 @@ export class RealtimeClient {
             protocols: [],
             queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
-            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
+            options: {
+                debug: debug ?? false,
+                maxRetries: reconnectAttempts ?? 30,
+                connectionTimeout: connectionTimeoutInSeconds != null ? connectionTimeoutInSeconds * 1000 : undefined,
+            },
+            abortSignal: abortSignal,
         });
         return new RealtimeSocket({ socket });
     }

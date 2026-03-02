@@ -30,6 +30,7 @@ export declare namespace ReconnectingWebSocket {
         options?: ReconnectingWebSocket.Options;
         headers?: Record<string, unknown>;
         queryParameters?: Record<string, unknown>;
+        abortSignal?: AbortSignal;
     }
 
     export type Options = {
@@ -91,13 +92,18 @@ export class ReconnectingWebSocket {
     private readonly _options: ReconnectingWebSocket.Options;
     private readonly _headers?: Record<string, any>;
     private readonly _queryParameters?: Record<string, any>;
+    private readonly _abortSignal?: AbortSignal;
 
-    constructor({ url, protocols, options, headers, queryParameters }: ReconnectingWebSocket.Args) {
+    constructor({ url, protocols, options, headers, queryParameters, abortSignal }: ReconnectingWebSocket.Args) {
         this._url = url;
         this._protocols = protocols;
         this._options = options ?? DEFAULT_OPTIONS;
         this._headers = headers;
         this._queryParameters = queryParameters;
+        this._abortSignal = abortSignal;
+        if (this._abortSignal) {
+            this._abortSignal.addEventListener("abort", this._handleAbort, { once: true });
+        }
         if (this._options.startClosed) {
             this._shouldReconnect = false;
         }
@@ -350,6 +356,10 @@ export class ReconnectingWebSocket {
         if (this._connectLock || !this._shouldReconnect) {
             return;
         }
+        if (this._abortSignal?.aborted) {
+            this._debug("connect aborted");
+            return;
+        }
         this._connectLock = true;
 
         const {
@@ -373,7 +383,8 @@ export class ReconnectingWebSocket {
         this._wait()
             .then(() => this._getNextUrl(this._url))
             .then((url) => {
-                if (this._closeCalled) {
+                if (this._closeCalled || this._abortSignal?.aborted) {
+                    this._connectLock = false;
                     return;
                 }
                 const options: Record<string, unknown> = {};
@@ -394,6 +405,22 @@ export class ReconnectingWebSocket {
                 this._connectTimeout = setTimeout(() => this._handleTimeout(), connectionTimeout);
             });
     }
+
+    private _handleAbort = () => {
+        this._debug("abort signal fired");
+        this._shouldReconnect = false;
+        this._closeCalled = true;
+        this._clearTimeouts();
+        if (this._ws) {
+            this._removeListeners();
+            try {
+                this._ws.close(1000, "aborted");
+                this._handleClose(new Events.CloseEvent(1000, "aborted", this));
+            } catch (_error) {
+                // ignore
+            }
+        }
+    };
 
     private _handleTimeout() {
         this._debug("timeout event");
