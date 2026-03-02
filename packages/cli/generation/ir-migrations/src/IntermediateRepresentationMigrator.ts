@@ -2,7 +2,7 @@ import { GeneratorName } from "@fern-api/configuration-loader";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { GENERATOR_MINIMUM_VERSIONS, MINIMUM_SUPPORTED_IR_VERSION } from "./generated/generatorVersionMap.js";
+import { GENERATOR_MINIMUM_VERSIONS, MINIMUM_SUPPORTED_IR_VERSION } from "./generatorVersionMap.js";
 import { GeneratorNameAndVersion } from "./IrMigrationContext.js";
 import { V54_TO_V53_MIGRATION } from "./migrations/v54-to-v53/migrateFromV54ToV53.js";
 import { V55_TO_V54_MIGRATION } from "./migrations/v55-to-v54/migrateFromV55ToV54.js";

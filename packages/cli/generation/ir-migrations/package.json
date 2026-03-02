@@ -24,14 +24,10 @@
   "files": ["lib"],
   "scripts": {
     "build": "tsc",
-    "clean": "rm -rf ./lib && rm -f ./src/generated/generatorVersionMap*.ts",
-    "compile": "pnpm generate:version-map && tsc",
-    "compile:debug": "pnpm generate:version-map && tsc --sourceMap",
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../knip.json --no-config-hints",
-    "generate:version-map": "tsx scripts/generate-version-map.ts",
-    "generate:version-map:force": "tsx scripts/generate-version-map.ts --force",
-    "prebuild": "pnpm generate:version-map",
-    "pretest": "pnpm generate:version-map",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
@@ -62,12 +58,8 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@types/js-yaml": "catalog:",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
-    "glob": "catalog:",
-    "js-yaml": "catalog:",
-    "tsx": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }
