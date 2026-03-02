@@ -10,7 +10,7 @@ export const BasicCustomFiles: core.serialization.ObjectSchema<
 > = core.serialization.object({
     methodName: core.serialization.string(),
     signature: core.serialization.lazyObject(() => serializers.v2.NonVoidFunctionSignature),
-    additionalFiles: core.serialization.record(
+    additionalFiles: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),

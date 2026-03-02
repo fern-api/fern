@@ -139,6 +139,7 @@ function visitEndpoint({
                                     });
                                 },
                                 "allow-multiple": noop,
+                                explode: noop,
                                 audiences: noop,
                                 encoding: noop,
                                 default: noop,

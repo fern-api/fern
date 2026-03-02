@@ -34,6 +34,10 @@ public final class SearchRequest {
 
     private final Optional<List<String>> filter;
 
+    private final Optional<List<String>> tags;
+
+    private final Optional<List<String>> optionalTags;
+
     private final int limit;
 
     private final String id;
@@ -66,6 +70,8 @@ public final class SearchRequest {
             Optional<List<User>> userList,
             Optional<List<User>> excludeUser,
             Optional<List<String>> filter,
+            Optional<List<String>> tags,
+            Optional<List<String>> optionalTags,
             int limit,
             String id,
             String date,
@@ -83,6 +89,8 @@ public final class SearchRequest {
         this.userList = userList;
         this.excludeUser = excludeUser;
         this.filter = filter;
+        this.tags = tags;
+        this.optionalTags = optionalTags;
         this.limit = limit;
         this.id = id;
         this.date = date;
@@ -112,6 +120,22 @@ public final class SearchRequest {
     @JsonProperty("filter")
     public Optional<List<String>> getFilter() {
         return filter;
+    }
+
+    /**
+     * @return List of tags. Serialized as a comma-separated list.
+     */
+    @JsonProperty("tags")
+    public Optional<List<String>> getTags() {
+        return tags;
+    }
+
+    /**
+     * @return Optional list of tags. Serialized as a comma-separated list.
+     */
+    @JsonProperty("optionalTags")
+    public Optional<List<String>> getOptionalTags() {
+        return optionalTags;
     }
 
     @JsonProperty("limit")
@@ -194,6 +218,8 @@ public final class SearchRequest {
         return userList.equals(other.userList)
                 && excludeUser.equals(other.excludeUser)
                 && filter.equals(other.filter)
+                && tags.equals(other.tags)
+                && optionalTags.equals(other.optionalTags)
                 && limit == other.limit
                 && id.equals(other.id)
                 && date.equals(other.date)
@@ -215,6 +241,8 @@ public final class SearchRequest {
                 this.userList,
                 this.excludeUser,
                 this.filter,
+                this.tags,
+                this.optionalTags,
                 this.limit,
                 this.id,
                 this.date,
@@ -294,6 +322,24 @@ public final class SearchRequest {
 
         _FinalStage filter(String filter);
 
+        /**
+         * <p>List of tags. Serialized as a comma-separated list.</p>
+         */
+        _FinalStage tags(Optional<List<String>> tags);
+
+        _FinalStage tags(List<String> tags);
+
+        _FinalStage tags(String tags);
+
+        /**
+         * <p>Optional list of tags. Serialized as a comma-separated list.</p>
+         */
+        _FinalStage optionalTags(Optional<List<String>> optionalTags);
+
+        _FinalStage optionalTags(List<String> optionalTags);
+
+        _FinalStage optionalTags(String optionalTags);
+
         _FinalStage optionalDeadline(Optional<OffsetDateTime> optionalDeadline);
 
         _FinalStage optionalDeadline(OffsetDateTime optionalDeadline);
@@ -355,6 +401,10 @@ public final class SearchRequest {
 
         private Optional<OffsetDateTime> optionalDeadline = Optional.empty();
 
+        private Optional<List<String>> optionalTags = Optional.empty();
+
+        private Optional<List<String>> tags = Optional.empty();
+
         private Optional<List<String>> filter = Optional.empty();
 
         private Optional<List<User>> excludeUser = Optional.empty();
@@ -371,6 +421,8 @@ public final class SearchRequest {
             userList(other.getUserList());
             excludeUser(other.getExcludeUser());
             filter(other.getFilter());
+            tags(other.getTags());
+            optionalTags(other.getOptionalTags());
             limit(other.getLimit());
             id(other.getId());
             date(other.getDate());
@@ -515,6 +567,58 @@ public final class SearchRequest {
         }
 
         @java.lang.Override
+        public _FinalStage optionalTags(String optionalTags) {
+            this.optionalTags = Optional.of(Collections.singletonList(optionalTags));
+            return this;
+        }
+
+        /**
+         * <p>Optional list of tags. Serialized as a comma-separated list.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage optionalTags(List<String> optionalTags) {
+            this.optionalTags = Optional.ofNullable(optionalTags);
+            return this;
+        }
+
+        /**
+         * <p>Optional list of tags. Serialized as a comma-separated list.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "optionalTags", nulls = Nulls.SKIP)
+        public _FinalStage optionalTags(Optional<List<String>> optionalTags) {
+            this.optionalTags = optionalTags;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage tags(String tags) {
+            this.tags = Optional.of(Collections.singletonList(tags));
+            return this;
+        }
+
+        /**
+         * <p>List of tags. Serialized as a comma-separated list.</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        public _FinalStage tags(List<String> tags) {
+            this.tags = Optional.ofNullable(tags);
+            return this;
+        }
+
+        /**
+         * <p>List of tags. Serialized as a comma-separated list.</p>
+         */
+        @java.lang.Override
+        @JsonSetter(value = "tags", nulls = Nulls.SKIP)
+        public _FinalStage tags(Optional<List<String>> tags) {
+            this.tags = tags;
+            return this;
+        }
+
+        @java.lang.Override
         public _FinalStage filter(String filter) {
             this.filter = Optional.of(Collections.singletonList(filter));
             return this;
@@ -577,6 +681,8 @@ public final class SearchRequest {
                     userList,
                     excludeUser,
                     filter,
+                    tags,
+                    optionalTags,
                     limit,
                     id,
                     date,

@@ -91,10 +91,10 @@ export function generatePrimitiveExample({
             return {
                 type: "success",
                 example: ExamplePrimitive.datetimeRfc2822({
-                    datetime: new Date(Examples.DATE_TIME),
-                    raw: Examples.DATE_TIME
+                    datetime: new Date(Examples.DATE_TIME_RFC_2822),
+                    raw: Examples.DATE_TIME_RFC_2822
                 }),
-                jsonExample: Examples.DATE_TIME
+                jsonExample: Examples.DATE_TIME_RFC_2822
             };
         }
         default:

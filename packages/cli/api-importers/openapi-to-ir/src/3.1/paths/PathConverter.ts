@@ -71,7 +71,16 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
                 operation,
                 context: this.context
             });
-            const streamingExtension = streamingExtensionConverter.convert();
+            let streamingExtension = streamingExtensionConverter.convert();
+
+            // If no x-fern-streaming extension is specified, check if the response has
+            // text/event-stream content type. This infers streaming based on the MIME type.
+            if (streamingExtension == null) {
+                const hasTextEventStream = this.operationHasTextEventStreamResponse(operation);
+                if (hasTextEventStream) {
+                    streamingExtension = { type: "stream", format: "sse", terminator: undefined };
+                }
+            }
 
             const convertedEndpoint = this.tryParseAsHttpEndpoint({
                 operationBreadcrumbs,
@@ -121,6 +130,35 @@ export class PathConverter extends AbstractConverter<OpenAPIConverterContext3_1,
             path: this.path
         });
         return webhookConverter.convert();
+    }
+
+    /**
+     * Checks if the operation has a response where text/event-stream is the only content type.
+     * When multiple content types are present (e.g., both application/json and text/event-stream),
+     * we don't infer streaming — the user should use x-fern-streaming to explicitly configure it.
+     */
+    private operationHasTextEventStreamResponse(operation: OpenAPIV3_1.OperationObject): boolean {
+        if (operation.responses == null) {
+            return false;
+        }
+        for (const [statusCode, response] of Object.entries(operation.responses)) {
+            const statusCodeNum = parseInt(statusCode);
+            if (isNaN(statusCodeNum) || statusCodeNum < 200 || statusCodeNum >= 300) {
+                continue;
+            }
+            const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
+                schemaOrReference: response,
+                breadcrumbs: this.breadcrumbs
+            });
+            if (resolvedResponse?.content == null) {
+                continue;
+            }
+            const contentTypes = Object.keys(resolvedResponse.content);
+            if (contentTypes.length === 1 && contentTypes[0]?.includes("text/event-stream")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private tryParseAsHttpEndpoint({

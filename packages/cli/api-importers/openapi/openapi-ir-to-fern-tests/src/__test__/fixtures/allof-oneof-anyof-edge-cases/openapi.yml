@@ -173,3 +173,37 @@ components:
               properties:
                 typeB:
                   type: number
+
+    # Reproduces getbrevo/brevo-python#20: allOf + oneOf with not:{} for mutual exclusion
+    SendTransacSms:
+      allOf:
+        - type: object
+          properties:
+            recipient:
+              description: Mobile number to send SMS with the country code
+              type: string
+            sender:
+              description: Name of the sender
+              type: string
+          required:
+            - recipient
+            - sender
+        - oneOf:
+            - type: object
+              required:
+                - templateId
+              properties:
+                templateId:
+                  description: Template ID to send SMS
+                  type: integer
+                content:
+                  not: {}
+            - type: object
+              required:
+                - content
+              properties:
+                content:
+                  description: Content of the message
+                  type: string
+                templateId:
+                  not: {}

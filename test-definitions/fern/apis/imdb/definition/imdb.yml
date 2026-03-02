@@ -2,12 +2,14 @@ types:
   MovieId: string
 
   Movie:
+    availability: generally-available
     properties:
       id: MovieId
       title: string
       rating:
         type: double
         docs: The rating scale is one to five stars
+        availability: deprecated
 
   CreateMovieRequest:
     properties:
@@ -26,6 +28,7 @@ service:
       response:
         type: MovieId
         status-code: 201
+      availability: pre-release
 
     getMovie:
       method: GET
@@ -33,6 +36,7 @@ service:
       path-parameters:
         movieId: MovieId
       response: Movie
+      availability: deprecated
       errors:
         - MovieDoesNotExistError
 

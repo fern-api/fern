@@ -89,6 +89,26 @@ paths:
             items:
               type: string
           explode: true
+        - name: tags
+          in: query
+          required: true
+          description: List of tags. Serialized as a comma-separated list.
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: optionalTags
+          in: query
+          required: false
+          description: Optional list of tags. Serialized as a comma-separated list.
+          style: form
+          explode: false
+          schema:
+            type: array
+            items:
+              type: string
         - name: neighbor
           in: query
           required: false
@@ -119,7 +139,6 @@ paths:
                     type: array
                     items:
                       type: string
-
 components:
   schemas:
     User:

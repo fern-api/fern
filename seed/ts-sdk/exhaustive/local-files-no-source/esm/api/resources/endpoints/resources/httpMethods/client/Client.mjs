@@ -57,6 +57,8 @@ export class HttpMethodsClient {
         });
     }
     /**
+     * @deprecated
+     *
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -104,6 +106,8 @@ export class HttpMethodsClient {
         });
     }
     /**
+     * @deprecated Use testPatch instead.
+     *
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -152,6 +156,8 @@ export class HttpMethodsClient {
         });
     }
     /**
+     * @beta This endpoint is in pre-release and may change.
+     *
      * @param {string} id
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -214,6 +220,8 @@ export class HttpMethodsClient {
         });
     }
     /**
+     * @beta This endpoint is in development and may change.
+     *
      * @param {string} id
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *

@@ -75,6 +75,7 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.OptionalNullableGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.QueryStringMapperGenerator;
+import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
 import com.fern.java.generators.SseEventGenerator;
 import com.fern.java.generators.SseEventParserGenerator;
 import com.fern.java.generators.StreamGenerator;
@@ -391,6 +392,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
+
+        Rfc2822DateTimeDeserializerGenerator rfc2822DateTimeDeserializerGenerator =
+                new Rfc2822DateTimeDeserializerGenerator(context);
+        this.addGeneratedFile(rfc2822DateTimeDeserializerGenerator.generateFile());
 
         StreamGenerator streamGenerator = new StreamGenerator(context);
         this.addGeneratedFile(streamGenerator.generateFile());

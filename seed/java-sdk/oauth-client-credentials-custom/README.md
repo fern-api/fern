@@ -12,6 +12,7 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
 - [Usage](#usage)
 - [Base Url](#base-url)
 - [Exception Handling](#exception-handling)
+- [Authentication](#authentication)
 - [Advanced](#advanced)
   - [Custom Client](#custom-client)
   - [Retries](#retries)
@@ -77,31 +78,6 @@ public class Example {
     }
 }
 ```
-## Authentication
-
-This SDK supports two authentication methods:
-
-### Option 1: Direct Bearer Token
-
-If you already have a valid access token, you can use it directly:
-
-```java
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder()
-    .token("your-access-token")
-    .url("https://api.example.com")
-    .build();
-```
-
-### Option 2: OAuth Client Credentials
-
-The SDK can automatically handle token acquisition and refresh:
-
-```java
-SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder()
-    .credentials("client-id", "client-secret")
-    .url("https://api.example.com")
-    .build();
-```
 
 ## Base Url
 
@@ -128,6 +104,32 @@ try{
 } catch (SeedOauthClientCredentialsApiException e){
     // Do something with the API exception...
 }
+```
+
+## Authentication
+
+This SDK supports two authentication methods:
+
+### Option 1: Direct Bearer Token
+
+If you already have a valid access token, you can use it directly:
+
+```java
+SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder()
+    .token("your-access-token")
+    .url("https://api.example.com")
+    .build();
+```
+
+### Option 2: OAuth Client Credentials
+
+The SDK can automatically handle token acquisition and refresh:
+
+```java
+SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder()
+    .credentials("client-id", "client-secret")
+    .url("https://api.example.com")
+    .build();
 ```
 
 ## Advanced

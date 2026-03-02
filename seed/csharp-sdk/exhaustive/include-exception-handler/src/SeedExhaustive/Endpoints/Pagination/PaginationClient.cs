@@ -60,7 +60,6 @@ public partial class PaginationClient : IPaginationClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = "/pagination",
                             QueryString = _queryString,

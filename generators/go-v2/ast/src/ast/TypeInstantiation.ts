@@ -195,9 +195,11 @@ export class TypeInstantiation extends AstNode {
                 break;
             case "string":
                 writer.write(
-                    this.internalType.value.includes('"') || this.internalType.value.includes("\n")
-                        ? `\`${this.internalType.value}\``
-                        : `"${this.internalType.value}"`
+                    this.internalType.value.includes("`")
+                        ? `"${escapeGoString(this.internalType.value)}"`
+                        : this.internalType.value.includes('"') || this.internalType.value.includes("\n")
+                          ? `\`${this.internalType.value}\``
+                          : `"${escapeGoString(this.internalType.value)}"`
                 );
                 break;
             case "struct":
@@ -391,7 +393,13 @@ export class TypeInstantiation extends AstNode {
                 writer.write(value.toString());
                 return;
             case "string":
-                writer.write(value.includes('"') || value.includes("\n") ? `\`${value}\`` : `"${value}"`);
+                writer.write(
+                    value.includes("`")
+                        ? `"${escapeGoString(value)}"`
+                        : value.includes('"') || value.includes("\n")
+                          ? `\`${value}\``
+                          : `"${escapeGoString(value)}"`
+                );
                 return;
             case "number":
                 writer.write(value.toString());
@@ -445,7 +453,7 @@ export class TypeInstantiation extends AstNode {
         writer.writeLine("{");
         writer.indent();
         for (const [key, val] of entries) {
-            writer.write(`"${key}": `);
+            writer.write(`"${escapeGoString(key)}": `);
             writer.writeNode(TypeInstantiation.any(val));
             writer.writeLine(",");
         }
@@ -609,6 +617,15 @@ function invokeMustParseUUID({ value }: { value: string }): FuncInvocation {
         }),
         arguments_: [new CodeBlock(`"${value}"`)]
     });
+}
+
+function escapeGoString(value: string): string {
+    return value
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r")
+        .replace(/\t/g, "\\t");
 }
 
 function filterNopMapEntries({ entries }: { entries: MapEntry[] }): MapEntry[] {

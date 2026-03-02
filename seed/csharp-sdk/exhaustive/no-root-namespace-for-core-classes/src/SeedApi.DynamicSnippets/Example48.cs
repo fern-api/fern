@@ -13,7 +13,7 @@ public class Example48
             }
         );
 
-        await client.Endpoints.Urls.WithUnderscoresAsync();
+        await client.Endpoints.Urls.NoEndingSlashAsync();
     }
 
 }

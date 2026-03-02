@@ -10,6 +10,7 @@ from .types import (
     ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithRequiredField,
+    ObjectWithUnknownField,
     OptionalAlias,
 )
 from .errors import (
@@ -31,5 +32,6 @@ __all__ = [
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",
     "ObjectWithRequiredFieldError",
+    "ObjectWithUnknownField",
     "OptionalAlias",
 ]

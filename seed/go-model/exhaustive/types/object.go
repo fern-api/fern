@@ -534,3 +534,56 @@ func (o *ObjectWithDatetimeLikeString) String() string {
 	}
 	return fmt.Sprintf("%#v", o)
 }
+
+// Tests that unknown/any values containing backslashes in map keys
+// are properly escaped in Go string literals.
+type ObjectWithUnknownField struct {
+	Unknown any `json:"unknown" url:"unknown"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithUnknownField) GetUnknown() any {
+	if o == nil {
+		return nil
+	}
+	return o.Unknown
+}
+
+func (o *ObjectWithUnknownField) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithUnknownField) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithUnknownField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithUnknownField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithUnknownField) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}

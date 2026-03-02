@@ -19,24 +19,28 @@ describe("no-complex-query-params", () => {
                 message: "Union is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "o"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-complex-query-params",
                 severity: "fatal"
             },
             {
                 message: "UndiscriminatedUnion is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "p"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-complex-query-params",
                 severity: "fatal"
             },
             {
                 message: "ObjectWithUnion is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "q"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-complex-query-params",
                 severity: "fatal"
             },
             {
                 message: "NestedObjectWithUnion is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "r"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-complex-query-params",
                 severity: "fatal"
             }
         ]);

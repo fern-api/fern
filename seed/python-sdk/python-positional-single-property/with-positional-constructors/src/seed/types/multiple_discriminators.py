@@ -11,8 +11,16 @@ class MultipleDiscriminators(UniversalBaseModel):
     type: typing.Literal["TYPE_A"] = "TYPE_A"
     version: typing.Literal["v1"] = "v1"
 
-    def __init__(self, value: str, **kwargs: typing.Any) -> None:
-        super().__init__(value=value, **kwargs)
+    @typing.overload
+    def __init__(self, value: str) -> None: ...
+    @typing.overload
+    def __init__(self, *, value: str) -> None: ...
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        if args:
+            kwargs.pop("value", None)
+            super().__init__(value=args[0], **kwargs)
+        else:
+            super().__init__(**kwargs)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

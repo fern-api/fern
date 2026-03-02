@@ -28,7 +28,6 @@ public partial class SimpleClient : ISimpleClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "foo1",
                     Body = request,
@@ -109,7 +108,6 @@ public partial class SimpleClient : ISimpleClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "foo2",
                     Body = request,
@@ -190,7 +188,6 @@ public partial class SimpleClient : ISimpleClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "foo3",
                     Body = request,

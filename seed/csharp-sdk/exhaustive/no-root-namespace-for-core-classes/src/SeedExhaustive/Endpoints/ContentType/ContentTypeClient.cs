@@ -48,7 +48,6 @@ public partial class ContentTypeClient : IContentTypeClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/foo/bar",
                     Body = request,
@@ -109,7 +108,6 @@ public partial class ContentTypeClient : IContentTypeClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/foo/baz",
                     Body = request,

@@ -14,10 +14,10 @@
  *
  */
 
-import { fail } from "node:assert";
 import { type Field as AstField, ClassReference } from "../ast/index.js";
 import { Generation } from "../context/generation-info.js";
 import { Origin } from "../context/model-navigator.js";
+import { fail } from "../utils/fail.js";
 import { is } from "../utils/type-guards.js";
 import { builtIns } from "./knownTypes.js";
 

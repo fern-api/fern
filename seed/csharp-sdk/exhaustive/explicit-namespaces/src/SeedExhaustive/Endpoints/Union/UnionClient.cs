@@ -30,7 +30,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/union",
                     Body = request,

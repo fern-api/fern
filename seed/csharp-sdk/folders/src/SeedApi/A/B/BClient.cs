@@ -30,7 +30,6 @@ public partial class BClient : IBClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     Headers = _headers,

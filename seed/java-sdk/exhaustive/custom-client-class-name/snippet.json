@@ -287,6 +287,32 @@
             }
         },
         {
+            "example_identifier": "BackslashExample",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-unknown-field",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"$ref\", \"https://example.com/schema\");\n                    }})\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"$ref\", \"https://example.com/schema\");\n                    }})\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d448288f",
+            "id": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-unknown-field",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.exhaustive.Best;\nimport com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;\nimport java.util.HashMap;\n\npublic class Example {\n    public static void main(String[] args) {\n        Best client = Best\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.endpoints().object().getAndReturnWithUnknownField(\n            ObjectWithUnknownField\n                .builder()\n                .unknown(new \n                    HashMap<String, Object>() {{put(\"key\", \"value\");\n                    }})\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "DatetimeLikeStringExample",
             "id": {
                 "method": "POST",

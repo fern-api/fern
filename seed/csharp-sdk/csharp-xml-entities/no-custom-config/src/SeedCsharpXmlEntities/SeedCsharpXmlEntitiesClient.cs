@@ -44,7 +44,6 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/timezone",
                     Headers = _headers,

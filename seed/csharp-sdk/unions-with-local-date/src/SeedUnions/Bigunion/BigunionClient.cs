@@ -28,7 +28,6 @@ public partial class BigunionClient : IBigunionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
                     Headers = _headers,
@@ -90,7 +89,6 @@ public partial class BigunionClient : IBigunionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = "",
                     Body = request,
@@ -153,7 +151,6 @@ public partial class BigunionClient : IBigunionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = "/many",
                     Body = request,

@@ -46,7 +46,6 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/union",
                     Headers = _headers,
@@ -108,7 +107,6 @@ public partial class SeedUndiscriminatedUnionWithResponsePropertyClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/unions",
                     Headers = _headers,
