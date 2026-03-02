@@ -1,5 +1,5 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints;
+using SeedExhaustive.Types;
 
 namespace Usage;
 
@@ -13,10 +13,13 @@ public class Example23
             }
         );
 
-        await client.Endpoints.Pagination.ListItemsAsync(
-            new ListItemsRequest {
-                Cursor = "cursor",
-                Limit = 1
+        await client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
+            new ObjectWithUnknownField {
+                Unknown = new Dictionary<string, object>()
+                {
+                    ["key"] = "value",
+                }
+
             }
         );
     }

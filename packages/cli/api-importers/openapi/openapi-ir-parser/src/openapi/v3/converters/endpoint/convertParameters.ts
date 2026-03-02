@@ -68,9 +68,14 @@ export function convertParameters({
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs, context.options.preserveSchemaIds);
 
-        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
-            ? [false, !isRequired]
-            : [!isRequired, false];
+        // For header parameters, don't coerce optional to nullable. HTTP headers don't have
+        // a "null" concept at the wire level — they're either present with a value or absent.
+        // The coerceOptionalSchemasToNullable option should only affect request/response body
+        // properties, not header parameters. If a header's schema is explicitly nullable,
+        // that will still be respected via convertSchema/convertSchemaObject.
+        const isHeader = resolvedParameter.in === "header";
+        const [isOptional, isNullable] =
+            context.options.coerceOptionalSchemasToNullable && !isHeader ? [false, !isRequired] : [!isRequired, false];
 
         let schema =
             resolvedParameter.schema != null
@@ -222,6 +227,7 @@ const HEADERS_TO_SKIP = new Set([
  *
  * OpenAPI defaults:
  * - form style (default for query): explode = true
+ * - deepObject style: explode = true (only valid value per the OpenAPI spec)
  * - All other styles: explode = false
  */
 function getExplodeForQueryParameter(parameter: OpenAPIV3.ParameterObject): boolean | undefined {
@@ -233,13 +239,15 @@ function getExplodeForQueryParameter(parameter: OpenAPIV3.ParameterObject): bool
         return undefined;
     }
 
-    // For form style, default explode is true
-    // Only preserve explode if it differs from the default
-    if (style === "form") {
+    // For form and deepObject styles, default explode is true.
+    // deepObject only supports explode=true per the OpenAPI spec serialization table,
+    // so we treat true as the default for deepObject as well.
+    // Only preserve explode if it differs from the default.
+    if (style === "form" || style === "deepObject") {
         return explode === true ? undefined : explode;
     }
 
-    // For all other styles (spaceDelimited, pipeDelimited, deepObject), default explode is false
+    // For all other styles (spaceDelimited, pipeDelimited), default explode is false
     return explode === false ? undefined : explode;
 }
 

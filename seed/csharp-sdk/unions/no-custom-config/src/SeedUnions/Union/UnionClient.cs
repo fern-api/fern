@@ -28,7 +28,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("/{0}", ValueConvert.ToPathParameterString(id)),
                     Headers = _headers,
@@ -90,7 +89,6 @@ public partial class UnionClient : IUnionClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethodExtensions.Patch,
                     Path = "",
                     Body = request,

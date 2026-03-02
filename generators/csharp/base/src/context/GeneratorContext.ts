@@ -177,6 +177,10 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return this.getIdempotencyHeaders().length > 0;
     }
 
+    public hasBaseUrl(): boolean {
+        return this.ir.environments?.environments.type !== "multipleBaseUrls";
+    }
+
     public getCoreDirectory(): RelativeFilePath {
         return RelativeFilePath.of(CORE_DIRECTORY_NAME);
     }

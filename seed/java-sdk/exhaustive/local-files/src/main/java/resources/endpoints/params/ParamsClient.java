@@ -12,6 +12,8 @@ import com.fern.sdk.resources.endpoints.params.requests.GetWithMultipleQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
 import com.fern.sdk.resources.endpoints.params.requests.GetWithQuery;
 import com.fern.sdk.resources.endpoints.params.requests.ModifyResourceAtInlinedPath;
+import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import java.io.InputStream;
 import java.lang.String;
 
 public class ParamsClient {
@@ -160,5 +162,35 @@ public class ParamsClient {
   public String modifyWithInlinePath(String param, ModifyResourceAtInlinedPath request,
       RequestOptions requestOptions) {
     return this.rawClient.modifyWithInlinePath(param, request, requestOptions).body();
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public ObjectWithRequiredField uploadWithPath(String param, InputStream request) {
+    return this.rawClient.uploadWithPath(param, request).body();
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public ObjectWithRequiredField uploadWithPath(String param, InputStream request,
+      RequestOptions requestOptions) {
+    return this.rawClient.uploadWithPath(param, request, requestOptions).body();
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public ObjectWithRequiredField uploadWithPath(String param, byte[] request) {
+    return this.rawClient.uploadWithPath(param, request).body();
+  }
+
+  /**
+   * POST bytes with path param returning object
+   */
+  public ObjectWithRequiredField uploadWithPath(String param, byte[] request,
+      RequestOptions requestOptions) {
+    return this.rawClient.uploadWithPath(param, request, requestOptions).body();
   }
 }

@@ -4,6 +4,7 @@ import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
     endpoints "github.com/exhaustive/fern/endpoints"
+    fern "github.com/exhaustive/fern"
     context "context"
 )
 
@@ -16,11 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithQuery{
-        Query: "query",
-        Number: 1,
+    request := &endpoints.ListItemsRequest{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Limit: fern.Int(
+            1,
+        ),
     }
-    client.Endpoints.Params.GetWithQuery(
+    client.Endpoints.Pagination.ListItems(
         context.TODO(),
         request,
     )

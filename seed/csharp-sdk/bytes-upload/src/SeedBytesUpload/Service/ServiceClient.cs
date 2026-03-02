@@ -30,7 +30,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new StreamRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "upload-content",
                     Body = request,

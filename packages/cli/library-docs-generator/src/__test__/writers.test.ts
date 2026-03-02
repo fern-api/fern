@@ -179,8 +179,8 @@ describe("buildNavigation", () => {
         const nav = buildNavigation(root, "ref");
         // Every submodule gets wrapped in a section by the parent
         expect(nav).toHaveLength(1);
-        expect(nav[0]?.type).toBe("section");
-        const section = nav[0] as { type: "section"; title: string; slug: string; children: NavNode[] };
+        const section = nav[0];
+        expect.assert(section?.type === "section");
         expect(section.title).toBe("utils");
         expect(section.slug).toBe("ref/pkg/utils");
         expect(section.children).toHaveLength(1);
@@ -213,12 +213,12 @@ describe("buildNavigation", () => {
         const nav = buildNavigation(root, "ref");
         expect(nav).toHaveLength(1);
         // sub is a section wrapping leaf's section
-        expect(nav[0]?.type).toBe("section");
-        const sub = nav[0] as { type: "section"; children: NavNode[] };
+        const sub = nav[0];
+        expect.assert(sub?.type === "section");
         expect(sub.children).toHaveLength(1);
         // leaf is also wrapped in a section by sub
-        expect(sub.children[0]?.type).toBe("section");
-        const leafSection = sub.children[0] as { type: "section"; children: NavNode[] };
+        const leafSection = sub.children[0];
+        expect.assert(leafSection?.type === "section");
         expect(leafSection.children).toHaveLength(1);
         expect(leafSection.children[0]?.type).toBe("page");
     });
@@ -239,8 +239,9 @@ describe("buildNavigation", () => {
         const nav = buildNavigation(root, "ref");
         // Only "filled" appears (wrapped in section); "empty" is skipped
         expect(nav).toHaveLength(1);
-        expect(nav[0]?.type).toBe("section");
-        expect((nav[0] as { title: string }).title).toBe("filled");
+        const filledSection = nav[0];
+        expect.assert(filledSection?.type === "section");
+        expect(filledSection.title).toBe("filled");
     });
 
     it("does not include root module as a node (root is section overview)", () => {
@@ -276,8 +277,8 @@ describe("buildNavigation", () => {
         });
         const nav = buildNavigation(root, "reference/python");
         // "core" gets wrapped in a section
-        expect(nav[0]?.type).toBe("section");
-        const section = nav[0] as { type: "section"; slug: string; children: NavNode[] };
+        const section = nav[0];
+        expect.assert(section?.type === "section");
         expect(section.slug).toBe("reference/python/mylib/core");
         // Inner page has same slug + pageId
         expect(section.children[0]).toEqual({
@@ -316,17 +317,14 @@ describe("buildNavigation", () => {
 
         // a -> section(b) -> section(c) -> section(d) -> page(d)
         expect(nav).toHaveLength(1);
-        // biome-ignore lint/style/noNonNullAssertion: length asserted above
-        const b = nav[0]! as { type: "section"; children: NavNode[] };
-        expect(b.type).toBe("section");
+        const b = nav[0];
+        expect.assert(b?.type === "section");
         expect(b.children).toHaveLength(1);
-        // biome-ignore lint/style/noNonNullAssertion: length asserted above
-        const c = b.children[0]! as { type: "section"; children: NavNode[] };
-        expect(c.type).toBe("section");
+        const c = b.children[0];
+        expect.assert(c?.type === "section");
         expect(c.children).toHaveLength(1);
-        // biome-ignore lint/style/noNonNullAssertion: length asserted above
-        const d = c.children[0]! as { type: "section"; title: string; children: NavNode[] };
-        expect(d.type).toBe("section");
+        const d = c.children[0];
+        expect.assert(d?.type === "section");
         expect(d.title).toBe("d");
         expect(d.children).toHaveLength(1);
         expect(d.children[0]?.type).toBe("page");
@@ -356,8 +354,8 @@ describe("buildNavigation", () => {
         const nav = buildNavigation(root, "ref");
         expect(nav).toHaveLength(1);
         // Wrapped in section, but inner page exists (docstring = content)
-        expect(nav[0]?.type).toBe("section");
-        const section = nav[0] as { type: "section"; children: NavNode[] };
+        const section = nav[0];
+        expect.assert(section?.type === "section");
         expect(section.children).toHaveLength(1);
         expect(section.children[0]?.type).toBe("page");
     });

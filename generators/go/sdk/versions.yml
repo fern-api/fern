@@ -1,4 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.26.0
+  changelogEntry:
+    - summary: |
+        Fix backslash escaping in Go string literals. When example data contains backslashes
+        (e.g., `\$ref` in JSON schema references), the generator now correctly outputs `\\`
+        in double-quoted Go strings instead of producing invalid escape sequences.
+      type: fix
+  createdAt: "2026-02-25"
+  irVersion: 61
+
+- version: 1.25.0-rc4
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 61
+
+- version: 1.25.0-rc3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet and wire test generation for endpoints with bytes body and path
+        parameters. Previously, the generator produced `nil` for the `io.Reader` body argument
+        instead of a valid `bytes.NewReader([]byte(...))` call, causing wire test failures.
+        Also fixed the nop request branch to include option arguments (e.g. test ID headers)
+        in the method invocation, fixed path parameter resolution to use
+        associateByWireValueOrDefault so missing path parameter values are synthesized, and
+        fixed WireMock stub response generation to return an empty JSON object `{}` instead
+        of a JSON string `""` when the example response body is null but the endpoint declares
+        a named (struct) response type.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
+- version: 1.25.0-rc2
+  changelogEntry:
+    - summary: |
+        Fix literal property doc comments leaking into the next field's comments in generated
+        Go structs. When a property has a literal type (e.g. stream boolean) and is excluded
+        from the struct, its documentation was still being written, causing it to appear as
+        part of the next field's comments.
+      type: fix
+  createdAt: "2026-02-19"
+  irVersion: 61
+
 - version: 1.25.0-rc1
   changelogEntry:
     - summary: |

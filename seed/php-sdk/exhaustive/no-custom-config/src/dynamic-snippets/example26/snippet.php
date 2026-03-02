@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Endpoints\Params\Requests\GetWithQuery;
+use Seed\Endpoints\Pagination\Requests\ListItemsRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,9 +11,9 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->endpoints->params->getWithQuery(
-    new GetWithQuery([
-        'query' => 'query',
-        'number' => 1,
+$client->endpoints->pagination->listItems(
+    new ListItemsRequest([
+        'cursor' => 'cursor',
+        'limit' => 1,
     ]),
 );

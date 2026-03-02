@@ -1,4 +1,5 @@
 using System.Text.Json;
+using OneOf;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -30,7 +31,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/list-of-primitives",
                     Body = request,
@@ -95,7 +95,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/list-of-objects",
                     Body = request,
@@ -160,7 +159,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/set-of-primitives",
                     Body = request,
@@ -225,7 +223,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/set-of-objects",
                     Body = request,
@@ -292,7 +289,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-prim",
                     Body = request,
@@ -357,7 +353,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/map-prim-to-object",
                     Body = request,
@@ -406,6 +401,74 @@ public partial class ContainerClient : IContainerClient
         }
     }
 
+    private async Task<
+        WithRawResponse<Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>>
+    > GetAndReturnMapOfPrimToUndiscriminatedUnionAsyncCore(
+        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _headers = await new SeedExhaustive.Core.HeadersBuilder.Builder()
+            .Add(_client.Options.Headers)
+            .Add(_client.Options.AdditionalHeaders)
+            .Add(options?.AdditionalHeaders)
+            .BuildAsync()
+            .ConfigureAwait(false);
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    Method = HttpMethod.Post,
+                    Path = "/container/map-prim-to-union",
+                    Body = request,
+                    Headers = _headers,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                var responseData = JsonUtils.Deserialize<
+                    Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+                >(responseBody)!;
+                return new WithRawResponse<
+                    Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+                >()
+                {
+                    Data = responseData,
+                    RawResponse = new RawResponse()
+                    {
+                        StatusCode = response.Raw.StatusCode,
+                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
+                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
+                    },
+                };
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveApiException(
+                    "Failed to deserialize response",
+                    response.StatusCode,
+                    null,
+                    e
+                );
+            }
+        }
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedExhaustiveApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     private async Task<WithRawResponse<ObjectWithRequiredField?>> GetAndReturnOptionalAsyncCore(
         ObjectWithRequiredField? request,
         RequestOptions? options = null,
@@ -422,7 +485,6 @@ public partial class ContainerClient : IContainerClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/container/opt-objects",
                     Body = request,
@@ -574,6 +636,30 @@ public partial class ContainerClient : IContainerClient
     {
         return new WithRawResponseTask<Dictionary<string, ObjectWithRequiredField>>(
             GetAndReturnMapOfPrimToObjectAsyncCore(request, options, cancellationToken)
+        );
+    }
+
+    /// <example><code>
+    /// await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    ///     new Dictionary&lt;string, OneOf&lt;double, bool, string, IEnumerable&lt;string&gt;&gt;&gt;() { { "string", 1.1 } }
+    /// );
+    /// </code></example>
+    public WithRawResponseTask<
+        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+    > GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+        Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return new WithRawResponseTask<
+            Dictionary<string, OneOf<double, bool, string, IEnumerable<string>>>
+        >(
+            GetAndReturnMapOfPrimToUndiscriminatedUnionAsyncCore(
+                request,
+                options,
+                cancellationToken
+            )
         );
     }
 

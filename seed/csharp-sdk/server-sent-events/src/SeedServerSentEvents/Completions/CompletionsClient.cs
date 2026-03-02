@@ -13,7 +13,7 @@ public partial class CompletionsClient : ICompletionsClient
     }
 
     /// <example><code>
-    /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "query" });
+    /// client.Completions.StreamAsync(new StreamCompletionRequest { Query = "foo" });
     /// </code></example>
     public async IAsyncEnumerable<StreamedCompletion> StreamAsync(
         StreamCompletionRequest request,
@@ -31,7 +31,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream",
                     Body = request,
@@ -101,7 +100,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream-no-terminator",
                     Body = request,

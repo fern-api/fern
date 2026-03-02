@@ -48,7 +48,7 @@ export class ClearCommand {
     }
 }
 
-export function addClearCommand(cli: Argv<GlobalArgs>): void {
+export function addClearCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new ClearCommand();
     command(
         cli,
@@ -76,6 +76,7 @@ export function addClearCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     description: "Preview what would be cleared without deleting",
                     default: false
-                })
+                }),
+        parentPath
     );
 }

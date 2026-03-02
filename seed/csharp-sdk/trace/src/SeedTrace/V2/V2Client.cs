@@ -15,9 +15,9 @@ public partial class V2Client : IV2Client
         V3 = new V3Client(_client);
     }
 
-    public ProblemClient Problem { get; }
+    public IProblemClient Problem { get; }
 
-    public V3Client V3 { get; }
+    public IV3Client V3 { get; }
 
     /// <example><code>
     /// await client.V2.TestAsync();
@@ -37,7 +37,6 @@ public partial class V2Client : IV2Client
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "",
                     Headers = _headers,

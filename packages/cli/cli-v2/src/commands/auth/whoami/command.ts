@@ -30,7 +30,7 @@ export class WhoamiCommand {
     }
 }
 
-export function addWhoamiCommand(cli: Argv<GlobalArgs>): void {
+export function addWhoamiCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new WhoamiCommand();
     command(
         cli,
@@ -42,6 +42,7 @@ export function addWhoamiCommand(cli: Argv<GlobalArgs>): void {
                 type: "boolean",
                 default: false,
                 description: "Output as JSON"
-            })
+            }),
+        parentPath
     );
 }

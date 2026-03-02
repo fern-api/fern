@@ -27,7 +27,6 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "property-based-error",
                     Headers = _headers,

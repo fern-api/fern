@@ -37,7 +37,7 @@ class RealtimeClient:
         return self._raw_client
 
     @contextmanager
-    def connect(
+    def create_realtime_connection(
         self,
         session_id: str,
         *,
@@ -120,7 +120,7 @@ class AsyncRealtimeClient:
         return self._raw_client
 
     @asynccontextmanager
-    async def connect(
+    async def create_realtime_connection(
         self,
         session_id: str,
         *,

@@ -519,6 +519,86 @@
             },
             {
               "_type": "endpoint",
+              "name": "Get And Return Map Of Prim To Undiscriminated Union",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/container/map-prim-to-union",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "container",
+                    "map-prim-to-union"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": 1.1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/map-prim-to-union",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "map-prim-to-union"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": 1.1\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": 1.1\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
               "name": "Get And Return Optional",
               "request": {
                 "description": null,
@@ -1773,6 +1853,127 @@
             },
             {
               "_type": "endpoint",
+              "name": "Get And Return With Unknown Field",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/object/get-and-return-with-unknown-field",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "object",
+                    "get-and-return-with-unknown-field"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"unknown\": {\n        \"$ref\": \"https://example.com/schema\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-with-unknown-field",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-with-unknown-field"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"unknown\": {\n        \"$ref\": \"https://example.com/schema\"\n    }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"unknown\": {\n        \"$ref\": \"https://example.com/schema\"\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-with-unknown-field",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-with-unknown-field"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"unknown\": {\n        \"key\": \"value\"\n    }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"unknown\": {\n        \"key\": \"value\"\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
               "name": "Get And Return With Datetime Like String",
               "request": {
                 "description": "Tests that string fields containing datetime-like values are NOT reformatted.\nThe datetimeLikeString field should preserve its exact value \"2023-08-31T14:15:22Z\"\nwithout being converted to \"2023-08-31T14:15:22.000Z\".",
@@ -2682,6 +2883,84 @@
                   },
                   "description": null,
                   "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Upload With Path",
+              "request": {
+                "description": "POST bytes with path param returning object",
+                "url": {
+                  "raw": "{{baseUrl}}/params/path/:param",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "params",
+                    "path",
+                    ":param"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "param",
+                      "description": null,
+                      "value": "upload-path"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "POST bytes with path param returning object",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "upload-path"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"uploaded\"\n}",
                   "_postman_previewlanguage": "json"
                 }
               ]

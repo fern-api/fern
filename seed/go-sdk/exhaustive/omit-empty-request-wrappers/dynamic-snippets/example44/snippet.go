@@ -15,7 +15,9 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.NoEndingSlash(
+    request := []byte("SGVsbG8gd29ybGQh")
+    client.Endpoints.Primitive.GetAndReturnBase64(
         context.TODO(),
+        request,
     )
 }

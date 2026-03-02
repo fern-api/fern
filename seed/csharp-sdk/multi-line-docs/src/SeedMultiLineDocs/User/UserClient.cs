@@ -28,7 +28,6 @@ public partial class UserClient : IUserClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "users",
                     Body = request,
@@ -98,7 +97,6 @@ public partial class UserClient : IUserClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format("users/{0}", ValueConvert.ToPathParameterString(userId)),
                     Headers = _headers,

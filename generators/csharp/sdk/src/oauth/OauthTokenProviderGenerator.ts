@@ -102,30 +102,38 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
             type: this.Primitive.string
         });
 
-        // check for required primitive properties in the request, and propogate them as fields on the class
+        // Propagate required, non-literal custom properties from the token endpoint request
+        // as fields on the class. Literal properties are hardcoded in the request class and
+        // don't need to be passed through. This aligns with Java's approach of skipping only
+        // literals, while also keeping the optional guard to avoid adding optional-typed
+        // properties as required constructor parameters.
         for (const customProperty of this.scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: customProperty.property.valueType
             });
-            if (!typeRef.isOptional && is.IR.TypeReference.Primitive(customProperty.property.valueType)) {
-                const name = this.model.getPropertyNameFor(customProperty.property.name);
-
-                this.additionalRequestFields.set(
-                    name,
-                    this.cls.addField({
-                        origin: this.cls.explicit(this.format.private(name)),
-                        access: ast.Access.Private,
-                        type: typeRef
-                    })
-                );
+            if (typeRef.isOptional) {
+                continue;
             }
+            const name = this.model.getPropertyNameFor(customProperty.property.name);
+
+            this.additionalRequestFields.set(
+                name,
+                this.cls.addField({
+                    origin: this.cls.explicit(this.format.private(name)),
+                    access: ast.Access.Private,
+                    type: typeRef
+                })
+            );
         }
         const scopes = this.scheme.configuration.tokenEndpoint.requestProperties.scopes;
-        if (scopes) {
+        if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
             const typeRef = this.context.csharpTypeMapper.convert({
                 reference: scopes.property.valueType
             });
-            if (!typeRef.isOptional && is.IR.TypeReference.Primitive(scopes.property.valueType)) {
+            if (!typeRef.isOptional) {
                 const name = this.model.getPropertyNameFor(scopes.property.name);
                 this.additionalRequestFields.set(
                     name,
@@ -359,4 +367,13 @@ export class OauthTokenProviderGenerator extends FileGenerator<CSharpFile, SdkGe
         }
         return property.name.name.pascalCase.safeName;
     }
+}
+
+/**
+ * Checks if a type reference is a literal type (container with literal value).
+ * Literal properties are hardcoded in the request class and should not be
+ * propagated as constructor parameters.
+ */
+function isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+    return typeReference.type === "container" && typeReference.container.type === "literal";
 }

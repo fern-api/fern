@@ -24,14 +24,27 @@ export function withContext<T extends GlobalArgs>(
 ): (args: T) => Promise<void> {
     return async (args: T) => {
         const context = createContext(args);
-
+        const startTime = Date.now();
         setupSignalHandler(context);
 
         try {
             await handler(context, args);
+            await context.telemetry.sendLifecycleEvent({
+                command: context.info.command,
+                status: "success",
+                durationMs: Date.now() - startTime
+            });
+            await context.telemetry.flush();
             context.finish();
             process.exit(0);
         } catch (error) {
+            await context.telemetry.sendLifecycleEvent({
+                command: context.info.command,
+                status: "error",
+                durationMs: Date.now() - startTime,
+                errorCode: extractErrorCode(error)
+            });
+            await context.telemetry.flush();
             handleError(context, error);
             context.finish();
             process.exit(1);
@@ -80,6 +93,19 @@ function handleError(context: Context, error: unknown): void {
     }
 
     process.stderr.write(`${chalk.red(String(error))}\n`);
+}
+
+function extractErrorCode(error: unknown): CliError.Code {
+    if (error instanceof CliError && error.code != null) {
+        return error.code;
+    }
+    if (error instanceof ValidationError) {
+        return "VALIDATION_ERROR";
+    }
+    if (error instanceof KeyringUnavailableError) {
+        return "UNAUTHORIZED_ERROR";
+    }
+    return "INTERNAL_ERROR";
 }
 
 function setupSignalHandler(context: Context): void {

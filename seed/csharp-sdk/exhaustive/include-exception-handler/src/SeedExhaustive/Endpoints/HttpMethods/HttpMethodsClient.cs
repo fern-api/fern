@@ -41,7 +41,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Get,
                             Path = string.Format(
                                 "/http-methods/{0}",
@@ -113,7 +112,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/http-methods",
                             Body = request,
@@ -186,7 +184,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Put,
                             Path = string.Format(
                                 "/http-methods/{0}",
@@ -262,7 +259,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethodExtensions.Patch,
                             Path = string.Format(
                                 "/http-methods/{0}",
@@ -337,7 +333,6 @@ public partial class HttpMethodsClient : IHttpMethodsClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Delete,
                             Path = string.Format(
                                 "/http-methods/{0}",

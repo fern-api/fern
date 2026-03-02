@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.testGroup.<a href="/Sources/Resources/TestGroup/TestGroupClient.swift">testMethodName</a>(pathParam: String, queryParamObject: Nullable<PlainObject>?, queryParamInteger: Nullable<Int>?, request: Nullable<PlainObject>, requestOptions: RequestOptions?) -> JSONValue</code></summary>
+<details><summary><code>client.testGroup.<a href="/Sources/Resources/TestGroup/TestGroupClient.swift">testMethodName</a>(pathParam: String, queryParamObject: Nullable&lt;PlainObject&gt;?, queryParamInteger: Nullable&lt;Int&gt;?, request: Nullable&lt;PlainObject&gt;, requestOptions: RequestOptions?) -> JSONValue</code></summary>
 <dl>
 <dd>
 

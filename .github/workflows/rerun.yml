@@ -5,6 +5,9 @@ on:
     inputs:
       run_id:
         required: true
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   rerun:
     runs-on: ubuntu-latest

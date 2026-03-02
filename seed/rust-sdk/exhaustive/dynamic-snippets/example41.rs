@@ -8,5 +8,12 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints.put.add(&"id".to_string(), None).await;
+    client
+        .endpoints
+        .primitive
+        .get_and_return_datetime(
+            &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
+            None,
+        )
+        .await;
 }

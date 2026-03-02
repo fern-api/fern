@@ -668,10 +668,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         } else if (this.response?.type === "streaming") {
             const eventShape = this.response.value._visit<Stream.MessageEventShape | Stream.SSEEventShape>({
                 sse: (sse) => ({
-                    type: "sse",
+                    type: "sse" as const,
                     ...(sse.terminator != null
                         ? { streamTerminator: ts.factory.createStringLiteral(sse.terminator) }
-                        : {})
+                        : {}),
+                    ...this.getEventDiscriminator(sse.payload, context)
                 }),
                 json: (json) => ({
                     type: "json",
@@ -964,13 +965,25 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody: (responseError: FernIr.ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
+        // Deduplicate errors by status code to prevent duplicate case clauses.
+        // The first error for each status code wins (endpoint-specific errors come before global errors).
+        const seenStatusCodes = new Set<number>();
+        const deduplicatedErrors = this.endpoint.errors.filter((error) => {
+            const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
+            if (seenStatusCodes.has(errorDeclaration.statusCode)) {
+                return false;
+            }
+            seenStatusCodes.add(errorDeclaration.statusCode);
+            return true;
+        });
+
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToError(context),
                 context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
             ),
             ts.factory.createCaseBlock([
-                ...this.endpoint.errors.map((error) => {
+                ...deduplicatedErrors.map((error) => {
                     const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
                     return ts.factory.createCaseClause(
                         ts.factory.createNumericLiteral(errorDeclaration.statusCode),
@@ -1056,5 +1069,24 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             this.getReferenceToError(context),
             context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
         );
+    }
+
+    private getEventDiscriminator(
+        payload: FernIr.TypeReference,
+        context: SdkContext
+    ): { eventDiscriminator: ts.Expression } | Record<string, never> {
+        if (payload.type !== "named") {
+            return {};
+        }
+        const typeDeclaration = context.type.getTypeDeclaration(payload);
+        if (typeDeclaration.shape.type !== "union") {
+            return {};
+        }
+        if (typeDeclaration.shape.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
+            return {};
+        }
+        return {
+            eventDiscriminator: ts.factory.createStringLiteral(typeDeclaration.shape.discriminant.wireValue)
+        };
     }
 }

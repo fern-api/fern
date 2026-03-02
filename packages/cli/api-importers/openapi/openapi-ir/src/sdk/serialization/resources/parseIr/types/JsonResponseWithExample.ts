@@ -15,6 +15,7 @@ export const JsonResponseWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         responseProperty: core.serialization.string().optional(),
+        terminator: core.serialization.string().optional(),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
     })
     .extend(WithDescription)
@@ -25,6 +26,7 @@ export declare namespace JsonResponseWithExample {
     export interface Raw extends WithDescription.Raw, WithSource.Raw, WithStatusCode.Raw {
         schema: serializers.SchemaWithExample.Raw;
         responseProperty?: string | null;
+        terminator?: string | null;
         fullExamples?: NamedFullExample.Raw[] | null;
     }
 }

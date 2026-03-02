@@ -292,6 +292,55 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(request) -> map[string]*types.MixedType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := map[string]*types.MixedType{
+        "string": &types.MixedType{
+            Double: 1.1,
+        },
+    }
+client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `map[string]*types.MixedType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Container.GetAndReturnOptional(request) -> *types.ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
@@ -1402,6 +1451,55 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.GetAndReturnWithUnknownField(request) -> *types.ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &types.ObjectWithUnknownField{
+        Unknown: map[string]any{
+            "$ref": "https://example.com/schema",
+        },
+    }
+client.Endpoints.Object.GetAndReturnWithUnknownField(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `*types.ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(request) -> *types.ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
@@ -2063,6 +2161,65 @@ client.Endpoints.Params.ModifyWithPath(
 <dd>
 
 **request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.Params.UploadWithPath(Param, request) -> *types.ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Endpoints.Params.UploadWithPath(
+        context.TODO(),
+        "upload-path",
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `string` 
     
 </dd>
 </dl>
@@ -2986,3 +3143,4 @@ client.ReqWithHeaders.GetWithCustomHeader(
 </dd>
 </dl>
 </details>
+

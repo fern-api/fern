@@ -8,7 +8,7 @@ export const FunctionImplementationForMultipleLanguages: core.serialization.Obje
     serializers.v2.v3.FunctionImplementationForMultipleLanguages.Raw,
     SeedTrace.v2.v3.FunctionImplementationForMultipleLanguages
 > = core.serialization.object({
-    codeByLanguage: core.serialization.record(
+    codeByLanguage: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.v3.FunctionImplementation).optional(),
     ),

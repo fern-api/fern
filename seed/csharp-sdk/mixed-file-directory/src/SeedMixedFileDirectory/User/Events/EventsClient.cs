@@ -37,7 +37,6 @@ public partial class EventsClient : IEventsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/users/events/",
                     QueryString = _queryString,

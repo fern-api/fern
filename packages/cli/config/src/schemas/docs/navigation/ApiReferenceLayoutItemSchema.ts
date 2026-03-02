@@ -39,6 +39,8 @@ export const ApiReferenceSectionConfigurationSchema = z.object({
     section: z.string(),
     slug: z.string().optional(),
     icon: z.string().optional(),
+    collapsible: z.boolean().optional(),
+    collapsedByDefault: z.boolean().optional(),
     contents: z.array(z.lazy((): z.ZodTypeAny => ApiReferenceLayoutItemSchema))
 });
 

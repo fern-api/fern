@@ -22,6 +22,8 @@ export declare namespace CliV2 {
         expectError?: boolean;
         /** Authentication token (set to null to explicitly remove FERN_TOKEN) */
         authToken?: string | null;
+        /** AbortSignal from vitest test context for cleanup on timeout/bail/Ctrl+C */
+        signal?: AbortSignal;
     }
 
     export interface Result {
@@ -133,7 +135,8 @@ export async function runCliV2(options: CliV2.Options): Promise<CliV2.Result> {
 
         const result = await loggingExeca(CONSOLE_LOGGER, "node", ["--enable-source-maps", cliPath, ...options.args], {
             ...execaOptions,
-            doNotPipeOutput: options.expectError ?? false
+            doNotPipeOutput: options.expectError ?? false,
+            signal: options.signal
         });
 
         const duration = Date.now() - startTime;

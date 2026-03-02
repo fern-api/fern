@@ -8,6 +8,9 @@ on:
     paths:
       - "packages/ir-sdk/fern/apis/ir-types-latest/VERSION"
 
+env:
+  DO_NOT_TRACK: "1"
+
 jobs:
   node:
     runs-on: ubuntu-latest

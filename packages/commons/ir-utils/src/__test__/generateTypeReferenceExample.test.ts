@@ -97,15 +97,13 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
         const elapsed = Date.now() - start;
 
         expect(elapsed).toBeLessThan(1000);
-        expect(result.type).toBe("success");
-        if (result.type === "success") {
-            const json = result.jsonExample as Record<string, unknown>;
-            expect(json).toHaveProperty("name");
-            for (const field of selfRefFields) {
-                const nested = json[field] as Record<string, unknown>;
-                expect(nested).toBeDefined();
-                expect(nested.name).toBe("name");
-            }
+        expect.assert(result.type === "success");
+        const json = result.jsonExample as Record<string, unknown>;
+        expect(json).toHaveProperty("name");
+        for (const field of selfRefFields) {
+            const nested = json[field] as Record<string, unknown>;
+            expect(nested).toBeDefined();
+            expect(nested.name).toBe("name");
         }
     });
 
@@ -126,16 +124,14 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
         // Now succeeds: first visit generates the object, inner "self" property
         // hits cycle limit and gets a stub empty object instead of failing.
         // The stub itself is an object with a "self" property that is also a stub.
-        expect(result.type).toBe("success");
-        if (result.type === "success") {
-            const json = result.jsonExample as Record<string, unknown>;
-            expect(json).toHaveProperty("self");
-            const inner = json.self as Record<string, unknown>;
-            // The inner stub also has "self" because it recursed one more level
-            // before hitting the limit. At the deepest level, "self" is an empty stub.
-            expect(inner).toHaveProperty("self");
-            expect(inner.self).toEqual({});
-        }
+        expect.assert(result.type === "success");
+        const json = result.jsonExample as Record<string, unknown>;
+        expect(json).toHaveProperty("self");
+        const inner = json.self as Record<string, unknown>;
+        // The inner stub also has "self" because it recursed one more level
+        // before hitting the limit. At the deepest level, "self" is an empty stub.
+        expect(inner).toHaveProperty("self");
+        expect(inner.self).toEqual({});
     });
 
     it("should detect triangle cycle (A -> B -> C -> A) with optional back-edge", () => {
@@ -154,38 +150,36 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             skipOptionalProperties: false
         });
 
-        expect(result.type).toBe("success");
-        if (result.type === "success") {
-            const json = result.jsonExample as Record<string, unknown>;
-            expect(json).toHaveProperty("value");
-            expect(json).toHaveProperty("toB");
-            const toB = json.toB as Record<string, unknown>;
-            expect(toB).toHaveProperty("value");
-            expect(toB).toHaveProperty("toC");
-            const toC = toB.toC as Record<string, unknown>;
-            expect(toC).toHaveProperty("value");
-            expect(toC).toHaveProperty("toA");
-            const toA = toC.toA as Record<string, unknown>;
-            expect(toA).toHaveProperty("value");
-            expect(toA).toHaveProperty("toB");
-            const toB2 = toA.toB as Record<string, unknown>;
-            expect(toB2).toHaveProperty("value");
-            expect(toB2).toHaveProperty("toC");
-            const toC2 = toB2.toC as Record<string, unknown>;
-            expect(toC2).toHaveProperty("value");
-            // toA gets a stub with leaf properties and non-leaf named properties filled in recursively.
-            // The visited set prevents infinite recursion (A is visited, so toA inside C's minimal stub
-            // won't recurse back into A again).
-            expect(toC2.toA).toEqual({
+        expect.assert(result.type === "success");
+        const json = result.jsonExample as Record<string, unknown>;
+        expect(json).toHaveProperty("value");
+        expect(json).toHaveProperty("toB");
+        const toB = json.toB as Record<string, unknown>;
+        expect(toB).toHaveProperty("value");
+        expect(toB).toHaveProperty("toC");
+        const toC = toB.toC as Record<string, unknown>;
+        expect(toC).toHaveProperty("value");
+        expect(toC).toHaveProperty("toA");
+        const toA = toC.toA as Record<string, unknown>;
+        expect(toA).toHaveProperty("value");
+        expect(toA).toHaveProperty("toB");
+        const toB2 = toA.toB as Record<string, unknown>;
+        expect(toB2).toHaveProperty("value");
+        expect(toB2).toHaveProperty("toC");
+        const toC2 = toB2.toC as Record<string, unknown>;
+        expect(toC2).toHaveProperty("value");
+        // toA gets a stub with leaf properties and non-leaf named properties filled in recursively.
+        // The visited set prevents infinite recursion (A is visited, so toA inside C's minimal stub
+        // won't recurse back into A again).
+        expect(toC2.toA).toEqual({
+            value: "value",
+            toB: {
                 value: "value",
-                toB: {
-                    value: "value",
-                    toC: {
-                        value: "value"
-                    }
+                toC: {
+                    value: "value"
                 }
-            });
-        }
+            }
+        });
     });
 
     it("should allow same type in sibling branches (backtracking correctness)", () => {
@@ -203,12 +197,10 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             skipOptionalProperties: false
         });
 
-        expect(result.type).toBe("success");
-        if (result.type === "success") {
-            const json = result.jsonExample as Record<string, unknown>;
-            expect(json.child1).toEqual({ data: "data" });
-            expect(json.child2).toEqual({ data: "data" });
-        }
+        expect.assert(result.type === "success");
+        const json = result.jsonExample as Record<string, unknown>;
+        expect(json.child1).toEqual({ data: "data" });
+        expect(json.child2).toEqual({ data: "data" });
     });
 
     it("should generate stubs for 3-way cycle with required fields (BulkSchedule-like)", () => {
@@ -244,22 +236,20 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             skipOptionalProperties: false
         });
 
-        expect(result.type).toBe("success");
-        if (result.type === "success") {
-            const json = result.jsonExample as Record<string, unknown>;
-            expect(json).toHaveProperty("frequency");
-            expect(json).toHaveProperty("multi");
-            const multi = json.multi as Record<string, unknown>;
-            expect(multi).toHaveProperty("schedules");
-            const schedules = multi.schedules as Array<Record<string, unknown>>;
-            // The list should have items (not be empty) because ItemSchedule.schedule
-            // now gets a stub with leaf properties instead of failing
-            expect(schedules.length).toBeGreaterThan(0);
-            expect(schedules[0]).toHaveProperty("item");
-            expect(schedules[0]).toHaveProperty("schedule");
-            // The stub for BulkSchedule at cycle limit includes its leaf property "frequency"
-            const stubSchedule = schedules[0]?.schedule as Record<string, unknown>;
-            expect(stubSchedule).toHaveProperty("frequency");
-        }
+        expect.assert(result.type === "success");
+        const json = result.jsonExample as Record<string, unknown>;
+        expect(json).toHaveProperty("frequency");
+        expect(json).toHaveProperty("multi");
+        const multi = json.multi as Record<string, unknown>;
+        expect(multi).toHaveProperty("schedules");
+        const schedules = multi.schedules as Array<Record<string, unknown>>;
+        // The list should have items (not be empty) because ItemSchedule.schedule
+        // now gets a stub with leaf properties instead of failing
+        expect(schedules.length).toBeGreaterThan(0);
+        expect(schedules[0]).toHaveProperty("item");
+        expect(schedules[0]).toHaveProperty("schedule");
+        // The stub for BulkSchedule at cycle limit includes its leaf property "frequency"
+        const stubSchedule = schedules[0]?.schedule as Record<string, unknown>;
+        expect(stubSchedule).toHaveProperty("frequency");
     });
 });

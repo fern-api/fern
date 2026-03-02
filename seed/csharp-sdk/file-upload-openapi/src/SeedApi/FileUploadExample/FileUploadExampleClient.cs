@@ -26,7 +26,6 @@ public partial class FileUploadExampleClient : IFileUploadExampleClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "upload-file",
             Headers = _headers,

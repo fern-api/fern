@@ -130,6 +130,7 @@ export class FernDefinitionFileFormatter {
                 case "service":
                 case "errors":
                 case "webhooks":
+                case "webhook-signature":
                 case "channel":
                     return castedKey;
                 default:
@@ -169,6 +170,8 @@ export class FernDefinitionFileFormatter {
                 if (indent === 1) {
                     return "webhook";
                 }
+                return undefined;
+            case "webhook-signature":
                 return undefined;
             case "channel":
                 if (indent === 1) {

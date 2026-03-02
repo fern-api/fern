@@ -29,7 +29,6 @@ public partial class MigrationClient : IMigrationClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/migration-info/all",
                     Headers = _headers,

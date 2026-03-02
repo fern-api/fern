@@ -6,7 +6,7 @@ import type * as FernSeedConfig from "../../../index.js";
  * Configuration for publishing from a docker image, assuming a vanilla docker deployment.
  */
 export interface PublishDocker {
-    workingDirectory?: string;
-    preBuildCommands?: FernSeedConfig.DockerCommand;
+    workingDirectory?: string | undefined;
+    preBuildCommands?: FernSeedConfig.DockerCommand | undefined;
     docker: FernSeedConfig.PublishDockerConfiguration;
 }

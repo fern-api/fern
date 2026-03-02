@@ -5,4 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.endpoints.put.add(id: "id")
+client.endpoints.primitive.get_and_return_datetime(request: "2024-01-15T09:30:00Z")

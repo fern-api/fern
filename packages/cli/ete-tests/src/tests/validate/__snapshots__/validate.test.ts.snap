@@ -2,7 +2,10 @@
 
 exports[`validate > docs 1`] = `
 "Detected empty API definiton: fern. Remove to resolve error.
-Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
+No API definition found. Expected one of the following:
+  - An api section in generators.yml pointing to your API spec(s)
+  - A definition/ directory with Fern Definition files
+For more information, see https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
 All checks passed"
 `;
 
@@ -10,7 +13,10 @@ exports[`validate > no-api 1`] = `"Missing file: api.yml"`;
 
 exports[`validate > no-generator 1`] = `
 "Detected empty API definiton: api1. Remove to resolve error.
-Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
+No API definition found. Expected one of the following:
+  - An api section in generators.yml pointing to your API spec(s)
+  - A definition/ directory with Fern Definition files
+For more information, see https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
 `;
 
 exports[`validate > simple 1`] = `
