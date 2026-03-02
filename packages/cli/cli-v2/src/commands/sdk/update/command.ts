@@ -116,6 +116,14 @@ export class UpdateCommand {
     }: {
         updates: SdkUpdater.TargetUpdate[];
     }): Promise<SdkUpdater.TargetUpdate[]> {
+        if (updates.length === 1) {
+            const update = updates[0];
+            if (update == null) {
+                return [];
+            }
+            return [update];
+        }
+
         const { selected } = await inquirer.prompt<{ selected: string[] }>([
             {
                 type: "checkbox",
