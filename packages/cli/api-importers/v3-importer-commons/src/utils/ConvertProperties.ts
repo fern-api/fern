@@ -139,7 +139,7 @@ function generatePropertyV2Examples({
         context,
         schema: propertySchema,
         example: undefined,
-        generateOptionalProperties: false
+        generateOptionalProperties: true
     });
     const { validExample } = exampleConverter.convert();
     return {
