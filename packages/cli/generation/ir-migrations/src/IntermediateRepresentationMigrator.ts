@@ -138,14 +138,14 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 if (minVersion != null) {
                     throw new Error(
                         `${targetGenerator.name}@${targetGenerator.version} is not compatible with CLI v4.x.x+. ` +
-                            `Please upgrade to ${targetGenerator.name}@${minVersion} or later using `fern generator upgrade --include-major`.`
+                            `Please upgrade to ${targetGenerator.name}@${minVersion} or later using 'fern generator upgrade --include-major'.`
                     );
                 }
             }
 
             throw new Error(
                 "This generator version is not compatible with CLI v4.x.x+. " +
-                    "Please upgrade your generator using `fern generator upgrade --include-major`."
+                    "Please upgrade your generator using 'fern generator upgrade --include-major'."
             );
         }
     }
