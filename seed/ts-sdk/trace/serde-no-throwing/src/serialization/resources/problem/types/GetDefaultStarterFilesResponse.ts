@@ -10,7 +10,7 @@ export const GetDefaultStarterFilesResponse: core.serialization.ObjectSchema<
     serializers.GetDefaultStarterFilesResponse.Raw,
     SeedTrace.GetDefaultStarterFilesResponse
 > = core.serialization.object({
-    files: core.serialization.record(Language, ProblemFiles.optional()),
+    files: core.serialization.partialRecord(Language, ProblemFiles.optional()),
 });
 
 export declare namespace GetDefaultStarterFilesResponse {
