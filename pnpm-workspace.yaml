@@ -32,54 +32,6 @@ catalog:
   "@fern-fern/fiddle-sdk": 0.0.775
   "@fern-fern/generator-exec-sdk": ^0.0.1167
   "@fern-fern/generators-sdk": 0.114.0-5745f9e74
-  "@fern-fern/ir-v1-model": 0.0.2
-  "@fern-fern/ir-v10-model": 0.0.1
-  "@fern-fern/ir-v11-model": 0.0.2
-  "@fern-fern/ir-v12-model": 0.0.12
-  "@fern-fern/ir-v13-model": 0.0.1
-  "@fern-fern/ir-v14-model": 0.0.1
-  "@fern-fern/ir-v15-model": 0.0.1
-  "@fern-fern/ir-v16-model": 0.0.4
-  "@fern-fern/ir-v17-model": 0.0.1
-  "@fern-fern/ir-v18-model": 0.0.1
-  "@fern-fern/ir-v19-model": 0.0.5
-  "@fern-fern/ir-v2-model": 0.0.2
-  "@fern-fern/ir-v20-model": 0.0.2
-  "@fern-fern/ir-v21-model": 0.0.1
-  "@fern-fern/ir-v22-model": 0.0.22
-  "@fern-fern/ir-v23-sdk": 1.0.0
-  "@fern-fern/ir-v24-sdk": 1.0.0
-  "@fern-fern/ir-v25-sdk": 1.0.0
-  "@fern-fern/ir-v26-sdk": 1.0.0
-  "@fern-fern/ir-v27-sdk": 1.0.0
-  "@fern-fern/ir-v28-sdk": 1.0.0
-  "@fern-fern/ir-v29-sdk": 1.0.0
-  "@fern-fern/ir-v3-model": 0.0.4
-  "@fern-fern/ir-v30-sdk": 1.0.0
-  "@fern-fern/ir-v31-sdk": 1.0.0
-  "@fern-fern/ir-v32-sdk": 1.0.1
-  "@fern-fern/ir-v33-sdk": 1.0.1
-  "@fern-fern/ir-v34-sdk": 1.0.1
-  "@fern-fern/ir-v35-sdk": 1.0.1
-  "@fern-fern/ir-v36-sdk": 1.0.1
-  "@fern-fern/ir-v37-sdk": 1.0.1
-  "@fern-fern/ir-v38-sdk": 1.0.1
-  "@fern-fern/ir-v39-sdk": 1.0.1
-  "@fern-fern/ir-v4-model": 0.0.4
-  "@fern-fern/ir-v40-sdk": 1.0.1
-  "@fern-fern/ir-v41-sdk": 1.0.1
-  "@fern-fern/ir-v42-sdk": 1.0.1
-  "@fern-fern/ir-v43-sdk": 1.0.1
-  "@fern-fern/ir-v44-sdk": 1.0.1
-  "@fern-fern/ir-v45-sdk": 1.0.1
-  "@fern-fern/ir-v46-sdk": 1.0.1
-  "@fern-fern/ir-v47-sdk": 1.0.1
-  "@fern-fern/ir-v48-sdk": 1.0.1
-  "@fern-fern/ir-v49-sdk": 1.0.1
-  "@fern-fern/ir-v5-model": 0.0.3
-  "@fern-fern/ir-v50-sdk": 1.0.1
-  "@fern-fern/ir-v51-sdk": 1.0.1
-  "@fern-fern/ir-v52-sdk": 1.0.1
   "@fern-fern/ir-v53-sdk": 1.0.1
   "@fern-fern/ir-v54-sdk": 1.0.1
   "@fern-fern/ir-v55-sdk": 1.0.1
@@ -87,14 +39,10 @@ catalog:
   "@fern-fern/ir-v57-sdk": 1.0.1
   "@fern-fern/ir-v58-sdk": 1.0.1
   "@fern-fern/ir-v59-sdk": 1.0.1
-  "@fern-fern/ir-v6-model": 0.0.33
   "@fern-fern/ir-v60-sdk": 1.0.1
   "@fern-fern/ir-v61-sdk": 1.0.1
   "@fern-fern/ir-v62-sdk": 1.0.1
   "@fern-fern/ir-v63-sdk": 1.0.2
-  "@fern-fern/ir-v7-model": 0.0.2
-  "@fern-fern/ir-v8-model": 0.0.1
-  "@fern-fern/ir-v9-model": 0.0.1
   "@fern-fern/legacy-docs-config": 0.0.58
   "@fern-fern/postman-sdk": 0.1.1
   "@inquirer/prompts": ^7.1.0

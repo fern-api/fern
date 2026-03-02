@@ -58,7 +58,7 @@ describe("migrateIntermediateRepresentation", () => {
         });
         expect(
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            (migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue
+            (migrated as IrVersions.V53.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue
         ).toBeUndefined();
     });
 
@@ -72,7 +72,7 @@ describe("migrateIntermediateRepresentation", () => {
             }
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
+        expect((migrated as IrVersions.V53.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",
             pascalCase: "BlogNotFoundError",
@@ -92,7 +92,7 @@ describe("migrateIntermediateRepresentation", () => {
             }
         });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
+        expect((migrated as IrVersions.V53.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
             camelCase: "blogNotFoundError",
             originalValue: "BlogNotFoundError",
             pascalCase: "BlogNotFoundError",
@@ -112,7 +112,7 @@ describe("migrateIntermediateRepresentation", () => {
             }
         });
 
-        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
+        expect((migrated as IrVersions.V53.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
     });
 
     it("does not run migration if generator (release) version is greater than migration's 'minVersiontoExclude'", async () => {
@@ -125,7 +125,7 @@ describe("migrateIntermediateRepresentation", () => {
             }
         });
 
-        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
+        expect((migrated as IrVersions.V53.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
     });
 });
 
