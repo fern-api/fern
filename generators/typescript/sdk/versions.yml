@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.52.9
+  changelogEntry:
+    - summary: |
+        Add `connectionTimeoutInSeconds` and `abortSignal` options to WebSocket `ConnectArgs`.
+        The `connectionTimeoutInSeconds` option sets the timeout for establishing the WebSocket
+        connection (converted to milliseconds internally). The `abortSignal` option allows callers
+        to abort the WebSocket connection attempt using an `AbortController`.
+      type: feat
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 3.52.8
   changelogEntry:
     - summary: |
