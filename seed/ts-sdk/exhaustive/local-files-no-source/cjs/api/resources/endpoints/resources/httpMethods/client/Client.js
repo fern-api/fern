@@ -37,10 +37,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpMethodsClient = void 0;
 const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const core = __importStar(require("../../../../../../core/index.js"));
+const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
+const errors = __importStar(require("../../../../../../errors/index.js"));
 class HttpMethodsClient {
     constructor(options, client) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client = client;
+        this._client =
+            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
     }
     /**
      * @param {string} id

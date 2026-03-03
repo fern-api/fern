@@ -2,7 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
-import type * as core from "../../../../../../core/index.js";
+import * as core from "../../../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../../../errors/index.js";
 import type * as SeedMixedFileDirectory from "../../../../../index.js";
 import { MetadataClient } from "../resources/metadata/client/Client.js";
 
@@ -17,9 +19,15 @@ export class EventsClient {
     protected readonly _client: core.HttpClient;
     protected _metadata: MetadataClient | undefined;
 
-    constructor(options: EventsClient.Options, client: core.HttpClient) {
+    constructor(options: EventsClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedMixedFileDirectoryError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     public get metadata(): MetadataClient {

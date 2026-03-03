@@ -4,6 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError";
+import * as errors from "../../../../errors/index";
 import * as SeedExhaustive from "../../../index.js";
 
 export declare namespace NoAuthClient {
@@ -16,9 +18,15 @@ export class NoAuthClient {
     protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: NoAuthClient.Options, client: core.HttpClient) {
+    constructor(options: NoAuthClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     /**

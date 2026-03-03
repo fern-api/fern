@@ -53,7 +53,8 @@ const SeedExhaustive = __importStar(require("../../../index.js"));
 class NoAuthClient {
     constructor(options, client) {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
-        this._client = client;
+        this._client =
+            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
     }
     /**
      * POST request with no auth

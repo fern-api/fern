@@ -18,9 +18,11 @@ export class SimpleClient {
     protected readonly _options: NormalizedClientOptions<SimpleClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: SimpleClient.Options, client: core.HttpClient) {
+    constructor(options: SimpleClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedErrorsError(args), handleNonStatusCodeError);
     }
 
     /**

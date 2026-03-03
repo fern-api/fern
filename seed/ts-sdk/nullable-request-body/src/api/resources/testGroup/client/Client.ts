@@ -18,9 +18,11 @@ export class TestGroupClient {
     protected readonly _options: NormalizedClientOptions<TestGroupClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: TestGroupClient.Options, client: core.HttpClient) {
+    constructor(options: TestGroupClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedApiError(args), handleNonStatusCodeError);
     }
 
     /**

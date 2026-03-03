@@ -2,7 +2,9 @@
 
 import type { BaseClientOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
-import type * as core from "../../../../../../core/index.js";
+import * as core from "../../../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError";
+import * as errors from "../../../../../../errors/index";
 import { ProblemClient } from "../resources/problem/client/Client.js";
 
 export declare namespace V3Client {
@@ -14,9 +16,11 @@ export class V3Client {
     protected readonly _client: core.HttpClient;
     protected _problem: ProblemClient | undefined;
 
-    constructor(options: V3Client.Options = {}, client: core.HttpClient) {
+    constructor(options: V3Client.Options = {}, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), handleNonStatusCodeError);
     }
 
     public get problem(): ProblemClient {

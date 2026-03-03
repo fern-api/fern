@@ -2,7 +2,9 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import type * as core from "../../../../core/index.js";
+import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError";
+import * as errors from "../../../../errors/index";
 import { ContainerClient } from "../resources/container/client/Client.js";
 import { ContentTypeClient } from "../resources/contentType/client/Client.js";
 import { EnumClient } from "../resources/enum/client/Client.js";
@@ -34,9 +36,15 @@ export class EndpointsClient {
     protected _union: UnionClient | undefined;
     protected _urls: UrlsClient | undefined;
 
-    constructor(options: EndpointsClient.Options, client: core.HttpClient) {
+    constructor(options: EndpointsClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     public get container(): ContainerClient {

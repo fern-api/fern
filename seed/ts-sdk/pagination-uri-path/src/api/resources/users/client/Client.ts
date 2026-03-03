@@ -2,7 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import type * as core from "../../../../core/index.js";
+import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../errors/index.js";
 import type * as SeedPaginationUriPath from "../../../index.js";
 
 export declare namespace UsersClient {
@@ -15,9 +17,15 @@ export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: UsersClient.Options, client: core.HttpClient) {
+    constructor(options: UsersClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedPaginationUriPathError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     /**

@@ -717,7 +717,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
                 });
             } else {
-                // Non-root client: constructor(options, client) - receives HttpClient
+                // Non-root client: constructor(options, client?) - receives HttpClient or creates one
                 const parameters = [
                     {
                         name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
@@ -726,12 +726,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     },
                     {
                         name: GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME,
-                        type: httpClientParamType
+                        type: httpClientParamType,
+                        hasQuestionToken: true
                     }
                 ];
                 const statements = code`
                     ${this.getCtorOptionsStatementsWithAuth(context)}
-                    this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME};
+                    this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME} ?? ${this.getCtorHttpClientExpression(context)};
                 `;
                 serviceClass.ctors.push({
                     parameters,
@@ -756,10 +757,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ]
                 });
             } else {
-                // Non-root client without auth: constructor(options, client) - receives HttpClient
+                // Non-root client without auth: constructor(options, client?) - receives HttpClient or creates one
                 const statements = code`
                     ${this.getCtorOptionsStatements(context)}
-                    this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME};
+                    this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME} ?? ${this.getCtorHttpClientExpression(context)};
                 `;
                 serviceClass.ctors.push({
                     statements: statements.toString({ dprintOptions: { indentWidth: 4 } }),
@@ -771,7 +772,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         },
                         {
                             name: GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME,
-                            type: httpClientParamType
+                            type: httpClientParamType,
+                            hasQuestionToken: true
                         }
                     ]
                 });
@@ -976,6 +978,25 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 .getExpression()
         );
         return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${handleNonStatusCodeErrorRef});`;
+    }
+
+    /**
+     * Returns the expression `new HttpClient(this._options, (args) => new errors.XxxError(args), handleNonStatusCodeError)`
+     * for use in non-root client constructors as a fallback when no client is provided.
+     */
+    private getCtorHttpClientExpression(context: SdkContext): Code {
+        const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
+        const errorRef = getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression());
+        const handleNonStatusCodeErrorRef = getTextOfTsNode(
+            context.nonStatusCodeErrorHandler
+                .getReferenceToHandleNonStatusCodeError({
+                    importsManager: context.importsManager,
+                    exportsManager: context.exportsManager,
+                    sourceFile: context.sourceFile
+                })
+                .getExpression()
+        );
+        return code`new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${handleNonStatusCodeErrorRef})`;
     }
 
     /**

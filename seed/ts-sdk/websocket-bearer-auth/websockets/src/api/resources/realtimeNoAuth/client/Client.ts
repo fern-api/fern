@@ -3,6 +3,8 @@
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../errors/index.js";
 import { RealtimeNoAuthSocket } from "./Socket.js";
 
 export declare namespace RealtimeNoAuthClient {
@@ -30,9 +32,15 @@ export class RealtimeNoAuthClient {
     protected readonly _options: NormalizedClientOptions<RealtimeNoAuthClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: RealtimeNoAuthClient.Options, client: core.HttpClient) {
+    constructor(options: RealtimeNoAuthClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedWebsocketBearerAuthError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     public async connect(args: RealtimeNoAuthClient.ConnectArgs): Promise<RealtimeNoAuthSocket> {

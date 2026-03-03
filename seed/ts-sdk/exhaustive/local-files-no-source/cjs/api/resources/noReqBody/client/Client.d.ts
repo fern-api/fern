@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../BaseClient.js";
-import type * as core from "../../../../core/index.js";
+import * as core from "../../../../core/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 export declare namespace NoReqBodyClient {
     type Options = BaseClientOptions;
@@ -10,7 +10,7 @@ export declare namespace NoReqBodyClient {
 export declare class NoReqBodyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: NoReqBodyClient.Options, client: core.HttpClient);
+    constructor(options: NoReqBodyClient.Options, client?: core.HttpClient);
     /**
      * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *

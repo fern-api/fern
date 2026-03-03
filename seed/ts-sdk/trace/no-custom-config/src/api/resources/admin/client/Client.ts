@@ -4,6 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../errors/index.js";
 import type * as SeedTrace from "../../../index.js";
 
 export declare namespace AdminClient {
@@ -16,9 +18,11 @@ export class AdminClient {
     protected readonly _options: NormalizedClientOptions<AdminClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: AdminClient.Options = {}, client: core.HttpClient) {
+    constructor(options: AdminClient.Options = {}, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), handleNonStatusCodeError);
     }
 
     /**

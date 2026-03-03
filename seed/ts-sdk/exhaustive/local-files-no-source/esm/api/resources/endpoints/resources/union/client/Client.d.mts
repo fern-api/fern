@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
-import type * as core from "../../../../../../core/index.mjs";
+import * as core from "../../../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace UnionClient {
     type Options = BaseClientOptions;
@@ -10,7 +10,7 @@ export declare namespace UnionClient {
 export declare class UnionClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UnionClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: UnionClient.Options, client: core.HttpClient);
+    constructor(options: UnionClient.Options, client?: core.HttpClient);
     /**
      * @param {SeedExhaustive.types.Animal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.

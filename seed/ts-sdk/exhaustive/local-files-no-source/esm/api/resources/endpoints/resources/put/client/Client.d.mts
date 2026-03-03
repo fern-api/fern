@@ -10,7 +10,7 @@ export declare namespace PutClient {
 export declare class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: PutClient.Options, client: core.HttpClient);
+    constructor(options: PutClient.Options, client?: core.HttpClient);
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.

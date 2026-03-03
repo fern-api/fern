@@ -5,6 +5,8 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError";
+import * as errors from "../../../../errors/index";
 import * as SeedTrace from "../../../index.js";
 import { ProblemClient } from "../resources/problem/client/Client.js";
 import { V3Client } from "../resources/v3/client/Client.js";
@@ -21,9 +23,11 @@ export class V2Client {
     protected _problem: ProblemClient | undefined;
     protected _v3: V3Client | undefined;
 
-    constructor(options: V2Client.Options = {}, client: core.HttpClient) {
+    constructor(options: V2Client.Options = {}, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), handleNonStatusCodeError);
     }
 
     public get problem(): ProblemClient {

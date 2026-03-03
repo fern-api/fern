@@ -10,7 +10,7 @@ export declare namespace ObjectClient {
 export declare class ObjectClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ObjectClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: ObjectClient.Options, client: core.HttpClient);
+    constructor(options: ObjectClient.Options, client?: core.HttpClient);
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.

@@ -4,6 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../errors/index.js";
 import * as SeedSimpleApi from "../../../index.js";
 
 export declare namespace UserClient {
@@ -16,9 +18,11 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UserClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: UserClient.Options, client: core.HttpClient) {
+    constructor(options: UserClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError);
     }
 
     /**

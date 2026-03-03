@@ -3,6 +3,8 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import * as core from "../../../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
@@ -16,9 +18,15 @@ export class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: PutClient.Options, client: core.HttpClient) {
+    constructor(options: PutClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     /**

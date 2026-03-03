@@ -18,9 +18,15 @@ export class InlineUsersClient {
     protected readonly _options: NormalizedClientOptions<InlineUsersClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: InlineUsersClient.Options, client: core.HttpClient) {
+    constructor(options: InlineUsersClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedPaginationError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     /**

@@ -17,7 +17,8 @@ import * as SeedExhaustive from "../../../index.mjs";
 export class InlinedRequestsClient {
     constructor(options, client) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError);
     }
     /**
      * POST with custom object in request body, response is an object

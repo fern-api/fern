@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import type * as core from "../../../../../../core/index.js";
+import * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 export declare namespace ContentTypeClient {
     type Options = BaseClientOptions;
@@ -10,7 +10,7 @@ export declare namespace ContentTypeClient {
 export declare class ContentTypeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContentTypeClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: ContentTypeClient.Options, client: core.HttpClient);
+    constructor(options: ContentTypeClient.Options, client?: core.HttpClient);
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.

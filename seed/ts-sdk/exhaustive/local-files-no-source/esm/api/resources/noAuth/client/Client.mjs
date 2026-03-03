@@ -17,7 +17,8 @@ import * as SeedExhaustive from "../../../index.mjs";
 export class NoAuthClient {
     constructor(options, client) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError);
     }
     /**
      * POST request with no auth

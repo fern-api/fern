@@ -1,4 +1,3 @@
-import type { AuthProvider } from "../auth/AuthProvider.js";
 import type { LogConfig, Logger } from "../logging/logger.js";
 import type { Fetcher } from "./Fetcher.js";
 import { HttpResponsePromise } from "./HttpResponsePromise.js";
@@ -32,7 +31,7 @@ export interface EndpointConfig {
         timeoutInSeconds?: number;
         maxRetries?: number;
         abortSignal?: AbortSignal;
-        headers?: Record<string, string | Supplier<string | null | undefined> | undefined>;
+        headers?: Record<string, unknown>;
         queryParams?: Record<string, unknown>;
     };
     /** Map specific status codes to typed error constructors */
@@ -52,7 +51,13 @@ export interface EndpointConfig {
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
     environment?: Supplier<string>;
-    authProvider?: AuthProvider;
+    authProvider?: {
+        getAuthRequest(arg?: {
+            endpointMetadata?: Record<string, unknown>;
+        }): Promise<{
+            headers: Record<string, string>;
+        }>;
+    };
     headers?: Record<string, unknown>;
     timeoutInSeconds?: number;
     maxRetries?: number;

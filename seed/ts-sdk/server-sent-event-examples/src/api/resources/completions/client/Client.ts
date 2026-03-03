@@ -18,9 +18,15 @@ export class CompletionsClient {
     protected readonly _options: NormalizedClientOptions<CompletionsClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: CompletionsClient.Options, client: core.HttpClient) {
+    constructor(options: CompletionsClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedServerSentEventsError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     public stream(

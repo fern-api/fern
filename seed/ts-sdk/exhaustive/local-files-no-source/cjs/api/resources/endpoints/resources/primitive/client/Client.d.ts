@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import type * as core from "../../../../../../core/index.js";
+import * as core from "../../../../../../core/index.js";
 export declare namespace PrimitiveClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -9,7 +9,7 @@ export declare namespace PrimitiveClient {
 export declare class PrimitiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PrimitiveClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: PrimitiveClient.Options, client: core.HttpClient);
+    constructor(options: PrimitiveClient.Options, client?: core.HttpClient);
     /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.

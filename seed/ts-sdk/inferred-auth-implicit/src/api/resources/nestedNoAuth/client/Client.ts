@@ -2,7 +2,9 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import type * as core from "../../../../core/index.js";
+import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../errors/index.js";
 import { ApiClient } from "../resources/api/client/Client.js";
 
 export declare namespace NestedNoAuthClient {
@@ -14,9 +16,15 @@ export class NestedNoAuthClient {
     protected readonly _client: core.HttpClient;
     protected _api: ApiClient | undefined;
 
-    constructor(options: NestedNoAuthClient.Options, client: core.HttpClient) {
+    constructor(options: NestedNoAuthClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedInferredAuthImplicitError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     public get api(): ApiClient {

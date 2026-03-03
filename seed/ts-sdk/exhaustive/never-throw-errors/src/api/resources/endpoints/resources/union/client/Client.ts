@@ -4,6 +4,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError";
+import * as errors from "../../../../../../errors/index";
 import * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace UnionClient {
@@ -16,9 +18,15 @@ export class UnionClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UnionClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: UnionClient.Options, client: core.HttpClient) {
+    constructor(options: UnionClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     /**

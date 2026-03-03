@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
-import type * as core from "../../../../../../core/index.mjs";
+import * as core from "../../../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace ContainerClient {
     type Options = BaseClientOptions;
@@ -10,7 +10,7 @@ export declare namespace ContainerClient {
 export declare class ContainerClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContainerClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: ContainerClient.Options, client: core.HttpClient);
+    constructor(options: ContainerClient.Options, client?: core.HttpClient);
     /**
      * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.

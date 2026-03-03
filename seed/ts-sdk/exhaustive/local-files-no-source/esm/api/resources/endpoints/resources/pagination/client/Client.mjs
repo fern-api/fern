@@ -16,7 +16,8 @@ import * as errors from "../../../../../../errors/index.mjs";
 export class PaginationClient {
     constructor(options, client) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError);
     }
     /**
      * List items with cursor pagination

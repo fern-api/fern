@@ -18,9 +18,15 @@ export class PropertyBasedErrorClient {
     protected readonly _options: NormalizedClientOptions<PropertyBasedErrorClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: PropertyBasedErrorClient.Options, client: core.HttpClient) {
+    constructor(options: PropertyBasedErrorClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedErrorPropertyError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     /**

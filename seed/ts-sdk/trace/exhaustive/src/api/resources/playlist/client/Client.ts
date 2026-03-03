@@ -5,6 +5,8 @@ import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } 
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError";
+import * as errors from "../../../../errors/index";
 import * as SeedTrace from "../../../index.js";
 
 export declare namespace PlaylistClient {
@@ -17,9 +19,11 @@ export class PlaylistClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PlaylistClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: PlaylistClient.Options = {}, client: core.HttpClient) {
+    constructor(options: PlaylistClient.Options = {}, client?: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), handleNonStatusCodeError);
     }
 
     /**

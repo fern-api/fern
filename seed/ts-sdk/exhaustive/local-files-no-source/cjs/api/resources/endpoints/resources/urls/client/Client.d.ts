@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import type * as core from "../../../../../../core/index.js";
+import * as core from "../../../../../../core/index.js";
 export declare namespace UrlsClient {
     type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
@@ -9,7 +9,7 @@ export declare namespace UrlsClient {
 export declare class UrlsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UrlsClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: UrlsClient.Options, client: core.HttpClient);
+    constructor(options: UrlsClient.Options, client?: core.HttpClient);
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *

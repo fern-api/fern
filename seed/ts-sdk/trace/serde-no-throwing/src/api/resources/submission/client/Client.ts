@@ -5,6 +5,8 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError";
+import * as errors from "../../../../errors/index";
 import * as serializers from "../../../../serialization/index.js";
 import * as SeedTrace from "../../../index.js";
 
@@ -21,9 +23,11 @@ export class SubmissionClient {
     protected readonly _options: NormalizedClientOptions<SubmissionClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: SubmissionClient.Options = {}, client: core.HttpClient) {
+    constructor(options: SubmissionClient.Options = {}, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), handleNonStatusCodeError);
     }
 
     /**

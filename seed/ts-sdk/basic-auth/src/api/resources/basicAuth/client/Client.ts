@@ -18,9 +18,11 @@ export class BasicAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<BasicAuthClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: BasicAuthClient.Options, client: core.HttpClient) {
+    constructor(options: BasicAuthClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedBasicAuthError(args), handleNonStatusCodeError);
     }
 
     /**

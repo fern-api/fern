@@ -10,7 +10,7 @@ export declare namespace ParamsClient {
 export declare class ParamsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
     protected readonly _client: core.HttpClient;
-    constructor(options: ParamsClient.Options, client: core.HttpClient);
+    constructor(options: ParamsClient.Options, client?: core.HttpClient);
     /**
      * GET with path param
      *

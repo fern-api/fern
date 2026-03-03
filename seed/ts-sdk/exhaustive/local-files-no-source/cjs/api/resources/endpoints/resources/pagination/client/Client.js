@@ -52,7 +52,8 @@ const errors = __importStar(require("../../../../../../errors/index.js"));
 class PaginationClient {
     constructor(options, client) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client = client;
+        this._client =
+            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
     }
     /**
      * List items with cursor pagination

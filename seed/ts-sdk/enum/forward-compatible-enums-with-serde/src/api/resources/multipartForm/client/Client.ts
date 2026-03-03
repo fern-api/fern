@@ -19,9 +19,11 @@ export class MultipartFormClient {
     protected readonly _options: NormalizedClientOptions<MultipartFormClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: MultipartFormClient.Options, client: core.HttpClient) {
+    constructor(options: MultipartFormClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedEnumError(args), handleNonStatusCodeError);
     }
 
     /**

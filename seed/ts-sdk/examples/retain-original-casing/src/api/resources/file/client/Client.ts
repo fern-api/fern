@@ -2,7 +2,9 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import type * as core from "../../../../core/index.js";
+import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../errors/index.js";
 import { NotificationClient } from "../resources/notification/client/Client.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
@@ -16,9 +18,11 @@ export class FileClient {
     protected _notification: NotificationClient | undefined;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: FileClient.Options, client: core.HttpClient) {
+    constructor(options: FileClient.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedExamplesError(args), handleNonStatusCodeError);
     }
 
     public get notification(): NotificationClient {

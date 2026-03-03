@@ -3,7 +3,9 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import type * as core from "../../../../core/index.js";
+import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
+import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import type * as SeedTrace from "../../../index.js";
 
@@ -17,9 +19,11 @@ export class HomepageClient {
     protected readonly _options: NormalizedClientOptions<HomepageClient.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: HomepageClient.Options = {}, client: core.HttpClient) {
+    constructor(options: HomepageClient.Options = {}, client?: core.HttpClient) {
         this._options = normalizeClientOptions(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), handleNonStatusCodeError);
     }
 
     /**

@@ -18,9 +18,15 @@ export class S3Client {
     protected readonly _options: NormalizedClientOptionsWithAuth<S3Client.Options>;
     protected readonly _client: core.HttpClient;
 
-    constructor(options: S3Client.Options, client: core.HttpClient) {
+    constructor(options: S3Client.Options, client?: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = client;
+        this._client =
+            client ??
+            new core.HttpClient(
+                this._options,
+                (args) => new errors.SeedMultiUrlEnvironmentNoDefaultError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     /**
