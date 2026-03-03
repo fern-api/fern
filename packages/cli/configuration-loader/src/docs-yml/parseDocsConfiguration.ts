@@ -143,7 +143,7 @@ export async function parseDocsConfiguration({
     const tabsObj =
         resolvedTheme?.tabs != null && typeof resolvedTheme.tabs === "object" ? resolvedTheme.tabs : undefined;
     const effectivePlacement = tabsObj?.placement ?? layout?.tabsPlacement ?? "sidebar";
-    const effectiveAlignment = tabsObj?.alignment ?? layout?.tabsAlignment ?? "left";
+    const effectiveAlignment = tabsObj?.alignment ?? "left";
     if (effectivePlacement === "sidebar" && effectiveAlignment === "center") {
         context.logger.warn(
             "Tabs alignment 'center' is not supported when tabs placement is 'sidebar'. The alignment will be ignored."
@@ -491,9 +491,9 @@ function convertLayoutConfig(
         disableHeader: layout.disableHeader ?? false,
         hideNavLinks: layout.hideNavLinks ?? false,
         hideFeedback: layout.hideFeedback ?? false,
-        // tabsAlignment is not yet in the FDR SDK type; cast to forward-compat
-        // until the fern-platform companion PR merges and the SDK is updated.
-        tabsAlignment: layout.tabsAlignment === "center" ? "CENTER" : "LEFT"
+        // tabsAlignment is resolved from theme.tabs.alignment, not layout
+        // Cast needed until the fern-platform companion PR merges and the SDK is updated.
+        tabsAlignment: "LEFT"
     } as docsYml.ParsedDocsConfiguration["layout"];
 }
 

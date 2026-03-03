@@ -5,7 +5,7 @@
         Nest tabs configuration under `theme.tabs` as an object with `style`,
         `alignment`, and `placement` properties. `theme.tabs: bubble` (string)
         is still supported for backward compatibility. The `layout.tabs-placement`
-        and `layout.tabs-alignment` fields are preserved for backward compat.
+        field is preserved for backward compat.
         Warn when sidebar placement is combined with center alignment since
         centering is only supported for header tabs.
       type: feat

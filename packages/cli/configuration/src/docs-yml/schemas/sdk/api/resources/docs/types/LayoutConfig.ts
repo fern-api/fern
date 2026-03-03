@@ -61,14 +61,6 @@ export interface LayoutConfig {
      */
     tabsPlacement?: FernDocsConfig.TabsPlacement;
     /**
-     * Set the horizontal alignment of the tabs.
-     *
-     * @default: `left`
-     *
-     * When set to `center`, the header tabs will be horizontally centered.
-     */
-    tabsAlignment?: FernDocsConfig.TabsAlignment;
-    /**
      * Set the placement of the version and language switcher
      *
      * @default: `header`

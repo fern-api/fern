@@ -5143,16 +5143,6 @@
             }
           ]
         },
-        "tabs-alignment": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.TabsAlignment"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "switcher-placement": {
           "oneOf": [
             {
