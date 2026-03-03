@@ -36,10 +36,12 @@ export class ServiceClient {
         movieId: SeedExamples.MovieId,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Movie> {
+        const _headers = {};
         return this._client.request<SeedExamples.Movie>({
             method: "GET",
             path: `/movie/${core.url.encodePathParam(movieId)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -76,6 +78,7 @@ export class ServiceClient {
         request: SeedExamples.Movie,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.MovieId> {
+        const _headers = {};
         return this._client.request<SeedExamples.MovieId>({
             method: "POST",
             path: "/movie",
@@ -83,6 +86,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -288,6 +292,7 @@ export class ServiceClient {
         request: SeedExamples.BigEntity,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Response> {
+        const _headers = {};
         return this._client.request<SeedExamples.Response>({
             method: "POST",
             path: "/big-entity",
@@ -295,6 +300,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -315,6 +321,7 @@ export class ServiceClient {
         request?: SeedExamples.RefreshTokenRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "/refresh-token",
@@ -322,6 +329,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

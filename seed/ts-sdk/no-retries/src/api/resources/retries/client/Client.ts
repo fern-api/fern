@@ -31,10 +31,12 @@ export class RetriesClient {
      *     await client.retries.getUsers()
      */
     public getUsers(requestOptions?: RetriesClient.RequestOptions): core.HttpResponsePromise<SeedNoRetries.User[]> {
+        const _headers = {};
         return this._client.request<SeedNoRetries.User[]>({
             method: "GET",
             path: "/users",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

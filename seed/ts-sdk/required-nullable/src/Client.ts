@@ -53,10 +53,12 @@ export class SeedApiClient {
             required_baz: requiredBaz,
             required_nullable_baz: requiredNullableBaz,
         };
+        const _headers = {};
         return this._client.request<SeedApi.Foo>({
             method: "GET",
             path: "foo",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

@@ -37,10 +37,12 @@ export class SeedApiClient {
         account_id: string,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Account> {
+        const _headers = {};
         return this._client.request<SeedApi.Account>({
             method: "GET",
             path: `account/${core.url.encodePathParam(account_id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

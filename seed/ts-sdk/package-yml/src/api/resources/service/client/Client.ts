@@ -35,10 +35,12 @@ export class ServiceClient {
      *     await client.service.nop("id-219xca8")
      */
     public nop(nestedId: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.id)}//${core.url.encodePathParam(nestedId)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

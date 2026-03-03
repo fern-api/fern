@@ -21,6 +21,7 @@ export class UnionClient {
      *     })
      */
     getAndReturnUnion(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/union",
@@ -28,6 +29,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

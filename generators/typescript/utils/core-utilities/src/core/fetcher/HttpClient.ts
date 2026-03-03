@@ -118,9 +118,32 @@ export class HttpClient {
      * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
      * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
      * to handle the response themselves. ALL HTTP calls should go through this method.
+     *
+     * Handles auth + global header merging on top of whatever endpoint-specific headers
+     * are provided in args.headers. Pass requestHeaders for per-request header overrides.
+     *
+     * @param args - Fetcher args (url, method, headers, body, etc.)
+     * @param options - Optional request-level overrides (per-request headers, endpoint metadata for auth)
      */
-    public async fetch<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
-        return this._fetcherFn<R>(args);
+    public async fetch<R = unknown>(
+        args: Fetcher.Args,
+        options?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: Record<string, unknown> }
+    ): Promise<APIResponse<R, Fetcher.Error>> {
+        // Merge headers: auth → global → endpoint-specific (args.headers) → per-request
+        const authHeaders: Record<string, string> = this._options.authProvider
+            ? (
+                  await this._options.authProvider.getAuthRequest({
+                      endpointMetadata: options?.endpointMetadata ?? args.endpointMetadata
+                  })
+              ).headers
+            : {};
+        const mergedHeaders = mergeHeaders(
+            authHeaders,
+            this._options.headers,
+            args.headers,
+            options?.requestHeaders
+        );
+        return this._fetcherFn<R>({ ...args, headers: mergedHeaders });
     }
 
     /**
@@ -132,50 +155,44 @@ export class HttpClient {
     }
 
     private async _execute<T>(config: EndpointConfig): Promise<WithRawResponse<T>> {
-        // 1. Auth
-        const authHeaders: Record<string, string> = this._options.authProvider
-            ? (await this._options.authProvider.getAuthRequest({ endpointMetadata: config.endpointMetadata })).headers
-            : {};
-
-        // 2. Headers: auth → global → endpoint-specific → per-request
-        //    This matches the exact merge order of the existing generated code:
-        //    mergeHeaders(authHeaders, this._options?.headers, [mergeOnlyDefinedHeaders({...}),] requestOptions?.headers)
-        const headers = mergeHeaders(
-            authHeaders,
-            this._options.headers,
-            config.headers != null ? mergeOnlyDefinedHeaders(config.headers) : undefined,
-            config.requestOptions?.headers,
-        );
-
-        // 3. Query params: endpoint-specific + per-request
+        // 1. Query params: endpoint-specific + per-request
         const queryParameters = config.queryParameters
             ? { ...config.queryParameters, ...config.requestOptions?.queryParams }
             : config.requestOptions?.queryParams;
 
-        // 4. Fetch — uses the configured fetcher (custom or default fetcherImpl)
-        const response = await this._fetcherFn({
-            url: join(
-                (await Supplier.get(this._options.baseUrl)) ?? ((await Supplier.get(this._options.environment)) as string) ?? "",
-                config.path,
-            ),
-            method: config.method,
-            headers,
-            contentType: config.contentType,
-            requestType: config.requestType,
-            responseType: config.responseType,
-            queryParameters,
-            body: config.body,
-            duplex: config.duplex,
-            timeoutMs: (config.requestOptions?.timeoutInSeconds ?? this._options.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: config.requestOptions?.maxRetries ?? this._options.maxRetries,
-            abortSignal: config.requestOptions?.abortSignal,
-            withCredentials: config.withCredentials,
-            fetchFn: this._options.fetch,
-            logging: this._options.logging,
-            endpointMetadata: config.endpointMetadata,
-        });
+        // 2. Build Fetcher.Args and delegate to fetch() for header merging
+        const endpointHeaders = config.headers != null ? mergeOnlyDefinedHeaders(config.headers) : {};
+        const response = await this.fetch<T>(
+            {
+                url: join(
+                    (await Supplier.get(this._options.baseUrl)) ??
+                        ((await Supplier.get(this._options.environment)) as string) ??
+                        "",
+                    config.path
+                ),
+                method: config.method,
+                headers: endpointHeaders as Record<string, string>,
+                contentType: config.contentType,
+                requestType: config.requestType,
+                responseType: config.responseType,
+                queryParameters,
+                body: config.body,
+                duplex: config.duplex,
+                timeoutMs: (config.requestOptions?.timeoutInSeconds ?? this._options.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: config.requestOptions?.maxRetries ?? this._options.maxRetries,
+                abortSignal: config.requestOptions?.abortSignal,
+                withCredentials: config.withCredentials,
+                fetchFn: this._options.fetch,
+                logging: this._options.logging,
+                endpointMetadata: config.endpointMetadata
+            },
+            {
+                requestHeaders: config.requestOptions?.headers,
+                endpointMetadata: config.endpointMetadata
+            }
+        );
 
-        // 5. Success
+        // 3. Success
         if (response.ok) {
             const data = config.transformResponse
                 ? (config.transformResponse(response.body) as T)
@@ -183,7 +200,7 @@ export class HttpClient {
             return { data, rawResponse: response.rawResponse };
         }
 
-        // 6. Status-code errors: check endpoint-specific map, then fall through to generic
+        // 4. Status-code errors: check endpoint-specific map, then fall through to generic
         if (response.error.reason === "status-code") {
             const factory = config.errorMap?.[response.error.statusCode];
             if (factory) {
@@ -192,11 +209,11 @@ export class HttpClient {
             throw this._createStatusCodeError({
                 statusCode: response.error.statusCode,
                 body: response.error.body,
-                rawResponse: response.rawResponse,
+                rawResponse: response.rawResponse
             });
         }
 
-        // 7. Non-status-code errors (timeout, network, etc.)
+        // 5. Non-status-code errors (timeout, network, etc.)
         return this._handleNonStatusCodeError(response.error, response.rawResponse, config.method, config.path);
     }
 }

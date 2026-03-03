@@ -2,7 +2,6 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -40,26 +39,31 @@ export class CompletionsClient {
         request: SeedServerSentEvents.StreamCompletionRequest,
         requestOptions?: CompletionsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await this._client.fetch<ReadableStream>({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "stream",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            responseType: "sse",
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
+        const _headers = {};
+        const _response = await this._client.fetch<ReadableStream>(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "stream",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                responseType: "sse",
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
+        );
         if (_response.ok) {
             return {
                 data: new core.Stream({
@@ -97,26 +101,31 @@ export class CompletionsClient {
         request: SeedServerSentEvents.StreamEventsRequest,
         requestOptions?: CompletionsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamEvent>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await this._client.fetch<ReadableStream>({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "stream-events",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            responseType: "sse",
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
+        const _headers = {};
+        const _response = await this._client.fetch<ReadableStream>(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "stream-events",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                responseType: "sse",
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
+        );
         if (_response.ok) {
             return {
                 data: new core.Stream({

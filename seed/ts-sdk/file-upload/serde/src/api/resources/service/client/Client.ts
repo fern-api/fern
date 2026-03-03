@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
@@ -144,27 +144,28 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url:
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
         }
@@ -204,29 +205,30 @@ export class ServiceClient {
         const _body = await core.newFormData();
         await _body.appendFile("file", request.file);
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/just-file",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/just-file",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
         }
@@ -267,29 +269,30 @@ export class ServiceClient {
         const _body = await core.newFormData();
         await _body.appendFile("file", request.file);
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/just-file-with-query-params",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/just-file-with-query-params",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
         }
@@ -327,29 +330,30 @@ export class ServiceClient {
         const _body = await core.newFormData();
         await _body.appendFile("file", request.file);
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/just-file-with-optional-query-params",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/just-file-with-optional-query-params",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
         }
@@ -394,29 +398,30 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/with-content-type",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/with-content-type",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
         }
@@ -458,29 +463,30 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/with-form-encoding",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/with-form-encoding",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
         }
@@ -608,27 +614,28 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url:
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
         }
@@ -673,29 +680,30 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/optional-args",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/optional-args",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: serializers.service.optionalArgs.Response.parseOrThrow(_response.body, {
@@ -747,29 +755,30 @@ export class ServiceClient {
             ),
         );
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/inline-type",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/inline-type",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: serializers.service.withInlineType.Response.parseOrThrow(_response.body, {
@@ -824,29 +833,30 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/with-json-property",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/with-json-property",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: serializers.service.withJsonProperty.Response.parseOrThrow(_response.body, {
@@ -878,10 +888,12 @@ export class ServiceClient {
      *     await client.service.simple()
      */
     public simple(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "/snippet",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -928,29 +940,30 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/with-literal-enum",
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "file",
+                duplex: _maybeEncodedRequest.duplex,
+                body: _maybeEncodedRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/with-literal-enum",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "file",
-            duplex: _maybeEncodedRequest.duplex,
-            body: _maybeEncodedRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: serializers.service.withLiteralAndEnumTypes.Response.parseOrThrow(_response.body, {

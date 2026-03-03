@@ -43,6 +43,7 @@ export class AuthClient {
         request: SeedOauthClientCredentialsMandatoryAuth.GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedOauthClientCredentialsMandatoryAuth.TokenResponse> {
+        const _headers = {};
         return this._client.request<SeedOauthClientCredentialsMandatoryAuth.TokenResponse>({
             method: "POST",
             path: "/token",
@@ -50,6 +51,7 @@ export class AuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -70,6 +72,7 @@ export class AuthClient {
         request: SeedOauthClientCredentialsMandatoryAuth.RefreshTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedOauthClientCredentialsMandatoryAuth.TokenResponse> {
+        const _headers = {};
         return this._client.request<SeedOauthClientCredentialsMandatoryAuth.TokenResponse>({
             method: "POST",
             path: "/token",
@@ -77,6 +80,7 @@ export class AuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

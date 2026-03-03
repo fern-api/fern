@@ -16,10 +16,12 @@ export class NoReqBodyClient {
      *     await client.noReqBody.getWithNoRequestBody()
      */
     getWithNoRequestBody(requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "GET",
             path: "/no-req-body",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -30,10 +32,12 @@ export class NoReqBodyClient {
      *     await client.noReqBody.postWithNoRequestBody()
      */
     postWithNoRequestBody(requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/no-req-body",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

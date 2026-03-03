@@ -38,10 +38,12 @@ export class TypesClient {
         id: string,
         requestOptions?: TypesClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUnions.UnionWithTime> {
+        const _headers = {};
         return this._client.request<SeedUnions.UnionWithTime>({
             method: "GET",
             path: `/time/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -66,6 +68,7 @@ export class TypesClient {
         request: SeedUnions.UnionWithTime,
         requestOptions?: TypesClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "PATCH",
             path: "/time",
@@ -73,6 +76,7 @@ export class TypesClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

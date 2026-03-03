@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
+import { mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
@@ -39,10 +39,12 @@ export class ParamsClient {
      *     await client.endpoints.params.getWithPath("param")
      */
     public getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -63,10 +65,12 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const { param } = request;
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -92,10 +96,12 @@ export class ParamsClient {
             query,
             number: number_,
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: "/params",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -121,10 +127,12 @@ export class ParamsClient {
             query,
             number: number_,
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: "/params",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -150,10 +158,12 @@ export class ParamsClient {
         const _queryParams: Record<string, unknown> = {
             query,
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -178,10 +188,12 @@ export class ParamsClient {
         const _queryParams: Record<string, unknown> = {
             query,
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -201,6 +213,7 @@ export class ParamsClient {
         request: string,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
@@ -208,6 +221,7 @@ export class ParamsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -229,6 +243,7 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const { param, body: _body } = request;
+        const _headers = {};
         return this._client.request<string>({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
@@ -236,6 +251,7 @@ export class ParamsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -265,31 +281,30 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
         const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            _binaryUploadRequest.headers,
-            requestOptions?.headers,
+        const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    `/params/path/${core.url.encodePathParam(param)}`,
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                requestType: "bytes",
+                duplex: "half",
+                body: _binaryUploadRequest.body,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            requestType: "bytes",
-            duplex: "half",
-            body: _binaryUploadRequest.body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,

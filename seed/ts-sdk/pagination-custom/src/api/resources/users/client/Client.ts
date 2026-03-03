@@ -2,7 +2,6 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -46,7 +45,7 @@ export class UsersClient {
         const _queryParams: Record<string, unknown> = {
             starting_after: startingAfter,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        const _headers = {};
         const _request = {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -63,7 +62,9 @@ export class UsersClient {
             logging: this._options.logging,
         };
         const _sendRequest = async (request: core.Fetcher.Args) => {
-            const _response = await core.fetcher<SeedPagination.UsernameCursor>(request);
+            const _response = await this._client.fetch<SeedPagination.UsernameCursor>(request, {
+                requestHeaders: requestOptions?.headers,
+            });
             if (_response.ok) {
                 return _response;
             }

@@ -35,10 +35,12 @@ export class BigunionClient {
         id: string,
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUnions.BigUnion> {
+        const _headers = {};
         return this._client.request<SeedUnions.BigUnion>({
             method: "GET",
             path: `/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -60,6 +62,7 @@ export class BigunionClient {
         request: SeedUnions.BigUnion,
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "PATCH",
             path: "",
@@ -67,6 +70,7 @@ export class BigunionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -94,6 +98,7 @@ export class BigunionClient {
         request: SeedUnions.BigUnion[],
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, boolean>> {
+        const _headers = {};
         return this._client.request<Record<string, boolean>>({
             method: "PATCH",
             path: "/many",
@@ -101,6 +106,7 @@ export class BigunionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

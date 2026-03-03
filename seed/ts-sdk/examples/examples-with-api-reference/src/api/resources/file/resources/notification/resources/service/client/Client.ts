@@ -38,10 +38,12 @@ export class ServiceClient {
         notificationId: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Exception> {
+        const _headers = {};
         return this._client.request<SeedExamples.Exception>({
             method: "GET",
             path: `/file/notification/${core.url.encodePathParam(notificationId)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

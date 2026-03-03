@@ -56,10 +56,12 @@ class PutClient {
      */
     add(request, requestOptions) {
         const { id } = request;
+        const _headers = {};
         return this._client.request({
             method: "PUT",
             path: `${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

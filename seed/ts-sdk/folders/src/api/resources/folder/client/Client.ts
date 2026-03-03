@@ -36,10 +36,12 @@ export class FolderClient {
      *     await client.folder.foo()
      */
     public foo(requestOptions?: FolderClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

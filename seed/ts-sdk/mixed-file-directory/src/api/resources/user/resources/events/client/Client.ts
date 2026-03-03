@@ -53,10 +53,12 @@ export class EventsClient {
         const _queryParams: Record<string, unknown> = {
             limit,
         };
+        const _headers = {};
         return this._client.request<SeedMixedFileDirectory.user.Event[]>({
             method: "GET",
             path: "/users/events/",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

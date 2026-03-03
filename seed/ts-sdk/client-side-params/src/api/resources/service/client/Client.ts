@@ -60,10 +60,12 @@ export class ServiceClient {
             fields,
             search,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.Resource[]>({
             method: "GET",
             path: "/api/resources",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -91,10 +93,12 @@ export class ServiceClient {
             include_metadata: includeMetadata,
             format,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.Resource>({
             method: "GET",
             path: `/api/resources/${core.url.encodePathParam(resourceId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -126,6 +130,7 @@ export class ServiceClient {
             limit,
             offset,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.SearchResponse>({
             method: "POST",
             path: "/api/resources/search",
@@ -133,6 +138,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -179,10 +185,12 @@ export class ServiceClient {
             search_engine: searchEngine,
             fields,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.PaginatedUserResponse>({
             method: "GET",
             path: "/api/users",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -210,10 +218,12 @@ export class ServiceClient {
             fields,
             include_fields: includeFields,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.User>({
             method: "GET",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -249,6 +259,7 @@ export class ServiceClient {
         request: SeedClientSideParams.CreateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
+        const _headers = {};
         return this._client.request<SeedClientSideParams.User>({
             method: "POST",
             path: "/api/users",
@@ -256,6 +267,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -293,6 +305,7 @@ export class ServiceClient {
         request: SeedClientSideParams.UpdateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
+        const _headers = {};
         return this._client.request<SeedClientSideParams.User>({
             method: "PATCH",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
@@ -300,6 +313,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -314,10 +328,12 @@ export class ServiceClient {
      *     await client.service.deleteUser("userId")
      */
     public deleteUser(userId: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "DELETE",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -345,10 +361,12 @@ export class ServiceClient {
             name,
             fields,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.Connection[]>({
             method: "GET",
             path: "/api/connections",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -374,10 +392,12 @@ export class ServiceClient {
         const _queryParams: Record<string, unknown> = {
             fields,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.Connection>({
             method: "GET",
             path: `/api/connections/${core.url.encodePathParam(connectionId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -424,10 +444,12 @@ export class ServiceClient {
             is_first_party: isFirstParty,
             app_type: appType != null ? toJson(appType) : undefined,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.PaginatedClientResponse>({
             method: "GET",
             path: "/api/clients",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -455,10 +477,12 @@ export class ServiceClient {
             fields,
             include_fields: includeFields,
         };
+        const _headers = {};
         return this._client.request<SeedClientSideParams.Client>({
             method: "GET",
             path: `/api/clients/${core.url.encodePathParam(clientId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

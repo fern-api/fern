@@ -38,6 +38,7 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "/primitive/string",
@@ -45,6 +46,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -60,6 +62,7 @@ export class PrimitiveClient {
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
+        const _headers = {};
         return this._client.request<number>({
             method: "POST",
             path: "/primitive/integer",
@@ -67,6 +70,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -82,6 +86,7 @@ export class PrimitiveClient {
         request: number | bigint,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number | bigint> {
+        const _headers = {};
         return this._client.request<number | bigint>({
             method: "POST",
             path: "/primitive/long",
@@ -89,6 +94,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -104,6 +110,7 @@ export class PrimitiveClient {
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
+        const _headers = {};
         return this._client.request<number>({
             method: "POST",
             path: "/primitive/double",
@@ -111,6 +118,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -126,6 +134,7 @@ export class PrimitiveClient {
         request: boolean,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "POST",
             path: "/primitive/boolean",
@@ -133,6 +142,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -148,6 +158,7 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "/primitive/datetime",
@@ -155,6 +166,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -170,6 +182,7 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "/primitive/date",
@@ -177,6 +190,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -192,6 +206,7 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "/primitive/uuid",
@@ -199,6 +214,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -214,6 +230,7 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "/primitive/base64",
@@ -221,6 +238,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

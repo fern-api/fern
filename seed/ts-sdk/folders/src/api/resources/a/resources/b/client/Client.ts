@@ -30,10 +30,12 @@ export class BClient {
      *     await client.a.b.foo()
      */
     public foo(requestOptions?: BClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

@@ -30,10 +30,12 @@ export class ServiceClient {
      *     await client.service.getText()
      */
     public getText(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "text",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             responseType: "text",
             requestOptions,
         });

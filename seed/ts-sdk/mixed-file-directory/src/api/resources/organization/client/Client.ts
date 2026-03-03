@@ -43,6 +43,7 @@ export class OrganizationClient {
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
         requestOptions?: OrganizationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
+        const _headers = {};
         return this._client.request<SeedMixedFileDirectory.Organization>({
             method: "POST",
             path: "/organizations/",
@@ -50,6 +51,7 @@ export class OrganizationClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

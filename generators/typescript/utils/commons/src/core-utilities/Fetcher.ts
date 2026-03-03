@@ -66,7 +66,16 @@ export interface Fetcher {
         _getReferenceTo: () => ts.Expression;
         _invoke: (
             args: Fetcher.Args,
-            { referenceToFetcher, cast }: { referenceToFetcher: ts.Expression; cast: ts.TypeNode | undefined }
+            {
+                referenceToFetcher,
+                cast,
+                additionalArgs
+            }: {
+                referenceToFetcher: ts.Expression;
+                cast: ts.TypeNode | undefined;
+                /** Additional arguments to pass after the fetcher args object */
+                additionalArgs?: ts.Expression[];
+            }
         ) => ts.Expression;
     };
 
@@ -283,7 +292,15 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         _getReferenceTo: this.withExportedName("fetcher", (fetcher) => () => fetcher.getExpression()),
         _invoke: (
             args: Fetcher.Args,
-            { referenceToFetcher, cast }: { referenceToFetcher: ts.Expression; cast: ts.TypeNode | undefined }
+            {
+                referenceToFetcher,
+                cast,
+                additionalArgs
+            }: {
+                referenceToFetcher: ts.Expression;
+                cast: ts.TypeNode | undefined;
+                additionalArgs?: ts.Expression[];
+            }
         ): ts.Expression => {
             const properties: ts.PropertyAssignment[] = [
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.url, args.url),
@@ -372,7 +389,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
 
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(referenceToFetcher, cast != null ? [cast] : [], [
-                    ts.factory.createObjectLiteralExpression(properties, true)
+                    ts.factory.createObjectLiteralExpression(properties, true),
+                    ...(additionalArgs ?? [])
                 ])
             );
         }

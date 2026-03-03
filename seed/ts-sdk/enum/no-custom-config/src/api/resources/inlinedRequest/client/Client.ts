@@ -38,6 +38,7 @@ export class InlinedRequestClient {
         request: SeedEnum.SendEnumInlinedRequest,
         requestOptions?: InlinedRequestClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "inlined",
@@ -45,6 +46,7 @@ export class InlinedRequestClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

@@ -2,7 +2,6 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
 
@@ -50,30 +49,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnString.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/string",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/string",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {
@@ -116,30 +115,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnInt.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/integer",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/integer",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {
@@ -182,30 +181,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnLong.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/long",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/long",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {
@@ -248,30 +247,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/double",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/double",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {
@@ -314,30 +313,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.primitive.getAndReturnBool.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/boolean",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/boolean",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {
@@ -382,30 +381,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/datetime",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/datetime",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {
@@ -448,30 +447,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDate.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/date",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/date",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {
@@ -514,30 +513,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/uuid",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/uuid",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {
@@ -580,30 +579,30 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error>>
     > {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
+        const _headers = {};
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "/primitive/base64",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: request,
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
         );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/primitive/base64",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
         if (_response.ok) {
             return {
                 data: {

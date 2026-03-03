@@ -32,10 +32,12 @@ export class SeedLicenseClient {
      *     await client.get()
      */
     public get(requestOptions?: SeedLicenseClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: "/",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

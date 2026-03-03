@@ -31,10 +31,12 @@ export class UserClient {
      *     await client.user.get()
      */
     public get(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
+        const _headers = {};
         return this._client.request<SeedAnyAuth.User[]>({
             method: "POST",
             path: "users",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -46,10 +48,12 @@ export class UserClient {
      *     await client.user.getAdmins()
      */
     public getAdmins(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
+        const _headers = {};
         return this._client.request<SeedAnyAuth.User[]>({
             method: "GET",
             path: "admins",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

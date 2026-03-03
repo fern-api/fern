@@ -37,10 +37,12 @@ export class PathParamClient {
         operandOrColor: SeedEnum.ColorOrOperand,
         requestOptions?: PathParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: `path/${core.url.encodePathParam(operand)}/${core.url.encodePathParam(operandOrColor)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

@@ -44,10 +44,12 @@ export class SeedApiClient {
      *     await client.foo()
      */
     public foo(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

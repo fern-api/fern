@@ -39,6 +39,7 @@ export class AuthClient {
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedAnyAuth.TokenResponse> {
         const _metadata: core.EndpointMetadata = { security: undefined };
+        const _headers = {};
         return this._client.request<SeedAnyAuth.TokenResponse>({
             method: "POST",
             path: "/token",
@@ -46,6 +47,7 @@ export class AuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });

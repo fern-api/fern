@@ -43,10 +43,12 @@ export class ServiceClient {
             ids,
             tags,
         };
+        const _headers = {};
         return this._client.request<SeedAudiences.folderA.Response>({
             method: "GET",
             path: "",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

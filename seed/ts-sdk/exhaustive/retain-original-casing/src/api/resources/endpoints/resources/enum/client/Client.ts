@@ -39,6 +39,7 @@ export class EnumClient {
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: EnumClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.WeatherReport>({
             method: "POST",
             path: "/enum",
@@ -46,6 +47,7 @@ export class EnumClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

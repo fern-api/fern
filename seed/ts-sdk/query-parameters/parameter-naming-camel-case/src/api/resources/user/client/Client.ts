@@ -110,10 +110,12 @@ export class UserClient {
             excludeUser,
             filter,
         };
+        const _headers = {};
         return this._client.request<SeedQueryParameters.User>({
             method: "GET",
             path: "/user",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

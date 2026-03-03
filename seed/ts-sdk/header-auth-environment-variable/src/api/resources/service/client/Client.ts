@@ -36,10 +36,12 @@ export class ServiceClient {
      *     await client.service.getWithBearerToken()
      */
     public getWithBearerToken(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: "apiKey",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

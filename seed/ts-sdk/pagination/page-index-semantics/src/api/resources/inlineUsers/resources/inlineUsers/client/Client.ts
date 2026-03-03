@@ -2,7 +2,6 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
@@ -61,25 +60,27 @@ export class InlineUsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
@@ -142,25 +143,27 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "POST",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse,
@@ -217,28 +220,30 @@ export class InlineUsersClient {
             async (
                 request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "POST",
+                        headers: _headers,
+                        contentType: "application/json",
+                        queryParameters: requestOptions?.queryParams,
+                        requestType: "json",
+                        body: request,
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
@@ -307,25 +312,27 @@ export class InlineUsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
@@ -391,25 +398,27 @@ export class InlineUsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
@@ -467,28 +476,30 @@ export class InlineUsersClient {
             async (
                 request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "POST",
+                        headers: _headers,
+                        contentType: "application/json",
+                        queryParameters: requestOptions?.queryParams,
+                        requestType: "json",
+                        body: request,
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
@@ -552,25 +563,27 @@ export class InlineUsersClient {
                     limit,
                     order: order != null ? order : undefined,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
@@ -634,25 +647,27 @@ export class InlineUsersClient {
                     limit,
                     order: order != null ? order : undefined,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
@@ -713,25 +728,27 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersExtendedResponse,
@@ -790,25 +807,27 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse,
@@ -862,25 +881,27 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.UsernameCursor,
@@ -932,25 +953,27 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     offset,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/inline-users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.inlineUsers.UsernameContainer,

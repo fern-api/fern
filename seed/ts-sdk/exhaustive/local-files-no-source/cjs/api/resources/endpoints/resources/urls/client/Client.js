@@ -52,10 +52,12 @@ class UrlsClient {
      *     await client.endpoints.urls.withMixedCase()
      */
     withMixedCase(requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "GET",
             path: "/urls/MixedCase",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -66,10 +68,12 @@ class UrlsClient {
      *     await client.endpoints.urls.noEndingSlash()
      */
     noEndingSlash(requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "GET",
             path: "/urls/no-ending-slash",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -80,10 +84,12 @@ class UrlsClient {
      *     await client.endpoints.urls.withEndingSlash()
      */
     withEndingSlash(requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "GET",
             path: "/urls/with-ending-slash/",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -94,10 +100,12 @@ class UrlsClient {
      *     await client.endpoints.urls.withUnderscores()
      */
     withUnderscores(requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "GET",
             path: "/urls/with_underscores",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

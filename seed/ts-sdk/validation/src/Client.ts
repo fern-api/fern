@@ -42,6 +42,7 @@ export class SeedValidationClient {
         request: SeedValidation.CreateRequest,
         requestOptions?: SeedValidationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedValidation.Type> {
+        const _headers = {};
         return this._client.request<SeedValidation.Type>({
             method: "POST",
             path: "/create",
@@ -49,6 +50,7 @@ export class SeedValidationClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -74,10 +76,12 @@ export class SeedValidationClient {
             even,
             name,
         };
+        const _headers = {};
         return this._client.request<SeedValidation.Type>({
             method: "GET",
             path: "",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

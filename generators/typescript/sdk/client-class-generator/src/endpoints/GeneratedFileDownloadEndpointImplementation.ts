@@ -210,6 +210,28 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         }
     }
 
+    private buildFetchOptionsArg(): ts.Expression {
+        const properties: ts.ObjectLiteralElementLike[] = [
+            ts.factory.createPropertyAssignment(
+                "requestHeaders",
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createIdentifier("requestOptions"),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    "headers"
+                )
+            )
+        ];
+        if (this.generateEndpointMetadata) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    "endpointMetadata",
+                    this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                )
+            );
+        }
+        return ts.factory.createObjectLiteralExpression(properties, true);
+    }
+
     public invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
@@ -275,7 +297,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                                         default:
                                             assertNever(this.fileResponseType);
                                     }
-                                })()
+                                })(),
+                                additionalArgs: [this.buildFetchOptionsArg()]
                             })
                         )
                     ],

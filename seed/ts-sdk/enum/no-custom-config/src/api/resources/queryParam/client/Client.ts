@@ -51,10 +51,12 @@ export class QueryParamClient {
                         : toJson(maybeOperandOrColor)
                     : undefined,
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "query",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -96,10 +98,12 @@ export class QueryParamClient {
                       : toJson(maybeOperandOrColor)
                   : undefined,
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "query-list",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

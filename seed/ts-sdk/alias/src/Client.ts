@@ -37,10 +37,12 @@ export class SeedAliasClient {
         typeId: SeedAlias.TypeId,
         requestOptions?: SeedAliasClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: `/${core.url.encodePathParam(typeId)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

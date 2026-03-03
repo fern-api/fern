@@ -37,10 +37,12 @@ export class NoReqBodyClient {
     public getWithNoRequestBody(
         requestOptions?: NoReqBodyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "GET",
             path: "/no-req-body",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -52,10 +54,12 @@ export class NoReqBodyClient {
      *     await client.noReqBody.postWithNoRequestBody()
      */
     public postWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "/no-req-body",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

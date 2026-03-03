@@ -39,10 +39,12 @@ export class OrganizationsClient {
         organization_id: string,
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+        const _headers = {};
         return this._client.request<SeedPathParameters.Organization>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -62,10 +64,12 @@ export class OrganizationsClient {
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { organization_id: organizationId, user_id: userId } = request;
+        const _headers = {};
         return this._client.request<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -89,10 +93,12 @@ export class OrganizationsClient {
         const _queryParams: Record<string, unknown> = {
             limit,
         };
+        const _headers = {};
         return this._client.request<SeedPathParameters.Organization[]>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

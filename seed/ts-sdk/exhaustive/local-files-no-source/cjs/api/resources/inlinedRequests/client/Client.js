@@ -45,7 +45,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.InlinedRequestsClient = void 0;
 const BaseClient_js_1 = require("../../../../BaseClient.js");
-const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../errors/index.js"));
@@ -92,21 +91,23 @@ class InlinedRequestsClient {
     }
     __postWithObjectBodyandResponse(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            var _a, _b, _c, _d, _e, _f, _g;
+            const _headers = {};
             const _response = yield this._client.fetch({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/req-bodies/object"),
+                url: core.url.join((_a = (yield core.Supplier.get(this._options.baseUrl))) !== null && _a !== void 0 ? _a : (yield core.Supplier.get(this._options.environment)), "/req-bodies/object"),
                 method: "POST",
                 headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
                 requestType: "json",
                 body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
+                timeoutMs: ((_d = (_b = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _b !== void 0 ? _b : (_c = this._options) === null || _c === void 0 ? void 0 : _c.timeoutInSeconds) !== null && _d !== void 0 ? _d : 60) * 1000,
+                maxRetries: (_e = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _e !== void 0 ? _e : (_f = this._options) === null || _f === void 0 ? void 0 : _f.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                fetchFn: (_g = this._options) === null || _g === void 0 ? void 0 : _g.fetch,
                 logging: this._options.logging,
+            }, {
+                requestHeaders: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers,
             });
             if (_response.ok) {
                 return {

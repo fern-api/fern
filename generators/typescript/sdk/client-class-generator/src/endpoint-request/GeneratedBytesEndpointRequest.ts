@@ -251,7 +251,7 @@ export class GeneratedBytesEndpointRequest implements GeneratedEndpointRequest {
             generatedSdkClientClass: this.generatedSdkClientClass,
             service: this.service,
             endpoint: this.endpoint,
-            headersToMergeAfterClientOptionsHeaders: [
+            additionalSpreadHeaders: [
                 ts.factory.createPropertyAccessExpression(
                     ts.factory.createIdentifier(GeneratedBytesEndpointRequest.BINARY_UPLOAD_REQUEST_VARIABLE_NAME),
                     "headers"

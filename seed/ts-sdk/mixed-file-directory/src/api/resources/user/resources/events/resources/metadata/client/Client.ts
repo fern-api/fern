@@ -47,10 +47,12 @@ export class MetadataClient {
         const _queryParams: Record<string, unknown> = {
             id,
         };
+        const _headers = {};
         return this._client.request<SeedMixedFileDirectory.user.events.Metadata>({
             method: "GET",
             path: "/users/events/metadata/",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

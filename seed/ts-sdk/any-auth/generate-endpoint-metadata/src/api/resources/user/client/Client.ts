@@ -34,10 +34,12 @@ export class UserClient {
         const _metadata: core.EndpointMetadata = {
             security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: [] }, { Basic: [] }, { InferredAuth: [] }],
         };
+        const _headers = {};
         return this._client.request<SeedAnyAuth.User[]>({
             method: "POST",
             path: "users",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });
@@ -51,10 +53,12 @@ export class UserClient {
      */
     public getAdmins(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["admin"] }] };
+        const _headers = {};
         return this._client.request<SeedAnyAuth.User[]>({
             method: "GET",
             path: "admins",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });

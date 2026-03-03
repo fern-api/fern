@@ -43,6 +43,7 @@ export class FooClient {
         const _queryParams: Record<string, unknown> = {
             optionalString,
         };
+        const _headers = {};
         return this._client.request<SeedAudiences.ImportingType>({
             method: "POST",
             path: "",
@@ -50,6 +51,7 @@ export class FooClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

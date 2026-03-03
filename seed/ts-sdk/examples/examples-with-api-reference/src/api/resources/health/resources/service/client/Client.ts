@@ -36,10 +36,12 @@ export class ServiceClient {
      *     await client.health.service.check("id-3tey93i")
      */
     public check(id: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: `/check/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -53,10 +55,12 @@ export class ServiceClient {
      *     await client.health.service.ping()
      */
     public ping(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "GET",
             path: "/ping",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

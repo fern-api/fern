@@ -39,6 +39,7 @@ export class ServiceClient {
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        const _headers = {};
         return this._client.request<SeedResponseProperty.Response>({
             method: "POST",
             path: "movie",
@@ -46,6 +47,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -61,6 +63,7 @@ export class ServiceClient {
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        const _headers = {};
         return this._client.request<SeedResponseProperty.Response>({
             method: "POST",
             path: "movie",
@@ -68,6 +71,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -83,6 +87,7 @@ export class ServiceClient {
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
+        const _headers = {};
         return this._client.request<SeedResponseProperty.StringResponse>({
             method: "POST",
             path: "movie",
@@ -90,6 +95,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -105,6 +111,7 @@ export class ServiceClient {
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+        const _headers = {};
         return this._client.request<SeedResponseProperty.Response>({
             method: "POST",
             path: "movie",
@@ -112,6 +119,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -127,6 +135,7 @@ export class ServiceClient {
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
+        const _headers = {};
         return this._client.request<SeedResponseProperty.Response | undefined>({
             method: "POST",
             path: "movie",
@@ -134,6 +143,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -149,6 +159,7 @@ export class ServiceClient {
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
+        const _headers = {};
         return this._client.request<SeedResponseProperty.OptionalWithDocs | undefined>({
             method: "POST",
             path: "movie",
@@ -156,6 +167,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -171,6 +183,7 @@ export class ServiceClient {
         request: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
+        const _headers = {};
         return this._client.request<SeedResponseProperty.OptionalStringResponse | undefined>({
             method: "POST",
             path: "movie",
@@ -178,6 +191,7 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

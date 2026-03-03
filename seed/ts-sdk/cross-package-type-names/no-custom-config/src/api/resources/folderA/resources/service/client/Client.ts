@@ -37,10 +37,12 @@ export class ServiceClient {
     public getDirectThread(
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedCrossPackageTypeNames.folderA.Response> {
+        const _headers = {};
         return this._client.request<SeedCrossPackageTypeNames.folderA.Response>({
             method: "GET",
             path: "",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

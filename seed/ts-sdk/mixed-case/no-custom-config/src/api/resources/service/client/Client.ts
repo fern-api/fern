@@ -35,10 +35,12 @@ export class ServiceClient {
         ResourceID: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedCase.Resource> {
+        const _headers = {};
         return this._client.request<SeedMixedCase.Resource>({
             method: "GET",
             path: `/resource/${core.url.encodePathParam(ResourceID)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -62,10 +64,12 @@ export class ServiceClient {
             page_limit: pageLimit,
             beforeDate,
         };
+        const _headers = {};
         return this._client.request<SeedMixedCase.Resource[]>({
             method: "GET",
             path: "/resource",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

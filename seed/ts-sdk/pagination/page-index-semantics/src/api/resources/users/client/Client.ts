@@ -2,7 +2,6 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -56,25 +55,27 @@ export class UsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -129,25 +130,27 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "POST",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersMixedTypePaginationResponse,
@@ -196,28 +199,30 @@ export class UsersClient {
             async (
                 request: SeedPagination.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "POST",
+                        headers: _headers,
+                        contentType: "application/json",
+                        queryParameters: requestOptions?.queryParams,
+                        requestType: "json",
+                        body: request,
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -273,28 +278,30 @@ export class UsersClient {
             async (
                 request: SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersTopLevelCursorPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users/top-level-cursor",
+                        ),
+                        method: "POST",
+                        headers: _headers,
+                        contentType: "application/json",
+                        queryParameters: requestOptions?.queryParams,
+                        requestType: "json",
+                        body: request,
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/top-level-cursor",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersTopLevelCursorPaginationResponse,
@@ -357,25 +364,27 @@ export class UsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -433,25 +442,27 @@ export class UsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -501,28 +512,30 @@ export class UsersClient {
             async (
                 request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "POST",
+                        headers: _headers,
+                        contentType: "application/json",
+                        queryParameters: requestOptions?.queryParams,
+                        requestType: "json",
+                        body: request,
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -578,25 +591,27 @@ export class UsersClient {
                     limit,
                     order: order != null ? order : undefined,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -652,25 +667,27 @@ export class UsersClient {
                     limit,
                     order: order != null ? order : undefined,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersPaginationResponse,
@@ -723,25 +740,27 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersExtendedResponse,
@@ -792,25 +811,27 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersExtendedOptionalListResponse,
@@ -861,25 +882,27 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.UsernameCursor,
@@ -931,25 +954,27 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     starting_after: startingAfter,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.UsernameCursor | undefined,
@@ -1001,25 +1026,27 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     offset,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.UsernameContainer,
@@ -1071,25 +1098,27 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     page,
                 };
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    requestOptions?.headers,
+                const _headers = {};
+                const _response = await this._client.fetch(
+                    {
+                        url: core.url.join(
+                            (await core.Supplier.get(this._options.baseUrl)) ??
+                                (await core.Supplier.get(this._options.environment)),
+                            "/users/optional-data",
+                        ),
+                        method: "GET",
+                        headers: _headers,
+                        queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                        timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                        maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                        abortSignal: requestOptions?.abortSignal,
+                        fetchFn: this._options?.fetch,
+                        logging: this._options.logging,
+                    },
+                    {
+                        requestHeaders: requestOptions?.headers,
+                    },
                 );
-                const _response = await this._client.fetch({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/users/optional-data",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
                 if (_response.ok) {
                     return {
                         data: _response.body as SeedPagination.ListUsersOptionalDataPaginationResponse,

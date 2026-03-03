@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
-import { mergeHeaders } from "../../../../../../core/headers.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
@@ -34,24 +33,25 @@ export class PaginationClient {
     listItems() {
         return __awaiter(this, arguments, void 0, function* (request = {}, requestOptions) {
             const list = core.HttpResponsePromise.interceptFunction((request) => __awaiter(this, void 0, void 0, function* () {
-                var _a, _b, _c, _d, _e, _f, _g, _h;
+                var _a, _b, _c, _d, _e, _f, _g;
                 const { cursor, limit } = request;
                 const _queryParams = {
                     cursor,
                     limit,
                 };
-                const _authRequest = yield this._options.authProvider.getAuthRequest();
-                const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+                const _headers = {};
                 const _response = yield this._client.fetch({
-                    url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/pagination"),
+                    url: core.url.join((_a = (yield core.Supplier.get(this._options.baseUrl))) !== null && _a !== void 0 ? _a : (yield core.Supplier.get(this._options.environment)), "/pagination"),
                     method: "GET",
                     headers: _headers,
                     queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                    timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                    maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
+                    timeoutMs: ((_d = (_b = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _b !== void 0 ? _b : (_c = this._options) === null || _c === void 0 ? void 0 : _c.timeoutInSeconds) !== null && _d !== void 0 ? _d : 60) * 1000,
+                    maxRetries: (_e = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _e !== void 0 ? _e : (_f = this._options) === null || _f === void 0 ? void 0 : _f.maxRetries,
                     abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                    fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                    fetchFn: (_g = this._options) === null || _g === void 0 ? void 0 : _g.fetch,
                     logging: this._options.logging,
+                }, {
+                    requestHeaders: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers,
                 });
                 if (_response.ok) {
                     return {

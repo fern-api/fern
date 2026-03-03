@@ -35,10 +35,12 @@ export class UserClient {
      *     await client.user.get("id")
      */
     public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedSimpleApi.User> {
+        const _headers = {};
         return this._client.request<SeedSimpleApi.User>({
             method: "GET",
             path: `/users/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions
         });
     }

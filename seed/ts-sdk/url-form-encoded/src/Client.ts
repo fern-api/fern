@@ -40,6 +40,7 @@ export class SeedApiClient {
         request: SeedApi.PostSubmitRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.PostSubmitResponse> {
+        const _headers = {};
         return this._client.request<SeedApi.PostSubmitResponse>({
             method: "POST",
             path: "submit",
@@ -47,6 +48,7 @@ export class SeedApiClient {
             contentType: "application/x-www-form-urlencoded",
             requestType: "form",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

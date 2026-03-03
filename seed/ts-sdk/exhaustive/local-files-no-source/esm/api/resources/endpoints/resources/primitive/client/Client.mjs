@@ -17,6 +17,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnString("string")
      */
     getAndReturnString(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/string",
@@ -24,6 +25,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -35,6 +37,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnInt(1)
      */
     getAndReturnInt(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/integer",
@@ -42,6 +45,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -53,6 +57,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnLong(1000000)
      */
     getAndReturnLong(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/long",
@@ -60,6 +65,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -71,6 +77,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnDouble(1.1)
      */
     getAndReturnDouble(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/double",
@@ -78,6 +85,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -89,6 +97,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnBool(true)
      */
     getAndReturnBool(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/boolean",
@@ -96,6 +105,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -107,6 +117,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
      */
     getAndReturnDatetime(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/datetime",
@@ -114,6 +125,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -125,6 +137,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnDate("2023-01-15")
      */
     getAndReturnDate(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/date",
@@ -132,6 +145,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -143,6 +157,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
     getAndReturnUuid(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/uuid",
@@ -150,6 +165,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -161,6 +177,7 @@ export class PrimitiveClient {
      *     await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
      */
     getAndReturnBase64(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/primitive/base64",
@@ -168,6 +185,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

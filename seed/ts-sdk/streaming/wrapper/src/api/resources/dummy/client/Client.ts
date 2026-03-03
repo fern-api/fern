@@ -3,7 +3,6 @@
 import type * as stream from "stream";
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
@@ -37,26 +36,31 @@ export class DummyClient {
         request: SeedStreaming.GenerateStreamRequest,
         requestOptions?: DummyClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await this._client.fetch<stream.Readable>({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "generate-stream",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: { ...request, stream: true },
-            responseType: "streaming",
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
+        const _headers = {};
+        const _response = await this._client.fetch<stream.Readable>(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)),
+                    "generate-stream",
+                ),
+                method: "POST",
+                headers: _headers,
+                contentType: "application/json",
+                queryParameters: requestOptions?.queryParams,
+                requestType: "json",
+                body: { ...request, stream: true },
+                responseType: "streaming",
+                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
+        );
         if (_response.ok) {
             return {
                 data: new core.Stream({
@@ -96,6 +100,7 @@ export class DummyClient {
         request: SeedStreaming.Generateequest,
         requestOptions?: DummyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
+        const _headers = {};
         return this._client.request<SeedStreaming.StreamResponse>({
             method: "POST",
             path: "generate",
@@ -103,6 +108,7 @@ export class DummyClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

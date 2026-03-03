@@ -18,9 +18,7 @@ export function generateHeaders({
     endpoint,
     idempotencyHeaders,
     additionalHeaders = [],
-    additionalSpreadHeaders = [],
-    headersToMergeAfterClientOptionsHeaders = [],
-    clientMode = false
+    additionalSpreadHeaders = []
 }: {
     context: SdkContext;
     intermediateRepresentation: FernIr.IntermediateRepresentation;
@@ -31,49 +29,11 @@ export function generateHeaders({
     idempotencyHeaders: FernIr.HttpHeader[];
     additionalHeaders?: GeneratedHeader[];
     additionalSpreadHeaders?: ts.Expression[];
-    headersToMergeAfterClientOptionsHeaders?: ts.Expression[];
-    /** When true, only generate endpoint-specific headers (no auth, global, or per-request). Used with HttpClient. */
-    clientMode?: boolean;
 }): ts.Statement[] {
     const statements: ts.Statement[] = [];
 
-    let authProviderHeaders: ts.Expression | undefined;
-    if (
-        !clientMode &&
-        generatedSdkClientClass.hasAuthProvider() &&
-        endpoint.auth &&
-        context.authProvider.isAuthEndpoint(endpoint) === false
-    ) {
-        const metadataArg = generatedSdkClientClass.getGenerateEndpointMetadata()
-            ? ts.factory.createObjectLiteralExpression([
-                  ts.factory.createPropertyAssignment(
-                      "endpointMetadata",
-                      generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                  )
-              ])
-            : undefined;
-
-        statements.push(
-            ts.factory.createVariableStatement(
-                undefined,
-                ts.factory.createVariableDeclarationList(
-                    [
-                        ts.factory.createVariableDeclaration(
-                            "_authRequest",
-                            undefined,
-                            context.coreUtilities.auth.AuthRequest._getReferenceToType(),
-                            context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
-                                generatedSdkClientClass.getReferenceToAuthProviderOrThrow(),
-                                metadataArg
-                            )
-                        )
-                    ],
-                    ts.NodeFlags.Const
-                )
-            )
-        );
-        authProviderHeaders = ts.factory.createIdentifier("_authRequest.headers");
-    }
+    // Auth headers are handled by HttpClient, not generated per-endpoint.
+    // This function only generates endpoint-specific headers (service, endpoint, idempotency, root headers).
 
     const elements: GeneratedHeader[] = [];
 
@@ -111,101 +71,52 @@ export function generateHeaders({
         );
     }
 
-    // In clientMode, only generate endpoint-specific headers (HttpClient handles auth, global, per-request)
-    if (clientMode) {
-        if (onlyDefinedHeaders.length > 0) {
-            context.importsManager.addImportFromRoot("core/headers", {
-                namedImports: ["mergeOnlyDefinedHeaders"]
-            });
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                HEADERS_VAR_NAME,
-                                undefined,
-                                undefined,
-                                ts.factory.createCallExpression(
-                                    ts.factory.createIdentifier("mergeOnlyDefinedHeaders"),
-                                    undefined,
-                                    [ts.factory.createObjectLiteralExpression(onlyDefinedHeaders)]
-                                )
-                            )
-                        ],
-                        ts.NodeFlags.Const
-                    )
-                )
-            );
-        }
-        return statements;
-    }
-
-    context.importsManager.addImportFromRoot("core/headers", {
-        namedImports: ["mergeHeaders"]
-    });
-
-    const mergeHeadersArgs = [];
-
-    if (authProviderHeaders) {
-        mergeHeadersArgs.push(authProviderHeaders);
-    }
-
-    mergeHeadersArgs.push(
-        ts.factory.createPropertyAccessChain(
-            ts.factory.createPropertyAccessChain(
-                ts.factory.createThis(),
-                undefined,
-                GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-            ),
-            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            "headers"
-        )
-    );
+    // Generate endpoint-specific headers only. HttpClient handles auth, global, and per-request headers.
+    // Always generate the _headers variable so invokeFetcher() can reference it consistently.
     if (onlyDefinedHeaders.length > 0) {
         context.importsManager.addImportFromRoot("core/headers", {
             namedImports: ["mergeOnlyDefinedHeaders"]
         });
-        mergeHeadersArgs.push(
-            ts.factory.createCallExpression(ts.factory.createIdentifier("mergeOnlyDefinedHeaders"), undefined, [
-                ts.factory.createObjectLiteralExpression(onlyDefinedHeaders)
-            ])
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            HEADERS_VAR_NAME,
+                            undefined,
+                            undefined,
+                            ts.factory.createCallExpression(
+                                ts.factory.createIdentifier("mergeOnlyDefinedHeaders"),
+                                undefined,
+                                [ts.factory.createObjectLiteralExpression(onlyDefinedHeaders)]
+                            )
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
+        );
+    } else {
+        // No endpoint-specific headers, but still define _headers as empty object
+        // so that invokeFetcher() and other callers can always reference it.
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            HEADERS_VAR_NAME,
+                            undefined,
+                            undefined,
+                            ts.factory.createObjectLiteralExpression([])
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
         );
     }
-
-    mergeHeadersArgs.push(...headersToMergeAfterClientOptionsHeaders);
-
-    mergeHeadersArgs.push(
-        ts.factory.createPropertyAccessChain(
-            ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-            ts.factory.createIdentifier("headers")
-        )
-    );
-
-    statements.push(
-        ts.factory.createVariableStatement(
-            undefined,
-            ts.factory.createVariableDeclarationList(
-                [
-                    ts.factory.createVariableDeclaration(
-                        HEADERS_VAR_NAME,
-                        undefined,
-                        ts.factory.createIndexedAccessTypeNode(
-                            context.coreUtilities.fetcher.Fetcher.Args._getReferenceToType(),
-                            ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("headers"))
-                        ),
-                        ts.factory.createCallExpression(
-                            ts.factory.createIdentifier("mergeHeaders"),
-                            undefined,
-                            mergeHeadersArgs
-                        )
-                    )
-                ],
-                ts.NodeFlags.Let
-            )
-        )
-    );
     return statements;
 }
 

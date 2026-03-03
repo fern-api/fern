@@ -39,6 +39,7 @@ export class ContainerClient {
         request: string[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<string[]> {
+        const _headers = {};
         return this._client.request<string[]>({
             method: "POST",
             path: "/container/list-of-primitives",
@@ -46,6 +47,7 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -65,6 +67,7 @@ export class ContainerClient {
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.ObjectWithRequiredField[]>({
             method: "POST",
             path: "/container/list-of-objects",
@@ -72,6 +75,7 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -87,6 +91,7 @@ export class ContainerClient {
         request: string[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<string[]> {
+        const _headers = {};
         return this._client.request<string[]>({
             method: "POST",
             path: "/container/set-of-primitives",
@@ -94,6 +99,7 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -111,6 +117,7 @@ export class ContainerClient {
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.ObjectWithRequiredField[]>({
             method: "POST",
             path: "/container/set-of-objects",
@@ -118,6 +125,7 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -135,6 +143,7 @@ export class ContainerClient {
         request: Record<string, string>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, string>> {
+        const _headers = {};
         return this._client.request<Record<string, string>>({
             method: "POST",
             path: "/container/map-prim-to-prim",
@@ -142,6 +151,7 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -161,6 +171,7 @@ export class ContainerClient {
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+        const _headers = {};
         return this._client.request<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>({
             method: "POST",
             path: "/container/map-prim-to-object",
@@ -168,6 +179,7 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -185,6 +197,7 @@ export class ContainerClient {
         request: Record<string, SeedExhaustive.types.MixedType>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.MixedType>> {
+        const _headers = {};
         return this._client.request<Record<string, SeedExhaustive.types.MixedType>>({
             method: "POST",
             path: "/container/map-prim-to-union",
@@ -192,6 +205,7 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -209,6 +223,7 @@ export class ContainerClient {
         request?: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.ObjectWithRequiredField | undefined>({
             method: "POST",
             path: "/container/opt-objects",
@@ -216,6 +231,7 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

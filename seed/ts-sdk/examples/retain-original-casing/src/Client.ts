@@ -52,6 +52,7 @@ export class SeedExamplesClient {
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
     public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "",
@@ -59,6 +60,7 @@ export class SeedExamplesClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -74,6 +76,7 @@ export class SeedExamplesClient {
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Identifier> {
+        const _headers = {};
         return this._client.request<SeedExamples.Identifier>({
             method: "POST",
             path: "",
@@ -81,6 +84,7 @@ export class SeedExamplesClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

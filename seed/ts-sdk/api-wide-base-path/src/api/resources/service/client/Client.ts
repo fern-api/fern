@@ -42,10 +42,12 @@ export class ServiceClient {
         resourceParam: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: `/test/${core.url.encodePathParam(this._options.pathParam)}/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(endpointParam)}/${core.url.encodePathParam(resourceParam)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

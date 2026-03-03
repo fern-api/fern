@@ -42,6 +42,7 @@ export class AuthClient {
         request: SeedOauthClientCredentialsDefault.GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedOauthClientCredentialsDefault.TokenResponse> {
+        const _headers = {};
         return this._client.request<SeedOauthClientCredentialsDefault.TokenResponse>({
             method: "POST",
             path: "/token",
@@ -49,6 +50,7 @@ export class AuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

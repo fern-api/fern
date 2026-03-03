@@ -34,10 +34,12 @@ export class ServiceClient {
      *     await client.service.post()
      */
     public post(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: `/service/${core.url.encodePathParam(this._options.rootVariable)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

@@ -53,6 +53,7 @@ class EnumClient {
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
     getAndReturnEnum(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/enum",
@@ -60,6 +61,7 @@ class EnumClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

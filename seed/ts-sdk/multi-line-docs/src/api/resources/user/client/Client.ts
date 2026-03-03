@@ -40,10 +40,12 @@ export class UserClient {
      *     await client.user.getUser("userId")
      */
     public getUser(userId: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: `users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -65,6 +67,7 @@ export class UserClient {
         request: SeedMultiLineDocs.CreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMultiLineDocs.User> {
+        const _headers = {};
         return this._client.request<SeedMultiLineDocs.User>({
             method: "POST",
             path: "users",
@@ -72,6 +75,7 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

@@ -33,6 +33,7 @@ export class ContentTypeClient {
      *     })
      */
     postJsonPatchContentType(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/foo/bar",
@@ -40,6 +41,7 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -67,6 +69,7 @@ export class ContentTypeClient {
      *     })
      */
     postJsonPatchContentWithCharsetType(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/foo/baz",
@@ -74,6 +77,7 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json; charset=utf-8",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

@@ -45,10 +45,12 @@ export class PackageClient {
         const _queryParams: Record<string, unknown> = {
             for: for_,
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

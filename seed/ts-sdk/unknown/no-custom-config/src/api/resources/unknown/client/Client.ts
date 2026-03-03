@@ -38,6 +38,7 @@ export class UnknownClient {
      *     })
      */
     public post(request?: unknown, requestOptions?: UnknownClient.RequestOptions): core.HttpResponsePromise<unknown[]> {
+        const _headers = {};
         return this._client.request<unknown[]>({
             method: "POST",
             path: "",
@@ -45,6 +46,7 @@ export class UnknownClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -64,6 +66,7 @@ export class UnknownClient {
         request: SeedUnknownAsAny.MyObject,
         requestOptions?: UnknownClient.RequestOptions,
     ): core.HttpResponsePromise<unknown[]> {
+        const _headers = {};
         return this._client.request<unknown[]>({
             method: "POST",
             path: "/with-object",
@@ -71,6 +74,7 @@ export class UnknownClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

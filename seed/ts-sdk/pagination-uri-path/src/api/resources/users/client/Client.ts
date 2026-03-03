@@ -37,10 +37,12 @@ export class UsersClient {
     public listWithUriPagination(
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPaginationUriPath.ListUsersUriPaginationResponse> {
+        const _headers = {};
         return this._client.request<SeedPaginationUriPath.ListUsersUriPaginationResponse>({
             method: "GET",
             path: "/users/uri",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -54,10 +56,12 @@ export class UsersClient {
     public listWithPathPagination(
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPaginationUriPath.ListUsersPathPaginationResponse> {
+        const _headers = {};
         return this._client.request<SeedPaginationUriPath.ListUsersPathPaginationResponse>({
             method: "GET",
             path: "/users/path",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

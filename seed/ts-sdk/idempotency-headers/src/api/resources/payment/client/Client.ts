@@ -69,10 +69,12 @@ export class PaymentClient {
      *     await client.payment.delete("paymentId")
      */
     public delete(paymentId: string, requestOptions?: PaymentClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "DELETE",
             path: `/payment/${core.url.encodePathParam(paymentId)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

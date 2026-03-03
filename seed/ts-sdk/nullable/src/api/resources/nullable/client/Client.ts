@@ -49,10 +49,12 @@ export class NullableClient {
             tags,
             extra,
         };
+        const _headers = {};
         return this._client.request<SeedNullable.User[]>({
             method: "GET",
             path: "/users",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -84,6 +86,7 @@ export class NullableClient {
         request: SeedNullable.CreateUserRequest,
         requestOptions?: NullableClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullable.User> {
+        const _headers = {};
         return this._client.request<SeedNullable.User>({
             method: "POST",
             path: "/users",
@@ -91,6 +94,7 @@ export class NullableClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -108,6 +112,7 @@ export class NullableClient {
         request: SeedNullable.DeleteUserRequest = {},
         requestOptions?: NullableClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "DELETE",
             path: "/users",
@@ -115,6 +120,7 @@ export class NullableClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

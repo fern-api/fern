@@ -49,6 +49,7 @@ export class UserClient {
         const _queryParams: Record<string, unknown> = {
             tags: toJson(tags),
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "/user/username",
@@ -56,6 +57,7 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -80,6 +82,7 @@ export class UserClient {
         const _queryParams: Record<string, unknown> = {
             tags: toJson(tags),
         };
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "/user/username-referenced",
@@ -87,6 +90,7 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -102,6 +106,7 @@ export class UserClient {
         request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "/user/username-optional",
@@ -109,6 +114,7 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -200,10 +206,12 @@ export class UserClient {
             longParam,
             bigIntParam,
         };
+        const _headers = {};
         return this._client.request<SeedRequestParameters.User>({
             method: "GET",
             path: "/user",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }

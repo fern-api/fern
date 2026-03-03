@@ -53,6 +53,7 @@ class ContainerClient {
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
     getAndReturnListOfPrimitives(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/container/list-of-primitives",
@@ -60,6 +61,7 @@ class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -75,6 +77,7 @@ class ContainerClient {
      *         }])
      */
     getAndReturnListOfObjects(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/container/list-of-objects",
@@ -82,6 +85,7 @@ class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -93,6 +97,7 @@ class ContainerClient {
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
     getAndReturnSetOfPrimitives(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/container/set-of-primitives",
@@ -100,6 +105,7 @@ class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -113,6 +119,7 @@ class ContainerClient {
      *         }])
      */
     getAndReturnSetOfObjects(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/container/set-of-objects",
@@ -120,6 +127,7 @@ class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -133,6 +141,7 @@ class ContainerClient {
      *     })
      */
     getAndReturnMapPrimToPrim(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/container/map-prim-to-prim",
@@ -140,6 +149,7 @@ class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -155,6 +165,7 @@ class ContainerClient {
      *     })
      */
     getAndReturnMapOfPrimToObject(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/container/map-prim-to-object",
@@ -162,6 +173,7 @@ class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -175,6 +187,7 @@ class ContainerClient {
      *     })
      */
     getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/container/map-prim-to-union",
@@ -182,6 +195,7 @@ class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -195,6 +209,7 @@ class ContainerClient {
      *     })
      */
     getAndReturnOptional(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/container/opt-objects",
@@ -202,6 +217,7 @@ class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

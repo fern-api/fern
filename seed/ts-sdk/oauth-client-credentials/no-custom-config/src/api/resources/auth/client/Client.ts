@@ -43,6 +43,7 @@ export class AuthClient {
         request: SeedOauthClientCredentials.GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedOauthClientCredentials.TokenResponse> {
+        const _headers = {};
         return this._client.request<SeedOauthClientCredentials.TokenResponse>({
             method: "POST",
             path: "/token",
@@ -50,6 +51,7 @@ export class AuthClient {
             contentType: "application/x-www-form-urlencoded",
             requestType: "form",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -70,6 +72,7 @@ export class AuthClient {
         request: SeedOauthClientCredentials.RefreshTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedOauthClientCredentials.TokenResponse> {
+        const _headers = {};
         return this._client.request<SeedOauthClientCredentials.TokenResponse>({
             method: "POST",
             path: "/token",
@@ -77,6 +80,7 @@ export class AuthClient {
             contentType: "application/x-www-form-urlencoded",
             requestType: "form",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

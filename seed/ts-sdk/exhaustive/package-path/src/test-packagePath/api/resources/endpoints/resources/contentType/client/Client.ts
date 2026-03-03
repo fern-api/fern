@@ -55,6 +55,7 @@ export class ContentTypeClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "/foo/bar",
@@ -62,6 +63,7 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -93,6 +95,7 @@ export class ContentTypeClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "POST",
             path: "/foo/baz",
@@ -100,6 +103,7 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json; charset=utf-8",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

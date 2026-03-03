@@ -34,10 +34,12 @@ export class ApiClient {
      *     await client.nested.api.getSomething()
      */
     public getSomething(requestOptions?: ApiClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: "/nested/get-something",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

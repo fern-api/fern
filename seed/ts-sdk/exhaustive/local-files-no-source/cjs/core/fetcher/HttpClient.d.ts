@@ -94,8 +94,17 @@ export declare class HttpClient {
      * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
      * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
      * to handle the response themselves. ALL HTTP calls should go through this method.
+     *
+     * Handles auth + global header merging on top of whatever endpoint-specific headers
+     * are provided in args.headers. Pass requestHeaders for per-request header overrides.
+     *
+     * @param args - Fetcher args (url, method, headers, body, etc.)
+     * @param options - Optional request-level overrides (per-request headers, endpoint metadata for auth)
      */
-    fetch<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>>;
+    fetch<R = unknown>(args: Fetcher.Args, options?: {
+        requestHeaders?: Record<string, unknown>;
+        endpointMetadata?: Record<string, unknown>;
+    }): Promise<APIResponse<R, Fetcher.Error>>;
     /**
      * Make an HTTP request. Returns HttpResponsePromise so callers get both
      * `await client.getUser()` and `client.getUser().withRawResponse()` for free.

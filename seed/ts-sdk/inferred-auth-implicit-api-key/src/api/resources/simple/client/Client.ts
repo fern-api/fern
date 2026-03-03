@@ -34,10 +34,12 @@ export class SimpleClient {
      *     await client.simple.getSomething()
      */
     public getSomething(requestOptions?: SimpleClient.RequestOptions): core.HttpResponsePromise<void> {
+        const _headers = {};
         return this._client.request<void>({
             method: "GET",
             path: "/get-something",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

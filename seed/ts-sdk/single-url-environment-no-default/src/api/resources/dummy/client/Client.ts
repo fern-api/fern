@@ -34,10 +34,12 @@ export class DummyClient {
      *     await client.dummy.getDummy()
      */
     public getDummy(requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: "dummy",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

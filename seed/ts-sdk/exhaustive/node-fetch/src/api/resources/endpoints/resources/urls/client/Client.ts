@@ -34,10 +34,12 @@ export class UrlsClient {
      *     await client.endpoints.urls.withMixedCase()
      */
     public withMixedCase(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: "/urls/MixedCase",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -49,10 +51,12 @@ export class UrlsClient {
      *     await client.endpoints.urls.noEndingSlash()
      */
     public noEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: "/urls/no-ending-slash",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -64,10 +68,12 @@ export class UrlsClient {
      *     await client.endpoints.urls.withEndingSlash()
      */
     public withEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: "/urls/with-ending-slash/",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -79,10 +85,12 @@ export class UrlsClient {
      *     await client.endpoints.urls.withUnderscores()
      */
     public withUnderscores(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: "/urls/with_underscores",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

@@ -43,6 +43,7 @@ export class OptionalClient {
         request?: Record<string, unknown>,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "send-optional-body",
@@ -50,6 +51,7 @@ export class OptionalClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -67,6 +69,7 @@ export class OptionalClient {
         request?: SeedObjectsWithImports.SendOptionalBodyRequest,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "send-optional-typed-body",
@@ -74,6 +77,7 @@ export class OptionalClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -98,6 +102,7 @@ export class OptionalClient {
         request?: SeedObjectsWithImports.DeployParams | null,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedObjectsWithImports.DeployResponse> {
+        const _headers = {};
         return this._client.request<SeedObjectsWithImports.DeployResponse>({
             method: "POST",
             path: `deploy/${core.url.encodePathParam(actionId)}/versions/${core.url.encodePathParam(id)}`,
@@ -105,6 +110,7 @@ export class OptionalClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

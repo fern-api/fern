@@ -43,6 +43,7 @@ export class UserClient {
         request: SeedExtraProperties.CreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExtraProperties.User> {
+        const _headers = {};
         return this._client.request<SeedExtraProperties.User>({
             method: "POST",
             path: "/user",
@@ -50,6 +51,7 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

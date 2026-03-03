@@ -39,6 +39,7 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
+        const _headers = {};
         return this._client.request<SeedUndiscriminatedUnions.MyUnion>({
             method: "POST",
             path: "",
@@ -46,6 +47,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -59,10 +61,12 @@ export class UnionClient {
     public getMetadata(
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
+        const _headers = {};
         return this._client.request<SeedUndiscriminatedUnions.Metadata>({
             method: "GET",
             path: "/metadata",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -82,6 +86,7 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.MetadataUnion,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "PUT",
             path: "/metadata",
@@ -89,6 +94,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -110,6 +116,7 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.Request,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "POST",
             path: "/call",
@@ -117,6 +124,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -132,6 +140,7 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
+        const _headers = {};
         return this._client.request<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>({
             method: "POST",
             path: "/duplicate",
@@ -139,6 +148,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -154,6 +164,7 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.NestedUnionRoot,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "/nested",
@@ -161,6 +172,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -181,6 +193,7 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.PaymentRequest,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: "/camel-case",
@@ -188,6 +201,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

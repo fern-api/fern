@@ -43,6 +43,7 @@ export class UnionClient {
         request: SeedExhaustive.types.Animal,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.Animal>({
             method: "POST",
             path: "/union",
@@ -50,6 +51,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

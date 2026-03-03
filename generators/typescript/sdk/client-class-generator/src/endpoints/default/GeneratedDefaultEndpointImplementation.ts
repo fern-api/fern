@@ -418,9 +418,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                         undefined,
                                         ts.factory.createAwaitExpression(
                                             ts.factory.createCallExpression(
-                                                context.coreUtilities.fetcher.fetcher._getReferenceTo(),
+                                                this.generatedSdkClientClass.getReferenceToFetcher(context),
                                                 [responseReturnType], // Generic type argument
-                                                [ts.factory.createIdentifier("request")]
+                                                [
+                                                    ts.factory.createIdentifier("request"),
+                                                    this.buildFetchOptionsArg()
+                                                ]
                                             )
                                         )
                                     )
@@ -781,7 +784,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         // 2. Build request statements (destructuring, query params, endpoint-specific headers)
-        statements.push(...this.request.getBuildRequestStatements(context, { clientMode: true }));
+        statements.push(...this.request.getBuildRequestStatements(context));
 
         // 3. Get fetcher request args for config properties
         const requestArgs = this.request.getFetcherRequestArgs(context);
@@ -985,6 +988,33 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
     }
 
+    /**
+     * Builds the second argument to this._client.fetch() containing per-request headers
+     * and endpoint metadata. HttpClient.fetch() uses these for auth + global + per-request
+     * header merging.
+     */
+    private buildFetchOptionsArg(): ts.Expression {
+        const properties: ts.ObjectLiteralElementLike[] = [
+            ts.factory.createPropertyAssignment(
+                "requestHeaders",
+                ts.factory.createPropertyAccessChain(
+                    ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                    "headers"
+                )
+            )
+        ];
+        if (this.generateEndpointMetadata) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    "endpointMetadata",
+                    this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                )
+            );
+        }
+        return ts.factory.createObjectLiteralExpression(properties, true);
+    }
+
     private invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
@@ -1029,10 +1059,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             this.response.getResponseVariableName(),
                             undefined,
                             undefined,
-                            context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
-                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                cast: undefined
-                            })
+                                            context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
+                                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
+                                                cast: undefined,
+                                                additionalArgs: [this.buildFetchOptionsArg()]
+                                            })
                         )
                     ],
                     ts.NodeFlags.Const

@@ -43,10 +43,12 @@ export class PutClient {
         requestOptions?: PutClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
         const { id } = request;
+        const _headers = {};
         return this._client.request<SeedExhaustive.endpoints.PutResponse>({
             method: "PUT",
             path: `${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.PutResponse.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

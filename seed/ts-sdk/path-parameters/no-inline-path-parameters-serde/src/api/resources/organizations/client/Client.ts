@@ -40,10 +40,12 @@ export class OrganizationsClient {
         organization_id: string,
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+        const _headers = {};
         return this._client.request<SeedPathParameters.Organization>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             transformResponse: (body) =>
                 serializers.Organization.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -71,10 +73,12 @@ export class OrganizationsClient {
         _request: SeedPathParameters.GetOrganizationUserRequest = {},
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
+        const _headers = {};
         return this._client.request<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/users/${core.url.encodePathParam(user_id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             transformResponse: (body) =>
                 serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -106,10 +110,12 @@ export class OrganizationsClient {
         const _queryParams: Record<string, unknown> = {
             limit,
         };
+        const _headers = {};
         return this._client.request<SeedPathParameters.Organization[]>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             transformResponse: (body) =>
                 serializers.organizations.searchOrganizations.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

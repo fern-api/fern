@@ -32,10 +32,12 @@ export class UnionClient {
      *     await client.union.get("id")
      */
     public get(id: string, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedUnions.Shape> {
+        const _headers = {};
         return this._client.request<SeedUnions.Shape>({
             method: "GET",
             path: `/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -56,6 +58,7 @@ export class UnionClient {
         request: SeedUnions.Shape,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "PATCH",
             path: "",
@@ -63,6 +66,7 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

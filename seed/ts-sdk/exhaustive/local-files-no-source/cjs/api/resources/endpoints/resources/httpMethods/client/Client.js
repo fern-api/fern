@@ -53,10 +53,12 @@ class HttpMethodsClient {
      *     await client.endpoints.httpMethods.testGet("id")
      */
     testGet(id, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "GET",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -72,6 +74,7 @@ class HttpMethodsClient {
      *     })
      */
     testPost(request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "POST",
             path: "/http-methods",
@@ -79,6 +82,7 @@ class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -95,6 +99,7 @@ class HttpMethodsClient {
      *     })
      */
     testPut(id, request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "PUT",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
@@ -102,6 +107,7 @@ class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -132,6 +138,7 @@ class HttpMethodsClient {
      *     })
      */
     testPatch(id, request, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "PATCH",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
@@ -139,6 +146,7 @@ class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -152,10 +160,12 @@ class HttpMethodsClient {
      *     await client.endpoints.httpMethods.testDelete("id")
      */
     testDelete(id, requestOptions) {
+        const _headers = {};
         return this._client.request({
             method: "DELETE",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

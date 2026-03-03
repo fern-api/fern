@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as SeedTrace from "../../../index.js";
@@ -60,35 +60,36 @@ export class SubmissionClient {
             core.APIResponse<SeedTrace.ExecutionSessionResponse, SeedTrace.submission.createExecutionSession.Error>
         >
     > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/sessions/create-session/${core.url.encodePathParam(language)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedTraceEnvironment.Prod,
+                    `/sessions/create-session/${core.url.encodePathParam(language)}`,
+                ),
+                method: "POST",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                timeoutMs:
+                    requestOptions?.timeoutInSeconds != null
+                        ? requestOptions.timeoutInSeconds * 1000
+                        : this._options?.timeoutInSeconds != null
+                          ? this._options?.timeoutInSeconds * 1000
+                          : undefined,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                withCredentials: true,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
+        );
         if (_response.ok) {
             return {
                 data: {
@@ -140,35 +141,36 @@ export class SubmissionClient {
             >
         >
     > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/sessions/${core.url.encodePathParam(sessionId)}`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedTraceEnvironment.Prod,
+                    `/sessions/${core.url.encodePathParam(sessionId)}`,
+                ),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                timeoutMs:
+                    requestOptions?.timeoutInSeconds != null
+                        ? requestOptions.timeoutInSeconds * 1000
+                        : this._options?.timeoutInSeconds != null
+                          ? this._options?.timeoutInSeconds * 1000
+                          : undefined,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                withCredentials: true,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
+        );
         if (_response.ok) {
             return {
                 data: {
@@ -211,35 +213,36 @@ export class SubmissionClient {
         sessionId: string,
         requestOptions?: SubmissionClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.submission.stopExecutionSession.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/sessions/stop/${core.url.encodePathParam(sessionId)}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedTraceEnvironment.Prod,
+                    `/sessions/stop/${core.url.encodePathParam(sessionId)}`,
+                ),
+                method: "DELETE",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                timeoutMs:
+                    requestOptions?.timeoutInSeconds != null
+                        ? requestOptions.timeoutInSeconds * 1000
+                        : this._options?.timeoutInSeconds != null
+                          ? this._options?.timeoutInSeconds * 1000
+                          : undefined,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                withCredentials: true,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
+        );
         if (_response.ok) {
             return {
                 data: {
@@ -289,35 +292,36 @@ export class SubmissionClient {
             >
         >
     > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await this._client.fetch({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/sessions/execution-sessions-state",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            withCredentials: true,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
+        const _response = await this._client.fetch(
+            {
+                url: core.url.join(
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedTraceEnvironment.Prod,
+                    "/sessions/execution-sessions-state",
+                ),
+                method: "GET",
+                headers: _headers,
+                queryParameters: requestOptions?.queryParams,
+                timeoutMs:
+                    requestOptions?.timeoutInSeconds != null
+                        ? requestOptions.timeoutInSeconds * 1000
+                        : this._options?.timeoutInSeconds != null
+                          ? this._options?.timeoutInSeconds * 1000
+                          : undefined,
+                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                withCredentials: true,
+                abortSignal: requestOptions?.abortSignal,
+                fetchFn: this._options?.fetch,
+                logging: this._options.logging,
+            },
+            {
+                requestHeaders: requestOptions?.headers,
+            },
+        );
         if (_response.ok) {
             return {
                 data: {

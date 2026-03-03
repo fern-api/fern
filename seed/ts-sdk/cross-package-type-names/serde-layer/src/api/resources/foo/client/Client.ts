@@ -48,6 +48,7 @@ export class FooClient {
         const _queryParams: Record<string, unknown> = {
             optionalString,
         };
+        const _headers = {};
         return this._client.request<SeedCrossPackageTypeNames.ImportingType>({
             method: "POST",
             path: "",
@@ -55,6 +56,7 @@ export class FooClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             transformResponse: (body) =>
                 serializers.ImportingType.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

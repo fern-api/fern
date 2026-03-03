@@ -41,10 +41,12 @@ export class UserClient {
         _request: SeedPathParameters.GetUsersRequest = {},
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
+        const _headers = {};
         return this._client.request<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -63,6 +65,7 @@ export class UserClient {
         request: SeedPathParameters.User,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
+        const _headers = {};
         return this._client.request<SeedPathParameters.User>({
             method: "POST",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
@@ -70,6 +73,7 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -93,6 +97,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { body: _body } = request;
+        const _headers = {};
         return this._client.request<SeedPathParameters.User>({
             method: "PATCH",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}`,
@@ -100,6 +105,7 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -123,10 +129,12 @@ export class UserClient {
         const _queryParams: Record<string, unknown> = {
             limit,
         };
+        const _headers = {};
         return this._client.request<SeedPathParameters.User[]>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
             requestOptions,
         });
     }
@@ -148,10 +156,12 @@ export class UserClient {
         _request: SeedPathParameters.GetUserMetadataRequest = {},
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
+        const _headers = {};
         return this._client.request<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/metadata/v${core.url.encodePathParam(version)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -175,10 +185,12 @@ export class UserClient {
         _request: SeedPathParameters.GetUserSpecificsRequest = {},
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
+        const _headers = {};
         return this._client.request<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

@@ -46,6 +46,7 @@ export class SeedPackageYmlClient {
         request: SeedPackageYml.EchoRequest,
         requestOptions?: SeedPackageYmlClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "POST",
             path: `/${core.url.encodePathParam(this._options.id)}/`,
@@ -53,6 +54,7 @@ export class SeedPackageYmlClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }

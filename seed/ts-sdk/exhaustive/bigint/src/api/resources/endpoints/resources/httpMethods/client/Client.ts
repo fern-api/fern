@@ -36,10 +36,12 @@ export class HttpMethodsClient {
      *     await client.endpoints.httpMethods.testGet("id")
      */
     public testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string> {
+        const _headers = {};
         return this._client.request<string>({
             method: "GET",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -59,6 +61,7 @@ export class HttpMethodsClient {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "POST",
             path: "/http-methods",
@@ -66,6 +69,7 @@ export class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -87,6 +91,7 @@ export class HttpMethodsClient {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "PUT",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
@@ -94,6 +99,7 @@ export class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -129,6 +135,7 @@ export class HttpMethodsClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+        const _headers = {};
         return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "PATCH",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
@@ -136,6 +143,7 @@ export class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
@@ -153,10 +161,12 @@ export class HttpMethodsClient {
         id: string,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
+        const _headers = {};
         return this._client.request<boolean>({
             method: "DELETE",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
+            headers: _headers,
             requestOptions,
         });
     }
