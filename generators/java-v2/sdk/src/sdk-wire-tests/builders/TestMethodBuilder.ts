@@ -218,10 +218,10 @@ export class TestMethodBuilder {
                     const normalizedResponseJson = this.convertRfc2822DatesToIso8601(expectedResponseJson);
 
                     // Use the same resource file that was registered for mock setup, or inline for small payloads
-                    if (responseResourcePath) {
+                    if (responseResourcePath && this.resourceWriter && this.currentTestClassName) {
                         // For resource files, we need to write a separate normalized version for expected comparison
-                        const normalizedResourcePath = this.resourceWriter!.registerResource(
-                            this.currentTestClassName!,
+                        const normalizedResourcePath = this.resourceWriter.registerResource(
+                            this.currentTestClassName,
                             testMethodName,
                             "expected_response",
                             normalizedResponseJson
@@ -319,7 +319,8 @@ export class TestMethodBuilder {
      */
     private tryConvertRfc2822Date(value: string): string {
         // Match RFC 2822 date format: "Thu, 30 Jul 2015 20:00:00 +0000"
-        const rfc2822Pattern = /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{1,2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4}$/;
+        const rfc2822Pattern =
+            /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{1,2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4}$/;
         if (!rfc2822Pattern.test(value)) {
             return value;
         }
