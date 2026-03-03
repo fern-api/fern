@@ -403,11 +403,16 @@ export class ReactQueryGenerator {
                         lines.push(`        },`);
                     } else if (paginationInfo != null && isMultiParamQuery) {
                         const { requestFieldName } = paginationInfo;
+                        // For multi-param endpoints, the args tuple is (pathParam1, ..., request, requestOptions?).
+                        // The request object (containing the pagination field) is at index = number of path params,
+                        // NOT always at index 0. We must modify the correct tuple position.
+                        const requestIndex = endpoint.allPathParameters.length;
                         lines.push(`        queryFn: ({ pageParam }) => {`);
-                        lines.push(`            const [request, ...rest] = args;`);
+                        lines.push(`            const modifiedArgs = [...args] as [...${paramsTypeName}];`);
                         lines.push(
-                            `            return ${clientAccess}.${endpointUnsafeName}(pageParam != null ? { ...request, ${requestFieldName}: pageParam as never } : request, ...rest);`
+                            `            if (pageParam != null) { modifiedArgs[${requestIndex}] = { ...modifiedArgs[${requestIndex}], ${requestFieldName}: pageParam as never }; }`
                         );
+                        lines.push(`            return ${clientAccess}.${endpointUnsafeName}(...modifiedArgs);`);
                         lines.push(`        },`);
                     } else if (isSingleParamQuery) {
                         lines.push(
