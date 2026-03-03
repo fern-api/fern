@@ -43,6 +43,7 @@ interface CratesIoResponse {
 export interface RegistryInfo {
     registryUrl: string | undefined;
     token: string | undefined;
+    username: string | undefined;
 }
 
 // ─── Default public registry URLs ───────────────────────────────────
@@ -129,66 +130,75 @@ export function getRegistryInfoFromOutputMode(outputMode: FernFiddle.remoteGen.O
     if (outputMode.type === "publishV2") {
         return getRegistryInfoFromPublishV2(outputMode.publishV2);
     }
-    return { registryUrl: undefined, token: undefined };
+    return { registryUrl: undefined, token: undefined, username: undefined };
 }
 
 function getRegistryInfoFromGithubV2PublishInfo(publishInfo: FernFiddle.GithubPublishInfo | undefined): RegistryInfo {
     if (publishInfo == null) {
-        return { registryUrl: undefined, token: undefined };
+        return { registryUrl: undefined, token: undefined, username: undefined };
     }
     switch (publishInfo.type) {
         case "npm":
-            return { registryUrl: publishInfo.registryUrl, token: publishInfo.token };
+            return { registryUrl: publishInfo.registryUrl, token: publishInfo.token, username: undefined };
         case "maven":
-            return { registryUrl: publishInfo.registryUrl, token: publishInfo.credentials?.password };
+            return {
+                registryUrl: publishInfo.registryUrl,
+                token: publishInfo.credentials?.password,
+                username: publishInfo.credentials?.username
+            };
         case "pypi":
-            return { registryUrl: publishInfo.registryUrl, token: publishInfo.credentials?.password };
+            return { registryUrl: publishInfo.registryUrl, token: publishInfo.credentials?.password, username: undefined };
         case "nuget":
-            return { registryUrl: publishInfo.registryUrl, token: publishInfo.apiKey };
+            return { registryUrl: publishInfo.registryUrl, token: publishInfo.apiKey, username: undefined };
         case "rubygems":
-            return { registryUrl: publishInfo.registryUrl, token: publishInfo.apiKey };
+            return { registryUrl: publishInfo.registryUrl, token: publishInfo.apiKey, username: undefined };
         case "crates":
-            return { registryUrl: publishInfo.registryUrl, token: publishInfo.token };
+            return { registryUrl: publishInfo.registryUrl, token: publishInfo.token, username: undefined };
         case "postman":
-            return { registryUrl: undefined, token: undefined };
+            return { registryUrl: undefined, token: undefined, username: undefined };
         default:
-            return { registryUrl: undefined, token: undefined };
+            return { registryUrl: undefined, token: undefined, username: undefined };
     }
 }
 
 function getRegistryInfoFromPublishV2(publishV2: FernFiddle.PublishOutputModeV2): RegistryInfo {
     switch (publishV2.type) {
         case "npmOverride":
-            return { registryUrl: publishV2.npmOverride?.registryUrl, token: publishV2.npmOverride?.token };
+            return { registryUrl: publishV2.npmOverride?.registryUrl, token: publishV2.npmOverride?.token, username: undefined };
         case "mavenOverride":
             return {
                 registryUrl: publishV2.mavenOverride?.registryUrl,
-                token: publishV2.mavenOverride?.password
+                token: publishV2.mavenOverride?.password,
+                username: publishV2.mavenOverride?.username
             };
         case "pypiOverride":
             return {
                 registryUrl: publishV2.pypiOverride?.registryUrl,
-                token: publishV2.pypiOverride?.password
+                token: publishV2.pypiOverride?.password,
+                username: undefined
             };
         case "nugetOverride":
             return {
                 registryUrl: publishV2.nugetOverride?.registryUrl,
-                token: publishV2.nugetOverride?.apiKey
+                token: publishV2.nugetOverride?.apiKey,
+                username: undefined
             };
         case "rubyGemsOverride":
             return {
                 registryUrl: publishV2.rubyGemsOverride?.registryUrl,
-                token: publishV2.rubyGemsOverride?.apiKey
+                token: publishV2.rubyGemsOverride?.apiKey,
+                username: undefined
             };
         case "cratesOverride":
             return {
                 registryUrl: publishV2.cratesOverride?.registryUrl,
-                token: publishV2.cratesOverride?.token
+                token: publishV2.cratesOverride?.token,
+                username: undefined
             };
         case "postman":
-            return { registryUrl: undefined, token: undefined };
+            return { registryUrl: undefined, token: undefined, username: undefined };
         default:
-            return { registryUrl: undefined, token: undefined };
+            return { registryUrl: undefined, token: undefined, username: undefined };
     }
 }
 
@@ -303,7 +313,7 @@ function resolveNpmToken(registryInfo: RegistryInfo): string | undefined {
 /** @internal Exported for testing */
 export async function getLatestVersionFromNpm(
     packageName: string,
-    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined }
+    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined }
 ): Promise<string | undefined> {
     try {
         const registryUrl = resolveNpmRegistryUrl(registryInfo);
@@ -373,7 +383,7 @@ function resolvePypiLookupUrl(registryInfo: RegistryInfo): string {
 /** @internal Exported for testing */
 export async function getLatestVersionFromPypi(
     packageName: string,
-    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined }
+    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined }
 ): Promise<string | undefined> {
     try {
         const lookupUrl = resolvePypiLookupUrl(registryInfo);
@@ -443,7 +453,7 @@ function resolveMavenSearchUrl(registryInfo: RegistryInfo): string {
 /** @internal Exported for testing */
 export async function getLatestVersionFromMaven(
     coordinate: string,
-    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined }
+    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined }
 ): Promise<string | undefined> {
     try {
         const parts = coordinate.split(":");
@@ -457,7 +467,8 @@ export async function getLatestVersionFromMaven(
         const headers: Record<string, string> = {};
         const token = registryInfo.token ?? undefined;
         if (token != null && token !== "") {
-            headers.authorization = `Basic ${Buffer.from(token).toString("base64")}`;
+            const username = registryInfo.username ?? "";
+            headers.authorization = `Basic ${Buffer.from(`${username}:${token}`).toString("base64")}`;
         }
 
         const mavenUrl = `${searchUrl}?q=g:${encodeURIComponent(groupId)}+AND+a:${encodeURIComponent(artifactId)}&rows=1&wt=json`;
@@ -514,7 +525,7 @@ function resolveNugetFlatContainerUrl(registryInfo: RegistryInfo): string {
 /** @internal Exported for testing */
 export async function getLatestVersionFromNuget(
     packageName: string,
-    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined }
+    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined }
 ): Promise<string | undefined> {
     try {
         const flatContainerUrl = resolveNugetFlatContainerUrl(registryInfo);
@@ -584,7 +595,7 @@ function resolveRubyGemsApiUrl(registryInfo: RegistryInfo): string {
 /** @internal Exported for testing */
 export async function getLatestVersionFromRubyGems(
     packageName: string,
-    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined }
+    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined }
 ): Promise<string | undefined> {
     try {
         const apiUrl = resolveRubyGemsApiUrl(registryInfo);
@@ -628,7 +639,7 @@ export async function getLatestVersionFromRubyGems(
 /** @internal Exported for testing */
 export async function getLatestVersionFromGoProxy(
     modulePath: string,
-    _registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined }
+    _registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined }
 ): Promise<string | undefined> {
     try {
         // Go module proxy requires case-encoding: uppercase letters become "!" + lowercase
@@ -681,7 +692,7 @@ function resolveCratesApiUrl(registryInfo: RegistryInfo): string {
 /** @internal Exported for testing */
 export async function getLatestVersionFromCrates(
     packageName: string,
-    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined }
+    registryInfo: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined }
 ): Promise<string | undefined> {
     try {
         const apiUrl = resolveCratesApiUrl(registryInfo);

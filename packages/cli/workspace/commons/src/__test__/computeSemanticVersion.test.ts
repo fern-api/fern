@@ -442,7 +442,7 @@ describe("getRegistryInfoFromOutputMode", () => {
         expect(info.token).toBe("pypi-secret-token");
     });
 
-    it("extracts maven registry URL and token from publishV2 mavenOverride", () => {
+    it("extracts maven registry URL, token, and username from publishV2 mavenOverride", () => {
         const outputMode = {
             type: "publishV2" as const,
             publishV2: {
@@ -459,6 +459,7 @@ describe("getRegistryInfoFromOutputMode", () => {
         const info = getRegistryInfoFromOutputMode(outputMode as any);
         expect(info.registryUrl).toBe("https://s01.oss.sonatype.org/content/repositories/releases/");
         expect(info.token).toBe("maven-secret");
+        expect(info.username).toBe("user");
     });
 
     it("extracts nuget registry URL and token from publishV2 nugetOverride", () => {
@@ -601,7 +602,8 @@ describe("getLatestVersionFromNpm with registryInfo", () => {
     it("uses registryUrl from output mode config instead of hardcoded URL", async () => {
         const customRegistry: RegistryInfo = {
             registryUrl: "https://npm.pkg.github.com",
-            token: "config-token"
+            token: "config-token",
+            username: undefined
         };
         vi.mocked(fetch).mockResolvedValueOnce(
             mockFetchResponse({
@@ -626,7 +628,8 @@ describe("getLatestVersionFromNpm with registryInfo", () => {
         process.env.NPM_TOKEN = "env-token";
         const customRegistry: RegistryInfo = {
             registryUrl: undefined,
-            token: "config-token"
+            token: "config-token",
+            username: undefined
         };
         vi.mocked(fetch).mockResolvedValueOnce(
             mockFetchResponse({
@@ -649,7 +652,8 @@ describe("getLatestVersionFromNpm with registryInfo", () => {
         process.env.NPM_TOKEN = "env-token";
         const emptyRegistry: RegistryInfo = {
             registryUrl: undefined,
-            token: ""
+            token: "",
+            username: undefined
         };
         vi.mocked(fetch).mockResolvedValueOnce(
             mockFetchResponse({
