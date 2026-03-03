@@ -665,7 +665,8 @@ export class EndpointSnippetGenerator {
     }): php.ConstructorField[] {
         const args: php.ConstructorField[] = [];
         for (const header of headers) {
-            const arg = this.getConstructorHeaderArg({ header, value: values.value });
+            const value = values[header.name.wireValue];
+            const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {
                 args.push({
                     name: this.context.getPropertyName(header.name.name),
