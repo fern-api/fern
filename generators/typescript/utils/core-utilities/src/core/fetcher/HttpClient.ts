@@ -22,7 +22,7 @@ export interface EndpointConfig {
     /** Query parameters specific to this endpoint (merged with requestOptions.queryParams) */
     queryParameters?: Record<string, unknown>;
     /** Endpoint-specific headers (e.g. custom headers from the API definition) */
-    headers?: Record<string, string | undefined>;
+    headers?: Record<string, unknown>;
     /** Override content type (default: "application/json" when body is present) */
     contentType?: string;
     /** Override request serialization (default: "json" when body is present) */
@@ -36,7 +36,7 @@ export interface EndpointConfig {
         timeoutInSeconds?: number;
         maxRetries?: number;
         abortSignal?: AbortSignal;
-        headers?: Record<string, string | undefined>;
+        headers?: Record<string, string | Supplier<string | null | undefined> | undefined>;
         queryParams?: Record<string, unknown>;
     };
     /** Map specific status codes to typed error constructors */
@@ -140,7 +140,7 @@ export class HttpClient {
         // 4. Fetch — matches the exact fetcher call pattern of existing generated code
         const response = await fetcherImpl({
             url: join(
-                (await Supplier.get(this._options.baseUrl)) ?? (await Supplier.get(this._options.environment)),
+                (await Supplier.get(this._options.baseUrl)) ?? (await Supplier.get(this._options.environment)) ?? "",
                 config.path,
             ),
             method: config.method,

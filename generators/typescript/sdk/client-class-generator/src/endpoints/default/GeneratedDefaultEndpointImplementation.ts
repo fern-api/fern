@@ -747,6 +747,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         if (this.defaultTimeoutInSeconds !== undefined && this.defaultTimeoutInSeconds !== 60) {
             return false;
         }
+        // Not multi-URL environment endpoint (HttpClient can't resolve environment object properties)
+        if (this.endpoint.baseUrl != null) {
+            return false;
+        }
         return true;
     }
 

@@ -793,8 +793,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const publicMethodName = endpoint.endpoint.name.camelCase.unsafeName;
 
             // Check if this endpoint can use the single-method HttpClient.request() pattern
+            // Excluded when: allowCustomFetcher (HttpClient always uses fetcherImpl, bypassing custom fetcher),
+            // requireDefaultEnvironment (HttpClient doesn't know the hard-coded default environment)
             const canUseClientRequest =
-                endpoint instanceof GeneratedDefaultEndpointImplementation && endpoint.canUseClientRequest(context);
+                !this.allowCustomFetcher &&
+                !this.requireDefaultEnvironment &&
+                endpoint instanceof GeneratedDefaultEndpointImplementation &&
+                endpoint.canUseClientRequest(context);
 
             if (canUseClientRequest) {
                 // Single public method that returns this._client.request<T>(config) directly
