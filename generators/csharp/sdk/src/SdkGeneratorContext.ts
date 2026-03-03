@@ -170,9 +170,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.RawClient,
                 AsIsFiles.RawResponse,
                 AsIsFiles.ResponseHeaders,
-                AsIsFiles.StreamRequest,
-                AsIsFiles.WithRawResponse,
-                AsIsFiles.WithRawResponseTask
+                AsIsFiles.StreamRequest
             ]
         );
 

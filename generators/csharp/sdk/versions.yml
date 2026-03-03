@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.3
+  changelogEntry:
+    - summary: |
+        Remove duplicate `WithRawResponse<T>` and `WithRawResponseTask<T>` structs
+        from the internal `Core` namespace. These types were already generated in the
+        public root namespace (via `Core/Public/`), making the `Core/` copies redundant.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
 - version: 2.23.2
   changelogEntry:
     - summary: |
