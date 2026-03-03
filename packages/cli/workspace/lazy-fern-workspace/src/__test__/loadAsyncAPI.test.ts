@@ -488,6 +488,254 @@ describe("loadAsyncAPI — external $ref resolution", () => {
         expect(payloadB["$ref"]).toBeUndefined();
     });
 
+    it("resolves diamond-shaped transitive refs (two paths to same file)", async () => {
+        // shared.yml is referenced by both a.yml and b.yml
+        const sharedSchema = { type: "string", description: "shared leaf" };
+        await writeFile(join(tempDir, "shared.yml"), yaml.dump(sharedSchema));
+
+        // a.yml and b.yml both reference shared.yml
+        await writeFile(join(tempDir, "a.yml"), yaml.dump({ AType: { $ref: "./shared.yml" } }));
+        await writeFile(join(tempDir, "b.yml"), yaml.dump({ BType: { $ref: "./shared.yml" } }));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/a": {
+                    publish: {
+                        message: { payload: { $ref: "./a.yml#/AType" } }
+                    }
+                },
+                "/b": {
+                    publish: {
+                        message: { payload: { $ref: "./b.yml#/BType" } }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+
+        const payloadA = (
+            ((channels["/a"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        const payloadB = (
+            ((channels["/b"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        // Both should resolve through their intermediary files down to the same shared leaf
+        expect(payloadA).toEqual(sharedSchema);
+        expect(payloadA["$ref"]).toBeUndefined();
+        expect(payloadB).toEqual(sharedSchema);
+        expect(payloadB["$ref"]).toBeUndefined();
+    });
+
+    it("resolves an external file that contains multiple nested external refs", async () => {
+        // leaf1.yml and leaf2.yml are simple schemas
+        await writeFile(join(tempDir, "leaf1.yml"), yaml.dump({ type: "string" }));
+        await writeFile(join(tempDir, "leaf2.yml"), yaml.dump({ type: "integer" }));
+
+        // parent.yml references both leaf files in different properties
+        const parentContent = {
+            type: "object",
+            properties: {
+                fieldA: { $ref: "./leaf1.yml" },
+                fieldB: { $ref: "./leaf2.yml" }
+            }
+        };
+        await writeFile(join(tempDir, "parent.yml"), yaml.dump(parentContent));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/data": {
+                    publish: {
+                        message: { payload: { $ref: "./parent.yml" } }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+        const payload = (
+            ((channels["/data"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        // The parent file should be fully resolved with both leaf schemas inlined
+        expect(payload["$ref"]).toBeUndefined();
+        expect(payload["type"]).toBe("object");
+        const properties = payload["properties"] as Record<string, unknown>;
+        expect(properties["fieldA"]).toEqual({ type: "string" });
+        expect(properties["fieldB"]).toEqual({ type: "integer" });
+    });
+
+    it("resolves a deep chain with mixed JSON pointer and whole-file refs", async () => {
+        // level3.yml — leaf
+        await writeFile(join(tempDir, "level3.yml"), yaml.dump({ type: "boolean", description: "deep leaf" }));
+
+        // level2.yml — references level3 via JSON pointer
+        await writeFile(
+            join(tempDir, "level2.yml"),
+            yaml.dump({
+                Wrapper: {
+                    type: "object",
+                    properties: {
+                        flag: { $ref: "./level3.yml" }
+                    }
+                }
+            })
+        );
+
+        // level1.yml — references level2 with a JSON pointer into Wrapper
+        await writeFile(
+            join(tempDir, "level1.yml"),
+            yaml.dump({
+                Inner: { $ref: "./level2.yml#/Wrapper" }
+            })
+        );
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/deep": {
+                    publish: {
+                        message: { payload: { $ref: "./level1.yml#/Inner" } }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        const result = (await loadAsyncAPI({
+            context,
+            absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+            absoluteFilePathToOverrides: undefined
+        })) as unknown as Record<string, unknown>;
+
+        const channels = result["channels"] as Record<string, unknown>;
+        const payload = (
+            ((channels["/deep"] as Record<string, unknown>)["publish"] as Record<string, unknown>)["message"] as Record<
+                string,
+                unknown
+            >
+        )["payload"] as Record<string, unknown>;
+
+        // Should resolve the full chain: level1 → level2#/Wrapper → level3 (inside properties.flag)
+        expect(payload["$ref"]).toBeUndefined();
+        expect(payload["type"]).toBe("object");
+        const properties = payload["properties"] as Record<string, unknown>;
+        expect(properties["flag"]).toEqual({ type: "boolean", description: "deep leaf" });
+    });
+
+    it("throws on direct circular ref between two files (A → B → A)", async () => {
+        // a.yml references b.yml, and b.yml references a.yml
+        await writeFile(join(tempDir, "a.yml"), yaml.dump({ AType: { $ref: "./b.yml#/BType" } }));
+        await writeFile(join(tempDir, "b.yml"), yaml.dump({ BType: { $ref: "./a.yml#/AType" } }));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/cycle": {
+                    publish: {
+                        message: { payload: { $ref: "./a.yml#/AType" } }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        await expect(
+            loadAsyncAPI({
+                context,
+                absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+                absoluteFilePathToOverrides: undefined
+            })
+        ).rejects.toThrow(/Circular \$ref detected/);
+    });
+
+    it("throws on self-referencing file", async () => {
+        // self.yml references itself
+        await writeFile(
+            join(tempDir, "self.yml"),
+            yaml.dump({ SelfType: { $ref: "./self.yml#/SelfType" } })
+        );
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/self": {
+                    publish: {
+                        message: { payload: { $ref: "./self.yml#/SelfType" } }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        await expect(
+            loadAsyncAPI({
+                context,
+                absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+                absoluteFilePathToOverrides: undefined
+            })
+        ).rejects.toThrow(/Circular \$ref detected/);
+    });
+
+    it("throws on indirect circular ref (A → B → C → A)", async () => {
+        await writeFile(join(tempDir, "a.yml"), yaml.dump({ A: { $ref: "./b.yml#/B" } }));
+        await writeFile(join(tempDir, "b.yml"), yaml.dump({ B: { $ref: "./c.yml#/C" } }));
+        await writeFile(join(tempDir, "c.yml"), yaml.dump({ C: { $ref: "./a.yml#/A" } }));
+
+        const doc = {
+            asyncapi: "2.6.0",
+            info: { title: "Test", version: "1.0.0" },
+            channels: {
+                "/cycle": {
+                    publish: {
+                        message: { payload: { $ref: "./a.yml#/A" } }
+                    }
+                }
+            }
+        };
+        await writeFile(join(tempDir, "asyncapi.yml"), yaml.dump(doc));
+
+        await expect(
+            loadAsyncAPI({
+                context,
+                absoluteFilePath: AbsoluteFilePath.of(join(tempDir, "asyncapi.yml")),
+                absoluteFilePathToOverrides: undefined
+            })
+        ).rejects.toThrow(/Circular \$ref detected/);
+    });
+
     it("leaves HTTP/HTTPS $ref values untouched for downstream resolution", async () => {
         const doc = {
             asyncapi: "3.0.0",
