@@ -696,7 +696,8 @@ export class SdkGenerator {
                 relativePackagePath: this.relativePackagePath,
                 intermediateRepresentation: this.intermediateRepresentation,
                 packageResolver: this.packageResolver,
-                getAllPackageIds: () => this.getAllPackageIds()
+                getAllPackageIds: () => this.getAllPackageIds(),
+                inlinePathParameters: this.config.inlinePathParameters
             });
             const result = reactQueryGenerator.generate();
             if (result != null) {

@@ -34,6 +34,7 @@ export declare namespace ReactQueryGenerator {
         intermediateRepresentation: FernIr.IntermediateRepresentation;
         packageResolver: PackageResolver;
         getAllPackageIds: () => PackageId[];
+        inlinePathParameters: boolean;
     }
 }
 
@@ -45,6 +46,7 @@ export class ReactQueryGenerator {
     private readonly intermediateRepresentation: FernIr.IntermediateRepresentation;
     private readonly packageResolver: PackageResolver;
     private readonly getAllPackageIds: () => PackageId[];
+    private readonly inlinePathParameters: boolean;
 
     constructor({
         context,
@@ -53,7 +55,8 @@ export class ReactQueryGenerator {
         relativePackagePath,
         intermediateRepresentation,
         packageResolver,
-        getAllPackageIds
+        getAllPackageIds,
+        inlinePathParameters
     }: ReactQueryGenerator.Args) {
         this.context = context;
         this.rootClientName = rootClientName;
@@ -62,6 +65,7 @@ export class ReactQueryGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
         this.packageResolver = packageResolver;
         this.getAllPackageIds = getAllPackageIds;
+        this.inlinePathParameters = inlinePathParameters;
     }
 
     public generate(): { reactQueryExportPaths: string[] } | undefined {
@@ -348,12 +352,16 @@ export class ReactQueryGenerator {
                 // Multi-param (has separate positional path params): named params for each path param + request body
                 // No-param: accept requestOptions explicitly
                 //
-                // IMPORTANT: When sdkRequest.shape.type === "wrapper", path params are inlined into the
-                // request wrapper object, so the SDK method signature is (request, requestOptions?) — NOT
-                // (pathParam, request, requestOptions?). These should be treated as single-param, not multi-param.
-                const hasPositionalPathParams =
-                    endpoint.allPathParameters.length > 0 &&
-                    (endpoint.sdkRequest == null || endpoint.sdkRequest.shape.type !== "wrapper");
+                // IMPORTANT: Path params are only inlined into the request wrapper when ALL of:
+                // 1. inlinePathParameters config is enabled
+                // 2. sdkRequest.shape.type === "wrapper"
+                // 3. The wrapper actually includes path params (onlyPathParameters or includePathParameters)
+                // This matches the logic in RequestWrapperContextImpl.shouldInlinePathParameters.
+                const pathParamsAreInlined =
+                    this.inlinePathParameters &&
+                    endpoint.sdkRequest?.shape.type === "wrapper" &&
+                    (endpoint.sdkRequest.shape.onlyPathParameters || endpoint.sdkRequest.shape.includePathParameters);
+                const hasPositionalPathParams = endpoint.allPathParameters.length > 0 && !pathParamsAreInlined;
                 const isSingleParamQuery = hasRequestParams && !hasPositionalPathParams;
                 const isMultiParamQuery = hasRequestParams && hasPositionalPathParams;
 
@@ -738,11 +746,12 @@ export class ReactQueryGenerator {
                 // Determine if this is a single-param or multi-param mutation.
                 // Single-param (no path params, just sdkRequest): unwrap tuple so users call mutate(request) not mutate([request])
                 // Multi-param (has separate positional path params): keep tuple since mutate() only accepts one argument
-                // When sdkRequest.shape.type === "wrapper", path params are inlined into the request wrapper,
-                // so the SDK method is (request, requestOptions?) — treat as single-param.
-                const hasPositionalPathParams =
-                    endpoint.allPathParameters.length > 0 &&
-                    (endpoint.sdkRequest == null || endpoint.sdkRequest.shape.type !== "wrapper");
+                // Path params are only inlined when all conditions are met (see query section for details).
+                const pathParamsAreInlined =
+                    this.inlinePathParameters &&
+                    endpoint.sdkRequest?.shape.type === "wrapper" &&
+                    (endpoint.sdkRequest.shape.onlyPathParameters || endpoint.sdkRequest.shape.includePathParameters);
+                const hasPositionalPathParams = endpoint.allPathParameters.length > 0 && !pathParamsAreInlined;
                 const isSingleParamMutation = hasRequestParams && !hasPositionalPathParams;
                 const isMultiParamMutation = hasRequestParams && hasPositionalPathParams;
 
