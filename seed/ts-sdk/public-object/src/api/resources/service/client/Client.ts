@@ -36,7 +36,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.BinaryResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher<core.BinaryResponse>({
+        const _response = await this._client.fetch<core.BinaryResponse>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),

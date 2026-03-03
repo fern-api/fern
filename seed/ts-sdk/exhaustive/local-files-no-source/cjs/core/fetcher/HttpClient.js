@@ -28,13 +28,25 @@ const Supplier_js_1 = require("./Supplier.js");
  */
 class HttpClient {
     constructor(options, createStatusCodeError, handleNonStatusCodeError) {
+        var _a;
         this._options = options;
+        this._fetcherFn = (_a = options.fetcher) !== null && _a !== void 0 ? _a : Fetcher_js_1.fetcherImpl;
         this._createStatusCodeError = createStatusCodeError;
         this._handleNonStatusCodeError = handleNonStatusCodeError;
     }
     /** Expose normalized options for sub-clients that need them (e.g. pagination) */
     get options() {
         return this._options;
+    }
+    /**
+     * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
+     * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
+     * to handle the response themselves. ALL HTTP calls should go through this method.
+     */
+    fetch(args) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this._fetcherFn(args);
+        });
     }
     /**
      * Make an HTTP request. Returns HttpResponsePromise so callers get both
@@ -57,8 +69,8 @@ class HttpClient {
             // 3. Query params: endpoint-specific + per-request
             const queryParameters = config.queryParameters
                 ? Object.assign(Object.assign({}, config.queryParameters), (_b = config.requestOptions) === null || _b === void 0 ? void 0 : _b.queryParams) : (_c = config.requestOptions) === null || _c === void 0 ? void 0 : _c.queryParams;
-            // 4. Fetch — matches the exact fetcher call pattern of existing generated code
-            const response = yield (0, Fetcher_js_1.fetcherImpl)({
+            // 4. Fetch — uses the configured fetcher (custom or default fetcherImpl)
+            const response = yield this._fetcherFn({
                 url: (0, join_js_1.join)((_e = (_d = (yield Supplier_js_1.Supplier.get(this._options.baseUrl))) !== null && _d !== void 0 ? _d : (yield Supplier_js_1.Supplier.get(this._options.environment))) !== null && _e !== void 0 ? _e : "", config.path),
                 method: config.method,
                 headers,

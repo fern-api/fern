@@ -796,12 +796,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
             const publicMethodName = endpoint.endpoint.name.camelCase.unsafeName;
 
-            // Check if this endpoint can use the single-method HttpClient.request() pattern
-            // Excluded when: allowCustomFetcher (HttpClient always uses fetcherImpl, bypassing custom fetcher),
-            // requireDefaultEnvironment (HttpClient doesn't know the hard-coded default environment)
+            // Check if this endpoint can use the single-method HttpClient.request() pattern.
+            // Complex endpoints (streaming, pagination, file upload, non-throwing, etc.) use
+            // the dual public/private pattern but still route through this._client.fetch().
             const canUseClientRequest =
-                !this.allowCustomFetcher &&
-                !this.requireDefaultEnvironment &&
                 endpoint instanceof GeneratedDefaultEndpointImplementation &&
                 endpoint.canUseClientRequest(context);
 
@@ -1298,15 +1296,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getReferenceToFetcher(context: SdkContext): ts.Expression {
-        if (this.allowCustomFetcher) {
-            return ts.factory.createBinaryExpression(
-                this.getReferenceToOption(GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME),
-                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                context.coreUtilities.fetcher.fetcher._getReferenceTo()
-            );
-        } else {
-            return context.coreUtilities.fetcher.fetcher._getReferenceTo();
-        }
+        // ALL endpoints route through this._client.fetch() so that every HTTP call
+        // goes through HttpClient. Custom fetcher is passed to HttpClient at construction time.
+        return ts.factory.createPropertyAccessExpression(
+            this.getReferenceToClient(),
+            ts.factory.createIdentifier("fetch")
+        );
     }
 
     public getReferenceToAuthProvider(): ts.Expression | undefined {

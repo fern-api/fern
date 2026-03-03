@@ -1,7 +1,8 @@
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../headers";
 import type { LogConfig, Logger } from "../logging/logger";
 import { join } from "../url/join";
-import type { Fetcher } from "./Fetcher";
+import type { APIResponse } from "./APIResponse";
+import type { Fetcher, FetchFunction } from "./Fetcher";
 import { fetcherImpl } from "./Fetcher";
 import { HttpResponsePromise } from "./HttpResponsePromise";
 import type { RawResponse, WithRawResponse } from "./RawResponse";
@@ -64,6 +65,8 @@ export interface HttpClientOptions {
     maxRetries?: number;
     fetch?: typeof fetch;
     logging?: LogConfig | Logger;
+    /** Custom fetcher function. When provided, HttpClient.fetch() uses this instead of the default fetcherImpl. */
+    fetcher?: FetchFunction;
 }
 
 /**
@@ -79,6 +82,7 @@ export interface HttpClientOptions {
  */
 export class HttpClient {
     private readonly _options: HttpClientOptions;
+    private readonly _fetcherFn: FetchFunction;
     private readonly _createStatusCodeError: (
         args: { statusCode: number; body: unknown; rawResponse: RawResponse },
     ) => Error;
@@ -100,6 +104,7 @@ export class HttpClient {
         ) => never,
     ) {
         this._options = options;
+        this._fetcherFn = options.fetcher ?? fetcherImpl;
         this._createStatusCodeError = createStatusCodeError;
         this._handleNonStatusCodeError = handleNonStatusCodeError;
     }
@@ -107,6 +112,15 @@ export class HttpClient {
     /** Expose normalized options for sub-clients that need them (e.g. pagination) */
     get options(): HttpClientOptions {
         return this._options;
+    }
+
+    /**
+     * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
+     * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
+     * to handle the response themselves. ALL HTTP calls should go through this method.
+     */
+    public async fetch<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
+        return this._fetcherFn<R>(args);
     }
 
     /**
@@ -138,8 +152,8 @@ export class HttpClient {
             ? { ...config.queryParameters, ...config.requestOptions?.queryParams }
             : config.requestOptions?.queryParams;
 
-        // 4. Fetch — matches the exact fetcher call pattern of existing generated code
-        const response = await fetcherImpl({
+        // 4. Fetch — uses the configured fetcher (custom or default fetcherImpl)
+        const response = await this._fetcherFn({
             url: join(
                 (await Supplier.get(this._options.baseUrl)) ?? ((await Supplier.get(this._options.environment)) as string) ?? "",
                 config.path,

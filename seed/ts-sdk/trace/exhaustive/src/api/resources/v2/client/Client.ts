@@ -65,7 +65,7 @@ export class V2Client {
             }),
             requestOptions?.headers,
         );
-        const _response = await core.fetcher({
+        const _response = await this._client.fetch({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)) ??

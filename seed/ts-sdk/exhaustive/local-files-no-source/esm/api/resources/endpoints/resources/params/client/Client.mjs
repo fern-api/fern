@@ -219,7 +219,7 @@ export class ParamsClient {
             const _binaryUploadRequest = yield core.file.toBinaryUploadRequest(uploadable);
             const _authRequest = yield this._options.authProvider.getAuthRequest();
             const _headers = mergeHeaders(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, _binaryUploadRequest.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
+            const _response = yield this._client.fetch({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
                 method: "POST",
                 headers: _headers,

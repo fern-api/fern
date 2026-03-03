@@ -38,7 +38,7 @@ export class DummyClient {
         requestOptions?: DummyClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher<ReadableStream>({
+        const _response = await this._client.fetch<ReadableStream>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),

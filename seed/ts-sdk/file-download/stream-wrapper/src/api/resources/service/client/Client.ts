@@ -52,7 +52,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<stream.Readable>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher<stream.Readable>({
+        const _response = await this._client.fetch<stream.Readable>({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
                 (await core.Supplier.get(this._options.environment)),

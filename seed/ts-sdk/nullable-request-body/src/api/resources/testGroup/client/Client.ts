@@ -61,7 +61,7 @@ export class TestGroupClient {
             query_param_integer: queryParamInteger,
         };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
+        const _response = await this._client.fetch({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),

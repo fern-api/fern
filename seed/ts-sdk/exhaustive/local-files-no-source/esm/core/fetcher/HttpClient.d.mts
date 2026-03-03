@@ -1,5 +1,6 @@
 import type { LogConfig, Logger } from "../logging/logger.mjs";
-import type { Fetcher } from "./Fetcher.mjs";
+import type { APIResponse } from "./APIResponse.mjs";
+import type { Fetcher, FetchFunction } from "./Fetcher.mjs";
 import { HttpResponsePromise } from "./HttpResponsePromise.mjs";
 import type { RawResponse } from "./RawResponse.mjs";
 import { Supplier } from "./Supplier.mjs";
@@ -63,6 +64,8 @@ export interface HttpClientOptions {
     maxRetries?: number;
     fetch?: typeof fetch;
     logging?: LogConfig | Logger;
+    /** Custom fetcher function. When provided, HttpClient.fetch() uses this instead of the default fetcherImpl. */
+    fetcher?: FetchFunction;
 }
 /**
  * A composable HTTP client that encapsulates all shared HTTP mechanics:
@@ -77,6 +80,7 @@ export interface HttpClientOptions {
  */
 export declare class HttpClient {
     private readonly _options;
+    private readonly _fetcherFn;
     private readonly _createStatusCodeError;
     private readonly _handleNonStatusCodeError;
     constructor(options: HttpClientOptions, createStatusCodeError: (args: {
@@ -86,6 +90,12 @@ export declare class HttpClient {
     }) => Error, handleNonStatusCodeError: (error: Fetcher.Error, rawResponse: RawResponse, method: string, path: string) => never);
     /** Expose normalized options for sub-clients that need them (e.g. pagination) */
     get options(): HttpClientOptions;
+    /**
+     * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
+     * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
+     * to handle the response themselves. ALL HTTP calls should go through this method.
+     */
+    fetch<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>>;
     /**
      * Make an HTTP request. Returns HttpResponsePromise so callers get both
      * `await client.getUser()` and `client.getUser().withRawResponse()` for free.
