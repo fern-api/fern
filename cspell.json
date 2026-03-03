@@ -37,6 +37,9 @@
     "**/generate/fixtures",
     "**/__test__/**/*.json",
     "fern/apis/fhir/definition/__package__.yml",
-    "packages/cli/cli/build.*.cjs"
+    "packages/cli/cli/build.*.cjs",
+    "packages/cli/ai/src/baml_client/**",
+    "**/protoc-gen-fern/tests/**/output/**",
+    "**/protos/anduril/**"
   ]
 }
