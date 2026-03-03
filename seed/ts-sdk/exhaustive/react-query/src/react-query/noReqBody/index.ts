@@ -12,28 +12,28 @@ import type {
 } from "@tanstack/react-query";
 import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../Client.js";
+import { useClient } from "../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type GetWithNoRequestBodyParams = Parameters<ClientInstance["noReqBody"]["getWithNoRequestBody"]>;
 type GetWithNoRequestBodyReturnType = ReturnType<ClientInstance["noReqBody"]["getWithNoRequestBody"]>;
 
-export function GetWithNoRequestBodyQueryKey(): QueryKey {
+export function getWithNoRequestBodyQueryKey(): QueryKey {
     return ["SeedExhaustiveClient", "noReqBody", "getWithNoRequestBody"] as const;
 }
 
-export function GetWithNoRequestBodyOptions(
+export function getWithNoRequestBodyOptions(
     client: ClientInstance,
     requestOptions?: GetWithNoRequestBodyParams[0],
 ): { queryKey: QueryKey; queryFn: () => GetWithNoRequestBodyReturnType } {
     return {
-        queryKey: GetWithNoRequestBodyQueryKey(),
+        queryKey: getWithNoRequestBodyQueryKey(),
         queryFn: () => client.noReqBody.getWithNoRequestBody(requestOptions),
     };
 }
 
 export function useGetWithNoRequestBody(
-    client: ClientInstance,
     requestOptions?: GetWithNoRequestBodyParams[0],
     options?: Omit<
         UseQueryOptions<
@@ -45,11 +45,11 @@ export function useGetWithNoRequestBody(
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithNoRequestBodyReturnType>, Error> {
-    return useQuery({ ...GetWithNoRequestBodyOptions(client, requestOptions), ...options });
+    const client = useClient();
+    return useQuery({ ...getWithNoRequestBodyOptions(client, requestOptions), ...options });
 }
 
 export function useSuspenseGetWithNoRequestBody(
-    client: ClientInstance,
     requestOptions?: GetWithNoRequestBodyParams[0],
     options?: Omit<
         UseSuspenseQueryOptions<
@@ -61,17 +61,18 @@ export function useSuspenseGetWithNoRequestBody(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithNoRequestBodyReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithNoRequestBodyOptions(client, requestOptions), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...getWithNoRequestBodyOptions(client, requestOptions), ...options });
 }
 
 export function invalidateGetWithNoRequestBody(queryClient: QueryClient): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithNoRequestBodyQueryKey() });
+    return queryClient.invalidateQueries({ queryKey: getWithNoRequestBodyQueryKey() });
 }
 
 type PostWithNoRequestBodyParams = Parameters<ClientInstance["noReqBody"]["postWithNoRequestBody"]>;
 type PostWithNoRequestBodyReturnType = ReturnType<ClientInstance["noReqBody"]["postWithNoRequestBody"]>;
 
-export function PostWithNoRequestBodyMutationOptions(
+export function postWithNoRequestBodyMutationOptions(
     client: ClientInstance,
     requestOptions?: PostWithNoRequestBodyParams[0],
 ): { mutationFn: () => PostWithNoRequestBodyReturnType } {
@@ -81,10 +82,10 @@ export function PostWithNoRequestBodyMutationOptions(
 }
 
 export function usePostWithNoRequestBodyMutation(
-    client: ClientInstance,
     requestOptions?: PostWithNoRequestBodyParams[0],
     options?: Omit<UseMutationOptions<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown> {
+    const client = useClient();
     return useMutation<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown>({
         mutationFn: () => client.noReqBody.postWithNoRequestBody(requestOptions),
         ...options,

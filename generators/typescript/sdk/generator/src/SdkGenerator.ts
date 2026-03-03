@@ -705,14 +705,17 @@ export class SdkGenerator {
             this.context.logger.debug("Generated React Query options");
         }
 
-        // Add @tanstack/react-query peer dependency if React Query is enabled
+        // Add @tanstack/react-query and react peer dependencies if React Query is enabled
         const extraPeerDependencies = { ...this.config.extraPeerDependencies };
         const extraPeerDependenciesMeta = { ...this.config.extraPeerDependenciesMeta };
+        const extraDevDependencies = { ...this.config.extraDevDependencies };
         if (reactQueryExportPaths != null) {
             extraPeerDependencies["@tanstack/react-query"] = ">=5.0.0";
             extraPeerDependencies["react"] = ">=18.0.0";
             extraPeerDependenciesMeta["@tanstack/react-query"] = { optional: true };
             extraPeerDependenciesMeta["react"] = { optional: true };
+            // @types/react needed for TypeScript compilation of the generated context file
+            extraDevDependencies["@types/react"] = ">=18.0.0";
         }
 
         return this.config.shouldBundle
@@ -721,7 +724,7 @@ export class SdkGenerator {
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
                   extraDependencies: this.config.extraDependencies,
-                  extraDevDependencies: this.config.extraDevDependencies,
+                  extraDevDependencies,
                   extraPeerDependencies,
                   extraPeerDependenciesMeta,
                   extraFiles: this.extraFiles,
@@ -746,7 +749,7 @@ export class SdkGenerator {
                   outputEsm: this.config.outputEsm,
                   outputJsr: this.config.outputJsr,
                   extraDependencies: this.config.extraDependencies,
-                  extraDevDependencies: this.config.extraDevDependencies,
+                  extraDevDependencies,
                   extraPeerDependencies,
                   extraPeerDependenciesMeta,
                   extraFiles: this.extraFiles,

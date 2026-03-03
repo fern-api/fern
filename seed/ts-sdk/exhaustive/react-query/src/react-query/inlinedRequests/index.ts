@@ -3,6 +3,7 @@
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../Client.js";
+import { useClient } from "../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
@@ -13,7 +14,7 @@ type PostWithObjectBodyandResponseReturnType = ReturnType<
     ClientInstance["inlinedRequests"]["postWithObjectBodyandResponse"]
 >;
 
-export function PostWithObjectBodyandResponseMutationOptions(
+export function postWithObjectBodyandResponseMutationOptions(
     client: ClientInstance,
     requestOptions?: PostWithObjectBodyandResponseParams[1],
 ): { mutationFn: (variables: PostWithObjectBodyandResponseParams[0]) => PostWithObjectBodyandResponseReturnType } {
@@ -23,7 +24,6 @@ export function PostWithObjectBodyandResponseMutationOptions(
 }
 
 export function usePostWithObjectBodyandResponseMutation(
-    client: ClientInstance,
     requestOptions?: PostWithObjectBodyandResponseParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -40,6 +40,7 @@ export function usePostWithObjectBodyandResponseMutation(
     PostWithObjectBodyandResponseParams[0],
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<PostWithObjectBodyandResponseReturnType>,
         Error,

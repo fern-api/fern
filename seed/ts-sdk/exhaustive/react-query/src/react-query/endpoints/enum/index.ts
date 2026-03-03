@@ -3,13 +3,14 @@
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
+import { useClient } from "../../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type GetAndReturnEnumParams = Parameters<ClientInstance["endpoints"]["enum"]["getAndReturnEnum"]>;
 type GetAndReturnEnumReturnType = ReturnType<ClientInstance["endpoints"]["enum"]["getAndReturnEnum"]>;
 
-export function GetAndReturnEnumMutationOptions(
+export function getAndReturnEnumMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnEnumParams[1],
 ): { mutationFn: (variables: GetAndReturnEnumParams[0]) => GetAndReturnEnumReturnType } {
@@ -19,13 +20,13 @@ export function GetAndReturnEnumMutationOptions(
 }
 
 export function useGetAndReturnEnumMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnEnumParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown> {
+    const client = useClient();
     return useMutation<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown>({
         mutationFn: (variables) => client.endpoints.enum.getAndReturnEnum(variables, requestOptions),
         ...options,

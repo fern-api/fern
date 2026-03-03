@@ -12,50 +12,51 @@ import type {
 } from "@tanstack/react-query";
 import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
+import { useClient } from "../../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type GetWithPathParams = Parameters<ClientInstance["endpoints"]["params"]["getWithPath"]>;
 type GetWithPathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["getWithPath"]>;
 
-export function GetWithPathQueryKey(...args: GetWithPathParams): QueryKey {
+export function getWithPathQueryKey(...args: GetWithPathParams): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "params", "getWithPath", ...args] as const;
 }
 
-export function GetWithPathOptions(
+export function getWithPathOptions(
     client: ClientInstance,
     ...args: GetWithPathParams
 ): { queryKey: QueryKey; queryFn: () => GetWithPathReturnType } {
     return {
-        queryKey: GetWithPathQueryKey(...args),
+        queryKey: getWithPathQueryKey(...args),
         queryFn: () => client.endpoints.params.getWithPath(...args),
     };
 }
 
 export function useGetWithPath(
-    client: ClientInstance,
     args: GetWithPathParams,
     options?: Omit<
         UseQueryOptions<Awaited<GetWithPathReturnType>, Error, Awaited<GetWithPathReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithPathReturnType>, Error> {
-    return useQuery({ ...GetWithPathOptions(client, ...args), ...options });
+    const client = useClient();
+    return useQuery({ ...getWithPathOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithPath(
-    client: ClientInstance,
     args: GetWithPathParams,
     options?: Omit<
         UseSuspenseQueryOptions<Awaited<GetWithPathReturnType>, Error, Awaited<GetWithPathReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithPathReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithPathOptions(client, ...args), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...getWithPathOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithPath(queryClient: QueryClient, ...args: GetWithPathParams): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithPathQueryKey(...args) });
+    return queryClient.invalidateQueries({ queryKey: getWithPathQueryKey(...args) });
 }
 
 export function invalidateAllGetWithPath(queryClient: QueryClient): Promise<void> {
@@ -65,33 +66,32 @@ export function invalidateAllGetWithPath(queryClient: QueryClient): Promise<void
 type GetWithInlinePathParams = Parameters<ClientInstance["endpoints"]["params"]["getWithInlinePath"]>;
 type GetWithInlinePathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["getWithInlinePath"]>;
 
-export function GetWithInlinePathQueryKey(...args: GetWithInlinePathParams): QueryKey {
+export function getWithInlinePathQueryKey(...args: GetWithInlinePathParams): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "params", "getWithInlinePath", ...args] as const;
 }
 
-export function GetWithInlinePathOptions(
+export function getWithInlinePathOptions(
     client: ClientInstance,
     ...args: GetWithInlinePathParams
 ): { queryKey: QueryKey; queryFn: () => GetWithInlinePathReturnType } {
     return {
-        queryKey: GetWithInlinePathQueryKey(...args),
+        queryKey: getWithInlinePathQueryKey(...args),
         queryFn: () => client.endpoints.params.getWithInlinePath(...args),
     };
 }
 
 export function useGetWithInlinePath(
-    client: ClientInstance,
     args: GetWithInlinePathParams,
     options?: Omit<
         UseQueryOptions<Awaited<GetWithInlinePathReturnType>, Error, Awaited<GetWithInlinePathReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithInlinePathReturnType>, Error> {
-    return useQuery({ ...GetWithInlinePathOptions(client, ...args), ...options });
+    const client = useClient();
+    return useQuery({ ...getWithInlinePathOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithInlinePath(
-    client: ClientInstance,
     args: GetWithInlinePathParams,
     options?: Omit<
         UseSuspenseQueryOptions<
@@ -103,11 +103,12 @@ export function useSuspenseGetWithInlinePath(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithInlinePathReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithInlinePathOptions(client, ...args), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...getWithInlinePathOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithInlinePath(queryClient: QueryClient, ...args: GetWithInlinePathParams): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithInlinePathQueryKey(...args) });
+    return queryClient.invalidateQueries({ queryKey: getWithInlinePathQueryKey(...args) });
 }
 
 export function invalidateAllGetWithInlinePath(queryClient: QueryClient): Promise<void> {
@@ -119,23 +120,22 @@ export function invalidateAllGetWithInlinePath(queryClient: QueryClient): Promis
 type GetWithQueryParams = Parameters<ClientInstance["endpoints"]["params"]["getWithQuery"]>;
 type GetWithQueryReturnType = ReturnType<ClientInstance["endpoints"]["params"]["getWithQuery"]>;
 
-export function GetWithQueryQueryKey(request: GetWithQueryParams[0]): QueryKey {
+export function getWithQueryQueryKey(request: GetWithQueryParams[0]): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "params", "getWithQuery", request] as const;
 }
 
-export function GetWithQueryOptions(
+export function getWithQueryOptions(
     client: ClientInstance,
     request: GetWithQueryParams[0],
     requestOptions?: GetWithQueryParams[1],
 ): { queryKey: QueryKey; queryFn: () => GetWithQueryReturnType } {
     return {
-        queryKey: GetWithQueryQueryKey(request),
+        queryKey: getWithQueryQueryKey(request),
         queryFn: () => client.endpoints.params.getWithQuery(request, requestOptions),
     };
 }
 
 export function useGetWithQuery(
-    client: ClientInstance,
     request: GetWithQueryParams[0],
     requestOptions?: GetWithQueryParams[1],
     options?: Omit<
@@ -143,11 +143,11 @@ export function useGetWithQuery(
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithQueryReturnType>, Error> {
-    return useQuery({ ...GetWithQueryOptions(client, request, requestOptions), ...options });
+    const client = useClient();
+    return useQuery({ ...getWithQueryOptions(client, request, requestOptions), ...options });
 }
 
 export function useSuspenseGetWithQuery(
-    client: ClientInstance,
     request: GetWithQueryParams[0],
     requestOptions?: GetWithQueryParams[1],
     options?: Omit<
@@ -155,11 +155,12 @@ export function useSuspenseGetWithQuery(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithQueryReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithQueryOptions(client, request, requestOptions), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...getWithQueryOptions(client, request, requestOptions), ...options });
 }
 
 export function invalidateGetWithQuery(queryClient: QueryClient, request: GetWithQueryParams[0]): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithQueryQueryKey(request) });
+    return queryClient.invalidateQueries({ queryKey: getWithQueryQueryKey(request) });
 }
 
 export function invalidateAllGetWithQuery(queryClient: QueryClient): Promise<void> {
@@ -171,23 +172,22 @@ type GetWithAllowMultipleQueryReturnType = ReturnType<
     ClientInstance["endpoints"]["params"]["getWithAllowMultipleQuery"]
 >;
 
-export function GetWithAllowMultipleQueryQueryKey(request: GetWithAllowMultipleQueryParams[0]): QueryKey {
+export function getWithAllowMultipleQueryQueryKey(request: GetWithAllowMultipleQueryParams[0]): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "params", "getWithAllowMultipleQuery", request] as const;
 }
 
-export function GetWithAllowMultipleQueryOptions(
+export function getWithAllowMultipleQueryOptions(
     client: ClientInstance,
     request: GetWithAllowMultipleQueryParams[0],
     requestOptions?: GetWithAllowMultipleQueryParams[1],
 ): { queryKey: QueryKey; queryFn: () => GetWithAllowMultipleQueryReturnType } {
     return {
-        queryKey: GetWithAllowMultipleQueryQueryKey(request),
+        queryKey: getWithAllowMultipleQueryQueryKey(request),
         queryFn: () => client.endpoints.params.getWithAllowMultipleQuery(request, requestOptions),
     };
 }
 
 export function useGetWithAllowMultipleQuery(
-    client: ClientInstance,
     request: GetWithAllowMultipleQueryParams[0],
     requestOptions?: GetWithAllowMultipleQueryParams[1],
     options?: Omit<
@@ -200,11 +200,11 @@ export function useGetWithAllowMultipleQuery(
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithAllowMultipleQueryReturnType>, Error> {
-    return useQuery({ ...GetWithAllowMultipleQueryOptions(client, request, requestOptions), ...options });
+    const client = useClient();
+    return useQuery({ ...getWithAllowMultipleQueryOptions(client, request, requestOptions), ...options });
 }
 
 export function useSuspenseGetWithAllowMultipleQuery(
-    client: ClientInstance,
     request: GetWithAllowMultipleQueryParams[0],
     requestOptions?: GetWithAllowMultipleQueryParams[1],
     options?: Omit<
@@ -217,14 +217,15 @@ export function useSuspenseGetWithAllowMultipleQuery(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithAllowMultipleQueryReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithAllowMultipleQueryOptions(client, request, requestOptions), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...getWithAllowMultipleQueryOptions(client, request, requestOptions), ...options });
 }
 
 export function invalidateGetWithAllowMultipleQuery(
     queryClient: QueryClient,
     request: GetWithAllowMultipleQueryParams[0],
 ): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithAllowMultipleQueryQueryKey(request) });
+    return queryClient.invalidateQueries({ queryKey: getWithAllowMultipleQueryQueryKey(request) });
 }
 
 export function invalidateAllGetWithAllowMultipleQuery(queryClient: QueryClient): Promise<void> {
@@ -236,22 +237,21 @@ export function invalidateAllGetWithAllowMultipleQuery(queryClient: QueryClient)
 type GetWithPathAndQueryParams = Parameters<ClientInstance["endpoints"]["params"]["getWithPathAndQuery"]>;
 type GetWithPathAndQueryReturnType = ReturnType<ClientInstance["endpoints"]["params"]["getWithPathAndQuery"]>;
 
-export function GetWithPathAndQueryQueryKey(...args: GetWithPathAndQueryParams): QueryKey {
+export function getWithPathAndQueryQueryKey(...args: GetWithPathAndQueryParams): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "params", "getWithPathAndQuery", ...args] as const;
 }
 
-export function GetWithPathAndQueryOptions(
+export function getWithPathAndQueryOptions(
     client: ClientInstance,
     ...args: GetWithPathAndQueryParams
 ): { queryKey: QueryKey; queryFn: () => GetWithPathAndQueryReturnType } {
     return {
-        queryKey: GetWithPathAndQueryQueryKey(...args),
+        queryKey: getWithPathAndQueryQueryKey(...args),
         queryFn: () => client.endpoints.params.getWithPathAndQuery(...args),
     };
 }
 
 export function useGetWithPathAndQuery(
-    client: ClientInstance,
     args: GetWithPathAndQueryParams,
     options?: Omit<
         UseQueryOptions<
@@ -263,11 +263,11 @@ export function useGetWithPathAndQuery(
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithPathAndQueryReturnType>, Error> {
-    return useQuery({ ...GetWithPathAndQueryOptions(client, ...args), ...options });
+    const client = useClient();
+    return useQuery({ ...getWithPathAndQueryOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithPathAndQuery(
-    client: ClientInstance,
     args: GetWithPathAndQueryParams,
     options?: Omit<
         UseSuspenseQueryOptions<
@@ -279,14 +279,15 @@ export function useSuspenseGetWithPathAndQuery(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithPathAndQueryReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithPathAndQueryOptions(client, ...args), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...getWithPathAndQueryOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithPathAndQuery(
     queryClient: QueryClient,
     ...args: GetWithPathAndQueryParams
 ): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithPathAndQueryQueryKey(...args) });
+    return queryClient.invalidateQueries({ queryKey: getWithPathAndQueryQueryKey(...args) });
 }
 
 export function invalidateAllGetWithPathAndQuery(queryClient: QueryClient): Promise<void> {
@@ -300,22 +301,21 @@ type GetWithInlinePathAndQueryReturnType = ReturnType<
     ClientInstance["endpoints"]["params"]["getWithInlinePathAndQuery"]
 >;
 
-export function GetWithInlinePathAndQueryQueryKey(...args: GetWithInlinePathAndQueryParams): QueryKey {
+export function getWithInlinePathAndQueryQueryKey(...args: GetWithInlinePathAndQueryParams): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "params", "getWithInlinePathAndQuery", ...args] as const;
 }
 
-export function GetWithInlinePathAndQueryOptions(
+export function getWithInlinePathAndQueryOptions(
     client: ClientInstance,
     ...args: GetWithInlinePathAndQueryParams
 ): { queryKey: QueryKey; queryFn: () => GetWithInlinePathAndQueryReturnType } {
     return {
-        queryKey: GetWithInlinePathAndQueryQueryKey(...args),
+        queryKey: getWithInlinePathAndQueryQueryKey(...args),
         queryFn: () => client.endpoints.params.getWithInlinePathAndQuery(...args),
     };
 }
 
 export function useGetWithInlinePathAndQuery(
-    client: ClientInstance,
     args: GetWithInlinePathAndQueryParams,
     options?: Omit<
         UseQueryOptions<
@@ -327,11 +327,11 @@ export function useGetWithInlinePathAndQuery(
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithInlinePathAndQueryReturnType>, Error> {
-    return useQuery({ ...GetWithInlinePathAndQueryOptions(client, ...args), ...options });
+    const client = useClient();
+    return useQuery({ ...getWithInlinePathAndQueryOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithInlinePathAndQuery(
-    client: ClientInstance,
     args: GetWithInlinePathAndQueryParams,
     options?: Omit<
         UseSuspenseQueryOptions<
@@ -343,14 +343,15 @@ export function useSuspenseGetWithInlinePathAndQuery(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithInlinePathAndQueryReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithInlinePathAndQueryOptions(client, ...args), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...getWithInlinePathAndQueryOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithInlinePathAndQuery(
     queryClient: QueryClient,
     ...args: GetWithInlinePathAndQueryParams
 ): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithInlinePathAndQueryQueryKey(...args) });
+    return queryClient.invalidateQueries({ queryKey: getWithInlinePathAndQueryQueryKey(...args) });
 }
 
 export function invalidateAllGetWithInlinePathAndQuery(queryClient: QueryClient): Promise<void> {
@@ -362,7 +363,7 @@ export function invalidateAllGetWithInlinePathAndQuery(queryClient: QueryClient)
 type ModifyWithPathParams = Parameters<ClientInstance["endpoints"]["params"]["modifyWithPath"]>;
 type ModifyWithPathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["modifyWithPath"]>;
 
-export function ModifyWithPathMutationOptions(client: ClientInstance): {
+export function modifyWithPathMutationOptions(client: ClientInstance): {
     mutationFn: (args: ModifyWithPathParams) => ModifyWithPathReturnType;
 } {
     return {
@@ -371,12 +372,12 @@ export function ModifyWithPathMutationOptions(client: ClientInstance): {
 }
 
 export function useModifyWithPathMutation(
-    client: ClientInstance,
     options?: Omit<
         UseMutationOptions<Awaited<ModifyWithPathReturnType>, Error, ModifyWithPathParams, unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<ModifyWithPathReturnType>, Error, ModifyWithPathParams, unknown> {
+    const client = useClient();
     return useMutation<Awaited<ModifyWithPathReturnType>, Error, ModifyWithPathParams, unknown>({
         mutationFn: (args) => client.endpoints.params.modifyWithPath(...args),
         ...options,
@@ -386,7 +387,7 @@ export function useModifyWithPathMutation(
 type ModifyWithInlinePathParams = Parameters<ClientInstance["endpoints"]["params"]["modifyWithInlinePath"]>;
 type ModifyWithInlinePathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["modifyWithInlinePath"]>;
 
-export function ModifyWithInlinePathMutationOptions(client: ClientInstance): {
+export function modifyWithInlinePathMutationOptions(client: ClientInstance): {
     mutationFn: (args: ModifyWithInlinePathParams) => ModifyWithInlinePathReturnType;
 } {
     return {
@@ -395,12 +396,12 @@ export function ModifyWithInlinePathMutationOptions(client: ClientInstance): {
 }
 
 export function useModifyWithInlinePathMutation(
-    client: ClientInstance,
     options?: Omit<
         UseMutationOptions<Awaited<ModifyWithInlinePathReturnType>, Error, ModifyWithInlinePathParams, unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<ModifyWithInlinePathReturnType>, Error, ModifyWithInlinePathParams, unknown> {
+    const client = useClient();
     return useMutation<Awaited<ModifyWithInlinePathReturnType>, Error, ModifyWithInlinePathParams, unknown>({
         mutationFn: (args) => client.endpoints.params.modifyWithInlinePath(...args),
         ...options,
@@ -410,7 +411,7 @@ export function useModifyWithInlinePathMutation(
 type UploadWithPathParams = Parameters<ClientInstance["endpoints"]["params"]["uploadWithPath"]>;
 type UploadWithPathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["uploadWithPath"]>;
 
-export function UploadWithPathMutationOptions(client: ClientInstance): {
+export function uploadWithPathMutationOptions(client: ClientInstance): {
     mutationFn: (args: UploadWithPathParams) => UploadWithPathReturnType;
 } {
     return {
@@ -419,12 +420,12 @@ export function UploadWithPathMutationOptions(client: ClientInstance): {
 }
 
 export function useUploadWithPathMutation(
-    client: ClientInstance,
     options?: Omit<
         UseMutationOptions<Awaited<UploadWithPathReturnType>, Error, UploadWithPathParams, unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<UploadWithPathReturnType>, Error, UploadWithPathParams, unknown> {
+    const client = useClient();
     return useMutation<Awaited<UploadWithPathReturnType>, Error, UploadWithPathParams, unknown>({
         mutationFn: (args) => client.endpoints.params.uploadWithPath(...args),
         ...options,

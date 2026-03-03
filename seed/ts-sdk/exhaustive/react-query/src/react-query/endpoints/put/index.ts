@@ -3,22 +3,23 @@
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
+import { useClient } from "../../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type AddParams = Parameters<ClientInstance["endpoints"]["put"]["add"]>;
 type AddReturnType = ReturnType<ClientInstance["endpoints"]["put"]["add"]>;
 
-export function AddMutationOptions(client: ClientInstance): { mutationFn: (args: AddParams) => AddReturnType } {
+export function addMutationOptions(client: ClientInstance): { mutationFn: (args: AddParams) => AddReturnType } {
     return {
         mutationFn: (args) => client.endpoints.put.add(...args),
     };
 }
 
 export function useAddMutation(
-    client: ClientInstance,
     options?: Omit<UseMutationOptions<Awaited<AddReturnType>, Error, AddParams, unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<AddReturnType>, Error, AddParams, unknown> {
+    const client = useClient();
     return useMutation<Awaited<AddReturnType>, Error, AddParams, unknown>({
         mutationFn: (args) => client.endpoints.put.add(...args),
         ...options,

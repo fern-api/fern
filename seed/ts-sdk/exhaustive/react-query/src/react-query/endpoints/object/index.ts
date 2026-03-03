@@ -3,6 +3,7 @@
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
+import { useClient } from "../../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
@@ -13,7 +14,7 @@ type GetAndReturnWithOptionalFieldReturnType = ReturnType<
     ClientInstance["endpoints"]["object"]["getAndReturnWithOptionalField"]
 >;
 
-export function GetAndReturnWithOptionalFieldMutationOptions(
+export function getAndReturnWithOptionalFieldMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnWithOptionalFieldParams[1],
 ): { mutationFn: (variables: GetAndReturnWithOptionalFieldParams[0]) => GetAndReturnWithOptionalFieldReturnType } {
@@ -23,7 +24,6 @@ export function GetAndReturnWithOptionalFieldMutationOptions(
 }
 
 export function useGetAndReturnWithOptionalFieldMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnWithOptionalFieldParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -40,6 +40,7 @@ export function useGetAndReturnWithOptionalFieldMutation(
     GetAndReturnWithOptionalFieldParams[0],
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<GetAndReturnWithOptionalFieldReturnType>,
         Error,
@@ -58,7 +59,7 @@ type GetAndReturnWithRequiredFieldReturnType = ReturnType<
     ClientInstance["endpoints"]["object"]["getAndReturnWithRequiredField"]
 >;
 
-export function GetAndReturnWithRequiredFieldMutationOptions(
+export function getAndReturnWithRequiredFieldMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnWithRequiredFieldParams[1],
 ): { mutationFn: (variables: GetAndReturnWithRequiredFieldParams[0]) => GetAndReturnWithRequiredFieldReturnType } {
@@ -68,7 +69,6 @@ export function GetAndReturnWithRequiredFieldMutationOptions(
 }
 
 export function useGetAndReturnWithRequiredFieldMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnWithRequiredFieldParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -85,6 +85,7 @@ export function useGetAndReturnWithRequiredFieldMutation(
     GetAndReturnWithRequiredFieldParams[0],
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<GetAndReturnWithRequiredFieldReturnType>,
         Error,
@@ -99,7 +100,7 @@ export function useGetAndReturnWithRequiredFieldMutation(
 type GetAndReturnWithMapOfMapParams = Parameters<ClientInstance["endpoints"]["object"]["getAndReturnWithMapOfMap"]>;
 type GetAndReturnWithMapOfMapReturnType = ReturnType<ClientInstance["endpoints"]["object"]["getAndReturnWithMapOfMap"]>;
 
-export function GetAndReturnWithMapOfMapMutationOptions(
+export function getAndReturnWithMapOfMapMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnWithMapOfMapParams[1],
 ): { mutationFn: (variables: GetAndReturnWithMapOfMapParams[0]) => GetAndReturnWithMapOfMapReturnType } {
@@ -109,7 +110,6 @@ export function GetAndReturnWithMapOfMapMutationOptions(
 }
 
 export function useGetAndReturnWithMapOfMapMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnWithMapOfMapParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -121,6 +121,7 @@ export function useGetAndReturnWithMapOfMapMutation(
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnWithMapOfMapReturnType>, Error, GetAndReturnWithMapOfMapParams[0], unknown> {
+    const client = useClient();
     return useMutation<Awaited<GetAndReturnWithMapOfMapReturnType>, Error, GetAndReturnWithMapOfMapParams[0], unknown>({
         mutationFn: (variables) => client.endpoints.object.getAndReturnWithMapOfMap(variables, requestOptions),
         ...options,
@@ -134,7 +135,7 @@ type GetAndReturnNestedWithOptionalFieldReturnType = ReturnType<
     ClientInstance["endpoints"]["object"]["getAndReturnNestedWithOptionalField"]
 >;
 
-export function GetAndReturnNestedWithOptionalFieldMutationOptions(
+export function getAndReturnNestedWithOptionalFieldMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnNestedWithOptionalFieldParams[1],
 ): {
@@ -149,7 +150,6 @@ export function GetAndReturnNestedWithOptionalFieldMutationOptions(
 }
 
 export function useGetAndReturnNestedWithOptionalFieldMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnNestedWithOptionalFieldParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -166,6 +166,7 @@ export function useGetAndReturnNestedWithOptionalFieldMutation(
     GetAndReturnNestedWithOptionalFieldParams[0],
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<GetAndReturnNestedWithOptionalFieldReturnType>,
         Error,
@@ -185,7 +186,7 @@ type GetAndReturnNestedWithRequiredFieldReturnType = ReturnType<
     ClientInstance["endpoints"]["object"]["getAndReturnNestedWithRequiredField"]
 >;
 
-export function GetAndReturnNestedWithRequiredFieldMutationOptions(client: ClientInstance): {
+export function getAndReturnNestedWithRequiredFieldMutationOptions(client: ClientInstance): {
     mutationFn: (args: GetAndReturnNestedWithRequiredFieldParams) => GetAndReturnNestedWithRequiredFieldReturnType;
 } {
     return {
@@ -194,7 +195,6 @@ export function GetAndReturnNestedWithRequiredFieldMutationOptions(client: Clien
 }
 
 export function useGetAndReturnNestedWithRequiredFieldMutation(
-    client: ClientInstance,
     options?: Omit<
         UseMutationOptions<
             Awaited<GetAndReturnNestedWithRequiredFieldReturnType>,
@@ -210,6 +210,7 @@ export function useGetAndReturnNestedWithRequiredFieldMutation(
     GetAndReturnNestedWithRequiredFieldParams,
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<GetAndReturnNestedWithRequiredFieldReturnType>,
         Error,
@@ -228,7 +229,7 @@ type GetAndReturnNestedWithRequiredFieldAsListReturnType = ReturnType<
     ClientInstance["endpoints"]["object"]["getAndReturnNestedWithRequiredFieldAsList"]
 >;
 
-export function GetAndReturnNestedWithRequiredFieldAsListMutationOptions(
+export function getAndReturnNestedWithRequiredFieldAsListMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnNestedWithRequiredFieldAsListParams[1],
 ): {
@@ -243,7 +244,6 @@ export function GetAndReturnNestedWithRequiredFieldAsListMutationOptions(
 }
 
 export function useGetAndReturnNestedWithRequiredFieldAsListMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnNestedWithRequiredFieldAsListParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -260,6 +260,7 @@ export function useGetAndReturnNestedWithRequiredFieldAsListMutation(
     GetAndReturnNestedWithRequiredFieldAsListParams[0],
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<GetAndReturnNestedWithRequiredFieldAsListReturnType>,
         Error,
@@ -279,7 +280,7 @@ type GetAndReturnWithUnknownFieldReturnType = ReturnType<
     ClientInstance["endpoints"]["object"]["getAndReturnWithUnknownField"]
 >;
 
-export function GetAndReturnWithUnknownFieldMutationOptions(
+export function getAndReturnWithUnknownFieldMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnWithUnknownFieldParams[1],
 ): { mutationFn: (variables: GetAndReturnWithUnknownFieldParams[0]) => GetAndReturnWithUnknownFieldReturnType } {
@@ -289,7 +290,6 @@ export function GetAndReturnWithUnknownFieldMutationOptions(
 }
 
 export function useGetAndReturnWithUnknownFieldMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnWithUnknownFieldParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -306,6 +306,7 @@ export function useGetAndReturnWithUnknownFieldMutation(
     GetAndReturnWithUnknownFieldParams[0],
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<GetAndReturnWithUnknownFieldReturnType>,
         Error,
@@ -324,7 +325,7 @@ type GetAndReturnWithDatetimeLikeStringReturnType = ReturnType<
     ClientInstance["endpoints"]["object"]["getAndReturnWithDatetimeLikeString"]
 >;
 
-export function GetAndReturnWithDatetimeLikeStringMutationOptions(
+export function getAndReturnWithDatetimeLikeStringMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnWithDatetimeLikeStringParams[1],
 ): {
@@ -339,7 +340,6 @@ export function GetAndReturnWithDatetimeLikeStringMutationOptions(
 }
 
 export function useGetAndReturnWithDatetimeLikeStringMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnWithDatetimeLikeStringParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -356,6 +356,7 @@ export function useGetAndReturnWithDatetimeLikeStringMutation(
     GetAndReturnWithDatetimeLikeStringParams[0],
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<GetAndReturnWithDatetimeLikeStringReturnType>,
         Error,

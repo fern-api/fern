@@ -3,13 +3,14 @@
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../Client.js";
+import { useClient } from "../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type PostWithNoAuthParams = Parameters<ClientInstance["noAuth"]["postWithNoAuth"]>;
 type PostWithNoAuthReturnType = ReturnType<ClientInstance["noAuth"]["postWithNoAuth"]>;
 
-export function PostWithNoAuthMutationOptions(
+export function postWithNoAuthMutationOptions(
     client: ClientInstance,
     requestOptions?: PostWithNoAuthParams[1],
 ): { mutationFn: (variables: PostWithNoAuthParams[0]) => PostWithNoAuthReturnType } {
@@ -19,13 +20,13 @@ export function PostWithNoAuthMutationOptions(
 }
 
 export function usePostWithNoAuthMutation(
-    client: ClientInstance,
     requestOptions?: PostWithNoAuthParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown> {
+    const client = useClient();
     return useMutation<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown>({
         mutationFn: (variables) => client.noAuth.postWithNoAuth(variables, requestOptions),
         ...options,

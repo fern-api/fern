@@ -12,50 +12,51 @@ import type {
 } from "@tanstack/react-query";
 import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
+import { useClient } from "../../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type TestGetParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["testGet"]>;
 type TestGetReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testGet"]>;
 
-export function TestGetQueryKey(...args: TestGetParams): QueryKey {
+export function testGetQueryKey(...args: TestGetParams): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "httpMethods", "testGet", ...args] as const;
 }
 
-export function TestGetOptions(
+export function testGetOptions(
     client: ClientInstance,
     ...args: TestGetParams
 ): { queryKey: QueryKey; queryFn: () => TestGetReturnType } {
     return {
-        queryKey: TestGetQueryKey(...args),
+        queryKey: testGetQueryKey(...args),
         queryFn: () => client.endpoints.httpMethods.testGet(...args),
     };
 }
 
 export function useTestGet(
-    client: ClientInstance,
     args: TestGetParams,
     options?: Omit<
         UseQueryOptions<Awaited<TestGetReturnType>, Error, Awaited<TestGetReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<TestGetReturnType>, Error> {
-    return useQuery({ ...TestGetOptions(client, ...args), ...options });
+    const client = useClient();
+    return useQuery({ ...testGetOptions(client, ...args), ...options });
 }
 
 export function useSuspenseTestGet(
-    client: ClientInstance,
     args: TestGetParams,
     options?: Omit<
         UseSuspenseQueryOptions<Awaited<TestGetReturnType>, Error, Awaited<TestGetReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<TestGetReturnType>, Error> {
-    return useSuspenseQuery({ ...TestGetOptions(client, ...args), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...testGetOptions(client, ...args), ...options });
 }
 
 export function invalidateTestGet(queryClient: QueryClient, ...args: TestGetParams): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: TestGetQueryKey(...args) });
+    return queryClient.invalidateQueries({ queryKey: testGetQueryKey(...args) });
 }
 
 export function invalidateAllTestGet(queryClient: QueryClient): Promise<void> {
@@ -65,7 +66,7 @@ export function invalidateAllTestGet(queryClient: QueryClient): Promise<void> {
 type TestPostParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["testPost"]>;
 type TestPostReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testPost"]>;
 
-export function TestPostMutationOptions(
+export function testPostMutationOptions(
     client: ClientInstance,
     requestOptions?: TestPostParams[1],
 ): { mutationFn: (variables: TestPostParams[0]) => TestPostReturnType } {
@@ -75,10 +76,10 @@ export function TestPostMutationOptions(
 }
 
 export function useTestPostMutation(
-    client: ClientInstance,
     requestOptions?: TestPostParams[1],
     options?: Omit<UseMutationOptions<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown> {
+    const client = useClient();
     return useMutation<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown>({
         mutationFn: (variables) => client.endpoints.httpMethods.testPost(variables, requestOptions),
         ...options,
@@ -88,7 +89,7 @@ export function useTestPostMutation(
 type TestPutParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["testPut"]>;
 type TestPutReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testPut"]>;
 
-export function TestPutMutationOptions(client: ClientInstance): {
+export function testPutMutationOptions(client: ClientInstance): {
     mutationFn: (args: TestPutParams) => TestPutReturnType;
 } {
     return {
@@ -97,9 +98,9 @@ export function TestPutMutationOptions(client: ClientInstance): {
 }
 
 export function useTestPutMutation(
-    client: ClientInstance,
     options?: Omit<UseMutationOptions<Awaited<TestPutReturnType>, Error, TestPutParams, unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<TestPutReturnType>, Error, TestPutParams, unknown> {
+    const client = useClient();
     return useMutation<Awaited<TestPutReturnType>, Error, TestPutParams, unknown>({
         mutationFn: (args) => client.endpoints.httpMethods.testPut(...args),
         ...options,
@@ -109,7 +110,7 @@ export function useTestPutMutation(
 type TestPatchParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["testPatch"]>;
 type TestPatchReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testPatch"]>;
 
-export function TestPatchMutationOptions(client: ClientInstance): {
+export function testPatchMutationOptions(client: ClientInstance): {
     mutationFn: (args: TestPatchParams) => TestPatchReturnType;
 } {
     return {
@@ -118,9 +119,9 @@ export function TestPatchMutationOptions(client: ClientInstance): {
 }
 
 export function useTestPatchMutation(
-    client: ClientInstance,
     options?: Omit<UseMutationOptions<Awaited<TestPatchReturnType>, Error, TestPatchParams, unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<TestPatchReturnType>, Error, TestPatchParams, unknown> {
+    const client = useClient();
     return useMutation<Awaited<TestPatchReturnType>, Error, TestPatchParams, unknown>({
         mutationFn: (args) => client.endpoints.httpMethods.testPatch(...args),
         ...options,
@@ -130,7 +131,7 @@ export function useTestPatchMutation(
 type TestDeleteParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["testDelete"]>;
 type TestDeleteReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testDelete"]>;
 
-export function TestDeleteMutationOptions(client: ClientInstance): {
+export function testDeleteMutationOptions(client: ClientInstance): {
     mutationFn: (args: TestDeleteParams) => TestDeleteReturnType;
 } {
     return {
@@ -139,9 +140,9 @@ export function TestDeleteMutationOptions(client: ClientInstance): {
 }
 
 export function useTestDeleteMutation(
-    client: ClientInstance,
     options?: Omit<UseMutationOptions<Awaited<TestDeleteReturnType>, Error, TestDeleteParams, unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<TestDeleteReturnType>, Error, TestDeleteParams, unknown> {
+    const client = useClient();
     return useMutation<Awaited<TestDeleteReturnType>, Error, TestDeleteParams, unknown>({
         mutationFn: (args) => client.endpoints.httpMethods.testDelete(...args),
         ...options,

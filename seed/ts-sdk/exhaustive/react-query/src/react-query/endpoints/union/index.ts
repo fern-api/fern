@@ -3,13 +3,14 @@
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
+import { useClient } from "../../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type GetAndReturnUnionParams = Parameters<ClientInstance["endpoints"]["union"]["getAndReturnUnion"]>;
 type GetAndReturnUnionReturnType = ReturnType<ClientInstance["endpoints"]["union"]["getAndReturnUnion"]>;
 
-export function GetAndReturnUnionMutationOptions(
+export function getAndReturnUnionMutationOptions(
     client: ClientInstance,
     requestOptions?: GetAndReturnUnionParams[1],
 ): { mutationFn: (variables: GetAndReturnUnionParams[0]) => GetAndReturnUnionReturnType } {
@@ -19,13 +20,13 @@ export function GetAndReturnUnionMutationOptions(
 }
 
 export function useGetAndReturnUnionMutation(
-    client: ClientInstance,
     requestOptions?: GetAndReturnUnionParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown> {
+    const client = useClient();
     return useMutation<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown>({
         mutationFn: (variables) => client.endpoints.union.getAndReturnUnion(variables, requestOptions),
         ...options,

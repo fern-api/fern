@@ -3,6 +3,7 @@
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
+import { useClient } from "../../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
@@ -13,7 +14,7 @@ type PostJsonPatchContentTypeReturnType = ReturnType<
     ClientInstance["endpoints"]["contentType"]["postJsonPatchContentType"]
 >;
 
-export function PostJsonPatchContentTypeMutationOptions(
+export function postJsonPatchContentTypeMutationOptions(
     client: ClientInstance,
     requestOptions?: PostJsonPatchContentTypeParams[1],
 ): { mutationFn: (variables: PostJsonPatchContentTypeParams[0]) => PostJsonPatchContentTypeReturnType } {
@@ -23,7 +24,6 @@ export function PostJsonPatchContentTypeMutationOptions(
 }
 
 export function usePostJsonPatchContentTypeMutation(
-    client: ClientInstance,
     requestOptions?: PostJsonPatchContentTypeParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -35,6 +35,7 @@ export function usePostJsonPatchContentTypeMutation(
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<PostJsonPatchContentTypeReturnType>, Error, PostJsonPatchContentTypeParams[0], unknown> {
+    const client = useClient();
     return useMutation<Awaited<PostJsonPatchContentTypeReturnType>, Error, PostJsonPatchContentTypeParams[0], unknown>({
         mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentType(variables, requestOptions),
         ...options,
@@ -48,7 +49,7 @@ type PostJsonPatchContentWithCharsetTypeReturnType = ReturnType<
     ClientInstance["endpoints"]["contentType"]["postJsonPatchContentWithCharsetType"]
 >;
 
-export function PostJsonPatchContentWithCharsetTypeMutationOptions(
+export function postJsonPatchContentWithCharsetTypeMutationOptions(
     client: ClientInstance,
     requestOptions?: PostJsonPatchContentWithCharsetTypeParams[1],
 ): {
@@ -63,7 +64,6 @@ export function PostJsonPatchContentWithCharsetTypeMutationOptions(
 }
 
 export function usePostJsonPatchContentWithCharsetTypeMutation(
-    client: ClientInstance,
     requestOptions?: PostJsonPatchContentWithCharsetTypeParams[1],
     options?: Omit<
         UseMutationOptions<
@@ -80,6 +80,7 @@ export function usePostJsonPatchContentWithCharsetTypeMutation(
     PostJsonPatchContentWithCharsetTypeParams[0],
     unknown
 > {
+    const client = useClient();
     return useMutation<
         Awaited<PostJsonPatchContentWithCharsetTypeReturnType>,
         Error,

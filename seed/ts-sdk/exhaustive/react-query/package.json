@@ -429,7 +429,8 @@
         "typescript": "~5.7.2",
         "@biomejs/biome": "2.4.3",
         "@tanstack/react-query": "^5.0.0",
-        "react": "^18.0.0"
+        "react": "^18.0.0",
+        "@types/react": ">=18.0.0"
     },
     "browser": {
         "fs": false,

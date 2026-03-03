@@ -13,17 +13,18 @@ import type {
 } from "@tanstack/react-query";
 import { useInfiniteQuery, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
+import { useClient } from "../../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type ListItemsParams = Parameters<ClientInstance["endpoints"]["pagination"]["listItems"]>;
 type ListItemsReturnType = ReturnType<ClientInstance["endpoints"]["pagination"]["listItems"]>;
 
-export function ListItemsQueryKey(request: ListItemsParams[0]): QueryKey {
+export function listItemsQueryKey(request: ListItemsParams[0]): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "pagination", "listItems", request] as const;
 }
 
-export function ListItemsInfiniteOptions(
+export function listItemsInfiniteOptions(
     client: ClientInstance,
     request: ListItemsParams[0],
     requestOptions?: ListItemsParams[1],
@@ -34,7 +35,7 @@ export function ListItemsInfiniteOptions(
     getNextPageParam: (lastPage: Awaited<ListItemsReturnType>, allPages: unknown, lastPageParam: unknown) => unknown;
 } {
     return {
-        queryKey: ListItemsQueryKey(request),
+        queryKey: listItemsQueryKey(request),
         queryFn: ({ pageParam }) => {
             return client.endpoints.pagination.listItems(
                 pageParam != null ? { ...request, cursor: pageParam as never } : request,
@@ -50,7 +51,6 @@ export function ListItemsInfiniteOptions(
 }
 
 export function useListItemsInfinite(
-    client: ClientInstance,
     request: ListItemsParams[0],
     requestOptions?: ListItemsParams[1],
     options?: Omit<
@@ -64,22 +64,22 @@ export function useListItemsInfinite(
         "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam"
     >,
 ): UseInfiniteQueryResult<InfiniteData<Awaited<ListItemsReturnType>, unknown>, Error> {
-    return useInfiniteQuery({ ...ListItemsInfiniteOptions(client, request, requestOptions), ...options });
+    const client = useClient();
+    return useInfiniteQuery({ ...listItemsInfiniteOptions(client, request, requestOptions), ...options });
 }
 
-export function ListItemsOptions(
+export function listItemsOptions(
     client: ClientInstance,
     request: ListItemsParams[0],
     requestOptions?: ListItemsParams[1],
 ): { queryKey: QueryKey; queryFn: () => ListItemsReturnType } {
     return {
-        queryKey: ListItemsQueryKey(request),
+        queryKey: listItemsQueryKey(request),
         queryFn: () => client.endpoints.pagination.listItems(request, requestOptions),
     };
 }
 
 export function useListItems(
-    client: ClientInstance,
     request: ListItemsParams[0],
     requestOptions?: ListItemsParams[1],
     options?: Omit<
@@ -87,11 +87,11 @@ export function useListItems(
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<ListItemsReturnType>, Error> {
-    return useQuery({ ...ListItemsOptions(client, request, requestOptions), ...options });
+    const client = useClient();
+    return useQuery({ ...listItemsOptions(client, request, requestOptions), ...options });
 }
 
 export function useSuspenseListItems(
-    client: ClientInstance,
     request: ListItemsParams[0],
     requestOptions?: ListItemsParams[1],
     options?: Omit<
@@ -99,11 +99,12 @@ export function useSuspenseListItems(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<ListItemsReturnType>, Error> {
-    return useSuspenseQuery({ ...ListItemsOptions(client, request, requestOptions), ...options });
+    const client = useClient();
+    return useSuspenseQuery({ ...listItemsOptions(client, request, requestOptions), ...options });
 }
 
 export function invalidateListItems(queryClient: QueryClient, request: ListItemsParams[0]): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: ListItemsQueryKey(request) });
+    return queryClient.invalidateQueries({ queryKey: listItemsQueryKey(request) });
 }
 
 export function invalidateAllListItems(queryClient: QueryClient): Promise<void> {

@@ -3,13 +3,14 @@
 import type { UseMutationOptions, UseMutationResult } from "@tanstack/react-query";
 import { useMutation } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../Client.js";
+import { useClient } from "../context.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
 type GetWithCustomHeaderParams = Parameters<ClientInstance["reqWithHeaders"]["getWithCustomHeader"]>;
 type GetWithCustomHeaderReturnType = ReturnType<ClientInstance["reqWithHeaders"]["getWithCustomHeader"]>;
 
-export function GetWithCustomHeaderMutationOptions(
+export function getWithCustomHeaderMutationOptions(
     client: ClientInstance,
     requestOptions?: GetWithCustomHeaderParams[1],
 ): { mutationFn: (variables: GetWithCustomHeaderParams[0]) => GetWithCustomHeaderReturnType } {
@@ -19,13 +20,13 @@ export function GetWithCustomHeaderMutationOptions(
 }
 
 export function useGetWithCustomHeaderMutation(
-    client: ClientInstance,
     requestOptions?: GetWithCustomHeaderParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams[0], unknown> {
+    const client = useClient();
     return useMutation<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams[0], unknown>({
         mutationFn: (variables) => client.reqWithHeaders.getWithCustomHeader(variables, requestOptions),
         ...options,
