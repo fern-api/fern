@@ -306,9 +306,10 @@ export class ReactQueryGenerator {
                 lines.push(``);
 
                 // === Infinite Options + Hook (if paginated) ===
-                if (hasPagination) {
+                if (hasPagination && endpoint.pagination != null) {
+                    const paginationInfo = this.getPaginationInfo(endpoint.pagination);
                     const infiniteFnName = `${functionPrefix}InfiniteOptions`;
-                    const infiniteReturnType = `{ queryKey: QueryKey; queryFn: () => ${returnTypeName}; initialPageParam: unknown; getNextPageParam: (lastPage: Awaited<${returnTypeName}>) => unknown }`;
+                    const infiniteReturnType = `{ queryKey: QueryKey; queryFn: (context: { pageParam: unknown }) => ${returnTypeName}; initialPageParam: unknown; getNextPageParam: (lastPage: Awaited<${returnTypeName}>, allPages: unknown, lastPageParam: unknown) => unknown }`;
                     if (hasRequestParams) {
                         lines.push(
                             `export function ${infiniteFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${infiniteReturnType} {`
@@ -321,15 +322,41 @@ export class ReactQueryGenerator {
                     lines.push(`    return {`);
                     if (hasRequestParams) {
                         lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
-                        lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(...args),`);
                     } else {
                         lines.push(`        queryKey: ${queryKeyFnName}(),`);
+                    }
+
+                    // Generate queryFn that injects pageParam into the request
+                    if (paginationInfo != null && hasRequestParams) {
+                        const { requestFieldName } = paginationInfo;
+                        lines.push(`        queryFn: ({ pageParam }) => {`);
+                        lines.push(`            const [request, ...rest] = args;`);
+                        lines.push(
+                            `            return ${clientAccess}.${endpointUnsafeName}(pageParam != null ? { ...request, ${requestFieldName}: pageParam as never } : request, ...rest);`
+                        );
+                        lines.push(`        },`);
+                    } else if (hasRequestParams) {
+                        lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(...args),`);
+                    } else {
                         lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
                     }
-                    lines.push(`        initialPageParam: undefined as unknown,`);
-                    lines.push(`        getNextPageParam: (_lastPage: Awaited<${returnTypeName}>): unknown => {`);
-                    lines.push(`            return undefined;`);
-                    lines.push(`        },`);
+
+                    // Generate initialPageParam and getNextPageParam based on pagination type
+                    if (paginationInfo != null) {
+                        lines.push(`        initialPageParam: ${paginationInfo.initialPageParam},`);
+                        lines.push(`        getNextPageParam: (lastPage, _allPages, lastPageParam): unknown => {`);
+                        for (const line of paginationInfo.getNextPageParamBody) {
+                            lines.push(`            ${line}`);
+                        }
+                        lines.push(`        },`);
+                    } else {
+                        // Custom or unknown pagination: provide stub
+                        lines.push(`        initialPageParam: undefined as unknown,`);
+                        lines.push(`        getNextPageParam: (_lastPage: Awaited<${returnTypeName}>): unknown => {`);
+                        lines.push(`            return undefined;`);
+                        lines.push(`        },`);
+                    }
+
                     lines.push(`    };`);
                     lines.push(`}`);
                     lines.push(``);
@@ -473,6 +500,107 @@ export class ReactQueryGenerator {
         }
 
         return lines.join("\n");
+    }
+
+    /**
+     * Extracts pagination metadata from the IR to generate real getNextPageParam
+     * and queryFn implementations for useInfiniteQuery.
+     *
+     * Returns null for custom or unsupported pagination types.
+     */
+    private getPaginationInfo(pagination: FernIr.Pagination): {
+        requestFieldName: string;
+        initialPageParam: string;
+        getNextPageParamBody: string[];
+    } | null {
+        switch (pagination.type) {
+            case "cursor": {
+                // Cursor pagination: extract next cursor from response
+                const requestFieldName =
+                    pagination.page.property.type === "query"
+                        ? pagination.page.property.name.name.camelCase.unsafeName
+                        : pagination.page.property.name.name.camelCase.unsafeName;
+                const responseAccessPath = this.buildResponsePropertyAccessPath(pagination.next);
+                return {
+                    requestFieldName,
+                    initialPageParam: "undefined as unknown",
+                    getNextPageParamBody: [
+                        `const nextCursor = ${responseAccessPath};`,
+                        `return nextCursor ?? undefined;`
+                    ]
+                };
+            }
+            case "offset": {
+                // Offset pagination: increment offset by results length
+                const requestFieldName =
+                    pagination.page.property.type === "query"
+                        ? pagination.page.property.name.name.camelCase.unsafeName
+                        : pagination.page.property.name.name.camelCase.unsafeName;
+                if (pagination.hasNextPage != null) {
+                    const hasNextPageAccess = this.buildResponsePropertyAccessPath(pagination.hasNextPage);
+                    return {
+                        requestFieldName,
+                        initialPageParam: "0",
+                        getNextPageParamBody: [
+                            `if (!${hasNextPageAccess}) {`,
+                            `    return undefined;`,
+                            `}`,
+                            `const currentOffset = typeof lastPageParam === "number" ? lastPageParam : 0;`,
+                            `return currentOffset + (lastPage.data?.length ?? 0);`
+                        ]
+                    };
+                }
+                // Without hasNextPage, use Page.hasNextPage() to detect end
+                return {
+                    requestFieldName,
+                    initialPageParam: "0",
+                    getNextPageParamBody: [
+                        `if (!lastPage.hasNextPage()) {`,
+                        `    return undefined;`,
+                        `}`,
+                        `const currentOffset = typeof lastPageParam === "number" ? lastPageParam : 0;`,
+                        `return currentOffset + (lastPage.data?.length ?? 0);`
+                    ]
+                };
+            }
+            case "uri": {
+                // URI pagination: extract next URI from response
+                const responseAccessPath = this.buildResponsePropertyAccessPath(pagination.nextUri);
+                return {
+                    requestFieldName: "cursor",
+                    initialPageParam: "undefined as unknown",
+                    getNextPageParamBody: [`const nextUri = ${responseAccessPath};`, `return nextUri ?? undefined;`]
+                };
+            }
+            case "path": {
+                // Path pagination: extract next path from response
+                const responseAccessPath = this.buildResponsePropertyAccessPath(pagination.nextPath);
+                return {
+                    requestFieldName: "cursor",
+                    initialPageParam: "undefined as unknown",
+                    getNextPageParamBody: [`const nextPath = ${responseAccessPath};`, `return nextPath ?? undefined;`]
+                };
+            }
+            case "custom":
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Builds a property access expression for extracting a value from the Page response.
+     * The Page object has a `.response` property containing the raw API response.
+     * Uses optional chaining for safe nested access.
+     */
+    private buildResponsePropertyAccessPath(responseProperty: FernIr.ResponseProperty): string {
+        const parts: string[] = ["lastPage.response"];
+        if (responseProperty.propertyPath != null) {
+            for (const pathItem of responseProperty.propertyPath) {
+                parts.push(pathItem.name.camelCase.unsafeName);
+            }
+        }
+        parts.push(responseProperty.property.name.name.camelCase.unsafeName);
+        return parts.join("?.");
     }
 
     private generateBarrelFiles(serviceGroups: ServiceGroup[]): Array<{ path: string; content: string }> {

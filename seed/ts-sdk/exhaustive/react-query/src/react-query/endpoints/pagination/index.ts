@@ -25,16 +25,23 @@ export function ListItemsInfiniteOptions(
     ...args: ListItemsParams
 ): {
     queryKey: QueryKey;
-    queryFn: () => ListItemsReturnType;
+    queryFn: (context: { pageParam: unknown }) => ListItemsReturnType;
     initialPageParam: unknown;
-    getNextPageParam: (lastPage: Awaited<ListItemsReturnType>) => unknown;
+    getNextPageParam: (lastPage: Awaited<ListItemsReturnType>, allPages: unknown, lastPageParam: unknown) => unknown;
 } {
     return {
         queryKey: ListItemsQueryKey(...args),
-        queryFn: () => client.endpoints.pagination.listItems(...args),
+        queryFn: ({ pageParam }) => {
+            const [request, ...rest] = args;
+            return client.endpoints.pagination.listItems(
+                pageParam != null ? { ...request, cursor: pageParam as never } : request,
+                ...rest,
+            );
+        },
         initialPageParam: undefined as unknown,
-        getNextPageParam: (_lastPage: Awaited<ListItemsReturnType>): unknown => {
-            return undefined;
+        getNextPageParam: (lastPage, _allPages, _lastPageParam): unknown => {
+            const nextCursor = lastPage.response?.next;
+            return nextCursor ?? undefined;
         },
     };
 }
