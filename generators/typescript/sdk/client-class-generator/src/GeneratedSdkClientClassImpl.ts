@@ -125,6 +125,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly neverThrowErrors: boolean;
 
     constructor({
         isRoot,
@@ -171,6 +172,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.neverThrowErrors = neverThrowErrors;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -968,16 +970,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getCtorHttpClientStatement(context: SdkContext): Code {
         const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
         const errorRef = getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression());
-        const handleNonStatusCodeErrorRef = getTextOfTsNode(
-            context.nonStatusCodeErrorHandler
-                .getReferenceToHandleNonStatusCodeError({
-                    importsManager: context.importsManager,
-                    exportsManager: context.exportsManager,
-                    sourceFile: context.sourceFile
-                })
-                .getExpression()
-        );
-        return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${handleNonStatusCodeErrorRef});`;
+        const nonStatusCodeErrorHandler = this.getNonStatusCodeErrorHandlerRef(context);
+        return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${nonStatusCodeErrorHandler});`;
     }
 
     /**
@@ -987,7 +981,22 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getCtorHttpClientExpression(context: SdkContext): Code {
         const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
         const errorRef = getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression());
-        const handleNonStatusCodeErrorRef = getTextOfTsNode(
+        const nonStatusCodeErrorHandler = this.getNonStatusCodeErrorHandlerRef(context);
+        return code`new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${nonStatusCodeErrorHandler})`;
+    }
+
+    /**
+     * Returns a reference to the non-status-code error handler.
+     * In never-throw-errors mode, handleNonStatusCodeError doesn't exist as an export,
+     * so we use an inline throw function instead. The HttpClient won't actually be used
+     * for endpoints in never-throw-errors mode (canUseClientRequest excludes them),
+     * but the constructor fallback still needs a valid function reference.
+     */
+    private getNonStatusCodeErrorHandlerRef(context: SdkContext): string {
+        if (this.neverThrowErrors) {
+            return "((e) => { throw e; }) as any";
+        }
+        return getTextOfTsNode(
             context.nonStatusCodeErrorHandler
                 .getReferenceToHandleNonStatusCodeError({
                     importsManager: context.importsManager,
@@ -996,7 +1005,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 })
                 .getExpression()
         );
-        return code`new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${handleNonStatusCodeErrorRef})`;
     }
 
     /**

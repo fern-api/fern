@@ -7,7 +7,6 @@ import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
-import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError";
 import * as errors from "./errors/index.js";
 
 export declare namespace SeedOauthClientCredentialsClient {
@@ -26,11 +25,11 @@ export class SeedOauthClientCredentialsClient {
 
     constructor(options: SeedOauthClientCredentialsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedOauthClientCredentialsError(args),
-            handleNonStatusCodeError,
-        );
+        this._client = new core.HttpClient(this._options, (args) => new errors.SeedOauthClientCredentialsError(args), ((
+            e,
+        ) => {
+            throw e;
+        }) as any);
     }
 
     public get auth(): AuthClient {

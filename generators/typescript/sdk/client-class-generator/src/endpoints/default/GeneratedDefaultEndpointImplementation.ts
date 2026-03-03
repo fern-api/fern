@@ -751,6 +751,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         if (this.endpoint.baseUrl != null) {
             return false;
         }
+        // Not endpoints with serde query params that generate async code (await in non-async method)
+        if (this.includeSerdeLayer && this.endpoint.queryParameters.length > 0) {
+            for (const queryParam of this.endpoint.queryParameters) {
+                if (queryParam.allowMultiple) {
+                    return false;
+                }
+            }
+        }
         return true;
     }
 

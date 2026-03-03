@@ -25,7 +25,7 @@ export interface EndpointConfig {
     /** Override content type (default: "application/json" when body is present) */
     contentType?: string;
     /** Override request serialization (default: "json" when body is present) */
-    requestType?: "json" | "file" | "bytes";
+    requestType?: "json" | "file" | "bytes" | "form";
     /** Response type for streaming/SSE/other non-JSON responses */
     responseType?: "streaming" | "sse" | "blob" | "text" | "arrayBuffer" | "binary-response";
     /** Duplex mode for streaming uploads */
@@ -55,7 +55,7 @@ export interface EndpointConfig {
  */
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
-    environment?: Supplier<string>;
+    environment?: Supplier<unknown>;
     authProvider?: {
         getAuthRequest(arg?: {
             endpointMetadata?: Record<string, unknown>;
@@ -145,7 +145,9 @@ export class HttpClient {
         // 4. Fetch — matches the exact fetcher call pattern of existing generated code
         const response = await fetcherImpl({
             url: join(
-                (await Supplier.get(this._options.baseUrl)) ?? (await Supplier.get(this._options.environment)) ?? "",
+                (await Supplier.get(this._options.baseUrl)) ??
+                    ((await Supplier.get(this._options.environment)) as string) ??
+                    "",
                 config.path,
             ),
             method: config.method,

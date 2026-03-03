@@ -11,7 +11,6 @@ import { V2Client } from "./api/resources/v2/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
-import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError";
 import * as errors from "./errors/index";
 
 export declare namespace SeedTraceClient {
@@ -34,11 +33,9 @@ export class SeedTraceClient {
 
     constructor(options: SeedTraceClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedTraceError(args),
-            handleNonStatusCodeError,
-        );
+        this._client = new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), ((e) => {
+            throw e;
+        }) as any);
     }
 
     public get v2(): V2Client {

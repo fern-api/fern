@@ -133,17 +133,52 @@ export class ParamsClient {
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
+    }
+
+    private async __getWithAllowMultipleQuery(
+        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
+        requestOptions?: ParamsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, unknown> = {
             query,
             number: number_,
         };
-        return this._client.request<void>({
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/params",
+            ),
             method: "GET",
-            path: "/params",
+            headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            requestOptions,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params");
     }
 
     /**
