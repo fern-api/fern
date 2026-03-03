@@ -28,7 +28,7 @@ describe Seed::Internal::Types::Array do
       assert_equal %w[foobar 1 true], TestArray::StringArray.coerce(["foobar", 1, true])
     end
 
-    it "raises an error if element of array is not coercible and strictness is on" do
+    it "raises an error if element of array is not coercable and strictness is on" do
       assert_raises Seed::Internal::Errors::TypeError do
         TestArray::StringArray.coerce([Object.new], strict: true)
       end

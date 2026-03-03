@@ -35,13 +35,13 @@ describe <%= gem_namespace %>::Internal::Types::Hash do
       end
     end
 
-    it "raises an error with non-coercible key types with strictness on" do
+    it "raises an error with non-coercable key types with strictness on" do
       assert_raises <%= gem_namespace %>::Internal::Errors::TypeError do
         TestHash::SymbolStringHash.coerce({ Object.new => 1 }, strict: true)
       end
     end
 
-    it "raises an error with non-coercible value types with strictness on" do
+    it "raises an error with non-coercable value types with strictness on" do
       assert_raises <%= gem_namespace %>::Internal::Errors::TypeError do
         TestHash::SymbolStringHash.coerce({ "foobar" => Object.new }, strict: true)
       end
