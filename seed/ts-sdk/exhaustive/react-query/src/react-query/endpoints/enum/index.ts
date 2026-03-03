@@ -9,23 +9,25 @@ type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 type GetAndReturnEnumParams = Parameters<ClientInstance["endpoints"]["enum"]["getAndReturnEnum"]>;
 type GetAndReturnEnumReturnType = ReturnType<ClientInstance["endpoints"]["enum"]["getAndReturnEnum"]>;
 
-export function GetAndReturnEnumMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnEnumParams[0]) => GetAndReturnEnumReturnType;
-} {
+export function GetAndReturnEnumMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnEnumParams[1],
+): { mutationFn: (variables: GetAndReturnEnumParams[0]) => GetAndReturnEnumReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.enum.getAndReturnEnum(variables),
+        mutationFn: (variables) => client.endpoints.enum.getAndReturnEnum(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnEnumMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnEnumParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.enum.getAndReturnEnum(variables),
+        mutationFn: (variables) => client.endpoints.enum.getAndReturnEnum(variables, requestOptions),
         ...options,
     });
 }

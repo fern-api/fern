@@ -283,7 +283,9 @@ export class ReactQueryGenerator {
 
             const hasRequestParams = endpoint.sdkRequest != null || endpoint.allPathParameters.length > 0;
 
-            if (hasRequestParams) {
+            // For mutations, always define Params so we can extract requestOptions type.
+            // For queries, only define Params when there are request params.
+            if (hasRequestParams || !isGetMethod) {
                 lines.push(`type ${paramsTypeName} = Parameters<${endpointMethodType}>;`);
             }
             lines.push(`type ${returnTypeName} = ReturnType<${endpointMethodType}>;`);
@@ -482,12 +484,18 @@ export class ReactQueryGenerator {
                 // === Mutation Options ===
                 // The factory's mutationFn signature must match useMutation's (variables: TVariables) => Promise<TData>
                 // pattern so that the factory is safely composable with useMutation() directly.
+                // For single-param and no-param mutations, accept requestOptions so SDK options
+                // (timeout, abortSignal, headers) can be passed through without falling back to raw client calls.
                 const mutationFnName = `${functionPrefix}MutationOptions`;
                 if (isSingleParamMutation) {
                     const mutationReturnType = `{ mutationFn: (variables: ${mutationVarsType}) => ${returnTypeName} }`;
-                    lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
+                    lines.push(
+                        `export function ${mutationFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[1]): ${mutationReturnType} {`
+                    );
                     lines.push(`    return {`);
-                    lines.push(`        mutationFn: (variables) => ${clientAccess}.${endpointUnsafeName}(variables),`);
+                    lines.push(
+                        `        mutationFn: (variables) => ${clientAccess}.${endpointUnsafeName}(variables, requestOptions),`
+                    );
                 } else if (isMultiParamMutation) {
                     const mutationReturnType = `{ mutationFn: (args: ${mutationVarsType}) => ${returnTypeName} }`;
                     lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
@@ -495,15 +503,20 @@ export class ReactQueryGenerator {
                     lines.push(`        mutationFn: (args) => ${clientAccess}.${endpointUnsafeName}(...args),`);
                 } else {
                     const mutationReturnType = `{ mutationFn: () => ${returnTypeName} }`;
-                    lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
+                    lines.push(
+                        `export function ${mutationFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[0]): ${mutationReturnType} {`
+                    );
                     lines.push(`    return {`);
-                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
+                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointUnsafeName}(requestOptions),`);
                 }
                 lines.push(`    };`);
                 lines.push(`}`);
                 lines.push(``);
 
                 // === useMutation hook ===
+                // For single-param and no-param mutations, accept requestOptions so SDK options
+                // (timeout, abortSignal, headers) can be passed through. requestOptions are bound
+                // at hook creation time, which is appropriate since they're typically consistent per hook instance.
                 const useMutationFnName = `use${functionPrefix}Mutation`;
                 if (isSingleParamMutation) {
                     // Single-param: TVariables is the unwrapped first param type
@@ -511,17 +524,20 @@ export class ReactQueryGenerator {
                     const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>`;
                     const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>, "mutationFn">`;
                     lines.push(
-                        `export function ${useMutationFnName}(client: ClientInstance, options?: ${mutationOptionsType}): ${useMutationReturnType} {`
+                        `export function ${useMutationFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[1], options?: ${mutationOptionsType}): ${useMutationReturnType} {`
                     );
                     lines.push(
                         `    return useMutation<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>({`
                     );
-                    lines.push(`        mutationFn: (variables) => ${clientAccess}.${endpointUnsafeName}(variables),`);
+                    lines.push(
+                        `        mutationFn: (variables) => ${clientAccess}.${endpointUnsafeName}(variables, requestOptions),`
+                    );
                     lines.push(`        ...options,`);
                     lines.push(`    });`);
                 } else if (isMultiParamMutation) {
                     // Multi-param: TVariables is the full tuple (path params + body)
                     // Users call mutate([pathParam, request]) — tuple required for multi-param
+                    // requestOptions is already part of the tuple, no separate parameter needed
                     const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>`;
                     const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>, "mutationFn">`;
                     lines.push(
@@ -535,13 +551,14 @@ export class ReactQueryGenerator {
                     lines.push(`    });`);
                 } else {
                     // No params: TVariables is void
+                    // Accept requestOptions so SDK options can still be passed through
                     const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, void, unknown>`;
                     const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, void, unknown>, "mutationFn">`;
                     lines.push(
-                        `export function ${useMutationFnName}(client: ClientInstance, options?: ${mutationOptionsType}): ${useMutationReturnType} {`
+                        `export function ${useMutationFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[0], options?: ${mutationOptionsType}): ${useMutationReturnType} {`
                     );
                     lines.push(`    return useMutation<Awaited<${returnTypeName}>, Error, void, unknown>({`);
-                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
+                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointUnsafeName}(requestOptions),`);
                     lines.push(`        ...options,`);
                     lines.push(`    });`);
                 }

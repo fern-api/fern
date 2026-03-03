@@ -9,23 +9,25 @@ type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 type GetAndReturnStringParams = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnString"]>;
 type GetAndReturnStringReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnString"]>;
 
-export function GetAndReturnStringMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnStringParams[0]) => GetAndReturnStringReturnType;
-} {
+export function GetAndReturnStringMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnStringParams[1],
+): { mutationFn: (variables: GetAndReturnStringParams[0]) => GetAndReturnStringReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnString(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnString(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnStringMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnStringParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnString(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnString(variables, requestOptions),
         ...options,
     });
 }
@@ -33,23 +35,25 @@ export function useGetAndReturnStringMutation(
 type GetAndReturnIntParams = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnInt"]>;
 type GetAndReturnIntReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnInt"]>;
 
-export function GetAndReturnIntMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnIntParams[0]) => GetAndReturnIntReturnType;
-} {
+export function GetAndReturnIntMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnIntParams[1],
+): { mutationFn: (variables: GetAndReturnIntParams[0]) => GetAndReturnIntReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnInt(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnInt(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnIntMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnIntParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnInt(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnInt(variables, requestOptions),
         ...options,
     });
 }
@@ -57,23 +61,25 @@ export function useGetAndReturnIntMutation(
 type GetAndReturnLongParams = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnLong"]>;
 type GetAndReturnLongReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnLong"]>;
 
-export function GetAndReturnLongMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnLongParams[0]) => GetAndReturnLongReturnType;
-} {
+export function GetAndReturnLongMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnLongParams[1],
+): { mutationFn: (variables: GetAndReturnLongParams[0]) => GetAndReturnLongReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnLong(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnLong(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnLongMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnLongParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnLong(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnLong(variables, requestOptions),
         ...options,
     });
 }
@@ -81,23 +87,25 @@ export function useGetAndReturnLongMutation(
 type GetAndReturnDoubleParams = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnDouble"]>;
 type GetAndReturnDoubleReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnDouble"]>;
 
-export function GetAndReturnDoubleMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnDoubleParams[0]) => GetAndReturnDoubleReturnType;
-} {
+export function GetAndReturnDoubleMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnDoubleParams[1],
+): { mutationFn: (variables: GetAndReturnDoubleParams[0]) => GetAndReturnDoubleReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDouble(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDouble(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnDoubleMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnDoubleParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDouble(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDouble(variables, requestOptions),
         ...options,
     });
 }
@@ -105,23 +113,25 @@ export function useGetAndReturnDoubleMutation(
 type GetAndReturnBoolParams = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnBool"]>;
 type GetAndReturnBoolReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnBool"]>;
 
-export function GetAndReturnBoolMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnBoolParams[0]) => GetAndReturnBoolReturnType;
-} {
+export function GetAndReturnBoolMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnBoolParams[1],
+): { mutationFn: (variables: GetAndReturnBoolParams[0]) => GetAndReturnBoolReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBool(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBool(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnBoolMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnBoolParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBool(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBool(variables, requestOptions),
         ...options,
     });
 }
@@ -129,23 +139,25 @@ export function useGetAndReturnBoolMutation(
 type GetAndReturnDatetimeParams = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnDatetime"]>;
 type GetAndReturnDatetimeReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnDatetime"]>;
 
-export function GetAndReturnDatetimeMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnDatetimeParams[0]) => GetAndReturnDatetimeReturnType;
-} {
+export function GetAndReturnDatetimeMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnDatetimeParams[1],
+): { mutationFn: (variables: GetAndReturnDatetimeParams[0]) => GetAndReturnDatetimeReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDatetime(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDatetime(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnDatetimeMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnDatetimeParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDatetime(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDatetime(variables, requestOptions),
         ...options,
     });
 }
@@ -153,23 +165,25 @@ export function useGetAndReturnDatetimeMutation(
 type GetAndReturnDateParams = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnDate"]>;
 type GetAndReturnDateReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnDate"]>;
 
-export function GetAndReturnDateMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnDateParams[0]) => GetAndReturnDateReturnType;
-} {
+export function GetAndReturnDateMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnDateParams[1],
+): { mutationFn: (variables: GetAndReturnDateParams[0]) => GetAndReturnDateReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDate(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDate(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnDateMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnDateParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDate(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDate(variables, requestOptions),
         ...options,
     });
 }
@@ -177,23 +191,25 @@ export function useGetAndReturnDateMutation(
 type GetAndReturnUuidParams = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnUuid"]>;
 type GetAndReturnUuidReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnUuid"]>;
 
-export function GetAndReturnUuidMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnUuidParams[0]) => GetAndReturnUuidReturnType;
-} {
+export function GetAndReturnUuidMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnUuidParams[1],
+): { mutationFn: (variables: GetAndReturnUuidParams[0]) => GetAndReturnUuidReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnUuid(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnUuid(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnUuidMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnUuidParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnUuid(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnUuid(variables, requestOptions),
         ...options,
     });
 }
@@ -201,23 +217,25 @@ export function useGetAndReturnUuidMutation(
 type GetAndReturnBase64Params = Parameters<ClientInstance["endpoints"]["primitive"]["getAndReturnBase64"]>;
 type GetAndReturnBase64ReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnBase64"]>;
 
-export function GetAndReturnBase64MutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnBase64Params[0]) => GetAndReturnBase64ReturnType;
-} {
+export function GetAndReturnBase64MutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnBase64Params[1],
+): { mutationFn: (variables: GetAndReturnBase64Params[0]) => GetAndReturnBase64ReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBase64(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBase64(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnBase64Mutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnBase64Params[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params[0], unknown> {
     return useMutation<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params[0], unknown>({
-        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBase64(variables),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBase64(variables, requestOptions),
         ...options,
     });
 }

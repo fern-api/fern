@@ -13,16 +13,18 @@ type PostWithObjectBodyandResponseReturnType = ReturnType<
     ClientInstance["inlinedRequests"]["postWithObjectBodyandResponse"]
 >;
 
-export function PostWithObjectBodyandResponseMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: PostWithObjectBodyandResponseParams[0]) => PostWithObjectBodyandResponseReturnType;
-} {
+export function PostWithObjectBodyandResponseMutationOptions(
+    client: ClientInstance,
+    requestOptions?: PostWithObjectBodyandResponseParams[1],
+): { mutationFn: (variables: PostWithObjectBodyandResponseParams[0]) => PostWithObjectBodyandResponseReturnType } {
     return {
-        mutationFn: (variables) => client.inlinedRequests.postWithObjectBodyandResponse(variables),
+        mutationFn: (variables) => client.inlinedRequests.postWithObjectBodyandResponse(variables, requestOptions),
     };
 }
 
 export function usePostWithObjectBodyandResponseMutation(
     client: ClientInstance,
+    requestOptions?: PostWithObjectBodyandResponseParams[1],
     options?: Omit<
         UseMutationOptions<
             Awaited<PostWithObjectBodyandResponseReturnType>,
@@ -44,7 +46,7 @@ export function usePostWithObjectBodyandResponseMutation(
         PostWithObjectBodyandResponseParams[0],
         unknown
     >({
-        mutationFn: (variables) => client.inlinedRequests.postWithObjectBodyandResponse(variables),
+        mutationFn: (variables) => client.inlinedRequests.postWithObjectBodyandResponse(variables, requestOptions),
         ...options,
     });
 }

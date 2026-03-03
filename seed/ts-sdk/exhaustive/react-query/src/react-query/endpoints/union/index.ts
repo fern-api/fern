@@ -9,23 +9,25 @@ type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 type GetAndReturnUnionParams = Parameters<ClientInstance["endpoints"]["union"]["getAndReturnUnion"]>;
 type GetAndReturnUnionReturnType = ReturnType<ClientInstance["endpoints"]["union"]["getAndReturnUnion"]>;
 
-export function GetAndReturnUnionMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: GetAndReturnUnionParams[0]) => GetAndReturnUnionReturnType;
-} {
+export function GetAndReturnUnionMutationOptions(
+    client: ClientInstance,
+    requestOptions?: GetAndReturnUnionParams[1],
+): { mutationFn: (variables: GetAndReturnUnionParams[0]) => GetAndReturnUnionReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.union.getAndReturnUnion(variables),
+        mutationFn: (variables) => client.endpoints.union.getAndReturnUnion(variables, requestOptions),
     };
 }
 
 export function useGetAndReturnUnionMutation(
     client: ClientInstance,
+    requestOptions?: GetAndReturnUnionParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown> {
     return useMutation<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.union.getAndReturnUnion(variables),
+        mutationFn: (variables) => client.endpoints.union.getAndReturnUnion(variables, requestOptions),
         ...options,
     });
 }

@@ -69,22 +69,25 @@ export function invalidateAllGetWithNoRequestBody(queryClient: QueryClient): Pro
     return queryClient.invalidateQueries({ queryKey: ["SeedExhaustiveClient", "noReqBody", "getWithNoRequestBody"] });
 }
 
+type PostWithNoRequestBodyParams = Parameters<ClientInstance["noReqBody"]["postWithNoRequestBody"]>;
 type PostWithNoRequestBodyReturnType = ReturnType<ClientInstance["noReqBody"]["postWithNoRequestBody"]>;
 
-export function PostWithNoRequestBodyMutationOptions(client: ClientInstance): {
-    mutationFn: () => PostWithNoRequestBodyReturnType;
-} {
+export function PostWithNoRequestBodyMutationOptions(
+    client: ClientInstance,
+    requestOptions?: PostWithNoRequestBodyParams[0],
+): { mutationFn: () => PostWithNoRequestBodyReturnType } {
     return {
-        mutationFn: () => client.noReqBody.postWithNoRequestBody(),
+        mutationFn: () => client.noReqBody.postWithNoRequestBody(requestOptions),
     };
 }
 
 export function usePostWithNoRequestBodyMutation(
     client: ClientInstance,
+    requestOptions?: PostWithNoRequestBodyParams[0],
     options?: Omit<UseMutationOptions<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown> {
     return useMutation<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown>({
-        mutationFn: () => client.noReqBody.postWithNoRequestBody(),
+        mutationFn: () => client.noReqBody.postWithNoRequestBody(requestOptions),
         ...options,
     });
 }

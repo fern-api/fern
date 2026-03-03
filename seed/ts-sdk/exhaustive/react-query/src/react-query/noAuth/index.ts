@@ -9,23 +9,25 @@ type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 type PostWithNoAuthParams = Parameters<ClientInstance["noAuth"]["postWithNoAuth"]>;
 type PostWithNoAuthReturnType = ReturnType<ClientInstance["noAuth"]["postWithNoAuth"]>;
 
-export function PostWithNoAuthMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: PostWithNoAuthParams[0]) => PostWithNoAuthReturnType;
-} {
+export function PostWithNoAuthMutationOptions(
+    client: ClientInstance,
+    requestOptions?: PostWithNoAuthParams[1],
+): { mutationFn: (variables: PostWithNoAuthParams[0]) => PostWithNoAuthReturnType } {
     return {
-        mutationFn: (variables) => client.noAuth.postWithNoAuth(variables),
+        mutationFn: (variables) => client.noAuth.postWithNoAuth(variables, requestOptions),
     };
 }
 
 export function usePostWithNoAuthMutation(
     client: ClientInstance,
+    requestOptions?: PostWithNoAuthParams[1],
     options?: Omit<
         UseMutationOptions<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown>,
         "mutationFn"
     >,
 ): UseMutationResult<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown> {
     return useMutation<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown>({
-        mutationFn: (variables) => client.noAuth.postWithNoAuth(variables),
+        mutationFn: (variables) => client.noAuth.postWithNoAuth(variables, requestOptions),
         ...options,
     });
 }

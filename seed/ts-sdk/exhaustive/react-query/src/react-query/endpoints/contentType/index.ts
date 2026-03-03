@@ -13,16 +13,18 @@ type PostJsonPatchContentTypeReturnType = ReturnType<
     ClientInstance["endpoints"]["contentType"]["postJsonPatchContentType"]
 >;
 
-export function PostJsonPatchContentTypeMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: PostJsonPatchContentTypeParams[0]) => PostJsonPatchContentTypeReturnType;
-} {
+export function PostJsonPatchContentTypeMutationOptions(
+    client: ClientInstance,
+    requestOptions?: PostJsonPatchContentTypeParams[1],
+): { mutationFn: (variables: PostJsonPatchContentTypeParams[0]) => PostJsonPatchContentTypeReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentType(variables),
+        mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentType(variables, requestOptions),
     };
 }
 
 export function usePostJsonPatchContentTypeMutation(
     client: ClientInstance,
+    requestOptions?: PostJsonPatchContentTypeParams[1],
     options?: Omit<
         UseMutationOptions<
             Awaited<PostJsonPatchContentTypeReturnType>,
@@ -34,7 +36,7 @@ export function usePostJsonPatchContentTypeMutation(
     >,
 ): UseMutationResult<Awaited<PostJsonPatchContentTypeReturnType>, Error, PostJsonPatchContentTypeParams[0], unknown> {
     return useMutation<Awaited<PostJsonPatchContentTypeReturnType>, Error, PostJsonPatchContentTypeParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentType(variables),
+        mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentType(variables, requestOptions),
         ...options,
     });
 }
@@ -46,18 +48,23 @@ type PostJsonPatchContentWithCharsetTypeReturnType = ReturnType<
     ClientInstance["endpoints"]["contentType"]["postJsonPatchContentWithCharsetType"]
 >;
 
-export function PostJsonPatchContentWithCharsetTypeMutationOptions(client: ClientInstance): {
+export function PostJsonPatchContentWithCharsetTypeMutationOptions(
+    client: ClientInstance,
+    requestOptions?: PostJsonPatchContentWithCharsetTypeParams[1],
+): {
     mutationFn: (
         variables: PostJsonPatchContentWithCharsetTypeParams[0],
     ) => PostJsonPatchContentWithCharsetTypeReturnType;
 } {
     return {
-        mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentWithCharsetType(variables),
+        mutationFn: (variables) =>
+            client.endpoints.contentType.postJsonPatchContentWithCharsetType(variables, requestOptions),
     };
 }
 
 export function usePostJsonPatchContentWithCharsetTypeMutation(
     client: ClientInstance,
+    requestOptions?: PostJsonPatchContentWithCharsetTypeParams[1],
     options?: Omit<
         UseMutationOptions<
             Awaited<PostJsonPatchContentWithCharsetTypeReturnType>,
@@ -79,7 +86,8 @@ export function usePostJsonPatchContentWithCharsetTypeMutation(
         PostJsonPatchContentWithCharsetTypeParams[0],
         unknown
     >({
-        mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentWithCharsetType(variables),
+        mutationFn: (variables) =>
+            client.endpoints.contentType.postJsonPatchContentWithCharsetType(variables, requestOptions),
         ...options,
     });
 }

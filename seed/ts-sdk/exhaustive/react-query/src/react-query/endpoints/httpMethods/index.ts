@@ -65,20 +65,22 @@ export function invalidateAllTestGet(queryClient: QueryClient): Promise<void> {
 type TestPostParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["testPost"]>;
 type TestPostReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testPost"]>;
 
-export function TestPostMutationOptions(client: ClientInstance): {
-    mutationFn: (variables: TestPostParams[0]) => TestPostReturnType;
-} {
+export function TestPostMutationOptions(
+    client: ClientInstance,
+    requestOptions?: TestPostParams[1],
+): { mutationFn: (variables: TestPostParams[0]) => TestPostReturnType } {
     return {
-        mutationFn: (variables) => client.endpoints.httpMethods.testPost(variables),
+        mutationFn: (variables) => client.endpoints.httpMethods.testPost(variables, requestOptions),
     };
 }
 
 export function useTestPostMutation(
     client: ClientInstance,
+    requestOptions?: TestPostParams[1],
     options?: Omit<UseMutationOptions<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown> {
     return useMutation<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown>({
-        mutationFn: (variables) => client.endpoints.httpMethods.testPost(variables),
+        mutationFn: (variables) => client.endpoints.httpMethods.testPost(variables, requestOptions),
         ...options,
     });
 }
