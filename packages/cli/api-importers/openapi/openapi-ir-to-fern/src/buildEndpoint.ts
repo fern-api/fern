@@ -299,7 +299,8 @@ export function buildEndpoint({
                 convertedEndpoint.url = defaultServer;
             }
         } else {
-            convertedEndpoint.url = serverOverride.name ?? undefined;
+            const urlId = serverOverride.url != null ? context.getUrlId(serverOverride.url) : undefined;
+            convertedEndpoint.url = urlId ?? serverOverride.name ?? undefined;
         }
     }
 
