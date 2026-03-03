@@ -161,7 +161,11 @@ function getRegistryInfoFromGithubPublishInfo(publishInfo: FernFiddle.GithubPubl
                 username: publishInfo.credentials?.username
             };
         case "pypi":
-            return { registryUrl: publishInfo.registryUrl, token: publishInfo.credentials?.password, username: undefined };
+            return {
+                registryUrl: publishInfo.registryUrl,
+                token: publishInfo.credentials?.password,
+                username: undefined
+            };
         case "nuget":
             return { registryUrl: publishInfo.registryUrl, token: publishInfo.apiKey, username: undefined };
         case "rubygems":
@@ -179,7 +183,11 @@ function getRegistryInfoFromPublishV2(publishV2: FernFiddle.PublishOutputModeV2)
     const publishV2Type = publishV2.type;
     switch (publishV2Type) {
         case "npmOverride":
-            return { registryUrl: publishV2.npmOverride?.registryUrl, token: publishV2.npmOverride?.token, username: undefined };
+            return {
+                registryUrl: publishV2.npmOverride?.registryUrl,
+                token: publishV2.npmOverride?.token,
+                username: undefined
+            };
         case "mavenOverride":
             return {
                 registryUrl: publishV2.mavenOverride?.registryUrl,
@@ -223,14 +231,14 @@ function getRegistryInfoFromPublishOutputMode(publishOutputMode: FernFiddle.Publ
         return {
             registryUrl: overrides.npm.registryUrl,
             token: overrides.npm.token,
-            username: undefined,
-        }
+            username: undefined
+        };
     } else if (overrides.maven != null) {
         return {
             registryUrl: overrides.maven.registryUrl,
             token: overrides.maven.password,
             username: overrides.maven.username
-        }
+        };
     } else {
         return RegistryInfo.Empty;
     }
