@@ -6,9 +6,11 @@ import inquirer from "inquirer";
 import type { Argv } from "yargs";
 import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
+import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
+import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGE_TO_DOCKER_IMAGE } from "../../../sdk/config/converter/constants.js";
 import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
@@ -39,6 +41,8 @@ export declare namespace AddCommand {
 
 export class AddCommand {
     public async handle(context: Context, args: AddCommand.Args): Promise<void> {
+        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
+        const fernYml = await schemaLoader.loadOrThrow();
         const workspace = await context.loadWorkspaceOrThrow();
 
         const fernYmlPath = workspace.absoluteFilePath;
@@ -46,6 +50,12 @@ export class AddCommand {
             throw new CliError({
                 message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
             });
+        }
+
+        const sdkChecker = new SdkChecker({ context });
+        const sdkCheckResult = await sdkChecker.check({ workspace, fernYml });
+        if (sdkCheckResult.errorCount > 0) {
+            throw CliError.exit();
         }
 
         const existingTargets = workspace.sdks?.targets ?? [];

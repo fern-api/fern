@@ -5038,6 +5038,9 @@ importers:
       '@fern-fern/fiddle-sdk':
         specifier: 'catalog:'
         version: 0.0.775
+      '@fern-fern/generators-sdk':
+        specifier: 'catalog:'
+        version: 0.114.0-5745f9e74
       '@types/inquirer':
         specifier: 'catalog:'
         version: 9.0.9
