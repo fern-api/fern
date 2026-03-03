@@ -1,4 +1,3 @@
-using global::System.Text.Json.Serialization;
 
 namespace SeedCsharpNamespaceCollision.Core;
 
