@@ -68,10 +68,6 @@ export function invalidateGetWithNoRequestBody(queryClient: QueryClient): Promis
     return queryClient.invalidateQueries({ queryKey: GetWithNoRequestBodyQueryKey() });
 }
 
-export function invalidateAllGetWithNoRequestBody(queryClient: QueryClient): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: ["SeedExhaustiveClient", "noReqBody", "getWithNoRequestBody"] });
-}
-
 type PostWithNoRequestBodyParams = Parameters<ClientInstance["noReqBody"]["postWithNoRequestBody"]>;
 type PostWithNoRequestBodyReturnType = ReturnType<ClientInstance["noReqBody"]["postWithNoRequestBody"]>;
 

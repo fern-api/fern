@@ -529,12 +529,16 @@ export class ReactQueryGenerator {
                 lines.push(`}`);
                 lines.push(``);
 
-                // Invalidate ALL cached entries for this endpoint (regardless of args)
-                const invalidateAllFnName = `invalidateAll${functionPrefix}`;
-                lines.push(`export function ${invalidateAllFnName}(queryClient: QueryClient): Promise<void> {`);
-                lines.push(`    return queryClient.invalidateQueries({ queryKey: [${keySegments.join(", ")}] });`);
-                lines.push(`}`);
-                lines.push(``);
+                // Invalidate ALL cached entries for this endpoint (regardless of args).
+                // Only generate for endpoints with params — for no-param endpoints,
+                // invalidate and invalidateAll would be identical.
+                if (hasRequestParams) {
+                    const invalidateAllFnName = `invalidateAll${functionPrefix}`;
+                    lines.push(`export function ${invalidateAllFnName}(queryClient: QueryClient): Promise<void> {`);
+                    lines.push(`    return queryClient.invalidateQueries({ queryKey: [${keySegments.join(", ")}] });`);
+                    lines.push(`}`);
+                    lines.push(``);
+                }
             } else {
                 // Determine if this is a single-param or multi-param mutation.
                 // Single-param (no path params, just sdkRequest): unwrap tuple so users call mutate(request) not mutate([request])

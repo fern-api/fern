@@ -56,10 +56,6 @@ export function invalidateWithMixedCase(queryClient: QueryClient): Promise<void>
     return queryClient.invalidateQueries({ queryKey: WithMixedCaseQueryKey() });
 }
 
-export function invalidateAllWithMixedCase(queryClient: QueryClient): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: ["SeedExhaustiveClient", "endpoints", "urls", "withMixedCase"] });
-}
-
 type NoEndingSlashParams = Parameters<ClientInstance["endpoints"]["urls"]["noEndingSlash"]>;
 type NoEndingSlashReturnType = ReturnType<ClientInstance["endpoints"]["urls"]["noEndingSlash"]>;
 
@@ -101,10 +97,6 @@ export function useSuspenseNoEndingSlash(
 
 export function invalidateNoEndingSlash(queryClient: QueryClient): Promise<void> {
     return queryClient.invalidateQueries({ queryKey: NoEndingSlashQueryKey() });
-}
-
-export function invalidateAllNoEndingSlash(queryClient: QueryClient): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: ["SeedExhaustiveClient", "endpoints", "urls", "noEndingSlash"] });
 }
 
 type WithEndingSlashParams = Parameters<ClientInstance["endpoints"]["urls"]["withEndingSlash"]>;
@@ -155,12 +147,6 @@ export function invalidateWithEndingSlash(queryClient: QueryClient): Promise<voi
     return queryClient.invalidateQueries({ queryKey: WithEndingSlashQueryKey() });
 }
 
-export function invalidateAllWithEndingSlash(queryClient: QueryClient): Promise<void> {
-    return queryClient.invalidateQueries({
-        queryKey: ["SeedExhaustiveClient", "endpoints", "urls", "withEndingSlash"],
-    });
-}
-
 type WithUnderscoresParams = Parameters<ClientInstance["endpoints"]["urls"]["withUnderscores"]>;
 type WithUnderscoresReturnType = ReturnType<ClientInstance["endpoints"]["urls"]["withUnderscores"]>;
 
@@ -207,10 +193,4 @@ export function useSuspenseWithUnderscores(
 
 export function invalidateWithUnderscores(queryClient: QueryClient): Promise<void> {
     return queryClient.invalidateQueries({ queryKey: WithUnderscoresQueryKey() });
-}
-
-export function invalidateAllWithUnderscores(queryClient: QueryClient): Promise<void> {
-    return queryClient.invalidateQueries({
-        queryKey: ["SeedExhaustiveClient", "endpoints", "urls", "withUnderscores"],
-    });
 }
