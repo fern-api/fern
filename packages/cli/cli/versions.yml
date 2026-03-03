@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.2.1
+  changelogEntry:
+    - summary: |
+        Fix `skip-slug` being ignored on sections with an intro article (`path`).
+        When a section had both `skip-slug: true` and a `path` pointing to an
+        overview page with a frontmatter slug, the frontmatter slug took precedence
+        and the section's slug was not skipped. Now `skip-slug` is respected
+        regardless of whether the section has an overview page.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
 - version: 4.2.0
   changelogEntry:
     - summary: |

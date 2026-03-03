@@ -1857,9 +1857,10 @@ export class DocsDefinitionResolver {
         const id = this.#idgen.get(pageId ?? `${prefix}/section`);
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
-            fullSlug: item.overviewAbsolutePath
-                ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
-                : undefined,
+            fullSlug:
+                item.overviewAbsolutePath && !item.skipUrlSlug
+                    ? this.markdownFilesToFullSlugs.get(item.overviewAbsolutePath)?.split("/")
+                    : undefined,
             skipUrlSlug: item.skipUrlSlug
         });
         const noindex =
