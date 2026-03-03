@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix map types with enum keys to generate `Partial<Record<EnumType, ValueType>>` instead of
+        `Record<EnumType, ValueType | undefined>`. The previous type required all enum keys to be
+        explicitly provided (even as `undefined`), while the new type correctly allows keys to be
+        omitted entirely, matching the semantics of a sparse map.
+      type: fix
+  irVersion: 65
+  createdAt: "2026-03-02"
+  version: 0.19.8
+
+- changelogEntry:
+    - summary: |
         Fix TypeScript generator crash when discriminated union discriminant values start
         with digits (e.g., "1foo", "1bar"). The generated code now prefixes such identifiers
         with an underscore to produce valid TypeScript.

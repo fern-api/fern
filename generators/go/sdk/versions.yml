@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.26.1
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of `WIREMOCK_PORT`. The CI workflow now
+        sets `WIREMOCK_URL` after discovering the dynamically assigned port. Falls back
+        to `http://localhost:8080` if the variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 61
+
 - version: 1.26.0
   changelogEntry:
     - summary: |
@@ -17,7 +28,6 @@
       type: chore
   createdAt: "2026-02-26"
   irVersion: 61
-
 - version: 1.25.0-rc3
   changelogEntry:
     - summary: |

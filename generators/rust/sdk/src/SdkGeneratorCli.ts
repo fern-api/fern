@@ -24,6 +24,7 @@ import { ErrorGenerator } from "./error/ErrorGenerator.js";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator.js";
 import { RootClientGenerator } from "./generators/RootClientGenerator.js";
 import { SubClientGenerator } from "./generators/SubClientGenerator.js";
+import { WebSocketChannelGenerator } from "./generators/WebSocketChannelGenerator.js";
 import { ReferenceConfigAssembler } from "./reference/index.js";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
@@ -229,9 +230,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const files: RustFile[] = [];
 
         // Core files
-        context.logger.debug("Generating core files (lib.rs, error.rs, api/mod.rs)...");
+        context.logger.debug("Generating core files (lib.rs, error.rs, core/mod.rs, api/mod.rs)...");
         files.push(this.generateLibFile(context));
         files.push(this.generateErrorFile(context));
+        files.push(this.generateCoreModFile(context));
         files.push(this.generateApiModFile(context));
 
         // Environment.rs (if environments are defined)
@@ -267,6 +269,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             files.push(...this.generateTypeFiles(context));
         }
 
+        // WebSocket channels
+        if (this.hasWebSocketChannels(context)) {
+            const wsChannelCount = Object.keys(context.ir.websocketChannels ?? {}).length;
+            context.logger.debug(`Generating ${wsChannelCount} WebSocket channel client(s)...`);
+            files.push(...this.generateWebSocketFiles(context));
+        }
+
         return files;
     }
 
@@ -293,6 +302,61 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             filename: "error.rs",
             directory: RelativeFilePath.of("src"),
             fileContents: errorGenerator.generateErrorRs()
+        });
+    }
+
+    /**
+     * Generates core/mod.rs dynamically based on which features are active.
+     *
+     * The static asIs mod.rs always declares `mod sse_stream` and `mod websocket` behind
+     * cfg feature gates. While this works for compilation (the compiler respects #[cfg]),
+     * cargo fmt does NOT evaluate feature flags — it tries to parse all declared modules
+     * and fails when the corresponding .rs file doesn't exist. Generating this file
+     * dynamically ensures we only declare modules for files that are actually present.
+     */
+    private generateCoreModFile(context: SdkGeneratorContext): RustFile {
+        const hasStreaming = context.hasStreamingEndpoints();
+        const hasWebSocket = context.hasWebSocketChannels();
+
+        const lines: string[] = [];
+        lines.push("//! Core client infrastructure");
+        lines.push("");
+        lines.push("mod http_client;");
+        lines.push("mod oauth_token_provider;");
+        lines.push("mod request_options;");
+        lines.push("mod query_parameter_builder;");
+        if (hasStreaming) {
+            lines.push('#[cfg(feature = "sse")]');
+            lines.push("mod sse_stream;");
+        }
+        if (hasWebSocket) {
+            lines.push('#[cfg(feature = "websocket")]');
+            lines.push("mod websocket;");
+        }
+        lines.push("mod utils;");
+        lines.push("pub mod flexible_datetime;");
+        lines.push("pub mod base64_bytes;");
+        lines.push("pub mod bigint_string;");
+        lines.push("");
+        lines.push("pub use http_client::{ByteStream, HttpClient, OAuthConfig};");
+        lines.push("pub use oauth_token_provider::OAuthTokenProvider;");
+        lines.push("pub use request_options::RequestOptions;");
+        lines.push("pub use query_parameter_builder::{QueryBuilder, QueryBuilderError, parse_structured_query};");
+        if (hasStreaming) {
+            lines.push('#[cfg(feature = "sse")]');
+            lines.push("pub use sse_stream::SseStream;");
+        }
+        if (hasWebSocket) {
+            lines.push('#[cfg(feature = "websocket")]');
+            lines.push("pub use websocket::{WebSocketClient, WebSocketMessage, WebSocketOptions, WebSocketState, parse_websocket_message};");
+        }
+        lines.push("pub use utils::join_url;");
+        lines.push("");
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of("src/core"),
+            fileContents: lines.join("\n")
         });
     }
 
@@ -332,11 +396,17 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (hasTypes) {
             moduleDoc.push("- [`types`] - Request, response, and model types");
         }
+        if (this.hasWebSocketChannels(context)) {
+            moduleDoc.push("- [`websocket`] - WebSocket channel clients");
+        }
 
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "resources", isPublic: true }));
         if (hasTypes) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
+        }
+        if (this.hasWebSocketChannels(context)) {
+            moduleDeclarations.push(new ModuleDeclaration({ name: "websocket", isPublic: true }));
         }
 
         // Add named re-exports for resources
@@ -349,6 +419,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
+
+        // WebSocket channel clients are accessible via the `websocket` submodule
+        // (e.g. `crate::websocket::RealtimeClient`). We intentionally do NOT
+        // glob re-export them here to avoid name collisions with HTTP resource
+        // clients that share the same subpackage name (e.g. both resources and
+        // websocket may define a `RealtimeClient`).
 
         const apiModule = new Module({
             moduleDoc,
@@ -857,6 +933,15 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.logger.debug(`Failed to generate snippet using EndpointSnippetGenerator: ${error}`);
             return [];
         }
+    }
+
+    private generateWebSocketFiles(context: SdkGeneratorContext): RustFile[] {
+        const generator = new WebSocketChannelGenerator(context);
+        return generator.generateAll();
+    }
+
+    private hasWebSocketChannels(context: SdkGeneratorContext): boolean {
+        return context.hasWebSocketChannels();
     }
 
     private hasTypes(context: SdkGeneratorContext): boolean {

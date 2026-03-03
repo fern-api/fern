@@ -4,7 +4,7 @@ namespace SeedPagination;
 
 public partial class UsersClient : IUsersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UsersClient(RawClient client)
     {
@@ -35,7 +35,6 @@ public partial class UsersClient : IUsersClient
         var httpRequest = await _client.CreateHttpRequestAsync(
             new JsonRequest
             {
-                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/users",
                 QueryString = _queryString,
@@ -57,7 +56,9 @@ public partial class UsersClient : IUsersClient
             }
 
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                var responseBody = await response
+                    .Raw.Content.ReadAsStringAsync(cancellationToken)
+                    .ConfigureAwait(false);
                 throw new SeedPaginationApiException(
                     $"Error with status code {response.StatusCode}",
                     response.StatusCode,

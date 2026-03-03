@@ -4,7 +4,7 @@ namespace SeedEnum;
 
 public partial class MultipartFormClient : IMultipartFormClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal MultipartFormClient(RawClient client)
     {
@@ -25,7 +25,6 @@ public partial class MultipartFormClient : IMultipartFormClient
             .ConfigureAwait(false);
         var multipartFormRequest_ = new SeedEnum.Core.MultipartFormRequest
         {
-            BaseUrl = _client.Options.BaseUrl,
             Method = HttpMethod.Post,
             Path = "multipart",
             Headers = _headers,
@@ -43,7 +42,9 @@ public partial class MultipartFormClient : IMultipartFormClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

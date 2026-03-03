@@ -4,7 +4,7 @@ namespace SeedBytesUpload;
 
 public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {
@@ -30,7 +30,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new StreamRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "upload-content",
                     Body = request,
@@ -46,7 +45,9 @@ public partial class ServiceClient : IServiceClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedBytesUploadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

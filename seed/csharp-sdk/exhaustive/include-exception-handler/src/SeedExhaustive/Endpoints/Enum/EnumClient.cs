@@ -7,7 +7,7 @@ namespace SeedExhaustive.Endpoints;
 
 public partial class EnumClient : IEnumClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal EnumClient(RawClient client)
     {
@@ -41,7 +41,6 @@ public partial class EnumClient : IEnumClient
                     .SendRequestAsync(
                         new JsonRequest
                         {
-                            BaseUrl = _client.Options.BaseUrl,
                             Method = HttpMethod.Post,
                             Path = "/enum",
                             Body = request,
@@ -53,7 +52,9 @@ public partial class EnumClient : IEnumClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<WeatherReport>(responseBody)!;
@@ -81,7 +82,9 @@ public partial class EnumClient : IEnumClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response
+                        .Raw.Content.ReadAsStringAsync(cancellationToken)
+                        .ConfigureAwait(false);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,

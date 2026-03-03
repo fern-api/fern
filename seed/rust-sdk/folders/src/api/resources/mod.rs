@@ -5,7 +5,7 @@
 //! - **A**
 //! - **Folder**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod a;
 pub mod folder;
@@ -20,10 +20,9 @@ impl ApiClient {
         Ok(Self {
             config: config.clone(),
             a: AClient::new(config.clone())?,
-            folder: FolderClient::new(config.clone())?
+            folder: FolderClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use a::AClient;

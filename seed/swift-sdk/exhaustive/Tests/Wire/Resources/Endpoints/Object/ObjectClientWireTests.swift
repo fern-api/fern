@@ -438,6 +438,78 @@ import Exhaustive
         try #require(response == expectedResponse)
     }
 
+    @Test func getAndReturnWithUnknownField1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "unknown": {
+                    "$ref": "https://example.com/schema"
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithUnknownField(
+            unknown: JSONValue.object(
+                [
+                    "$ref": JSONValue.string("https://example.com/schema")
+                ]
+            )
+        )
+        let response = try await client.endpoints.object.getAndReturnWithUnknownField(
+            request: ObjectWithUnknownField(
+                unknown: .object([
+                    "$ref": .string("https://example.com/schema")
+                ])
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
+    @Test func getAndReturnWithUnknownField2() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "unknown": {
+                    "key": "value"
+                  }
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithUnknownField(
+            unknown: JSONValue.object(
+                [
+                    "key": JSONValue.string("value")
+                ]
+            )
+        )
+        let response = try await client.endpoints.object.getAndReturnWithUnknownField(
+            request: ObjectWithUnknownField(
+                unknown: .object([
+                    "key": .string("value")
+                ])
+            ),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
+
     @Test func getAndReturnWithDatetimeLikeString1() async throws -> Void {
         let stub = HTTPStub()
         stub.setResponse(

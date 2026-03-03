@@ -15,3 +15,18 @@ export type BaseRecordSchema<
     ParsedKey extends string | number,
     ParsedValue,
 > = BaseSchema<Record<RawKey, RawValue>, Record<ParsedKey, ParsedValue>>;
+
+export type PartialRecordSchema<
+    RawKey extends string | number,
+    RawValue,
+    ParsedKey extends string | number,
+    ParsedValue,
+> = BasePartialRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> &
+    SchemaUtils<Record<RawKey, RawValue>, Partial<Record<ParsedKey, ParsedValue>>>;
+
+export type BasePartialRecordSchema<
+    RawKey extends string | number,
+    RawValue,
+    ParsedKey extends string | number,
+    ParsedValue,
+> = BaseSchema<Record<RawKey, RawValue>, Partial<Record<ParsedKey, ParsedValue>>>;

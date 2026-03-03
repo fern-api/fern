@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
+import { deduplicateExamples, GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseContext, BaseGeneratedType } from "@fern-typescript/contexts";
 import { ModuleDeclarationStructure, StatementStructures, ts, WriterFunction } from "ts-morph";
 
@@ -76,7 +76,7 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
         if (this.docs) {
             groups.push(this.docs);
         }
-        for (const example of this.examples) {
+        const allExamples = this.examples.map((example) => {
             const exampleStr =
                 "@example\n" +
                 getTextOfTsNode(
@@ -87,8 +87,9 @@ export abstract class AbstractGeneratedType<Shape, Context extends BaseContext> 
                         isForResponse: opts?.isForResponse
                     })
                 );
-            groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
-        }
+            return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+        });
+        groups.push(...deduplicateExamples(allExamples));
         if (groups.length === 0) {
             return undefined;
         }
