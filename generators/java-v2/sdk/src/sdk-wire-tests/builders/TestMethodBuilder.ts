@@ -281,8 +281,16 @@ export class TestMethodBuilder {
      */
     private formUrlEncode(value: unknown): string {
         const stringValue = this.formValueToString(value);
-        // encodeURIComponent encodes spaces as %20, but Java's URLEncoder uses +
-        return encodeURIComponent(stringValue).replace(/%20/g, "+");
+        // Match Java's URLEncoder.encode() behavior:
+        // - Spaces as '+' (encodeURIComponent uses %20)
+        // - '!', '~', "'", '(', ')' are encoded (encodeURIComponent leaves them unencoded)
+        return encodeURIComponent(stringValue)
+            .replace(/%20/g, "+")
+            .replace(/!/g, "%21")
+            .replace(/~/g, "%7E")
+            .replace(/'/g, "%27")
+            .replace(/\(/g, "%28")
+            .replace(/\)/g, "%29");
     }
 
     /**
