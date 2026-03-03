@@ -23,9 +23,9 @@ export class SeedSimpleApiClient {
     constructor(options: SeedSimpleApiClient.Options) {
 
 
-                            this._options = normalizeClientOptionsWithAuth(options);
-                            this._client = new core.HttpClient(this._options, (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError);
-                        
+                        this._options = normalizeClientOptionsWithAuth(options);
+                        this._client = new core.HttpClient(this._options, (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError);
+                    
     }
 
     public get user(): UserClient {

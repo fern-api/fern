@@ -22,9 +22,9 @@ export class UserClient {
     constructor(options: UserClient.Options, client?: core.HttpClient) {
 
 
-                            this._options = normalizeClientOptionsWithAuth(options);
-                            this._client = client ?? new core.HttpClient(this._options, (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError);
-                        
+                        this._options = normalizeClientOptionsWithAuth(options);
+                        this._client = client ?? new core.HttpClient(this._options, (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError);
+                    
     }
 
     /**

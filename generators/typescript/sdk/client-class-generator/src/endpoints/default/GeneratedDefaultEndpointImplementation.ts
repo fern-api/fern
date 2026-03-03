@@ -952,39 +952,35 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     /**
+     * Builds the URL path expression for this endpoint using buildUrl().
+     * Shared by both getPathExpression() and getReferenceToBaseUrl().
+     */
+    private buildUrlPath(context: SdkContext): ts.Expression | undefined {
+        return buildUrl({
+            endpoint: this.endpoint,
+            generatedClientClass: this.generatedSdkClientClass,
+            context,
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+            },
+            parameterNaming: this.parameterNaming
+        });
+    }
+
+    /**
      * Gets just the URL path expression (without base URL resolution).
      * Used by getClientRequestStatements() since the HttpClient handles base URL internally.
      */
     private getPathExpression(context: SdkContext): ts.Expression {
-        const url = buildUrl({
-            endpoint: this.endpoint,
-            generatedClientClass: this.generatedSdkClientClass,
-            context,
-            includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing,
-            omitUndefined: this.omitUndefined,
-            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
-            },
-            parameterNaming: this.parameterNaming
-        });
-        return url ?? ts.factory.createStringLiteral("");
+        return this.buildUrlPath(context) ?? ts.factory.createStringLiteral("");
     }
 
     private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
         const baseUrl = this.generatedSdkClientClass.getBaseUrl(this.endpoint, context);
-        const url = buildUrl({
-            endpoint: this.endpoint,
-            generatedClientClass: this.generatedSdkClientClass,
-            context,
-            includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing,
-            omitUndefined: this.omitUndefined,
-            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
-            },
-            parameterNaming: this.parameterNaming
-        });
+        const url = this.buildUrlPath(context);
         if (url != null) {
             return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
         } else {

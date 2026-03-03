@@ -89,7 +89,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static readonly TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
     private static readonly ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
     private static readonly MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
-    private static readonly CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
     public static readonly BASE_URL_OPTION_PROPERTY_NAME = "baseUrl";
     public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
@@ -716,7 +715,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             // Root client: constructor(options) - creates HttpClient internally
             const statements = code`
                 ${optionsStatement}
-                ${this.getCtorHttpClientStatement(context)}
+                this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${this.getNewHttpClientExpression(context)};
             `;
             serviceClass.ctors.push({
                 parameters: [optionsParam],
@@ -726,7 +725,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             // Non-root client: constructor(options, client?) - receives HttpClient or creates one
             const statements = code`
                 ${optionsStatement}
-                this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME} ?? ${this.getCtorHttpClientExpression(context)};
+                this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME} ?? ${this.getNewHttpClientExpression(context)};
             `;
             serviceClass.ctors.push({
                 parameters: [
@@ -913,28 +912,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     /**
-     * Generates the constructor statement that creates the HttpClient instance.
-     * Only used in root clients; non-root clients receive the HttpClient via constructor parameter.
-     *
-     * Emits:
-     *   this._client = new HttpClient(
-     *       this._options,
-     *       (args) => new errors.SeedXxxError(args),
-     *       handleNonStatusCodeError
-     *   );
+     * Returns the expression `new HttpClient(this._options, errorFactory, errorHandler)`.
+     * Used by root clients (assigned to this._client) and non-root clients (as fallback).
      */
-    private getCtorHttpClientStatement(context: SdkContext): Code {
-        const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
-        const statusCodeErrorFactory = this.getStatusCodeErrorFactoryRef(context);
-        const nonStatusCodeErrorHandler = this.getNonStatusCodeErrorHandlerRef(context);
-        return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, ${statusCodeErrorFactory}, ${nonStatusCodeErrorHandler});`;
-    }
-
-    /**
-     * Returns the expression `new HttpClient(this._options, (args) => new errors.XxxError(args), handleNonStatusCodeError)`
-     * for use in non-root client constructors as a fallback when no client is provided.
-     */
-    private getCtorHttpClientExpression(context: SdkContext): Code {
+    private getNewHttpClientExpression(context: SdkContext): Code {
         const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
         const statusCodeErrorFactory = this.getStatusCodeErrorFactoryRef(context);
         const nonStatusCodeErrorHandler = this.getNonStatusCodeErrorHandlerRef(context);

@@ -109,11 +109,6 @@ export class HttpClient {
         this._handleNonStatusCodeError = handleNonStatusCodeError;
     }
 
-    /** Expose normalized options for sub-clients that need them (e.g. pagination) */
-    get options(): HttpClientOptions {
-        return this._options;
-    }
-
     /**
      * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
      * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
@@ -184,7 +179,6 @@ export class HttpClient {
                 withCredentials: config.withCredentials,
                 fetchFn: this._options.fetch,
                 logging: this._options.logging,
-                endpointMetadata: config.endpointMetadata
             },
             {
                 requestHeaders: config.requestOptions?.headers,

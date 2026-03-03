@@ -57,13 +57,13 @@
     },
     "dependencies": {},
     "devDependencies": {
-        "@biomejs/biome": "2.4.3",
-        "@types/node": "^18.19.70",
-        "msw": "2.11.2",
+        "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
-        "typescript": "~5.7.2",
         "vitest": "^3.2.4",
-        "webpack": "^5.97.1"
+        "msw": "2.11.2",
+        "@types/node": "^18.19.70",
+        "typescript": "~5.7.2",
+        "@biomejs/biome": "2.4.3"
     },
     "browser": {
         "fs": false,
