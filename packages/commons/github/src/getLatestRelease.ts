@@ -15,7 +15,7 @@ import { parseRepository } from "./parseRepository.js";
  * @param githubRepository a string with the format `owner/repo`
  * @param options.authToken optional GitHub auth token (defaults to process.env.GITHUB_TOKEN)
  */
-export async function getLatestTag(
+export async function getLatestRelease(
     githubRepository: string,
     options?: { authToken?: string }
 ): Promise<string | undefined> {

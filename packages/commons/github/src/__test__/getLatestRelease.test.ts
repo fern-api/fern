@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { getLatestTag } from "../getLatestTag.js";
+import { getLatestRelease } from "../getLatestRelease.js";
 
 const mockGetLatestRelease = vi.fn();
 
@@ -15,7 +15,7 @@ vi.mock("octokit", () => {
     };
 });
 
-describe("getLatestTag", () => {
+describe("getLatestRelease", () => {
     beforeEach(() => {
         mockGetLatestRelease.mockReset();
     });
@@ -25,14 +25,14 @@ describe("getLatestTag", () => {
             data: { tag_name: "v2.0.0" }
         });
 
-        const result = await getLatestTag("owner/repo");
+        const result = await getLatestRelease("owner/repo");
         expect(result).toEqual("v2.0.0");
     });
 
     it("returns undefined when no releases exist (404)", async () => {
         mockGetLatestRelease.mockRejectedValueOnce(new Error("Not Found"));
 
-        const result = await getLatestTag("owner/repo");
+        const result = await getLatestRelease("owner/repo");
         expect(result).toBeUndefined();
     });
 
@@ -41,7 +41,7 @@ describe("getLatestTag", () => {
             data: { tag_name: "3.1.0" }
         });
 
-        const result = await getLatestTag("owner/repo");
+        const result = await getLatestRelease("owner/repo");
         expect(result).toEqual("3.1.0");
     });
 
@@ -50,7 +50,7 @@ describe("getLatestTag", () => {
             data: { tag_name: "v1.0.0" }
         });
 
-        const result = await getLatestTag("owner/repo", { authToken: "ghp_test123" });
+        const result = await getLatestRelease("owner/repo", { authToken: "ghp_test123" });
         expect(result).toEqual("v1.0.0");
         expect(mockGetLatestRelease).toHaveBeenCalledWith({ owner: "owner", repo: "repo" });
     });
@@ -58,7 +58,7 @@ describe("getLatestTag", () => {
     it("returns undefined on network error", async () => {
         mockGetLatestRelease.mockRejectedValueOnce(new Error("Network error"));
 
-        const result = await getLatestTag("owner/repo");
+        const result = await getLatestRelease("owner/repo");
         expect(result).toBeUndefined();
     });
 });

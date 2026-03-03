@@ -1,5 +1,5 @@
 import type { generatorsYml } from "@fern-api/configuration";
-import { getLatestTag as getLatestTagFromGithub } from "@fern-api/github";
+import { getLatestRelease as getLatestReleaseFromGithub } from "@fern-api/github";
 import latestVersion from "latest-version";
 import semver from "semver";
 
@@ -48,7 +48,7 @@ interface CratesIoResponse {
  * - Ruby: RubyGems.org
  * - Go: Go Module Proxy
  * - Rust: Crates.io
- * - PHP/Swift: GitHub tags fallback only
+ * - PHP/Swift: GitHub releases fallback only
  *
  * Supports authenticated access to private registries and repositories via environment variables:
  * - GITHUB_TOKEN: Used to authenticate GitHub API requests for private repositories
@@ -89,8 +89,8 @@ export async function computeSemanticVersion({
 }
 
 /**
- * Gets the existing version of a package from registries or GitHub tags.
- * Tries package registries first, then falls back to GitHub tags.
+ * Gets the existing version of a package from registries or GitHub releases.
+ * Tries package registries first, then falls back to GitHub releases.
  *
  * Supports authenticated access via environment variables:
  * - GITHUB_TOKEN: Authenticates GitHub API requests for private repositories
@@ -138,7 +138,7 @@ async function getExistingVersion({
         case "php":
         case "swift":
             // PHP and Swift do not have standard public registry APIs for version lookup.
-            // They rely on the GitHub tags fallback below.
+            // They rely on the GitHub releases fallback below.
             break;
     }
 
@@ -146,9 +146,9 @@ async function getExistingVersion({
         return version;
     }
 
-    // Step 2: Fall back to GitHub tags
+    // Step 2: Fall back to GitHub releases
     if (githubRepository != null) {
-        version = await getLatestTag(githubRepository);
+        version = await getLatestRelease(githubRepository);
     }
 
     return version;
@@ -377,18 +377,18 @@ export async function getLatestVersionFromCrates(packageName: string): Promise<s
 }
 
 /**
- * Fetches the latest tag from a GitHub repository.
+ * Fetches the latest release tag from a GitHub repository.
  *
  * Delegates to the shared @fern-api/github utility, which supports
  * GITHUB_TOKEN for authenticated access to private repositories.
  *
  * @param githubRepository - Repository in "owner/repo" format
- * @returns The latest tag name, or undefined if no tags exist
+ * @returns The latest release tag name, or undefined if no releases exist
  */
 /** @internal Exported for testing */
-export async function getLatestTag(githubRepository: string): Promise<string | undefined> {
+export async function getLatestRelease(githubRepository: string): Promise<string | undefined> {
     try {
-        return await getLatestTagFromGithub(githubRepository);
+        return await getLatestReleaseFromGithub(githubRepository);
     } catch (error) {
         // Repository doesn't exist or API error
         return undefined;
