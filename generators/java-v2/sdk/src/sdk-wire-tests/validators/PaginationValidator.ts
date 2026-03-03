@@ -69,6 +69,12 @@ export class PaginationValidator {
             return this.extractPath(endpoint.pagination.results);
         } else if (endpoint.pagination.type === "custom") {
             return undefined;
+        } else {
+            // Handle uri, path, and any future pagination types that have a results property
+            const paginationAny = endpoint.pagination as unknown as { results?: FernIr.ResponseProperty };
+            if (paginationAny.results) {
+                return this.extractPath(paginationAny.results);
+            }
         }
 
         return "data"; // Default fallback

@@ -158,7 +158,7 @@ export class TestMethodBuilder {
                     const formDataPairs: string[] = [];
                     if (typeof expectedRequestJson === "object" && expectedRequestJson !== null) {
                         for (const [key, value] of Object.entries(expectedRequestJson)) {
-                            formDataPairs.push(`${key}=${encodeURIComponent(String(value))}`);
+                            formDataPairs.push(`${key}=${this.formUrlEncode(value)}`);
                         }
                     }
                     const expectedFormData = formDataPairs.join("&");
@@ -212,14 +212,36 @@ export class TestMethodBuilder {
                 } else {
                     writer.writeLine("String actualResponseJson = objectMapper.writeValueAsString(response);");
 
+                    // Convert RFC 2822 dates to ISO 8601 Z format in expected response.
+                    // The mock response can contain RFC 2822 dates (the SDK's Rfc2822DateTimeDeserializer handles them),
+                    // but after deserialization and re-serialization, Jackson outputs ISO 8601 with Z for UTC.
+                    const normalizedResponseJson = this.convertRfc2822DatesToIso8601(expectedResponseJson);
+                    const responseWasNormalized =
+                        JSON.stringify(normalizedResponseJson) !== JSON.stringify(expectedResponseJson);
+
                     // Use the same resource file that was registered for mock setup, or inline for small payloads
-                    if (responseResourcePath) {
-                        writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
-                        writer.writeLine(
-                            `String expectedResponseBody = TestResources.loadResource("${responseResourcePath}");`
-                        );
+                    if (responseResourcePath && this.resourceWriter && this.currentTestClassName) {
+                        if (responseWasNormalized) {
+                            // Response had RFC 2822 dates that were converted — write a separate normalized resource
+                            const normalizedResourcePath = this.resourceWriter.registerResource(
+                                this.currentTestClassName,
+                                testMethodName,
+                                "expected_response",
+                                normalizedResponseJson
+                            );
+                            writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                            writer.writeLine(
+                                `String expectedResponseBody = TestResources.loadResource("${normalizedResourcePath}");`
+                            );
+                        } else {
+                            // No date conversion needed — reuse the original mock response resource
+                            writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                            writer.writeLine(
+                                `String expectedResponseBody = TestResources.loadResource("${responseResourcePath}");`
+                            );
+                        }
                     } else {
-                        this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", expectedResponseJson);
+                        this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", normalizedResponseJson);
                     }
 
                     writer.writeLine("JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);");
@@ -251,6 +273,86 @@ export class TestMethodBuilder {
     /**
      * Checks if the endpoint uses application/x-www-form-urlencoded content type.
      */
+    /**
+     * Encodes a value for application/x-www-form-urlencoded format, matching Java's URLEncoder.encode() behavior.
+     * - Spaces are encoded as '+' (not '%20' like encodeURIComponent)
+     * - Arrays are serialized as '[val1, val2]' (matching Java's List.toString())
+     * - Objects are serialized as JSON strings
+     */
+    private formUrlEncode(value: unknown): string {
+        const stringValue = this.formValueToString(value);
+        // Match Java's URLEncoder.encode() behavior:
+        // - Spaces as '+' (encodeURIComponent uses %20)
+        // - '!', '~', "'", '(', ')' are encoded (encodeURIComponent leaves them unencoded)
+        return encodeURIComponent(stringValue)
+            .replace(/%20/g, "+")
+            .replace(/!/g, "%21")
+            .replace(/~/g, "%7E")
+            .replace(/'/g, "%27")
+            .replace(/\(/g, "%28")
+            .replace(/\)/g, "%29");
+    }
+
+    /**
+     * Converts a value to its string representation matching Java SDK serialization.
+     */
+    private formValueToString(value: unknown): string {
+        if (Array.isArray(value)) {
+            // Java's List.toString() produces "[val1, val2]"
+            return `[${value.join(", ")}]`;
+        }
+        if (typeof value === "object" && value !== null) {
+            // Java serializes objects as JSON strings
+            return JSON.stringify(value);
+        }
+        return String(value);
+    }
+
+    /**
+     * Recursively converts RFC 2822 date strings to ISO 8601 format with Z suffix
+     * in JSON data. This is needed because Jackson's JavaTimeModule serializes
+     * OffsetDateTime as ISO 8601 (e.g. "2015-07-30T20:00:00Z"), but the IR example
+     * data may contain RFC 2822 dates (e.g. "Thu, 30 Jul 2015 20:00:00 +0000").
+     */
+    private convertRfc2822DatesToIso8601(data: unknown): unknown {
+        if (typeof data === "string") {
+            return this.tryConvertRfc2822Date(data);
+        }
+        if (Array.isArray(data)) {
+            return data.map((item) => this.convertRfc2822DatesToIso8601(item));
+        }
+        if (typeof data === "object" && data !== null) {
+            const result: Record<string, unknown> = {};
+            for (const [key, value] of Object.entries(data)) {
+                result[key] = this.convertRfc2822DatesToIso8601(value);
+            }
+            return result;
+        }
+        return data;
+    }
+
+    /**
+     * Attempts to parse an RFC 2822 date string and convert it to ISO 8601 with Z suffix.
+     * Returns the original string if it's not an RFC 2822 date.
+     */
+    private tryConvertRfc2822Date(value: string): string {
+        // Match RFC 2822 date format: "Thu, 30 Jul 2015 20:00:00 +0000"
+        const rfc2822Pattern =
+            /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{1,2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4}$/;
+        if (!rfc2822Pattern.test(value)) {
+            return value;
+        }
+        try {
+            const date = new Date(value);
+            if (isNaN(date.getTime())) {
+                return value;
+            }
+            return date.toISOString().replace(".000Z", "Z");
+        } catch {
+            return value;
+        }
+    }
+
     private isFormUrlEncodedEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
         const requestBody = endpoint.requestBody;
         if (!requestBody) {
