@@ -49,7 +49,9 @@ public partial class ServiceClient : IServiceClient
             };
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPublicObjectApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -39,7 +39,9 @@ public partial class DummyClient : IDummyClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<StreamResponse>(responseBody)!;
@@ -65,7 +67,9 @@ public partial class DummyClient : IDummyClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedStreamingApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -121,7 +125,9 @@ public partial class DummyClient : IDummyClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedStreamingApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

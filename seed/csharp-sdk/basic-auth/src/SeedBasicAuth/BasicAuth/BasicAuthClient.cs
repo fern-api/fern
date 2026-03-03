@@ -37,7 +37,9 @@ public partial class BasicAuthClient : IBasicAuthClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -63,7 +65,9 @@ public partial class BasicAuthClient : IBasicAuthClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 switch (response.StatusCode)
@@ -113,7 +117,9 @@ public partial class BasicAuthClient : IBasicAuthClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -139,7 +145,9 @@ public partial class BasicAuthClient : IBasicAuthClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 switch (response.StatusCode)

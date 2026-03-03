@@ -45,7 +45,9 @@ public partial class Ec2Client : IEc2Client
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedMultiUrlEnvironmentApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

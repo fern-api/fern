@@ -44,7 +44,9 @@ public partial class ApiClient : IApiClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedOauthClientCredentialsMandatoryAuthApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

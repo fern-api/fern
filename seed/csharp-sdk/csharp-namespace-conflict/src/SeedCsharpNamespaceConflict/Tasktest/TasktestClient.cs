@@ -42,7 +42,9 @@ public partial class TasktestClient : ITasktestClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedCsharpNamespaceConflictApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -48,7 +48,9 @@ public partial class PackageClient : IPackageClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNurseryApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

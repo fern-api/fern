@@ -46,7 +46,9 @@ public partial class FooClient : IFooClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ImportingType>(responseBody)!;
@@ -72,7 +74,9 @@ public partial class FooClient : IFooClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedCrossPackageTypeNamesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
