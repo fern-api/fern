@@ -10,7 +10,7 @@ import type {
     UseSuspenseQueryOptions,
     UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
 import { useClient } from "../../context.js";
 
@@ -19,44 +19,47 @@ type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 type TestGetParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["testGet"]>;
 type TestGetReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testGet"]>;
 
-export function testGetQueryKey(...args: TestGetParams): QueryKey {
-    return ["SeedExhaustiveClient", "endpoints", "httpMethods", "testGet", ...args] as const;
+export function testGetQueryKey(id: TestGetParams[0]): QueryKey {
+    return ["SeedExhaustiveClient", "endpoints", "httpMethods", "testGet", id] as const;
 }
 
 export function testGetOptions(
     client: ClientInstance,
-    ...args: TestGetParams
+    id: TestGetParams[0],
+    requestOptions?: TestGetParams[1],
 ): { queryKey: QueryKey; queryFn: () => TestGetReturnType } {
-    return {
-        queryKey: testGetQueryKey(...args),
-        queryFn: () => client.endpoints.httpMethods.testGet(...args),
-    };
+    return queryOptions({
+        queryKey: testGetQueryKey(id),
+        queryFn: () => client.endpoints.httpMethods.testGet(id, requestOptions),
+    });
 }
 
 export function useTestGet(
-    args: TestGetParams,
+    id: TestGetParams[0],
+    requestOptions?: TestGetParams[1],
     options?: Omit<
         UseQueryOptions<Awaited<TestGetReturnType>, Error, Awaited<TestGetReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<TestGetReturnType>, Error> {
     const client = useClient();
-    return useQuery({ ...testGetOptions(client, ...args), ...options });
+    return useQuery({ ...testGetOptions(client, id, requestOptions), ...options });
 }
 
 export function useSuspenseTestGet(
-    args: TestGetParams,
+    id: TestGetParams[0],
+    requestOptions?: TestGetParams[1],
     options?: Omit<
         UseSuspenseQueryOptions<Awaited<TestGetReturnType>, Error, Awaited<TestGetReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<TestGetReturnType>, Error> {
     const client = useClient();
-    return useSuspenseQuery({ ...testGetOptions(client, ...args), ...options });
+    return useSuspenseQuery({ ...testGetOptions(client, id, requestOptions), ...options });
 }
 
-export function invalidateTestGet(queryClient: QueryClient, ...args: TestGetParams): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: testGetQueryKey(...args) });
+export function invalidateTestGet(queryClient: QueryClient, id: TestGetParams[0]): Promise<void> {
+    return queryClient.invalidateQueries({ queryKey: testGetQueryKey(id) });
 }
 
 export function invalidateAllTestGet(queryClient: QueryClient): Promise<void> {

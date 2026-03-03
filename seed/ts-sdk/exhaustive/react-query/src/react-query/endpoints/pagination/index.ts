@@ -11,7 +11,13 @@ import type {
     UseSuspenseQueryOptions,
     UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { useInfiniteQuery, useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import {
+    infiniteQueryOptions,
+    queryOptions,
+    useInfiniteQuery,
+    useQuery,
+    useSuspenseQuery,
+} from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
 import { useClient } from "../../context.js";
 
@@ -34,7 +40,7 @@ export function listItemsInfiniteOptions(
     initialPageParam: unknown;
     getNextPageParam: (lastPage: Awaited<ListItemsReturnType>, allPages: unknown, lastPageParam: unknown) => unknown;
 } {
-    return {
+    return infiniteQueryOptions({
         queryKey: listItemsQueryKey(request),
         queryFn: ({ pageParam }) => {
             return client.endpoints.pagination.listItems(
@@ -47,7 +53,7 @@ export function listItemsInfiniteOptions(
             const nextCursor = lastPage.response?.next;
             return nextCursor ?? undefined;
         },
-    };
+    });
 }
 
 export function useListItemsInfinite(
@@ -73,10 +79,10 @@ export function listItemsOptions(
     request: ListItemsParams[0],
     requestOptions?: ListItemsParams[1],
 ): { queryKey: QueryKey; queryFn: () => ListItemsReturnType } {
-    return {
+    return queryOptions({
         queryKey: listItemsQueryKey(request),
         queryFn: () => client.endpoints.pagination.listItems(request, requestOptions),
-    };
+    });
 }
 
 export function useListItems(

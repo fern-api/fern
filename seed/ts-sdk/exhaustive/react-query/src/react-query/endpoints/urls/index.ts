@@ -8,7 +8,7 @@ import type {
     UseSuspenseQueryOptions,
     UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../../Client.js";
 import { useClient } from "../../context.js";
 
@@ -25,10 +25,10 @@ export function withMixedCaseOptions(
     client: ClientInstance,
     requestOptions?: WithMixedCaseParams[0],
 ): { queryKey: QueryKey; queryFn: () => WithMixedCaseReturnType } {
-    return {
+    return queryOptions({
         queryKey: withMixedCaseQueryKey(),
         queryFn: () => client.endpoints.urls.withMixedCase(requestOptions),
-    };
+    });
 }
 
 export function useWithMixedCase(
@@ -68,10 +68,10 @@ export function noEndingSlashOptions(
     client: ClientInstance,
     requestOptions?: NoEndingSlashParams[0],
 ): { queryKey: QueryKey; queryFn: () => NoEndingSlashReturnType } {
-    return {
+    return queryOptions({
         queryKey: noEndingSlashQueryKey(),
         queryFn: () => client.endpoints.urls.noEndingSlash(requestOptions),
-    };
+    });
 }
 
 export function useNoEndingSlash(
@@ -111,10 +111,10 @@ export function withEndingSlashOptions(
     client: ClientInstance,
     requestOptions?: WithEndingSlashParams[0],
 ): { queryKey: QueryKey; queryFn: () => WithEndingSlashReturnType } {
-    return {
+    return queryOptions({
         queryKey: withEndingSlashQueryKey(),
         queryFn: () => client.endpoints.urls.withEndingSlash(requestOptions),
-    };
+    });
 }
 
 export function useWithEndingSlash(
@@ -159,10 +159,10 @@ export function withUnderscoresOptions(
     client: ClientInstance,
     requestOptions?: WithUnderscoresParams[0],
 ): { queryKey: QueryKey; queryFn: () => WithUnderscoresReturnType } {
-    return {
+    return queryOptions({
         queryKey: withUnderscoresQueryKey(),
         queryFn: () => client.endpoints.urls.withUnderscores(requestOptions),
-    };
+    });
 }
 
 export function useWithUnderscores(

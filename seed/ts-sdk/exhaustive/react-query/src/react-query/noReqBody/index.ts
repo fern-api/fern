@@ -10,7 +10,7 @@ import type {
     UseSuspenseQueryOptions,
     UseSuspenseQueryResult,
 } from "@tanstack/react-query";
-import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import type { SeedExhaustiveClient } from "../../Client.js";
 import { useClient } from "../context.js";
 
@@ -27,10 +27,10 @@ export function getWithNoRequestBodyOptions(
     client: ClientInstance,
     requestOptions?: GetWithNoRequestBodyParams[0],
 ): { queryKey: QueryKey; queryFn: () => GetWithNoRequestBodyReturnType } {
-    return {
+    return queryOptions({
         queryKey: getWithNoRequestBodyQueryKey(),
         queryFn: () => client.noReqBody.getWithNoRequestBody(requestOptions),
-    };
+    });
 }
 
 export function useGetWithNoRequestBody(
