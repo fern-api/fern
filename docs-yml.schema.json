@@ -5052,13 +5052,6 @@
         "sidebar"
       ]
     },
-    "docs.TabsAlignment": {
-      "type": "string",
-      "enum": [
-        "left",
-        "center"
-      ]
-    },
     "docs.SwitcherPlacement": {
       "type": "string",
       "enum": [
@@ -5379,6 +5372,13 @@
       "enum": [
         "default",
         "bubble"
+      ]
+    },
+    "docs.TabsAlignment": {
+      "type": "string",
+      "enum": [
+        "left",
+        "center"
       ]
     },
     "docs.TabsThemeObjectConfig": {
