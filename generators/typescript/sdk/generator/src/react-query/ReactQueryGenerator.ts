@@ -257,15 +257,19 @@ export class ReactQueryGenerator {
         const clientTypeAccess = `ClientInstance${servicePath.map((p) => `["${p.unsafeName}"]`).join("")}`;
 
         for (const { endpoint } of group.endpoints) {
-            const endpointName = endpoint.name.camelCase.safeName;
+            // safeName for generated identifiers (avoids reserved words like 'delete' -> 'delete_')
+            // unsafeName for client method access (matches actual SDK client method names)
+            const endpointSafeName = endpoint.name.camelCase.safeName;
+            const endpointUnsafeName = endpoint.name.camelCase.unsafeName;
             const isGetMethod = endpoint.method === "GET" || endpoint.method === "HEAD";
             const hasPagination = endpoint.pagination != null;
 
-            // Use just the endpoint name for function prefix (file provides service context)
-            const capitalizedEndpointName = endpointName.charAt(0).toUpperCase() + endpointName.slice(1);
+            // Use safe name for function prefix (file provides service context)
+            const capitalizedEndpointName = endpointSafeName.charAt(0).toUpperCase() + endpointSafeName.slice(1);
             const functionPrefix = capitalizedEndpointName;
 
-            const endpointMethodType = `${clientTypeAccess}["${endpointName}"]`;
+            // Use unsafeName for type extraction from client (must match actual method name)
+            const endpointMethodType = `${clientTypeAccess}["${endpointUnsafeName}"]`;
             const paramsTypeName = `${functionPrefix}Params`;
             const returnTypeName = `${functionPrefix}ReturnType`;
 
@@ -281,7 +285,7 @@ export class ReactQueryGenerator {
             const keySegments = [
                 `"${this.rootClientName}"`,
                 ...servicePath.map((s) => `"${s.unsafeName}"`),
-                `"${endpointName}"`
+                `"${endpointUnsafeName}"`
             ];
 
             if (isGetMethod) {
@@ -313,10 +317,10 @@ export class ReactQueryGenerator {
                     lines.push(`    return {`);
                     if (hasRequestParams) {
                         lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
-                        lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(...args),`);
+                        lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(...args),`);
                     } else {
                         lines.push(`        queryKey: ${queryKeyFnName}(),`);
-                        lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(),`);
+                        lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
                     }
                     lines.push(`        initialPageParam: undefined as unknown,`);
                     lines.push(`        getNextPageParam: (_lastPage: Awaited<${returnTypeName}>): unknown => {`);
@@ -357,10 +361,10 @@ export class ReactQueryGenerator {
                 lines.push(`    return {`);
                 if (hasRequestParams) {
                     lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
-                    lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(...args),`);
+                    lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(...args),`);
                 } else {
                     lines.push(`        queryKey: ${queryKeyFnName}(),`);
-                    lines.push(`        queryFn: () => ${clientAccess}.${endpointName}(),`);
+                    lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
                 }
                 lines.push(`    };`);
                 lines.push(`}`);
@@ -426,13 +430,13 @@ export class ReactQueryGenerator {
                     lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
                     lines.push(`    return {`);
                     lines.push(
-                        `        mutationFn: (...args: ${paramsTypeName}) => ${clientAccess}.${endpointName}(...args),`
+                        `        mutationFn: (...args: ${paramsTypeName}) => ${clientAccess}.${endpointUnsafeName}(...args),`
                     );
                 } else {
                     const mutationReturnType = `{ mutationFn: () => ${returnTypeName} }`;
                     lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
                     lines.push(`    return {`);
-                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointName}(),`);
+                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
                 }
                 lines.push(`    };`);
                 lines.push(`}`);
@@ -448,7 +452,7 @@ export class ReactQueryGenerator {
                     lines.push(
                         `    return useMutation<Awaited<${returnTypeName}>, Error, ${paramsTypeName}, unknown>({`
                     );
-                    lines.push(`        mutationFn: (args) => ${clientAccess}.${endpointName}(...args),`);
+                    lines.push(`        mutationFn: (args) => ${clientAccess}.${endpointUnsafeName}(...args),`);
                     lines.push(`    });`);
                 } else {
                     const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, void, unknown>`;
@@ -456,7 +460,7 @@ export class ReactQueryGenerator {
                         `export function ${useMutationFnName}(client: ClientInstance): ${useMutationReturnType} {`
                     );
                     lines.push(`    return useMutation<Awaited<${returnTypeName}>, Error, void, unknown>({`);
-                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointName}(),`);
+                    lines.push(`        mutationFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
                     lines.push(`    });`);
                 }
                 lines.push(`}`);
