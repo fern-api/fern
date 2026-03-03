@@ -631,7 +631,8 @@ export class DocsDefinitionResolver {
             // Extract slug
             const slug = frontmatter.data.slug;
             if (typeof slug === "string" && slug.trim().length > 0) {
-                const trimmedSlug = slug.trim();
+                // Strip .md/.mdx extensions to prevent file extensions from leaking into navigation URLs
+                const trimmedSlug = slug.trim().replace(/\.(md|mdx)$/i, "");
                 if (isValidRelativeSlug(trimmedSlug)) {
                     this.markdownFilesToFullSlugs.set(absolutePath, trimmedSlug);
                 } else {
