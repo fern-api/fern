@@ -479,7 +479,7 @@ interface ProductionUrlInfo {
 }
 
 function getProductionUrlInfo(docsConfig: {
-    instances: Array<{ url: string; "custom-domain"?: string }> | undefined;
+    instances: Array<{ url: string; "custom-domain"?: string | string[] }> | undefined;
 }): ProductionUrlInfo {
     if (docsConfig.instances == null || docsConfig.instances.length === 0) {
         throw new Error("No docs instances configured in docs.yml");
@@ -491,7 +491,8 @@ function getProductionUrlInfo(docsConfig: {
     }
 
     // Prefer custom-domain if available, otherwise use url
-    const instanceUrl = firstInstance["custom-domain"] ?? firstInstance.url;
+    const customDomain = firstInstance["custom-domain"];
+    const instanceUrl = (Array.isArray(customDomain) ? customDomain[0] : customDomain) ?? firstInstance.url;
 
     let normalizedUrl = instanceUrl;
     if (!normalizedUrl.startsWith("https://") && !normalizedUrl.startsWith("http://")) {
