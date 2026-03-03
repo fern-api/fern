@@ -10,18 +10,22 @@ type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 type AddParams = Parameters<ClientInstance["endpoints"]["put"]["add"]>;
 type AddReturnType = ReturnType<ClientInstance["endpoints"]["put"]["add"]>;
 
-export function addMutationOptions(client: ClientInstance): { mutationFn: (args: AddParams) => AddReturnType } {
+export function addMutationOptions(
+    client: ClientInstance,
+    requestOptions?: AddParams[1],
+): { mutationFn: (variables: AddParams[0]) => AddReturnType } {
     return {
-        mutationFn: (args) => client.endpoints.put.add(...args),
+        mutationFn: (variables) => client.endpoints.put.add(variables, requestOptions),
     };
 }
 
 export function useAddMutation(
-    options?: Omit<UseMutationOptions<Awaited<AddReturnType>, Error, AddParams, unknown>, "mutationFn">,
-): UseMutationResult<Awaited<AddReturnType>, Error, AddParams, unknown> {
+    requestOptions?: AddParams[1],
+    options?: Omit<UseMutationOptions<Awaited<AddReturnType>, Error, AddParams[0], unknown>, "mutationFn">,
+): UseMutationResult<Awaited<AddReturnType>, Error, AddParams[0], unknown> {
     const client = useClient();
-    return useMutation<Awaited<AddReturnType>, Error, AddParams, unknown>({
-        mutationFn: (args) => client.endpoints.put.add(...args),
+    return useMutation<Awaited<AddReturnType>, Error, AddParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.put.add(variables, requestOptions),
         ...options,
     });
 }

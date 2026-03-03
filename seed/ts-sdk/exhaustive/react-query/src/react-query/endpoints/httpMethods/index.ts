@@ -31,7 +31,7 @@ export function testGetOptions(
     return queryOptions({
         queryKey: testGetQueryKey(id),
         queryFn: () => client.endpoints.httpMethods.testGet(id, requestOptions),
-    });
+    }) as unknown as { queryKey: QueryKey; queryFn: () => TestGetReturnType };
 }
 
 export function useTestGet(

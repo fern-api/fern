@@ -30,7 +30,7 @@ export function getWithNoRequestBodyOptions(
     return queryOptions({
         queryKey: getWithNoRequestBodyQueryKey(),
         queryFn: () => client.noReqBody.getWithNoRequestBody(requestOptions),
-    });
+    }) as unknown as { queryKey: QueryKey; queryFn: () => GetWithNoRequestBodyReturnType };
 }
 
 export function useGetWithNoRequestBody(

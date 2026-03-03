@@ -345,11 +345,17 @@ export class ReactQueryGenerator {
             if (isGetMethod) {
                 // Determine query parameter shape (same distinction as mutations for consistency).
                 // Single-param (sdkRequest, no path params): separate request from requestOptions for clean DX
-                // Multi-param (has path params): keep full tuple (requestOptions is part of the tuple)
+                // Multi-param (has separate positional path params): named params for each path param + request body
                 // No-param: accept requestOptions explicitly
-                const hasPathParams = endpoint.allPathParameters.length > 0;
-                const isSingleParamQuery = hasRequestParams && !hasPathParams;
-                const isMultiParamQuery = hasRequestParams && hasPathParams;
+                //
+                // IMPORTANT: When sdkRequest.shape.type === "wrapper", path params are inlined into the
+                // request wrapper object, so the SDK method signature is (request, requestOptions?) — NOT
+                // (pathParam, request, requestOptions?). These should be treated as single-param, not multi-param.
+                const hasPositionalPathParams =
+                    endpoint.allPathParameters.length > 0 &&
+                    (endpoint.sdkRequest == null || endpoint.sdkRequest.shape.type !== "wrapper");
+                const isSingleParamQuery = hasRequestParams && !hasPositionalPathParams;
+                const isMultiParamQuery = hasRequestParams && hasPositionalPathParams;
 
                 // === Query Key ===
                 // Exclude requestOptions from the cache key to prevent cache pollution
@@ -417,6 +423,8 @@ export class ReactQueryGenerator {
                     // Use infiniteQueryOptions() for idiomatic TanStack Query v5 pattern.
                     // We keep explicit return type annotations for isolatedDeclarations compatibility
                     // (the DataTag type from infiniteQueryOptions() contains internal symbols that can't be named).
+                    // Cast needed because infiniteQueryOptions() widens queryFn to QueryFunction<...> | undefined,
+                    // but we always provide queryFn so the cast is safe.
                     lines.push(`    return infiniteQueryOptions({`);
                     if (isSingleParamQuery) {
                         lines.push(`        queryKey: ${queryKeyFnName}(request),`);
@@ -487,7 +495,7 @@ export class ReactQueryGenerator {
                         lines.push(`        },`);
                     }
 
-                    lines.push(`    });`);
+                    lines.push(`    }) as unknown as ${infiniteReturnType};`);
                     lines.push(`}`);
                     lines.push(``);
 
@@ -589,7 +597,7 @@ export class ReactQueryGenerator {
                     lines.push(`        queryKey: ${queryKeyFnName}(),`);
                     lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(requestOptions),`);
                 }
-                lines.push(`    });`);
+                lines.push(`    }) as unknown as ${queryReturnType};`);
                 lines.push(`}`);
                 lines.push(``);
 
@@ -729,10 +737,14 @@ export class ReactQueryGenerator {
             } else {
                 // Determine if this is a single-param or multi-param mutation.
                 // Single-param (no path params, just sdkRequest): unwrap tuple so users call mutate(request) not mutate([request])
-                // Multi-param (has path params): keep tuple since mutate() only accepts one argument
-                const hasPathParams = endpoint.allPathParameters.length > 0;
-                const isSingleParamMutation = hasRequestParams && !hasPathParams;
-                const isMultiParamMutation = hasRequestParams && hasPathParams;
+                // Multi-param (has separate positional path params): keep tuple since mutate() only accepts one argument
+                // When sdkRequest.shape.type === "wrapper", path params are inlined into the request wrapper,
+                // so the SDK method is (request, requestOptions?) — treat as single-param.
+                const hasPositionalPathParams =
+                    endpoint.allPathParameters.length > 0 &&
+                    (endpoint.sdkRequest == null || endpoint.sdkRequest.shape.type !== "wrapper");
+                const isSingleParamMutation = hasRequestParams && !hasPositionalPathParams;
+                const isMultiParamMutation = hasRequestParams && hasPositionalPathParams;
 
                 // For single-param mutations, extract just the first element of the Parameters tuple
                 const mutationVarsType = isSingleParamMutation

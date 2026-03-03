@@ -53,7 +53,16 @@ export function listItemsInfiniteOptions(
             const nextCursor = lastPage.response?.next;
             return nextCursor ?? undefined;
         },
-    });
+    }) as unknown as {
+        queryKey: QueryKey;
+        queryFn: (context: { pageParam: unknown }) => ListItemsReturnType;
+        initialPageParam: unknown;
+        getNextPageParam: (
+            lastPage: Awaited<ListItemsReturnType>,
+            allPages: unknown,
+            lastPageParam: unknown,
+        ) => unknown;
+    };
 }
 
 export function useListItemsInfinite(
@@ -82,7 +91,7 @@ export function listItemsOptions(
     return queryOptions({
         queryKey: listItemsQueryKey(request),
         queryFn: () => client.endpoints.pagination.listItems(request, requestOptions),
-    });
+    }) as unknown as { queryKey: QueryKey; queryFn: () => ListItemsReturnType };
 }
 
 export function useListItems(

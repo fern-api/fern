@@ -28,7 +28,7 @@ export function withMixedCaseOptions(
     return queryOptions({
         queryKey: withMixedCaseQueryKey(),
         queryFn: () => client.endpoints.urls.withMixedCase(requestOptions),
-    });
+    }) as unknown as { queryKey: QueryKey; queryFn: () => WithMixedCaseReturnType };
 }
 
 export function useWithMixedCase(
@@ -71,7 +71,7 @@ export function noEndingSlashOptions(
     return queryOptions({
         queryKey: noEndingSlashQueryKey(),
         queryFn: () => client.endpoints.urls.noEndingSlash(requestOptions),
-    });
+    }) as unknown as { queryKey: QueryKey; queryFn: () => NoEndingSlashReturnType };
 }
 
 export function useNoEndingSlash(
@@ -114,7 +114,7 @@ export function withEndingSlashOptions(
     return queryOptions({
         queryKey: withEndingSlashQueryKey(),
         queryFn: () => client.endpoints.urls.withEndingSlash(requestOptions),
-    });
+    }) as unknown as { queryKey: QueryKey; queryFn: () => WithEndingSlashReturnType };
 }
 
 export function useWithEndingSlash(
@@ -162,7 +162,7 @@ export function withUnderscoresOptions(
     return queryOptions({
         queryKey: withUnderscoresQueryKey(),
         queryFn: () => client.endpoints.urls.withUnderscores(requestOptions),
-    });
+    }) as unknown as { queryKey: QueryKey; queryFn: () => WithUnderscoresReturnType };
 }
 
 export function useWithUnderscores(
