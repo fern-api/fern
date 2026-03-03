@@ -197,14 +197,19 @@ export class GenerateCommand {
             apiNames: apisToCheck
         });
 
-        // Check that the SDK configurations are valid.
+        // Check that the SDK configurations are valid (when fern.yml exists).
         const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
-        const fernYml = await schemaLoader.loadOrThrow();
-        const sdkChecker = new SdkChecker({ context });
-        const sdkCheckResult = await sdkChecker.check({ workspace, fernYml });
+        const fernYmlResult = await schemaLoader.load();
+        if (fernYmlResult.type === "success") {
+            const sdkChecker = new SdkChecker({ context });
+            const sdkCheckResult = await sdkChecker.check({ workspace, fernYml: fernYmlResult });
+            if (sdkCheckResult.errorCount > 0) {
+                throw CliError.exit();
+            }
+        }
 
         const validTargets = targets.filter((t) => checkResult.validApis.has(t.api));
-        if (validTargets.length === 0 || sdkCheckResult.errorCount > 0) {
+        if (validTargets.length === 0) {
             throw CliError.exit();
         }
 
