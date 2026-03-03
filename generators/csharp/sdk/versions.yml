@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.2
+  changelogEntry:
+    - summary: |
+        Fix incorrect XML doc comment on `MaxRetries` property in `ClientOptions`,
+        `RequestOptions`, and `IRequestOptions`. The summary previously read
+        "The http client used to make requests." (copy-paste from `HttpClient`)
+        and now correctly reads "The max number of retries to attempt."
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
 - version: 2.23.1
   changelogEntry:
     - summary: |
