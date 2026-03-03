@@ -17,6 +17,9 @@ func do() {
         DateTime: fern.MustParseDateTime(
             "2023-08-31T14:15:22Z",
         ),
+        DatetimeAlias: fern.MustParseDateTime(
+            "2023-08-31T14:15:22Z",
+        ),
     }
     client.Endpoints.GetAndReturnWithDatetimeAliasWithDocs(
         context.TODO(),

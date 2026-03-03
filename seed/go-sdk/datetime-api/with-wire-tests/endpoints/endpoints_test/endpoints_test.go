@@ -72,7 +72,14 @@ func TestEndpointsGetAndReturnWithDatetimeAliasWithDocsWithWireMock(
 	client := client.NewClient(
 		option.WithBaseURL(WireMockBaseURL),
 	)
-	request := &fern.ObjectWithDatetimeAlias{}
+	request := &fern.ObjectWithDatetimeAlias{
+		DateTime: fern.MustParseDateTime(
+			"2023-08-31T14:15:22Z",
+		),
+		DatetimeAlias: fern.MustParseDateTime(
+			"2023-08-31T14:15:22Z",
+		),
+	}
 	_, invocationErr := client.Endpoints.GetAndReturnWithDatetimeAliasWithDocs(
 		context.TODO(),
 		request,

@@ -28,7 +28,14 @@ The dateTime field should preserve its exact value "2023-08-31T14:15:22Z" withou
 <dd>
 
 ```go
-request := &fern.ObjectWithDatetimeAlias{}
+request := &fern.ObjectWithDatetimeAlias{
+        DateTime: fern.MustParseDateTime(
+            "2023-08-31T14:15:22Z",
+        ),
+        DatetimeAlias: fern.MustParseDateTime(
+            "2023-08-31T14:15:22Z",
+        ),
+    }
 client.Endpoints.GetAndReturnWithDatetimeAliasWithDocs(
         context.TODO(),
         request,

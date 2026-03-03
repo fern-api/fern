@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/datetime-api/fern\"\n\tfernclient \"github.com/datetime-api/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Endpoints.GetAndReturnWithDatetimeAliasWithDocs(\n\tcontext.TODO(),\n\t\u0026fern.ObjectWithDatetimeAlias{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/datetime-api/fern\"\n\tfernclient \"github.com/datetime-api/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Endpoints.GetAndReturnWithDatetimeAliasWithDocs(\n\tcontext.TODO(),\n\t\u0026fern.ObjectWithDatetimeAlias{\n\t\tDateTime: fern.MustParseDateTime(\n\t\t\t\"2023-08-31T14:15:22Z\",\n\t\t),\n\t\tDatetimeAlias: fern.MustParseDateTime(\n\t\t\t\"2023-08-31T14:15:22Z\",\n\t\t),\n\t},\n)\n"
             }
         }
     ]

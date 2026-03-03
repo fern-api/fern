@@ -13,17 +13,19 @@ service:
       request: root.ObjectWithDatetimeAlias
       response: root.ObjectWithDatetimeAlias
       examples:
-        - name: DatetimeLikeStringExample
+        - name: DatetimeAliasExample
           request:
-            datetimeLikeString: "2023-08-31T14:15:22Z"
-            actualDatetime: "2023-08-31T14:15:22Z"
+            dateTime: "2023-08-31T14:15:22Z"
+            datetimeAlias: "2023-08-31T14:15:22Z"
           response:
             body:
-              datetimeLikeString: "2023-08-31T14:15:22Z"
-              actualDatetime: "2023-08-31T14:15:22Z"
+              dateTime: "2023-08-31T14:15:22Z"
+              datetimeAlias: "2023-08-31T14:15:22Z"
         - name: DatetimeAliasExampleWithoutTimeZone
           request:
             dateTime: "2023-08-31T14:15:22"
+            datetimeAlias: "2023-08-31T14:15:22"
           response:
             body:
               dateTime: "2023-08-31T14:15:22"
+              datetimeAlias: "2023-08-31T14:15:22"
