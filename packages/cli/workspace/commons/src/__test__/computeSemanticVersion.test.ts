@@ -565,7 +565,8 @@ describe("getRegistryInfoFromOutputMode", () => {
             type: "publish" as const,
             registryOverrides: {}
         };
-        const info = getRegistryInfoFromOutputMode(outputMode);
+        // biome-ignore lint/suspicious/noExplicitAny: test stub — OutputMode.Publish requires _visit
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
         expect(info.registryUrl).toBeUndefined();
         expect(info.token).toBeUndefined();
     });
