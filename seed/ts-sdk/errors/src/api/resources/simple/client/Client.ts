@@ -41,68 +41,28 @@ export class SimpleClient {
         request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__fooWithoutEndpointError(request, requestOptions));
-    }
-
-    private async __fooWithoutEndpointError(
-        request: SeedErrors.FooRequest,
-        requestOptions?: SimpleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "foo1",
-                ),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<SeedErrors.FooResponse>({
+            method: "POST",
+            path: "foo1",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (statusCode, body, rawResponse) => {
+                switch (statusCode) {
+                    case 404:
+                        return new SeedErrors.NotFoundError(body as SeedErrors.ErrorBody, rawResponse);
+                    case 400:
+                        return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
+                    case 500:
+                        return new SeedErrors.InternalServerError(body as SeedErrors.ErrorBody, rawResponse);
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new SeedErrors.NotFoundError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedErrors.BadRequestError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 500:
-                    throw new SeedErrors.InternalServerError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedErrorsError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo1");
+            requestOptions,
+        });
     }
 
     /**
@@ -124,73 +84,30 @@ export class SimpleClient {
         request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__foo(request, requestOptions));
-    }
-
-    private async __foo(
-        request: SeedErrors.FooRequest,
-        requestOptions?: SimpleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "foo2",
-                ),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<SeedErrors.FooResponse>({
+            method: "POST",
+            path: "foo2",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (statusCode, body, rawResponse) => {
+                switch (statusCode) {
+                    case 429:
+                        return new SeedErrors.FooTooMuch(body as SeedErrors.ErrorBody, rawResponse);
+                    case 500:
+                        return new SeedErrors.FooTooLittle(body as SeedErrors.ErrorBody, rawResponse);
+                    case 404:
+                        return new SeedErrors.NotFoundError(body as SeedErrors.ErrorBody, rawResponse);
+                    case 400:
+                        return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 429:
-                    throw new SeedErrors.FooTooMuch(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 500:
-                    throw new SeedErrors.FooTooLittle(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new SeedErrors.NotFoundError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedErrors.BadRequestError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedErrorsError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo2");
+            requestOptions,
+        });
     }
 
     /**
@@ -212,72 +129,29 @@ export class SimpleClient {
         request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__fooWithExamples(request, requestOptions));
-    }
-
-    private async __fooWithExamples(
-        request: SeedErrors.FooRequest,
-        requestOptions?: SimpleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedErrors.FooResponse>> {
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "foo3",
-                ),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<SeedErrors.FooResponse>({
+            method: "POST",
+            path: "foo3",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (statusCode, body, rawResponse) => {
+                switch (statusCode) {
+                    case 429:
+                        return new SeedErrors.FooTooMuch(body as SeedErrors.ErrorBody, rawResponse);
+                    case 500:
+                        return new SeedErrors.FooTooLittle(body as SeedErrors.ErrorBody, rawResponse);
+                    case 404:
+                        return new SeedErrors.NotFoundError(body as SeedErrors.ErrorBody, rawResponse);
+                    case 400:
+                        return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedErrors.FooResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 429:
-                    throw new SeedErrors.FooTooMuch(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 500:
-                    throw new SeedErrors.FooTooLittle(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new SeedErrors.NotFoundError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedErrors.BadRequestError(
-                        _response.error.body as SeedErrors.ErrorBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedErrorsError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo3");
+            requestOptions,
+        });
     }
 }

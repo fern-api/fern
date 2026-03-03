@@ -256,7 +256,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         retainOriginalCasing: this.retainOriginalCasing,
                         omitUndefined: this.omitUndefined,
                         generateEndpointMetadata: this.generateEndpointMetadata,
-                        parameterNaming
+                        parameterNaming,
+                        errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
+                        errorResolver
                     });
                 };
 
@@ -754,15 +756,21 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
             const publicMethodName = endpoint.endpoint.name.camelCase.unsafeName;
 
-            // Check if this endpoint can use the single-method HttpClient.request() pattern.
-            // Complex endpoints (streaming, pagination, file upload, non-throwing, etc.) use
-            // the dual public/private pattern but still route through this._client.fetch().
-            const canUseClientRequest =
-                endpoint instanceof GeneratedDefaultEndpointImplementation && endpoint.canUseClientRequest(context);
+            // Determine which code generation pattern to use:
+            // 1. GeneratedDefaultEndpointImplementation (non-paginated, non-non-throwing):
+            //    Single public method using this._client.request<T>(config)
+            // 2. Everything else (streaming, file-download, paginated, non-throwing):
+            //    Dual public/private pattern or single async method
+            const isDefaultEndpoint = endpoint instanceof GeneratedDefaultEndpointImplementation;
+            const isNonThrowing =
+                isDefaultEndpoint && endpoint.response instanceof GeneratedNonThrowingEndpointResponse;
+            const useClientRequest = isDefaultEndpoint && !isPaginated && !isNonThrowing;
 
-            if (canUseClientRequest) {
+            if (useClientRequest) {
                 // Single public method that returns this._client.request<T>(config) directly
-                const clientRequestStatements = endpoint.getClientRequestStatements(context);
+                const clientRequestStatements = (
+                    endpoint as GeneratedDefaultEndpointImplementation
+                ).getClientRequestStatements(context);
                 const publicMethod: MethodDeclarationStructure = {
                     kind: StructureKind.Method,
                     scope: Scope.Public,
@@ -782,7 +790,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
                 serviceClass.methods.push(publicMethod);
             } else {
-                // Dual public/private pattern for complex endpoints (streaming, pagination, file upload, etc.)
+                // Dual public/private pattern for: streaming, file-download, paginated, non-throwing
                 const internalMethodName = `__${publicMethodName}`;
                 const publicStatements = [
                     ts.factory.createReturnStatement(

@@ -41,56 +41,24 @@ export class FileUploadExampleClient {
         request: SeedApi.UploadFileRequest,
         requestOptions?: FileUploadExampleClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.FileId> {
-        return core.HttpResponsePromise.fromPromise(this.__uploadFile(request, requestOptions));
-    }
-
-    private async __uploadFile(
-        request: SeedApi.UploadFileRequest,
-        requestOptions?: FileUploadExampleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.FileId>> {
-        const _body = await core.newFormData();
-        _body.append("name", request.name);
-        if (request.file != null) {
-            await _body.appendFile("file", request.file);
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "upload-file",
-                ),
+        return this._client.request<SeedApi.FileId>(async () => {
+            const _body = await core.newFormData();
+            _body.append("name", request.name);
+            if (request.file != null) {
+                await _body.appendFile("file", request.file);
+            }
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "upload-file",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedApi.FileId, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/upload-file");
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 }

@@ -35,14 +35,28 @@ export interface EndpointConfig {
         headers?: Record<string, unknown>;
         queryParams?: Record<string, unknown>;
     };
-    /** Map specific status codes to typed error constructors */
-    errorMap?: Record<number, (body: unknown, rawResponse: RawResponse) => Error>;
+    /**
+     * Custom error handler for status-code errors. Called with the status code, body, and raw response.
+     * Return an Error to throw it, or undefined to fall through to the generic SDK error.
+     */
+    errorHandler?: (statusCode: number, body: unknown, rawResponse: RawResponse) => Error | undefined;
     /** Whether to include credentials on cross-origin requests */
     withCredentials?: boolean;
     /** Endpoint metadata for supplier resolution */
     endpointMetadata?: Record<string, unknown>;
-    /** Custom response transform (e.g. for deserialization). Called with the raw response body on success. */
-    transformResponse?: (body: unknown) => unknown;
+    /** Custom response transform (e.g. for deserialization or HEAD responses). Called with the raw response body and raw response on success. */
+    transformResponse?: (body: unknown, rawResponse: RawResponse) => unknown;
+    /**
+     * Override the default timeout for this endpoint (in seconds).
+     * Falls back to requestOptions.timeoutInSeconds, then client-level timeout, then this value.
+     * Use "infinity" to disable timeout.
+     */
+    defaultTimeoutInSeconds?: number | "infinity";
+    /**
+     * Override the base URL for this endpoint. Used by multi-URL environments
+     * where different endpoints hit different base URLs.
+     */
+    baseUrl?: string;
 }
 /**
  * Options for constructing an HttpClient.
@@ -88,8 +102,6 @@ export declare class HttpClient {
         body: unknown;
         rawResponse: RawResponse;
     }) => Error, handleNonStatusCodeError: (error: Fetcher.Error, rawResponse: RawResponse, method: string, path: string) => never);
-    /** Expose normalized options for sub-clients that need them (e.g. pagination) */
-    get options(): HttpClientOptions;
     /**
      * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
      * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
@@ -108,7 +120,17 @@ export declare class HttpClient {
     /**
      * Make an HTTP request. Returns HttpResponsePromise so callers get both
      * `await client.getUser()` and `client.getUser().withRawResponse()` for free.
+     *
+     * Accepts either a static config or an async config builder function.
+     * The async builder is used by endpoints that need async pre-processing
+     * (e.g. file upload form data building) while keeping the public method non-async.
      */
-    request<T>(config: EndpointConfig): HttpResponsePromise<T>;
+    request<T>(config: EndpointConfig | (() => Promise<EndpointConfig>)): HttpResponsePromise<T>;
     private _execute;
+    /**
+     * Resolves the timeout in milliseconds for a request.
+     * Priority: requestOptions.timeoutInSeconds > client-level > endpoint default > 60s.
+     * "infinity" means no timeout (returns undefined).
+     */
+    private _resolveTimeoutMs;
 }

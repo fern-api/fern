@@ -121,5 +121,4 @@ export declare class ParamsClient {
      *     await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path")
      */
     uploadWithPath(uploadable: core.file.Uploadable, param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
-    private __uploadWithPath;
 }

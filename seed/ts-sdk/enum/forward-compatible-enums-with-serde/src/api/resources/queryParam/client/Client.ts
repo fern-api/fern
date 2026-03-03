@@ -94,13 +94,6 @@ export class QueryParamClient {
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
-    }
-
-    private async __sendList(
-        request: SeedEnum.SendEnumListAsQueryParamRequest,
-        requestOptions?: QueryParamClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
             operand: Array.isArray(operand)
@@ -156,38 +149,12 @@ export class QueryParamClient {
                   : undefined,
         };
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "query-list",
-                ),
-                method: "POST",
-                headers: _headers,
-                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedEnumError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/query-list");
+        return this._client.request<void>({
+            method: "POST",
+            path: "query-list",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
+            requestOptions,
+        });
     }
 }

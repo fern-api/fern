@@ -9,7 +9,7 @@ export interface GeneratedEndpointRequest {
     getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure & { docs?: string }>[];
     getFetcherRequestArgs: (
         context: SdkContext
-    ) => Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType">;
+    ) => Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex">;
     getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
     getReferenceToPathParameter: (pathParameterKey: string, context: SdkContext) => ts.Expression;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;

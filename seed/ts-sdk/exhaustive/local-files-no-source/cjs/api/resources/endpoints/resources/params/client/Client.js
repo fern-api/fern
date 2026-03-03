@@ -263,44 +263,20 @@ class ParamsClient {
      *     await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path")
      */
     uploadWithPath(uploadable, param, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__uploadWithPath(uploadable, param, requestOptions));
-    }
-    __uploadWithPath(uploadable, param, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g;
+        return this._client.request(() => __awaiter(this, void 0, void 0, function* () {
             const _binaryUploadRequest = yield core.file.toBinaryUploadRequest(uploadable);
             const _headers = (0, headers_js_1.mergeOnlyDefinedHeaders)(Object.assign({}, _binaryUploadRequest.headers));
-            const _response = yield this._client.fetch({
-                url: core.url.join((_a = (yield core.Supplier.get(this._options.baseUrl))) !== null && _a !== void 0 ? _a : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "bytes",
-                duplex: "half",
+                path: `/params/path/${core.url.encodePathParam(param)}`,
                 body: _binaryUploadRequest.body,
-                timeoutMs: ((_d = (_b = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _b !== void 0 ? _b : (_c = this._options) === null || _c === void 0 ? void 0 : _c.timeoutInSeconds) !== null && _d !== void 0 ? _d : 60) * 1000,
-                maxRetries: (_e = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _e !== void 0 ? _e : (_f = this._options) === null || _f === void 0 ? void 0 : _f.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_g = this._options) === null || _g === void 0 ? void 0 : _g.fetch,
-                logging: this._options.logging,
-            }, {
-                requestHeaders: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/params/path/{param}");
-        });
+                requestType: "bytes",
+                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+                duplex: "half",
+                headers: _headers,
+                requestOptions,
+            };
+        }));
     }
 }
 exports.ParamsClient = ParamsClient;

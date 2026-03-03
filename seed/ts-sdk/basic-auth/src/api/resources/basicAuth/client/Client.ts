@@ -35,54 +35,24 @@ export class BasicAuthClient {
      *     await client.basicAuth.getWithBasicAuth()
      */
     public getWithBasicAuth(requestOptions?: BasicAuthClient.RequestOptions): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__getWithBasicAuth(requestOptions));
-    }
-
-    private async __getWithBasicAuth(
-        requestOptions?: BasicAuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "basic-auth",
-                ),
-                method: "GET",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<boolean>({
+            method: "GET",
+            path: "basic-auth",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (statusCode, body, rawResponse) => {
+                switch (statusCode) {
+                    case 401:
+                        return new SeedBasicAuth.UnauthorizedRequest(
+                            body as SeedBasicAuth.UnauthorizedRequestErrorBody,
+                            rawResponse,
+                        );
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new SeedBasicAuth.UnauthorizedRequest(
-                        _response.error.body as SeedBasicAuth.UnauthorizedRequestErrorBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedBasicAuthError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/basic-auth");
+            requestOptions,
+        });
     }
 
     /**
@@ -103,59 +73,28 @@ export class BasicAuthClient {
         request?: unknown,
         requestOptions?: BasicAuthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__postWithBasicAuth(request, requestOptions));
-    }
-
-    private async __postWithBasicAuth(
-        request?: unknown,
-        requestOptions?: BasicAuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "basic-auth",
-                ),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<boolean>({
+            method: "POST",
+            path: "basic-auth",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (statusCode, body, rawResponse) => {
+                switch (statusCode) {
+                    case 401:
+                        return new SeedBasicAuth.UnauthorizedRequest(
+                            body as SeedBasicAuth.UnauthorizedRequestErrorBody,
+                            rawResponse,
+                        );
+                    case 400:
+                        return new SeedBasicAuth.BadRequest(rawResponse);
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 401:
-                    throw new SeedBasicAuth.UnauthorizedRequest(
-                        _response.error.body as SeedBasicAuth.UnauthorizedRequestErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedBasicAuth.BadRequest(_response.rawResponse);
-                default:
-                    throw new errors.SeedBasicAuthError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/basic-auth");
+            requestOptions,
+        });
     }
 }

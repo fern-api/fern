@@ -34,81 +34,47 @@ export class MultipartFormClient {
         request: SeedEnum.MultipartFormRequest,
         requestOptions?: MultipartFormClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__multipartForm(request, requestOptions));
-    }
-
-    private async __multipartForm(
-        request: SeedEnum.MultipartFormRequest,
-        requestOptions?: MultipartFormClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _body = await core.newFormData();
-        _body.append(
-            "color",
-            serializers.Color.jsonOrThrow(request.color, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-        );
-        if (request.maybeColor != null) {
+        return this._client.request<void>(async () => {
+            const _body = await core.newFormData();
             _body.append(
-                "maybeColor",
-                serializers.Color.jsonOrThrow(request.maybeColor, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
+                "color",
+                serializers.Color.jsonOrThrow(request.color, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             );
-        }
-
-        for (const _item of request.colorList) {
-            _body.append(
-                "colorList",
-                serializers.Color.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            );
-        }
-
-        if (request.maybeColorList != null) {
-            for (const _item of request.maybeColorList) {
+            if (request.maybeColor != null) {
                 _body.append(
-                    "maybeColorList",
+                    "maybeColor",
+                    serializers.Color.jsonOrThrow(request.maybeColor, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
+                );
+            }
+            for (const _item of request.colorList) {
+                _body.append(
+                    "colorList",
                     serializers.Color.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
                 );
             }
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "multipart",
-                ),
+            if (request.maybeColorList != null) {
+                for (const _item of request.maybeColorList) {
+                    _body.append(
+                        "maybeColorList",
+                        serializers.Color.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+                    );
+                }
+            }
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "multipart",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedEnumError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/multipart");
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 }

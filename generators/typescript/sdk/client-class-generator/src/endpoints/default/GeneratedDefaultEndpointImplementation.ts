@@ -1,6 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { deduplicateExamples, Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
@@ -17,7 +18,6 @@ import {
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse.js";
-import { GeneratedNonThrowingEndpointResponse } from "./endpoint-response/GeneratedNonThrowingEndpointResponse.js";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
@@ -32,6 +32,8 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         omitUndefined: boolean;
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
+        errorResolver: ErrorResolver;
     }
 }
 
@@ -49,6 +51,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private readonly omitUndefined: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    private readonly errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy;
+    private readonly errorResolver: ErrorResolver;
 
     constructor({
         endpoint,
@@ -61,7 +65,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         retainOriginalCasing,
         omitUndefined,
         generateEndpointMetadata,
-        parameterNaming
+        parameterNaming,
+        errorDiscriminationStrategy,
+        errorResolver
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -74,6 +80,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.omitUndefined = omitUndefined;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
+        this.errorDiscriminationStrategy = errorDiscriminationStrategy;
+        this.errorResolver = errorResolver;
     }
 
     public isPaginated(context: SdkContext): boolean {
@@ -721,66 +729,21 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     /**
-     * Determines whether this endpoint can use the HttpClient.request() pattern
-     * (single synchronous method) instead of the dual public/private async pattern.
-     */
-    public canUseClientRequest(context: SdkContext): boolean {
-        // Not paginated
-        if (this.response.getPaginationInfo(context) != null) {
-            return false;
-        }
-        // Not streaming/file-download/bytes response
-        const responseType = this.endpoint.response?.body?.type;
-        if (responseType === "streaming" || responseType === "fileDownload" || responseType === "bytes") {
-            return false;
-        }
-        // Not HEAD method (returns headers as data)
-        if (this.endpoint.method === "HEAD") {
-            return false;
-        }
-        // Not file upload or bytes request (needs async form data building)
-        const requestType = this.endpoint.requestBody?.type;
-        if (requestType === "fileUpload" || requestType === "bytes") {
-            return false;
-        }
-        // No specific endpoint errors (for now - errorMap support can be added later)
-        if (this.endpoint.errors.length > 0) {
-            return false;
-        }
-        // Not non-throwing mode (HttpClient always throws on errors)
-        if (this.response instanceof GeneratedNonThrowingEndpointResponse) {
-            return false;
-        }
-        // Not non-default timeout (HttpClient can't express "infinity" or custom defaults per-endpoint)
-        if (this.defaultTimeoutInSeconds !== undefined && this.defaultTimeoutInSeconds !== 60) {
-            return false;
-        }
-        // Not multi-URL environment endpoint (HttpClient can't resolve environment object properties)
-        if (this.endpoint.baseUrl != null) {
-            return false;
-        }
-        // Not endpoints with serde query params that generate async code (await in non-async method)
-        if (this.includeSerdeLayer && this.endpoint.queryParameters.length > 0) {
-            for (const queryParam of this.endpoint.queryParameters) {
-                if (queryParam.allowMultiple) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    /**
      * Generates the body statements for a single (non-async) public method
-     * that uses this._client.request<T>({config}). This eliminates the dual
-     * public/private method pattern for simple endpoints.
+     * that uses this._client.request<T>({config}). Handles ALL endpoint variations:
+     * errorHandler, custom timeouts, multi-URL baseUrl, HEAD responses, file upload,
+     * bytes request, serde allowMultiple, and duplex.
+     *
+     * When async preprocessing is needed (file upload form data, multi-URL base URL
+     * resolution, serde allowMultiple), wraps the config in an async builder function.
      */
     public getClientRequestStatements(context: SdkContext): ts.Statement[] {
-        const statements: ts.Statement[] = [];
+        // Statements that go outside the async builder (always sync)
+        const outerStatements: ts.Statement[] = [];
 
-        // 1. Endpoint metadata
+        // 1. Endpoint metadata (always sync, goes outside)
         if (this.generateEndpointMetadata) {
-            statements.push(
+            outerStatements.push(
                 ...generateEndpointMetadata({
                     httpEndpoint: this.endpoint,
                     context
@@ -789,7 +752,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         // 2. Build request statements (destructuring, query params, endpoint-specific headers)
-        statements.push(...this.request.getBuildRequestStatements(context));
+        // These may contain await (file upload, bytes upload, serde allowMultiple), so they may need to
+        // go inside an async config builder.
+        const buildStatements = this.request.getBuildRequestStatements(context);
+
+        const needsAsync = this.endpoint.baseUrl != null || this.hasAwaitExpression(buildStatements);
+
+        if (!needsAsync) {
+            outerStatements.push(...buildStatements);
+        }
 
         // 3. Get fetcher request args for config properties
         const requestArgs = this.request.getFetcherRequestArgs(context);
@@ -849,8 +820,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             );
         }
 
+        // duplex (if present — file upload, bytes request)
+        if (requestArgs.duplex != null) {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("duplex"), requestArgs.duplex)
+            );
+        }
+
         // headers (only if endpoint-specific headers were generated)
-        const hasEndpointSpecificHeaders = statements.some(
+        const hasEndpointSpecificHeaders = buildStatements.some(
             (stmt) =>
                 ts.isVariableStatement(stmt) &&
                 stmt.declarationList.declarations.some(
@@ -894,8 +872,64 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             );
         }
 
-        // transformResponse (for serde layer deserialization)
-        if (this.includeSerdeLayer && this.endpoint.response?.body != null) {
+        // errorHandler (for endpoints with status-code-specific errors)
+        if (this.endpoint.errors.length > 0) {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("errorHandler"),
+                    this.buildErrorHandler(context)
+                )
+            );
+        }
+
+        // defaultTimeoutInSeconds (for custom per-endpoint timeouts)
+        if (this.defaultTimeoutInSeconds !== undefined) {
+            const timeoutExpr =
+                this.defaultTimeoutInSeconds === "infinity"
+                    ? ts.factory.createStringLiteral("infinity")
+                    : ts.factory.createNumericLiteral(this.defaultTimeoutInSeconds);
+            configProperties.push(
+                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("defaultTimeoutInSeconds"), timeoutExpr)
+            );
+        }
+
+        // baseUrl (for multi-URL environments)
+        if (this.endpoint.baseUrl != null) {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("baseUrl"),
+                    this.generatedSdkClientClass.getBaseUrl(this.endpoint, context)
+                )
+            );
+        }
+
+        // transformResponse for HEAD method (returns rawResponse.headers as data)
+        if (this.endpoint.method === "HEAD" && this.endpoint.response?.body == null) {
+            const rawResponseParam = ts.factory.createIdentifier("rawResponse");
+            configProperties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("transformResponse"),
+                    ts.factory.createArrowFunction(
+                        undefined,
+                        undefined,
+                        [
+                            ts.factory.createParameterDeclaration(
+                                undefined,
+                                undefined,
+                                ts.factory.createIdentifier("_body")
+                            ),
+                            ts.factory.createParameterDeclaration(undefined, undefined, rawResponseParam)
+                        ],
+                        undefined,
+                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                        ts.factory.createPropertyAccessExpression(rawResponseParam, "headers")
+                    )
+                )
+            );
+        }
+
+        // transformResponse (for serde layer deserialization of JSON responses)
+        if (this.endpoint.method !== "HEAD" && this.includeSerdeLayer && this.endpoint.response?.body != null) {
             const responseBody = this.endpoint.response.body;
             if (responseBody.type === "json") {
                 const bodyParam = ts.factory.createIdentifier("body");
@@ -919,7 +953,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }
         }
 
-        // requestOptions (shorthand property)
+        // requestOptions (shorthand property — always last)
         configProperties.push(
             ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME))
         );
@@ -927,24 +961,207 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         // 6. Build the config object
         const configObject = ts.factory.createObjectLiteralExpression(configProperties, true);
 
-        // 7. Build this._client.request<T>(config)
+        // 7. Build the request call
         const returnType = this.response.getReturnType(context);
-        const clientRequestCall = ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(
+
+        if (needsAsync) {
+            // Async config builder: return this._client.request<T>(async () => { ...stmts; return config })
+            const asyncBodyStatements: ts.Statement[] = [
+                ...buildStatements,
+                ts.factory.createReturnStatement(configObject)
+            ];
+
+            const asyncBuilderFn = ts.factory.createArrowFunction(
+                [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                undefined,
+                [],
+                undefined,
+                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                ts.factory.createBlock(asyncBodyStatements, true)
+            );
+
+            const clientRequestCall = ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
-                    ts.factory.createThis(),
-                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER)
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createThis(),
+                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER)
+                    ),
+                    ts.factory.createIdentifier("request")
                 ),
-                ts.factory.createIdentifier("request")
-            ),
-            [returnType], // type argument
-            [configObject]
+                [returnType],
+                [asyncBuilderFn]
+            );
+
+            outerStatements.push(ts.factory.createReturnStatement(clientRequestCall));
+        } else {
+            // Sync: return this._client.request<T>(config)
+            const clientRequestCall = ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createThis(),
+                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER)
+                    ),
+                    ts.factory.createIdentifier("request")
+                ),
+                [returnType],
+                [configObject]
+            );
+
+            outerStatements.push(ts.factory.createReturnStatement(clientRequestCall));
+        }
+
+        return outerStatements;
+    }
+
+    /**
+     * Determines whether the provided statements contain an await expression.
+     * Used to decide if we must use the async config builder form of HttpClient.request().
+     */
+    private hasAwaitExpression(statements: ts.Statement[]): boolean {
+        const containsAwait = (node: ts.Node): boolean => {
+            if (ts.isAwaitExpression(node)) {
+                return true;
+            }
+            let found = false;
+            ts.forEachChild(node, (child) => {
+                if (!found && containsAwait(child)) {
+                    found = true;
+                }
+            });
+            return found;
+        };
+
+        return statements.some((stmt) => containsAwait(stmt));
+    }
+
+    /**
+     * Builds an errorHandler arrow function for the EndpointConfig.
+     * Generates a switch statement matching status codes or discriminant properties
+     * to typed error constructors. Returns undefined to fall through to the generic error.
+     */
+    private buildErrorHandler(context: SdkContext): ts.Expression {
+        const statusCodeParam = ts.factory.createIdentifier("statusCode");
+        const bodyParam = ts.factory.createIdentifier("body");
+        const rawResponseParam = ts.factory.createIdentifier("rawResponse");
+
+        // Generate case clauses based on error discrimination strategy
+        const switchStatement = FernIr.ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
+            statusCode: () => this.buildStatusCodeErrorHandler(context, statusCodeParam, bodyParam, rawResponseParam),
+            property: (propertyStrategy) =>
+                this.buildPropertyErrorHandler(context, propertyStrategy, bodyParam, rawResponseParam),
+            _other: () => {
+                throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
+            }
+        });
+
+        // Return: (statusCode, body, rawResponse) => { switch(...) { ... } return undefined; }
+        return ts.factory.createArrowFunction(
+            undefined,
+            undefined,
+            [
+                ts.factory.createParameterDeclaration(undefined, undefined, statusCodeParam),
+                ts.factory.createParameterDeclaration(undefined, undefined, bodyParam),
+                ts.factory.createParameterDeclaration(undefined, undefined, rawResponseParam)
+            ],
+            undefined,
+            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            ts.factory.createBlock(
+                [switchStatement, ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined"))],
+                true
+            )
         );
+    }
 
-        // 8. Return statement
-        statements.push(ts.factory.createReturnStatement(clientRequestCall));
+    /**
+     * Builds a switch(statusCode) statement for status-code-discriminated errors.
+     */
+    private buildStatusCodeErrorHandler(
+        context: SdkContext,
+        statusCodeParam: ts.Identifier,
+        bodyParam: ts.Identifier,
+        rawResponseParam: ts.Identifier
+    ): ts.Statement {
+        // Deduplicate errors by status code (first wins, same as GeneratedThrowingEndpointResponse)
+        const seenStatusCodes = new Set<number>();
+        const deduplicatedErrors = this.endpoint.errors.filter((error) => {
+            const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
+            if (seenStatusCodes.has(errorDeclaration.statusCode)) {
+                return false;
+            }
+            seenStatusCodes.add(errorDeclaration.statusCode);
+            return true;
+        });
 
-        return statements;
+        return ts.factory.createSwitchStatement(
+            statusCodeParam,
+            ts.factory.createCaseBlock(
+                deduplicatedErrors.map((error) => {
+                    const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
+                    return ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
+                        ts.factory.createReturnStatement(
+                            this.buildErrorExpression(context, error, bodyParam, rawResponseParam)
+                        )
+                    ]);
+                })
+            )
+        );
+    }
+
+    /**
+     * Builds a switch((body as any)?.[discriminant]) statement for property-discriminated errors.
+     */
+    private buildPropertyErrorHandler(
+        context: SdkContext,
+        propertyStrategy: FernIr.ErrorDiscriminationByPropertyStrategy,
+        bodyParam: ts.Identifier,
+        rawResponseParam: ts.Identifier
+    ): ts.Statement {
+        return ts.factory.createSwitchStatement(
+            ts.factory.createElementAccessChain(
+                ts.factory.createAsExpression(bodyParam, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createStringLiteral(propertyStrategy.discriminant.wireValue)
+            ),
+            ts.factory.createCaseBlock(
+                this.endpoint.errors.map((error) =>
+                    ts.factory.createCaseClause(
+                        ts.factory.createStringLiteral(
+                            context.sdkError.getErrorDeclaration(error.error).discriminantValue.wireValue
+                        ),
+                        [
+                            ts.factory.createReturnStatement(
+                                this.buildErrorExpression(context, error, bodyParam, rawResponseParam)
+                            )
+                        ]
+                    )
+                )
+            )
+        );
+    }
+
+    /**
+     * Builds a `new SomeError(deserializedBody, rawResponse)` expression for a single error.
+     */
+    private buildErrorExpression(
+        context: SdkContext,
+        error: FernIr.ResponseError,
+        bodyParam: ts.Identifier,
+        rawResponseParam: ts.Identifier
+    ): ts.Expression {
+        const generatedSdkError = context.sdkError.getGeneratedSdkError(error.error);
+        if (generatedSdkError?.type !== "class") {
+            throw new Error("Cannot build error because it's not a class");
+        }
+        const generatedSdkErrorSchema = context.sdkErrorSchema.getGeneratedSdkErrorSchema(error.error);
+        return generatedSdkError.build(context, {
+            referenceToBody:
+                generatedSdkErrorSchema != null
+                    ? generatedSdkErrorSchema.deserializeBody(context, {
+                          referenceToBody: bodyParam
+                      })
+                    : undefined,
+            referenceToRawResponse: rawResponseParam
+        });
     }
 
     public invokeFetcherAndReturnResponse(context: SdkContext): ts.Statement[] {

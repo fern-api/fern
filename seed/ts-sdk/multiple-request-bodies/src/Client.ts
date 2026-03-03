@@ -5,7 +5,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import { mergeOnlyDefinedHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
-import * as environments from "./environments.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
 
@@ -60,52 +59,20 @@ export class SeedApiClient {
         uploadable: core.file.Uploadable,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.UploadDocumentResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__uploadPdfDocument(uploadable, requestOptions));
-    }
-
-    private async __uploadPdfDocument(
-        uploadable: core.file.Uploadable,
-        requestOptions?: SeedApiClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.UploadDocumentResponse>> {
-        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
-        const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.SeedApiEnvironment.Default,
-                    "documents/upload",
-                ),
+        return this._client.request<SeedApi.UploadDocumentResponse>(async () => {
+            const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+            const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                contentType: "application/pdf",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "bytes",
-                duplex: "half",
+                path: "documents/upload",
                 body: _binaryUploadRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedApi.UploadDocumentResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/documents/upload");
+                contentType: "application/pdf",
+                requestType: "bytes",
+                queryParameters: requestOptions?.queryParams,
+                duplex: "half",
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 }

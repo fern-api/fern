@@ -67,54 +67,20 @@ export class ImdbClient {
         movie_id: SeedApi.MovieId,
         requestOptions?: ImdbClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Movie> {
-        return core.HttpResponsePromise.fromPromise(this.__getMovie(movie_id, requestOptions));
-    }
-
-    private async __getMovie(
-        movie_id: SeedApi.MovieId,
-        requestOptions?: ImdbClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Movie>> {
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    `/movies/${core.url.encodePathParam(movie_id)}`,
-                ),
-                method: "GET",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<SeedApi.Movie>({
+            method: "GET",
+            path: `/movies/${core.url.encodePathParam(movie_id)}`,
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (statusCode, body, rawResponse) => {
+                switch (statusCode) {
+                    case 404:
+                        return new SeedApi.MovieDoesNotExistError(body as SeedApi.MovieId, rawResponse);
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedApi.Movie, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new SeedApi.MovieDoesNotExistError(
-                        _response.error.body as SeedApi.MovieId,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/movies/{movie_id}");
+            requestOptions,
+        });
     }
 }

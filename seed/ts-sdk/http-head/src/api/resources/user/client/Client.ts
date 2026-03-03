@@ -31,44 +31,15 @@ export class UserClient {
      *     await client.user.head()
      */
     public head(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<Headers> {
-        return core.HttpResponsePromise.fromPromise(this.__head(requestOptions));
-    }
-
-    private async __head(requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<Headers>> {
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/users",
-                ),
-                method: "HEAD",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.rawResponse.headers, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedHttpHeadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "HEAD", "/users");
+        return this._client.request<Headers>({
+            method: "HEAD",
+            path: "/users",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            transformResponse: (_body, rawResponse) => rawResponse.headers,
+            requestOptions,
+        });
     }
 
     /**

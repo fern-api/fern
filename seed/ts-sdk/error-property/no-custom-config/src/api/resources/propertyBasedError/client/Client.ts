@@ -39,53 +39,23 @@ export class PropertyBasedErrorClient {
      *     await client.propertyBasedError.throwError()
      */
     public throwError(requestOptions?: PropertyBasedErrorClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__throwError(requestOptions));
-    }
-
-    private async __throwError(
-        requestOptions?: PropertyBasedErrorClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "property-based-error",
-                ),
-                method: "GET",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<string>({
+            method: "GET",
+            path: "property-based-error",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (_statusCode, body, rawResponse) => {
+                switch ((body as any)?.errorName) {
+                    case "PropertyBasedErrorTest":
+                        return new SeedErrorProperty.PropertyBasedErrorTest(
+                            body as SeedErrorProperty.PropertyBasedErrorTestBody,
+                            rawResponse,
+                        );
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch ((_response.error.body as any)?.errorName) {
-                case "PropertyBasedErrorTest":
-                    throw new SeedErrorProperty.PropertyBasedErrorTest(
-                        _response.error.body as SeedErrorProperty.PropertyBasedErrorTestBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedErrorPropertyError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/property-based-error");
+            requestOptions,
+        });
     }
 }

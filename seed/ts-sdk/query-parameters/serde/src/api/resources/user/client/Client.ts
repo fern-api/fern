@@ -79,126 +79,94 @@ export class UserClient {
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedQueryParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
-    }
-
-    private async __getUsername(
-        request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
-        const {
-            limit,
-            id,
-            date,
-            deadline,
-            bytes,
-            user,
-            userList,
-            optionalDeadline,
-            keyValue,
-            optionalString,
-            nestedUser,
-            optionalUser,
-            excludeUser,
-            filter,
-        } = request;
-        const _queryParams: Record<string, unknown> = {
-            limit,
-            id,
-            date,
-            deadline: deadline.toISOString(),
-            bytes,
-            user: serializers.User.jsonOrThrow(user, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                omitUndefined: true,
-                breadcrumbsPrefix: ["request", "user"],
-            }),
-            userList: toJson(userList),
-            optionalDeadline: optionalDeadline != null ? optionalDeadline?.toISOString() : undefined,
-            keyValue: toJson(keyValue),
-            optionalString,
-            nestedUser: serializers.NestedUser.jsonOrThrow(nestedUser, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                omitUndefined: true,
-                breadcrumbsPrefix: ["request", "nestedUser"],
-            }),
-            optionalUser:
-                optionalUser != null
-                    ? serializers.User.jsonOrThrow(optionalUser, {
-                          unrecognizedObjectKeys: "passthrough",
-                          allowUnrecognizedUnionMembers: true,
-                          allowUnrecognizedEnumValues: true,
-                          omitUndefined: true,
-                          breadcrumbsPrefix: ["request", "optionalUser"],
-                      })
-                    : optionalUser,
-            excludeUser: Array.isArray(excludeUser)
-                ? await Promise.all(
-                      excludeUser.map(async (item) =>
-                          serializers.User.jsonOrThrow(item, {
+        return this._client.request<SeedQueryParameters.User>(async () => {
+            const {
+                limit,
+                id,
+                date,
+                deadline,
+                bytes,
+                user,
+                userList,
+                optionalDeadline,
+                keyValue,
+                optionalString,
+                nestedUser,
+                optionalUser,
+                excludeUser,
+                filter,
+            } = request;
+            const _queryParams: Record<string, unknown> = {
+                limit,
+                id,
+                date,
+                deadline: deadline.toISOString(),
+                bytes,
+                user: serializers.User.jsonOrThrow(user, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    omitUndefined: true,
+                    breadcrumbsPrefix: ["request", "user"],
+                }),
+                userList: toJson(userList),
+                optionalDeadline: optionalDeadline != null ? optionalDeadline?.toISOString() : undefined,
+                keyValue: toJson(keyValue),
+                optionalString,
+                nestedUser: serializers.NestedUser.jsonOrThrow(nestedUser, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    omitUndefined: true,
+                    breadcrumbsPrefix: ["request", "nestedUser"],
+                }),
+                optionalUser:
+                    optionalUser != null
+                        ? serializers.User.jsonOrThrow(optionalUser, {
                               unrecognizedObjectKeys: "passthrough",
                               allowUnrecognizedUnionMembers: true,
                               allowUnrecognizedEnumValues: true,
                               omitUndefined: true,
-                              breadcrumbsPrefix: ["request", "excludeUser"],
-                          }),
-                      ),
-                  )
-                : serializers.User.jsonOrThrow(excludeUser, {
-                      unrecognizedObjectKeys: "passthrough",
-                      allowUnrecognizedUnionMembers: true,
-                      allowUnrecognizedEnumValues: true,
-                      omitUndefined: true,
-                      breadcrumbsPrefix: ["request", "excludeUser"],
-                  }),
-            filter,
-        };
-        const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/user",
-                ),
-                method: "GET",
-                headers: _headers,
-                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return {
-                data: serializers.User.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
+                              breadcrumbsPrefix: ["request", "optionalUser"],
+                          })
+                        : optionalUser,
+                excludeUser: Array.isArray(excludeUser)
+                    ? await Promise.all(
+                          excludeUser.map(async (item) =>
+                              serializers.User.jsonOrThrow(item, {
+                                  unrecognizedObjectKeys: "passthrough",
+                                  allowUnrecognizedUnionMembers: true,
+                                  allowUnrecognizedEnumValues: true,
+                                  omitUndefined: true,
+                                  breadcrumbsPrefix: ["request", "excludeUser"],
+                              }),
+                          ),
+                      )
+                    : serializers.User.jsonOrThrow(excludeUser, {
+                          unrecognizedObjectKeys: "passthrough",
+                          allowUnrecognizedUnionMembers: true,
+                          allowUnrecognizedEnumValues: true,
+                          omitUndefined: true,
+                          breadcrumbsPrefix: ["request", "excludeUser"],
+                      }),
+                filter,
             };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedQueryParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/user");
+            const _headers = {};
+            return {
+                method: "GET",
+                path: "/user",
+                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                headers: _headers,
+                transformResponse: (body) =>
+                    serializers.User.parseOrThrow(body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                requestOptions,
+            };
+        });
     }
 }

@@ -24,5 +24,4 @@ export declare class NoAuthClient {
      *     })
      */
     postWithNoAuth(request?: unknown, requestOptions?: NoAuthClient.RequestOptions): core.HttpResponsePromise<boolean>;
-    private __postWithNoAuth;
 }

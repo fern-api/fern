@@ -272,54 +272,19 @@ export class ParamsClient {
         param: string,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
-        return core.HttpResponsePromise.fromPromise(this.__uploadWithPath(uploadable, param, requestOptions));
-    }
-
-    private async __uploadWithPath(
-        uploadable: core.file.Uploadable,
-        param: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
-        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
-        const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    `/params/path/${core.url.encodePathParam(param)}`,
-                ),
-                method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "bytes",
-                duplex: "half",
-                body: _binaryUploadRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
+        return this._client.request<SeedExhaustive.types.ObjectWithRequiredField>(async () => {
+            const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+            const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
-                rawResponse: _response.rawResponse,
+                method: "POST",
+                path: `/params/path/${core.url.encodePathParam(param)}`,
+                body: _binaryUploadRequest.body,
+                requestType: "bytes",
+                queryParameters: requestOptions?.queryParams,
+                duplex: "half",
+                headers: _headers,
+                requestOptions,
             };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/params/path/{param}");
+        });
     }
 }

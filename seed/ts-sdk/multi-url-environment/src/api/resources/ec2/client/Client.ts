@@ -42,52 +42,24 @@ export class Ec2Client {
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2Client.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__bootInstance(request, requestOptions));
-    }
-
-    private async __bootInstance(
-        request: SeedMultiUrlEnvironment.BootInstanceRequest,
-        requestOptions?: Ec2Client.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (
-                            (await core.Supplier.get(this._options.environment)) ??
-                            environments.SeedMultiUrlEnvironmentEnvironment.Production
-                        ).ec2,
-                    "/ec2/boot",
-                ),
+        return this._client.request<void>(async () => {
+            const _headers = {};
+            return {
                 method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "json",
+                path: "/ec2/boot",
                 body: request,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMultiUrlEnvironmentError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/ec2/boot");
+                contentType: "application/json",
+                requestType: "json",
+                queryParameters: requestOptions?.queryParams,
+                headers: _headers,
+                baseUrl:
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedMultiUrlEnvironmentEnvironment.Production
+                    ).ec2,
+                requestOptions,
+            };
+        });
     }
 }

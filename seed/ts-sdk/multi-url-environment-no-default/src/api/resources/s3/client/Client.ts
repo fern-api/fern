@@ -41,49 +41,21 @@ export class S3Client {
         request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
         requestOptions?: S3Client.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__getPresignedUrl(request, requestOptions));
-    }
-
-    private async __getPresignedUrl(
-        request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
-        requestOptions?: S3Client.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)).s3,
-                    "/s3/presigned-url",
-                ),
+        return this._client.request<string>(async () => {
+            const _headers = {};
+            return {
                 method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "json",
+                path: "/s3/presigned-url",
                 body: request,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMultiUrlEnvironmentNoDefaultError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/s3/presigned-url");
+                contentType: "application/json",
+                requestType: "json",
+                queryParameters: requestOptions?.queryParams,
+                headers: _headers,
+                baseUrl:
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)).s3,
+                requestOptions,
+            };
+        });
     }
 }

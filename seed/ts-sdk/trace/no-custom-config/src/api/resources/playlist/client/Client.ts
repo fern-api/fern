@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedTrace from "../../../index.js";
@@ -127,66 +126,28 @@ export class PlaylistClient {
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: PlaylistClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.Playlist> {
-        return core.HttpResponsePromise.fromPromise(this.__getPlaylist(serviceParam, playlistId, requestOptions));
-    }
-
-    private async __getPlaylist(
-        serviceParam: number,
-        playlistId: SeedTrace.PlaylistId,
-        requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.SeedTraceEnvironment.Prod,
-                    `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
-                ),
-                method: "GET",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<SeedTrace.Playlist>({
+            method: "GET",
+            path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (_statusCode, body, rawResponse) => {
+                switch ((body as any)?.errorName) {
+                    case "PlaylistIdNotFoundError":
+                        return new SeedTrace.PlaylistIdNotFoundError(
+                            body as SeedTrace.PlaylistIdNotFoundErrorBody,
+                            rawResponse,
+                        );
+                    case "UnauthorizedError":
+                        return new SeedTrace.UnauthorizedError(rawResponse);
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedTrace.Playlist, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch ((_response.error.body as any)?.errorName) {
-                case "PlaylistIdNotFoundError":
-                    throw new SeedTrace.PlaylistIdNotFoundError(
-                        _response.error.body as SeedTrace.PlaylistIdNotFoundErrorBody,
-                        _response.rawResponse,
-                    );
-                case "UnauthorizedError":
-                    throw new SeedTrace.UnauthorizedError(_response.rawResponse);
-                default:
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/v2/playlist/{serviceParam}/{playlistId}",
-        );
+            requestOptions,
+        });
     }
 
     /**
@@ -211,70 +172,29 @@ export class PlaylistClient {
         request?: SeedTrace.UpdatePlaylistRequest,
         requestOptions?: PlaylistClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.Playlist | undefined> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__updatePlaylist(serviceParam, playlistId, request, requestOptions),
-        );
-    }
-
-    private async __updatePlaylist(
-        serviceParam: number,
-        playlistId: SeedTrace.PlaylistId,
-        request?: SeedTrace.UpdatePlaylistRequest,
-        requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.Playlist | undefined>> {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.SeedTraceEnvironment.Prod,
-                    `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
-                ),
-                method: "PUT",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<SeedTrace.Playlist | undefined>({
+            method: "PUT",
+            path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            errorHandler: (_statusCode, body, rawResponse) => {
+                switch ((body as any)?.errorName) {
+                    case "PlaylistIdNotFoundError":
+                        return new SeedTrace.PlaylistIdNotFoundError(
+                            body as SeedTrace.PlaylistIdNotFoundErrorBody,
+                            rawResponse,
+                        );
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedTrace.Playlist | undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch ((_response.error.body as any)?.errorName) {
-                case "PlaylistIdNotFoundError":
-                    throw new SeedTrace.PlaylistIdNotFoundError(
-                        _response.error.body as SeedTrace.PlaylistIdNotFoundErrorBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedTraceError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "PUT",
-            "/v2/playlist/{serviceParam}/{playlistId}",
-        );
+            requestOptions,
+        });
     }
 
     /**

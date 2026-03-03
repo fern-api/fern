@@ -42,13 +42,6 @@ export class TestGroupClient {
         request: SeedApi.TestMethodNameTestGroupRequest,
         requestOptions?: TestGroupClient.RequestOptions,
     ): core.HttpResponsePromise<unknown> {
-        return core.HttpResponsePromise.fromPromise(this.__testMethodName(request, requestOptions));
-    }
-
-    private async __testMethodName(
-        request: SeedApi.TestMethodNameTestGroupRequest,
-        requestOptions?: TestGroupClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown>> {
         const {
             path_param: pathParam,
             query_param_object: queryParamObject,
@@ -60,54 +53,22 @@ export class TestGroupClient {
             query_param_integer: queryParamInteger,
         };
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    `optional-request-body/${core.url.encodePathParam(pathParam)}`,
-                ),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                requestType: "json",
-                body: _body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
+        return this._client.request<unknown>({
+            method: "POST",
+            path: `optional-request-body/${core.url.encodePathParam(pathParam)}`,
+            body: _body,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
+            errorHandler: (statusCode, body, rawResponse) => {
+                switch (statusCode) {
+                    case 422:
+                        return new SeedApi.UnprocessableEntityError(body as SeedApi.PlainObject, rawResponse);
+                }
+                return undefined;
             },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 422:
-                    throw new SeedApi.UnprocessableEntityError(
-                        _response.error.body as SeedApi.PlainObject,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/optional-request-body/{path_param}",
-        );
+            requestOptions,
+        });
     }
 }

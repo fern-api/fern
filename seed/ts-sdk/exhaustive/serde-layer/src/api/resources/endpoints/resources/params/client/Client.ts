@@ -139,52 +139,19 @@ export class ParamsClient {
         request: SeedExhaustive.endpoints.GetWithMultipleQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
-    }
-
-    private async __getWithAllowMultipleQuery(
-        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
         const { query, number: number_ } = request;
         const _queryParams: Record<string, unknown> = {
             query,
             number: number_,
         };
         const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/params",
-                ),
-                method: "GET",
-                headers: _headers,
-                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/params");
+        return this._client.request<void>({
+            method: "GET",
+            path: "/params",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -344,60 +311,27 @@ export class ParamsClient {
         param: string,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
-        return core.HttpResponsePromise.fromPromise(this.__uploadWithPath(uploadable, param, requestOptions));
-    }
-
-    private async __uploadWithPath(
-        uploadable: core.file.Uploadable,
-        param: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
-        const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
-        const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    `/params/path/${core.url.encodePathParam(param)}`,
-                ),
-                method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "bytes",
-                duplex: "half",
-                body: _binaryUploadRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
+        return this._client.request<SeedExhaustive.types.ObjectWithRequiredField>(async () => {
+            const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
+            const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
             return {
-                data: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
+                method: "POST",
+                path: `/params/path/${core.url.encodePathParam(param)}`,
+                body: _binaryUploadRequest.body,
+                requestType: "bytes",
+                queryParameters: requestOptions?.queryParams,
+                duplex: "half",
+                headers: _headers,
+                transformResponse: (body) =>
+                    serializers.types.ObjectWithRequiredField.parseOrThrow(body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                requestOptions,
             };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/params/path/{param}");
+        });
     }
 }

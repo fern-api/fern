@@ -34,49 +34,22 @@ export class SeedApiClient {
      *     await client.getUsers()
      */
     public getUsers(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<SeedApi.User[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getUsers(requestOptions));
-    }
-
-    private async __getUsers(
-        requestOptions?: SeedApiClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.User[]>> {
-        const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (
-                            (await core.Supplier.get(this._options.environment)) ??
-                            environments.SeedApiEnvironment.RegionalApiServer
-                        ).base,
-                    "users",
-                ),
+        return this._client.request<SeedApi.User[]>(async () => {
+            const _headers = {};
+            return {
                 method: "GET",
-                headers: _headers,
+                path: "users",
                 queryParameters: requestOptions?.queryParams,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedApi.User[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+                headers: _headers,
+                baseUrl:
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedApiEnvironment.RegionalApiServer
+                    ).base,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -92,51 +65,23 @@ export class SeedApiClient {
         request: SeedApi.GetUserRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUser(request, requestOptions));
-    }
-
-    private async __getUser(
-        request: SeedApi.GetUserRequest,
-        requestOptions?: SeedApiClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.User>> {
-        const { userId } = request;
-        const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (
-                            (await core.Supplier.get(this._options.environment)) ??
-                            environments.SeedApiEnvironment.RegionalApiServer
-                        ).base,
-                    `users/${core.url.encodePathParam(userId)}`,
-                ),
+        return this._client.request<SeedApi.User>(async () => {
+            const { userId } = request;
+            const _headers = {};
+            return {
                 method: "GET",
-                headers: _headers,
+                path: `users/${core.url.encodePathParam(userId)}`,
                 queryParameters: requestOptions?.queryParams,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedApi.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/{userId}");
+                headers: _headers,
+                baseUrl:
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedApiEnvironment.RegionalApiServer
+                    ).base,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -153,52 +98,24 @@ export class SeedApiClient {
         request: SeedApi.TokenRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.TokenResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
-    }
-
-    private async __getToken(
-        request: SeedApi.TokenRequest,
-        requestOptions?: SeedApiClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.TokenResponse>> {
-        const _headers = {};
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (
-                            (await core.Supplier.get(this._options.environment)) ??
-                            environments.SeedApiEnvironment.RegionalApiServer
-                        ).auth,
-                    "auth/token",
-                ),
+        return this._client.request<SeedApi.TokenResponse>(async () => {
+            const _headers = {};
+            return {
                 method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions?.queryParams,
-                requestType: "json",
+                path: "auth/token",
                 body: request,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: _response.body as SeedApi.TokenResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/auth/token");
+                contentType: "application/json",
+                requestType: "json",
+                queryParameters: requestOptions?.queryParams,
+                headers: _headers,
+                baseUrl:
+                    (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.SeedApiEnvironment.RegionalApiServer
+                    ).auth,
+                requestOptions,
+            };
+        });
     }
 }

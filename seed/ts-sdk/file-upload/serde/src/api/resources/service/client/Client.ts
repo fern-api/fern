@@ -39,146 +39,111 @@ export class ServiceClient {
         request: SeedFileUpload.MyRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
-    }
-
-    private async __post(
-        request: SeedFileUpload.MyRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _body = await core.newFormData();
-        if (request.maybeString != null) {
-            _body.append("maybe_string", request.maybeString);
-        }
-
-        _body.append("integer", request.integer.toString());
-        await _body.appendFile("file", request.file);
-        for (const _file of request.fileList) {
-            await _body.appendFile("file_list", _file);
-        }
-
-        if (request.maybeFile != null) {
-            await _body.appendFile("maybe_file", request.maybeFile);
-        }
-
-        if (request.maybeFileList != null) {
-            for (const _file of request.maybeFileList) {
-                await _body.appendFile("maybe_file_list", _file);
+        return this._client.request<void>(async () => {
+            const _body = await core.newFormData();
+            if (request.maybeString != null) {
+                _body.append("maybe_string", request.maybeString);
             }
-        }
-
-        if (request.maybeInteger != null) {
-            _body.append("maybe_integer", request.maybeInteger?.toString());
-        }
-
-        if (request.optionalListOfStrings != null) {
-            for (const _item of request.optionalListOfStrings) {
-                _body.append("optional_list_of_strings", _item);
+            _body.append("integer", request.integer.toString());
+            await _body.appendFile("file", request.file);
+            for (const _file of request.fileList) {
+                await _body.appendFile("file_list", _file);
             }
-        }
-
-        for (const _item of request.listOfObjects) {
-            _body.append(
-                "list_of_objects",
-                toJson(
-                    serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-                ),
-            );
-        }
-
-        if (request.optionalMetadata != null) {
-            if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
-                for (const _item of request.optionalMetadata) {
-                    _body.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
+            if (request.maybeFile != null) {
+                await _body.appendFile("maybe_file", request.maybeFile);
+            }
+            if (request.maybeFileList != null) {
+                for (const _file of request.maybeFileList) {
+                    await _body.appendFile("maybe_file_list", _file);
                 }
-        }
-
-        if (request.optionalObjectType != null) {
+            }
+            if (request.maybeInteger != null) {
+                _body.append("maybe_integer", request.maybeInteger?.toString());
+            }
+            if (request.optionalListOfStrings != null) {
+                for (const _item of request.optionalListOfStrings) {
+                    _body.append("optional_list_of_strings", _item);
+                }
+            }
+            for (const _item of request.listOfObjects) {
+                _body.append(
+                    "list_of_objects",
+                    toJson(
+                        serializers.MyObject.jsonOrThrow(_item, {
+                            unrecognizedObjectKeys: "strip",
+                            omitUndefined: true,
+                        }),
+                    ),
+                );
+            }
+            if (request.optionalMetadata != null) {
+                if (Array.isArray(request.optionalMetadata) || request.optionalMetadata instanceof Set)
+                    for (const _item of request.optionalMetadata) {
+                        _body.append("optional_metadata", typeof _item === "string" ? _item : toJson(_item));
+                    }
+            }
+            if (request.optionalObjectType != null) {
+                _body.append(
+                    "optional_object_type",
+                    serializers.ObjectType.jsonOrThrow(request.optionalObjectType, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
+                );
+            }
+            if (request.optionalId != null) {
+                _body.append(
+                    "optional_id",
+                    serializers.Id.jsonOrThrow(request.optionalId, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
+                );
+            }
             _body.append(
-                "optional_object_type",
-                serializers.ObjectType.jsonOrThrow(request.optionalObjectType, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-            );
-        }
-
-        if (request.optionalId != null) {
-            _body.append(
-                "optional_id",
-                serializers.Id.jsonOrThrow(request.optionalId, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-            );
-        }
-
-        _body.append(
-            "alias_object",
-            toJson(
-                serializers.MyAliasObject.jsonOrThrow(request.aliasObject, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-            ),
-        );
-        for (const _item of request.listOfAliasObject) {
-            _body.append(
-                "list_of_alias_object",
+                "alias_object",
                 toJson(
-                    serializers.MyAliasObject.jsonOrThrow(_item, {
+                    serializers.MyAliasObject.jsonOrThrow(request.aliasObject, {
                         unrecognizedObjectKeys: "strip",
                         omitUndefined: true,
                     }),
                 ),
             );
-        }
-
-        for (const _item of request.aliasListOfObject) {
-            _body.append(
-                "alias_list_of_object",
-                toJson(
-                    serializers.MyObject.jsonOrThrow(_item, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-                ),
-            );
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url:
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+            for (const _item of request.listOfAliasObject) {
+                _body.append(
+                    "list_of_alias_object",
+                    toJson(
+                        serializers.MyAliasObject.jsonOrThrow(_item, {
+                            unrecognizedObjectKeys: "strip",
+                            omitUndefined: true,
+                        }),
+                    ),
+                );
+            }
+            for (const _item of request.aliasListOfObject) {
+                _body.append(
+                    "alias_list_of_object",
+                    toJson(
+                        serializers.MyObject.jsonOrThrow(_item, {
+                            unrecognizedObjectKeys: "strip",
+                            omitUndefined: true,
+                        }),
+                    ),
+                );
+            }
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -195,53 +160,22 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__justFile(request, requestOptions));
-    }
-
-    private async __justFile(
-        request: SeedFileUpload.JustFileRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _body = await core.newFormData();
-        await _body.appendFile("file", request.file);
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/just-file",
-                ),
+        return this._client.request<void>(async () => {
+            const _body = await core.newFormData();
+            await _body.appendFile("file", request.file);
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "/just-file",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/just-file");
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -252,60 +186,29 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__justFileWithQueryParams(request, requestOptions));
-    }
-
-    private async __justFileWithQueryParams(
-        request: SeedFileUpload.JustFileWithQueryParamsRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _queryParams: Record<string, unknown> = {
-            maybeString: request.maybeString,
-            integer: request.integer,
-            maybeInteger: request.maybeInteger,
-            listOfStrings: request.listOfStrings,
-            optionalListOfStrings: request.optionalListOfStrings,
-        };
-        const _body = await core.newFormData();
-        await _body.appendFile("file", request.file);
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/just-file-with-query-params",
-                ),
+        return this._client.request<void>(async () => {
+            const _queryParams: Record<string, unknown> = {
+                maybeString: request.maybeString,
+                integer: request.integer,
+                maybeInteger: request.maybeInteger,
+                listOfStrings: request.listOfStrings,
+                optionalListOfStrings: request.optionalListOfStrings,
+            };
+            const _body = await core.newFormData();
+            await _body.appendFile("file", request.file);
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "/just-file-with-query-params",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/just-file-with-query-params");
+                requestType: "file",
+                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -316,62 +219,26 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileWithOptionalQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__justFileWithOptionalQueryParams(request, requestOptions));
-    }
-
-    private async __justFileWithOptionalQueryParams(
-        request: SeedFileUpload.JustFileWithOptionalQueryParamsRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _queryParams: Record<string, unknown> = {
-            maybeString: request.maybeString,
-            maybeInteger: request.maybeInteger,
-        };
-        const _body = await core.newFormData();
-        await _body.appendFile("file", request.file);
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/just-file-with-optional-query-params",
-                ),
+        return this._client.request<void>(async () => {
+            const _queryParams: Record<string, unknown> = {
+                maybeString: request.maybeString,
+                maybeInteger: request.maybeInteger,
+            };
+            const _body = await core.newFormData();
+            await _body.appendFile("file", request.file);
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "/just-file-with-optional-query-params",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/just-file-with-optional-query-params",
-        );
+                requestType: "file",
+                queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -382,59 +249,27 @@ export class ServiceClient {
         request: SeedFileUpload.WithContentTypeRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__withContentType(request, requestOptions));
-    }
-
-    private async __withContentType(
-        request: SeedFileUpload.WithContentTypeRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _body = await core.newFormData();
-        await _body.appendFile("file", request.file);
-        _body.append("foo", request.foo);
-        _body.append("bar", toJson(request.bar));
-        if (request.fooBar != null) {
-            _body.append("foo_bar", toJson(request.fooBar));
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/with-content-type",
-                ),
+        return this._client.request<void>(async () => {
+            const _body = await core.newFormData();
+            await _body.appendFile("file", request.file);
+            _body.append("foo", request.foo);
+            _body.append("bar", toJson(request.bar));
+            if (request.fooBar != null) {
+                _body.append("foo_bar", toJson(request.fooBar));
+            }
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "/with-content-type",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/with-content-type");
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -445,61 +280,28 @@ export class ServiceClient {
         request: SeedFileUpload.WithFormEncodingRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__withFormEncoding(request, requestOptions));
-    }
-
-    private async __withFormEncoding(
-        request: SeedFileUpload.WithFormEncodingRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _body = await core.newFormData();
-        await _body.appendFile("file", request.file);
-        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ foo: request.foo }))) {
-            _body.append(key, value);
-        }
-
-        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ bar: request.bar }))) {
-            _body.append(key, value);
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/with-form-encoding",
-                ),
+        return this._client.request<void>(async () => {
+            const _body = await core.newFormData();
+            await _body.appendFile("file", request.file);
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ foo: request.foo }))) {
+                _body.append(key, value);
+            }
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ bar: request.bar }))) {
+                _body.append(key, value);
+            }
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "/with-form-encoding",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/with-form-encoding");
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -510,145 +312,103 @@ export class ServiceClient {
         request: SeedFileUpload.MyOtherRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__withFormEncodedContainers(request, requestOptions));
-    }
-
-    private async __withFormEncodedContainers(
-        request: SeedFileUpload.MyOtherRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _body = await core.newFormData();
-        if (request.maybeString != null) {
+        return this._client.request<void>(async () => {
+            const _body = await core.newFormData();
+            if (request.maybeString != null) {
+                for (const [key, value] of Object.entries(
+                    core.encodeAsFormParameter({ maybe_string: request.maybeString }),
+                )) {
+                    _body.append(key, value);
+                }
+            }
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ integer: request.integer }))) {
+                _body.append(key, value);
+            }
+            await _body.appendFile("file", request.file);
+            for (const _file of request.fileList) {
+                await _body.appendFile("file_list", _file);
+            }
+            if (request.maybeFile != null) {
+                await _body.appendFile("maybe_file", request.maybeFile);
+            }
+            if (request.maybeFileList != null) {
+                for (const _file of request.maybeFileList) {
+                    await _body.appendFile("maybe_file_list", _file);
+                }
+            }
+            if (request.maybeInteger != null) {
+                for (const [key, value] of Object.entries(
+                    core.encodeAsFormParameter({ maybe_integer: request.maybeInteger }),
+                )) {
+                    _body.append(key, value);
+                }
+            }
+            if (request.optionalListOfStrings != null) {
+                for (const [key, value] of Object.entries(
+                    core.encodeAsFormParameter({ optional_list_of_strings: request.optionalListOfStrings }),
+                )) {
+                    _body.append(key, value);
+                }
+            }
             for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ maybe_string: request.maybeString }),
+                core.encodeAsFormParameter({ list_of_objects: request.listOfObjects }),
             )) {
                 _body.append(key, value);
             }
-        }
-
-        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ integer: request.integer }))) {
-            _body.append(key, value);
-        }
-
-        await _body.appendFile("file", request.file);
-        for (const _file of request.fileList) {
-            await _body.appendFile("file_list", _file);
-        }
-
-        if (request.maybeFile != null) {
-            await _body.appendFile("maybe_file", request.maybeFile);
-        }
-
-        if (request.maybeFileList != null) {
-            for (const _file of request.maybeFileList) {
-                await _body.appendFile("maybe_file_list", _file);
+            if (request.optionalMetadata != null) {
+                for (const [key, value] of Object.entries(
+                    core.encodeAsFormParameter({ optional_metadata: request.optionalMetadata }),
+                )) {
+                    _body.append(key, value);
+                }
             }
-        }
-
-        if (request.maybeInteger != null) {
+            if (request.optionalObjectType != null) {
+                for (const [key, value] of Object.entries(
+                    core.encodeAsFormParameter({ optional_object_type: request.optionalObjectType }),
+                )) {
+                    _body.append(key, value);
+                }
+            }
+            if (request.optionalId != null) {
+                for (const [key, value] of Object.entries(
+                    core.encodeAsFormParameter({ optional_id: request.optionalId }),
+                )) {
+                    _body.append(key, value);
+                }
+            }
             for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ maybe_integer: request.maybeInteger }),
+                core.encodeAsFormParameter({ list_of_objects_with_optionals: request.listOfObjectsWithOptionals }),
             )) {
                 _body.append(key, value);
             }
-        }
-
-        if (request.optionalListOfStrings != null) {
             for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ optional_list_of_strings: request.optionalListOfStrings }),
+                core.encodeAsFormParameter({ alias_object: request.aliasObject }),
             )) {
                 _body.append(key, value);
             }
-        }
-
-        for (const [key, value] of Object.entries(
-            core.encodeAsFormParameter({ list_of_objects: request.listOfObjects }),
-        )) {
-            _body.append(key, value);
-        }
-
-        if (request.optionalMetadata != null) {
             for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ optional_metadata: request.optionalMetadata }),
+                core.encodeAsFormParameter({ list_of_alias_object: request.listOfAliasObject }),
             )) {
                 _body.append(key, value);
             }
-        }
-
-        if (request.optionalObjectType != null) {
             for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ optional_object_type: request.optionalObjectType }),
+                core.encodeAsFormParameter({ alias_list_of_object: request.aliasListOfObject }),
             )) {
                 _body.append(key, value);
             }
-        }
-
-        if (request.optionalId != null) {
-            for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ optional_id: request.optionalId }),
-            )) {
-                _body.append(key, value);
-            }
-        }
-
-        for (const [key, value] of Object.entries(
-            core.encodeAsFormParameter({ list_of_objects_with_optionals: request.listOfObjectsWithOptionals }),
-        )) {
-            _body.append(key, value);
-        }
-
-        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ alias_object: request.aliasObject }))) {
-            _body.append(key, value);
-        }
-
-        for (const [key, value] of Object.entries(
-            core.encodeAsFormParameter({ list_of_alias_object: request.listOfAliasObject }),
-        )) {
-            _body.append(key, value);
-        }
-
-        for (const [key, value] of Object.entries(
-            core.encodeAsFormParameter({ alias_list_of_object: request.aliasListOfObject }),
-        )) {
-            _body.append(key, value);
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url:
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
+            return {
                 method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
+                path: "",
                 body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                requestOptions,
+            };
+        });
     }
 
     /**
@@ -663,69 +423,35 @@ export class ServiceClient {
         request: SeedFileUpload.OptionalArgsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__optionalArgs(request, requestOptions));
-    }
-
-    private async __optionalArgs(
-        request: SeedFileUpload.OptionalArgsRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _body = await core.newFormData();
-        if (request.imageFile != null) {
-            await _body.appendFile("image_file", request.imageFile);
-        }
-
-        if (request.request != null) {
-            _body.append("request", toJson(request.request));
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/optional-args",
-                ),
-                method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
-                body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
+        return this._client.request<string>(async () => {
+            const _body = await core.newFormData();
+            if (request.imageFile != null) {
+                await _body.appendFile("image_file", request.imageFile);
+            }
+            if (request.request != null) {
+                _body.append("request", toJson(request.request));
+            }
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
             return {
-                data: serializers.service.optionalArgs.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
+                method: "POST",
+                path: "/optional-args",
+                body: _maybeEncodedRequest.body,
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                transformResponse: (body) =>
+                    serializers.service.optionalArgs.Response.parseOrThrow(body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                requestOptions,
             };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/optional-args");
+        });
     }
 
     /**
@@ -736,71 +462,39 @@ export class ServiceClient {
         request: SeedFileUpload.InlineTypeRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__withInlineType(request, requestOptions));
-    }
-
-    private async __withInlineType(
-        request: SeedFileUpload.InlineTypeRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _body = await core.newFormData();
-        await _body.appendFile("file", request.file);
-        _body.append(
-            "request",
-            toJson(
-                serializers.MyInlineType.jsonOrThrow(request.request, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-            ),
-        );
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/inline-type",
+        return this._client.request<string>(async () => {
+            const _body = await core.newFormData();
+            await _body.appendFile("file", request.file);
+            _body.append(
+                "request",
+                toJson(
+                    serializers.MyInlineType.jsonOrThrow(request.request, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
                 ),
-                method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
-                body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
+            );
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
             return {
-                data: serializers.service.withInlineType.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
+                method: "POST",
+                path: "/inline-type",
+                body: _maybeEncodedRequest.body,
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                transformResponse: (body) =>
+                    serializers.service.withInlineType.Response.parseOrThrow(body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                requestOptions,
             };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/inline-type");
+        });
     }
 
     /**
@@ -811,74 +505,41 @@ export class ServiceClient {
         request: SeedFileUpload.WithJsonPropertyRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__withJsonProperty(request, requestOptions));
-    }
-
-    private async __withJsonProperty(
-        request: SeedFileUpload.WithJsonPropertyRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _body = await core.newFormData();
-        await _body.appendFile("file", request.file);
-        if (request.json != null) {
-            _body.append(
-                "json",
-                toJson(
-                    serializers.MyObject.jsonOrThrow(request.json, {
-                        unrecognizedObjectKeys: "strip",
-                        omitUndefined: true,
-                    }),
-                ),
-            );
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/with-json-property",
-                ),
-                method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
-                body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
+        return this._client.request<string>(async () => {
+            const _body = await core.newFormData();
+            await _body.appendFile("file", request.file);
+            if (request.json != null) {
+                _body.append(
+                    "json",
+                    toJson(
+                        serializers.MyObject.jsonOrThrow(request.json, {
+                            unrecognizedObjectKeys: "strip",
+                            omitUndefined: true,
+                        }),
+                    ),
+                );
+            }
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
             return {
-                data: serializers.service.withJsonProperty.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
+                method: "POST",
+                path: "/with-json-property",
+                body: _maybeEncodedRequest.body,
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                transformResponse: (body) =>
+                    serializers.service.withJsonProperty.Response.parseOrThrow(body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                requestOptions,
             };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/with-json-property");
+        });
     }
 
     /**
@@ -906,85 +567,50 @@ export class ServiceClient {
         request: SeedFileUpload.LiteralEnumRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__withLiteralAndEnumTypes(request, requestOptions));
-    }
-
-    private async __withLiteralAndEnumTypes(
-        request: SeedFileUpload.LiteralEnumRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _body = await core.newFormData();
-        await _body.appendFile("file", request.file);
-        if (request.modelType != null) {
-            _body.append(
-                "model_type",
-                serializers.ModelType.jsonOrThrow(request.modelType, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-            );
-        }
-
-        if (request.openEnum != null) {
-            _body.append(
-                "open_enum",
-                serializers.OpenEnumType.jsonOrThrow(request.openEnum, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-            );
-        }
-
-        if (request.maybeName != null) {
-            _body.append("maybe_name", request.maybeName);
-        }
-
-        const _maybeEncodedRequest = await _body.getRequest();
-        const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
-        const _response = await this._client.fetch(
-            {
-                url: core.url.join(
-                    (await core.Supplier.get(this._options.baseUrl)) ??
-                        (await core.Supplier.get(this._options.environment)),
-                    "/with-literal-enum",
-                ),
-                method: "POST",
-                headers: _headers,
-                queryParameters: requestOptions?.queryParams,
-                requestType: "file",
-                duplex: _maybeEncodedRequest.duplex,
-                body: _maybeEncodedRequest.body,
-                timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                abortSignal: requestOptions?.abortSignal,
-                fetchFn: this._options?.fetch,
-                logging: this._options.logging,
-            },
-            {
-                requestHeaders: requestOptions?.headers,
-            },
-        );
-        if (_response.ok) {
+        return this._client.request<string>(async () => {
+            const _body = await core.newFormData();
+            await _body.appendFile("file", request.file);
+            if (request.modelType != null) {
+                _body.append(
+                    "model_type",
+                    serializers.ModelType.jsonOrThrow(request.modelType, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
+                );
+            }
+            if (request.openEnum != null) {
+                _body.append(
+                    "open_enum",
+                    serializers.OpenEnumType.jsonOrThrow(request.openEnum, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
+                );
+            }
+            if (request.maybeName != null) {
+                _body.append("maybe_name", request.maybeName);
+            }
+            const _maybeEncodedRequest = await _body.getRequest();
+            const _headers = mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers });
             return {
-                data: serializers.service.withLiteralAndEnumTypes.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
+                method: "POST",
+                path: "/with-literal-enum",
+                body: _maybeEncodedRequest.body,
+                requestType: "file",
+                queryParameters: requestOptions?.queryParams,
+                duplex: _maybeEncodedRequest.duplex,
+                headers: _headers,
+                transformResponse: (body) =>
+                    serializers.service.withLiteralAndEnumTypes.Response.parseOrThrow(body, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    }),
+                requestOptions,
             };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedFileUploadError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/with-literal-enum");
+        });
     }
 }

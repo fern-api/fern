@@ -39,14 +39,28 @@ export interface EndpointConfig {
         headers?: Record<string, unknown>;
         queryParams?: Record<string, unknown>;
     };
-    /** Map specific status codes to typed error constructors */
-    errorMap?: Record<number, (body: unknown, rawResponse: RawResponse) => Error>;
+    /**
+     * Custom error handler for status-code errors. Called with the status code, body, and raw response.
+     * Return an Error to throw it, or undefined to fall through to the generic SDK error.
+     */
+    errorHandler?: (statusCode: number, body: unknown, rawResponse: RawResponse) => Error | undefined;
     /** Whether to include credentials on cross-origin requests */
     withCredentials?: boolean;
     /** Endpoint metadata for supplier resolution */
     endpointMetadata?: Record<string, unknown>;
-    /** Custom response transform (e.g. for deserialization). Called with the raw response body on success. */
-    transformResponse?: (body: unknown) => unknown;
+    /** Custom response transform (e.g. for deserialization or HEAD responses). Called with the raw response body and raw response on success. */
+    transformResponse?: (body: unknown, rawResponse: RawResponse) => unknown;
+    /**
+     * Override the default timeout for this endpoint (in seconds).
+     * Falls back to requestOptions.timeoutInSeconds, then client-level timeout, then this value.
+     * Use "infinity" to disable timeout.
+     */
+    defaultTimeoutInSeconds?: number | "infinity";
+    /**
+     * Override the base URL for this endpoint. Used by multi-URL environments
+     * where different endpoints hit different base URLs.
+     */
+    baseUrl?: string;
 }
 
 /**
@@ -109,11 +123,6 @@ export class HttpClient {
         this._handleNonStatusCodeError = handleNonStatusCodeError;
     }
 
-    /** Expose normalized options for sub-clients that need them (e.g. pagination) */
-    get options(): HttpClientOptions {
-        return this._options;
-    }
-
     /**
      * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
      * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
@@ -149,8 +158,15 @@ export class HttpClient {
     /**
      * Make an HTTP request. Returns HttpResponsePromise so callers get both
      * `await client.getUser()` and `client.getUser().withRawResponse()` for free.
+     *
+     * Accepts either a static config or an async config builder function.
+     * The async builder is used by endpoints that need async pre-processing
+     * (e.g. file upload form data building) while keeping the public method non-async.
      */
-    public request<T>(config: EndpointConfig): HttpResponsePromise<T> {
+    public request<T>(config: EndpointConfig | (() => Promise<EndpointConfig>)): HttpResponsePromise<T> {
+        if (typeof config === "function") {
+            return HttpResponsePromise.fromPromise(config().then((resolved) => this._execute<T>(resolved)));
+        }
         return HttpResponsePromise.fromPromise(this._execute<T>(config));
     }
 
@@ -165,7 +181,8 @@ export class HttpClient {
         const response = await this.fetch<T>(
             {
                 url: join(
-                    (await Supplier.get(this._options.baseUrl)) ??
+                    config.baseUrl ??
+                        (await Supplier.get(this._options.baseUrl)) ??
                         ((await Supplier.get(this._options.environment)) as string) ??
                         "",
                     config.path
@@ -178,13 +195,12 @@ export class HttpClient {
                 queryParameters,
                 body: config.body,
                 duplex: config.duplex,
-                timeoutMs: (config.requestOptions?.timeoutInSeconds ?? this._options.timeoutInSeconds ?? 60) * 1000,
+                timeoutMs: this._resolveTimeoutMs(config),
                 maxRetries: config.requestOptions?.maxRetries ?? this._options.maxRetries,
                 abortSignal: config.requestOptions?.abortSignal,
                 withCredentials: config.withCredentials,
                 fetchFn: this._options.fetch,
                 logging: this._options.logging,
-                endpointMetadata: config.endpointMetadata
             },
             {
                 requestHeaders: config.requestOptions?.headers,
@@ -195,16 +211,16 @@ export class HttpClient {
         // 3. Success
         if (response.ok) {
             const data = config.transformResponse
-                ? (config.transformResponse(response.body) as T)
+                ? (config.transformResponse(response.body, response.rawResponse) as T)
                 : (response.body as T);
             return { data, rawResponse: response.rawResponse };
         }
 
-        // 4. Status-code errors: check endpoint-specific map, then fall through to generic
+        // 4. Status-code errors: check endpoint-specific handler, then fall through to generic
         if (response.error.reason === "status-code") {
-            const factory = config.errorMap?.[response.error.statusCode];
-            if (factory) {
-                throw factory(response.error.body, response.rawResponse);
+            const customError = config.errorHandler?.(response.error.statusCode, response.error.body, response.rawResponse);
+            if (customError) {
+                throw customError;
             }
             throw this._createStatusCodeError({
                 statusCode: response.error.statusCode,
@@ -215,5 +231,29 @@ export class HttpClient {
 
         // 5. Non-status-code errors (timeout, network, etc.)
         return this._handleNonStatusCodeError(response.error, response.rawResponse, config.method, config.path);
+    }
+
+    /**
+     * Resolves the timeout in milliseconds for a request.
+     * Priority: requestOptions.timeoutInSeconds > client-level > endpoint default > 60s.
+     * "infinity" means no timeout (returns undefined).
+     */
+    private _resolveTimeoutMs(config: EndpointConfig): number | undefined {
+        const requestTimeout = config.requestOptions?.timeoutInSeconds;
+        if (requestTimeout != null) {
+            return requestTimeout * 1000;
+        }
+        const clientTimeout = this._options.timeoutInSeconds;
+        if (clientTimeout != null) {
+            return clientTimeout * 1000;
+        }
+        const endpointDefault = config.defaultTimeoutInSeconds;
+        if (endpointDefault === "infinity") {
+            return undefined;
+        }
+        if (endpointDefault != null) {
+            return endpointDefault * 1000;
+        }
+        return 60 * 1000;
     }
 }

@@ -31,10 +31,6 @@ export class HttpClient {
         this._createStatusCodeError = createStatusCodeError;
         this._handleNonStatusCodeError = handleNonStatusCodeError;
     }
-    /** Expose normalized options for sub-clients that need them (e.g. pagination) */
-    get options() {
-        return this._options;
-    }
     /**
      * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
      * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
@@ -62,20 +58,27 @@ export class HttpClient {
     /**
      * Make an HTTP request. Returns HttpResponsePromise so callers get both
      * `await client.getUser()` and `client.getUser().withRawResponse()` for free.
+     *
+     * Accepts either a static config or an async config builder function.
+     * The async builder is used by endpoints that need async pre-processing
+     * (e.g. file upload form data building) while keeping the public method non-async.
      */
     request(config) {
+        if (typeof config === "function") {
+            return HttpResponsePromise.fromPromise(config().then((resolved) => this._execute(resolved)));
+        }
         return HttpResponsePromise.fromPromise(this._execute(config));
     }
     _execute(config) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
             // 1. Query params: endpoint-specific + per-request
             const queryParameters = config.queryParameters
                 ? Object.assign(Object.assign({}, config.queryParameters), (_a = config.requestOptions) === null || _a === void 0 ? void 0 : _a.queryParams) : (_b = config.requestOptions) === null || _b === void 0 ? void 0 : _b.queryParams;
             // 2. Build Fetcher.Args and delegate to fetch() for header merging
             const endpointHeaders = config.headers != null ? mergeOnlyDefinedHeaders(config.headers) : {};
             const response = yield this.fetch({
-                url: join((_d = (_c = (yield Supplier.get(this._options.baseUrl))) !== null && _c !== void 0 ? _c : (yield Supplier.get(this._options.environment))) !== null && _d !== void 0 ? _d : "", config.path),
+                url: join((_e = (_d = (_c = config.baseUrl) !== null && _c !== void 0 ? _c : (yield Supplier.get(this._options.baseUrl))) !== null && _d !== void 0 ? _d : (yield Supplier.get(this._options.environment))) !== null && _e !== void 0 ? _e : "", config.path),
                 method: config.method,
                 headers: endpointHeaders,
                 contentType: config.contentType,
@@ -84,29 +87,28 @@ export class HttpClient {
                 queryParameters,
                 body: config.body,
                 duplex: config.duplex,
-                timeoutMs: ((_g = (_f = (_e = config.requestOptions) === null || _e === void 0 ? void 0 : _e.timeoutInSeconds) !== null && _f !== void 0 ? _f : this._options.timeoutInSeconds) !== null && _g !== void 0 ? _g : 60) * 1000,
-                maxRetries: (_j = (_h = config.requestOptions) === null || _h === void 0 ? void 0 : _h.maxRetries) !== null && _j !== void 0 ? _j : this._options.maxRetries,
-                abortSignal: (_k = config.requestOptions) === null || _k === void 0 ? void 0 : _k.abortSignal,
+                timeoutMs: this._resolveTimeoutMs(config),
+                maxRetries: (_g = (_f = config.requestOptions) === null || _f === void 0 ? void 0 : _f.maxRetries) !== null && _g !== void 0 ? _g : this._options.maxRetries,
+                abortSignal: (_h = config.requestOptions) === null || _h === void 0 ? void 0 : _h.abortSignal,
                 withCredentials: config.withCredentials,
                 fetchFn: this._options.fetch,
                 logging: this._options.logging,
-                endpointMetadata: config.endpointMetadata,
             }, {
-                requestHeaders: (_l = config.requestOptions) === null || _l === void 0 ? void 0 : _l.headers,
+                requestHeaders: (_j = config.requestOptions) === null || _j === void 0 ? void 0 : _j.headers,
                 endpointMetadata: config.endpointMetadata,
             });
             // 3. Success
             if (response.ok) {
                 const data = config.transformResponse
-                    ? config.transformResponse(response.body)
+                    ? config.transformResponse(response.body, response.rawResponse)
                     : response.body;
                 return { data, rawResponse: response.rawResponse };
             }
-            // 4. Status-code errors: check endpoint-specific map, then fall through to generic
+            // 4. Status-code errors: check endpoint-specific handler, then fall through to generic
             if (response.error.reason === "status-code") {
-                const factory = (_m = config.errorMap) === null || _m === void 0 ? void 0 : _m[response.error.statusCode];
-                if (factory) {
-                    throw factory(response.error.body, response.rawResponse);
+                const customError = (_k = config.errorHandler) === null || _k === void 0 ? void 0 : _k.call(config, response.error.statusCode, response.error.body, response.rawResponse);
+                if (customError) {
+                    throw customError;
                 }
                 throw this._createStatusCodeError({
                     statusCode: response.error.statusCode,
@@ -117,5 +119,29 @@ export class HttpClient {
             // 5. Non-status-code errors (timeout, network, etc.)
             return this._handleNonStatusCodeError(response.error, response.rawResponse, config.method, config.path);
         });
+    }
+    /**
+     * Resolves the timeout in milliseconds for a request.
+     * Priority: requestOptions.timeoutInSeconds > client-level > endpoint default > 60s.
+     * "infinity" means no timeout (returns undefined).
+     */
+    _resolveTimeoutMs(config) {
+        var _a;
+        const requestTimeout = (_a = config.requestOptions) === null || _a === void 0 ? void 0 : _a.timeoutInSeconds;
+        if (requestTimeout != null) {
+            return requestTimeout * 1000;
+        }
+        const clientTimeout = this._options.timeoutInSeconds;
+        if (clientTimeout != null) {
+            return clientTimeout * 1000;
+        }
+        const endpointDefault = config.defaultTimeoutInSeconds;
+        if (endpointDefault === "infinity") {
+            return undefined;
+        }
+        if (endpointDefault != null) {
+            return endpointDefault * 1000;
+        }
+        return 60 * 1000;
     }
 }
