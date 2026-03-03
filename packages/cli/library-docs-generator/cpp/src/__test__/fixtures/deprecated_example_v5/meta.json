@@ -6,6 +6,7 @@
   "namespace_path": [
     "thrust"
   ],
+  "description": "An iterator adaptor that wraps another iterator and moves it by a specified stride each time it is incremented or decremented.",
   "golden_page": "thrust/deprecated_example_v5.mdx",
   "status": "MATCHED"
 }

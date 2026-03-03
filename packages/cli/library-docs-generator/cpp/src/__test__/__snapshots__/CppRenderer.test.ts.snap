@@ -3,7 +3,7 @@
 exports[`C++ Renderer Golden Page Convergence > renders block_reduce_v5 1`] = `
 "---
 title: cub::BlockReduce
-description: ""
+description: "Collective methods for computing parallel reductions across a CUDA thread block."
 ---
 
 The BlockReduce class provides collective  methods for computing a
@@ -575,7 +575,7 @@ The operations exposed by [BlockReduce](/library/api/cub::_block_reduce) require
 exports[`C++ Renderer Golden Page Convergence > renders block_scan_v5 1`] = `
 "---
 title: cub::BlockScan
-description: ""
+description: "Collective methods for computing parallel prefix sums/scans across a CUDA thread block."
 ---
 
 The BlockScan class provides collective  methods for computing a parallel prefix
@@ -2377,7 +2377,7 @@ The operations exposed by [BlockScan](/library/api/cub::_block_scan) require a t
 exports[`C++ Renderer Golden Page Convergence > renders concept_example_v5 1`] = `
 "---
 title: "cuda::mr::resource_with"
-description: "The \`resource_with\` concept verifies that a type Resource satisfies the [\`resource\`](/library/api/cuda::mr::resource) concept and also satisfies all the provided Properties."
+description: "A concept that verifies a memory resource satisfies both the resource concept and a set of property requirements."
 ---
 
 <Badge intent="info">C++20 concept</Badge>
@@ -2403,7 +2403,7 @@ concept resource_with = /* see description */;
 exports[`C++ Renderer Golden Page Convergence > renders deep_template_class_v5 1`] = `
 "---
 title: "cuda::counting_iterator"
-description: "A \`counting_iterator\` represents an iterator into a range of sequentially increasing values."
+description: "An iterator that represents a range of sequentially increasing values without storing them in memory."
 ---
 
 A \`counting_iterator\` represents an iterator into a range of sequentially increasing values.
@@ -2645,7 +2645,7 @@ The amount of elements to decrement
 exports[`C++ Renderer Golden Page Convergence > renders deprecated_example_v5 1`] = `
 "---
 title: thrust::strided_iterator
-description: "A \`strided_iterator\` wraps another iterator and moves it by a specified stride each time it is incremented or decremented."
+description: "An iterator adaptor that wraps another iterator and moves it by a specified stride each time it is incremented or decremented."
 ---
 
 A \`strided_iterator\` wraps another iterator and moves it by a specified stride each time it is incremented or decremented.
@@ -2775,7 +2775,7 @@ RandomAccessIterator const & thrust::iterator_adaptor<strided_iterator<RandomAcc
 exports[`C++ Renderer Golden Page Convergence > renders device_vector_v5 1`] = `
 "---
 title: thrust::device_vector
-description: "A \`device_vector\` is a container that supports random access to elements, constant time removal of elements at the end, and linear time insertion and removal of elements at the beginning or in the middle."
+description: "A dynamically-sized container for device memory with automatic memory management."
 ---
 
 A \`device_vector\` is a container that supports random access to elements, constant time removal of elements at the end, and linear time insertion and removal of elements at the beginning or in the middle.
@@ -4880,7 +4880,7 @@ After this explicit destroy call, the buffer can only be assigned to or destroye
 exports[`C++ Renderer Golden Page Convergence > renders group_member_example_v5 1`] = `
 "---
 title: thrust::mr::disjoint_unsynchronized_pool_resource
-description: "A memory resource adaptor allowing for pooling and caching allocations from \`Upstream\`, using \`Bookkeeper\` for management of that cached and pooled memory, allowing to cache portions of memory inaccessible from the host."
+description: "A memory resource adaptor that pools and caches allocations using a separate bookkeeper for managing memory inaccessible from the host."
 ---
 
 A memory resource adaptor allowing for pooling and caching allocations from \`Upstream\`, using \`Bookkeeper\` for management of that cached and pooled memory, allowing to cache portions of memory inaccessible from the host.
@@ -5294,7 +5294,7 @@ struct thrust::mr::disjoint_unsynchronized_pool_resource::pool
 exports[`C++ Renderer Golden Page Convergence > renders pointer_v5 1`] = `
 "---
 title: thrust::pointer
-description: "\`pointer\` stores a pointer to an object allocated in memory."
+description: "A tagged pointer type that stores a pointer to an object allocated in memory, generalizing device_ptr with configurable backend systems."
 ---
 
 \`pointer\` stores a pointer to an object allocated in memory.
@@ -5588,7 +5588,7 @@ static derived_type thrust::pointer<Element, Tag, Reference, Derived>::pointer_t
 exports[`C++ Renderer Golden Page Convergence > renders raises_example_v5 1`] = `
 "---
 title: "cuda::stream"
-description: "An owning wrapper for cudaStream_t."
+description: "An owning wrapper for cudaStream_t providing RAII-based stream lifecycle management."
 ---
 
 An owning wrapper for cudaStream_t.
@@ -6037,7 +6037,7 @@ static stream cuda::stream::from_native_handle(invalid_stream_t) = delete;
 exports[`C++ Renderer Golden Page Convergence > renders simple_struct_v5 1`] = `
 "---
 title: cub::ArgMax
-description: "Arg max functor (keeps the value and offset of the first occurrence of the larger item)."
+description: "Arg max functor that keeps the value and offset of the first occurrence of the larger item."
 ---
 
 Arg max functor (keeps the value and offset of the first occurrence of the larger item).
@@ -6065,7 +6065,7 @@ KeyValuePair<OffsetT, T> cub::ArgMax::operator()(
 exports[`C++ Renderer Golden Page Convergence > renders warp_reduce_v5 1`] = `
 "---
 title: cub::WarpReduce
-description: ""
+description: "Collective methods for computing parallel reductions across a CUDA thread warp."
 ---
 
 The \`WarpReduce\` class provides collective  methods for computing a parallel

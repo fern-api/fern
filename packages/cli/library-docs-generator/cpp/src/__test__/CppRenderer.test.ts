@@ -12,47 +12,10 @@ import * as path from "path";
 
 import { renderCompoundPage } from "../renderers/CompoundPageRenderer.js";
 import type { CppClassIr, CppConceptIr } from "../../../src/types/CppLibraryDocsIr.js";
-import type { CompoundMeta } from "../context.js";
-
-const FIXTURES_DIR = path.resolve(__dirname, "fixtures");
-
-interface FixtureMeta {
-    compound_name: string;
-    qualified_name: string;
-    repo: string;
-    compound_kind: "class" | "concept";
-    namespace_path: string[];
-    golden_page: string;
-    status: string;
-}
-
-function metaToCompoundMeta(meta: FixtureMeta): CompoundMeta {
-    return {
-        compoundName: meta.compound_name,
-        qualifiedName: meta.qualified_name,
-        repo: meta.repo,
-        compoundKind: meta.compound_kind,
-        namespacePath: meta.namespace_path,
-    };
-}
-
-const fixtures = [
-    "block_reduce_v5",
-    "block_scan_v5",
-    "simple_struct_v5",
-    "warp_reduce_v5",
-    "device_vector_v5",
-    "pointer_v5",
-    "deprecated_example_v5",
-    "group_member_example_v5",
-    "concept_example_v5",
-    "deep_template_class_v5",
-    "empty_docstring_class_v5",
-    "raises_example_v5",
-];
+import { FIXTURES_DIR, FIXTURES, metaToCompoundMeta, type FixtureMeta } from "./fixture-utils.js";
 
 describe("C++ Renderer Golden Page Convergence", () => {
-    for (const name of fixtures) {
+    for (const name of FIXTURES) {
         it(`renders ${name}`, () => {
             const dir = path.join(FIXTURES_DIR, name);
             const input = JSON.parse(fs.readFileSync(path.join(dir, "input.json"), "utf-8"));

@@ -6,6 +6,7 @@
   "namespace_path": [
     "cub"
   ],
+  "description": "Collective methods for computing parallel prefix sums/scans across a CUDA thread block.",
   "golden_page": "cub/block_scan_v5.mdx",
   "status": "MATCHED"
 }

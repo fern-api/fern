@@ -176,6 +176,7 @@ export function renderConceptPage(concept: CppConceptIr, meta: CompoundMeta): st
 
     // Frontmatter
     const title = needsQuoting(concept.path) ? `"${concept.path}"` : concept.path;
+    // Description is expected to be provided by the caller (pipeline/Lambda); fallback extracts from docstring summary
     const description = meta.description
         ?? (concept.docstring ? renderSegmentsTrimmed(concept.docstring.summary) : "");
 

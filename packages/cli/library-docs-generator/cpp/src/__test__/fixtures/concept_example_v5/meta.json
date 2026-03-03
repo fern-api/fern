@@ -7,6 +7,7 @@
     "cuda",
     "mr"
   ],
+  "description": "A concept that verifies a memory resource satisfies both the resource concept and a set of property requirements.",
   "golden_page": "libcudacxx/concept_example_v5.mdx",
   "status": "MATCHED"
 }

@@ -6,6 +6,7 @@
   "namespace_path": [
     "cuda"
   ],
+  "description": "An iterator that represents a range of sequentially increasing values without storing them in memory.",
   "golden_page": "libcudacxx/deep_template_class_v5.mdx",
   "status": "MATCHED"
 }

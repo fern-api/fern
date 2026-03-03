@@ -54,6 +54,7 @@ import {
  */
 function renderFrontmatter(cls: CppClassIr, meta: CompoundMeta): string {
     const title = needsQuoting(cls.path) ? `"${cls.path}"` : cls.path;
+    // Description is expected to be provided by the caller (pipeline/Lambda); fallback extracts from docstring summary
     const description = meta.description
         ?? (cls.docstring ? renderSegmentsTrimmed(cls.docstring.summary) : "");
 

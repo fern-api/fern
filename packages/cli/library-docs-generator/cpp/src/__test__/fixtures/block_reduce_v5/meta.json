@@ -6,6 +6,7 @@
   "namespace_path": [
     "cub"
   ],
+  "description": "Collective methods for computing parallel reductions across a CUDA thread block.",
   "golden_page": "cub/block_reduce_v5.mdx",
   "status": "MATCHED"
 }
