@@ -3,7 +3,6 @@
 import type * as SeedApi from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
@@ -16,9 +15,15 @@ export declare namespace SeedApiClient {
 
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
+    protected readonly _client: core.HttpClient;
 
     constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedApiError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     /**
@@ -32,41 +37,11 @@ export class SeedApiClient {
         account_id: string,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Account> {
-        return core.HttpResponsePromise.fromPromise(this.__getAccount(account_id, requestOptions));
-    }
-
-    private async __getAccount(
-        account_id: string,
-        requestOptions?: SeedApiClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Account>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `account/${core.url.encodePathParam(account_id)}`,
-            ),
+        return this._client.request<SeedApi.Account>({
             method: "GET",
-            headers: _headers,
+            path: `account/${core.url.encodePathParam(account_id)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedApi.Account, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/account/{account_id}");
     }
 }

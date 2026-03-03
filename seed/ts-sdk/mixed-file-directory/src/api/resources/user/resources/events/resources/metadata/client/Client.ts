@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../../../core/headers.js";
-import * as core from "../../../../../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../../../errors/index.js";
+import type * as core from "../../../../../../../../core/index.js";
 import type * as SeedMixedFileDirectory from "../../../../../../../index.js";
 
 export declare namespace MetadataClient {
@@ -16,9 +13,11 @@ export declare namespace MetadataClient {
 
 export class MetadataClient {
     protected readonly _options: NormalizedClientOptions<MetadataClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: MetadataClient.Options) {
+    constructor(options: MetadataClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -36,48 +35,15 @@ export class MetadataClient {
         request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
         requestOptions?: MetadataClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.user.events.Metadata> {
-        return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
-    }
-
-    private async __getMetadata(
-        request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
-        requestOptions?: MetadataClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.events.Metadata>> {
         const { id } = request;
         const _queryParams: Record<string, unknown> = {
             id,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users/events/metadata/",
-            ),
+        return this._client.request<SeedMixedFileDirectory.user.events.Metadata>({
             method: "GET",
-            headers: _headers,
+            path: "/users/events/metadata/",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedMixedFileDirectory.user.events.Metadata,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMixedFileDirectoryError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/events/metadata/");
     }
 }

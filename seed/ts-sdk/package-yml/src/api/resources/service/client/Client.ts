@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 
 export declare namespace ServiceClient {
     export type Options = BaseClientOptions;
@@ -15,9 +12,11 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ServiceClient.Options) {
+    constructor(options: ServiceClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -28,41 +27,11 @@ export class ServiceClient {
      *     await client.service.nop("id-219xca8")
      */
     public nop(nestedId: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__nop(nestedId, requestOptions));
-    }
-
-    private async __nop(
-        nestedId: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.id)}//${core.url.encodePathParam(nestedId)}`,
-            ),
+        return this._client.request<void>({
             method: "GET",
-            headers: _headers,
+            path: `/${core.url.encodePathParam(this._options.id)}//${core.url.encodePathParam(nestedId)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPackageYmlError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/{id}/{nestedId}");
     }
 }

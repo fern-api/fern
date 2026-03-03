@@ -16,9 +16,11 @@ export declare namespace ImdbClient {
 
 export class ImdbClient {
     protected readonly _options: NormalizedClientOptions<ImdbClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ImdbClient.Options) {
+    constructor(options: ImdbClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -39,45 +41,15 @@ export class ImdbClient {
         request: SeedApi.CreateMovieRequest,
         requestOptions?: ImdbClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.MovieId> {
-        return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
-    }
-
-    private async __createMovie(
-        request: SeedApi.CreateMovieRequest,
-        requestOptions?: ImdbClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.MovieId>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/movies/create-movie",
-            ),
+        return this._client.request<SeedApi.MovieId>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/movies/create-movie",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedApi.MovieId, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/movies/create-movie");
     }
 
     /**

@@ -18,9 +18,11 @@ export declare namespace PlaylistClient {
 
 export class PlaylistClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PlaylistClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: PlaylistClient.Options = {}) {
+    constructor(options: PlaylistClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -45,77 +47,35 @@ export class PlaylistClient {
         request: SeedTrace.CreatePlaylistRequest,
         requestOptions?: PlaylistClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.Playlist> {
-        return core.HttpResponsePromise.fromPromise(this.__createPlaylist(serviceParam, request, requestOptions));
-    }
-
-    private async __createPlaylist(
-        serviceParam: number,
-        request: SeedTrace.CreatePlaylistRequest,
-        requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.Playlist>> {
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, unknown> = {
             datetime: datetime.toISOString(),
             optionalDatetime: optionalDatetime != null ? optionalDatetime?.toISOString() : undefined,
         };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/create`,
-            ),
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+        });
+        return this._client.request<SeedTrace.Playlist>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            requestType: "json",
+            path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/create`,
             body: serializers.PlaylistCreateRequest.jsonOrThrow(_body, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.Playlist.parseOrThrow(_response.body, {
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.Playlist.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/v2/playlist/{serviceParam}/create",
-        );
+            requestOptions,
+        });
     }
 
     /**
@@ -139,14 +99,6 @@ export class PlaylistClient {
         request: SeedTrace.GetPlaylistsRequest,
         requestOptions?: PlaylistClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.Playlist[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getPlaylists(serviceParam, request, requestOptions));
-    }
-
-    private async __getPlaylists(
-        serviceParam: number,
-        request: SeedTrace.GetPlaylistsRequest,
-        requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.Playlist[]>> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -155,58 +107,24 @@ export class PlaylistClient {
             optionalMultipleField,
             multipleField,
         };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return {
-                data: serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
+        return this._client.request<SeedTrace.Playlist[]>({
+            method: "GET",
+            path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.playlist.getPlaylists.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/v2/playlist/{serviceParam}/all",
-        );
+            requestOptions,
+        });
     }
 
     /**
@@ -425,56 +343,15 @@ export class PlaylistClient {
         playlist_id: SeedTrace.PlaylistId,
         requestOptions?: PlaylistClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deletePlaylist(serviceParam, playlist_id, requestOptions));
-    }
-
-    private async __deletePlaylist(
-        serviceParam: number,
-        playlist_id: SeedTrace.PlaylistId,
-        requestOptions?: PlaylistClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlist_id, { omitUndefined: true }))}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "DELETE",
-            "/v2/playlist/{serviceParam}/{playlist_id}",
-        );
+        return this._client.request<void>({
+            method: "DELETE",
+            path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlist_id, { omitUndefined: true }))}`,
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 }

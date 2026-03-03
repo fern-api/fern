@@ -30,9 +30,11 @@ export declare namespace RealtimeClient {
 
 export class RealtimeClient {
     protected readonly _options: NormalizedClientOptions<RealtimeClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: RealtimeClient.Options) {
+    constructor(options: RealtimeClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public async createRealtimeConnection(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {

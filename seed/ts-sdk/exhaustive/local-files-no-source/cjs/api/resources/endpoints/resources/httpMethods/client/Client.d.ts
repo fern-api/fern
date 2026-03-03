@@ -9,7 +9,8 @@ export declare namespace HttpMethodsClient {
 }
 export declare class HttpMethodsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<HttpMethodsClient.Options>;
-    constructor(options: HttpMethodsClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: HttpMethodsClient.Options, client: core.HttpClient);
     /**
      * @param {string} id
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -18,7 +19,6 @@ export declare class HttpMethodsClient {
      *     await client.endpoints.httpMethods.testGet("id")
      */
     testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __testGet;
     /**
      * @deprecated
      *
@@ -31,7 +31,6 @@ export declare class HttpMethodsClient {
      *     })
      */
     testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
-    private __testPost;
     /**
      * @deprecated Use testPatch instead.
      *
@@ -45,7 +44,6 @@ export declare class HttpMethodsClient {
      *     })
      */
     testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
-    private __testPut;
     /**
      * @beta This endpoint is in pre-release and may change.
      *
@@ -73,7 +71,6 @@ export declare class HttpMethodsClient {
      *     })
      */
     testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
-    private __testPatch;
     /**
      * @beta This endpoint is in development and may change.
      *
@@ -84,5 +81,4 @@ export declare class HttpMethodsClient {
      *     await client.endpoints.httpMethods.testDelete("id")
      */
     testDelete(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<boolean>;
-    private __testDelete;
 }

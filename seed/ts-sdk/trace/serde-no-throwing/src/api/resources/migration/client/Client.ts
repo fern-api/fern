@@ -16,9 +16,11 @@ export declare namespace MigrationClient {
 
 export class MigrationClient {
     protected readonly _options: NormalizedClientOptions<MigrationClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: MigrationClient.Options = {}) {
+    constructor(options: MigrationClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

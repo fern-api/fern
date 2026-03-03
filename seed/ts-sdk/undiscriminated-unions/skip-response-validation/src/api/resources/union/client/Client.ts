@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedUndiscriminatedUnions from "../../../index.js";
 
 export declare namespace UnionClient {
@@ -16,9 +13,11 @@ export declare namespace UnionClient {
 
 export class UnionClient {
     protected readonly _options: NormalizedClientOptions<UnionClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UnionClient.Options) {
+    constructor(options: UnionClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -32,43 +31,15 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
-        return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
-    }
-
-    private async __get(
-        request: SeedUndiscriminatedUnions.MyUnion,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+        return this._client.request<SeedUndiscriminatedUnions.MyUnion>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedUndiscriminatedUnions.MyUnion, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 
     /**
@@ -80,41 +51,12 @@ export class UnionClient {
     public getMetadata(
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
-        return core.HttpResponsePromise.fromPromise(this.__getMetadata(requestOptions));
-    }
-
-    private async __getMetadata(
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/metadata",
-            ),
+        return this._client.request<SeedUndiscriminatedUnions.Metadata>({
             method: "GET",
-            headers: _headers,
+            path: "/metadata",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedUndiscriminatedUnions.Metadata, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/metadata");
     }
 
     /**
@@ -132,45 +74,15 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.MetadataUnion,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__updateMetadata(request, requestOptions));
-    }
-
-    private async __updateMetadata(
-        request: SeedUndiscriminatedUnions.MetadataUnion,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/metadata",
-            ),
+        return this._client.request<boolean>({
             method: "PUT",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/metadata",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/metadata");
     }
 
     /**
@@ -190,45 +102,15 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.Request,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        return core.HttpResponsePromise.fromPromise(this.__call(request, requestOptions));
-    }
-
-    private async __call(
-        request: SeedUndiscriminatedUnions.Request,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/call",
-            ),
+        return this._client.request<boolean>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/call",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/call");
     }
 
     /**
@@ -242,48 +124,15 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
-        return core.HttpResponsePromise.fromPromise(this.__duplicateTypesUnion(request, requestOptions));
-    }
-
-    private async __duplicateTypesUnion(
-        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/duplicate",
-            ),
+        return this._client.request<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/duplicate",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/duplicate");
     }
 
     /**
@@ -297,45 +146,15 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.NestedUnionRoot,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__nestedUnions(request, requestOptions));
-    }
-
-    private async __nestedUnions(
-        request: SeedUndiscriminatedUnions.NestedUnionRoot,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/nested",
-            ),
+        return this._client.request<string>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/nested",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/nested");
     }
 
     /**
@@ -354,44 +173,14 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.PaymentRequest,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__testCamelCaseProperties(request, requestOptions));
-    }
-
-    private async __testCamelCaseProperties(
-        request: SeedUndiscriminatedUnions.PaymentRequest,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/camel-case",
-            ),
+        return this._client.request<string>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/camel-case",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/camel-case");
     }
 }

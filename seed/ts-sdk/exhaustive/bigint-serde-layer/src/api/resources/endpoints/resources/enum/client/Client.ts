@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
-import * as core from "../../../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../errors/index.js";
+import type * as core from "../../../../../../core/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
@@ -17,9 +14,11 @@ export declare namespace EnumClient {
 
 export class EnumClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EnumClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: EnumClient.Options) {
+    constructor(options: EnumClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -33,61 +32,25 @@ export class EnumClient {
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: EnumClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
-    }
-
-    private async __getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
-        requestOptions?: EnumClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.WeatherReport>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/enum",
-            ),
+        return this._client.request<SeedExhaustive.types.WeatherReport>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/enum",
             body: serializers.types.WeatherReport.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.types.WeatherReport.parseOrThrow(_response.body, {
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            transformResponse: (body) =>
+                serializers.types.WeatherReport.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/enum");
+            requestOptions,
+        });
     }
 }

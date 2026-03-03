@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedPathParameters from "../../../index.js";
 
 export declare namespace OrganizationsClient {
@@ -16,9 +13,11 @@ export declare namespace OrganizationsClient {
 
 export class OrganizationsClient {
     protected readonly _options: NormalizedClientOptions<OrganizationsClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: OrganizationsClient.Options) {
+    constructor(options: OrganizationsClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -32,47 +31,12 @@ export class OrganizationsClient {
         organization_id: string,
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization> {
-        return core.HttpResponsePromise.fromPromise(this.__getOrganization(organization_id, requestOptions));
-    }
-
-    private async __getOrganization(
-        organization_id: string,
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
-            ),
+        return this._client.request<SeedPathParameters.Organization>({
             method: "GET",
-            headers: _headers,
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.Organization, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/{tenant_id}/organizations/{organization_id}/",
-        );
     }
 
     /**
@@ -89,48 +53,13 @@ export class OrganizationsClient {
         request: SeedPathParameters.GetOrganizationUserRequest,
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getOrganizationUser(request, requestOptions));
-    }
-
-    private async __getOrganizationUser(
-        request: SeedPathParameters.GetOrganizationUserRequest,
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { organization_id: organizationId, user_id: userId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
-            ),
+        return this._client.request<SeedPathParameters.User>({
             method: "GET",
-            headers: _headers,
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/{tenant_id}/organizations/{organization_id}/users/{user_id}",
-        );
     }
 
     /**
@@ -148,53 +77,15 @@ export class OrganizationsClient {
         request: SeedPathParameters.SearchOrganizationsRequest = {},
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__searchOrganizations(organization_id, request, requestOptions),
-        );
-    }
-
-    private async __searchOrganizations(
-        organization_id: string,
-        request: SeedPathParameters.SearchOrganizationsRequest = {},
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
         const { limit } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
-            ),
+        return this._client.request<SeedPathParameters.Organization[]>({
             method: "GET",
-            headers: _headers,
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.Organization[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/{tenant_id}/organizations/{organization_id}/search",
-        );
     }
 }

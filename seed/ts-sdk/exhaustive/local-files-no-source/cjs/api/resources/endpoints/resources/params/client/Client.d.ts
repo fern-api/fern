@@ -9,7 +9,8 @@ export declare namespace ParamsClient {
 }
 export declare class ParamsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
-    constructor(options: ParamsClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: ParamsClient.Options, client: core.HttpClient);
     /**
      * GET with path param
      *
@@ -20,7 +21,6 @@ export declare class ParamsClient {
      *     await client.endpoints.params.getWithPath("param")
      */
     getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __getWithPath;
     /**
      * GET with path param
      *
@@ -33,7 +33,6 @@ export declare class ParamsClient {
      *     })
      */
     getWithInlinePath(request: SeedExhaustive.endpoints.GetWithInlinePath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __getWithInlinePath;
     /**
      * GET with query param
      *
@@ -47,7 +46,6 @@ export declare class ParamsClient {
      *     })
      */
     getWithQuery(request: SeedExhaustive.endpoints.GetWithQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __getWithQuery;
     /**
      * GET with multiple of same query param
      *
@@ -61,7 +59,6 @@ export declare class ParamsClient {
      *     })
      */
     getWithAllowMultipleQuery(request: SeedExhaustive.endpoints.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __getWithAllowMultipleQuery;
     /**
      * GET with path and query params
      *
@@ -75,7 +72,6 @@ export declare class ParamsClient {
      *     })
      */
     getWithPathAndQuery(param: string, request: SeedExhaustive.endpoints.GetWithPathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __getWithPathAndQuery;
     /**
      * GET with path and query params
      *
@@ -89,7 +85,6 @@ export declare class ParamsClient {
      *     })
      */
     getWithInlinePathAndQuery(request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __getWithInlinePathAndQuery;
     /**
      * PUT to update with path param
      *
@@ -101,7 +96,6 @@ export declare class ParamsClient {
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
     modifyWithPath(param: string, request: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __modifyWithPath;
     /**
      * PUT to update with path param
      *
@@ -115,7 +109,6 @@ export declare class ParamsClient {
      *     })
      */
     modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string>;
-    private __modifyWithInlinePath;
     /**
      * POST bytes with path param returning object
      *

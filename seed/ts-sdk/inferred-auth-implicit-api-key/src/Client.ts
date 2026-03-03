@@ -6,6 +6,9 @@ import { NestedNoAuthClient } from "./api/resources/nestedNoAuth/client/Client.j
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedInferredAuthImplicitApiKeyClient {
     export type Options = BaseClientOptions;
@@ -15,6 +18,7 @@ export declare namespace SeedInferredAuthImplicitApiKeyClient {
 
 export class SeedInferredAuthImplicitApiKeyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedInferredAuthImplicitApiKeyClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _auth: AuthClient | undefined;
     protected _nestedNoAuth: NestedNoAuthClient | undefined;
     protected _nested: NestedClient | undefined;
@@ -22,21 +26,26 @@ export class SeedInferredAuthImplicitApiKeyClient {
 
     constructor(options: SeedInferredAuthImplicitApiKeyClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedInferredAuthImplicitApiKeyError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient(this._options));
+        return (this._auth ??= new AuthClient(this._options, this._client));
     }
 
     public get nestedNoAuth(): NestedNoAuthClient {
-        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options));
+        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options, this._client));
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient(this._options));
+        return (this._nested ??= new NestedClient(this._options, this._client));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options));
+        return (this._simple ??= new SimpleClient(this._options, this._client));
     }
 }

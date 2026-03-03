@@ -4,6 +4,9 @@ import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { RealtimeClient } from "./api/resources/realtime/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedWebsocketAuthClient {
     export type Options = BaseClientOptions;
@@ -13,18 +16,24 @@ export declare namespace SeedWebsocketAuthClient {
 
 export class SeedWebsocketAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedWebsocketAuthClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _auth: AuthClient | undefined;
     protected _realtime: RealtimeClient | undefined;
 
     constructor(options: SeedWebsocketAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedWebsocketAuthError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient(this._options));
+        return (this._auth ??= new AuthClient(this._options, this._client));
     }
 
     public get realtime(): RealtimeClient {
-        return (this._realtime ??= new RealtimeClient(this._options));
+        return (this._realtime ??= new RealtimeClient(this._options, this._client));
     }
 }

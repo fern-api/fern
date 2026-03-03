@@ -2,11 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
+import type * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedEnum from "../../../index.js";
 
 export declare namespace QueryParamClient {
@@ -17,9 +14,11 @@ export declare namespace QueryParamClient {
 
 export class QueryParamClient {
     protected readonly _options: NormalizedClientOptions<QueryParamClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: QueryParamClient.Options) {
+    constructor(options: QueryParamClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -36,13 +35,6 @@ export class QueryParamClient {
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
-    }
-
-    private async __send(
-        request: SeedEnum.SendEnumAsQueryParamRequest,
-        requestOptions?: QueryParamClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
             operand,
@@ -55,35 +47,12 @@ export class QueryParamClient {
                         : toJson(maybeOperandOrColor)
                     : undefined,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "query",
-            ),
+        return this._client.request<void>({
             method: "POST",
-            headers: _headers,
+            path: "query",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedEnumError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/query");
     }
 
     /**
@@ -102,13 +71,6 @@ export class QueryParamClient {
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
-    }
-
-    private async __sendList(
-        request: SeedEnum.SendEnumListAsQueryParamRequest,
-        requestOptions?: QueryParamClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, unknown> = {
             operand: Array.isArray(operand) ? operand.map((item) => item) : operand,
@@ -130,34 +92,11 @@ export class QueryParamClient {
                       : toJson(maybeOperandOrColor)
                   : undefined,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "query-list",
-            ),
+        return this._client.request<void>({
             method: "POST",
-            headers: _headers,
+            path: "query-list",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedEnumError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/query-list");
     }
 }

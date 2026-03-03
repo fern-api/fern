@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
-import * as core from "../../../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../errors/index.js";
+import type * as core from "../../../../../../core/index.js";
 
 export declare namespace ApiClient {
     export type Options = BaseClientOptions;
@@ -15,9 +12,11 @@ export declare namespace ApiClient {
 
 export class ApiClient {
     protected readonly _options: NormalizedClientOptions<ApiClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ApiClient.Options) {
+    constructor(options: ApiClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -27,38 +26,11 @@ export class ApiClient {
      *     await client.nestedNoAuth.api.getSomething()
      */
     public getSomething(requestOptions?: ApiClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__getSomething(requestOptions));
-    }
-
-    private async __getSomething(requestOptions?: ApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/nested-no-auth/get-something",
-            ),
+        return this._client.request<void>({
             method: "GET",
-            headers: _headers,
+            path: "/nested-no-auth/get-something",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/nested-no-auth/get-something");
     }
 }

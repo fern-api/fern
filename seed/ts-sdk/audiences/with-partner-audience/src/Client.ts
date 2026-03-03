@@ -3,6 +3,9 @@
 import { FolderDClient } from "./api/resources/folderD/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedAudiencesClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedAudiencesClient {
 
 export class SeedAudiencesClient {
     protected readonly _options: NormalizedClientOptions<SeedAudiencesClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _folderD: FolderDClient | undefined;
 
     constructor(options: SeedAudiencesClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedAudiencesError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get folderD(): FolderDClient {
-        return (this._folderD ??= new FolderDClient(this._options));
+        return (this._folderD ??= new FolderDClient(this._options, this._client));
     }
 }

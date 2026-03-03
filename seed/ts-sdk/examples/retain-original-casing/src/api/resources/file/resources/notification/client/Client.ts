@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
+import type * as core from "../../../../../../core/index.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace NotificationClient {
@@ -10,13 +11,15 @@ export declare namespace NotificationClient {
 
 export class NotificationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NotificationClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: NotificationClient.Options) {
+    constructor(options: NotificationClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options));
+        return (this._service ??= new ServiceClient(this._options, this._client));
     }
 }

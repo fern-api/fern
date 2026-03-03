@@ -5,6 +5,9 @@ import { FolderDClient } from "./api/resources/folderD/client/Client.js";
 import { FooClient } from "./api/resources/foo/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedCrossPackageTypeNamesClient {
     export type Options = BaseClientOptions;
@@ -14,23 +17,29 @@ export declare namespace SeedCrossPackageTypeNamesClient {
 
 export class SeedCrossPackageTypeNamesClient {
     protected readonly _options: NormalizedClientOptions<SeedCrossPackageTypeNamesClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _folderA: FolderAClient | undefined;
     protected _folderD: FolderDClient | undefined;
     protected _foo: FooClient | undefined;
 
     constructor(options: SeedCrossPackageTypeNamesClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedCrossPackageTypeNamesError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get folderA(): FolderAClient {
-        return (this._folderA ??= new FolderAClient(this._options));
+        return (this._folderA ??= new FolderAClient(this._options, this._client));
     }
 
     public get folderD(): FolderDClient {
-        return (this._folderD ??= new FolderDClient(this._options));
+        return (this._folderD ??= new FolderDClient(this._options, this._client));
     }
 
     public get foo(): FooClient {
-        return (this._foo ??= new FooClient(this._options));
+        return (this._foo ??= new FooClient(this._options, this._client));
     }
 }

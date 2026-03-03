@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
-import * as core from "../../../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../errors/index.js";
+import type * as core from "../../../../../../core/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
@@ -17,9 +14,11 @@ export declare namespace UnionClient {
 
 export class UnionClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UnionClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UnionClient.Options) {
+    constructor(options: UnionClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -37,61 +36,25 @@ export class UnionClient {
         request: SeedExhaustive.types.Animal,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
-    }
-
-    private async __getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/union",
-            ),
+        return this._client.request<SeedExhaustive.types.Animal>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/union",
             body: serializers.types.Animal.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.types.Animal.parseOrThrow(_response.body, {
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            transformResponse: (body) =>
+                serializers.types.Animal.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/union");
+            requestOptions,
+        });
     }
 }

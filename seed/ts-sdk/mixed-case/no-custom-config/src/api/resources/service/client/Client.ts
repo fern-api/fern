@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedMixedCase from "../../../index.js";
 
 export declare namespace ServiceClient {
@@ -16,9 +13,11 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ServiceClient.Options) {
+    constructor(options: ServiceClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -32,42 +31,12 @@ export class ServiceClient {
         ResourceID: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedCase.Resource> {
-        return core.HttpResponsePromise.fromPromise(this.__getResource(ResourceID, requestOptions));
-    }
-
-    private async __getResource(
-        ResourceID: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/resource/${core.url.encodePathParam(ResourceID)}`,
-            ),
+        return this._client.request<SeedMixedCase.Resource>({
             method: "GET",
-            headers: _headers,
+            path: `/resource/${core.url.encodePathParam(ResourceID)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedMixedCase.Resource, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMixedCaseError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/resource/{ResourceID}");
     }
 
     /**
@@ -84,46 +53,16 @@ export class ServiceClient {
         request: SeedMixedCase.ListResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedCase.Resource[]> {
-        return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
-    }
-
-    private async __listResources(
-        request: SeedMixedCase.ListResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedCase.Resource[]>> {
         const { page_limit: pageLimit, beforeDate } = request;
         const _queryParams: Record<string, unknown> = {
             page_limit: pageLimit,
             beforeDate,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/resource",
-            ),
+        return this._client.request<SeedMixedCase.Resource[]>({
             method: "GET",
-            headers: _headers,
+            path: "/resource",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedMixedCase.Resource[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMixedCaseError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/resource");
     }
 }

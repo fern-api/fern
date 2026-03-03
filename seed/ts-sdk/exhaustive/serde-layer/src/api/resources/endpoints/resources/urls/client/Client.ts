@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
-import * as core from "../../../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../errors/index.js";
+import type * as core from "../../../../../../core/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
 
 export declare namespace UrlsClient {
@@ -16,9 +13,11 @@ export declare namespace UrlsClient {
 
 export class UrlsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UrlsClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UrlsClient.Options) {
+    constructor(options: UrlsClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -28,53 +27,20 @@ export class UrlsClient {
      *     await client.endpoints.urls.withMixedCase()
      */
     public withMixedCase(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__withMixedCase(requestOptions));
-    }
-
-    private async __withMixedCase(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/urls/MixedCase",
-            ),
+        return this._client.request<string>({
             method: "GET",
-            headers: _headers,
+            path: "/urls/MixedCase",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.endpoints.urls.withMixedCase.Response.parseOrThrow(_response.body, {
+            transformResponse: (body) =>
+                serializers.endpoints.urls.withMixedCase.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/urls/MixedCase");
+            requestOptions,
+        });
     }
 
     /**
@@ -84,53 +50,20 @@ export class UrlsClient {
      *     await client.endpoints.urls.noEndingSlash()
      */
     public noEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__noEndingSlash(requestOptions));
-    }
-
-    private async __noEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/urls/no-ending-slash",
-            ),
+        return this._client.request<string>({
             method: "GET",
-            headers: _headers,
+            path: "/urls/no-ending-slash",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.endpoints.urls.noEndingSlash.Response.parseOrThrow(_response.body, {
+            transformResponse: (body) =>
+                serializers.endpoints.urls.noEndingSlash.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/urls/no-ending-slash");
+            requestOptions,
+        });
     }
 
     /**
@@ -140,53 +73,20 @@ export class UrlsClient {
      *     await client.endpoints.urls.withEndingSlash()
      */
     public withEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__withEndingSlash(requestOptions));
-    }
-
-    private async __withEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/urls/with-ending-slash/",
-            ),
+        return this._client.request<string>({
             method: "GET",
-            headers: _headers,
+            path: "/urls/with-ending-slash/",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.endpoints.urls.withEndingSlash.Response.parseOrThrow(_response.body, {
+            transformResponse: (body) =>
+                serializers.endpoints.urls.withEndingSlash.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/urls/with-ending-slash/");
+            requestOptions,
+        });
     }
 
     /**
@@ -196,52 +96,19 @@ export class UrlsClient {
      *     await client.endpoints.urls.withUnderscores()
      */
     public withUnderscores(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__withUnderscores(requestOptions));
-    }
-
-    private async __withUnderscores(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/urls/with_underscores",
-            ),
+        return this._client.request<string>({
             method: "GET",
-            headers: _headers,
+            path: "/urls/with_underscores",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.endpoints.urls.withUnderscores.Response.parseOrThrow(_response.body, {
+            transformResponse: (body) =>
+                serializers.endpoints.urls.withUnderscores.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/urls/with_underscores");
+            requestOptions,
+        });
     }
 }

@@ -3,6 +3,9 @@
 import { PaymentClient } from "./api/resources/payment/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedIdempotencyHeadersClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedIdempotencyHeadersClient {
 
 export class SeedIdempotencyHeadersClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedIdempotencyHeadersClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _payment: PaymentClient | undefined;
 
     constructor(options: SeedIdempotencyHeadersClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedIdempotencyHeadersError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get payment(): PaymentClient {
-        return (this._payment ??= new PaymentClient(this._options));
+        return (this._payment ??= new PaymentClient(this._options, this._client));
     }
 }

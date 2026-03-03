@@ -17,9 +17,11 @@ export declare namespace Ec2Client {
 
 export class Ec2Client {
     protected readonly _options: NormalizedClientOptionsWithAuth<Ec2Client.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: Ec2Client.Options) {
+    constructor(options: Ec2Client.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+import type * as core from "../../../../core/index.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace FolderAClient {
@@ -10,13 +11,15 @@ export declare namespace FolderAClient {
 
 export class FolderAClient {
     protected readonly _options: NormalizedClientOptions<FolderAClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: FolderAClient.Options) {
+    constructor(options: FolderAClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options));
+        return (this._service ??= new ServiceClient(this._options, this._client));
     }
 }

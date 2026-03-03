@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
@@ -17,9 +14,11 @@ export declare namespace PutClient {
 
 export class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: PutClient.Options) {
+    constructor(options: PutClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -35,56 +34,20 @@ export class PutClient {
         request: SeedExhaustive.endpoints.PutRequest,
         requestOptions?: PutClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
-    }
-
-    private async __add(
-        request: SeedExhaustive.endpoints.PutRequest,
-        requestOptions?: PutClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.endpoints.PutResponse>> {
         const { id } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `${core.url.encodePathParam(id)}`,
-            ),
+        return this._client.request<SeedExhaustive.endpoints.PutResponse>({
             method: "PUT",
-            headers: _headers,
+            path: `${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.endpoints.PutResponse.parseOrThrow(_response.body, {
+            transformResponse: (body) =>
+                serializers.endpoints.PutResponse.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PUT", "/{id}");
+            requestOptions,
+        });
     }
 }

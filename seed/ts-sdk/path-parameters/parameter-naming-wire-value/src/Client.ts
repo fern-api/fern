@@ -4,6 +4,9 @@ import { OrganizationsClient } from "./api/resources/organizations/client/Client
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedPathParametersClient {
     export type Options = BaseClientOptions;
@@ -13,18 +16,24 @@ export declare namespace SeedPathParametersClient {
 
 export class SeedPathParametersClient {
     protected readonly _options: NormalizedClientOptions<SeedPathParametersClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _organizations: OrganizationsClient | undefined;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedPathParametersClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedPathParametersError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get organizations(): OrganizationsClient {
-        return (this._organizations ??= new OrganizationsClient(this._options));
+        return (this._organizations ??= new OrganizationsClient(this._options, this._client));
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options));
+        return (this._user ??= new UserClient(this._options, this._client));
     }
 }

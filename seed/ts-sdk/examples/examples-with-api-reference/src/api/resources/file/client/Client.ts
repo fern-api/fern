@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
+import type * as core from "../../../../core/index.js";
 import { NotificationClient } from "../resources/notification/client/Client.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
@@ -11,18 +12,20 @@ export declare namespace FileClient {
 
 export class FileClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<FileClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _notification: NotificationClient | undefined;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: FileClient.Options) {
+    constructor(options: FileClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     public get notification(): NotificationClient {
-        return (this._notification ??= new NotificationClient(this._options));
+        return (this._notification ??= new NotificationClient(this._options, this._client));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options));
+        return (this._service ??= new ServiceClient(this._options, this._client));
     }
 }

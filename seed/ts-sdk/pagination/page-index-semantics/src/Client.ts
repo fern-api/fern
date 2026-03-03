@@ -5,6 +5,9 @@ import { InlineUsersClient } from "./api/resources/inlineUsers/client/Client.js"
 import { UsersClient } from "./api/resources/users/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedPaginationClient {
     export type Options = BaseClientOptions;
@@ -14,23 +17,29 @@ export declare namespace SeedPaginationClient {
 
 export class SeedPaginationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedPaginationClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _complex: ComplexClient | undefined;
     protected _inlineUsers: InlineUsersClient | undefined;
     protected _users: UsersClient | undefined;
 
     constructor(options: SeedPaginationClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedPaginationError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get complex(): ComplexClient {
-        return (this._complex ??= new ComplexClient(this._options));
+        return (this._complex ??= new ComplexClient(this._options, this._client));
     }
 
     public get inlineUsers(): InlineUsersClient {
-        return (this._inlineUsers ??= new InlineUsersClient(this._options));
+        return (this._inlineUsers ??= new InlineUsersClient(this._options, this._client));
     }
 
     public get users(): UsersClient {
-        return (this._users ??= new UsersClient(this._options));
+        return (this._users ??= new UsersClient(this._options, this._client));
     }
 }

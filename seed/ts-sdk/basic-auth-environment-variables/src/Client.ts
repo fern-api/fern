@@ -3,6 +3,9 @@
 import { BasicAuthClient } from "./api/resources/basicAuth/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedBasicAuthEnvironmentVariablesClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedBasicAuthEnvironmentVariablesClient {
 
 export class SeedBasicAuthEnvironmentVariablesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedBasicAuthEnvironmentVariablesClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _basicAuth: BasicAuthClient | undefined;
 
     constructor(options: SeedBasicAuthEnvironmentVariablesClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedBasicAuthEnvironmentVariablesError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get basicAuth(): BasicAuthClient {
-        return (this._basicAuth ??= new BasicAuthClient(this._options));
+        return (this._basicAuth ??= new BasicAuthClient(this._options, this._client));
     }
 }

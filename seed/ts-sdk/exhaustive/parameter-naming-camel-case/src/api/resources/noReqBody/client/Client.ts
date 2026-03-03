@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 
 export declare namespace NoReqBodyClient {
@@ -16,9 +13,11 @@ export declare namespace NoReqBodyClient {
 
 export class NoReqBodyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: NoReqBodyClient.Options) {
+    constructor(options: NoReqBodyClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -30,49 +29,12 @@ export class NoReqBodyClient {
     public getWithNoRequestBody(
         requestOptions?: NoReqBodyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
-    }
-
-    private async __getWithNoRequestBody(
-        requestOptions?: NoReqBodyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/no-req-body",
-            ),
+        return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "GET",
-            headers: _headers,
+            path: "/no-req-body",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/no-req-body");
     }
 
     /**
@@ -82,45 +44,11 @@ export class NoReqBodyClient {
      *     await client.noReqBody.postWithNoRequestBody()
      */
     public postWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__postWithNoRequestBody(requestOptions));
-    }
-
-    private async __postWithNoRequestBody(
-        requestOptions?: NoReqBodyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/no-req-body",
-            ),
+        return this._client.request<string>({
             method: "POST",
-            headers: _headers,
+            path: "/no-req-body",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/no-req-body");
     }
 }

@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+import type * as core from "../../../../core/index.js";
 import { InlineUsersClient as InlineUsersClient_ } from "../resources/inlineUsers/client/Client.js";
 
 export declare namespace InlineUsersClient {
@@ -10,13 +11,15 @@ export declare namespace InlineUsersClient {
 
 export class InlineUsersClient {
     protected readonly _options: NormalizedClientOptions<InlineUsersClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _inlineUsers: InlineUsersClient_ | undefined;
 
-    constructor(options: InlineUsersClient.Options) {
+    constructor(options: InlineUsersClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public get inlineUsers(): InlineUsersClient_ {
-        return (this._inlineUsers ??= new InlineUsersClient_(this._options));
+        return (this._inlineUsers ??= new InlineUsersClient_(this._options, this._client));
     }
 }

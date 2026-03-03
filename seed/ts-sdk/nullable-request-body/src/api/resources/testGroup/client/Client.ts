@@ -16,9 +16,11 @@ export declare namespace TestGroupClient {
 
 export class TestGroupClient {
     protected readonly _options: NormalizedClientOptions<TestGroupClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: TestGroupClient.Options) {
+    constructor(options: TestGroupClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

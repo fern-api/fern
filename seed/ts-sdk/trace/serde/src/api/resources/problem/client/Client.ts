@@ -2,11 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as environments from "../../../../environments.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import type * as SeedTrace from "../../../index.js";
 
@@ -18,9 +15,11 @@ export declare namespace ProblemClient {
 
 export class ProblemClient {
     protected readonly _options: NormalizedClientOptions<ProblemClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ProblemClient.Options = {}) {
+    constructor(options: ProblemClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -108,64 +107,30 @@ export class ProblemClient {
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.CreateProblemResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__createProblem(request, requestOptions));
-    }
-
-    private async __createProblem(
-        request: SeedTrace.CreateProblemRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.CreateProblemResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/create",
-            ),
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+        });
+        return this._client.request<SeedTrace.CreateProblemResponse>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/problem-crud/create",
             body: serializers.CreateProblemRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.CreateProblemResponse.parseOrThrow(_response.body, {
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.CreateProblemResponse.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/problem-crud/create");
+            requestOptions,
+        });
     }
 
     /**
@@ -255,70 +220,30 @@ export class ProblemClient {
         request: SeedTrace.CreateProblemRequest,
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.UpdateProblemResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__updateProblem(problemId, request, requestOptions));
-    }
-
-    private async __updateProblem(
-        problemId: SeedTrace.ProblemId,
-        request: SeedTrace.CreateProblemRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.UpdateProblemResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
-            ),
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+        });
+        return this._client.request<SeedTrace.UpdateProblemResponse>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: `/problem-crud/update/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
             body: serializers.CreateProblemRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.UpdateProblemResponse.parseOrThrow(_response.body, {
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.UpdateProblemResponse.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/problem-crud/update/{problemId}",
-        );
+            requestOptions,
+        });
     }
 
     /**
@@ -334,54 +259,16 @@ export class ProblemClient {
         problemId: SeedTrace.ProblemId,
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteProblem(problemId, requestOptions));
-    }
-
-    private async __deleteProblem(
-        problemId: SeedTrace.ProblemId,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "DELETE",
-            "/problem-crud/delete/{problemId}",
-        );
+        return this._client.request<void>({
+            method: "DELETE",
+            path: `/problem-crud/delete/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -413,68 +300,29 @@ export class ProblemClient {
         request: SeedTrace.GetDefaultStarterFilesRequest,
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.GetDefaultStarterFilesResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getDefaultStarterFiles(request, requestOptions));
-    }
-
-    private async __getDefaultStarterFiles(
-        request: SeedTrace.GetDefaultStarterFilesRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.GetDefaultStarterFilesResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/default-starter-files",
-            ),
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
+        });
+        return this._client.request<SeedTrace.GetDefaultStarterFilesResponse>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/problem-crud/default-starter-files",
             body: serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.GetDefaultStarterFilesResponse.parseOrThrow(_response.body, {
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.GetDefaultStarterFilesResponse.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/problem-crud/default-starter-files",
-        );
+            requestOptions,
+        });
     }
 }

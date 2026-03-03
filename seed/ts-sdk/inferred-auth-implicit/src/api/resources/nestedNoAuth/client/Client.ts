@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+import type * as core from "../../../../core/index.js";
 import { ApiClient } from "../resources/api/client/Client.js";
 
 export declare namespace NestedNoAuthClient {
@@ -10,13 +11,15 @@ export declare namespace NestedNoAuthClient {
 
 export class NestedNoAuthClient {
     protected readonly _options: NormalizedClientOptions<NestedNoAuthClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _api: ApiClient | undefined;
 
-    constructor(options: NestedNoAuthClient.Options) {
+    constructor(options: NestedNoAuthClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public get api(): ApiClient {
-        return (this._api ??= new ApiClient(this._options));
+        return (this._api ??= new ApiClient(this._options, this._client));
     }
 }

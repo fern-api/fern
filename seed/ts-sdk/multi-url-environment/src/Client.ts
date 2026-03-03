@@ -4,6 +4,9 @@ import { Ec2Client } from "./api/resources/ec2/client/Client.js";
 import { S3Client } from "./api/resources/s3/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedMultiUrlEnvironmentClient {
     export type Options = BaseClientOptions;
@@ -13,18 +16,24 @@ export declare namespace SeedMultiUrlEnvironmentClient {
 
 export class SeedMultiUrlEnvironmentClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedMultiUrlEnvironmentClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _ec2: Ec2Client | undefined;
     protected _s3: S3Client | undefined;
 
     constructor(options: SeedMultiUrlEnvironmentClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedMultiUrlEnvironmentError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get ec2(): Ec2Client {
-        return (this._ec2 ??= new Ec2Client(this._options));
+        return (this._ec2 ??= new Ec2Client(this._options, this._client));
     }
 
     public get s3(): S3Client {
-        return (this._s3 ??= new S3Client(this._options));
+        return (this._s3 ??= new S3Client(this._options, this._client));
     }
 }

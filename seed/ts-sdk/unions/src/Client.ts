@@ -4,6 +4,9 @@ import { BigunionClient } from "./api/resources/bigunion/client/Client.js";
 import { UnionClient } from "./api/resources/union/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedUnionsClient {
     export type Options = BaseClientOptions;
@@ -13,18 +16,24 @@ export declare namespace SeedUnionsClient {
 
 export class SeedUnionsClient {
     protected readonly _options: NormalizedClientOptions<SeedUnionsClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _bigunion: BigunionClient | undefined;
     protected _union: UnionClient | undefined;
 
     constructor(options: SeedUnionsClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedUnionsError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get bigunion(): BigunionClient {
-        return (this._bigunion ??= new BigunionClient(this._options));
+        return (this._bigunion ??= new BigunionClient(this._options, this._client));
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(this._options));
+        return (this._union ??= new UnionClient(this._options, this._client));
     }
 }

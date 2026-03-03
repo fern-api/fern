@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
+import type * as core from "../../../../../../core/index.js";
 import { ProblemClient } from "../resources/problem/client/Client.js";
 
 export declare namespace V3Client {
@@ -10,13 +11,15 @@ export declare namespace V3Client {
 
 export class V3Client {
     protected readonly _options: NormalizedClientOptions<V3Client.Options>;
+    protected readonly _client: core.HttpClient;
     protected _problem: ProblemClient | undefined;
 
-    constructor(options: V3Client.Options = {}) {
+    constructor(options: V3Client.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(this._options));
+        return (this._problem ??= new ProblemClient(this._options, this._client));
     }
 }

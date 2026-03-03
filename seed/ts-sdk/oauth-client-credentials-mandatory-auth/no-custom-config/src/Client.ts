@@ -5,6 +5,9 @@ import { NestedClient } from "./api/resources/nested/client/Client.js";
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedOauthClientCredentialsMandatoryAuthClient {
     export type Options = BaseClientOptions;
@@ -14,23 +17,29 @@ export declare namespace SeedOauthClientCredentialsMandatoryAuthClient {
 
 export class SeedOauthClientCredentialsMandatoryAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedOauthClientCredentialsMandatoryAuthClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _auth: AuthClient | undefined;
     protected _nested: NestedClient | undefined;
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedOauthClientCredentialsMandatoryAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedOauthClientCredentialsMandatoryAuthError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient(this._options));
+        return (this._auth ??= new AuthClient(this._options, this._client));
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient(this._options));
+        return (this._nested ??= new NestedClient(this._options, this._client));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options));
+        return (this._simple ??= new SimpleClient(this._options, this._client));
     }
 }

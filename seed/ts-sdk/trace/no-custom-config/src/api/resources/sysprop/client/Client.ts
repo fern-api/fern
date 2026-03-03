@@ -2,11 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as environments from "../../../../environments.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedTrace from "../../../index.js";
 
 export declare namespace SyspropClient {
@@ -17,9 +14,11 @@ export declare namespace SyspropClient {
 
 export class SyspropClient {
     protected readonly _options: NormalizedClientOptions<SyspropClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: SyspropClient.Options = {}) {
+    constructor(options: SyspropClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -35,57 +34,16 @@ export class SyspropClient {
         numWarmInstances: number,
         requestOptions?: SyspropClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__setNumWarmInstances(language, numWarmInstances, requestOptions),
-        );
-    }
-
-    private async __setNumWarmInstances(
-        language: SeedTrace.Language,
-        numWarmInstances: number,
-        requestOptions?: SyspropClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${core.url.encodePathParam(language)}/${core.url.encodePathParam(numWarmInstances)}`,
-            ),
-            method: "PUT",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "PUT",
-            "/sysprop/num-warm-instances/{language}/{numWarmInstances}",
-        );
+        return this._client.request<void>({
+            method: "PUT",
+            path: `/sysprop/num-warm-instances/${core.url.encodePathParam(language)}/${core.url.encodePathParam(numWarmInstances)}`,
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -97,50 +55,15 @@ export class SyspropClient {
     public getNumWarmInstances(
         requestOptions?: SyspropClient.RequestOptions,
     ): core.HttpResponsePromise<Partial<Record<SeedTrace.Language, number>>> {
-        return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
-    }
-
-    private async __getNumWarmInstances(
-        requestOptions?: SyspropClient.RequestOptions,
-    ): Promise<core.WithRawResponse<Partial<Record<SeedTrace.Language, number>>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/sysprop/num-warm-instances",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as Partial<Record<SeedTrace.Language, number>>,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/sysprop/num-warm-instances");
+        return this._client.request<Partial<Record<SeedTrace.Language, number>>>({
+            method: "GET",
+            path: "/sysprop/num-warm-instances",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 }

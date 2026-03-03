@@ -14,9 +14,11 @@ export declare namespace ContainerClient {
 
 export class ContainerClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContainerClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ContainerClient.Options) {
+    constructor(options: ContainerClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

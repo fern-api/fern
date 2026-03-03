@@ -2,11 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as environments from "../../../../environments.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedTrace from "../../../index.js";
 
 export declare namespace AdminClient {
@@ -17,9 +14,11 @@ export declare namespace AdminClient {
 
 export class AdminClient {
     protected readonly _options: NormalizedClientOptions<AdminClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: AdminClient.Options = {}) {
+    constructor(options: AdminClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -37,60 +36,19 @@ export class AdminClient {
         request: SeedTrace.TestSubmissionStatus,
         requestOptions?: AdminClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__updateTestSubmissionStatus(submissionId, request, requestOptions),
-        );
-    }
-
-    private async __updateTestSubmissionStatus(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TestSubmissionStatus,
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status/${core.url.encodePathParam(submissionId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/admin/store-test-submission-status/{submissionId}",
-        );
+        return this._client.request<void>({
+            method: "POST",
+            path: `/admin/store-test-submission-status/${core.url.encodePathParam(submissionId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -112,60 +70,19 @@ export class AdminClient {
         request: SeedTrace.TestSubmissionUpdate,
         requestOptions?: AdminClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__sendTestSubmissionUpdate(submissionId, request, requestOptions),
-        );
-    }
-
-    private async __sendTestSubmissionUpdate(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TestSubmissionUpdate,
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/admin/store-test-submission-status-v2/{submissionId}",
-        );
+        return this._client.request<void>({
+            method: "POST",
+            path: `/admin/store-test-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -183,60 +100,19 @@ export class AdminClient {
         request: SeedTrace.WorkspaceSubmissionStatus,
         requestOptions?: AdminClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__updateWorkspaceSubmissionStatus(submissionId, request, requestOptions),
-        );
-    }
-
-    private async __updateWorkspaceSubmissionStatus(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.WorkspaceSubmissionStatus,
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status/${core.url.encodePathParam(submissionId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/admin/store-workspace-submission-status/{submissionId}",
-        );
+        return this._client.request<void>({
+            method: "POST",
+            path: `/admin/store-workspace-submission-status/${core.url.encodePathParam(submissionId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -258,60 +134,19 @@ export class AdminClient {
         request: SeedTrace.WorkspaceSubmissionUpdate,
         requestOptions?: AdminClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions),
-        );
-    }
-
-    private async __sendWorkspaceSubmissionUpdate(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.WorkspaceSubmissionUpdate,
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/admin/store-workspace-submission-status-v2/{submissionId}",
-        );
+        return this._client.request<void>({
+            method: "POST",
+            path: `/admin/store-workspace-submission-status-v2/${core.url.encodePathParam(submissionId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -416,61 +251,19 @@ export class AdminClient {
         request: SeedTrace.StoreTracedTestCaseRequest,
         requestOptions?: AdminClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__storeTracedTestCase(submissionId, testCaseId, request, requestOptions),
-        );
-    }
-
-    private async __storeTracedTestCase(
-        submissionId: SeedTrace.SubmissionId,
-        testCaseId: string,
-        request: SeedTrace.StoreTracedTestCaseRequest,
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
-        );
+        return this._client.request<void>({
+            method: "POST",
+            path: `/admin/store-test-trace/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -564,61 +357,19 @@ export class AdminClient {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: AdminClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions),
-        );
-    }
-
-    private async __storeTracedTestCaseV2(
-        submissionId: SeedTrace.SubmissionId,
-        testCaseId: SeedTrace.v2.TestCaseId,
-        request: SeedTrace.TraceResponseV2[],
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace-v2/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
-        );
+        return this._client.request<void>({
+            method: "POST",
+            path: `/admin/store-test-trace-v2/submission/${core.url.encodePathParam(submissionId)}/testCase/${core.url.encodePathParam(testCaseId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -718,58 +469,19 @@ export class AdminClient {
         request: SeedTrace.StoreTracedWorkspaceRequest,
         requestOptions?: AdminClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__storeTracedWorkspace(submissionId, request, requestOptions));
-    }
-
-    private async __storeTracedWorkspace(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.StoreTracedWorkspaceRequest,
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace/submission/${core.url.encodePathParam(submissionId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/admin/store-workspace-trace/submission/{submissionId}",
-        );
+        return this._client.request<void>({
+            method: "POST",
+            path: `/admin/store-workspace-trace/submission/${core.url.encodePathParam(submissionId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 
     /**
@@ -861,59 +573,18 @@ export class AdminClient {
         request: SeedTrace.TraceResponseV2[],
         requestOptions?: AdminClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__storeTracedWorkspaceV2(submissionId, request, requestOptions),
-        );
-    }
-
-    private async __storeTracedWorkspaceV2(
-        submissionId: SeedTrace.SubmissionId,
-        request: SeedTrace.TraceResponseV2[],
-        requestOptions?: AdminClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace-v2/submission/${core.url.encodePathParam(submissionId)}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/admin/store-workspace-trace-v2/submission/{submissionId}",
-        );
+        return this._client.request<void>({
+            method: "POST",
+            path: `/admin/store-workspace-trace-v2/submission/${core.url.encodePathParam(submissionId)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 }

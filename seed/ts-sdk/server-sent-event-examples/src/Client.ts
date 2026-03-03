@@ -3,6 +3,9 @@
 import { CompletionsClient } from "./api/resources/completions/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedServerSentEventsClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedServerSentEventsClient {
 
 export class SeedServerSentEventsClient {
     protected readonly _options: NormalizedClientOptions<SeedServerSentEventsClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _completions: CompletionsClient | undefined;
 
     constructor(options: SeedServerSentEventsClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedServerSentEventsError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get completions(): CompletionsClient {
-        return (this._completions ??= new CompletionsClient(this._options));
+        return (this._completions ??= new CompletionsClient(this._options, this._client));
     }
 }

@@ -16,9 +16,11 @@ export declare namespace AdminClient {
 
 export class AdminClient {
     protected readonly _options: NormalizedClientOptions<AdminClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: AdminClient.Options = {}) {
+    constructor(options: AdminClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

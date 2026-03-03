@@ -5,6 +5,8 @@ import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { normalizeClientOptionsWithAuth, type NormalizedClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
 import * as environments from "./environments.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedSimpleApiClient {
     export type Options = BaseClientOptions;
@@ -14,13 +16,19 @@ export declare namespace SeedSimpleApiClient {
 
 export class SeedSimpleApiClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedSimpleApiClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedSimpleApiClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedSimpleApiError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options));
+        return (this._user ??= new UserClient(this._options, this._client));
     }
 }

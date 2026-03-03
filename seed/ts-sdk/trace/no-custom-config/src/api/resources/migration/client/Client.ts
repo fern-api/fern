@@ -2,11 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import * as environments from "../../../../environments.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedTrace from "../../../index.js";
 
 export declare namespace MigrationClient {
@@ -17,9 +14,11 @@ export declare namespace MigrationClient {
 
 export class MigrationClient {
     protected readonly _options: NormalizedClientOptions<MigrationClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: MigrationClient.Options = {}) {
+    constructor(options: MigrationClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -35,50 +34,17 @@ export class MigrationClient {
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: MigrationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.Migration[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
-    }
-
-    private async __getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
-        requestOptions?: MigrationClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
         const { "admin-key-header": adminKeyHeader } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "admin-key-header": adminKeyHeader,
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/migration-info/all",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "admin-key-header": adminKeyHeader,
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedTrace.Migration[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/migration-info/all");
+        return this._client.request<SeedTrace.Migration[]>({
+            method: "GET",
+            path: "/migration-info/all",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 }

@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedPathParameters from "../../../index.js";
 
 export declare namespace UserClient {
@@ -16,9 +13,11 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UserClient.Options) {
+    constructor(options: UserClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -34,43 +33,13 @@ export class UserClient {
         request: SeedPathParameters.GetUsersRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUser(request, requestOptions));
-    }
-
-    private async __getUser(
-        request: SeedPathParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
-            ),
+        return this._client.request<SeedPathParameters.User>({
             method: "GET",
-            headers: _headers,
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/{tenant_id}/user/{user_id}");
     }
 
     /**
@@ -87,45 +56,15 @@ export class UserClient {
         request: SeedPathParameters.User,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
-    }
-
-    private async __createUser(
-        request: SeedPathParameters.User,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
-            ),
+        return this._client.request<SeedPathParameters.User>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/{tenant_id}/user/");
     }
 
     /**
@@ -145,46 +84,16 @@ export class UserClient {
         request: SeedPathParameters.UpdateUserRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__updateUser(request, requestOptions));
-    }
-
-    private async __updateUser(
-        request: SeedPathParameters.UpdateUserRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
-            ),
+        return this._client.request<SeedPathParameters.User>({
             method: "PATCH",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
             body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/{tenant_id}/user/{user_id}");
     }
 
     /**
@@ -201,51 +110,16 @@ export class UserClient {
         request: SeedPathParameters.SearchUsersRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User[]> {
-        return core.HttpResponsePromise.fromPromise(this.__searchUsers(request, requestOptions));
-    }
-
-    private async __searchUsers(
-        request: SeedPathParameters.SearchUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
         const { user_id: userId, limit } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/search`,
-            ),
+        return this._client.request<SeedPathParameters.User[]>({
             method: "GET",
-            headers: _headers,
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.User[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/{tenant_id}/user/{user_id}/search",
-        );
     }
 
     /**
@@ -264,48 +138,13 @@ export class UserClient {
         request: SeedPathParameters.GetUserMetadataRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUserMetadata(request, requestOptions));
-    }
-
-    private async __getUserMetadata(
-        request: SeedPathParameters.GetUserMetadataRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId, version } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
-            ),
+        return this._client.request<SeedPathParameters.User>({
             method: "GET",
-            headers: _headers,
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/{tenant_id}/user/{user_id}/metadata/v/{version}",
-        );
     }
 
     /**
@@ -325,47 +164,12 @@ export class UserClient {
         request: SeedPathParameters.GetUserSpecificsRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUserSpecifics(request, requestOptions));
-    }
-
-    private async __getUserSpecifics(
-        request: SeedPathParameters.GetUserSpecificsRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId, version, thought } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
-            ),
+        return this._client.request<SeedPathParameters.User>({
             method: "GET",
-            headers: _headers,
+            path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPathParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
-        );
     }
 }

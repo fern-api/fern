@@ -16,9 +16,11 @@ export declare namespace ComplexClient {
 
 export class ComplexClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ComplexClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ComplexClient.Options) {
+    constructor(options: ComplexClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

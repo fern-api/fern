@@ -16,9 +16,11 @@ export declare namespace MultipartFormClient {
 
 export class MultipartFormClient {
     protected readonly _options: NormalizedClientOptions<MultipartFormClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: MultipartFormClient.Options) {
+    constructor(options: MultipartFormClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

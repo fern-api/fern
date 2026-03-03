@@ -9,7 +9,8 @@ export declare namespace InlinedRequestsClient {
 }
 export declare class InlinedRequestsClient {
     protected readonly _options: NormalizedClientOptions<InlinedRequestsClient.Options>;
-    constructor(options: InlinedRequestsClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: InlinedRequestsClient.Options, client: core.HttpClient);
     /**
      * POST with custom object in request body, response is an object
      *

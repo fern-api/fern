@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedEnum from "../../../index.js";
 
 export declare namespace PathParamClient {
@@ -16,9 +13,11 @@ export declare namespace PathParamClient {
 
 export class PathParamClient {
     protected readonly _options: NormalizedClientOptions<PathParamClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: PathParamClient.Options) {
+    constructor(options: PathParamClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -34,47 +33,11 @@ export class PathParamClient {
         operandOrColor: SeedEnum.ColorOrOperand,
         requestOptions?: PathParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__send(operand, operandOrColor, requestOptions));
-    }
-
-    private async __send(
-        operand: SeedEnum.Operand,
-        operandOrColor: SeedEnum.ColorOrOperand,
-        requestOptions?: PathParamClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `path/${core.url.encodePathParam(operand)}/${core.url.encodePathParam(operandOrColor)}`,
-            ),
+        return this._client.request<void>({
             method: "POST",
-            headers: _headers,
+            path: `path/${core.url.encodePathParam(operand)}/${core.url.encodePathParam(operandOrColor)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedEnumError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/path/{operand}/{operandOrColor}",
-        );
     }
 }

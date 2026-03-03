@@ -17,9 +17,11 @@ export declare namespace PaginationClient {
 
 export class PaginationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PaginationClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: PaginationClient.Options) {
+    constructor(options: PaginationClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

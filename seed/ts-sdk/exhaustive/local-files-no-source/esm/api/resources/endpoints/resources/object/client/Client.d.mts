@@ -9,7 +9,8 @@ export declare namespace ObjectClient {
 }
 export declare class ObjectClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ObjectClient.Options>;
-    constructor(options: ObjectClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: ObjectClient.Options, client: core.HttpClient);
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -34,7 +35,6 @@ export declare class ObjectClient {
      *     })
      */
     getAndReturnWithOptionalField(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
-    private __getAndReturnWithOptionalField;
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -45,7 +45,6 @@ export declare class ObjectClient {
      *     })
      */
     getAndReturnWithRequiredField(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
-    private __getAndReturnWithRequiredField;
     /**
      * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -60,7 +59,6 @@ export declare class ObjectClient {
      *     })
      */
     getAndReturnWithMapOfMap(request: SeedExhaustive.types.ObjectWithMapOfMap, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap>;
-    private __getAndReturnWithMapOfMap;
     /**
      * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -88,7 +86,6 @@ export declare class ObjectClient {
      *     })
      */
     getAndReturnNestedWithOptionalField(request: SeedExhaustive.types.NestedObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField>;
-    private __getAndReturnNestedWithOptionalField;
     /**
      * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
@@ -117,7 +114,6 @@ export declare class ObjectClient {
      *     })
      */
     getAndReturnNestedWithRequiredField(string: string, request: SeedExhaustive.types.NestedObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
-    private __getAndReturnNestedWithRequiredField;
     /**
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -164,7 +160,6 @@ export declare class ObjectClient {
      *         }])
      */
     getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
-    private __getAndReturnNestedWithRequiredFieldAsList;
     /**
      * @param {SeedExhaustive.types.ObjectWithUnknownField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -177,7 +172,6 @@ export declare class ObjectClient {
      *     })
      */
     getAndReturnWithUnknownField(request: SeedExhaustive.types.ObjectWithUnknownField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithUnknownField>;
-    private __getAndReturnWithUnknownField;
     /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
@@ -193,5 +187,4 @@ export declare class ObjectClient {
      *     })
      */
     getAndReturnWithDatetimeLikeString(request: SeedExhaustive.types.ObjectWithDatetimeLikeString, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDatetimeLikeString>;
-    private __getAndReturnWithDatetimeLikeString;
 }

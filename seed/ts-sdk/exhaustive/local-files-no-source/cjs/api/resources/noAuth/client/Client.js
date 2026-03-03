@@ -51,8 +51,9 @@ const handleNonStatusCodeError_js_1 = require("../../../../errors/handleNonStatu
 const errors = __importStar(require("../../../../errors/index.js"));
 const SeedExhaustive = __importStar(require("../../../index.js"));
 class NoAuthClient {
-    constructor(options) {
+    constructor(options, client) {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
+        this._client = client;
     }
     /**
      * POST request with no auth

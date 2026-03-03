@@ -2,10 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedWebsocketAuth from "../../../index.js";
 
 export declare namespace AuthClient {
@@ -16,9 +14,11 @@ export declare namespace AuthClient {
 
 export class AuthClient {
     protected readonly _options: NormalizedClientOptions<AuthClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: AuthClient.Options) {
+    constructor(options: AuthClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -37,50 +37,18 @@ export class AuthClient {
         request: SeedWebsocketAuth.GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedWebsocketAuth.TokenResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getTokenWithClientCredentials(request, requestOptions));
-    }
-
-    private async __getTokenWithClientCredentials(
-        request: SeedWebsocketAuth.GetTokenRequest,
-        requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedWebsocketAuth.TokenResponse>> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/token",
-            ),
+        const _headers = mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey });
+        return this._client.request<SeedWebsocketAuth.TokenResponse>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/token",
             body: { ..._body, audience: "https://api.example.com", grant_type: "client_credentials" },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedWebsocketAuth.TokenResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedWebsocketAuthError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/token");
     }
 
     /**
@@ -100,49 +68,17 @@ export class AuthClient {
         request: SeedWebsocketAuth.RefreshTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedWebsocketAuth.TokenResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
-    }
-
-    private async __refreshToken(
-        request: SeedWebsocketAuth.RefreshTokenRequest,
-        requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedWebsocketAuth.TokenResponse>> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/token/refresh",
-            ),
+        const _headers = mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey });
+        return this._client.request<SeedWebsocketAuth.TokenResponse>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/token/refresh",
             body: { ..._body, audience: "https://api.example.com", grant_type: "refresh_token" },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedWebsocketAuth.TokenResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedWebsocketAuthError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/token/refresh");
     }
 }

@@ -2,11 +2,9 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import type * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedEnum from "../../../index.js";
 
 export declare namespace HeadersClient {
@@ -17,9 +15,11 @@ export declare namespace HeadersClient {
 
 export class HeadersClient {
     protected readonly _options: NormalizedClientOptions<HeadersClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: HeadersClient.Options) {
+    constructor(options: HeadersClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -38,56 +38,24 @@ export class HeadersClient {
         request: SeedEnum.SendEnumAsHeaderRequest,
         requestOptions?: HeadersClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
-    }
-
-    private async __send(
-        request: SeedEnum.SendEnumAsHeaderRequest,
-        requestOptions?: HeadersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                operand: operand,
-                maybeOperand: maybeOperand,
-                operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
-                maybeOperandOrColor:
-                    maybeOperandOrColor != null
-                        ? typeof maybeOperandOrColor === "string"
-                            ? maybeOperandOrColor
-                            : toJson(maybeOperandOrColor)
-                        : undefined,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "headers",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            operand: operand,
+            maybeOperand: maybeOperand,
+            operandOrColor: typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor),
+            maybeOperandOrColor:
+                maybeOperandOrColor != null
+                    ? typeof maybeOperandOrColor === "string"
+                        ? maybeOperandOrColor
+                        : toJson(maybeOperandOrColor)
+                    : undefined,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedEnumError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/headers");
+        return this._client.request<void>({
+            method: "POST",
+            path: "headers",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 }

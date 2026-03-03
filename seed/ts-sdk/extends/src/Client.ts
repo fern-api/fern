@@ -3,7 +3,6 @@
 import type * as SeedExtends from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
@@ -16,9 +15,15 @@ export declare namespace SeedExtendsClient {
 
 export class SeedExtendsClient {
     protected readonly _options: NormalizedClientOptions<SeedExtendsClient.Options>;
+    protected readonly _client: core.HttpClient;
 
     constructor(options: SeedExtendsClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedExtendsError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     /**
@@ -36,49 +41,14 @@ export class SeedExtendsClient {
         request: SeedExtends.Inlined,
         requestOptions?: SeedExtendsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__extendedInlineRequestBody(request, requestOptions));
-    }
-
-    private async __extendedInlineRequestBody(
-        request: SeedExtends.Inlined,
-        requestOptions?: SeedExtendsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/extends/extended-inline-request-body",
-            ),
+        return this._client.request<void>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/extends/extended-inline-request-body",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExtendsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/extends/extended-inline-request-body",
-        );
     }
 }

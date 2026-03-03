@@ -16,9 +16,11 @@ export declare namespace UsersClient {
 
 export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UsersClient.Options) {
+    constructor(options: UsersClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

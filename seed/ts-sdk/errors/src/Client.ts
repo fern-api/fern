@@ -3,6 +3,9 @@
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedErrorsClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedErrorsClient {
 
 export class SeedErrorsClient {
     protected readonly _options: NormalizedClientOptions<SeedErrorsClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedErrorsClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedErrorsError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options));
+        return (this._simple ??= new SimpleClient(this._options, this._client));
     }
 }

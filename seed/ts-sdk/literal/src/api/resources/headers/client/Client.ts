@@ -2,10 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedLiteral from "../../../index.js";
 
 export declare namespace HeadersClient {
@@ -16,9 +14,11 @@ export declare namespace HeadersClient {
 
 export class HeadersClient {
     protected readonly _options: NormalizedClientOptions<HeadersClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: HeadersClient.Options) {
+    constructor(options: HeadersClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -34,53 +34,21 @@ export class HeadersClient {
         request: SeedLiteral.SendLiteralsInHeadersRequest,
         requestOptions?: HeadersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
-    }
-
-    private async __send(
-        request: SeedLiteral.SendLiteralsInHeadersRequest,
-        requestOptions?: HeadersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Endpoint-Version": "02-12-2024",
-                "X-Async": "true",
-                "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "headers",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Endpoint-Version": "02-12-2024",
+            "X-Async": "true",
+            "X-API-Version": requestOptions?.version ?? "02-02-2024",
+            "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedLiteralError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/headers");
+        return this._client.request<SeedLiteral.SendResponse>({
+            method: "POST",
+            path: "headers",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 }

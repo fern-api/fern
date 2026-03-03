@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
+import type * as core from "../../../../core/index.js";
 import { ContainerClient } from "../resources/container/client/Client.js";
 import { ContentTypeClient } from "../resources/contentType/client/Client.js";
 import { EnumClient } from "../resources/enum/client/Client.js";
@@ -20,6 +21,7 @@ export declare namespace EndpointsClient {
 
 export class EndpointsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EndpointsClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _container: ContainerClient | undefined;
     protected _contentType: ContentTypeClient | undefined;
     protected _enum: EnumClient | undefined;
@@ -32,51 +34,52 @@ export class EndpointsClient {
     protected _union: UnionClient | undefined;
     protected _urls: UrlsClient | undefined;
 
-    constructor(options: EndpointsClient.Options) {
+    constructor(options: EndpointsClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     public get container(): ContainerClient {
-        return (this._container ??= new ContainerClient(this._options));
+        return (this._container ??= new ContainerClient(this._options, this._client));
     }
 
     public get contentType(): ContentTypeClient {
-        return (this._contentType ??= new ContentTypeClient(this._options));
+        return (this._contentType ??= new ContentTypeClient(this._options, this._client));
     }
 
     public get enum(): EnumClient {
-        return (this._enum ??= new EnumClient(this._options));
+        return (this._enum ??= new EnumClient(this._options, this._client));
     }
 
     public get httpMethods(): HttpMethodsClient {
-        return (this._httpMethods ??= new HttpMethodsClient(this._options));
+        return (this._httpMethods ??= new HttpMethodsClient(this._options, this._client));
     }
 
     public get object(): ObjectClient {
-        return (this._object ??= new ObjectClient(this._options));
+        return (this._object ??= new ObjectClient(this._options, this._client));
     }
 
     public get pagination(): PaginationClient {
-        return (this._pagination ??= new PaginationClient(this._options));
+        return (this._pagination ??= new PaginationClient(this._options, this._client));
     }
 
     public get params(): ParamsClient {
-        return (this._params ??= new ParamsClient(this._options));
+        return (this._params ??= new ParamsClient(this._options, this._client));
     }
 
     public get primitive(): PrimitiveClient {
-        return (this._primitive ??= new PrimitiveClient(this._options));
+        return (this._primitive ??= new PrimitiveClient(this._options, this._client));
     }
 
     public get put(): PutClient {
-        return (this._put ??= new PutClient(this._options));
+        return (this._put ??= new PutClient(this._options, this._client));
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(this._options));
+        return (this._union ??= new UnionClient(this._options, this._client));
     }
 
     public get urls(): UrlsClient {
-        return (this._urls ??= new UrlsClient(this._options));
+        return (this._urls ??= new UrlsClient(this._options, this._client));
     }
 }

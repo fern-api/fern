@@ -3,7 +3,6 @@
 import type * as SeedUndiscriminatedUnionWithResponseProperty from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
@@ -16,9 +15,15 @@ export declare namespace SeedUndiscriminatedUnionWithResponsePropertyClient {
 
 export class SeedUndiscriminatedUnionWithResponsePropertyClient {
     protected readonly _options: NormalizedClientOptions<SeedUndiscriminatedUnionWithResponsePropertyClient.Options>;
+    protected readonly _client: core.HttpClient;
 
     constructor(options: SeedUndiscriminatedUnionWithResponsePropertyClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedUndiscriminatedUnionWithResponsePropertyError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     /**
@@ -30,44 +35,12 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
     public getUnion(
         requestOptions?: SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnionWithResponseProperty.UnionResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getUnion(requestOptions));
-    }
-
-    private async __getUnion(
-        requestOptions?: SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnionWithResponseProperty.UnionResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/union",
-            ),
+        return this._client.request<SeedUndiscriminatedUnionWithResponseProperty.UnionResponse>({
             method: "GET",
-            headers: _headers,
+            path: "/union",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedUndiscriminatedUnionWithResponseProperty.UnionResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/union");
     }
 
     /**
@@ -79,43 +52,11 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
     public listUnions(
         requestOptions?: SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listUnions(requestOptions));
-    }
-
-    private async __listUnions(
-        requestOptions?: SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/unions",
-            ),
+        return this._client.request<SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse>({
             method: "GET",
-            headers: _headers,
+            path: "/unions",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/unions");
     }
 }

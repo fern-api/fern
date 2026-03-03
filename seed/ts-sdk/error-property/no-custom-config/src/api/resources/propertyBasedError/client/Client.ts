@@ -16,9 +16,11 @@ export declare namespace PropertyBasedErrorClient {
 
 export class PropertyBasedErrorClient {
     protected readonly _options: NormalizedClientOptions<PropertyBasedErrorClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: PropertyBasedErrorClient.Options) {
+    constructor(options: PropertyBasedErrorClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import type * as core from "../../../../core/index.js";
 
 export declare namespace DummyClient {
     export type Options = BaseClientOptions;
@@ -15,9 +12,11 @@ export declare namespace DummyClient {
 
 export class DummyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<DummyClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: DummyClient.Options) {
+    constructor(options: DummyClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -27,43 +26,11 @@ export class DummyClient {
      *     await client.dummy.getDummy()
      */
     public getDummy(requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__getDummy(requestOptions));
-    }
-
-    private async __getDummy(requestOptions?: DummyClient.RequestOptions): Promise<core.WithRawResponse<string>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "dummy",
-            ),
+        return this._client.request<string>({
             method: "GET",
-            headers: _headers,
+            path: "dummy",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedSingleUrlEnvironmentNoDefaultError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/dummy");
     }
 }

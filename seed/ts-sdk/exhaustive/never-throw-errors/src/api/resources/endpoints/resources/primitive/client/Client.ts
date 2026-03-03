@@ -14,9 +14,11 @@ export declare namespace PrimitiveClient {
 
 export class PrimitiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PrimitiveClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: PrimitiveClient.Options) {
+    constructor(options: PrimitiveClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

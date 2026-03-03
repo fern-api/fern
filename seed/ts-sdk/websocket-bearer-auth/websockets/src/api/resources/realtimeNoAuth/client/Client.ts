@@ -28,9 +28,11 @@ export declare namespace RealtimeNoAuthClient {
 
 export class RealtimeNoAuthClient {
     protected readonly _options: NormalizedClientOptions<RealtimeNoAuthClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: RealtimeNoAuthClient.Options) {
+    constructor(options: RealtimeNoAuthClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public async connect(args: RealtimeNoAuthClient.ConnectArgs): Promise<RealtimeNoAuthSocket> {

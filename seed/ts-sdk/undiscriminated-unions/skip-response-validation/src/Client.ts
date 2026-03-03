@@ -3,6 +3,9 @@
 import { UnionClient } from "./api/resources/union/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedUndiscriminatedUnionsClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedUndiscriminatedUnionsClient {
 
 export class SeedUndiscriminatedUnionsClient {
     protected readonly _options: NormalizedClientOptions<SeedUndiscriminatedUnionsClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _union: UnionClient | undefined;
 
     constructor(options: SeedUndiscriminatedUnionsClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedUndiscriminatedUnionsError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(this._options));
+        return (this._union ??= new UnionClient(this._options, this._client));
     }
 }

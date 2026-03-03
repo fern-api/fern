@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
+import type * as core from "../../../../core/index.js";
 import { BClient } from "../resources/b/client/Client.js";
 import { CClient } from "../resources/c/client/Client.js";
 
@@ -11,18 +12,20 @@ export declare namespace AClient {
 
 export class AClient {
     protected readonly _options: NormalizedClientOptions<AClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _b: BClient | undefined;
     protected _c: CClient | undefined;
 
-    constructor(options: AClient.Options) {
+    constructor(options: AClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public get b(): BClient {
-        return (this._b ??= new BClient(this._options));
+        return (this._b ??= new BClient(this._options, this._client));
     }
 
     public get c(): CClient {
-        return (this._c ??= new CClient(this._options));
+        return (this._c ??= new CClient(this._options, this._client));
     }
 }

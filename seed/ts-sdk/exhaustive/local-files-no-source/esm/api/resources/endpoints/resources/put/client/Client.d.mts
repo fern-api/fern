@@ -9,7 +9,8 @@ export declare namespace PutClient {
 }
 export declare class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
-    constructor(options: PutClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: PutClient.Options, client: core.HttpClient);
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -20,5 +21,4 @@ export declare class PutClient {
      *     })
      */
     add(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: PutClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse>;
-    private __add;
 }

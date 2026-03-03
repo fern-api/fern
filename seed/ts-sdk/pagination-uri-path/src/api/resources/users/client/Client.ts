@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedPaginationUriPath from "../../../index.js";
 
 export declare namespace UsersClient {
@@ -16,9 +13,11 @@ export declare namespace UsersClient {
 
 export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UsersClient.Options) {
+    constructor(options: UsersClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -30,44 +29,12 @@ export class UsersClient {
     public listWithUriPagination(
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPaginationUriPath.ListUsersUriPaginationResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listWithUriPagination(requestOptions));
-    }
-
-    private async __listWithUriPagination(
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPaginationUriPath.ListUsersUriPaginationResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users/uri",
-            ),
+        return this._client.request<SeedPaginationUriPath.ListUsersUriPaginationResponse>({
             method: "GET",
-            headers: _headers,
+            path: "/users/uri",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedPaginationUriPath.ListUsersUriPaginationResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPaginationUriPathError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/uri");
     }
 
     /**
@@ -79,43 +46,11 @@ export class UsersClient {
     public listWithPathPagination(
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPaginationUriPath.ListUsersPathPaginationResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listWithPathPagination(requestOptions));
-    }
-
-    private async __listWithPathPagination(
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPaginationUriPath.ListUsersPathPaginationResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users/path",
-            ),
+        return this._client.request<SeedPaginationUriPath.ListUsersPathPaginationResponse>({
             method: "GET",
-            headers: _headers,
+            path: "/users/path",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedPaginationUriPath.ListUsersPathPaginationResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedPaginationUriPathError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/path");
     }
 }

@@ -16,9 +16,11 @@ export declare namespace BasicAuthClient {
 
 export class BasicAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<BasicAuthClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: BasicAuthClient.Options) {
+    constructor(options: BasicAuthClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

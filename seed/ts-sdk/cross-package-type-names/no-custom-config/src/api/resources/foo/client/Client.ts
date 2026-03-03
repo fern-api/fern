@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedCrossPackageTypeNames from "../../../index.js";
 
 export declare namespace FooClient {
@@ -16,9 +13,11 @@ export declare namespace FooClient {
 
 export class FooClient {
     protected readonly _options: NormalizedClientOptions<FooClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: FooClient.Options) {
+    constructor(options: FooClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -36,49 +35,18 @@ export class FooClient {
         request: SeedCrossPackageTypeNames.FindRequest = {},
         requestOptions?: FooClient.RequestOptions,
     ): core.HttpResponsePromise<SeedCrossPackageTypeNames.ImportingType> {
-        return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
-    }
-
-    private async __find(
-        request: SeedCrossPackageTypeNames.FindRequest = {},
-        requestOptions?: FooClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.ImportingType>> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
             optionalString,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+        return this._client.request<SeedCrossPackageTypeNames.ImportingType>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            requestType: "json",
+            path: "",
             body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedCrossPackageTypeNames.ImportingType,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedCrossPackageTypeNamesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 }

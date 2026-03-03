@@ -14,9 +14,11 @@ export declare namespace ParamsClient {
 
 export class ParamsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ParamsClient.Options) {
+    constructor(options: ParamsClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

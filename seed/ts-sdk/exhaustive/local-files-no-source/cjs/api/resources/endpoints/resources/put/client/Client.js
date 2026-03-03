@@ -33,25 +33,14 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PutClient = void 0;
 const BaseClient_js_1 = require("../../../../../../BaseClient.js");
-const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
-const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
-const errors = __importStar(require("../../../../../../errors/index.js"));
 class PutClient {
-    constructor(options) {
+    constructor(options, client) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
+        this._client = client;
     }
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
@@ -63,36 +52,12 @@ class PutClient {
      *     })
      */
     add(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
-    }
-    __add(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { id } = request;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `${core.url.encodePathParam(id)}`),
-                method: "PUT",
-                headers: _headers,
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "PUT", "/{id}");
+        const { id } = request;
+        return this._client.request({
+            method: "PUT",
+            path: `${core.url.encodePathParam(id)}`,
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
 }

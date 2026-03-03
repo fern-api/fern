@@ -2,11 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import type * as SeedClientSideParams from "../../../index.js";
 
 export declare namespace ServiceClient {
@@ -17,9 +14,11 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ServiceClient.Options) {
+    constructor(options: ServiceClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -43,13 +42,6 @@ export class ServiceClient {
         request: SeedClientSideParams.ListResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.Resource[]> {
-        return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
-    }
-
-    private async __listResources(
-        request: SeedClientSideParams.ListResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Resource[]>> {
         const { page, per_page: perPage, sort, order, include_totals: includeTotals, fields, search } = request;
         const _queryParams: Record<string, unknown> = {
             page,
@@ -60,35 +52,12 @@ export class ServiceClient {
             fields,
             search,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/resources",
-            ),
+        return this._client.request<SeedClientSideParams.Resource[]>({
             method: "GET",
-            headers: _headers,
+            path: "/api/resources",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Resource[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/resources");
     }
 
     /**
@@ -109,48 +78,17 @@ export class ServiceClient {
         request: SeedClientSideParams.GetResourceRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.Resource> {
-        return core.HttpResponsePromise.fromPromise(this.__getResource(resourceId, request, requestOptions));
-    }
-
-    private async __getResource(
-        resourceId: string,
-        request: SeedClientSideParams.GetResourceRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Resource>> {
         const { include_metadata: includeMetadata, format } = request;
         const _queryParams: Record<string, unknown> = {
             include_metadata: includeMetadata,
             format,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/resources/${core.url.encodePathParam(resourceId)}`,
-            ),
+        return this._client.request<SeedClientSideParams.Resource>({
             method: "GET",
-            headers: _headers,
+            path: `/api/resources/${core.url.encodePathParam(resourceId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Resource, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/resources/{resourceId}");
     }
 
     /**
@@ -175,50 +113,20 @@ export class ServiceClient {
         request: SeedClientSideParams.SearchResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.SearchResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__searchResources(request, requestOptions));
-    }
-
-    private async __searchResources(
-        request: SeedClientSideParams.SearchResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.SearchResponse>> {
         const { limit, offset, ..._body } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
             offset,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/resources/search",
-            ),
+        return this._client.request<SeedClientSideParams.SearchResponse>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            requestType: "json",
+            path: "/api/resources/search",
             body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.SearchResponse, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/api/resources/search");
     }
 
     /**
@@ -243,13 +151,6 @@ export class ServiceClient {
         request: SeedClientSideParams.ListUsersRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.PaginatedUserResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listUsers(request, requestOptions));
-    }
-
-    private async __listUsers(
-        request: SeedClientSideParams.ListUsersRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.PaginatedUserResponse>> {
         const {
             page,
             per_page: perPage,
@@ -270,38 +171,12 @@ export class ServiceClient {
             search_engine: searchEngine,
             fields,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/users",
-            ),
+        return this._client.request<SeedClientSideParams.PaginatedUserResponse>({
             method: "GET",
-            headers: _headers,
+            path: "/api/users",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedClientSideParams.PaginatedUserResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/users");
     }
 
     /**
@@ -322,48 +197,17 @@ export class ServiceClient {
         request: SeedClientSideParams.GetUserRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUserById(userId, request, requestOptions));
-    }
-
-    private async __getUserById(
-        userId: string,
-        request: SeedClientSideParams.GetUserRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
         const { fields, include_fields: includeFields } = request;
         const _queryParams: Record<string, unknown> = {
             fields,
             include_fields: includeFields,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
-            ),
+        return this._client.request<SeedClientSideParams.User>({
             method: "GET",
-            headers: _headers,
+            path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/users/{userId}");
     }
 
     /**
@@ -397,45 +241,15 @@ export class ServiceClient {
         request: SeedClientSideParams.CreateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
-        return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
-    }
-
-    private async __createUser(
-        request: SeedClientSideParams.CreateUserRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/users",
-            ),
+        return this._client.request<SeedClientSideParams.User>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/api/users",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/api/users");
     }
 
     /**
@@ -471,46 +285,15 @@ export class ServiceClient {
         request: SeedClientSideParams.UpdateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
-        return core.HttpResponsePromise.fromPromise(this.__updateUser(userId, request, requestOptions));
-    }
-
-    private async __updateUser(
-        userId: string,
-        request: SeedClientSideParams.UpdateUserRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
-            ),
+        return this._client.request<SeedClientSideParams.User>({
             method: "PATCH",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: `/api/users/${core.url.encodePathParam(userId)}`,
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/api/users/{userId}");
     }
 
     /**
@@ -523,42 +306,12 @@ export class ServiceClient {
      *     await client.service.deleteUser("userId")
      */
     public deleteUser(userId: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteUser(userId, requestOptions));
-    }
-
-    private async __deleteUser(
-        userId: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
-            ),
+        return this._client.request<void>({
             method: "DELETE",
-            headers: _headers,
+            path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/api/users/{userId}");
     }
 
     /**
@@ -578,48 +331,18 @@ export class ServiceClient {
         request: SeedClientSideParams.ListConnectionsRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.Connection[]> {
-        return core.HttpResponsePromise.fromPromise(this.__listConnections(request, requestOptions));
-    }
-
-    private async __listConnections(
-        request: SeedClientSideParams.ListConnectionsRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Connection[]>> {
         const { strategy, name, fields } = request;
         const _queryParams: Record<string, unknown> = {
             strategy,
             name,
             fields,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/connections",
-            ),
+        return this._client.request<SeedClientSideParams.Connection[]>({
             method: "GET",
-            headers: _headers,
+            path: "/api/connections",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Connection[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/connections");
     }
 
     /**
@@ -639,52 +362,16 @@ export class ServiceClient {
         request: SeedClientSideParams.GetConnectionRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.Connection> {
-        return core.HttpResponsePromise.fromPromise(this.__getConnection(connectionId, request, requestOptions));
-    }
-
-    private async __getConnection(
-        connectionId: string,
-        request: SeedClientSideParams.GetConnectionRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Connection>> {
         const { fields } = request;
         const _queryParams: Record<string, unknown> = {
             fields,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/connections/${core.url.encodePathParam(connectionId)}`,
-            ),
+        return this._client.request<SeedClientSideParams.Connection>({
             method: "GET",
-            headers: _headers,
+            path: `/api/connections/${core.url.encodePathParam(connectionId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Connection, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/api/connections/{connectionId}",
-        );
     }
 
     /**
@@ -709,13 +396,6 @@ export class ServiceClient {
         request: SeedClientSideParams.ListClientsRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.PaginatedClientResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listClients(request, requestOptions));
-    }
-
-    private async __listClients(
-        request: SeedClientSideParams.ListClientsRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.PaginatedClientResponse>> {
         const {
             fields,
             include_fields: includeFields,
@@ -736,38 +416,12 @@ export class ServiceClient {
             is_first_party: isFirstParty,
             app_type: appType != null ? toJson(appType) : undefined,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/clients",
-            ),
+        return this._client.request<SeedClientSideParams.PaginatedClientResponse>({
             method: "GET",
-            headers: _headers,
+            path: "/api/clients",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return {
-                data: _response.body as SeedClientSideParams.PaginatedClientResponse,
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/clients");
     }
 
     /**
@@ -788,47 +442,16 @@ export class ServiceClient {
         request: SeedClientSideParams.GetClientRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.Client> {
-        return core.HttpResponsePromise.fromPromise(this.__getClient(clientId, request, requestOptions));
-    }
-
-    private async __getClient(
-        clientId: string,
-        request: SeedClientSideParams.GetClientRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Client>> {
         const { fields, include_fields: includeFields } = request;
         const _queryParams: Record<string, unknown> = {
             fields,
             include_fields: includeFields,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/clients/${core.url.encodePathParam(clientId)}`,
-            ),
+        return this._client.request<SeedClientSideParams.Client>({
             method: "GET",
-            headers: _headers,
+            path: `/api/clients/${core.url.encodePathParam(clientId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Client, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedClientSideParamsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/clients/{clientId}");
     }
 }

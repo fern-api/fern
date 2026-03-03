@@ -5,6 +5,7 @@ export { EndpointSupplier } from "./EndpointSupplier.js";
 export type { Fetcher, FetchFunction } from "./Fetcher.js";
 export { fetcher } from "./Fetcher.js";
 export { getHeader } from "./getHeader.js";
+export { type EndpointConfig, HttpClient, type HttpClientOptions } from "./HttpClient.js";
 export { HttpResponsePromise } from "./HttpResponsePromise.js";
 export type { RawResponse, WithRawResponse } from "./RawResponse.js";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";

@@ -6,7 +6,6 @@ import { HealthClient } from "./api/resources/health/client/Client.js";
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
@@ -19,24 +18,30 @@ export declare namespace SeedExamplesClient {
 
 export class SeedExamplesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedExamplesClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _file: FileClient | undefined;
     protected _health: HealthClient | undefined;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedExamplesClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedExamplesError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get file(): FileClient {
-        return (this._file ??= new FileClient(this._options));
+        return (this._file ??= new FileClient(this._options, this._client));
     }
 
     public get health(): HealthClient {
-        return (this._health ??= new HealthClient(this._options));
+        return (this._health ??= new HealthClient(this._options, this._client));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options));
+        return (this._service ??= new ServiceClient(this._options, this._client));
     }
 
     /**
@@ -47,43 +52,15 @@ export class SeedExamplesClient {
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
     public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
-        return core.HttpResponsePromise.fromPromise(this.__echo(request, requestOptions));
-    }
-
-    private async __echo(
-        request: string,
-        requestOptions?: SeedExamplesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+        return this._client.request<string>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExamplesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 
     /**
@@ -97,42 +74,14 @@ export class SeedExamplesClient {
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Identifier> {
-        return core.HttpResponsePromise.fromPromise(this.__createType(request, requestOptions));
-    }
-
-    private async __createType(
-        request: SeedExamples.Type,
-        requestOptions?: SeedExamplesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+        return this._client.request<SeedExamples.Identifier>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedExamples.Identifier, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExamplesError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 }

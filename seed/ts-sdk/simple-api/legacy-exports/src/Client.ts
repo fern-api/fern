@@ -3,6 +3,9 @@
 import { UserClient } from "./api/resources/user/client/Client";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient";
+import * as core from "./core";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError";
+import * as errors from "./errors/index";
 
 export declare namespace SeedSimpleApiClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedSimpleApiClient {
 
 export class SeedSimpleApiClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedSimpleApiClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedSimpleApiClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedSimpleApiError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options));
+        return (this._user ??= new UserClient(this._options, this._client));
     }
 }

@@ -3,6 +3,9 @@
 import { DummyClient } from "./api/resources/dummy/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedSingleUrlEnvironmentDefaultClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedSingleUrlEnvironmentDefaultClient {
 
 export class SeedSingleUrlEnvironmentDefaultClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedSingleUrlEnvironmentDefaultClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _dummy: DummyClient | undefined;
 
     constructor(options: SeedSingleUrlEnvironmentDefaultClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedSingleUrlEnvironmentDefaultError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get dummy(): DummyClient {
-        return (this._dummy ??= new DummyClient(this._options));
+        return (this._dummy ??= new DummyClient(this._options, this._client));
     }
 }

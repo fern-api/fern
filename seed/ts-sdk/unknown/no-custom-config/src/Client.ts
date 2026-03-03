@@ -3,6 +3,9 @@
 import { UnknownClient } from "./api/resources/unknown/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedUnknownAsAnyClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedUnknownAsAnyClient {
 
 export class SeedUnknownAsAnyClient {
     protected readonly _options: NormalizedClientOptions<SeedUnknownAsAnyClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _unknown: UnknownClient | undefined;
 
     constructor(options: SeedUnknownAsAnyClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedUnknownAsAnyError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get unknown(): UnknownClient {
-        return (this._unknown ??= new UnknownClient(this._options));
+        return (this._unknown ??= new UnknownClient(this._options, this._client));
     }
 }

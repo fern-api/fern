@@ -3,6 +3,9 @@
 import { PropertyBasedErrorClient } from "./api/resources/propertyBasedError/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedErrorPropertyClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedErrorPropertyClient {
 
 export class SeedErrorPropertyClient {
     protected readonly _options: NormalizedClientOptions<SeedErrorPropertyClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _propertyBasedError: PropertyBasedErrorClient | undefined;
 
     constructor(options: SeedErrorPropertyClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedErrorPropertyError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get propertyBasedError(): PropertyBasedErrorClient {
-        return (this._propertyBasedError ??= new PropertyBasedErrorClient(this._options));
+        return (this._propertyBasedError ??= new PropertyBasedErrorClient(this._options, this._client));
     }
 }

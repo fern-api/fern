@@ -15,9 +15,11 @@ export declare namespace HomepageClient {
 
 export class HomepageClient {
     protected readonly _options: NormalizedClientOptions<HomepageClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: HomepageClient.Options = {}) {
+    constructor(options: HomepageClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

@@ -16,9 +16,11 @@ export declare namespace FileUploadExampleClient {
 
 export class FileUploadExampleClient {
     protected readonly _options: NormalizedClientOptions<FileUploadExampleClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: FileUploadExampleClient.Options) {
+    constructor(options: FileUploadExampleClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

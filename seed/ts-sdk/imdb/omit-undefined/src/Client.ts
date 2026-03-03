@@ -3,6 +3,9 @@
 import { ImdbClient } from "./api/resources/imdb/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedApiClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedApiClient {
 
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _imdb: ImdbClient | undefined;
 
     constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedApiError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get imdb(): ImdbClient {
-        return (this._imdb ??= new ImdbClient(this._options));
+        return (this._imdb ??= new ImdbClient(this._options, this._client));
     }
 }

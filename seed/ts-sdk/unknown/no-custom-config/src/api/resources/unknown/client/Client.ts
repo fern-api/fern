@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedUnknownAsAny from "../../../index.js";
 
 export declare namespace UnknownClient {
@@ -16,9 +13,11 @@ export declare namespace UnknownClient {
 
 export class UnknownClient {
     protected readonly _options: NormalizedClientOptions<UnknownClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UnknownClient.Options) {
+    constructor(options: UnknownClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -31,43 +30,15 @@ export class UnknownClient {
      *     })
      */
     public post(request?: unknown, requestOptions?: UnknownClient.RequestOptions): core.HttpResponsePromise<unknown[]> {
-        return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
-    }
-
-    private async __post(
-        request?: unknown,
-        requestOptions?: UnknownClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+        return this._client.request<unknown[]>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as unknown[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUnknownAsAnyError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 
     /**
@@ -85,44 +56,14 @@ export class UnknownClient {
         request: SeedUnknownAsAny.MyObject,
         requestOptions?: UnknownClient.RequestOptions,
     ): core.HttpResponsePromise<unknown[]> {
-        return core.HttpResponsePromise.fromPromise(this.__postObject(request, requestOptions));
-    }
-
-    private async __postObject(
-        request: SeedUnknownAsAny.MyObject,
-        requestOptions?: UnknownClient.RequestOptions,
-    ): Promise<core.WithRawResponse<unknown[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/with-object",
-            ),
+        return this._client.request<unknown[]>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/with-object",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as unknown[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedUnknownAsAnyError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/with-object");
     }
 }

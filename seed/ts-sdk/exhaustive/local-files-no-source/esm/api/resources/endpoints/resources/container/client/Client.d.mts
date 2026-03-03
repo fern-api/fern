@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
-import * as core from "../../../../../../core/index.mjs";
+import type * as core from "../../../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace ContainerClient {
     type Options = BaseClientOptions;
@@ -9,7 +9,8 @@ export declare namespace ContainerClient {
 }
 export declare class ContainerClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContainerClient.Options>;
-    constructor(options: ContainerClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: ContainerClient.Options, client: core.HttpClient);
     /**
      * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -18,7 +19,6 @@ export declare class ContainerClient {
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
     getAndReturnListOfPrimitives(request: string[], requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<string[]>;
-    private __getAndReturnListOfPrimitives;
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -31,7 +31,6 @@ export declare class ContainerClient {
      *         }])
      */
     getAndReturnListOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]>;
-    private __getAndReturnListOfObjects;
     /**
      * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -40,7 +39,6 @@ export declare class ContainerClient {
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
     getAndReturnSetOfPrimitives(request: string[], requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<string[]>;
-    private __getAndReturnSetOfPrimitives;
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -51,7 +49,6 @@ export declare class ContainerClient {
      *         }])
      */
     getAndReturnSetOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]>;
-    private __getAndReturnSetOfObjects;
     /**
      * @param {Record<string, string>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -62,7 +59,6 @@ export declare class ContainerClient {
      *     })
      */
     getAndReturnMapPrimToPrim(request: Record<string, string>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<Record<string, string>>;
-    private __getAndReturnMapPrimToPrim;
     /**
      * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -75,7 +71,6 @@ export declare class ContainerClient {
      *     })
      */
     getAndReturnMapOfPrimToObject(request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>;
-    private __getAndReturnMapOfPrimToObject;
     /**
      * @param {Record<string, SeedExhaustive.types.MixedType>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -86,7 +81,6 @@ export declare class ContainerClient {
      *     })
      */
     getAndReturnMapOfPrimToUndiscriminatedUnion(request: Record<string, SeedExhaustive.types.MixedType>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<Record<string, SeedExhaustive.types.MixedType>>;
-    private __getAndReturnMapOfPrimToUndiscriminatedUnion;
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -97,5 +91,4 @@ export declare class ContainerClient {
      *     })
      */
     getAndReturnOptional(request?: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined>;
-    private __getAndReturnOptional;
 }

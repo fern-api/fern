@@ -3,6 +3,9 @@
 import { PackageClient } from "./api/resources/package/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedNurseryApiClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedNurseryApiClient {
 
 export class SeedNurseryApiClient {
     protected readonly _options: NormalizedClientOptions<SeedNurseryApiClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _package: PackageClient | undefined;
 
     constructor(options: SeedNurseryApiClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedNurseryApiError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get package(): PackageClient {
-        return (this._package ??= new PackageClient(this._options));
+        return (this._package ??= new PackageClient(this._options, this._client));
     }
 }

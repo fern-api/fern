@@ -9,7 +9,8 @@ export declare namespace PaginationClient {
 }
 export declare class PaginationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PaginationClient.Options>;
-    constructor(options: PaginationClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: PaginationClient.Options, client: core.HttpClient);
     /**
      * List items with cursor pagination
      *

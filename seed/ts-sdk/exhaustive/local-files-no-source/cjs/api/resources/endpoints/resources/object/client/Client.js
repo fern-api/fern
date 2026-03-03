@@ -33,25 +33,14 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObjectClient = void 0;
 const BaseClient_js_1 = require("../../../../../../BaseClient.js");
-const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
-const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
-const errors = __importStar(require("../../../../../../errors/index.js"));
 class ObjectClient {
-    constructor(options) {
+    constructor(options, client) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
+        this._client = client;
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
@@ -77,41 +66,14 @@ class ObjectClient {
      *     })
      */
     getAndReturnWithOptionalField(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithOptionalField(request, requestOptions));
-    }
-    __getAndReturnWithOptionalField(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-optional-field"),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-optional-field");
+        return this._client.request({
+            method: "POST",
+            path: "/object/get-and-return-with-optional-field",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -124,41 +86,14 @@ class ObjectClient {
      *     })
      */
     getAndReturnWithRequiredField(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithRequiredField(request, requestOptions));
-    }
-    __getAndReturnWithRequiredField(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-required-field"),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-required-field");
+        return this._client.request({
+            method: "POST",
+            path: "/object/get-and-return-with-required-field",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -175,41 +110,14 @@ class ObjectClient {
      *     })
      */
     getAndReturnWithMapOfMap(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithMapOfMap(request, requestOptions));
-    }
-    __getAndReturnWithMapOfMap(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-map-of-map"),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-map-of-map");
+        return this._client.request({
+            method: "POST",
+            path: "/object/get-and-return-with-map-of-map",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -239,41 +147,14 @@ class ObjectClient {
      *     })
      */
     getAndReturnNestedWithOptionalField(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnNestedWithOptionalField(request, requestOptions));
-    }
-    __getAndReturnNestedWithOptionalField(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-nested-with-optional-field"),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-nested-with-optional-field");
+        return this._client.request({
+            method: "POST",
+            path: "/object/get-and-return-nested-with-optional-field",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -304,41 +185,14 @@ class ObjectClient {
      *     })
      */
     getAndReturnNestedWithRequiredField(string, request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnNestedWithRequiredField(string, request, requestOptions));
-    }
-    __getAndReturnNestedWithRequiredField(string, request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-nested-with-required-field/{string}");
+        return this._client.request({
+            method: "POST",
+            path: `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -387,41 +241,14 @@ class ObjectClient {
      *         }])
      */
     getAndReturnNestedWithRequiredFieldAsList(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnNestedWithRequiredFieldAsList(request, requestOptions));
-    }
-    __getAndReturnNestedWithRequiredFieldAsList(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-nested-with-required-field-list"),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-nested-with-required-field-list");
+        return this._client.request({
+            method: "POST",
+            path: "/object/get-and-return-nested-with-required-field-list",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -436,41 +263,14 @@ class ObjectClient {
      *     })
      */
     getAndReturnWithUnknownField(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithUnknownField(request, requestOptions));
-    }
-    __getAndReturnWithUnknownField(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-unknown-field"),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-unknown-field");
+        return this._client.request({
+            method: "POST",
+            path: "/object/get-and-return-with-unknown-field",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -488,41 +288,14 @@ class ObjectClient {
      *     })
      */
     getAndReturnWithDatetimeLikeString(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithDatetimeLikeString(request, requestOptions));
-    }
-    __getAndReturnWithDatetimeLikeString(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/object/get-and-return-with-datetime-like-string"),
-                method: "POST",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "POST", "/object/get-and-return-with-datetime-like-string");
+        return this._client.request({
+            method: "POST",
+            path: "/object/get-and-return-with-datetime-like-string",
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
 }

@@ -2,11 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
+import type * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import type * as SeedQueryParameters from "../../../index.js";
 
@@ -18,9 +15,11 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UserClient.Options) {
+    constructor(options: UserClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -72,13 +71,6 @@ export class UserClient {
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedQueryParameters.User> {
-        return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
-    }
-
-    private async __getUsername(
-        request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
         const {
             limit,
             id,
@@ -130,17 +122,7 @@ export class UserClient {
                       })
                     : optionalUser,
             excludeUser: Array.isArray(excludeUser)
-                ? await Promise.all(
-                      excludeUser.map(async (item) =>
-                          serializers.User.jsonOrThrow(item, {
-                              unrecognizedObjectKeys: "passthrough",
-                              allowUnrecognizedUnionMembers: true,
-                              allowUnrecognizedEnumValues: true,
-                              omitUndefined: true,
-                              breadcrumbsPrefix: ["request", "excludeUser"],
-                          }),
-                      ),
-                  )
+                ? await Promise.all(excludeUser.map(async (item) => serializers.User.jsonOrThrow(item, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, omitUndefined: true, breadcrumbsPrefix: ["request", "excludeUser"] })))
                 : serializers.User.jsonOrThrow(excludeUser, {
                       unrecognizedObjectKeys: "passthrough",
                       allowUnrecognizedUnionMembers: true,
@@ -150,43 +132,19 @@ export class UserClient {
                   }),
             filter,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/user",
-            ),
+        return this._client.request<SeedQueryParameters.User>({
             method: "GET",
-            headers: _headers,
+            path: "/user",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.User.parseOrThrow(_response.body, {
+            transformResponse: (body) =>
+                serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedQueryParametersError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/user");
+            requestOptions,
+        });
     }
 }

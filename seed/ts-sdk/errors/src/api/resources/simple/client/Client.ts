@@ -16,9 +16,11 @@ export declare namespace SimpleClient {
 
 export class SimpleClient {
     protected readonly _options: NormalizedClientOptions<SimpleClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: SimpleClient.Options) {
+    constructor(options: SimpleClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

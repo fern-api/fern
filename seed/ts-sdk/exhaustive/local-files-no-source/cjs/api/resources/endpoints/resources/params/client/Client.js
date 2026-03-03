@@ -50,8 +50,9 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class ParamsClient {
-    constructor(options) {
+    constructor(options, client) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
+        this._client = client;
     }
     /**
      * GET with path param
@@ -63,35 +64,11 @@ class ParamsClient {
      *     await client.endpoints.params.getWithPath("param")
      */
     getWithPath(param, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getWithPath(param, requestOptions));
-    }
-    __getWithPath(param, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
-                method: "GET",
-                headers: _headers,
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "GET", "/params/path/{param}");
+        return this._client.request({
+            method: "GET",
+            path: `/params/path/${core.url.encodePathParam(param)}`,
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -106,36 +83,12 @@ class ParamsClient {
      *     })
      */
     getWithInlinePath(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getWithInlinePath(request, requestOptions));
-    }
-    __getWithInlinePath(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { param } = request;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
-                method: "GET",
-                headers: _headers,
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "GET", "/params/path/{param}");
+        const { param } = request;
+        return this._client.request({
+            method: "GET",
+            path: `/params/path/${core.url.encodePathParam(param)}`,
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -151,40 +104,16 @@ class ParamsClient {
      *     })
      */
     getWithQuery(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getWithQuery(request, requestOptions));
-    }
-    __getWithQuery(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { query, number: number_ } = request;
-            const _queryParams = {
-                query,
-                number: number_,
-            };
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
-                method: "GET",
-                headers: _headers,
-                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: undefined, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "GET", "/params");
+        const { query, number: number_ } = request;
+        const _queryParams = {
+            query,
+            number: number_,
+        };
+        return this._client.request({
+            method: "GET",
+            path: "/params",
+            queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            requestOptions,
         });
     }
     /**
@@ -200,40 +129,16 @@ class ParamsClient {
      *     })
      */
     getWithAllowMultipleQuery(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
-    }
-    __getWithAllowMultipleQuery(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { query, number: number_ } = request;
-            const _queryParams = {
-                query,
-                number: number_,
-            };
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
-                method: "GET",
-                headers: _headers,
-                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: undefined, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "GET", "/params");
+        const { query, number: number_ } = request;
+        const _queryParams = {
+            query,
+            number: number_,
+        };
+        return this._client.request({
+            method: "GET",
+            path: "/params",
+            queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            requestOptions,
         });
     }
     /**
@@ -249,39 +154,15 @@ class ParamsClient {
      *     })
      */
     getWithPathAndQuery(param, request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
-    }
-    __getWithPathAndQuery(param, request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { query } = request;
-            const _queryParams = {
-                query,
-            };
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${core.url.encodePathParam(param)}`),
-                method: "GET",
-                headers: _headers,
-                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: undefined, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "GET", "/params/path-query/{param}");
+        const { query } = request;
+        const _queryParams = {
+            query,
+        };
+        return this._client.request({
+            method: "GET",
+            path: `/params/path-query/${core.url.encodePathParam(param)}`,
+            queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            requestOptions,
         });
     }
     /**
@@ -297,39 +178,15 @@ class ParamsClient {
      *     })
      */
     getWithInlinePathAndQuery(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__getWithInlinePathAndQuery(request, requestOptions));
-    }
-    __getWithInlinePathAndQuery(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { param, query } = request;
-            const _queryParams = {
-                query,
-            };
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${core.url.encodePathParam(param)}`),
-                method: "GET",
-                headers: _headers,
-                queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: undefined, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "GET", "/params/path-query/{param}");
+        const { param, query } = request;
+        const _queryParams = {
+            query,
+        };
+        return this._client.request({
+            method: "GET",
+            path: `/params/path-query/${core.url.encodePathParam(param)}`,
+            queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
+            requestOptions,
         });
     }
     /**
@@ -343,38 +200,14 @@ class ParamsClient {
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
     modifyWithPath(param, request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__modifyWithPath(param, request, requestOptions));
-    }
-    __modifyWithPath(param, request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
-                method: "PUT",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: request,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "PUT", "/params/path/{param}");
+        return this._client.request({
+            method: "PUT",
+            path: `/params/path/${core.url.encodePathParam(param)}`,
+            body: request,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**
@@ -390,39 +223,15 @@ class ParamsClient {
      *     })
      */
     modifyWithInlinePath(request, requestOptions) {
-        return core.HttpResponsePromise.fromPromise(this.__modifyWithInlinePath(request, requestOptions));
-    }
-    __modifyWithInlinePath(request, requestOptions) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h;
-            const { param, body: _body } = request;
-            const _authRequest = yield this._options.authProvider.getAuthRequest();
-            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
-            const _response = yield core.fetcher({
-                url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
-                method: "PUT",
-                headers: _headers,
-                contentType: "application/json",
-                queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-                requestType: "json",
-                body: _body,
-                timeoutMs: ((_e = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : (_d = this._options) === null || _d === void 0 ? void 0 : _d.timeoutInSeconds) !== null && _e !== void 0 ? _e : 60) * 1000,
-                maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
-                abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
-                fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
-                logging: this._options.logging,
-            });
-            if (_response.ok) {
-                return { data: _response.body, rawResponse: _response.rawResponse };
-            }
-            if (_response.error.reason === "status-code") {
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                    rawResponse: _response.rawResponse,
-                });
-            }
-            return (0, handleNonStatusCodeError_js_1.handleNonStatusCodeError)(_response.error, _response.rawResponse, "PUT", "/params/path/{param}");
+        const { param, body: _body } = request;
+        return this._client.request({
+            method: "PUT",
+            path: `/params/path/${core.url.encodePathParam(param)}`,
+            body: _body,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
+            requestOptions,
         });
     }
     /**

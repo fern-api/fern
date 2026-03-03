@@ -5,28 +5,32 @@ import { NoAuthClient } from "./api/resources/noAuth/client/Client.mjs";
 import { NoReqBodyClient } from "./api/resources/noReqBody/client/Client.mjs";
 import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Client.mjs";
 import { normalizeClientOptionsWithAuth } from "./BaseClient.mjs";
+import * as core from "./core/index.mjs";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.mjs";
+import * as errors from "./errors/index.mjs";
 export class SeedExhaustiveClient {
     constructor(options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError);
     }
     get endpoints() {
         var _a;
-        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new EndpointsClient(this._options)));
+        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new EndpointsClient(this._options, this._client)));
     }
     get inlinedRequests() {
         var _a;
-        return ((_a = this._inlinedRequests) !== null && _a !== void 0 ? _a : (this._inlinedRequests = new InlinedRequestsClient(this._options)));
+        return ((_a = this._inlinedRequests) !== null && _a !== void 0 ? _a : (this._inlinedRequests = new InlinedRequestsClient(this._options, this._client)));
     }
     get noAuth() {
         var _a;
-        return ((_a = this._noAuth) !== null && _a !== void 0 ? _a : (this._noAuth = new NoAuthClient(this._options)));
+        return ((_a = this._noAuth) !== null && _a !== void 0 ? _a : (this._noAuth = new NoAuthClient(this._options, this._client)));
     }
     get noReqBody() {
         var _a;
-        return ((_a = this._noReqBody) !== null && _a !== void 0 ? _a : (this._noReqBody = new NoReqBodyClient(this._options)));
+        return ((_a = this._noReqBody) !== null && _a !== void 0 ? _a : (this._noReqBody = new NoReqBodyClient(this._options, this._client)));
     }
     get reqWithHeaders() {
         var _a;
-        return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new ReqWithHeadersClient(this._options)));
+        return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new ReqWithHeadersClient(this._options, this._client)));
     }
 }

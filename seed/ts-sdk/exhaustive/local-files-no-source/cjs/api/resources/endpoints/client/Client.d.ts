@@ -1,5 +1,6 @@
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../BaseClient.js";
+import type * as core from "../../../../core/index.js";
 import { ContainerClient } from "../resources/container/client/Client.js";
 import { ContentTypeClient } from "../resources/contentType/client/Client.js";
 import { EnumClient } from "../resources/enum/client/Client.js";
@@ -16,6 +17,7 @@ export declare namespace EndpointsClient {
 }
 export declare class EndpointsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EndpointsClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _container: ContainerClient | undefined;
     protected _contentType: ContentTypeClient | undefined;
     protected _enum: EnumClient | undefined;
@@ -27,7 +29,7 @@ export declare class EndpointsClient {
     protected _put: PutClient | undefined;
     protected _union: UnionClient | undefined;
     protected _urls: UrlsClient | undefined;
-    constructor(options: EndpointsClient.Options);
+    constructor(options: EndpointsClient.Options, client: core.HttpClient);
     get container(): ContainerClient;
     get contentType(): ContentTypeClient;
     get enum(): EnumClient;

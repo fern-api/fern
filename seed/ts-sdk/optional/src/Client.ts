@@ -3,6 +3,9 @@
 import { OptionalClient } from "./api/resources/optional/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedObjectsWithImportsClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedObjectsWithImportsClient {
 
 export class SeedObjectsWithImportsClient {
     protected readonly _options: NormalizedClientOptions<SeedObjectsWithImportsClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _optional: OptionalClient | undefined;
 
     constructor(options: SeedObjectsWithImportsClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedObjectsWithImportsError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get optional(): OptionalClient {
-        return (this._optional ??= new OptionalClient(this._options));
+        return (this._optional ??= new OptionalClient(this._options, this._client));
     }
 }

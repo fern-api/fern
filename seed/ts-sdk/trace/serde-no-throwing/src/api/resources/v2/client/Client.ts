@@ -17,19 +17,21 @@ export declare namespace V2Client {
 
 export class V2Client {
     protected readonly _options: NormalizedClientOptions<V2Client.Options>;
+    protected readonly _client: core.HttpClient;
     protected _problem: ProblemClient | undefined;
     protected _v3: V3Client | undefined;
 
-    constructor(options: V2Client.Options = {}) {
+    constructor(options: V2Client.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(this._options));
+        return (this._problem ??= new ProblemClient(this._options, this._client));
     }
 
     public get v3(): V3Client {
-        return (this._v3 ??= new V3Client(this._options));
+        return (this._v3 ??= new V3Client(this._options, this._client));
     }
 
     /**

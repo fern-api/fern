@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
-import * as core from "../../../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../errors/index.js";
+import type * as core from "../../../../../../core/index.js";
 import type * as SeedMixedFileDirectory from "../../../../../index.js";
 import { MetadataClient } from "../resources/metadata/client/Client.js";
 
@@ -17,14 +14,16 @@ export declare namespace EventsClient {
 
 export class EventsClient {
     protected readonly _options: NormalizedClientOptions<EventsClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _metadata: MetadataClient | undefined;
 
-    constructor(options: EventsClient.Options) {
+    constructor(options: EventsClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public get metadata(): MetadataClient {
-        return (this._metadata ??= new MetadataClient(this._options));
+        return (this._metadata ??= new MetadataClient(this._options, this._client));
     }
 
     /**
@@ -42,45 +41,15 @@ export class EventsClient {
         request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
         requestOptions?: EventsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.user.Event[]> {
-        return core.HttpResponsePromise.fromPromise(this.__listEvents(request, requestOptions));
-    }
-
-    private async __listEvents(
-        request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
-        requestOptions?: EventsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.Event[]>> {
         const { limit } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
         };
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users/events/",
-            ),
+        return this._client.request<SeedMixedFileDirectory.user.Event[]>({
             method: "GET",
-            headers: _headers,
+            path: "/users/events/",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedMixedFileDirectory.user.Event[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMixedFileDirectoryError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/events/");
     }
 }

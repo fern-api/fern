@@ -7,6 +7,9 @@ import { PathParamClient } from "./api/resources/pathParam/client/Client.js";
 import { QueryParamClient } from "./api/resources/queryParam/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedEnumClient {
     export type Options = BaseClientOptions;
@@ -16,6 +19,7 @@ export declare namespace SeedEnumClient {
 
 export class SeedEnumClient {
     protected readonly _options: NormalizedClientOptions<SeedEnumClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _headers: HeadersClient | undefined;
     protected _inlinedRequest: InlinedRequestClient | undefined;
     protected _multipartForm: MultipartFormClient | undefined;
@@ -24,25 +28,30 @@ export class SeedEnumClient {
 
     constructor(options: SeedEnumClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedEnumError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get headers(): HeadersClient {
-        return (this._headers ??= new HeadersClient(this._options));
+        return (this._headers ??= new HeadersClient(this._options, this._client));
     }
 
     public get inlinedRequest(): InlinedRequestClient {
-        return (this._inlinedRequest ??= new InlinedRequestClient(this._options));
+        return (this._inlinedRequest ??= new InlinedRequestClient(this._options, this._client));
     }
 
     public get multipartForm(): MultipartFormClient {
-        return (this._multipartForm ??= new MultipartFormClient(this._options));
+        return (this._multipartForm ??= new MultipartFormClient(this._options, this._client));
     }
 
     public get pathParam(): PathParamClient {
-        return (this._pathParam ??= new PathParamClient(this._options));
+        return (this._pathParam ??= new PathParamClient(this._options, this._client));
     }
 
     public get queryParam(): QueryParamClient {
-        return (this._queryParam ??= new QueryParamClient(this._options));
+        return (this._queryParam ??= new QueryParamClient(this._options, this._client));
     }
 }

@@ -2,11 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../../../core/headers.js";
+import { mergeOnlyDefinedHeaders } from "../../../../../../../../core/headers.js";
 import * as core from "../../../../../../../../core/index.js";
-import * as environments from "../../../../../../../../environments.js";
-import { handleNonStatusCodeError } from "../../../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../../../errors/index.js";
 import * as serializers from "../../../../../../../../serialization/index.js";
 import type * as SeedTrace from "../../../../../../../index.js";
 
@@ -18,9 +15,11 @@ export declare namespace ProblemClient {
 
 export class ProblemClient {
     protected readonly _options: NormalizedClientOptions<ProblemClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ProblemClient.Options = {}) {
+    constructor(options: ProblemClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -34,62 +33,24 @@ export class ProblemClient {
     public getLightweightProblems(
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.v2.v3.LightweightProblemInfoV2[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getLightweightProblems(requestOptions));
-    }
-
-    private async __getLightweightProblems(
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.LightweightProblemInfoV2[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/lightweight-problem-info",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return {
-                data: serializers.v2.v3.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
+        return this._client.request<SeedTrace.v2.v3.LightweightProblemInfoV2[]>({
+            method: "GET",
+            path: "/problems-v2/lightweight-problem-info",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.v2.v3.problem.getLightweightProblems.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/problems-v2/lightweight-problem-info",
-        );
+            requestOptions,
+        });
     }
 
     /**
@@ -103,57 +64,24 @@ export class ProblemClient {
     public getProblems(
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getProblems(requestOptions));
-    }
-
-    private async __getProblems(
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/problem-info",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return {
-                data: serializers.v2.v3.problem.getProblems.Response.parseOrThrow(_response.body, {
+        return this._client.request<SeedTrace.v2.v3.ProblemInfoV2[]>({
+            method: "GET",
+            path: "/problems-v2/problem-info",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.v2.v3.problem.getProblems.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/problems-v2/problem-info");
+            requestOptions,
+        });
     }
 
     /**
@@ -169,63 +97,24 @@ export class ProblemClient {
         problemId: SeedTrace.ProblemId,
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2> {
-        return core.HttpResponsePromise.fromPromise(this.__getLatestProblem(problemId, requestOptions));
-    }
-
-    private async __getLatestProblem(
-        problemId: SeedTrace.ProblemId,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return {
-                data: serializers.v2.v3.ProblemInfoV2.parseOrThrow(_response.body, {
+        return this._client.request<SeedTrace.v2.v3.ProblemInfoV2>({
+            method: "GET",
+            path: `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.v2.v3.ProblemInfoV2.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/problems-v2/problem-info/{problemId}",
-        );
+            requestOptions,
+        });
     }
 
     /**
@@ -243,65 +132,23 @@ export class ProblemClient {
         problemVersion: number,
         requestOptions?: ProblemClient.RequestOptions,
     ): core.HttpResponsePromise<SeedTrace.v2.v3.ProblemInfoV2> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getProblemVersion(problemId, problemVersion, requestOptions),
-        );
-    }
-
-    private async __getProblemVersion(
-        problemId: SeedTrace.ProblemId,
-        problemVersion: number,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.v2.v3.ProblemInfoV2>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}/version/${core.url.encodePathParam(problemVersion)}`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        if (_response.ok) {
-            return {
-                data: serializers.v2.v3.ProblemInfoV2.parseOrThrow(_response.body, {
+        return this._client.request<SeedTrace.v2.v3.ProblemInfoV2>({
+            method: "GET",
+            path: `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}/version/${core.url.encodePathParam(problemVersion)}`,
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            transformResponse: (body) =>
+                serializers.v2.v3.ProblemInfoV2.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedTraceError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
-        );
+            requestOptions,
+        });
     }
 }

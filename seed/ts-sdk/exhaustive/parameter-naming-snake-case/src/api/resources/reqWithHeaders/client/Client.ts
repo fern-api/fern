@@ -2,10 +2,8 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import { mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 
 export declare namespace ReqWithHeadersClient {
@@ -16,9 +14,11 @@ export declare namespace ReqWithHeadersClient {
 
 export class ReqWithHeadersClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ReqWithHeadersClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ReqWithHeadersClient.Options) {
+    constructor(options: ReqWithHeadersClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -36,58 +36,24 @@ export class ReqWithHeadersClient {
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
-    }
-
-    private async __getWithCustomHeader(
-        request: SeedExhaustive.ReqWithHeaders,
-        requestOptions?: ReqWithHeadersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
         const {
             x_test_service_header: xTestServiceHeader,
             x_test_endpoint_header: xTestEndpointHeader,
             body: _body,
         } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-                "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-            }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/test-headers/custom-header",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: _body,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+        const _headers = mergeOnlyDefinedHeaders({
+            "X-TEST-SERVICE-HEADER": xTestServiceHeader,
+            "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/test-headers/custom-header");
+        return this._client.request<void>({
+            method: "POST",
+            path: "/test-headers/custom-header",
+            body: _body,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            headers: _headers,
+            requestOptions,
+        });
     }
 }

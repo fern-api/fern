@@ -14,9 +14,11 @@ export declare namespace ReqWithHeadersClient {
 
 export class ReqWithHeadersClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ReqWithHeadersClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ReqWithHeadersClient.Options) {
+    constructor(options: ReqWithHeadersClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

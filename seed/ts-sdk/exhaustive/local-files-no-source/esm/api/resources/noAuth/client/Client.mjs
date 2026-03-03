@@ -15,8 +15,9 @@ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCode
 import * as errors from "../../../../errors/index.mjs";
 import * as SeedExhaustive from "../../../index.mjs";
 export class NoAuthClient {
-    constructor(options) {
+    constructor(options, client) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
     /**
      * POST request with no auth

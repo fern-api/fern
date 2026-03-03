@@ -14,9 +14,11 @@ export declare namespace ApiClient {
 
 export class ApiClient {
     protected readonly _options: NormalizedClientOptions<ApiClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ApiClient.Options) {
+    constructor(options: ApiClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

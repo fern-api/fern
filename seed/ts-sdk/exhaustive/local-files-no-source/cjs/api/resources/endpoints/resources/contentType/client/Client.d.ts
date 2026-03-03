@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import * as core from "../../../../../../core/index.js";
+import type * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 export declare namespace ContentTypeClient {
     type Options = BaseClientOptions;
@@ -9,7 +9,8 @@ export declare namespace ContentTypeClient {
 }
 export declare class ContentTypeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContentTypeClient.Options>;
-    constructor(options: ContentTypeClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: ContentTypeClient.Options, client: core.HttpClient);
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -34,7 +35,6 @@ export declare class ContentTypeClient {
      *     })
      */
     postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __postJsonPatchContentType;
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -59,5 +59,4 @@ export declare class ContentTypeClient {
      *     })
      */
     postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
-    private __postJsonPatchContentWithCharsetType;
 }

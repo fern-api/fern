@@ -14,9 +14,11 @@ export declare namespace UnionClient {
 
 export class UnionClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UnionClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UnionClient.Options) {
+    constructor(options: UnionClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

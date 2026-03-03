@@ -14,9 +14,11 @@ export declare namespace PutClient {
 
 export class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: PutClient.Options) {
+    constructor(options: PutClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

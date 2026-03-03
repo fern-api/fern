@@ -3,6 +3,9 @@
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedExtraPropertiesClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedExtraPropertiesClient {
 
 export class SeedExtraPropertiesClient {
     protected readonly _options: NormalizedClientOptions<SeedExtraPropertiesClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedExtraPropertiesClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedExtraPropertiesError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options));
+        return (this._user ??= new UserClient(this._options, this._client));
     }
 }

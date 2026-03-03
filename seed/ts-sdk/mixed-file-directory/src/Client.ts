@@ -4,6 +4,9 @@ import { OrganizationClient } from "./api/resources/organization/client/Client.j
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedMixedFileDirectoryClient {
     export type Options = BaseClientOptions;
@@ -13,18 +16,24 @@ export declare namespace SeedMixedFileDirectoryClient {
 
 export class SeedMixedFileDirectoryClient {
     protected readonly _options: NormalizedClientOptions<SeedMixedFileDirectoryClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _organization: OrganizationClient | undefined;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedMixedFileDirectoryClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedMixedFileDirectoryError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get organization(): OrganizationClient {
-        return (this._organization ??= new OrganizationClient(this._options));
+        return (this._organization ??= new OrganizationClient(this._options, this._client));
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options));
+        return (this._user ??= new UserClient(this._options, this._client));
     }
 }

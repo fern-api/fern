@@ -26,9 +26,11 @@ export declare namespace EmptyRealtimeClient {
 
 export class EmptyRealtimeClient {
     protected readonly _options: NormalizedClientOptions<EmptyRealtimeClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: EmptyRealtimeClient.Options) {
+    constructor(options: EmptyRealtimeClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public async connect(args: EmptyRealtimeClient.ConnectArgs = {}): Promise<EmptyRealtimeSocket> {

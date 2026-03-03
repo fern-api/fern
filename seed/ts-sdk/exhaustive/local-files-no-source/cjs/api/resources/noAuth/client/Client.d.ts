@@ -8,7 +8,8 @@ export declare namespace NoAuthClient {
 }
 export declare class NoAuthClient {
     protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
-    constructor(options: NoAuthClient.Options);
+    protected readonly _client: core.HttpClient;
+    constructor(options: NoAuthClient.Options, client: core.HttpClient);
     /**
      * POST request with no auth
      *

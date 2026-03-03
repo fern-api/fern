@@ -3,6 +3,9 @@
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedBytesDownloadClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedBytesDownloadClient {
 
 export class SeedBytesDownloadClient {
     protected readonly _options: NormalizedClientOptions<SeedBytesDownloadClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedBytesDownloadClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedBytesDownloadError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options));
+        return (this._service ??= new ServiceClient(this._options, this._client));
     }
 }

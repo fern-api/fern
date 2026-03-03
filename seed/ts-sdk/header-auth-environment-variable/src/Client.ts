@@ -3,6 +3,9 @@
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedHeaderTokenEnvironmentVariableClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedHeaderTokenEnvironmentVariableClient {
 
 export class SeedHeaderTokenEnvironmentVariableClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedHeaderTokenEnvironmentVariableClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedHeaderTokenEnvironmentVariableClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedHeaderTokenEnvironmentVariableError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options));
+        return (this._service ??= new ServiceClient(this._options, this._client));
     }
 }

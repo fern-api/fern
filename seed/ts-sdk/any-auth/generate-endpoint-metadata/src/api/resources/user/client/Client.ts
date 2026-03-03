@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedAnyAuth from "../../../index.js";
 
 export declare namespace UserClient {
@@ -16,9 +13,11 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UserClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: UserClient.Options) {
+    constructor(options: UserClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -28,50 +27,16 @@ export class UserClient {
      *     await client.user.get()
      */
     public get(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
-        return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
-    }
-
-    private async __get(requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
         const _metadata: core.EndpointMetadata = {
             security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: [] }, { Basic: [] }, { InferredAuth: [] }],
         };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
-            endpointMetadata: _metadata,
-        });
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "users",
-            ),
+        return this._client.request<SeedAnyAuth.User[]>({
             method: "POST",
-            headers: _headers,
+            path: "users",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
             endpointMetadata: _metadata,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedAnyAuth.User[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedAnyAuthError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users");
     }
 
     /**
@@ -81,49 +46,13 @@ export class UserClient {
      *     await client.user.getAdmins()
      */
     public getAdmins(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
-        return core.HttpResponsePromise.fromPromise(this.__getAdmins(requestOptions));
-    }
-
-    private async __getAdmins(
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
         const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["admin"] }] };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest({
-            endpointMetadata: _metadata,
-        });
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "admins",
-            ),
+        return this._client.request<SeedAnyAuth.User[]>({
             method: "GET",
-            headers: _headers,
+            path: "admins",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
             endpointMetadata: _metadata,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedAnyAuth.User[], rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedAnyAuthError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/admins");
     }
 }

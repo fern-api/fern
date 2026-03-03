@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
-import * as core from "../../../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../../../errors/index.js";
+import type * as core from "../../../../../../core/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace ContentTypeClient {
@@ -16,9 +13,11 @@ export declare namespace ContentTypeClient {
 
 export class ContentTypeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContentTypeClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: ContentTypeClient.Options) {
+    constructor(options: ContentTypeClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**
@@ -48,50 +47,15 @@ export class ContentTypeClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
-    }
-
-    private async __postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentTypeClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/foo/bar",
-            ),
+        return this._client.request<void>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json-patch+json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/foo/bar",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json-patch+json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo/bar");
     }
 
     /**
@@ -121,51 +85,14 @@ export class ContentTypeClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__postJsonPatchContentWithCharsetType(request, requestOptions),
-        );
-    }
-
-    private async __postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentTypeClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/foo/baz",
-            ),
+        return this._client.request<void>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json-patch+json; charset=utf-8",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/foo/baz",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json-patch+json; charset=utf-8",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedExhaustiveError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo/baz");
     }
 }

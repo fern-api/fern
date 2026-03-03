@@ -14,9 +14,11 @@ export declare namespace HttpMethodsClient {
 
 export class HttpMethodsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<HttpMethodsClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: HttpMethodsClient.Options) {
+    constructor(options: HttpMethodsClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

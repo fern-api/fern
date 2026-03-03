@@ -2,10 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
-import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
-import * as errors from "../../../../errors/index.js";
+import type * as core from "../../../../core/index.js";
 import type * as SeedMixedFileDirectory from "../../../index.js";
 
 export declare namespace OrganizationClient {
@@ -16,9 +13,11 @@ export declare namespace OrganizationClient {
 
 export class OrganizationClient {
     protected readonly _options: NormalizedClientOptions<OrganizationClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: OrganizationClient.Options) {
+    constructor(options: OrganizationClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**
@@ -36,44 +35,14 @@ export class OrganizationClient {
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
         requestOptions?: OrganizationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
-        return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
-    }
-
-    private async __create(
-        request: SeedMixedFileDirectory.CreateOrganizationRequest,
-        requestOptions?: OrganizationClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.Organization>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/organizations/",
-            ),
+        return this._client.request<SeedMixedFileDirectory.Organization>({
             method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
+            path: "/organizations/",
             body: request,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            contentType: "application/json",
+            requestType: "json",
+            queryParameters: requestOptions?.queryParams,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: _response.body as SeedMixedFileDirectory.Organization, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedMixedFileDirectoryError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/organizations/");
     }
 }

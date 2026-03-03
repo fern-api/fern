@@ -14,9 +14,11 @@ export declare namespace EnumClient {
 
 export class EnumClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EnumClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: EnumClient.Options) {
+    constructor(options: EnumClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

@@ -16,9 +16,11 @@ export declare namespace PlaylistClient {
 
 export class PlaylistClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PlaylistClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: PlaylistClient.Options = {}) {
+    constructor(options: PlaylistClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

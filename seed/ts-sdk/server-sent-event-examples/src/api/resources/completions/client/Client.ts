@@ -16,9 +16,11 @@ export declare namespace CompletionsClient {
 
 export class CompletionsClient {
     protected readonly _options: NormalizedClientOptions<CompletionsClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: CompletionsClient.Options) {
+    constructor(options: CompletionsClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public stream(

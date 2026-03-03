@@ -4,7 +4,6 @@ import { AClient } from "./api/resources/a/client/Client.js";
 import { FolderClient } from "./api/resources/folder/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
-import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
 import * as errors from "./errors/index.js";
@@ -17,19 +16,25 @@ export declare namespace SeedApiClient {
 
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _a: AClient | undefined;
     protected _folder: FolderClient | undefined;
 
     constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedApiError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get a(): AClient {
-        return (this._a ??= new AClient(this._options));
+        return (this._a ??= new AClient(this._options, this._client));
     }
 
     public get folder(): FolderClient {
-        return (this._folder ??= new FolderClient(this._options));
+        return (this._folder ??= new FolderClient(this._options, this._client));
     }
 
     /**
@@ -39,36 +44,11 @@ export class SeedApiClient {
      *     await client.foo()
      */
     public foo(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__foo(requestOptions));
-    }
-
-    private async __foo(requestOptions?: SeedApiClient.RequestOptions): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
-        const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+        return this._client.request<void>({
             method: "POST",
-            headers: _headers,
+            path: "",
             queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            requestOptions,
         });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.SeedApiError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 }

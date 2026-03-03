@@ -14,9 +14,11 @@ export declare namespace NoReqBodyClient {
 
 export class NoReqBodyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: NoReqBodyClient.Options) {
+    constructor(options: NoReqBodyClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
 
     /**

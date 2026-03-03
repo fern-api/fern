@@ -17,9 +17,15 @@ export declare namespace SeedApiClient {
 
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
+    protected readonly _client: core.HttpClient;
 
     constructor(options: SeedApiClient.Options = {}) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedApiError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     /**

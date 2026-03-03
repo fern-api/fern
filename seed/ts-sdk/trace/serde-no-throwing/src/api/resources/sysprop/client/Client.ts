@@ -16,9 +16,11 @@ export declare namespace SyspropClient {
 
 export class SyspropClient {
     protected readonly _options: NormalizedClientOptions<SyspropClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: SyspropClient.Options = {}) {
+    constructor(options: SyspropClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

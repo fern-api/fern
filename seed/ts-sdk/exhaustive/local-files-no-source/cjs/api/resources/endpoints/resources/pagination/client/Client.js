@@ -50,8 +50,9 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class PaginationClient {
-    constructor(options) {
+    constructor(options, client) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
+        this._client = client;
     }
     /**
      * List items with cursor pagination

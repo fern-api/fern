@@ -14,8 +14,9 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class PaginationClient {
-    constructor(options) {
+    constructor(options, client) {
         this._options = normalizeClientOptionsWithAuth(options);
+        this._client = client;
     }
     /**
      * List items with cursor pagination

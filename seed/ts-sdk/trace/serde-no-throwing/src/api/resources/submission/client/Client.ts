@@ -19,9 +19,11 @@ export declare namespace SubmissionClient {
  */
 export class SubmissionClient {
     protected readonly _options: NormalizedClientOptions<SubmissionClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: SubmissionClient.Options = {}) {
+    constructor(options: SubmissionClient.Options = {}, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     /**

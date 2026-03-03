@@ -3,6 +3,9 @@
 import { NullableClient } from "./api/resources/nullable/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedNullableClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedNullableClient {
 
 export class SeedNullableClient {
     protected readonly _options: NormalizedClientOptions<SeedNullableClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _nullable: NullableClient | undefined;
 
     constructor(options: SeedNullableClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedNullableError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get nullable(): NullableClient {
-        return (this._nullable ??= new NullableClient(this._options));
+        return (this._nullable ??= new NullableClient(this._options, this._client));
     }
 }

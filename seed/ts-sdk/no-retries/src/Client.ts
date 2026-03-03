@@ -3,6 +3,9 @@
 import { RetriesClient } from "./api/resources/retries/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedNoRetriesClient {
     export type Options = BaseClientOptions;
@@ -12,13 +15,19 @@ export declare namespace SeedNoRetriesClient {
 
 export class SeedNoRetriesClient {
     protected readonly _options: NormalizedClientOptions<SeedNoRetriesClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _retries: RetriesClient | undefined;
 
     constructor(options: SeedNoRetriesClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedNoRetriesError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get retries(): RetriesClient {
-        return (this._retries ??= new RetriesClient(this._options));
+        return (this._retries ??= new RetriesClient(this._options, this._client));
     }
 }

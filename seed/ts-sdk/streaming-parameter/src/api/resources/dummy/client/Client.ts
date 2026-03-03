@@ -16,9 +16,11 @@ export declare namespace DummyClient {
 
 export class DummyClient {
     protected readonly _options: NormalizedClientOptions<DummyClient.Options>;
+    protected readonly _client: core.HttpClient;
 
-    constructor(options: DummyClient.Options) {
+    constructor(options: DummyClient.Options, client: core.HttpClient) {
         this._options = normalizeClientOptions(options);
+        this._client = client;
     }
 
     public generate(

@@ -7,6 +7,9 @@ import { QueryClient } from "./api/resources/query/client/Client.js";
 import { ReferenceClient } from "./api/resources/reference/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import * as core from "./core/index.js";
+import { handleNonStatusCodeError } from "./errors/handleNonStatusCodeError.js";
+import * as errors from "./errors/index.js";
 
 export declare namespace SeedLiteralClient {
     export type Options = BaseClientOptions;
@@ -16,6 +19,7 @@ export declare namespace SeedLiteralClient {
 
 export class SeedLiteralClient {
     protected readonly _options: NormalizedClientOptions<SeedLiteralClient.Options>;
+    protected readonly _client: core.HttpClient;
     protected _headers: HeadersClient | undefined;
     protected _inlined: InlinedClient | undefined;
     protected _path: PathClient | undefined;
@@ -24,25 +28,30 @@ export class SeedLiteralClient {
 
     constructor(options: SeedLiteralClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._client = new core.HttpClient(
+            this._options,
+            (args) => new errors.SeedLiteralError(args),
+            handleNonStatusCodeError,
+        );
     }
 
     public get headers(): HeadersClient {
-        return (this._headers ??= new HeadersClient(this._options));
+        return (this._headers ??= new HeadersClient(this._options, this._client));
     }
 
     public get inlined(): InlinedClient {
-        return (this._inlined ??= new InlinedClient(this._options));
+        return (this._inlined ??= new InlinedClient(this._options, this._client));
     }
 
     public get path(): PathClient {
-        return (this._path ??= new PathClient(this._options));
+        return (this._path ??= new PathClient(this._options, this._client));
     }
 
     public get query(): QueryClient {
-        return (this._query ??= new QueryClient(this._options));
+        return (this._query ??= new QueryClient(this._options, this._client));
     }
 
     public get reference(): ReferenceClient {
-        return (this._reference ??= new ReferenceClient(this._options));
+        return (this._reference ??= new ReferenceClient(this._options, this._client));
     }
 }
