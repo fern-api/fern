@@ -91,6 +91,16 @@ service:
           param: string
       response: string
 
+    getWithDatetimeQuery:
+      docs: GET with datetime query param to test WireMock datetime matching
+      path: /datetime-query
+      method: GET
+      request:
+        name: GetWithDatetimeQuery
+        query-parameters:
+          before: datetime
+          after: datetime
+
     uploadWithPath:
       docs: POST bytes with path param returning object
       path: /path/{param}
