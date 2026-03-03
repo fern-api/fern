@@ -27,7 +27,7 @@ import { resolveTargetOutput } from "./utils/resolveTargetOutput.js";
 /**
  * Runs generation using the legacy local-generation infrastructure.
  */
-export namespace LegacyGenerationRunner {
+export namespace LegacyLocalGenerationRunner {
     export interface Config {
         /** The CLI context */
         context: Context;
@@ -86,18 +86,18 @@ export namespace LegacyGenerationRunner {
     }
 }
 
-export class LegacyGenerationRunner {
+export class LegacyLocalGenerationRunner {
     private readonly context: Context;
     private readonly cliVersion: string;
     private readonly invocationAdapter: LegacyGeneratorInvocationAdapter;
 
-    constructor(config: LegacyGenerationRunner.Config) {
+    constructor(config: LegacyLocalGenerationRunner.Config) {
         this.context = config.context;
         this.cliVersion = config.cliVersion;
         this.invocationAdapter = new LegacyGeneratorInvocationAdapter({ context: this.context });
     }
 
-    public async run(args: LegacyGenerationRunner.RunArgs): Promise<LegacyGenerationRunner.Result> {
+    public async run(args: LegacyLocalGenerationRunner.RunArgs): Promise<LegacyLocalGenerationRunner.Result> {
         const taskContext = new TaskContextAdapter({
             context: this.context,
             task: args.task,
@@ -148,11 +148,11 @@ export class LegacyGenerationRunner {
         fernWorkspace,
         generatorGroup
     }: {
-        args: LegacyGenerationRunner.RunArgs;
+        args: LegacyLocalGenerationRunner.RunArgs;
         taskContext: TaskContextAdapter;
         fernWorkspace: FernWorkspace;
         generatorGroup: generatorsYml.GeneratorGroup;
-    }): Promise<LegacyGenerationRunner.Result> {
+    }): Promise<LegacyLocalGenerationRunner.Result> {
         const projectConfig: fernConfigJson.ProjectConfig = {
             _absolutePath: join(this.context.cwd, RelativeFilePath.of("fern.config.json")),
             rawConfig: {
@@ -202,12 +202,12 @@ export class LegacyGenerationRunner {
         generatorGroup,
         generatorInvocation
     }: {
-        args: LegacyGenerationRunner.RunArgs;
+        args: LegacyLocalGenerationRunner.RunArgs;
         taskContext: TaskContextAdapter;
         fernWorkspace: FernWorkspace;
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
-    }): Promise<LegacyGenerationRunner.Result> {
+    }): Promise<LegacyLocalGenerationRunner.Result> {
         const containerImage = `${args.target.image}:${args.target.version}`;
         const executionEnvironment = new ContainerExecutionEnvironment({
             containerImage,

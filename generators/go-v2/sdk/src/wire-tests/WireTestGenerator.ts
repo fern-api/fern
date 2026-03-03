@@ -195,7 +195,7 @@ export class WireTestGenerator {
             filename: serviceName + "_test.go",
             packageName: `${serviceName}_test`,
             rootImportPath: this.context.getRootImportPath(),
-            importPath: "", // unecessary for wire tests since nothing will import FROM this file
+            importPath: "", // unnecessary for wire tests since nothing will import FROM this file
             customConfig: this.context.customConfig ?? {},
             formatter: undefined
         });
