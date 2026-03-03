@@ -17,8 +17,8 @@ export function convertPlaygroundSettings(
                     ? { href: FernNavigation.V1.Url(playgroundSettings.button.href) }
                     : undefined,
             "limit-websocket-messages-per-connection":
-                playgroundSettings.limitWebsocketMessagesPerConnection != null
-                    ? playgroundSettings.limitWebsocketMessagesPerConnection
+                playgroundSettings["limit-websocket-messages-per-connection"] != null
+                    ? playgroundSettings["limit-websocket-messages-per-connection"]
                     : undefined,
             hidden: playgroundSettings.hidden != null ? playgroundSettings.hidden : undefined
         };

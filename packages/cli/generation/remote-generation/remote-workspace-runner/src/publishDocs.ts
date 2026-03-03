@@ -109,8 +109,8 @@ export async function publishDocs({
     let urlToOutput = customDomains[0] ?? domain;
     const basePath = parseBasePath(domain);
     const disableDynamicSnippets =
-        docsWorkspace.config.experimental && docsWorkspace.config.experimental.dynamicSnippets === false;
-    const isBasepathAware = docsWorkspace.config.experimental?.basepathAware === true;
+        docsWorkspace.config.experimental && docsWorkspace.config.experimental["dynamic-snippets"] === false;
+    const isBasepathAware = docsWorkspace.config.experimental?.["basepath-aware"] === true;
 
     if (isBasepathAware) {
         context.logger.debug("Experimental flag 'basepath-aware' is enabled - using basepath-aware S3 key format");
@@ -329,7 +329,7 @@ export async function publishDocs({
 
             const aiEnhancerConfig = getAIEnhancerConfig(
                 withAiExamples,
-                docsWorkspace.config.aiExamples?.style ?? docsWorkspace.config.experimental?.aiExampleStyleInstructions
+                docsWorkspace.config["ai-examples"]?.style ?? docsWorkspace.config.experimental?.["ai-example-style-instructions"]
             );
             if (aiEnhancerConfig) {
                 const sources = workspace?.getSources();
@@ -456,7 +456,7 @@ export async function publishDocs({
     let docsDefinition = await resolver.resolve();
     const resolveTime = performance.now() - resolveStart;
 
-    if (docsWorkspace.config.settings?.substituteEnvVars) {
+    if (docsWorkspace.config.settings?.["substitute-env-vars"]) {
         context.logger.debug("Applying environment variable substitution to docs definition...");
         // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
         const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;

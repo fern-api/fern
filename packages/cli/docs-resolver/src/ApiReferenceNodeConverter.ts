@@ -73,7 +73,7 @@ export class ApiReferenceNodeConverter {
     ) {
         this.#tagDescriptionContent = new Map();
         this.#graphqlNamespacesByOperationId = graphqlNamespacesByOperationId ?? new Map();
-        this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
+        this.disableEndpointPairs = docsWorkspace.config.experimental?.["disable-stream-toggle"] ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
         this.collectedFileIds = collectedFileIds;

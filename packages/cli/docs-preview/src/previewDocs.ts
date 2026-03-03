@@ -317,7 +317,7 @@ export async function getPreviewDocsDefinition({
         id: undefined
     };
 
-    if (docsWorkspace.config.settings?.substituteEnvVars) {
+    if (docsWorkspace.config.settings?.["substitute-env-vars"]) {
         // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
         const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
         const substitutedDocs = replaceEnvVariables(

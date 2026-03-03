@@ -38,7 +38,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     // Although this logic is separate from generating a remote, placing it here helps us
     // avoid making cascading changes to other workflows.
     // docsWorkspace = substituteEnvVariables(docsWorkspace, context, { substituteAsEmpty: preview });
-    const shouldSubstituteAsEmpty = preview && !docsWorkspace.config.settings?.substituteEnvVars;
+    const shouldSubstituteAsEmpty = preview && !docsWorkspace.config.settings?.["substitute-env-vars"];
     docsWorkspace.config = replaceEnvVariables(
         docsWorkspace.config,
         // Wrap in a closure for correct binding of `this` downstream
@@ -100,8 +100,8 @@ export async function runRemoteGenerationForDocsWorkspace({
             disableTemplates,
             skipUpload,
             withAiExamples:
-                docsWorkspace.config.aiExamples?.enabled ?? docsWorkspace.config.experimental?.aiExamples ?? true,
-            excludeApis: docsWorkspace.config.experimental?.excludeApis ?? false,
+                docsWorkspace.config["ai-examples"]?.enabled ?? docsWorkspace.config.experimental?.["ai-examples"] ?? true,
+            excludeApis: docsWorkspace.config.experimental?.["exclude-apis"] ?? false,
             targetAudiences: maybeInstance.audiences
                 ? Array.isArray(maybeInstance.audiences)
                     ? maybeInstance.audiences

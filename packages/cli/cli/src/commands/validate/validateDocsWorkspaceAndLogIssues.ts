@@ -28,7 +28,7 @@ export async function collectDocsWorkspaceViolations({
     excludeRules?: string[];
 }): Promise<CollectedDocsViolations> {
     // Apply env var substitution if settings.substitute-env-vars is enabled
-    if (workspace.config.settings?.substituteEnvVars) {
+    if (workspace.config.settings?.["substitute-env-vars"]) {
         workspace.config = replaceEnvVariables(workspace.config, {
             onError: (e) => context.failAndThrow(e)
         });
@@ -79,7 +79,7 @@ export async function validateDocsWorkspaceWithoutExiting({
     // Apply env var substitution if settings.substitute-env-vars is enabled
     // This matches the behavior of `fern generate --docs` which throws errors for missing env vars
     // The entire config including instances (with custom domains) goes through substitution
-    if (workspace.config.settings?.substituteEnvVars) {
+    if (workspace.config.settings?.["substitute-env-vars"]) {
         workspace.config = replaceEnvVariables(workspace.config, {
             onError: (e) => context.failAndThrow(e)
         });

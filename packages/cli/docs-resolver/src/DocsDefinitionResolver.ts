@@ -227,7 +227,7 @@ export class DocsDefinitionResolver {
      */
     private getRawProductAudiences(productName: string): string[] | undefined {
         const rawProducts = this.docsWorkspace.config.products;
-        const product = rawProducts?.find((p) => p.displayName === productName);
+        const product = rawProducts?.find((p) => p["display-name"] === productName);
         return parseAudiences(product?.audiences);
     }
 
@@ -236,7 +236,7 @@ export class DocsDefinitionResolver {
      */
     private getRawVersionAudiences(versionName: string): string[] | undefined {
         const rawVersions = this.docsWorkspace.config.versions;
-        const version = rawVersions?.find((v) => v.displayName === versionName);
+        const version = rawVersions?.find((v) => v["display-name"] === versionName);
         return parseAudiences(version?.audiences);
     }
 
@@ -298,7 +298,7 @@ export class DocsDefinitionResolver {
         }
 
         // track all changelog markdown files in parsedDocsConfig.pages
-        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.["openapi-parser-v3"];
         const useV1Parser = openapiParserV3 != null && !openapiParserV3;
         if (this.docsWorkspace.config.navigation != null && useV1Parser) {
             this.taskContext.logger.debug("Visiting navigation AST for changelog files...");
@@ -528,12 +528,12 @@ export class DocsDefinitionResolver {
 
         // detect experimental js files to include in the docs
         let jsFiles: Record<string, string> = {};
-        if (this._parsedDocsConfig.experimental?.mdxComponents != null) {
+        if (this._parsedDocsConfig.experimental?.["mdx-components"] != null) {
             this.taskContext.logger.debug("Processing MDX components...");
             const mdxStart = performance.now();
             const jsFilePaths = new Set<AbsoluteFilePath>();
             await Promise.all(
-                this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
+                this._parsedDocsConfig.experimental["mdx-components"].map(async (filepath: string) => {
                     const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilePath, filepath);
 
                     // check if absoluteFilePath is a directory or a file
@@ -748,7 +748,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.aiChatConfig != null
                     ? {
                           model: this.parsedDocsConfig.aiChatConfig.model,
-                          systemPrompt: this.parsedDocsConfig.aiChatConfig.systemPrompt,
+                          systemPrompt: this.parsedDocsConfig.aiChatConfig["system-prompt"],
                           location: this.parsedDocsConfig.aiChatConfig.location,
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
@@ -857,10 +857,10 @@ export class DocsDefinitionResolver {
                           sidebar: this.parsedDocsConfig.theme.sidebar,
                           body: this.parsedDocsConfig.theme.body,
                           tabs: this.parsedDocsConfig.theme.tabs,
-                          "page-actions": this.parsedDocsConfig.theme.pageActions,
-                          footerNav: this.parsedDocsConfig.theme.footerNav,
-                          "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
-                          "product-switcher": this.parsedDocsConfig.theme.productSwitcher
+                          "page-actions": this.parsedDocsConfig.theme["page-actions"],
+                          footerNav: this.parsedDocsConfig.theme["footer-nav"],
+                          "language-switcher": this.parsedDocsConfig.theme["language-switcher"],
+                          "product-switcher": this.parsedDocsConfig.theme["product-switcher"]
                       }
                     : undefined,
             // deprecated
@@ -1333,7 +1333,7 @@ export class DocsDefinitionResolver {
         let workspace: FernWorkspace | undefined = undefined;
         let openapiWorkspace: OSSWorkspace | undefined = undefined;
         let openapiError: unknown = undefined;
-        const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
+        const openapiParserV3 = this.parsedDocsConfig.experimental?.["openapi-parser-v3"];
         const useV3Parser = openapiParserV3 == null || openapiParserV3;
         // The v3 parser is enabled on default. We attempt to load the OpenAPI workspace and generate an IR directly.
         if (useV3Parser) {
@@ -1435,7 +1435,7 @@ export class DocsDefinitionResolver {
 
         // Apply environment variable substitution to the IR if enabled in docs.yml settings
         // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
-        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+        if (this.docsWorkspace.config.settings?.["substitute-env-vars"]) {
             ir = replaceEnvVariables(
                 ir,
                 {
@@ -1496,7 +1496,7 @@ export class DocsDefinitionResolver {
 
             // Apply environment variable substitution if enabled
             let processedContent = content;
-            if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+            if (this.docsWorkspace.config.settings?.["substitute-env-vars"]) {
                 processedContent = replaceEnvVariables(
                     content,
                     {
@@ -2254,7 +2254,7 @@ export class DocsDefinitionResolver {
 }
 
 function createEditThisPageUrl(
-    editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined,
+    editThisPage: docsYml.RawSchemas.EditThisPageConfig | undefined,
     pageFilepath: string
 ): { url: string | undefined; launch: string } {
     const launch = editThisPage?.launch ?? "github";

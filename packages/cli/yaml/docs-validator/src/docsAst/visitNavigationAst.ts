@@ -105,10 +105,10 @@ async function visitNavigationItem({
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     context: TaskContext;
 }): Promise<void> {
-    await visitObjectAsync(navigationItem, {
+    await visitObjectAsync(navigationItem as object, {
         alphabetized: noop,
         api: noop,
-        apiName: noop,
+        "api-name": noop,
         audiences: noop,
         openrpc: async (path: string | undefined): Promise<void> => {
             if (path == null) {
@@ -123,8 +123,8 @@ async function visitNavigationItem({
                 willBeUploaded: false
             });
         },
-        displayErrors: noop,
-        tagDescriptionPages: noop,
+        "display-errors": noop,
+        "tag-description-pages": noop,
         snippets: noop,
         summary: noop,
         title: noop,
@@ -133,11 +133,11 @@ async function visitNavigationItem({
         icon: noop,
         slug: noop,
         hidden: noop,
-        skipSlug: noop,
+        "skip-slug": noop,
         paginated: noop,
         playground: noop,
         flattened: noop,
-        featureFlag: noop,
+        "feature-flag": noop,
         postman: noop,
         path: async (path: string | undefined): Promise<void> => {
             if (path == null) {
@@ -177,7 +177,17 @@ async function visitNavigationItem({
             }
         },
         orphaned: noop,
-        availability: noop
+        availability: noop,
+        collapsible: noop,
+        "collapsed-by-default": noop,
+        section: noop,
+        changelog: noop,
+        link: noop,
+        href: noop,
+        target: noop,
+        library: noop,
+        folder: noop,
+        "title-source": noop
     });
 
     const markdownPath = getNavigationItemMarkdownPath(navigationItem);
@@ -238,7 +248,7 @@ async function visitNavigationItem({
     }
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
+        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem["api-name"]);
         if (workspace != null) {
             await visitor.apiSection?.(
                 {

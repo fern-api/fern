@@ -9,9 +9,9 @@ import { transformContentForLanguage } from "./content-transformer.js";
 import { ContentTransformation } from "./types.js";
 import { addLanguageSuffixToUrl } from "./url-utils.js";
 
-type DocsConfiguration = docsYml.RawSchemas.Serializer.DocsConfiguration.Raw;
+type DocsConfiguration = docsYml.RawSchemas.DocsConfiguration;
 type Language = docsYml.RawSchemas.Language;
-type DocsInstance = docsYml.RawSchemas.Serializer.DocsInstance.Raw;
+type DocsInstance = docsYml.RawSchemas.DocsInstance;
 
 /**
  * Modifies docs configuration by adding language settings and updating instance URLs.

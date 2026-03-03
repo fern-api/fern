@@ -8,7 +8,7 @@ export function convertColorsConfiguration(
     rawConfig: docsYml.RawSchemas.ColorsConfiguration = { accentPrimary: undefined, background: undefined },
     context: TaskContext
 ): CjsFdrSdk.docs.v1.write.ColorsConfigV3 {
-    rawConfig.accentPrimary = rawConfig.accentPrimary ?? rawConfig.accentPrimaryDeprecated;
+    rawConfig.accentPrimary = rawConfig.accentPrimary ?? rawConfig["accent-primary"];
 
     const colorType = getColorType(rawConfig);
     switch (colorType) {
@@ -37,7 +37,7 @@ export function convertColorsConfiguration(
 export function getColorType({
     background,
     accentPrimary,
-    accentPrimaryDeprecated
+    "accent-primary": accentPrimaryDeprecated
 }: docsYml.RawSchemas.ColorsConfiguration): "dark" | "light" | "darkAndLight" {
     // if both background and accent colors are provided as strings,
     // we can determine the theme using just the background color
@@ -89,7 +89,7 @@ export function convertThemedColorConfig(
 ): CjsFdrSdk.docs.v1.write.ThemeConfig {
     const accentPrimaryColor =
         getColorInstanceFromRawConfigOrThrow(
-            rawConfig.accentPrimary ?? rawConfig.accentPrimaryDeprecated,
+            rawConfig.accentPrimary ?? rawConfig["accent-primary"],
             context,
             "accent-primary",
             theme
@@ -104,36 +104,36 @@ export function convertThemedColorConfig(
         background: backgroundColor?.toRgb(),
         border: getColorInstanceFromRawConfigOrThrow(rawConfig.border, context, "border", theme)?.toRgb(),
         sidebarBackground: getColorInstanceFromRawConfigOrThrow(
-            rawConfig.sidebarBackground,
+            rawConfig["sidebar-background"],
             context,
             "sidebar-background",
             theme
         )?.toRgb(),
         headerBackground: getColorInstanceFromRawConfigOrThrow(
-            rawConfig.headerBackground,
+            rawConfig["header-background"],
             context,
             "header-background",
             theme
         )?.toRgb(),
         cardBackground: getColorInstanceFromRawConfigOrThrow(
-            rawConfig.cardBackground,
+            rawConfig["card-background"],
             context,
             "card-background",
             theme
         )?.toRgb(),
         // Accent scale colors (accent-1 through accent-12) are automatically calculated from accentPrimary when undefined
-        accent1: getColorInstanceFromRawConfigOrThrow(rawConfig.accent1, context, "accent-1", theme)?.toRgb(),
-        accent2: getColorInstanceFromRawConfigOrThrow(rawConfig.accent2, context, "accent-2", theme)?.toRgb(),
-        accent3: getColorInstanceFromRawConfigOrThrow(rawConfig.accent3, context, "accent-3", theme)?.toRgb(),
-        accent4: getColorInstanceFromRawConfigOrThrow(rawConfig.accent4, context, "accent-4", theme)?.toRgb(),
-        accent5: getColorInstanceFromRawConfigOrThrow(rawConfig.accent5, context, "accent-5", theme)?.toRgb(),
-        accent6: getColorInstanceFromRawConfigOrThrow(rawConfig.accent6, context, "accent-6", theme)?.toRgb(),
-        accent7: getColorInstanceFromRawConfigOrThrow(rawConfig.accent7, context, "accent-7", theme)?.toRgb(),
-        accent8: getColorInstanceFromRawConfigOrThrow(rawConfig.accent8, context, "accent-8", theme)?.toRgb(),
-        accent9: getColorInstanceFromRawConfigOrThrow(rawConfig.accent9, context, "accent-9", theme)?.toRgb(),
-        accent10: getColorInstanceFromRawConfigOrThrow(rawConfig.accent10, context, "accent-10", theme)?.toRgb(),
-        accent11: getColorInstanceFromRawConfigOrThrow(rawConfig.accent11, context, "accent-11", theme)?.toRgb(),
-        accent12: getColorInstanceFromRawConfigOrThrow(rawConfig.accent12, context, "accent-12", theme)?.toRgb(),
+        accent1: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-1"], context, "accent-1", theme)?.toRgb(),
+        accent2: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-2"], context, "accent-2", theme)?.toRgb(),
+        accent3: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-3"], context, "accent-3", theme)?.toRgb(),
+        accent4: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-4"], context, "accent-4", theme)?.toRgb(),
+        accent5: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-5"], context, "accent-5", theme)?.toRgb(),
+        accent6: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-6"], context, "accent-6", theme)?.toRgb(),
+        accent7: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-7"], context, "accent-7", theme)?.toRgb(),
+        accent8: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-8"], context, "accent-8", theme)?.toRgb(),
+        accent9: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-9"], context, "accent-9", theme)?.toRgb(),
+        accent10: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-10"], context, "accent-10", theme)?.toRgb(),
+        accent11: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-11"], context, "accent-11", theme)?.toRgb(),
+        accent12: getColorInstanceFromRawConfigOrThrow(rawConfig["accent-12"], context, "accent-12", theme)?.toRgb(),
         // NOTE: logo and backgroundImage filepaths need to be resolved in publishDocs.ts and not here.
         logo: undefined,
         backgroundImage: undefined

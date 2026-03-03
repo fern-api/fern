@@ -25,7 +25,7 @@ export async function validateProductConfigFileSchema({ value }: { value: unknow
 
         return {
             type: "success",
-            contents: docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(sanitizedValue)
+            contents: docsYml.ZodSchemas.ProductFileConfig.parse(sanitizedValue)
         };
     }
 

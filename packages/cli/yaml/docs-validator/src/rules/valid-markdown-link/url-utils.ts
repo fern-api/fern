@@ -23,10 +23,10 @@ function getInstanceUrls(workspace: DocsWorkspace): string[] {
     workspace.config.instances.forEach((instance) => {
         urls.push(instance.url);
 
-        if (typeof instance.customDomain === "string") {
-            urls.push(instance.customDomain);
-        } else if (Array.isArray(instance.customDomain)) {
-            urls.push(...instance.customDomain);
+        if (typeof instance["custom-domain"] === "string") {
+            urls.push(instance["custom-domain"]);
+        } else if (Array.isArray(instance["custom-domain"])) {
+            urls.push(...instance["custom-domain"]);
         }
     });
 

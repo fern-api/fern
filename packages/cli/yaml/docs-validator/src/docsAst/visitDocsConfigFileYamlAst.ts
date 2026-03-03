@@ -41,9 +41,9 @@ export async function visitDocsConfigFileYamlAst({
     await visitObjectAsync(contents, {
         instances: noop,
         analytics: noop,
-        aiChat: noop,
-        aiSearch: noop,
-        aiExamples: async (aiExamples) => {
+        "ai-chat": noop,
+        "ai-search": noop,
+        "ai-examples": async (aiExamples: unknown) => {
             // Handle nested structure (new format)
             if (aiExamples != null && typeof aiExamples === "object") {
                 await visitObjectAsync(aiExamples, {
@@ -53,9 +53,9 @@ export async function visitDocsConfigFileYamlAst({
             }
             // If it's a boolean, it's the old format which is handled by noop
         },
-        pageActions: noop,
+        "page-actions": noop,
         announcement: noop,
-        backgroundImage: async (background) => {
+        "background-image": async (background: docsYml.RawSchemas.BackgroundImageConfiguration | undefined) => {
             if (background == null) {
                 return;
             } else if (typeof background === "string") {
@@ -111,7 +111,7 @@ export async function visitDocsConfigFileYamlAst({
                 });
             }
         },
-        defaultLanguage: noop,
+        "default-language": noop,
         experimental: noop,
         favicon: async (favicon) => {
             if (favicon == null) {
@@ -137,7 +137,7 @@ export async function visitDocsConfigFileYamlAst({
                 willBeUploaded: false
             });
         },
-        footerLinks: noop,
+        "footer-links": noop,
         header: async (header) => {
             if (header == null) {
                 return;
@@ -176,7 +176,7 @@ export async function visitDocsConfigFileYamlAst({
                 });
             }
         },
-        landingPage: noop,
+        "landing-page": noop,
         layout: noop,
         settings: noop,
         logo: async () => {
@@ -198,7 +198,7 @@ export async function visitDocsConfigFileYamlAst({
             }
         },
         metadata: noop,
-        navbarLinks: noop,
+        "navbar-links": noop,
         navigation: async (navigation) => {
             if (navigation == null) {
                 return;

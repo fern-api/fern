@@ -58,9 +58,9 @@ export async function parseDocsConfiguration({
         products,
         versions,
         navigation: rawNavigation,
-        navbarLinks,
-        footerLinks,
-        defaultLanguage,
+        "navbar-links": navbarLinks,
+        "footer-links": footerLinks,
+        "default-language": defaultLanguage,
 
         /* seo */
         metadata: rawMetadata,
@@ -69,7 +69,7 @@ export async function parseDocsConfiguration({
         /* branding */
         logo: rawLogo,
         favicon: faviconRef,
-        backgroundImage: rawBackgroundImage,
+        "background-image": rawBackgroundImage,
         colors,
         typography: rawTypography,
         layout,
@@ -80,17 +80,17 @@ export async function parseDocsConfiguration({
         css: rawCssConfig,
         js: rawJsConfig,
 
-        aiChat,
-        aiSearch,
+        "ai-chat": aiChat,
+        "ai-search": aiSearch,
 
-        pageActions,
+        "page-actions": pageActions,
 
         experimental
     } = rawDocsConfiguration;
 
-    const landingPage = parsePageConfig(rawDocsConfiguration.landingPage, absoluteFilepathToDocsConfig);
+    const landingPage = parsePageConfig(rawDocsConfiguration["landing-page"], absoluteFilepathToDocsConfig);
 
-    const folderTitleSource = rawDocsConfiguration.settings?.folderTitleSource;
+    const folderTitleSource = rawDocsConfiguration.settings?.["folder-title-source"];
 
     const convertedNavigationPromise = getNavigationConfiguration({
         tabs,
@@ -180,21 +180,28 @@ export async function parseDocsConfiguration({
             intercom: rawDocsConfiguration.analytics?.intercom
                 ? {
                       ...rawDocsConfiguration.analytics.intercom,
-                      appId: rawDocsConfiguration.analytics.intercom.appId,
-                      apiBase: rawDocsConfiguration.analytics.intercom.apiBase
+                      appId: rawDocsConfiguration.analytics.intercom["app-id"],
+                      apiBase: rawDocsConfiguration.analytics.intercom["api-base"]
                   }
                 : undefined,
-            fullstory: rawDocsConfiguration.analytics?.fullstory,
+            fullstory: rawDocsConfiguration.analytics?.fullstory
+                ? { orgId: rawDocsConfiguration.analytics.fullstory["org-id"] }
+                : undefined,
             posthog: rawDocsConfiguration.analytics?.posthog
                 ? {
-                      ...rawDocsConfiguration.analytics.posthog,
-                      apiKey: rawDocsConfiguration.analytics.posthog.apiKey,
+                      apiKey: rawDocsConfiguration.analytics.posthog["api-key"],
                       endpoint: rawDocsConfiguration.analytics.posthog.endpoint
                   }
                 : undefined,
-            segment: rawDocsConfiguration.analytics?.segment,
-            gtm: rawDocsConfiguration.analytics?.gtm,
-            ga4: rawDocsConfiguration.analytics?.ga4,
+            segment: rawDocsConfiguration.analytics?.segment
+                ? { writeKey: rawDocsConfiguration.analytics.segment["write-key"] }
+                : undefined,
+            gtm: rawDocsConfiguration.analytics?.gtm
+                ? { containerId: rawDocsConfiguration.analytics.gtm["container-id"] }
+                : undefined,
+            ga4: rawDocsConfiguration.analytics?.ga4
+                ? { measurementId: rawDocsConfiguration.analytics.ga4["measurement-id"] }
+                : undefined,
             amplitude: undefined,
             mixpanel: undefined,
             hotjar: undefined,
@@ -239,7 +246,7 @@ function convertLogoReference(
               light: resolveFilepath(rawLogo.light, absoluteFilepathToDocsConfig),
               height: rawLogo.height,
               href: rawLogo.href != null ? CjsFdrSdk.Url(rawLogo.href) : undefined,
-              rightText: rawLogo.rightText
+              rightText: rawLogo["right-text"]
           }
         : undefined;
 }
@@ -338,9 +345,9 @@ function convertPageActions(
     return {
         default: convertedDefault,
         options: {
-            askAi: pageActions.options?.askAi ?? true,
-            copyPage: pageActions.options?.copyPage ?? true,
-            viewAsMarkdown: pageActions.options?.viewAsMarkdown ?? true,
+                askAi: pageActions.options?.["ask-ai"] ?? true,
+                copyPage: pageActions.options?.["copy-page"] ?? true,
+                viewAsMarkdown: pageActions.options?.["view-as-markdown"] ?? true,
             openAi: pageActions.options?.chatgpt ?? true,
             claude: pageActions.options?.claude ?? true,
             cursor: pageActions.options?.cursor ?? true,
@@ -399,10 +406,10 @@ function convertThemeConfig(
         sidebar: theme.sidebar ?? "default",
         tabs: theme.tabs ?? "default",
         body: theme.body ?? "default",
-        pageActions: theme.pageActions ?? "default",
-        footerNav: theme.footerNav ?? "default",
-        languageSwitcher: theme.languageSwitcher ?? "default",
-        productSwitcher: theme.productSwitcher ?? "default"
+        "page-actions": theme["page-actions"] ?? "default",
+        "footer-nav": theme["footer-nav"] ?? "default",
+        "language-switcher": theme["language-switcher"] ?? "default",
+        "product-switcher": theme["product-switcher"] ?? "default"
     };
 }
 
@@ -414,16 +421,16 @@ function convertSettingsConfig(
     }
 
     return {
-        darkModeCode: settings.darkModeCode ?? false,
-        defaultSearchFilters: settings.defaultSearchFilters ?? false,
+        darkModeCode: settings["dark-mode-code"] ?? false,
+        defaultSearchFilters: settings["default-search-filters"] ?? false,
         language: settings.language ?? "en",
-        disableSearch: settings.disableSearch ?? false,
-        hide404Page: settings.hide404Page ?? false,
-        httpSnippets: settings.httpSnippets ?? true,
-        searchText: settings.searchText ?? undefined,
-        useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
-        disableExplorerProxy: settings.disableExplorerProxy ?? false,
-        disableAnalytics: settings.disableAnalytics ?? false
+        disableSearch: settings["disable-search"] ?? false,
+        hide404Page: settings["hide-404-page"] ?? false,
+        httpSnippets: settings["http-snippets"] ?? true,
+        searchText: settings["search-text"] ?? undefined,
+        useJavascriptAsTypescript: settings["use-javascript-as-typescript"] ?? false,
+        disableExplorerProxy: settings["disable-explorer-proxy"] ?? false,
+        disableAnalytics: settings["disable-analytics"] ?? false
     };
 }
 
@@ -436,36 +443,36 @@ function convertLayoutConfig(
 
     return {
         pageWidth:
-            layout.pageWidth?.trim().toLowerCase() === "full" ? { type: "full" } : parseSizeConfig(layout.pageWidth),
-        contentWidth: parseSizeConfig(layout.contentWidth),
-        sidebarWidth: parseSizeConfig(layout.sidebarWidth),
-        headerHeight: parseSizeConfig(layout.headerHeight),
+            layout["page-width"]?.trim().toLowerCase() === "full" ? { type: "full" } : parseSizeConfig(layout["page-width"]),
+        contentWidth: parseSizeConfig(layout["content-width"]),
+        sidebarWidth: parseSizeConfig(layout["sidebar-width"]),
+        headerHeight: parseSizeConfig(layout["header-height"]),
 
         searchbarPlacement:
-            layout.searchbarPlacement === "header"
+            layout["searchbar-placement"] === "header"
                 ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Header
-                : layout.searchbarPlacement === "header-tabs"
+                : layout["searchbar-placement"] === "header-tabs"
                   ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
                   : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         switcherPlacement:
-            !layout.switcherPlacement || layout.switcherPlacement === "header"
+            !layout["switcher-placement"] || layout["switcher-placement"] === "header"
                 ? CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Header
                 : CjsFdrSdk.docs.v1.commons.SwitcherPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === "header"
+            layout["tabs-placement"] === "header"
                 ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
                 : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar,
         contentAlignment:
-            layout.contentAlignment === "left"
+            layout["content-alignment"] === "left"
                 ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
                 : CjsFdrSdk.docs.v1.commons.ContentAlignment.Center,
         headerPosition:
-            layout.headerPosition === "static"
+            layout["header-position"] === "static"
                 ? CjsFdrSdk.docs.v1.commons.HeaderPosition.Absolute
                 : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
-        disableHeader: layout.disableHeader ?? false,
-        hideNavLinks: layout.hideNavLinks ?? false,
-        hideFeedback: layout.hideFeedback ?? false
+        disableHeader: layout["disable-header"] ?? false,
+        hideNavLinks: layout["hide-nav-links"] ?? false,
+        hideFeedback: layout["hide-feedback"] ?? false
     };
 }
 
@@ -521,7 +528,7 @@ async function getVersionedNavigationConfiguration({
             );
         }
 
-        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedVersionContent);
+        const versionResult = docsYml.ZodSchemas.VersionFileConfig.parse(sanitizedVersionContent);
         const versionNavigation = await convertNavigationConfiguration({
             tabs: versionResult.tabs,
             rawNavigationConfig: versionResult.navigation,
@@ -531,15 +538,15 @@ async function getVersionedNavigationConfiguration({
             folderTitleSource
         });
         versionedNavbars.push({
-            landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
-            version: version.displayName,
+            landingPage: parsePageConfig(versionResult["landing-page"], absoluteFilepathToVersionFile),
+            version: version["display-name"],
             navigation: versionNavigation,
             availability: version.availability,
             slug: version.slug,
             hidden: version.hidden,
             viewers: parseRoles(version.viewers),
             orphaned: version.orphaned,
-            featureFlags: convertFeatureFlag(version.featureFlag),
+            featureFlags: convertFeatureFlag(version["feature-flag"]),
             announcement: version.announcement
         });
     }
@@ -598,7 +605,7 @@ async function getNavigationConfiguration({
                     );
                 }
 
-                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(sanitizedContent);
+                const result = docsYml.ZodSchemas.ProductFileConfig.parse(sanitizedContent);
 
                 // If the product has versions defined, process them
                 if (product.versions != null && product.versions.length > 0) {
@@ -622,8 +629,8 @@ async function getNavigationConfiguration({
 
                 productNavbars.push({
                     type: "internal",
-                    landingPage: parsePageConfig(result.landingPage, absoluteFilepathToProductFile),
-                    product: product.displayName,
+                    landingPage: parsePageConfig(result["landing-page"], absoluteFilepathToProductFile),
+                    product: product["display-name"],
                     navigation,
                     slug: product.slug,
                     subtitle: product.subtitle,
@@ -631,13 +638,13 @@ async function getNavigationConfiguration({
                     image: productImageFile,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
-                    featureFlags: convertFeatureFlag(product.featureFlag),
+                    featureFlags: convertFeatureFlag(product["feature-flag"]),
                     announcement: product.announcement
                 });
             } else if ("href" in product && product.href != null) {
                 productNavbars.push({
                     type: "external",
-                    product: product.displayName,
+                    product: product["display-name"],
                     href: product.href,
                     target: product.target,
                     subtitle: product.subtitle,
@@ -645,7 +652,7 @@ async function getNavigationConfiguration({
                     image: productImageFile,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
-                    featureFlags: convertFeatureFlag(product.featureFlag)
+                    featureFlags: convertFeatureFlag(product["feature-flag"])
                 });
             } else {
                 throw new Error(
@@ -687,14 +694,14 @@ function convertFeatureFlag(
         return flag.map((flagItem) => ({
             flag: flagItem.flag,
             match: flagItem.match,
-            fallbackValue: flagItem.fallbackValue
+            fallbackValue: flagItem["fallback-value"]
         }));
     } else {
         return [
             {
                 flag: flag.flag,
                 match: flag.match ?? true,
-                fallbackValue: flag.fallbackValue
+                fallbackValue: flag["fallback-value"]
             }
         ];
     }
@@ -744,7 +751,7 @@ async function convertFontConfig({
         variants: await constructVariants(rawFontConfig, absoluteFilepathToDocsConfig),
         display: rawFontConfig.display,
         fallback: rawFontConfig.fallback,
-        fontVariationSettings: rawFontConfig.fontVariationSettings
+        fontVariationSettings: rawFontConfig["font-variation-settings"]
     };
 }
 
@@ -845,20 +852,20 @@ async function convertNavigationTabConfiguration({
                     icon: resolveIconPath(variant.icon, absolutePathToConfig),
                     layout,
                     slug: variant.slug,
-                    skipUrlSlug: variant.skipSlug,
+                    skipUrlSlug: variant["skip-slug"],
                     hidden: variant.hidden,
                     default: variant.default,
                     viewers: parseRoles(variant.viewers),
                     orphaned: variant.orphaned,
-                    featureFlags: convertFeatureFlag(variant.featureFlag)
+                    featureFlags: convertFeatureFlag(variant["feature-flag"])
                 };
             })
         );
         return {
-            title: tab.displayName,
+            title: tab["display-name"],
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
-            skipUrlSlug: tab.skipSlug,
+            skipUrlSlug: tab["skip-slug"],
             hidden: tab.hidden,
             child: {
                 type: "variants",
@@ -866,7 +873,7 @@ async function convertNavigationTabConfiguration({
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
-            featureFlags: convertFeatureFlag(tab.featureFlag)
+            featureFlags: convertFeatureFlag(tab["feature-flag"])
         };
     }
 
@@ -883,10 +890,10 @@ async function convertNavigationTabConfiguration({
             )
         );
         return {
-            title: tab.displayName,
+            title: tab["display-name"],
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
-            skipUrlSlug: tab.skipSlug,
+            skipUrlSlug: tab["skip-slug"],
             hidden: tab.hidden,
             child: {
                 type: "layout",
@@ -894,16 +901,16 @@ async function convertNavigationTabConfiguration({
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
-            featureFlags: convertFeatureFlag(tab.featureFlag)
+            featureFlags: convertFeatureFlag(tab["feature-flag"])
         };
     }
 
     if (tab.href != null) {
         return {
-            title: tab.displayName,
+            title: tab["display-name"],
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
-            skipUrlSlug: tab.skipSlug,
+            skipUrlSlug: tab["skip-slug"],
             hidden: tab.hidden,
             child: {
                 type: "link",
@@ -912,16 +919,16 @@ async function convertNavigationTabConfiguration({
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
-            featureFlags: convertFeatureFlag(tab.featureFlag)
+            featureFlags: convertFeatureFlag(tab["feature-flag"])
         };
     }
 
     if (tab.changelog != null) {
         return {
-            title: tab.displayName,
+            title: tab["display-name"],
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
-            skipUrlSlug: tab.skipSlug,
+            skipUrlSlug: tab["skip-slug"],
             hidden: tab.hidden,
             child: {
                 type: "changelog",
@@ -929,7 +936,7 @@ async function convertNavigationTabConfiguration({
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
-            featureFlags: convertFeatureFlag(tab.featureFlag)
+            featureFlags: convertFeatureFlag(tab["feature-flag"])
         };
     }
 
@@ -1012,10 +1019,10 @@ async function expandFolderConfiguration({
         sectionTitle: rawConfig.folder,
         collapsed: rawConfig.collapsed ?? undefined,
         collapsible: rawConfig.collapsible ?? undefined,
-        collapsedByDefault: rawConfig.collapsedByDefault ?? undefined
+        collapsedByDefault: rawConfig["collapsed-by-default"] ?? undefined
     });
 
-    const effectiveTitleSource = rawConfig.titleSource ?? folderTitleSource;
+    const effectiveTitleSource = rawConfig["title-source"] ?? folderTitleSource;
 
     const contents = await buildNavigationForDirectory({
         directoryPath: folderPath,
@@ -1048,13 +1055,13 @@ async function expandFolderConfiguration({
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
         collapsible: rawConfig.collapsible ?? undefined,
-        collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
+        collapsedByDefault: rawConfig["collapsed-by-default"] ?? undefined,
         hidden: rawConfig.hidden ?? undefined,
-        skipUrlSlug: rawConfig.skipSlug ?? false,
+        skipUrlSlug: rawConfig["skip-slug"] ?? false,
         overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
         viewers: parseRoles(rawConfig.viewers),
         orphaned: rawConfig.orphaned,
-        featureFlags: convertFeatureFlag(rawConfig.featureFlag),
+        featureFlags: convertFeatureFlag(rawConfig["feature-flag"]),
         availability: rawConfig.availability
     };
 }
@@ -1081,7 +1088,7 @@ async function convertNavigationItem({
             sectionTitle: rawConfig.section,
             collapsed: rawConfig.collapsed ?? undefined,
             collapsible: rawConfig.collapsible ?? undefined,
-            collapsedByDefault: rawConfig.collapsedByDefault ?? undefined
+            collapsedByDefault: rawConfig["collapsed-by-default"] ?? undefined
         });
         return {
             type: "section",
@@ -1101,13 +1108,13 @@ async function convertNavigationItem({
             slug: rawConfig.slug ?? undefined,
             collapsed: rawConfig.collapsed ?? undefined,
             collapsible: rawConfig.collapsible ?? undefined,
-            collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
+            collapsedByDefault: rawConfig["collapsed-by-default"] ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
-            skipUrlSlug: rawConfig.skipSlug ?? false,
+            skipUrlSlug: rawConfig["skip-slug"] ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag),
+            featureFlags: convertFeatureFlag(rawConfig["feature-flag"]),
             availability: rawConfig.availability
         };
     }
@@ -1117,14 +1124,14 @@ async function convertNavigationItem({
             openrpc: rawConfig.openrpc,
             title: rawConfig.api,
             icon: resolveIconPath(rawConfig.icon, absolutePathToConfig),
-            apiName: rawConfig.apiName ?? undefined,
+            apiName: rawConfig["api-name"] ?? undefined,
             audiences:
                 rawConfig.audiences != null
                     ? { type: "select", audiences: parseAudiences(rawConfig.audiences) ?? [] }
                     : { type: "all" },
             availability: rawConfig.availability,
-            showErrors: rawConfig.displayErrors ?? true,
-            tagDescriptionPages: rawConfig.tagDescriptionPages ?? false,
+            showErrors: rawConfig["display-errors"] ?? true,
+            tagDescriptionPages: rawConfig["tag-description-pages"] ?? false,
             snippetsConfiguration:
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
@@ -1137,14 +1144,14 @@ async function convertNavigationItem({
             collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
             slug: rawConfig.slug,
-            skipUrlSlug: rawConfig.skipSlug ?? false,
+            skipUrlSlug: rawConfig["skip-slug"] ?? false,
             flattened: rawConfig.flattened ?? false,
             alphabetized: rawConfig.alphabetized ?? false,
             paginated: rawConfig.paginated ?? false,
             playground: rawConfig.playground,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+            featureFlags: convertFeatureFlag(rawConfig["feature-flag"])
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -1166,7 +1173,7 @@ async function convertNavigationItem({
             slug: rawConfig.slug,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+            featureFlags: convertFeatureFlag(rawConfig["feature-flag"])
         };
     }
     if (isRawFolderConfig(rawConfig)) {
@@ -1186,10 +1193,10 @@ async function convertNavigationItem({
             slug: rawConfig.slug ?? undefined,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
-            featureFlags: convertFeatureFlag(rawConfig.featureFlag)
+            featureFlags: convertFeatureFlag(rawConfig["feature-flag"])
         };
     }
-    assertNever(rawConfig);
+    assertNever(rawConfig as never);
 }
 
 function parsePageConfig(
@@ -1217,7 +1224,7 @@ function parsePageConfig(
         noindex: item.noindex,
         viewers: parseRoles(item.viewers),
         orphaned: item.orphaned,
-        featureFlags: convertFeatureFlag(item.featureFlag),
+        featureFlags: convertFeatureFlag(item["feature-flag"]),
         availability: item.availability
     };
 }
@@ -1250,14 +1257,14 @@ function parseApiReferenceLayoutItem(
                 sectionTitle: item.section,
                 collapsed: undefined,
                 collapsible: item.collapsible ?? undefined,
-                collapsedByDefault: item.collapsedByDefault ?? undefined
+                collapsedByDefault: item["collapsed-by-default"] ?? undefined
             });
         }
         return [
             {
                 type: "section",
                 title: item.section,
-                referencedSubpackages: item.referencedPackages ?? [],
+                referencedSubpackages: item["referenced-packages"] ?? [],
                 overviewAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
                 contents:
                     item.contents?.flatMap((value) =>
@@ -1265,15 +1272,15 @@ function parseApiReferenceLayoutItem(
                     ) ?? [],
                 slug: item.slug,
                 hidden: item.hidden,
-                skipUrlSlug: item.skipSlug,
+                skipUrlSlug: item["skip-slug"],
                 collapsible: item.collapsible ?? undefined,
-                collapsedByDefault: item.collapsedByDefault ?? undefined,
+                collapsedByDefault: item["collapsed-by-default"] ?? undefined,
                 availability: item.availability,
                 icon: resolveIconPath(item.icon, absolutePathToConfig),
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
-                featureFlags: convertFeatureFlag(item.featureFlag)
+                featureFlags: convertFeatureFlag(item["feature-flag"])
             }
         ];
     } else if (isRawApiRefEndpointConfiguration(item)) {
@@ -1289,7 +1296,7 @@ function parseApiReferenceLayoutItem(
                 playground: item.playground,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
-                featureFlags: convertFeatureFlag(item.featureFlag)
+                featureFlags: convertFeatureFlag(item["feature-flag"])
             }
         ];
     } else if (isRawApiRefOperationConfiguration(item)) {
@@ -1303,11 +1310,11 @@ function parseApiReferenceLayoutItem(
                 availability: item.availability,
                 viewers: parseRoles(item.viewers),
                 orphaned: item.orphaned,
-                featureFlags: convertFeatureFlag(item.featureFlag)
+                featureFlags: convertFeatureFlag(item["feature-flag"])
             }
         ];
     }
-    return Object.entries(item).map(([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
+    return Object.entries(item as Record<string, unknown>).map(([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
         if (isRawApiRefPackageConfiguration(value)) {
             return {
                 type: "package",
@@ -1320,13 +1327,13 @@ function parseApiReferenceLayoutItem(
                     ) ?? [],
                 slug: value.slug,
                 hidden: value.hidden,
-                skipUrlSlug: value.skipSlug,
+                skipUrlSlug: value["skip-slug"],
                 icon: resolveIconPath(value.icon, absolutePathToConfig),
                 playground: value.playground,
                 availability: value.availability,
                 viewers: parseRoles(value.viewers),
                 orphaned: value.orphaned,
-                featureFlags: convertFeatureFlag(value.featureFlag)
+                featureFlags: convertFeatureFlag(value["feature-flag"])
             };
         }
         return {
@@ -1334,7 +1341,7 @@ function parseApiReferenceLayoutItem(
             title: undefined,
             package: key,
             overviewAbsolutePath: undefined,
-            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig, context)),
+            contents: (value as docsYml.RawSchemas.ApiReferenceLayoutItem[]).flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig, context)),
             hidden: false,
             slug: undefined,
             skipUrlSlug: false,
@@ -1597,25 +1604,25 @@ async function convertMetadata(
     }
 
     return {
-        "og:site_name": metadata.ogSiteName,
-        "og:title": metadata.ogTitle,
-        "og:description": metadata.ogDescription,
-        "og:url": metadata.ogUrl,
-        "og:image": await convertFilepathOrUrl(metadata.ogImage, absoluteFilepathToDocsConfig),
-        "og:image:width": metadata.ogImageWidth,
-        "og:image:height": metadata.ogImageHeight,
-        "og:locale": metadata.ogLocale,
-        "og:logo": await convertFilepathOrUrl(metadata.ogLogo, absoluteFilepathToDocsConfig),
-        "twitter:title": metadata.twitterTitle,
-        "twitter:description": metadata.twitterDescription,
-        "twitter:image": await convertFilepathOrUrl(metadata.twitterImage, absoluteFilepathToDocsConfig),
-        "twitter:handle": metadata.twitterHandle,
-        "twitter:site": metadata.twitterSite,
-        "twitter:url": metadata.twitterUrl,
-        "twitter:card": metadata.twitterCard,
+        "og:site_name": metadata["og:site_name"],
+        "og:title": metadata["og:title"],
+        "og:description": metadata["og:description"],
+        "og:url": metadata["og:url"],
+        "og:image": await convertFilepathOrUrl(metadata["og:image"], absoluteFilepathToDocsConfig),
+        "og:image:width": metadata["og:image:width"],
+        "og:image:height": metadata["og:image:height"],
+        "og:locale": metadata["og:locale"],
+        "og:logo": await convertFilepathOrUrl(metadata["og:logo"], absoluteFilepathToDocsConfig),
+        "twitter:title": metadata["twitter:title"],
+        "twitter:description": metadata["twitter:description"],
+        "twitter:image": await convertFilepathOrUrl(metadata["twitter:image"], absoluteFilepathToDocsConfig),
+        "twitter:handle": metadata["twitter:handle"],
+        "twitter:site": metadata["twitter:site"],
+        "twitter:url": metadata["twitter:url"],
+        "twitter:card": metadata["twitter:card"],
         nofollow: undefined,
         noindex: undefined,
-        canonicalHost: metadata.canonicalHost
+        canonicalHost: metadata["canonical-host"]
     };
 }
 

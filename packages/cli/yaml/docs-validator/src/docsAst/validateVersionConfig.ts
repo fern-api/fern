@@ -25,7 +25,7 @@ export async function validateVersionConfigFileSchema({ value }: { value: unknow
 
         return {
             type: "success",
-            contents: docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedValue)
+            contents: docsYml.ZodSchemas.VersionFileConfig.parse(sanitizedValue)
         };
     }
 

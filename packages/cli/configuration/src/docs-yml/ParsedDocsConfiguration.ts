@@ -3,7 +3,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 
 import { Audiences } from "../commons/index.js";
 import {
-    AiChatConfig,
+    AIChatConfig,
     AnnouncementConfig,
     Availability,
     DocsInstance,
@@ -82,7 +82,7 @@ export interface ParsedDocsConfiguration {
     css: CjsFdrSdk.docs.v1.commons.CssConfig | undefined;
     js: JavascriptConfig | undefined;
 
-    aiChatConfig: AiChatConfig | undefined;
+    aiChatConfig: AIChatConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
 

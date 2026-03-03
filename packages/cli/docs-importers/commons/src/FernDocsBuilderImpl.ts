@@ -92,10 +92,10 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
     }
 
     public addNavbarLink({ link }: { link: docsYml.RawSchemas.NavbarLink }): void {
-        if (this.docsYml.navbarLinks == null) {
-            this.docsYml.navbarLinks = [link];
+        if (this.docsYml["navbar-links"] == null) {
+            this.docsYml["navbar-links"] = [link];
         }
-        this.docsYml.navbarLinks.push(link);
+        this.docsYml["navbar-links"].push(link);
     }
 
     public setTitle({ title }: { title: string }): void {
@@ -164,7 +164,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
         await writeFile(
             join(absolutePathToFernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
             yaml.dump(
-                docsYml.RawSchemas.Serializer.DocsConfiguration.jsonOrThrow(this.docsYml, { omitUndefined: true })
+                this.docsYml
             )
         );
 

@@ -1,9 +1,9 @@
 import { docsYml } from "@fern-api/configuration";
 
 const DEFAULT_LAYOUT: docsYml.RawSchemas.LayoutConfig = {
-    searchbarPlacement: "header",
-    pageWidth: "full",
-    tabsPlacement: "header"
+    "searchbar-placement": "header",
+    "page-width": "full",
+    "tabs-placement": "header"
 };
 
 export { DEFAULT_LAYOUT };

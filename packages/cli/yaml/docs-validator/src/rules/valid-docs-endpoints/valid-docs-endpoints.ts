@@ -11,7 +11,7 @@ export const ValidDocsEndpoints: Rule = {
 
             // Add each endpoint that should be included in this rule here
             const endpoints = [
-                [config.analytics.intercom?.apiBase, "Intercom API Base"],
+                [config.analytics.intercom?.["api-base"], "Intercom API Base"],
                 [config.analytics.posthog?.endpoint, "Posthog Host Endpoint"]
             ];
 

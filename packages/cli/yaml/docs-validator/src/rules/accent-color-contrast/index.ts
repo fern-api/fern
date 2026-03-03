@@ -32,7 +32,7 @@ export function validateTheme(
     theme: "dark" | "light"
 ): RuleViolation[] {
     const accentPrimaryColor = getColorFromRawConfig(
-        colors.accentPrimary ?? colors.accentPrimaryDeprecated,
+        colors.accentPrimary ?? colors["accent-primary"],
         "accent-primary",
         theme
     );

@@ -85,7 +85,7 @@ export async function loadRawDocsConfiguration({
 
         try {
             context.logger.debug(`Attempting to parse sanitized docs configuration`);
-            return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(sanitizedJson);
+            return docsYml.ZodSchemas.DocsConfiguration.parse(sanitizedJson);
         } catch (err) {
             context.logger.error(
                 `Parsing failed even after sanitization: ${err instanceof Error ? err.message : String(err)}`

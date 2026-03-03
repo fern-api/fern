@@ -52,7 +52,7 @@ describe("getColorType", () => {
 describe("convertColorsConfiguration", () => {
     it("should support accentPrimaryDeprecated", () => {
         const rawConfig = {
-            accentPrimaryDeprecated: "#5D65EE"
+            "accent-primary": "#5D65EE"
         };
         expect(convertColorsConfiguration(rawConfig, createMockTaskContext())).toMatchSnapshot();
     });

@@ -88,13 +88,13 @@ async function visitNavigationItem({
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     context: TaskContext;
 }): Promise<void> {
-    await visitObjectAsync(navigationItem, {
+    await visitObjectAsync(navigationItem as object, {
         alphabetized: noop,
         api: noop,
-        apiName: noop,
+        "api-name": noop,
         audiences: noop,
-        displayErrors: noop,
-        tagDescriptionPages: noop,
+        "display-errors": noop,
+        "tag-description-pages": noop,
         snippets: noop,
         summary: noop,
         title: noop,
@@ -103,13 +103,13 @@ async function visitNavigationItem({
         icon: noop,
         slug: noop,
         hidden: noop,
-        skipSlug: noop,
+        "skip-slug": noop,
         paginated: noop,
         playground: noop,
         flattened: noop,
         path: noop,
         page: noop,
-        featureFlag: noop,
+        "feature-flag": noop,
         openrpc: noop,
         postman: noop,
         contents: async (items: docsYml.RawSchemas.NavigationItem[] | undefined): Promise<void> => {
@@ -133,7 +133,7 @@ async function visitNavigationItem({
     });
 
     if (navigationItemIsApi(navigationItem)) {
-        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem.apiName);
+        const workspace = apiWorkspaces.find((workspace) => workspace.workspaceName === navigationItem["api-name"]);
         if (workspace != null) {
             await visitor.apiSection?.({
                 config: navigationItem,
