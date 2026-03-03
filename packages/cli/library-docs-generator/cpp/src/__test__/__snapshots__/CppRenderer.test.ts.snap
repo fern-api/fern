@@ -344,7 +344,9 @@ Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the
 
 <CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
 \`\`\`cpp showLineNumbers={false}
-T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(T input)
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(
+    T input
+)
 \`\`\`
 </CodeBlock>
 
@@ -397,7 +399,9 @@ Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the
 <CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD>
-T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(T(&inputs)[ITEMS_PER_THREAD])
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(
+    T(&inputs)[ITEMS_PER_THREAD]
+)
 \`\`\`
 </CodeBlock>
 
@@ -644,7 +648,9 @@ Collective constructor using the specified memory allocation as temporary storag
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan", "TempStorage": "/library/api/cub::_block_scan::_temp_storage"}}>
 \`\`\`cpp showLineNumbers={false}
-cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockScan(TempStorage &temp_storage)
+cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockScan(
+    TempStorage &temp_storage
+)
 \`\`\`
 </CodeBlock>
 
@@ -2819,7 +2825,9 @@ This constructor creates an empty \`device_vector\`.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-thrust::device_vector<T, Alloc>::device_vector(const Alloc &alloc)
+thrust::device_vector<T, Alloc>::device_vector(
+    const Alloc &alloc
+)
 \`\`\`
 </CodeBlock>
 
@@ -2838,7 +2846,9 @@ This constructor creates a \`device_vector\` with the given size.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-thrust::device_vector<T, Alloc>::device_vector(size_type n)
+thrust::device_vector<T, Alloc>::device_vector(
+    size_type n
+)
 \`\`\`
 </CodeBlock>
 
@@ -2980,7 +2990,9 @@ Copy constructor copies from an exemplar \`device_vector\`.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-thrust::device_vector<T, Alloc>::device_vector(const device_vector &v)
+thrust::device_vector<T, Alloc>::device_vector(
+    const device_vector &v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3021,7 +3033,9 @@ Move constructor moves from another \`device_vector\`.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-thrust::device_vector<T, Alloc>::device_vector(device_vector &&v)
+thrust::device_vector<T, Alloc>::device_vector(
+    device_vector &&v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3065,7 +3079,9 @@ Copy constructor copies from an exemplar \`device_vector\` with different type.
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
 template <typename OtherT, typename OtherAlloc>
-thrust::device_vector<T, Alloc>::device_vector(const device_vector<OtherT, OtherAlloc> &v)
+thrust::device_vector<T, Alloc>::device_vector(
+    const device_vector<OtherT, OtherAlloc> &v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3083,7 +3099,9 @@ Copy constructor copies from an exemplar \`std::vector\`.
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
 template <typename OtherT, typename OtherAlloc>
-thrust::device_vector<T, Alloc>::device_vector(const std::vector<OtherT, OtherAlloc> &v)
+thrust::device_vector<T, Alloc>::device_vector(
+    const std::vector<OtherT, OtherAlloc> &v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3101,7 +3119,9 @@ Copy construct from a \`vector_base\` whose element type is convertible to \`T\`
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
 template <typename OtherT, typename OtherAlloc>
-thrust::device_vector<T, Alloc>::device_vector(const detail::vector_base<OtherT, OtherAlloc> &v)
+thrust::device_vector<T, Alloc>::device_vector(
+    const detail::vector_base<OtherT, OtherAlloc> &v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3118,7 +3138,9 @@ This constructor builds a \`device_vector\` from an intializer_list.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-thrust::device_vector<T, Alloc>::device_vector(::cuda::std::initializer_list<T> il)
+thrust::device_vector<T, Alloc>::device_vector(
+    ::cuda::std::initializer_list<T> il
+)
 \`\`\`
 </CodeBlock>
 
@@ -3235,7 +3257,9 @@ Copy assign operator copies another \`device_vector\` with the same type.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-device_vector & thrust::device_vector<T, Alloc>::operator=(const device_vector &v)
+device_vector & thrust::device_vector<T, Alloc>::operator=(
+    const device_vector &v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3252,7 +3276,9 @@ Move assign operator moves from another \`device_vector\`.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-device_vector & thrust::device_vector<T, Alloc>::operator=(device_vector &&v)
+device_vector & thrust::device_vector<T, Alloc>::operator=(
+    device_vector &&v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3290,7 +3316,9 @@ Assign operator copies from an exemplar \`std::vector\`.
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
 template <typename OtherT, typename OtherAlloc>
-device_vector & thrust::device_vector<T, Alloc>::operator=(const std::vector<OtherT, OtherAlloc> &v)
+device_vector & thrust::device_vector<T, Alloc>::operator=(
+    const std::vector<OtherT, OtherAlloc> &v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3327,7 +3355,9 @@ Assign an \`intializer_list\` with a matching element type.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-device_vector & thrust::device_vector<T, Alloc>::operator=(::cuda::std::initializer_list<T> il)
+device_vector & thrust::device_vector<T, Alloc>::operator=(
+    ::cuda::std::initializer_list<T> il
+)
 \`\`\`
 </CodeBlock>
 
@@ -3449,7 +3479,9 @@ If n is less than or equal to [capacity()](/library/api/thrust::device_vector::c
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-void thrust::device_vector<T, Alloc>::reserve(size_type n)
+void thrust::device_vector<T, Alloc>::reserve(
+    size_type n
+)
 \`\`\`
 </CodeBlock>
 
@@ -3486,7 +3518,9 @@ This operator allows for easy, array-style, data access. Note that data access w
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-reference thrust::device_vector<T, Alloc>::operator[](size_type n)
+reference thrust::device_vector<T, Alloc>::operator[](
+    size_type n
+)
 \`\`\`
 </CodeBlock>
 
@@ -3509,7 +3543,9 @@ This operator allows for easy, array-style, data access. Note that data access w
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-const_reference thrust::device_vector<T, Alloc>::operator[](size_type n) const
+const_reference thrust::device_vector<T, Alloc>::operator[](
+    size_type n
+) const
 \`\`\`
 </CodeBlock>
 
@@ -3831,7 +3867,9 @@ This method appends the given element to the end of this vector.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-void thrust::device_vector<T, Alloc>::push_back(const value_type &x)
+void thrust::device_vector<T, Alloc>::push_back(
+    const value_type &x
+)
 \`\`\`
 </CodeBlock>
 
@@ -3857,7 +3895,9 @@ This method swaps the contents of this [device_vector](/library/api/thrust::devi
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-void thrust::device_vector<T, Alloc>::swap(device_vector &v)
+void thrust::device_vector<T, Alloc>::swap(
+    device_vector &v
+)
 \`\`\`
 </CodeBlock>
 
@@ -3876,7 +3916,9 @@ This method removes the element at position pos.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
-iterator thrust::device_vector<T, Alloc>::erase(iterator pos)
+iterator thrust::device_vector<T, Alloc>::erase(
+    iterator pos
+)
 \`\`\`
 </CodeBlock>
 
@@ -4149,7 +4191,9 @@ Copy-constructs from a buffer.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
-cuda::buffer<_Tp, _Properties>::buffer(const buffer &__other)
+cuda::buffer<_Tp, _Properties>::buffer(
+    const buffer &__other
+)
 \`\`\`
 </CodeBlock>
 
@@ -4168,7 +4212,9 @@ Move-constructs from a buffer.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
-cuda::buffer<_Tp, _Properties>::buffer(buffer &&__other) noexcept
+cuda::buffer<_Tp, _Properties>::buffer(
+    buffer &&__other
+) noexcept
 \`\`\`
 </CodeBlock>
 
@@ -4189,7 +4235,9 @@ Copy-constructs from a buffer with matching properties.
 \`\`\`cpp showLineNumbers={false}
 template <class... _OtherProperties,
           ::cuda::std::enable_if_t< __properties_match< _OtherProperties... >, int >>
-cuda::buffer<_Tp, _Properties>::buffer(const buffer<_Tp, _OtherProperties...> &__other)
+cuda::buffer<_Tp, _Properties>::buffer(
+    const buffer<_Tp, _OtherProperties...> &__other
+)
 \`\`\`
 </CodeBlock>
 
@@ -4210,7 +4258,9 @@ Move-constructs from a buffer with matching properties.
 \`\`\`cpp showLineNumbers={false}
 template <class... _OtherProperties,
           ::cuda::std::enable_if_t< __properties_match< _OtherProperties... >, int >>
-cuda::buffer<_Tp, _Properties>::buffer(buffer<_Tp, _OtherProperties...> &&__other) noexcept
+cuda::buffer<_Tp, _Properties>::buffer(
+    buffer<_Tp, _OtherProperties...> &&__other
+) noexcept
 \`\`\`
 </CodeBlock>
 
@@ -4391,7 +4441,9 @@ Move assignment operator.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
-void cuda::buffer<_Tp, _Properties>::operator=(buffer &&__other)
+void cuda::buffer<_Tp, _Properties>::operator=(
+    buffer &&__other
+)
 \`\`\`
 </CodeBlock>
 
@@ -4627,7 +4679,9 @@ Returns a reference to the \`__n\` 'th element of the async_vector.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
-reference cuda::buffer<_Tp, _Properties>::get_unsynchronized(const size_type __n) noexcept
+reference cuda::buffer<_Tp, _Properties>::get_unsynchronized(
+    const size_type __n
+) noexcept
 \`\`\`
 </CodeBlock>
 
@@ -4719,7 +4773,9 @@ Replaces the stored stream.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
 \`\`\`cpp showLineNumbers={false}
-void cuda::buffer<_Tp, _Properties>::set_stream(stream_ref __new_stream)
+void cuda::buffer<_Tp, _Properties>::set_stream(
+    stream_ref __new_stream
+)
 \`\`\`
 </CodeBlock>
 
@@ -4739,7 +4795,9 @@ Swaps the contents of a buffer with those of \`__other\`.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
-void cuda::buffer<_Tp, _Properties>::swap(buffer &__other) noexcept
+void cuda::buffer<_Tp, _Properties>::swap(
+    buffer &__other
+) noexcept
 \`\`\`
 </CodeBlock>
 
@@ -4758,7 +4816,9 @@ Destroys the buffer, deallocates the buffer and destroys the memory resource.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
 \`\`\`cpp showLineNumbers={false}
-void cuda::buffer<_Tp, _Properties>::destroy(::cuda::stream_ref __stream)
+void cuda::buffer<_Tp, _Properties>::destroy(
+    ::cuda::stream_ref __stream
+)
 \`\`\`
 </CodeBlock>
 
@@ -5304,7 +5364,9 @@ thrust::pointer<Element, Tag, Reference, Derived>::pointer()
 
 <CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
 \`\`\`cpp showLineNumbers={false}
-thrust::pointer<Element, Tag, Reference, Derived>::pointer(::cuda::std::nullptr_t)
+thrust::pointer<Element, Tag, Reference, Derived>::pointer(
+    ::cuda::std::nullptr_t
+)
 \`\`\`
 </CodeBlock>
 
@@ -5318,7 +5380,9 @@ This constructor allows construction of a [\`pointer<const T, ...>\`](/library/a
 <CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
 \`\`\`cpp showLineNumbers={false}
 template <typename OtherElement>
-thrust::pointer<Element, Tag, Reference, Derived>::pointer(OtherElement *ptr)
+thrust::pointer<Element, Tag, Reference, Derived>::pointer(
+    OtherElement *ptr
+)
 \`\`\`
 </CodeBlock>
 
@@ -5343,7 +5407,9 @@ This constructor allows initialization from another pointer-like object.
 \`\`\`cpp showLineNumbers={false}
 template <typename OtherPointer,
           detail::enable_if_pointer_is_convertible_t< OtherPointer, pointer > *>
-thrust::pointer<Element, Tag, Reference, Derived>::pointer(const OtherPointer &other)
+thrust::pointer<Element, Tag, Reference, Derived>::pointer(
+    const OtherPointer &other
+)
 \`\`\`
 </CodeBlock>
 
@@ -5373,7 +5439,9 @@ The \`OtherPointer\` to copy.
 
 <CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
 \`\`\`cpp showLineNumbers={false}
-derived_type & thrust::pointer<Element, Tag, Reference, Derived>::operator=(::cuda::std::nullptr_t)
+derived_type & thrust::pointer<Element, Tag, Reference, Derived>::operator=(
+    ::cuda::std::nullptr_t
+)
 \`\`\`
 </CodeBlock>
 
@@ -5566,7 +5634,9 @@ Construct a new \`stream\` object into the moved-from state.
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
 \`\`\`cpp showLineNumbers={false}
-cuda::stream::stream(no_init_t) noexcept
+cuda::stream::stream(
+    no_init_t
+) noexcept
 \`\`\`
 </CodeBlock>
 
@@ -5583,7 +5653,9 @@ Move-construct a new \`stream\` object.
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
 \`\`\`cpp showLineNumbers={false}
-cuda::stream::stream(stream &&__other) noexcept
+cuda::stream::stream(
+    stream &&__other
+) noexcept
 \`\`\`
 </CodeBlock>
 
@@ -5598,7 +5670,9 @@ cuda::stream::stream(stream &&__other) noexcept
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
 \`\`\`cpp showLineNumbers={false}
-cuda::stream::stream(::cudaStream_t __handle)
+cuda::stream::stream(
+    ::cudaStream_t __handle
+)
 \`\`\`
 </CodeBlock>
 
@@ -5607,7 +5681,9 @@ cuda::stream::stream(::cudaStream_t __handle)
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
 \`\`\`cpp showLineNumbers={false}
-cuda::stream::stream(const stream &) = delete
+cuda::stream::stream(
+    const stream &
+) = delete
 \`\`\`
 </CodeBlock>
 
@@ -5643,7 +5719,9 @@ Move-assign a \`stream\` object.
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
 \`\`\`cpp showLineNumbers={false}
-stream & cuda::stream::operator=(stream &&__other) noexcept
+stream & cuda::stream::operator=(
+    stream &&__other
+) noexcept
 \`\`\`
 </CodeBlock>
 
@@ -5656,7 +5734,9 @@ stream & cuda::stream::operator=(stream &&__other) noexcept
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
 \`\`\`cpp showLineNumbers={false}
-stream & cuda::stream::operator=(const stream &) = delete
+stream & cuda::stream::operator=(
+    const stream &
+) = delete
 \`\`\`
 </CodeBlock>
 
@@ -5731,7 +5811,9 @@ Make all future work submitted into this stream depend on completion of the spec
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "event_ref": "/libcudacxx/api/cuda::event_ref", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
 \`\`\`cpp showLineNumbers={false}
-void cuda::stream::wait(event_ref __ev) const
+void cuda::stream::wait(
+    event_ref __ev
+) const
 \`\`\`
 </CodeBlock>
 
@@ -5750,7 +5832,9 @@ Make all future work submitted into this stream depend on completion of all work
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
 \`\`\`cpp showLineNumbers={false}
-void cuda::stream::wait(stream_ref __other) const
+void cuda::stream::wait(
+    stream_ref __other
+) const
 \`\`\`
 </CodeBlock>
 
@@ -5829,7 +5913,9 @@ Create a new event and record it into this stream.
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "event": "/libcudacxx/api/cuda::event", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
 \`\`\`cpp showLineNumbers={false}
-event cuda::stream::record_event(event_flags __flags = event_flags::none) const
+event cuda::stream::record_event(
+    event_flags __flags = event_flags::none
+) const
 \`\`\`
 </CodeBlock>
 
@@ -5843,7 +5929,9 @@ Create a new timed event and record it into this stream.
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "timed_event": "/libcudacxx/api/cuda::timed_event", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
 \`\`\`cpp showLineNumbers={false}
-timed_event cuda::stream::record_timed_event(event_flags __flags = event_flags::none) const
+timed_event cuda::stream::record_timed_event(
+    event_flags __flags = event_flags::none
+) const
 \`\`\`
 </CodeBlock>
 
@@ -5873,7 +5961,9 @@ This makes [\`stream_ref\`](/libcudacxx/api/cuda::stream_ref) usable in places w
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "get_stream_t": "/libcudacxx/api/cuda::get_stream_t", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
 \`\`\`cpp showLineNumbers={false}
-stream_ref cuda::stream::query(const ::cuda::get_stream_t &) const noexcept
+stream_ref cuda::stream::query(
+    const ::cuda::get_stream_t &
+) const noexcept
 \`\`\`
 </CodeBlock>
 
@@ -5890,7 +5980,9 @@ Construct an \`stream\` object from a native \`cudaStream_t\` handle.
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
 \`\`\`cpp showLineNumbers={false}
-static stream cuda::stream::from_native_handle(::cudaStream_t __handle)
+static stream cuda::stream::from_native_handle(
+    ::cudaStream_t __handle
+)
 \`\`\`
 </CodeBlock>
 
@@ -6063,7 +6155,9 @@ Collective constructor using the specified memory allocation as temporary storag
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce", "TempStorage": "/library/api/cub::_warp_reduce::_temp_storage"}}>
 \`\`\`cpp showLineNumbers={false}
-cub::WarpReduce<T, LogicalWarpThreads>::WarpReduce(TempStorage &temp_storage)
+cub::WarpReduce<T, LogicalWarpThreads>::WarpReduce(
+    TempStorage &temp_storage
+)
 \`\`\`
 </CodeBlock>
 
@@ -6086,7 +6180,9 @@ Computes a warp-wide sum in the calling warp. The output is valid in warp *lane*
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
-T cub::WarpReduce<T, LogicalWarpThreads>::Sum(T input)
+T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
+    T input
+)
 \`\`\`
 </CodeBlock>
 
@@ -6126,7 +6222,9 @@ __global__ void ExampleKernel(...)
 \`\`\`cpp showLineNumbers={false}
 template <typename InputType,
           ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
-T cub::WarpReduce<T, LogicalWarpThreads>::Sum(const InputType &input)
+T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
+    const InputType &input
+)
 \`\`\`
 </CodeBlock>
 
@@ -6199,7 +6297,9 @@ __global__ void ExampleKernel(int *d_data, int valid_items)
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
-T cub::WarpReduce<T, LogicalWarpThreads>::Max(T input)
+T cub::WarpReduce<T, LogicalWarpThreads>::Max(
+    T input
+)
 \`\`\`
 </CodeBlock>
 
@@ -6210,7 +6310,9 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(T input)
 \`\`\`cpp showLineNumbers={false}
 template <typename InputType,
           ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
-T cub::WarpReduce<T, LogicalWarpThreads>::Max(const InputType &input)
+T cub::WarpReduce<T, LogicalWarpThreads>::Max(
+    const InputType &input
+)
 \`\`\`
 </CodeBlock>
 
@@ -6236,7 +6338,9 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
-T cub::WarpReduce<T, LogicalWarpThreads>::Min(T input)
+T cub::WarpReduce<T, LogicalWarpThreads>::Min(
+    T input
+)
 \`\`\`
 </CodeBlock>
 
@@ -6247,7 +6351,9 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Min(T input)
 \`\`\`cpp showLineNumbers={false}
 template <typename InputType,
           ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
-T cub::WarpReduce<T, LogicalWarpThreads>::Min(const InputType &input)
+T cub::WarpReduce<T, LogicalWarpThreads>::Min(
+    const InputType &input
+)
 \`\`\`
 </CodeBlock>
 

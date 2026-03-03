@@ -395,17 +395,7 @@ function reformatRawSignature(func: CppFunctionIr, ownerClass?: CppClassIr): str
     // Split parameters (respect template angle brackets and nested parens)
     const params = splitParams(paramsStr);
 
-    if (params.length <= 1) {
-        // Single parameter: use compact format if it fits, multi-line otherwise
-        const singleParam = params[0]?.trim() ?? "";
-        const oneLiner = `${prefix}(${singleParam})${quals}${specialSuffix}`;
-        if (oneLiner.length <= 100) {
-            return oneLiner;
-        }
-        return `${prefix}(\n    ${singleParam}\n)${quals}${specialSuffix}`;
-    }
-
-    // Multi-parameter: one per line, indented with 4 spaces
+    // One or more parameters: one per line, indented with 4 spaces
     const formattedParams = params.map((p, i) => {
         const trimmed = p.trim();
         const comma = i < params.length - 1 ? "," : "";
