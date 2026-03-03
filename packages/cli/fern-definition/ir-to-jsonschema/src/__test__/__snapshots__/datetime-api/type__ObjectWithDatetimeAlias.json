@@ -1,0 +1,44 @@
+{
+  "type": "object",
+  "properties": {
+    "dateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "datetimeAlias": {
+      "$ref": "#/definitions/DatetimeAlias"
+    },
+    "optionalDatetime": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalDatetimeAlias": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/DatetimeAlias"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "dateTime",
+    "datetimeAlias"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "DatetimeAlias": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
