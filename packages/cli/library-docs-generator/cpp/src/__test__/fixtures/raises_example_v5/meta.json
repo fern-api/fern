@@ -1,0 +1,11 @@
+{
+  "compound_name": "stream",
+  "qualified_name": "cuda::stream",
+  "repo": "libcudacxx",
+  "compound_kind": "class",
+  "namespace_path": [
+    "cuda"
+  ],
+  "golden_page": "libcudacxx/raises_example_v5.mdx",
+  "status": "MATCHED"
+}

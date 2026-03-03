@@ -1,0 +1,580 @@
+---
+title: cub::BlockReduce
+description: "Collective methods for computing parallel reductions across a CUDA thread block."
+---
+
+The `BlockReduce` class provides collective methods for computing a parallel reduction of items partitioned across a CUDA thread block.
+
+A [reduction](http://en.wikipedia.org/wiki/Reduce_(higher-order_function)) (or *fold*) uses a binary combining operator to compute a single aggregate from a list of input elements. Threads are assumed to be in row-major order.
+
+`BlockReduce` can be optionally specialized by algorithm to accommodate different latency/throughput workload profiles:
+
+1. [`cub::BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY`](/library/api/cub::BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY):
+   An efficient "raking" reduction algorithm that only supports commutative reduction operators.
+2. [`cub::BLOCK_REDUCE_RAKING`](/library/api/cub::BLOCK_REDUCE_RAKING):
+   An efficient "raking" reduction algorithm that supports commutative and non-commutative reduction operators.
+3. [`cub::BLOCK_REDUCE_WARP_REDUCTIONS`](/library/api/cub::BLOCK_REDUCE_WARP_REDUCTIONS):
+   A quick "tiled warp-reductions" reduction algorithm that supports commutative and non-commutative reduction operators.
+4. [`cub::BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC`](/library/api/cub::BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC):
+   A quick "tiled warp-reductions" reduction algorithm that supports commutative and non-commutative reduction operators. This variant uses atomic operations to reduce the warp-wide reduction results, making it non-deterministic, i.e. the order of reduction operations is not guaranteed to be the same across different invocations of the same kernel.
+
+## Performance considerations
+
+- Performance is sensitive to the degree of data movement across the block.
+- Very efficient (only one synchronization barrier).
+- Incurs zero bank conflicts for most types.
+- Computation is slightly more efficient (i.e., having lower instruction overhead) for:
+  - Summation (vs. generic reduction)
+  - `BLOCK_THREADS` is a multiple of the architecture's warp size
+  - Every thread has a valid input (i.e., full vs. partial-tiles)
+- See `cub::BlockReduceAlgorithm` for performance details regarding algorithmic alternatives.
+
+## Example
+
+The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in a blocked arrangement across 128 threads where each thread owns 4 consecutive items.
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Obtain a segment of consecutive items that are blocked across threads
+    int thread_data[4];
+    ...
+
+    // Compute the block-wide sum for thread0
+    int aggregate = BlockReduce(temp_storage).Sum(thread_data);
+}
+```
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="T" type="typename">
+Data type being reduced
+</ParamField>
+
+<ParamField path="BlockDimX" type="int">
+The thread block length in threads along the X dimension
+</ParamField>
+
+<ParamField path="Algorithm" type="BlockReduceAlgorithm" default="BLOCK_REDUCE_WARP_REDUCTIONS">
+**[optional]** [cub::BlockReduceAlgorithm](/library/api/cub::BlockReduceAlgorithm) enumerator specifying the underlying algorithm to use (default: [cub::BLOCK_REDUCE_WARP_REDUCTIONS](/library/api/cub::BLOCK_REDUCE_WARP_REDUCTIONS))
+</ParamField>
+
+<ParamField path="BlockDimY" type="int" default="1">
+**[optional]** The thread block length in threads along the Y dimension (default: 1)
+</ParamField>
+
+<ParamField path="BlockDimZ" type="int" default="1">
+**[optional]** The thread block length in threads along the Z dimension (default: 1)
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Collective constructors
+
+### BlockReduce <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Default">
+
+Collective constructor using a private static allocation of shared memory as temporary storage.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockReduce()
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+</Tab>
+<Tab title="With TempStorage">
+
+Collective constructor using the specified memory allocation as temporary storage.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce", "TempStorage": "/library/api/cub::BlockReduce::TempStorage"}}>
+```cpp showLineNumbers={false}
+cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockReduce(
+    TempStorage &temp_storage
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="temp_storage" type="TempStorage &">
+Reference to memory allocation having layout type [TempStorage](/library/api/cub::BlockReduce::TempStorage)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Generic reductions
+
+### Reduce <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Single item">
+
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction functor. Each thread contributes one input element.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+template <typename ReductionOp>
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
+    T input,
+    ReductionOp reduction_op
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
+<Note>
+Assumes threads are in row-major order.
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Note>
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction functor type having member `T operator()(const T &a, const T &b)`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction functor
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a max reduction of 128 integer items that are partitioned across 128 threads.
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Each thread obtains an input item
+    int thread_data;
+    ...
+
+    // Compute the block-wide max for thread0
+    int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{});
+}
+```
+
+</Tab>
+<Tab title="Multiple items per thread">
+
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction functor. Each thread contributes an array of consecutive input elements.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ReductionOp>
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
+    T (&inputs)[ITEMS_PER_THREAD],
+    ReductionOp reduction_op
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
+<Note>
+Performance is sensitive to the degree of data movement across the block.
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Note>
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction functor type having member `T operator()(const T &a, const T &b)`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="inputs" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input segment
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction functor
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a max reduction of 512 integer items that are partitioned in a blocked arrangement across 128 threads where each thread owns 4 consecutive items.
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Obtain a segment of consecutive items that are blocked across threads
+    int thread_data[4];
+    ...
+
+    // Compute the block-wide max for thread0
+    int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{});
+}
+```
+
+</Tab>
+<Tab title="Partial tile">
+
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction functor. The first `num_valid` threads each contribute one input element.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+template <typename ReductionOp>
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
+    T input,
+    ReductionOp reduction_op,
+    int num_valid
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
+<Note>
+Assumes threads are in row-major order.
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Note>
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction functor type having member `T operator()(const T &a, const T &b)`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction functor
+</ParamField>
+
+<ParamField path="num_valid" type="int">
+Number of threads containing valid elements (may be less than BLOCK_THREADS)
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a max reduction of a partially-full tile of integer items that are partitioned across 128 threads.
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(int num_valid, ...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Each thread obtains an input item
+    int thread_data;
+    if (threadIdx.x < num_valid) thread_data = ...
+
+    // Compute the block-wide max for thread0
+    int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{}, num_valid);
+}
+```
+
+</Tab>
+</Tabs>
+
+---
+
+## Summation reductions
+
+### Sum <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Single item">
+
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction operator. Each thread contributes one input element.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(
+    T input
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
+<Note>
+Assumes threads are in row-major order.
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Note>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a sum reduction of 128 integer items that are partitioned across 128 threads.
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Each thread obtains an input item
+    int thread_data;
+    ...
+
+    // Compute the block-wide sum for thread0
+    int aggregate = BlockReduce(temp_storage).Sum(thread_data);
+}
+```
+
+</Tab>
+<Tab title="Multiple items per thread">
+
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction operator. Each thread contributes an array of consecutive input elements.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD>
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(
+    T (&inputs)[ITEMS_PER_THREAD]
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
+<Note>
+Performance is sensitive to the degree of data movement across the block.
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Note>
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="inputs" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input segment
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in a blocked arrangement across 128 threads where each thread owns 4 consecutive items.
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Obtain a segment of consecutive items that are blocked across threads
+    int thread_data[4];
+    ...
+
+    // Compute the block-wide sum for thread0
+    int aggregate = BlockReduce(temp_storage).Sum(thread_data);
+}
+```
+
+</Tab>
+<Tab title="Partial tile">
+
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction operator. The first `num_valid` threads each contribute one input element.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(
+    T input,
+    int num_valid
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
+<Note>
+Assumes threads are in row-major order.
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Note>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="num_valid" type="int">
+Number of threads containing valid elements (may be less than BLOCK_THREADS)
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a sum reduction of a partially-full tile of integer items that are partitioned across 128 threads.
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(int num_valid, ...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Each thread obtains an input item (up to num_items)
+    int thread_data;
+    if (threadIdx.x < num_valid)
+        thread_data = ...
+
+    // Compute the block-wide sum for thread0
+    int aggregate = BlockReduce(temp_storage).Sum(thread_data, num_valid);
+}
+```
+
+</Tab>
+</Tabs>
+
+---
+
+## Utility methods
+
+### PrivateStorage <Badge intent="note" minimal>inline</Badge>
+
+Internal storage allocator.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+_TempStorage& cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::PrivateStorage()
+```
+</CodeBlock>
+
+**Returns:** Reference to [_TempStorage](/library/api/cub::BlockReduce::_TempStorage)
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| `InternalBlockReduce` | `::cuda::std::_If< Algorithm==`[`BLOCK_REDUCE_WARP_REDUCTIONS`](/library/api/cub::BLOCK_REDUCE_WARP_REDUCTIONS)`, `[`WarpReductions`](/library/api/cub::BlockReduce::WarpReductions)`, ::cuda::std::_If< Algorithm==`[`BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC`](/library/api/cub::BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC)`, `[`WarpReductionsNondeterministic`](/library/api/cub::BlockReduce::WarpReductionsNondeterministic)`, ::cuda::std::_If< Algorithm==`[`BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY`](/library/api/cub::BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY)`, `[`RakingCommutativeOnly`](/library/api/cub::BlockReduce::RakingCommutativeOnly)`, `[`Raking`](/library/api/cub::BlockReduce::Raking)` > > >` | Internal specialization type. |
+| `_TempStorage` | `typename InternalBlockReduce::TempStorage` | Shared memory storage layout type for [BlockReduce](/library/api/cub::BlockReduce). |
+| `WarpReductions` | `detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ >` | |
+| `WarpReductionsNondeterministic` | `detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ, false >` | |
+| `RakingCommutativeOnly` | `detail::BlockReduceRakingCommutativeOnly< T, BlockDimX, BlockDimY, BlockDimZ >` | |
+| `Raking` | `detail::BlockReduceRaking< T, BlockDimX, BlockDimY, BlockDimZ >` | |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| `BLOCK_THREADS` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | `int` | The thread block size in threads. |
+| `temp_storage` | [`_TempStorage`](/library/api/cub::BlockReduce::_TempStorage) `&` | Shared storage reference. |
+| `linear_tid` | `unsigned int` | Linear thread-id. |
+
+---
+
+## Inner classes
+
+### TempStorage
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+```cpp showLineNumbers={false}
+struct cub::BlockReduce::TempStorage
+```
+</CodeBlock>
+
+The operations exposed by [BlockReduce](/library/api/cub::BlockReduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the `__shared__` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or `union`'d with other storage allocation types to facilitate memory reuse.
+
+**Inherits from:** `Uninitialized< _TempStorage >` (public)

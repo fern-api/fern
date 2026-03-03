@@ -1,0 +1,873 @@
+---
+title: cub::WarpReduce
+description: "Collective methods for computing parallel reductions across a CUDA thread warp."
+---
+
+The `WarpReduce` class provides collective methods for computing a parallel reduction of items partitioned across a CUDA thread warp.
+
+A [reduction](http://en.wikipedia.org/wiki/Reduce_(higher-order_function)) (or *fold*) uses a binary combining operator to compute a single aggregate from a list of input elements.
+
+<Note>
+Supports "logical" warps smaller than the physical warp size (e.g., logical warps of 8 threads).
+The number of entrant threads must be a multiple of `LogicalWarpThreads`.
+</Note>
+
+## Performance considerations
+
+- Uses special instructions when applicable (e.g., warp `SHFL` instructions)
+- Uses synchronization-free communication between warp lanes when applicable
+- Incurs zero bank conflicts for most types
+- Computation is slightly more efficient (i.e., having lower instruction overhead) for:
+  - Summation (vs. generic reduction)
+  - The architecture's warp size is a whole multiple of `LogicalWarpThreads`
+
+## Example
+
+The code snippet below illustrates four concurrent warp sum reductions within a block of 128 threads (one per each of the 32-thread warps).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+    // Allocate WarpReduce shared memory for 4 warps
+    __shared__ typename WarpReduce::TempStorage temp_storage[4];
+    // Obtain one input item per thread
+    int thread_data = ...
+    // Return the warp-wide sums to each lane0 (threads 0, 32, 64, and 96)
+    int warp_id   = threadIdx.x / 32;
+    int aggregate = WarpReduce(temp_storage[warp_id]).Sum(thread_data);
+}
+```
+
+Suppose the set of input `thread_data` across the block of threads is `{0, 1, 2, 3, ..., 127}`. The corresponding output `aggregate` in threads 0, 32, 64, and 96 will be `496`, `1520`, `2544`, and `3568`, respectively (and is undefined in other threads).
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="T" type="typename">
+Data type being reduced
+</ParamField>
+
+<ParamField path="LogicalWarpThreads" type="int" default="detail::warp_threads">
+**[optional]** The number of threads per "logical" warp (may be less than the number of hardware warp threads). Default is the warp size of the targeted CUDA compute architecture (e.g., 32 threads for SM3x).
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Collective constructors
+
+### WarpReduce <Badge intent="note" minimal>inline</Badge>
+
+Collective constructor using the specified memory allocation as temporary storage. Logical warp and lane identifiers are constructed from `threadIdx.x`.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce", "TempStorage": "/library/api/cub::WarpReduce::TempStorage"}}>
+```cpp showLineNumbers={false}
+cub::WarpReduce<T, LogicalWarpThreads>::WarpReduce(
+    TempStorage &temp_storage
+)
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="temp_storage" type="TempStorage &">
+Reference to memory allocation having layout type [TempStorage](/library/api/cub::WarpReduce::TempStorage)
+</ParamField>
+
+---
+
+## Generic reductions
+
+### Reduce <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Full warp">
+
+Computes a warp-wide reduction in the calling warp using the specified binary reduction functor. The output is valid in warp *lane*<sub>0</sub>.
+
+Supports non-commutative reduction operators.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename ReductionOp>
+T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
+    T input,
+    ReductionOp reduction_op
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member `T operator()(const T &a, const T &b)`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction operator
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates four concurrent warp max reductions within a block of 128 threads (one per each of the 32-thread warps).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for 4 warps
+    __shared__ typename WarpReduce::TempStorage temp_storage[4];
+
+    // Obtain one input item per thread
+    int thread_data = ...
+
+    // Return the warp-wide reductions to each lane0
+    int warp_id = threadIdx.x / 32;
+    int aggregate = WarpReduce(temp_storage[warp_id]).Reduce(
+        thread_data, cuda::maximum<>{});
+}
+```
+
+</Tab>
+<Tab title="Multiple items per thread">
+
+Computes a warp-wide reduction in the calling warp using the specified binary reduction functor. Each thread contributes a fixed-size array of consecutive input elements. The output is valid in warp *lane*<sub>0</sub>.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename InputType, typename ReductionOp>
+T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
+    const InputType &input,
+    ReductionOp reduction_op
+)
+```
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="InputType" type="typename">
+**[inferred]** Input type, must be a fixed-size random access range
+</ParamField>
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member `T operator()(const T &a, const T &b)`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="const InputType &">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction operator
+</ParamField>
+
+</Tab>
+<Tab title="Partial warp">
+
+Computes a partially-full warp-wide reduction in the calling warp using the specified binary reduction functor. The output is valid in warp *lane*<sub>0</sub>.
+
+All threads across the calling warp must agree on the same value for `valid_items`. Otherwise the result is undefined.
+
+Supports non-commutative reduction operators.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename ReductionOp>
+T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
+    T input,
+    ReductionOp reduction_op,
+    int valid_items
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member `T operator()(const T &a, const T &b)`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction operator
+</ParamField>
+
+<ParamField path="valid_items" type="int">
+Total number of valid items in the calling thread's logical warp (may be less than `LogicalWarpThreads`)
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a max reduction within a single, partially-full block of 32 threads (one warp).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(int *d_data, int valid_items)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item per thread if in range
+    int thread_data;
+    if (threadIdx.x < valid_items)
+        thread_data = d_data[threadIdx.x];
+
+    // Return the warp-wide reductions to each lane0
+    int aggregate = WarpReduce(temp_storage).Reduce(
+        thread_data, cuda::maximum<>{}, valid_items);
+}
+```
+
+</Tab>
+</Tabs>
+
+---
+
+## Summation reductions
+
+### Sum <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Full warp">
+
+Computes a warp-wide sum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
+    T input
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates four concurrent warp sum reductions within a block of 128 threads (one per each of the 32-thread warps).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+    // Allocate WarpReduce shared memory for 4 warps
+    __shared__ typename WarpReduce::TempStorage temp_storage[4];
+    // Obtain one input item per thread
+    int thread_data = ...
+    // Return the warp-wide sums to each lane0
+    int warp_id = threadIdx.x / 32;
+    int aggregate = WarpReduce(temp_storage[warp_id]).Sum(thread_data);
+}
+```
+
+</Tab>
+<Tab title="Multiple items per thread">
+
+Computes a warp-wide sum in the calling warp. Each thread contributes a fixed-size array of consecutive input elements. The output is valid in warp *lane*<sub>0</sub>.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename InputType,
+          ::cuda::std::enable_if_t<
+              detail::is_fixed_size_random_access_range_v<InputType>, int> = 0>
+T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
+    const InputType &input
+)
+```
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="InputType" type="typename">
+**[inferred]** Input type, must be a fixed-size random access range
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="const InputType &">
+Calling thread's input
+</ParamField>
+
+</Tab>
+<Tab title="Partial warp">
+
+Computes a partially-full warp-wide sum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
+
+All threads across the calling warp must agree on the same value for `valid_items`. Otherwise the result is undefined.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
+    T input,
+    int valid_items
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="valid_items" type="int">
+Total number of valid items in the calling thread's logical warp (may be less than `LogicalWarpThreads`)
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a sum reduction within a single, partially-full block of 32 threads (one warp).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(int *d_data, int valid_items)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item per thread if in range
+    int thread_data;
+    if (threadIdx.x < valid_items)
+        thread_data = d_data[threadIdx.x];
+
+    // Return the warp-wide sums to each lane0
+    int aggregate = WarpReduce(temp_storage).Sum(thread_data, valid_items);
+}
+```
+
+</Tab>
+</Tabs>
+
+---
+
+## Max reductions
+
+### Max <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Full warp">
+
+Computes a warp-wide maximum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Max(
+    T input
+)
+```
+</CodeBlock>
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+</Tab>
+<Tab title="Multiple items per thread">
+
+Computes a warp-wide maximum in the calling warp. Each thread contributes a fixed-size array of consecutive input elements. The output is valid in warp *lane*<sub>0</sub>.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename InputType,
+          ::cuda::std::enable_if_t<
+              detail::is_fixed_size_random_access_range_v<InputType>, int> = 0>
+T cub::WarpReduce<T, LogicalWarpThreads>::Max(
+    const InputType &input
+)
+```
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="InputType" type="typename">
+**[inferred]** Input type, must be a fixed-size random access range
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="const InputType &">
+Calling thread's input
+</ParamField>
+
+</Tab>
+<Tab title="Partial warp">
+
+Computes a partially-full warp-wide maximum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
+
+All threads across the calling warp must agree on the same value for `valid_items`. Otherwise the result is undefined.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Max(
+    T input,
+    int valid_items
+)
+```
+</CodeBlock>
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="valid_items" type="int">
+Total number of valid items in the calling thread's logical warp (may be less than `LogicalWarpThreads`)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Min reductions
+
+### Min <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Full warp">
+
+Computes a warp-wide minimum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Min(
+    T input
+)
+```
+</CodeBlock>
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+</Tab>
+<Tab title="Multiple items per thread">
+
+Computes a warp-wide minimum in the calling warp. Each thread contributes a fixed-size array of consecutive input elements. The output is valid in warp *lane*<sub>0</sub>.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename InputType,
+          ::cuda::std::enable_if_t<
+              detail::is_fixed_size_random_access_range_v<InputType>, int> = 0>
+T cub::WarpReduce<T, LogicalWarpThreads>::Min(
+    const InputType &input
+)
+```
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="InputType" type="typename">
+**[inferred]** Input type, must be a fixed-size random access range
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="const InputType &">
+Calling thread's input
+</ParamField>
+
+</Tab>
+<Tab title="Partial warp">
+
+Computes a partially-full warp-wide minimum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
+
+All threads across the calling warp must agree on the same value for `valid_items`. Otherwise the result is undefined.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Min(
+    T input,
+    int valid_items
+)
+```
+</CodeBlock>
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="valid_items" type="int">
+Total number of valid items in the calling thread's logical warp (may be less than `LogicalWarpThreads`)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Segmented reductions
+
+### HeadSegmentedSum <Badge intent="note" minimal>inline</Badge>
+
+Computes a segmented sum in the calling warp where segments are defined by head-flags. The sum of each segment is returned to the first lane in that segment (which always includes *lane*<sub>0</sub>).
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename FlagT>
+T cub::WarpReduce<T, LogicalWarpThreads>::HeadSegmentedSum(
+    T input,
+    FlagT head_flag
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="head_flag" type="FlagT">
+Head flag denoting whether or not `input` is the start of a new segment
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a head-segmented warp sum reduction within a block of 32 threads (one warp).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item and flag per thread
+    int thread_data = ...
+    int head_flag = ...
+
+    // Return the warp-wide sums to each lane0
+    int aggregate = WarpReduce(temp_storage).HeadSegmentedSum(
+        thread_data, head_flag);
+}
+```
+
+---
+
+### TailSegmentedSum <Badge intent="note" minimal>inline</Badge>
+
+Computes a segmented sum in the calling warp where segments are defined by tail-flags. The sum of each segment is returned to the first lane in that segment (which always includes *lane*<sub>0</sub>).
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename FlagT>
+T cub::WarpReduce<T, LogicalWarpThreads>::TailSegmentedSum(
+    T input,
+    FlagT tail_flag
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="tail_flag" type="FlagT">
+Tail flag denoting whether or not `input` is the end of the current segment
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a tail-segmented warp sum reduction within a block of 32 threads (one warp).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item and flag per thread
+    int thread_data = ...
+    int tail_flag = ...
+
+    // Return the warp-wide sums to each lane0
+    int aggregate = WarpReduce(temp_storage).TailSegmentedSum(
+        thread_data, tail_flag);
+}
+```
+
+---
+
+### HeadSegmentedReduce <Badge intent="note" minimal>inline</Badge>
+
+Computes a segmented reduction in the calling warp where segments are defined by head-flags. The reduction of each segment is returned to the first lane in that segment (which always includes *lane*<sub>0</sub>).
+
+Supports non-commutative reduction operators.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename ReductionOp, typename FlagT>
+T cub::WarpReduce<T, LogicalWarpThreads>::HeadSegmentedReduce(
+    T input,
+    FlagT head_flag,
+    ReductionOp reduction_op
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member `T operator()(const T &a, const T &b)`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="head_flag" type="FlagT">
+Head flag denoting whether or not `input` is the start of a new segment
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction operator
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a head-segmented warp max reduction within a block of 32 threads (one warp).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item and flag per thread
+    int thread_data = ...
+    int head_flag = ...
+
+    // Return the warp-wide reductions to each lane0
+    int aggregate = WarpReduce(temp_storage).HeadSegmentedReduce(
+        thread_data, head_flag, cuda::maximum<>{});
+}
+```
+
+---
+
+### TailSegmentedReduce <Badge intent="note" minimal>inline</Badge>
+
+Computes a segmented reduction in the calling warp where segments are defined by tail-flags. The reduction of each segment is returned to the first lane in that segment (which always includes *lane*<sub>0</sub>).
+
+Supports non-commutative reduction operators.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+template <typename ReductionOp, typename FlagT>
+T cub::WarpReduce<T, LogicalWarpThreads>::TailSegmentedReduce(
+    T input,
+    FlagT tail_flag,
+    ReductionOp reduction_op
+)
+```
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.
+</Warning>
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member `T operator()(const T &a, const T &b)`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="tail_flag" type="FlagT">
+Tail flag denoting whether or not `input` is the end of the current segment
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction operator
+</ParamField>
+
+**Example**
+
+The code snippet below illustrates a tail-segmented warp max reduction within a block of 32 threads (one warp).
+
+```cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item and flag per thread
+    int thread_data = ...
+    int tail_flag = ...
+
+    // Return the warp-wide reductions to each lane0
+    int aggregate = WarpReduce(temp_storage).TailSegmentedReduce(
+        thread_data, tail_flag, cuda::maximum<>{});
+}
+```
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| `_TempStorage` | `typename InternalWarpReduce::TempStorage` | Shared memory storage layout type for [WarpReduce](/library/api/cub::WarpReduce). |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| `is_full_warp` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | `bool` | |
+| `is_power_of_two` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | `bool` | |
+| `temp_storage` | [`_TempStorage`](/library/api/cub::WarpReduce::_TempStorage) `&` | Shared storage reference. |
+
+---
+
+## Inner classes
+
+### TempStorage
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+```cpp showLineNumbers={false}
+struct cub::WarpReduce::TempStorage
+```
+</CodeBlock>
+
+The operations exposed by [WarpReduce](/library/api/cub::WarpReduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the `__shared__` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or `union`'d with other storage allocation types to facilitate memory reuse.
+
+**Inherits from:** `Uninitialized< _TempStorage >` (public)

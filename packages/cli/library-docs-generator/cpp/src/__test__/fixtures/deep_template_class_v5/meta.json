@@ -1,0 +1,11 @@
+{
+  "compound_name": "counting_iterator",
+  "qualified_name": "cuda::counting_iterator",
+  "repo": "libcudacxx",
+  "compound_kind": "class",
+  "namespace_path": [
+    "cuda"
+  ],
+  "golden_page": "libcudacxx/deep_template_class_v5.mdx",
+  "status": "MATCHED"
+}

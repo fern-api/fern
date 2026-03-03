@@ -1,0 +1,1535 @@
+{
+  "name": "pointer",
+  "path": "thrust::pointer",
+  "kind": "class",
+  "templateParams": [
+    {
+      "type": "typename Element",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "typename Tag",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "typename Reference",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "typename Derived",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    }
+  ],
+  "baseClasses": [
+    {
+      "name": "thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >",
+      "typeInfo": {
+        "parts": [
+          {
+            "text": "thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >",
+            "refid": "classthrust_1_1iterator__adaptor",
+            "kindref": "compound"
+          }
+        ],
+        "display": "thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >"
+      },
+      "access": "public",
+      "isVirtual": false
+    }
+  ],
+  "derivedClasses": [],
+  "docstring": {
+    "summary": [
+      {
+        "code": "pointer",
+        "type": "code"
+      },
+      {
+        "text": " stores a pointer to an object allocated in memory. ",
+        "type": "text"
+      }
+    ],
+    "description": [
+      {
+        "segments": [
+          {
+            "text": "Like ",
+            "type": "text"
+          },
+          {
+            "code": "device_ptr",
+            "refid": "classthrust_1_1device__ptr",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ", this type ensures type safety when dispatching standard algorithms on ranges resident in memory.",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "code": "pointer",
+            "type": "code"
+          },
+          {
+            "text": " generalizes ",
+            "type": "text"
+          },
+          {
+            "code": "device_ptr",
+            "refid": "classthrust_1_1device__ptr",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " by relaxing the backend system associated with the ",
+            "type": "text"
+          },
+          {
+            "code": "pointer",
+            "type": "code"
+          },
+          {
+            "text": ". Instead of the backend system specified by ",
+            "type": "text"
+          },
+          {
+            "code": "THRUST_DEVICE_SYSTEM",
+            "type": "code"
+          },
+          {
+            "text": ", ",
+            "type": "text"
+          },
+          {
+            "code": "pointer's",
+            "type": "code"
+          },
+          {
+            "text": " system is given by its second template parameter, ",
+            "type": "text"
+          },
+          {
+            "code": "Tag",
+            "type": "code"
+          },
+          {
+            "text": ". For the purpose of Thrust dispatch, ",
+            "type": "text"
+          },
+          {
+            "code": "device_ptr<Element>",
+            "refid": "classthrust_1_1device__ptr",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " and ",
+            "type": "text"
+          },
+          {
+            "code": "pointer<Element,device_system_tag>",
+            "refid": "classthrust_1_1pointer_1a7cc4729c5432d016b6b81c25bfe9cf42",
+            "kindref": "member",
+            "type": "codeRef"
+          },
+          {
+            "text": " are considered equivalent.",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "The raw pointer encapsulated by a ",
+            "type": "text"
+          },
+          {
+            "code": "pointer",
+            "type": "code"
+          },
+          {
+            "text": " may be obtained through its ",
+            "type": "text"
+          },
+          {
+            "code": "get",
+            "refid": "classthrust_1_1pointer_1a4e296a4038c34a94546481b790b8ca03",
+            "kindref": "member",
+            "type": "codeRef"
+          },
+          {
+            "text": " member function or the ",
+            "type": "text"
+          },
+          {
+            "code": "raw_pointer_cast",
+            "type": "code"
+          },
+          {
+            "text": " free function.",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      }
+    ],
+    "params": [],
+    "templateParamsDoc": [
+      {
+        "name": "Element",
+        "description": [
+          {
+            "text": "specifies the type of the pointed-to object.",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "Tag",
+        "description": [
+          {
+            "text": "specifies the system with which this ",
+            "type": "text"
+          },
+          {
+            "code": "pointer",
+            "type": "code"
+          },
+          {
+            "text": " is associated. This may be any Thrust backend system, or a user-defined tag.",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "Reference",
+        "description": [
+          {
+            "text": "allows the client to specify the reference type returned upon derereference. By default, this type is ",
+            "type": "text"
+          },
+          {
+            "code": "reference<Element,pointer>",
+            "type": "code"
+          },
+          {
+            "text": ".",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "Derived",
+        "description": [
+          {
+            "text": "allows the client to specify the name of the derived type when ",
+            "type": "text"
+          },
+          {
+            "code": "pointer",
+            "type": "code"
+          },
+          {
+            "text": " is used as a base class. This is useful to ensure that arithmetic on values of the derived type return values of the derived type as a result. By default, this type is ",
+            "type": "text"
+          },
+          {
+            "code": "pointer<Element,Tag,Reference>",
+            "refid": "classthrust_1_1pointer_1a7cc4729c5432d016b6b81c25bfe9cf42",
+            "kindref": "member",
+            "type": "codeRef"
+          },
+          {
+            "text": ".",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      }
+    ],
+    "raises": [],
+    "examples": [],
+    "notes": [
+      [
+        {
+          "code": "pointer",
+          "type": "code"
+        },
+        {
+          "text": " is not a smart pointer; it is the client's responsibility to deallocate memory pointer to by ",
+          "type": "text"
+        },
+        {
+          "code": "pointer",
+          "type": "code"
+        },
+        {
+          "text": ".",
+          "type": "text"
+        }
+      ]
+    ],
+    "warnings": [],
+    "remarks": [],
+    "preconditions": [],
+    "postconditions": [],
+    "seeAlso": [
+      [
+        {
+          "text": "device_ptr",
+          "refid": "classthrust_1_1device__ptr",
+          "kindref": "compound",
+          "type": "ref"
+        },
+        {
+          "text": " ",
+          "type": "text"
+        }
+      ],
+      [
+        {
+          "text": "reference ",
+          "type": "text"
+        }
+      ],
+      [
+        {
+          "text": "raw_pointer_cast",
+          "refid": "group__memory__management_1ga4215d3848717050f7c47f36e43b7c19a",
+          "kindref": "member",
+          "type": "ref"
+        },
+        {
+          "text": " ",
+          "type": "text"
+        }
+      ]
+    ],
+    "returns": null,
+    "deprecated": null
+  },
+  "isAbstract": false,
+  "isFinal": false,
+  "includeHeader": "pointer.h",
+  "methods": [
+    {
+      "name": "dereference",
+      "path": "thrust::pointer::dereference",
+      "signature": "SuperRef thrust::pointer< Element, Tag, Reference, Derived >::dereference() const",
+      "templateParams": [
+        {
+          "type": "typename SuperRef",
+          "defaultValue": {
+            "parts": [
+              "typename super_t::reference"
+            ],
+            "display": "typename super_t::reference"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "SuperRef"
+        ],
+        "display": "SuperRef"
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "pointer",
+      "path": "thrust::pointer::pointer",
+      "signature": "thrust::pointer< Element, Tag, Reference, Derived >::pointer()",
+      "templateParams": [],
+      "parameters": [],
+      "docstring": {
+        "summary": [
+          {
+            "code": "pointer's",
+            "type": "code"
+          },
+          {
+            "text": " default constructor initializes its encapsulated pointer to ",
+            "type": "text"
+          },
+          {
+            "code": "0",
+            "type": "code"
+          },
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "pointer",
+      "path": "thrust::pointer::pointer",
+      "signature": "thrust::pointer< Element, Tag, Reference, Derived >::pointer(::cuda::std::nullptr_t)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "::cuda::std::nullptr_t"
+            ],
+            "display": "::cuda::std::nullptr_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "pointer",
+      "path": "thrust::pointer::pointer",
+      "signature": "thrust::pointer< Element, Tag, Reference, Derived >::pointer(OtherElement *ptr)",
+      "templateParams": [
+        {
+          "type": "typename OtherElement",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "ptr",
+          "typeInfo": {
+            "parts": [
+              "OtherElement *"
+            ],
+            "display": "OtherElement *"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor allows construction of a ",
+            "type": "text"
+          },
+          {
+            "code": "pointer<const T, ...>",
+            "refid": "classthrust_1_1pointer_1a7cc4729c5432d016b6b81c25bfe9cf42",
+            "kindref": "member",
+            "type": "codeRef"
+          },
+          {
+            "text": " from a ",
+            "type": "text"
+          },
+          {
+            "code": "T*",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "ptr",
+            "description": [
+              {
+                "text": "A raw pointer to copy from, presumed to point to a location in ",
+                "type": "text"
+              },
+              {
+                "code": "Tag's",
+                "type": "code"
+              },
+              {
+                "text": " memory. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "OtherElement",
+            "description": [
+              {
+                "code": "OtherElement",
+                "type": "code"
+              },
+              {
+                "text": " shall be convertible to ",
+                "type": "text"
+              },
+              {
+                "code": "Element",
+                "type": "code"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "pointer",
+      "path": "thrust::pointer::pointer",
+      "signature": "thrust::pointer< Element, Tag, Reference, Derived >::pointer(const OtherPointer &other)",
+      "templateParams": [
+        {
+          "type": "typename OtherPointer",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "detail::enable_if_pointer_is_convertible_t< OtherPointer, pointer > *",
+          "defaultValue": {
+            "parts": [
+              "nullptr"
+            ],
+            "display": "nullptr"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "other",
+          "typeInfo": {
+            "parts": [
+              "const OtherPointer &"
+            ],
+            "display": "const OtherPointer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor allows initialization from another pointer-like object. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "other",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "OtherPointer",
+                "type": "code"
+              },
+              {
+                "text": " to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "OtherPointer",
+            "description": [
+              {
+                "text": "The tag associated with ",
+                "type": "text"
+              },
+              {
+                "code": "OtherPointer",
+                "type": "code"
+              },
+              {
+                "text": " shall be convertible to ",
+                "type": "text"
+              },
+              {
+                "code": "Tag",
+                "type": "code"
+              },
+              {
+                "text": ", and its element type shall be convertible to ",
+                "type": "text"
+              },
+              {
+                "code": "Element",
+                "type": "code"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "thrust::pointer::operator=",
+      "signature": "derived_type & thrust::pointer< Element, Tag, Reference, Derived >::operator=(::cuda::std::nullptr_t)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "::cuda::std::nullptr_t"
+            ],
+            "display": "::cuda::std::nullptr_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "derived_type",
+            "refid": "classthrust_1_1pointer_1a3fadd059a3d6ad2afad8f55a76c5a803",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "derived_type &"
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "thrust::pointer::operator=",
+      "signature": "detail::enable_if_pointer_is_convertible_t< OtherPointer, pointer, derived_type & > thrust::pointer< Element, Tag, Reference, Derived >::operator=(const OtherPointer &other)",
+      "templateParams": [
+        {
+          "type": "typename OtherPointer",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "other",
+          "typeInfo": {
+            "parts": [
+              "const OtherPointer &"
+            ],
+            "display": "const OtherPointer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "detail::enable_if_pointer_is_convertible_t< OtherPointer, ",
+          {
+            "text": "pointer",
+            "refid": "classthrust_1_1pointer_1a7cc4729c5432d016b6b81c25bfe9cf42",
+            "kindref": "member"
+          },
+          ", ",
+          {
+            "text": "derived_type",
+            "refid": "classthrust_1_1pointer_1a3fadd059a3d6ad2afad8f55a76c5a803",
+            "kindref": "member"
+          },
+          " & >"
+        ],
+        "display": "detail::enable_if_pointer_is_convertible_t< OtherPointer, pointer, derived_type & >"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Assignment operator allows assigning from another pointer-like object whose element type is convertible to ",
+            "type": "text"
+          },
+          {
+            "code": "Element",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "other",
+            "description": [
+              {
+                "text": "The other pointer-like object to assign from. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "OtherPointer",
+            "description": [
+              {
+                "text": "The tag associated with ",
+                "type": "text"
+              },
+              {
+                "code": "OtherPointer",
+                "type": "code"
+              },
+              {
+                "text": " shall be convertible to ",
+                "type": "text"
+              },
+              {
+                "code": "Tag",
+                "type": "code"
+              },
+              {
+                "text": ", and its element type shall be convertible to ",
+                "type": "text"
+              },
+              {
+                "code": "Element",
+                "type": "code"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "returns": [
+          {
+            "code": "*this",
+            "type": "code"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "get",
+      "path": "thrust::pointer::get",
+      "signature": "Element * thrust::pointer< Element, Tag, Reference, Derived >::get() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "Element *"
+        ],
+        "display": "Element *"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "code": "get",
+            "type": "code"
+          },
+          {
+            "text": " returns this ",
+            "type": "text"
+          },
+          {
+            "code": "pointer's",
+            "type": "code"
+          },
+          {
+            "text": " encapsulated raw pointer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "This ",
+            "type": "text"
+          },
+          {
+            "code": "pointer's",
+            "type": "code"
+          },
+          {
+            "text": " raw pointer. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator->",
+      "path": "thrust::pointer::operator->",
+      "signature": "Element * thrust::pointer< Element, Tag, Reference, Derived >::operator->() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "Element *"
+        ],
+        "display": "Element *"
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator bool",
+      "path": "thrust::pointer::operator bool",
+      "signature": "thrust::pointer< Element, Tag, Reference, Derived >::operator bool() const",
+      "templateParams": [],
+      "parameters": [],
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "base",
+      "path": "thrust::iterator_adaptor::base",
+      "signature": "Base const  & thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >::base() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "Base const &"
+        ],
+        "display": "Base const &"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A ",
+            "type": "text"
+          },
+          {
+            "code": "const",
+            "type": "code"
+          },
+          {
+            "text": " reference to the ",
+            "type": "text"
+          },
+          {
+            "code": "Base",
+            "type": "code"
+          },
+          {
+            "text": " iterator this ",
+            "type": "text"
+          },
+          {
+            "code": "iterator_adaptor",
+            "refid": "classthrust_1_1iterator__adaptor",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " adapts. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "base_reference",
+      "path": "thrust::iterator_adaptor::base_reference",
+      "signature": "Base const  & thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >::base_reference() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "Base const &"
+        ],
+        "display": "Base const &"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A ",
+            "type": "text"
+          },
+          {
+            "code": "const",
+            "type": "code"
+          },
+          {
+            "text": " reference to the ",
+            "type": "text"
+          },
+          {
+            "code": "Base",
+            "type": "code"
+          },
+          {
+            "text": " iterator this ",
+            "type": "text"
+          },
+          {
+            "code": "iterator_adaptor",
+            "refid": "classthrust_1_1iterator__adaptor",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " adapts. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "base_reference",
+      "path": "thrust::iterator_adaptor::base_reference",
+      "signature": "Base & thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >::base_reference()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "Base &"
+        ],
+        "display": "Base &"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A mutable reference to the ",
+            "type": "text"
+          },
+          {
+            "code": "Base",
+            "type": "code"
+          },
+          {
+            "text": " iterator this ",
+            "type": "text"
+          },
+          {
+            "code": "iterator_adaptor",
+            "refid": "classthrust_1_1iterator__adaptor",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " adapts. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "staticMethods": [
+    {
+      "name": "pointer_to",
+      "path": "thrust::pointer::pointer_to",
+      "signature": "static derived_type thrust::pointer< Element, Tag, Reference, Derived >::pointer_to(typename detail::pointer_traits_detail::pointer_to_param< Element >::type r)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "r",
+          "typeInfo": {
+            "parts": [
+              "typename detail::pointer_traits_detail::pointer_to_param< Element >::type"
+            ],
+            "display": "typename detail::pointer_traits_detail::pointer_to_param< Element >::type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "derived_type",
+            "refid": "classthrust_1_1pointer_1a3fadd059a3d6ad2afad8f55a76c5a803",
+            "kindref": "member"
+          }
+        ],
+        "display": "derived_type"
+      },
+      "isStatic": true,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "friendFunctions": [],
+  "typedefs": [
+    {
+      "name": "super_t",
+      "path": "thrust::pointer::super_t",
+      "typeInfo": {
+        "parts": [
+          "typename detail::pointer_base< Element, Tag, Reference, Derived >::type"
+        ],
+        "display": "typename detail::pointer_base< Element, Tag, Reference, Derived >::type"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "derived_type",
+      "path": "thrust::pointer::derived_type",
+      "typeInfo": {
+        "parts": [
+          "typename detail::pointer_base< Element, Tag, Reference, Derived >::derived_type"
+        ],
+        "display": "typename detail::pointer_base< Element, Tag, Reference, Derived >::derived_type"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "raw_pointer",
+      "path": "thrust::pointer::raw_pointer",
+      "typeInfo": {
+        "parts": [
+          "typename super_t::base_type"
+        ],
+        "display": "typename super_t::base_type"
+      },
+      "templateParams": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "The type of the raw pointer. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      }
+    },
+    {
+      "name": "base_type",
+      "path": "thrust::iterator_adaptor::base_type",
+      "typeInfo": {
+        "parts": [
+          "Base"
+        ],
+        "display": "Base"
+      },
+      "templateParams": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "The type of iterator this ",
+            "type": "text"
+          },
+          {
+            "code": "iterator_adaptor",
+            "refid": "classthrust_1_1iterator__adaptor",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "code": "'s",
+            "type": "code"
+          },
+          {
+            "text": " ",
+            "type": "text"
+          },
+          {
+            "code": "adapts",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      }
+    }
+  ],
+  "memberVariables": [],
+  "enums": [],
+  "innerClasses": [],
+  "relatedMemberRefs": [],
+  "sectionLabels": {}
+}

@@ -1,0 +1,11 @@
+{
+  "compound_name": "buffer",
+  "qualified_name": "cuda::buffer",
+  "repo": "libcudacxx",
+  "compound_kind": "class",
+  "namespace_path": [
+    "cuda"
+  ],
+  "golden_page": "libcudacxx/empty_docstring_class_v5.mdx",
+  "status": "MATCHED"
+}

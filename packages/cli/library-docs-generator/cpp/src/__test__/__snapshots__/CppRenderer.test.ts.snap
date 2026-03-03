@@ -1,0 +1,6086 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Snapshot: Rendered output > should match snapshot for block_reduce_v5 1`] = `
+"---
+title: cub::BlockReduce
+description: ""
+---
+
+The BlockReduce class provides collective  methods for computing a
+parallel reduction of items partitioned across a CUDA thread block.
+
+## Performance considerations
+
+- Performance is sensitive to the degree of data movement across the block.
+- Very efficient (only one synchronization barrier).
+- Incurs zero bank conflicts for most types
+- Computation is slightly more efficient (i.e., having lower instruction overhead) for:
+  - Summation (vs. generic reduction)
+  - \`BLOCK_THREADS\` is a multiple of the architecture's warp size
+  - Every thread has a valid input (i.e., full vs. partial-tiles)
+- See cub::BlockReduceAlgorithm for performance details regarding algorithmic alternatives
+
+## Example
+
+The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in
+a blocked arrangement  across 128 threads where each thread
+owns 4 consecutive items.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Obtain a segment of consecutive items that are blocked across threads
+    int thread_data[4];
+    ...
+
+    // Compute the block-wide sum for thread0
+    int aggregate = BlockReduce(temp_storage).Sum(thread_data);
+}
+\`\`\`
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="T" type="typename">
+Data type being reduced
+</ParamField>
+
+<ParamField path="BlockDimX" type="int">
+The thread block length in threads along the X dimension
+</ParamField>
+
+<ParamField path="Algorithm" type="BlockReduceAlgorithm" default="BLOCK_REDUCE_WARP_REDUCTIONS">
+**[optional]** [Cub::BlockReduceAlgorithm](/library/api/cub::BlockReduceAlgorithm) enumerator specifying the underlying algorithm to use (default: [cub::BLOCK_REDUCE_WARP_REDUCTIONS](/library/api/cub::BLOCK_REDUCE_WARP_REDUCTIONS))
+</ParamField>
+
+<ParamField path="BlockDimY" type="int" default="1">
+**[optional]** The thread block length in threads along the Y dimension (default: 1)
+</ParamField>
+
+<ParamField path="BlockDimZ" type="int" default="1">
+**[optional]** The thread block length in threads along the Z dimension (default: 1)
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Collective constructors
+
+### BlockReduce <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Default">
+
+Collective constructor using a private static allocation of shared memory as temporary storage.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockReduce()
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+</Tab>
+<Tab title="With TempStorage">
+
+Collective constructor using the specified memory allocation as temporary storage.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce", "TempStorage": "/library/api/cub::_block_reduce::_temp_storage"}}>
+\`\`\`cpp showLineNumbers={false}
+cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockReduce(
+    TempStorage &temp_storage
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="temp_storage" type="TempStorage &">
+Reference to memory allocation having layout type [TempStorage](/library/api/cub::_block_reduce::_temp_storage)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Generic reductions
+
+### Reduce <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction functor.
+Each thread contributes one input element.
+
+
+- The return value is undefined in threads other than thread<sub>0</sub>.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ReductionOp>
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
+    T input,
+    ReductionOp reduction_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction functor
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction
+functor. Each thread contributes an array of consecutive input elements.
+
+
+- The return value is undefined in threads other than thread<sub>0</sub>.
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ReductionOp>
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
+    T(&inputs)[ITEMS_PER_THREAD],
+    ReductionOp reduction_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="inputs" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input segment
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction functor
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction
+functor. The first \`num_valid\` threads each contribute one input element.
+
+
+- The return value is undefined in threads other than thread<sub>0</sub>.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ReductionOp>
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
+    T input,
+    ReductionOp reduction_op,
+    int num_valid
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction functor
+</ParamField>
+
+<ParamField path="num_valid" type="int">
+Number of threads containing valid elements (may be less than BLOCK_THREADS)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Summation reductions
+
+### Sum <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction operator.
+Each thread contributes one input element.
+
+
+- The return value is undefined in threads other than thread<sub>0</sub>.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(T input)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction
+operator. Each thread contributes an array of consecutive input elements.
+
+
+- The return value is undefined in threads other than thread<sub>0</sub>.
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD>
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(T(&inputs)[ITEMS_PER_THREAD])
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="inputs" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input segment
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction
+operator. The first \`num_valid\` threads each contribute one input element.
+
+
+- The return value is undefined in threads other than thread<sub>0</sub>.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(
+    T input,
+    int num_valid
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="num_valid" type="int">
+Number of threads containing valid elements (may be less than BLOCK_THREADS)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### PrivateStorage <Badge intent="note" minimal>inline</Badge>
+
+Internal storage allocator.
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+_TempStorage & cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::PrivateStorage()
+\`\`\`
+</CodeBlock>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| \`WarpReductions\` | \`detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ >\` |  |
+| \`WarpReductionsNondeterministic\` | \`detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ, false >\` |  |
+| \`RakingCommutativeOnly\` | \`detail::BlockReduceRakingCommutativeOnly< T, BlockDimX, BlockDimY, BlockDimZ >\` |  |
+| \`Raking\` | \`detail::BlockReduceRaking< T, BlockDimX, BlockDimY, BlockDimZ >\` |  |
+| \`InternalBlockReduce\` | \`::cuda::std::_If< Algorithm==BLOCK_REDUCE_WARP_REDUCTIONS, WarpReductions, ::cuda::std::_If< Algorithm==BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC, WarpReductionsNondeterministic, ::cuda::std::_If< Algorithm==BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY, RakingCommutativeOnly, Raking > > >\` | Internal specialization type. |
+| \`_TempStorage\` | \`typename InternalBlockReduce::TempStorage\` | Shared memory storage layout type for [BlockReduce](/library/api/cub::_block_reduce). |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| \`BLOCK_THREADS\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`int\` | The thread block size in threads. |
+| \`temp_storage\` | \`_TempStorage &\` | Shared storage reference. |
+| \`linear_tid\` | \`unsigned int\` | Linear thread-id. |
+
+---
+
+## Inner classes
+
+### TempStorage
+
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+struct cub::BlockReduce::TempStorage
+\`\`\`
+</CodeBlock>
+
+The operations exposed by [BlockReduce](/library/api/cub::_block_reduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+
+**Inherits from:** \`Uninitialized< _TempStorage >\` (public)
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for block_scan_v5 1`] = `
+"---
+title: cub::BlockScan
+description: ""
+---
+
+The BlockScan class provides collective  methods for computing a parallel prefix
+sum/scan of items partitioned across a CUDA thread block.
+
+## Performance considerations
+
+- Performance is sensitive to the degree of data movement across the block.
+- Uses special instructions when applicable (e.g., warp \`SHFL\`)
+- Uses synchronization-free communication between warp lanes when applicable
+- Invokes a minimal number of minimal block-wide synchronization barriers (only
+  one or two depending on algorithm selection)
+- Incurs zero bank conflicts for most types
+- Computation is slightly more efficient (i.e., having lower instruction overhead) for:
+
+  - Prefix sum variants (vs. generic scan)
+  - @blocksize
+
+- See cub::BlockScanAlgorithm for performance details regarding algorithmic alternatives
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="T" type="typename">
+Data type being scanned
+</ParamField>
+
+<ParamField path="BlockDimX" type="int">
+The thread block length in threads along the X dimension
+</ParamField>
+
+<ParamField path="Algorithm" type="BlockScanAlgorithm" default="BLOCK_SCAN_RAKING">
+**[optional]** [Cub::BlockScanAlgorithm](/library/api/cub::BlockScanAlgorithm) enumerator specifying the underlying algorithm to use (default: [cub::BLOCK_SCAN_RAKING](/library/api/cub::BLOCK_SCAN_RAKING))
+</ParamField>
+
+<ParamField path="BlockDimY" type="int" default="1">
+**[optional]** The thread block length in threads along the Y dimension (default: 1)
+</ParamField>
+
+<ParamField path="BlockDimZ" type="int" default="1">
+**[optional]** The thread block length in threads along the Z dimension (default: 1)
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Collective constructors
+
+### BlockScan <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Default">
+
+Collective constructor using a private static allocation of shared memory as temporary storage.
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockScan()
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+</Tab>
+<Tab title="With TempStorage">
+
+Collective constructor using the specified memory allocation as temporary storage.
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan", "TempStorage": "/library/api/cub::_block_scan::_temp_storage"}}>
+\`\`\`cpp showLineNumbers={false}
+cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockScan(TempStorage &temp_storage)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="temp_storage" type="TempStorage &">
+Reference to memory allocation having layout type [TempStorage](/library/api/cub::_block_scan::_temp_storage)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Exclusive prefix sum operations
+
+### ExclusiveSum <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes one input element. The value of 0 is applied as the initial value, and is assigned
+to \`output\` in *thread*<sub>0</sub>.
+
+
+- @identityzero
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
+    T input,
+    T &output
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes one input element.
+The value of 0 is applied as the initial value, and is assigned to \`output\` in *thread*<sub>0</sub>.
+Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
+
+
+- @identityzero
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
+    T input,
+    T &output,
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes one input element.  Instead of using 0 as the block-wide prefix, the call-back functor
+\`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by
+*lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's
+scan inputs.
+
+
+- @identityzero
+- The \`block_prefix_callback_op\` functor must implement a member function
+  \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block,
+  however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename BlockPrefixCallbackOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
+    T input,
+    T &output,
+    BlockPrefixCallbackOp &block_prefix_callback_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="BlockPrefixCallbackOp" type="typename">
+**[inferred]** Call-back functor type having member \`T operator()(T block_aggregate)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="block_prefix_callback_op" type="BlockPrefixCallbackOp &">
+Embed:rst:leading-asterisk 
+//!   *warp*\\ :sub:\`0\` only call-back functor for specifying a block-wide prefix to be applied to
+//!   the logical input sequence.
+//!
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Exclusive prefix sum operations (multiple data per thread)
+
+### ExclusiveSum <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes an array of consecutive input elements.
+The value of 0 is applied as the initial value, and is assigned to \`output[0]\` in *thread*<sub>0</sub>.
+
+
+- @identityzero
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD]
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes an array of consecutive input elements.
+The value of 0 is applied as the initial value, and is assigned to \`output[0]\` in *thread*<sub>0</sub>.
+Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
+
+
+- @identityzero
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes an array of consecutive input elements.
+Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by
+the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed"
+value that logically prefixes the thread block's scan inputs.
+
+
+- @identityzero
+- The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`.
+  The functor will be invoked by the first warp of threads in the block, however only the return value from
+  *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename BlockPrefixCallbackOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    BlockPrefixCallbackOp &block_prefix_callback_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="BlockPrefixCallbackOp" type="typename">
+**[inferred]** Call-back functor type having member \`T operator()(T block_aggregate)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="block_prefix_callback_op" type="BlockPrefixCallbackOp &">
+Embed:rst:leading-asterisk 
+//!   *warp*\\ :sub:\`0\` only call-back functor for specifying a block-wide prefix to be applied to
+//!   the logical input sequence.
+//!
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Exclusive prefix scan operations
+
+### ExclusiveScan <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes one input element.
+
+
+- Supports non-commutative scan operators.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
+    T input,
+    T &output,
+    T initial_value,
+    ScanOp scan_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="initial_value" type="T">
+Embed:rst:leading-asterisk 
+//!   Initial value to seed the exclusive scan (and is assigned to \`output[0]\` in *thread*\\ :sub:\`0\`)
+//!
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes one input element.
+Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
+
+
+- Supports non-commutative scan operators.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
+    T input,
+    T &output,
+    T initial_value,
+    ScanOp scan_op,
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="initial_value" type="T">
+Embed:rst:leading-asterisk 
+//!   Initial value to seed the exclusive scan (and is assigned to \`\`output[0]\`\` in *thread*\\ :sub:\`0\`). It is not
+//!   taken into account for \`\`block_aggregate\`\`.
+//!
+//!
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes one input element. The call-back functor \`block_prefix_callback_op\` is invoked by
+the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as
+the "seed" value that logically prefixes the thread block's scan inputs.
+
+
+- The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`.
+  The functor will be invoked by the first warp of threads in the block, however only the return value from
+  *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+- Supports non-commutative scan operators.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ScanOp, typename BlockPrefixCallbackOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
+    T input,
+    T &output,
+    ScanOp scan_op,
+    BlockPrefixCallbackOp &block_prefix_callback_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+<ParamField path="BlockPrefixCallbackOp" type="typename">
+**[inferred]** Call-back functor type having member \`T operator()(T block_aggregate)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_prefix_callback_op" type="BlockPrefixCallbackOp &">
+Embed:rst:leading-asterisk 
+//!   *warp*\\ :sub:\`0\` only call-back functor for specifying a block-wide prefix to be applied to
+//!   the logical input sequence.
+//!
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Exclusive prefix scan operations (multiple data per thread)
+
+### ExclusiveScan <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes an array of consecutive input elements.
+
+
+- Supports non-commutative scan operators.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    T initial_value,
+    ScanOp scan_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="initial_value" type="T">
+Embed:rst:leading-asterisk 
+//!   Initial value to seed the exclusive scan (and is assigned to \`output[0]\` in *thread*\\ :sub:\`0\`)
+//!
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes an array of consecutive input elements.
+Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
+
+
+- Supports non-commutative scan operators.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    T initial_value,
+    ScanOp scan_op,
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="initial_value" type="T">
+Embed:rst:leading-asterisk 
+//!   Initial value to seed the exclusive scan (and is assigned to \`output[0]\` in *thread*\\ :sub:\`0\`). It is not taken
+//!   into account for \`\`block_aggregate\`\`.
+//!
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes an array of consecutive input elements.
+The call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value
+returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread
+block's scan inputs.
+
+
+- The \`block_prefix_callback_op\` functor must implement a member function
+  \`T operator()(T block_aggregate)\`. The functor will be invoked by the
+  first warp of threads in the block, however only the return value from
+  *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+- Supports non-commutative scan operators.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ScanOp, typename BlockPrefixCallbackOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    ScanOp scan_op,
+    BlockPrefixCallbackOp &block_prefix_callback_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+<ParamField path="BlockPrefixCallbackOp" type="typename">
+**[inferred]** Call-back functor type having member \`T operator()(T block_aggregate)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_prefix_callback_op" type="BlockPrefixCallbackOp &">
+Embed:rst:leading-asterisk 
+//!   *warp*\\ :sub:\`0\` only call-back functor for specifying a block-wide prefix to be applied to
+//!   the logical input sequence.
+//!
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Inclusive prefix sum operations
+
+### InclusiveSum <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes an inclusive block-wide prefix scan using addition (+)
+as the scan operator. Each thread contributes one input element.
+
+
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
+    T input,
+    T &output
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes one input element.
+Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
+
+
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
+    T input,
+    T &output,
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes one input element. Instead of using 0 as the block-wide prefix, the call-back functor
+\`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by
+*lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's
+scan inputs.
+
+
+- The \`block_prefix_callback_op\` functor must implement a member function
+  \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block,
+  however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename BlockPrefixCallbackOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
+    T input,
+    T &output,
+    BlockPrefixCallbackOp &block_prefix_callback_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="BlockPrefixCallbackOp" type="typename">
+**[inferred]** Call-back functor type having member \`T operator()(T block_aggregate)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="block_prefix_callback_op" type="BlockPrefixCallbackOp &">
+Embed:rst:leading-asterisk 
+//!   *warp*\\ :sub:\`0\` only call-back functor for specifying a block-wide prefix to be applied
+//!   to the logical input sequence.
+//!
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Inclusive prefix sum operations (multiple data per thread)
+
+### InclusiveSum <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes an array of consecutive input elements.
+
+
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD]
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes an array of consecutive input elements.
+Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
+
+
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
+Each thread contributes an array of consecutive input elements.
+Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by
+the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed"
+value that logically prefixes the thread block's scan inputs.
+
+
+- The \`block_prefix_callback_op\` functor must implement a member function
+  \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block,
+  however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename BlockPrefixCallbackOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    BlockPrefixCallbackOp &block_prefix_callback_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="BlockPrefixCallbackOp" type="typename">
+**[inferred]** Call-back functor type having member \`T operator()(T block_aggregate)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="block_prefix_callback_op" type="BlockPrefixCallbackOp &">
+Embed:rst:leading-asterisk 
+//!   *warp*\\ :sub:\`0\` only call-back functor for specifying a block-wide prefix to be applied to the
+//!   logical input sequence.
+//!
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Inclusive prefix scan operations
+
+### InclusiveScan <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes one input element.
+
+
+- Supports non-commutative scan operators.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
+    T input,
+    T &output,
+    ScanOp scan_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes one input element. Also provides every thread with the block-wide
+\`block_aggregate\` of all inputs.
+
+
+- Supports non-commutative scan operators.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
+    T input,
+    T &output,
+    ScanOp scan_op,
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes one input element. The call-back functor \`block_prefix_callback_op\`
+is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as
+the "seed" value that logically prefixes the thread block's scan inputs.
+
+
+- The \`block_prefix_callback_op\` functor must implement a member function
+  \`T operator()(T block_aggregate)\`. The functor's input parameter
+  The functor will be invoked by the first warp of threads in the block,
+  however only the return value from *lane*<sub>0</sub> is applied
+  as the block-wide prefix. Can be stateful.
+- Supports non-commutative scan operators.
+- Threads are assumed to be in row-major order.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ScanOp, typename BlockPrefixCallbackOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
+    T input,
+    T &output,
+    ScanOp scan_op,
+    BlockPrefixCallbackOp &block_prefix_callback_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+<ParamField path="BlockPrefixCallbackOp" type="typename">
+**[inferred]** Call-back functor type having member \`T operator()(T block_aggregate)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input item
+</ParamField>
+
+<ParamField path="output" type="T &">
+Calling thread's output item (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_prefix_callback_op" type="BlockPrefixCallbackOp &">
+Embed:rst:leading-asterisk 
+//!   *warp*\\ :sub:\`0\` only call-back functor for specifying a block-wide prefix to be applied to
+//!   the logical input sequence.
+//!
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Inclusive prefix scan operations (multiple data per thread)
+
+### InclusiveScan <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes an array of consecutive input elements.
+
+
+- Supports non-commutative scan operators.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    ScanOp scan_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes an array of consecutive input elements.
+
+
+- Supports non-commutative scan operators.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    T initial_value,
+    ScanOp scan_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="initial_value" type="T">
+Initial value to seed the inclusive scan (uniform across block)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes an array of consecutive input elements. Also provides every thread
+with the block-wide \`block_aggregate\` of all inputs.
+
+
+- Supports non-commutative scan operators.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    ScanOp scan_op,
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 4">
+
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes an array of consecutive input elements. Also provides every thread
+with the block-wide \`block_aggregate\` of all inputs.
+
+
+- Supports non-commutative scan operators.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ScanOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    T initial_value,
+    ScanOp scan_op,
+    T &block_aggregate
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="initial_value" type="T">
+Initial value to seed the inclusive scan (uniform across block). It is not taken into account for \`block_aggregate\`.
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_aggregate" type="T &">
+Block-wide aggregate reduction of input items
+</ParamField>
+
+</Tab>
+<Tab title="Overload 5">
+
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
+Each thread contributes an array of consecutive input elements.
+The call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block,
+and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the
+thread block's scan inputs.
+
+
+- The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`.
+  The functor will be invoked by the first warp of threads in the block, however only the return value
+  from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+- Supports non-commutative scan operators.
+- @blocked
+- Performance is sensitive to the degree of data movement across the block.
+- @smemreuse
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+template <int ITEMS_PER_THREAD, typename ScanOp, typename BlockPrefixCallbackOp>
+void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
+    T(&input)[ITEMS_PER_THREAD],
+    T(&output)[ITEMS_PER_THREAD],
+    ScanOp scan_op,
+    BlockPrefixCallbackOp &block_prefix_callback_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ITEMS_PER_THREAD" type="int">
+**[inferred]** The number of consecutive items partitioned onto each thread.
+</ParamField>
+
+<ParamField path="ScanOp" type="typename">
+**[inferred]** Binary scan functor type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+<ParamField path="BlockPrefixCallbackOp" type="typename">
+**[inferred]** Call-back functor type having member \`T operator()(T block_aggregate)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's input items
+</ParamField>
+
+<ParamField path="output" type="T(&)[ITEMS_PER_THREAD]">
+Calling thread's output items (may be aliased to \`input\`)
+</ParamField>
+
+<ParamField path="scan_op" type="ScanOp">
+Binary scan functor
+</ParamField>
+
+<ParamField path="block_prefix_callback_op" type="BlockPrefixCallbackOp &">
+Embed:rst:leading-asterisk 
+//!   *warp*\\ :sub:\`0\` only call-back functor for specifying a block-wide prefix to be applied to
+//!   the logical input sequence.
+//!
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### PrivateStorage <Badge intent="note" minimal>inline</Badge>
+
+Internal storage allocator.
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+_TempStorage & cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::PrivateStorage()
+\`\`\`
+</CodeBlock>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| \`WarpScans\` | \`detail::BlockScanWarpScans< T, BlockDimX, BlockDimY, BlockDimZ >\` |  |
+| \`Raking\` | \`detail::BlockScanRaking< T, BlockDimX, BlockDimY, BlockDimZ,(SAFE_ALGORITHM==BLOCK_SCAN_RAKING_MEMOIZE)>\` |  |
+| \`InternalBlockScan\` | \`::cuda::std::_If< SAFE_ALGORITHM==BLOCK_SCAN_WARP_SCANS, WarpScans, Raking >\` | Define the delegate type for the desired algorithm. |
+| \`_TempStorage\` | \`typename InternalBlockScan::TempStorage\` | Shared memory storage layout type for [BlockScan](/library/api/cub::_block_scan). |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| \`BLOCK_THREADS\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`int\` | The thread block size in threads. |
+| \`SAFE_ALGORITHM\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`BlockScanAlgorithm\` | Ensure the template parameterization meets the requirements of the specified algorithm. |
+| \`temp_storage\` | \`_TempStorage &\` | Shared storage reference. |
+| \`linear_tid\` | \`unsigned int\` | Linear thread-id. |
+
+---
+
+## Inner classes
+
+### TempStorage
+
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
+\`\`\`cpp showLineNumbers={false}
+struct cub::BlockScan::TempStorage
+\`\`\`
+</CodeBlock>
+
+The operations exposed by [BlockScan](/library/api/cub::_block_scan) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+
+**Inherits from:** \`Uninitialized< _TempStorage >\` (public)
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for concept_example_v5 1`] = `
+"---
+title: "cuda::mr::resource_with"
+description: "The \`resource_with\` concept verifies that a type Resource satisfies the [\`resource\`](/library/api/cuda::mr::resource) concept and also satisfies all the provided Properties."
+---
+
+<Badge intent="info">C++20 concept</Badge>
+
+The \`resource_with\` concept verifies that a type Resource satisfies the [\`resource\`](/library/api/cuda::mr::resource) concept and also satisfies all the provided Properties.
+
+<CodeBlock links={{"resource": "/library/api/cuda::mr::resource"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Resource, class... _Properties>
+concept resource_with = /* see description */;
+\`\`\`
+</CodeBlock>
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+
+</Accordion>
+</AccordionGroup>
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for deep_template_class_v5 1`] = `
+"---
+title: "cuda::counting_iterator"
+description: "A \`counting_iterator\` represents an iterator into a range of sequentially increasing values."
+---
+
+A \`counting_iterator\` represents an iterator into a range of sequentially increasing values.
+
+This iterator is useful for creating a range filled with a sequence without explicitly storing it in memory. Using \`counting_iterator\` saves memory capacity and bandwidth.
+
+The following code snippet demonstrates how to create a \`counting_iterator\` whose [\`value_type\`](/libcudacxx/api/cuda::counting_iterator::value_type) is \`int\`
+
+\`\`\`cpp showLineNumbers={false}
+#include <cuda/counting_iterator.h>
+\`\`\`
+
+## Example
+
+\`\`\`cpp showLineNumbers={false}
+#include <cuda/iterator>
+...
+// create iterators
+cuda::counting_iterator first(10);
+cuda::counting_iterator last = first + 3;
+
+first[0]   // returns 10
+first[1]   // returns 11
+first[100] // returns 110
+
+// sum of [first, last)
+std::reduce(first, last);   // returns 33 (i.e. 10 + 11 + 12)
+
+// initialize vector to [0,1,2,..]
+cuda::counting_iterator iter(0);
+std::vector<int> vec(500);
+std::copy(iter, iter + vec.size(), vec.begin());
+\`\`\`
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="_Start" type="class">
+The value type of the \`counting_iterator\`.
+</ParamField>
+
+
+</Accordion>
+</AccordionGroup>
+
+**Inherits from:** [\`__counting_iterator_category< _Start >\`](/library/api/__counting_iterator_category) (public)
+
+---
+
+## Constructors
+
+### counting_iterator <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Default">
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Start2,
+          ::cuda::std::enable_if_t< ::cuda::std::default_initializable< _Start2 >, int >>
+cuda::counting_iterator<_Start,,>::counting_iterator() noexcept(::cuda::std::is_nothrow_default_constructible_v< _Start2 >)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Overload 2">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+Creates a \`counting_iterator\` from an initial value.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::counting_iterator<_Start,,>::counting_iterator(
+    _Start __value
+) noexcept(::cuda::std::is_nothrow_move_constructible_v< _Start >)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__value" type="_Start">
+The value to store in the \`counting_iterator\`
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### operator* <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the value currently stored in the \`counting_iterator\`.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+_Start cuda::counting_iterator<_Start,,>::operator*() const noexcept(::cuda::std::is_nothrow_copy_constructible_v< _Start >)
+\`\`\`
+</CodeBlock>
+
+### operator[] <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the value currently stored in the \`counting_iterator\` advanced by a number of steps.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Start2,
+          ::cuda::std::enable_if_t< __advanceable< _Start2 >, int >>
+_Start2 cuda::counting_iterator<_Start,,>::operator[](
+    difference_type __n
+) const noexcept(::cuda::std::is_nothrow_copy_constructible_v< _Start2 > &&noexcept(::cuda::std::declval< const _Start2 & >()+__n))
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__n" type="difference_type">
+The amount of elements to advance
+</ParamField>
+
+### operator++ <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Increments the stored value">
+
+Increments the stored value.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+counting_iterator & cuda::counting_iterator<_Start,,>::operator++() noexcept(++::cuda::std::declval< _Start & >())
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Increments the stored value">
+
+Increments the stored value.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+auto cuda::counting_iterator<_Start,,>::operator++(
+    int
+) noexcept(noexcept(++::cuda::std::declval< _Start & >()) &&::cuda::std::is_nothrow_copy_constructible_v< _Start >)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### operator-- <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Decrements the stored value">
+
+Decrements the stored value.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Start2,
+          ::cuda::std::enable_if_t< __decrementable< _Start2 >, int >>
+counting_iterator & cuda::counting_iterator<_Start,,>::operator--() noexcept(--::cuda::std::declval< _Start2 & >())
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Decrements the stored value">
+
+Decrements the stored value.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Start2,
+          ::cuda::std::enable_if_t< __decrementable< _Start2 >, int >>
+counting_iterator cuda::counting_iterator<_Start,,>::operator--(
+    int
+) noexcept(noexcept(--::cuda::std::declval< _Start2 & >()) &&::cuda::std::is_nothrow_copy_constructible_v< _Start >)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### operator+= <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Increments the stored value by a given number of elements.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+counting_iterator & cuda::counting_iterator<_Start,,>::operator+=(
+    difference_type __n
+) noexcept(::cuda::std::__integer_like< _Start >)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__n" type="difference_type">
+The number of elements to increment
+</ParamField>
+
+### operator-= <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Decrements the stored value by a given number of elements.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Start2,
+          ::cuda::std::enable_if_t< __advanceable< _Start2 >, int >>
+counting_iterator & cuda::counting_iterator<_Start,,>::operator-=(
+    difference_type __n
+) noexcept(::cuda::std::__integer_like< _Start2 >)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__n" type="difference_type">
+The amount of elements to decrement
+</ParamField>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition |
+|---|---|
+| \`iterator_concept\` | \`::cuda::std::conditional_t< __advanceable< _Start >, ::cuda::std::random_access_iterator_tag, ::cuda::std::conditional_t< __decrementable< _Start >, ::cuda::std::bidirectional_iterator_tag, ::cuda::std::conditional_t<::cuda::std::incrementable< _Start >, ::cuda::std::forward_iterator_tag, ::cuda::std::input_iterator_tag > > >\` |
+| \`value_type\` | \`_Start\` |
+| \`difference_type\` | \`_IotaDiffT< _Start >\` |
+| \`reference\` | \`_Start\` |
+| \`pointer\` | \`void\` |
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for deprecated_example_v5 1`] = `
+"---
+title: thrust::strided_iterator
+description: "A \`strided_iterator\` wraps another iterator and moves it by a specified stride each time it is incremented or decremented."
+---
+
+A \`strided_iterator\` wraps another iterator and moves it by a specified stride each time it is incremented or decremented.
+
+\`\`\`cpp showLineNumbers={false}
+#include <thrust/strided_iterator.h>
+\`\`\`
+
+<Error title="Deprecated">
+Use \`cuda::strided_iterator\` instead
+</Error>
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="RandomAccessIterator" type="typename">
+A random access iterator
+</ParamField>
+
+<ParamField path="StrideHolder" type="typename">
+Either a [runtime_value](/library/api/thrust::runtime_value) or a [compile_time_value](/library/api/thrust::compile_time_value) specifying the stride
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+**Inherits from:** [\`thrust::iterator_adaptor< strided_iterator< RandomAccessIterator, StrideHolder >, RandomAccessIterator >\`](/library/api/thrust::iterator_adaptor) (public), [\`StrideHolder\`](/library/api/StrideHolder) (private)
+
+---
+
+## Constructors
+
+### strided_iterator
+
+<Tabs>
+<Tab title="Default">
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::strided_iterator<RandomAccessIterator, StrideHolder>::strided_iterator() = default
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="From iterator range">
+
+<Badge intent="note" minimal>inline</Badge>
+
+Creates a [strided_iterator](/library/api/thrust::strided_iterator) from an existing iterator and a stride.
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::strided_iterator<RandomAccessIterator, StrideHolder>::strided_iterator(
+    RandomAccessIterator it,
+    StrideHolder stride = {}
+)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### stride_holder <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+Returns either the [runtime_value](/library/api/thrust::runtime_value) or the [compile_time_value](/library/api/thrust::compile_time_value) holding the stride's value.
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+const auto & thrust::strided_iterator<RandomAccessIterator, StrideHolder>::stride_holder() const
+\`\`\`
+</CodeBlock>
+
+### stride <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+Returns the stride's value.
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
+\`\`\`cpp showLineNumbers={false}
+difference_type thrust::strided_iterator<RandomAccessIterator, StrideHolder>::stride() const
+\`\`\`
+</CodeBlock>
+
+### base <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator", "iterator_adaptor": "/library/api/thrust::iterator_adaptor", "StrideHolder": "/library/api/StrideHolder"}}>
+\`\`\`cpp showLineNumbers={false}
+RandomAccessIterator const & thrust::iterator_adaptor<strided_iterator<RandomAccessIterator, StrideHolder>, RandomAccessIterator, use_default, use_default, use_default, use_default, use_default>::base() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A \`const\` reference to the \`Base\` iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor) adapts.
+
+### base_reference <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator", "iterator_adaptor": "/library/api/thrust::iterator_adaptor", "StrideHolder": "/library/api/StrideHolder"}}>
+\`\`\`cpp showLineNumbers={false}
+RandomAccessIterator const & thrust::iterator_adaptor<strided_iterator<RandomAccessIterator, StrideHolder>, RandomAccessIterator, use_default, use_default, use_default, use_default, use_default>::base_reference() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A \`const\` reference to the \`Base\` iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor) adapts.
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| \`base_type\` | \`RandomAccessIterator\` | The type of iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor)\`'s\` \`adapts\`. |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| \`has_static_stride\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` |  |
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for device_vector_v5 1`] = `
+"---
+title: thrust::device_vector
+description: "A \`device_vector\` is a container that supports random access to elements, constant time removal of elements at the end, and linear time insertion and removal of elements at the beginning or in the middle."
+---
+
+A \`device_vector\` is a container that supports random access to elements, constant time removal of elements at the end, and linear time insertion and removal of elements at the beginning or in the middle.
+
+*Added in v2.2.0.*
+
+\`\`\`cpp showLineNumbers={false}
+#include <thrust/device_vector.h>
+\`\`\`
+
+**See also:**
+[https://en.cppreference.com/w/cpp/container/vector](https://en.cppreference.com/w/cpp/container/vector),
+[device_allocator](/library/api/thrust::device_allocator),
+[host_vector](/library/api/thrust::host_vector),
+universal_vector
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+
+</Accordion>
+</AccordionGroup>
+
+**Inherits from:** [\`detail::vector_base< T, thrust::device_allocator< T > >\`](/library/api/detail::vector_base) (public)
+
+---
+
+## Constructors
+
+### device_vector <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Default">
+
+This constructor creates an empty \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector()
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="This constructor creates an empty \`device_vector\`">
+
+This constructor creates an empty \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(const Alloc &alloc)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="alloc" type="const Alloc &">
+The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+</ParamField>
+
+</Tab>
+<Tab title="From native handle">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+This constructor creates a \`device_vector\` with the given size.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(size_type n)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The number of elements to initially create.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 4">
+
+This constructor creates a \`device_vector\` with the given size, performing only default-initialization instead of value-initialization.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    size_type n,
+    default_init_t
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The number of elements to initially create.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 5">
+
+This constructor creates a \`device_vector\` with the given size, without initializing elements.
+
+It mandates that the element type is trivially default-constructible.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    size_type n,
+    no_init_t
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The number of elements to initially create.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 6">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+This constructor creates a \`device_vector\` with the given size.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    size_type n,
+    const Alloc &alloc
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The number of elements to initially create.
+</ParamField>
+
+<ParamField path="alloc" type="const Alloc &">
+The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+</ParamField>
+
+</Tab>
+<Tab title="Overload 7">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+This constructor creates a \`device_vector\` with copies of an exemplar element.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    size_type n,
+    const value_type &value
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The number of elements to initially create.
+</ParamField>
+
+<ParamField path="value" type="const value_type &">
+An element to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 8">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+This constructor creates a \`device_vector\` with copies of an exemplar element.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    size_type n,
+    const value_type &value,
+    const Alloc &alloc
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The number of elements to initially create.
+</ParamField>
+
+<ParamField path="value" type="const value_type &">
+An element to copy.
+</ParamField>
+
+<ParamField path="alloc" type="const Alloc &">
+The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+</ParamField>
+
+</Tab>
+<Tab title="Copy">
+
+Copy constructor copies from an exemplar \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(const device_vector &v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const device_vector &">
+The \`device_vector\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 10">
+
+Copy constructor copies from an exemplar \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    const device_vector &v,
+    const Alloc &alloc
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const device_vector &">
+The \`device_vector\` to copy.
+</ParamField>
+
+<ParamField path="alloc" type="const Alloc &">
+The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+</ParamField>
+
+</Tab>
+<Tab title="Move">
+
+Move constructor moves from another \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(device_vector &&v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="device_vector &&">
+The [device_vector](/library/api/thrust::device_vector) to move.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 12">
+
+Move constructor moves from another \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    device_vector &&v,
+    const Alloc &alloc
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="device_vector &&">
+The [device_vector](/library/api/thrust::device_vector) to move.
+</ParamField>
+
+<ParamField path="alloc" type="const Alloc &">
+The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+</ParamField>
+
+</Tab>
+<Tab title="Copy">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+Copy constructor copies from an exemplar \`device_vector\` with different type.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherT, typename OtherAlloc>
+thrust::device_vector<T, Alloc>::device_vector(const device_vector<OtherT, OtherAlloc> &v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const device_vector< OtherT, OtherAlloc > &">
+The \`device_vector\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Copy">
+
+Copy constructor copies from an exemplar \`std::vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherT, typename OtherAlloc>
+thrust::device_vector<T, Alloc>::device_vector(const std::vector<OtherT, OtherAlloc> &v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const std::vector< OtherT, OtherAlloc > &">
+The \`std::vector\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Copy">
+
+Copy construct from a \`vector_base\` whose element type is convertible to \`T\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherT, typename OtherAlloc>
+thrust::device_vector<T, Alloc>::device_vector(const detail::vector_base<OtherT, OtherAlloc> &v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const detail::vector_base< OtherT, OtherAlloc > &">
+The \`vector_base\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="From initializer_list">
+
+This constructor builds a \`device_vector\` from an intializer_list.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(::cuda::std::initializer_list<T> il)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="il" type="::cuda::std::initializer_list< T >">
+The intializer_list.
+</ParamField>
+
+</Tab>
+<Tab title="From initializer_list">
+
+This constructor builds a \`device_vector\` from an intializer_list.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    ::cuda::std::initializer_list<T> il,
+    const Alloc &alloc
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="il" type="::cuda::std::initializer_list< T >">
+The intializer_list.
+</ParamField>
+
+<ParamField path="alloc" type="const Alloc &">
+The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+</ParamField>
+
+</Tab>
+<Tab title="From iterator range">
+
+This constructor builds a \`device_vector\` from a range.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename InputIterator>
+thrust::device_vector<T, Alloc>::device_vector(
+    InputIterator first,
+    InputIterator last
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="first" type="InputIterator">
+The beginning of the range.
+</ParamField>
+
+<ParamField path="last" type="InputIterator">
+The end of the range.
+</ParamField>
+
+</Tab>
+<Tab title="From iterator range">
+
+This constructor builds a \`device_vector\` from a range.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename InputIterator>
+thrust::device_vector<T, Alloc>::device_vector(
+    InputIterator first,
+    InputIterator last,
+    const Alloc &alloc
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="first" type="InputIterator">
+The beginning of the range.
+</ParamField>
+
+<ParamField path="last" type="InputIterator">
+The end of the range.
+</ParamField>
+
+<ParamField path="alloc" type="const Alloc &">
+The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### Destructor
+
+### ~device_vector <Badge intent="note" minimal>inline</Badge>
+
+The destructor erases the elements.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::~device_vector()
+\`\`\`
+</CodeBlock>
+
+---
+
+## Assignment operators
+
+### operator= <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Copy assign operator copies another \`device_vector\` with the same type.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+device_vector & thrust::device_vector<T, Alloc>::operator=(const device_vector &v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const device_vector &">
+The \`device_vector\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+Move assign operator moves from another \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+device_vector & thrust::device_vector<T, Alloc>::operator=(device_vector &&v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="device_vector &&">
+The [device_vector](/library/api/thrust::device_vector) to move.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+Assign operator copies from an exemplar \`device_vector\` with different type.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherT, typename OtherAlloc>
+device_vector & thrust::device_vector<T, Alloc>::operator=(
+    const device_vector<OtherT, OtherAlloc> &v
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const device_vector< OtherT, OtherAlloc > &">
+The \`device_vector\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 4">
+
+Assign operator copies from an exemplar \`std::vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherT, typename OtherAlloc>
+device_vector & thrust::device_vector<T, Alloc>::operator=(const std::vector<OtherT, OtherAlloc> &v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const std::vector< OtherT, OtherAlloc > &">
+The \`std::vector\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 5">
+
+Assign a \`vector_base\` whose element type is convertible to \`T\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherT, typename OtherAlloc>
+device_vector & thrust::device_vector<T, Alloc>::operator=(
+    const detail::vector_base<OtherT, OtherAlloc> &v
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="const detail::vector_base< OtherT, OtherAlloc > &">
+The \`vector_base\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 6">
+
+Assign an \`intializer_list\` with a matching element type.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+device_vector & thrust::device_vector<T, Alloc>::operator=(::cuda::std::initializer_list<T> il)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="il" type="::cuda::std::initializer_list< T >">
+The intializer_list.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### resize
+
+<Tabs>
+<Tab title="Overload 1">
+
+Resizes this vector to the specified number of elements.
+
+This method will resize this vector to the specified number of elements. If the number is smaller than this vector's current size this vector is truncated, otherwise this vector is extended and new elements are populated with given data.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::resize(
+    size_type new_size,
+    const value_type &x = value_type()
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="new_size" type="size_type">
+Number of elements this vector should contain.
+</ParamField>
+
+<ParamField path="x" type="const value_type &" default="value_type()">
+Data with which new elements should be populated.
+</ParamField>
+
+**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
+
+</Tab>
+<Tab title="Overload 2">
+
+Resizes this vector to the specified number of elements, performing default-initialization instead of value-initialization.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::resize(
+    size_type new_size,
+    default_init_t
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="new_size" type="size_type">
+Number of elements this vector should contain.
+</ParamField>
+
+**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
+
+</Tab>
+<Tab title="Overload 3">
+
+Resizes this vector_base to the specified number of elements, without initializing elements.
+
+It mandates that the element type is trivially default-constructible.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::resize(
+    size_type new_size,
+    no_init_t
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="new_size" type="size_type">
+Number of elements this vector_base should contain.
+</ParamField>
+
+**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
+
+</Tab>
+</Tabs>
+
+### size <Badge intent="note" minimal>const</Badge>
+
+Returns the number of elements in this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+size_type thrust::device_vector<T, Alloc>::size() const
+\`\`\`
+</CodeBlock>
+
+### max_size <Badge intent="note" minimal>const</Badge>
+
+Returns the [size()](/library/api/thrust::device_vector::size()) of the largest possible vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+size_type thrust::device_vector<T, Alloc>::max_size() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** The largest possible return value of [size()](/library/api/thrust::device_vector::size()).
+
+### reserve
+
+If n is less than or equal to [capacity()](/library/api/thrust::device_vector::capacity()), this call has no effect.
+
+Otherwise, this method is a request for allocation of additional memory. If the request is successful, then [capacity()](/library/api/thrust::device_vector::capacity()) is greater than or equal to n; otherwise, [capacity()](/library/api/thrust::device_vector::capacity()) is unchanged. In either case, [size()](/library/api/thrust::device_vector::size()) is unchanged.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::reserve(size_type n)
+\`\`\`
+</CodeBlock>
+
+**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
+
+### capacity <Badge intent="note" minimal>const</Badge>
+
+Returns the number of elements which have been reserved in this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+size_type thrust::device_vector<T, Alloc>::capacity() const
+\`\`\`
+</CodeBlock>
+
+### shrink_to_fit
+
+This method shrinks the capacity of this vector to exactly fit its elements.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::shrink_to_fit()
+\`\`\`
+</CodeBlock>
+
+### operator[]
+
+<Tabs>
+<Tab title="Overload 1">
+
+Subscript access to the data contained in this vector_dev.
+
+This operator allows for easy, array-style, data access. Note that data access with this operator is unchecked and out_of_range lookups are not defined.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+reference thrust::device_vector<T, Alloc>::operator[](size_type n)
+\`\`\`
+</CodeBlock>
+
+**Returns:** Read/write reference to data.
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The index of the element for which data should be accessed.
+</ParamField>
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+Subscript read access to the data contained in this vector_dev.
+
+This operator allows for easy, array-style, data access. Note that data access with this operator is unchecked and out_of_range lookups are not defined.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reference thrust::device_vector<T, Alloc>::operator[](size_type n) const
+\`\`\`
+</CodeBlock>
+
+**Returns:** Read reference to data.
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The index of the element for which data should be accessed.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### begin
+
+<Tabs>
+<Tab title="Overload 1">
+
+This method returns an iterator pointing to the beginning of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+iterator thrust::device_vector<T, Alloc>::begin()
+\`\`\`
+</CodeBlock>
+
+**Returns:** mStart
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+This method returns a const_iterator pointing to the beginning of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_iterator thrust::device_vector<T, Alloc>::begin() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** mStart
+
+</Tab>
+</Tabs>
+
+### cbegin <Badge intent="note" minimal>const</Badge>
+
+This method returns a const_iterator pointing to the beginning of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_iterator thrust::device_vector<T, Alloc>::cbegin() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** mStart
+
+### rbegin
+
+<Tabs>
+<Tab title="Overload 1">
+
+This method returns a reverse_iterator pointing to the beginning of this vector's reversed sequence.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+reverse_iterator thrust::device_vector<T, Alloc>::rbegin()
+\`\`\`
+</CodeBlock>
+
+**Returns:** A reverse_iterator pointing to the beginning of this vector's reversed sequence.
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+This method returns a const_reverse_iterator pointing to the beginning of this vector's reversed sequence.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reverse_iterator thrust::device_vector<T, Alloc>::rbegin() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A const_reverse_iterator pointing to the beginning of this vector's reversed sequence.
+
+</Tab>
+</Tabs>
+
+### crbegin <Badge intent="note" minimal>const</Badge>
+
+This method returns a const_reverse_iterator pointing to the beginning of this vector's reversed sequence.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reverse_iterator thrust::device_vector<T, Alloc>::crbegin() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A const_reverse_iterator pointing to the beginning of this vector's reversed sequence.
+
+### end
+
+<Tabs>
+<Tab title="Overload 1">
+
+This method returns an iterator pointing to one element past the last of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+iterator thrust::device_vector<T, Alloc>::end()
+\`\`\`
+</CodeBlock>
+
+**Returns:** [begin()](/library/api/thrust::device_vector::begin()) + [size()](/library/api/thrust::device_vector::size()).
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+This method returns a const_iterator pointing to one element past the last of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_iterator thrust::device_vector<T, Alloc>::end() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** [begin()](/library/api/thrust::device_vector::begin()) + [size()](/library/api/thrust::device_vector::size()).
+
+</Tab>
+</Tabs>
+
+### cend <Badge intent="note" minimal>const</Badge>
+
+This method returns a const_iterator pointing to one element past the last of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_iterator thrust::device_vector<T, Alloc>::cend() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** [begin()](/library/api/thrust::device_vector::begin()) + [size()](/library/api/thrust::device_vector::size()).
+
+### rend
+
+<Tabs>
+<Tab title="Overload 1">
+
+This method returns a reverse_iterator pointing to one element past the last of this vector's reversed sequence.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+reverse_iterator thrust::device_vector<T, Alloc>::rend()
+\`\`\`
+</CodeBlock>
+
+**Returns:** [rbegin()](/library/api/thrust::device_vector::rbegin()) + [size()](/library/api/thrust::device_vector::size()).
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+This method returns a const_reverse_iterator pointing to one element past the last of this vector's reversed sequence.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reverse_iterator thrust::device_vector<T, Alloc>::rend() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** [rbegin()](/library/api/thrust::device_vector::rbegin()) + [size()](/library/api/thrust::device_vector::size()).
+
+</Tab>
+</Tabs>
+
+### crend <Badge intent="note" minimal>const</Badge>
+
+This method returns a const_reverse_iterator pointing to one element past the last of this vector's reversed sequence.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reverse_iterator thrust::device_vector<T, Alloc>::crend() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** [rbegin()](/library/api/thrust::device_vector::rbegin()) + [size()](/library/api/thrust::device_vector::size()).
+
+### front
+
+<Tabs>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+This method returns a const_reference referring to the first element of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reference thrust::device_vector<T, Alloc>::front() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** The first element of this vector.
+
+</Tab>
+<Tab title="Overload 2">
+
+This method returns a reference pointing to the first element of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+reference thrust::device_vector<T, Alloc>::front()
+\`\`\`
+</CodeBlock>
+
+**Returns:** The first element of this vector.
+
+</Tab>
+</Tabs>
+
+### back
+
+<Tabs>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+This method returns a const reference pointing to the last element of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reference thrust::device_vector<T, Alloc>::back() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** The last element of this vector.
+
+</Tab>
+<Tab title="Overload 2">
+
+This method returns a reference referring to the last element of this vector_dev.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+reference thrust::device_vector<T, Alloc>::back()
+\`\`\`
+</CodeBlock>
+
+**Returns:** The last element of this vector.
+
+</Tab>
+</Tabs>
+
+### data
+
+<Tabs>
+<Tab title="Returns a pointer to this vector's first element">
+
+This method returns a pointer to this vector's first element.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector", "pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+pointer thrust::device_vector<T, Alloc>::data()
+\`\`\`
+</CodeBlock>
+
+**Returns:** A pointer to the first element of this vector.
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+This method returns a const_pointer to this vector's first element.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+const_pointer thrust::device_vector<T, Alloc>::data() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** a const_pointer to the first element of this vector.
+
+</Tab>
+</Tabs>
+
+### clear
+
+This method resizes this vector to 0.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::clear()
+\`\`\`
+</CodeBlock>
+
+### empty <Badge intent="note" minimal>const</Badge>
+
+This method returns true iff [size()](/library/api/thrust::device_vector::size()) == 0.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+bool thrust::device_vector<T, Alloc>::empty() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** true if [size()](/library/api/thrust::device_vector::size()) == 0; false, otherwise.
+
+### push_back
+
+This method appends the given element to the end of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::push_back(const value_type &x)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="x" type="const value_type &">
+The element to append.
+</ParamField>
+
+### pop_back
+
+This method erases the last element of this vector, invalidating all iterators and references to it.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::pop_back()
+\`\`\`
+</CodeBlock>
+
+### swap
+
+This method swaps the contents of this [device_vector](/library/api/thrust::device_vector) with another vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::swap(device_vector &v)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="device_vector &">
+The vector with which to swap.
+</ParamField>
+
+### erase
+
+<Tabs>
+<Tab title="Removes the element at position pos">
+
+This method removes the element at position pos.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+iterator thrust::device_vector<T, Alloc>::erase(iterator pos)
+\`\`\`
+</CodeBlock>
+
+**Returns:** An iterator pointing to the new location of the element that followed the element at position pos.
+
+**Parameters**
+
+<ParamField path="pos" type="iterator">
+The position of the element of interest.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+This method removes the range of elements [first,last) from this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+iterator thrust::device_vector<T, Alloc>::erase(
+    iterator first,
+    iterator last
+)
+\`\`\`
+</CodeBlock>
+
+**Returns:** An iterator pointing to the new location of the element that followed the last element in the sequence [first,last).
+
+**Parameters**
+
+<ParamField path="first" type="iterator">
+The beginning of the range of elements to remove.
+</ParamField>
+
+<ParamField path="last" type="iterator">
+The end of the range of elements to remove.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### insert
+
+<Tabs>
+<Tab title="Overload 1">
+
+This method inserts a single copy of a given exemplar value at the specified position in this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+iterator thrust::device_vector<T, Alloc>::insert(
+    iterator position,
+    const T &x
+)
+\`\`\`
+</CodeBlock>
+
+**Returns:** An iterator pointing to the newly inserted element.
+
+**Parameters**
+
+<ParamField path="position" type="iterator">
+The insertion position.
+</ParamField>
+
+<ParamField path="x" type="const T &">
+The exemplar element to copy & insert.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+This method inserts a copy of an exemplar value to a range at the specified position in this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::insert(
+    iterator position,
+    size_type n,
+    const T &x
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="position" type="iterator">
+The insertion position
+</ParamField>
+
+<ParamField path="n" type="size_type">
+The number of insertions to perform.
+</ParamField>
+
+<ParamField path="x" type="const T &">
+The value to replicate and insert.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 3">
+
+This method inserts a copy of an input range at the specified position in this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename InputIterator>
+void thrust::device_vector<T, Alloc>::insert(
+    iterator position,
+    InputIterator first,
+    InputIterator last
+)
+\`\`\`
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="InputIterator" type="typename">
+Is a model of <a href="https://en.cppreference.com/w/cpp/iterator/input_iterator>Input
+  Iterator</a>, and \\p InputIterator's \\c value_type is a model of <a
+  href="[https://en.cppreference.com/w/cpp/named_req/CopyAssignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable)">Assignable.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="position" type="iterator">
+The insertion position.
+</ParamField>
+
+<ParamField path="first" type="InputIterator">
+The beginning of the range to copy.
+</ParamField>
+
+<ParamField path="last" type="InputIterator">
+The end of the range to copy.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### assign
+
+<Tabs>
+<Tab title="Overload 1">
+
+This version of \`assign\` replicates a given exemplar \`n\` times into this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::device_vector<T, Alloc>::assign(
+    size_type n,
+    const T &x
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="n" type="size_type">
+The number of times to copy \`x\`.
+</ParamField>
+
+<ParamField path="x" type="const T &">
+The exemplar element to replicate.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+This version of \`assign\` makes this vector a copy of a given input range.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename InputIterator>
+void thrust::device_vector<T, Alloc>::assign(
+    InputIterator first,
+    InputIterator last
+)
+\`\`\`
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="InputIterator" type="typename">
+Is a model of [Input Iterator](https://en.cppreference.com/w/cpp/named_req/InputIterator).
+</ParamField>
+
+**Parameters**
+
+<ParamField path="first" type="InputIterator">
+The beginning of the range to copy.
+</ParamField>
+
+<ParamField path="last" type="InputIterator">
+The end of the range to copy.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### get_allocator <Badge intent="note" minimal>const</Badge>
+
+This method returns a copy of this vector's allocator.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+allocator_type thrust::device_vector<T, Alloc>::get_allocator() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A copy of the allocator used by this vector.
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition |
+|---|---|
+| \`Parent\` | \`detail::vector_base< T, Alloc >\` |
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for empty_docstring_class_v5 1`] = `
+"---
+title: "cuda::buffer"
+description: ""
+---
+
+\`buffer\` is a container that provides resizable typed storage allocated
+from a given memory resource . It handles alignment,
+release and growth of the allocation. The elements are initialized during
+construction, which may require a kernel launch.
+
+In addition to being type-safe, \`buffer\` also takes a set of
+properties  to
+ensure that e.g. execution space constraints are checked at compile time.
+However, only stateless properties can be forwarded. To use a stateful
+property, implement get_property(const buffer&, Property) .
+
+\`\`\`cpp showLineNumbers={false}
+#include <cuda/buffer.h>
+\`\`\`
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="_Tp" type="class">
+The type to be stored in the buffer
+</ParamField>
+
+<ParamField path="_Properties..." type="class...">
+The properties the allocated memory satisfies
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Constructors
+
+### buffer <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Copy-constructs from a buffer">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+Copy-constructs from a buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::buffer<_Tp, _Properties>::buffer(const buffer &__other)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="const buffer &">
+The other buffer.
+</ParamField>
+
+</Tab>
+<Tab title="Move-constructs from a buffer">
+
+<Badge intent="note" minimal>noexcept</Badge>
+
+Move-constructs from a buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::buffer<_Tp, _Properties>::buffer(buffer &&__other) noexcept
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="buffer &&">
+The other buffer. After move construction, the other buffer can only be assigned to or destroyed.
+</ParamField>
+
+</Tab>
+<Tab title="Copy">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+Copy-constructs from a buffer with matching properties.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class... _OtherProperties,
+          ::cuda::std::enable_if_t< __properties_match< _OtherProperties... >, int >>
+cuda::buffer<_Tp, _Properties>::buffer(const buffer<_Tp, _OtherProperties...> &__other)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="const buffer< _Tp, _OtherProperties... > &">
+The other buffer.
+</ParamField>
+
+</Tab>
+<Tab title="Move">
+
+<Badge intent="note" minimal>noexcept</Badge>
+
+Move-constructs from a buffer with matching properties.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class... _OtherProperties,
+          ::cuda::std::enable_if_t< __properties_match< _OtherProperties... >, int >>
+cuda::buffer<_Tp, _Properties>::buffer(buffer<_Tp, _OtherProperties...> &&__other) noexcept
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="buffer< _Tp, _OtherProperties... > &&">
+The other buffer. After move construction, the other buffer can only be assigned to or destroyed.
+</ParamField>
+
+</Tab>
+<Tab title="Constructs an empty buffer using an environment">
+
+Constructs an empty buffer using an environment.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    const _Env &__env = {}
+)
+\`\`\`
+</CodeBlock>
+
+<Note>
+No memory is allocated.
+</Note>
+
+**Parameters**
+
+<ParamField path="__env" type="const _Env &" default="{}">
+The environment providing the needed information
+</ParamField>
+
+</Tab>
+<Tab title="Overload 6">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+Constructs a buffer of size \`__size\` using a memory and leaves all elements uninitialized.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    const size_type __size,
+    ::cuda::no_init_t,
+    const _Env &__env = {}
+)
+\`\`\`
+</CodeBlock>
+
+<Warning>
+This constructor does *NOT* initialize any elements. It is the user's responsibility to ensure that the elements within \`[vec.begin(), vec.end())\` are properly initialized, e.g with \`cuda::std::uninitialized_copy\`. At the destruction of the \`buffer\` all elements in the range \`[vec.begin(), vec.end())\` will be destroyed.
+</Warning>
+
+**Parameters**
+
+<ParamField path="__size" type="const size_type">
+The size of the buffer.
+</ParamField>
+
+<ParamField path="__env" type="const _Env &" default="{}">
+The environment used to query the memory resource.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 7">
+
+Constructs a buffer using a memory resource and copy-constructs all elements from the forward range \`[__first, __last)\`.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Iter, class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    _Iter __first,
+    _Iter __last,
+    const _Env &__env = {}
+)
+\`\`\`
+</CodeBlock>
+
+<Note>
+If \`__first == __last\` then no memory is allocated
+</Note>
+
+**Parameters**
+
+<ParamField path="__first" type="_Iter">
+The start of the input sequence.
+</ParamField>
+
+<ParamField path="__last" type="_Iter">
+The end of the input sequence.
+</ParamField>
+
+<ParamField path="__env" type="const _Env &" default="{}">
+The environment used to query the memory resource.
+</ParamField>
+
+</Tab>
+<Tab title="From initializer_list">
+
+Constructs a buffer using a memory resource and copy-constructs all elements from \`__ilist\`.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    ::cuda::std::initializer_list<_Tp> __ilist,
+    const _Env &__env = {}
+)
+\`\`\`
+</CodeBlock>
+
+<Note>
+If \`__ilist.size() == 0\` then no memory is allocated
+</Note>
+
+**Parameters**
+
+<ParamField path="__ilist" type="::cuda::std::initializer_list< _Tp >">
+The initializer_list being copied into the buffer.
+</ParamField>
+
+<ParamField path="__env" type="const _Env &" default="{}">
+The environment used to query the memory resource.
+</ParamField>
+
+</Tab>
+<Tab title="Overload 9">
+
+Constructs a buffer using a memory resource and an input range.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+template <class _Range, class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    _Range &&__range,
+    const _Env &__env = {}
+)
+\`\`\`
+</CodeBlock>
+
+<Note>
+If \`__range.size() == 0\` then no memory is allocated.
+</Note>
+
+**Parameters**
+
+<ParamField path="__range" type="_Range &&">
+The input range to be moved into the buffer.
+</ParamField>
+
+<ParamField path="__env" type="const _Env &" default="{}">
+The environment used to query the memory resource.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Assignment operators
+
+### operator= <Badge intent="note" minimal>inline</Badge>
+
+Move assignment operator.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::operator=(buffer &&__other)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="buffer &&">
+The other buffer. After move assignment, the other buffer can only be assigned to or destroyed.
+</ParamField>
+
+---
+
+## Methods
+
+### begin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Returns an iterator to the first element of the buffer.
+
+If the buffer is empty, the returned iterator will be equal to [end()](/libcudacxx/api/cuda::buffer::end()).
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+iterator cuda::buffer<_Tp, _Properties>::begin() noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+Returns an immutable iterator to the first element of the buffer.
+
+If the buffer is empty, the returned iterator will be equal to [end()](/libcudacxx/api/cuda::buffer::end()).
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_iterator cuda::buffer<_Tp, _Properties>::begin() const noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### cbegin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable iterator to the first element of the buffer.
+
+If the buffer is empty, the returned iterator will be equal to [end()](/libcudacxx/api/cuda::buffer::end()).
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_iterator cuda::buffer<_Tp, _Properties>::cbegin() const noexcept
+\`\`\`
+</CodeBlock>
+
+### end <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Returns an iterator to the element following the last element of the buffer.
+
+This element acts as a placeholder; attempting to access it results in undefined behavior.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+iterator cuda::buffer<_Tp, _Properties>::end() noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+Returns an immutable iterator to the element following the last element of the buffer.
+
+This element acts as a placeholder; attempting to access it results in undefined behavior.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_iterator cuda::buffer<_Tp, _Properties>::end() const noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### cend <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable iterator to the element following the last element of the buffer.
+
+This element acts as a placeholder; attempting to access it results in undefined behavior.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_iterator cuda::buffer<_Tp, _Properties>::cend() const noexcept
+\`\`\`
+</CodeBlock>
+
+### rbegin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Returns a reverse iterator to the first element of the reversed buffer.
+
+It corresponds to the last element of the non-reversed buffer. If the buffer is empty, the returned iterator is equal to [rend()](/libcudacxx/api/cuda::buffer::rend()).
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+reverse_iterator cuda::buffer<_Tp, _Properties>::rbegin() noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+Returns an immutable reverse iterator to the first element of the reversed buffer.
+
+It corresponds to the last element of the non-reversed buffer. If the buffer is empty, the returned iterator is equal to [rend()](/libcudacxx/api/cuda::buffer::rend()).
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reverse_iterator cuda::buffer<_Tp, _Properties>::rbegin() const noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### crbegin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable reverse iterator to the first element of the reversed buffer.
+
+It corresponds to the last element of the non-reversed buffer. If the buffer is empty, the returned iterator is equal to [rend()](/libcudacxx/api/cuda::buffer::rend()).
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reverse_iterator cuda::buffer<_Tp, _Properties>::crbegin() const noexcept
+\`\`\`
+</CodeBlock>
+
+### rend <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Returns a reverse iterator to the element following the last element of the reversed buffer.
+
+It corresponds to the element preceding the first element of the non-reversed buffer. This element acts as a placeholder, attempting to access it results in undefined behavior.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+reverse_iterator cuda::buffer<_Tp, _Properties>::rend() noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+Returns an immutable reverse iterator to the element following the last element of the reversed buffer.
+
+It corresponds to the element preceding the first element of the non-reversed buffer. This element acts as a placeholder, attempting to access it results in undefined behavior.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reverse_iterator cuda::buffer<_Tp, _Properties>::rend() const noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### crend <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable reverse iterator to the element following the last element of the reversed buffer.
+
+It corresponds to the element preceding the first element of the non-reversed buffer. This element acts as a placeholder, attempting to access it results in undefined behavior.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reverse_iterator cuda::buffer<_Tp, _Properties>::crend() const noexcept
+\`\`\`
+</CodeBlock>
+
+### data <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Returns a pointer to the first element of the buffer.
+
+If the buffer has not allocated memory the pointer will be null.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+pointer cuda::buffer<_Tp, _Properties>::data() noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+Returns a pointer to the first element of the buffer.
+
+If the buffer has not allocated memory the pointer will be null.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_pointer cuda::buffer<_Tp, _Properties>::data() const noexcept
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### get_unsynchronized <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Returns a reference to the \`__n\` 'th element of the async_vector.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+reference cuda::buffer<_Tp, _Properties>::get_unsynchronized(const size_type __n) noexcept
+\`\`\`
+</CodeBlock>
+
+<Note>
+Does not synchronize with the stored stream
+</Note>
+
+**Parameters**
+
+<ParamField path="__n" type="const size_type">
+The index of the element we want to access
+</ParamField>
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+Returns a reference to the \`__n\` 'th element of the async_vector.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const_reference cuda::buffer<_Tp, _Properties>::get_unsynchronized(
+    const size_type __n
+) const noexcept
+\`\`\`
+</CodeBlock>
+
+<Note>
+Does not synchronize with the stored stream
+</Note>
+
+**Parameters**
+
+<ParamField path="__n" type="const size_type">
+The index of the element we want to access
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### size <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the current number of elements stored in the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+size_type cuda::buffer<_Tp, _Properties>::size() const noexcept
+\`\`\`
+</CodeBlock>
+
+### empty <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns true if the buffer is empty.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+bool cuda::buffer<_Tp, _Properties>::empty() const noexcept
+\`\`\`
+</CodeBlock>
+
+### memory_resource <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns a \\c const reference to the any_resource  that holds the
+memory resource used to allocate the buffer
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+const __resource_t & cuda::buffer<_Tp, _Properties>::memory_resource() const noexcept
+\`\`\`
+</CodeBlock>
+
+### stream <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the stored stream.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+stream_ref cuda::buffer<_Tp, _Properties>::stream() const noexcept
+\`\`\`
+</CodeBlock>
+
+<Note>
+Stream used to allocate the buffer is initially stored in the buffer, but can be changed with [\`set_stream\`](/libcudacxx/api/cuda::buffer::set_stream)
+</Note>
+
+### set_stream <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge>
+
+Replaces the stored stream.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::set_stream(stream_ref __new_stream)
+\`\`\`
+</CodeBlock>
+
+<Note>
+Always synchronizes with the old stream
+</Note>
+
+**Parameters**
+
+<ParamField path="__new_stream" type="stream_ref">
+The new stream
+</ParamField>
+
+### swap <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Swaps the contents of a buffer with those of \`__other\`.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::swap(buffer &__other) noexcept
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="buffer &">
+The other buffer.
+</ParamField>
+
+### destroy <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Destroys the buffer">
+
+Destroys the buffer, deallocates the buffer and destroys the memory resource.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::destroy(::cuda::stream_ref __stream)
+\`\`\`
+</CodeBlock>
+
+<Warning>
+After this explicit destroy call, the buffer can only be assigned to or destroyed.
+</Warning>
+
+**Parameters**
+
+<ParamField path="__stream" type="::cuda::stream_ref">
+The stream to deallocate the buffer on.
+</ParamField>
+
+</Tab>
+<Tab title="Destroys the buffer">
+
+Destroys the buffer, deallocates the buffer and destroys the memory resource.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::destroy()
+\`\`\`
+</CodeBlock>
+
+<Warning>
+After this explicit destroy call, the buffer can only be assigned to or destroyed.
+</Warning>
+
+<Note>
+Uses the stored stream to deallocate the buffer, equivalent to calling [buffer.destroy](/libcudacxx/api/cuda::buffer::buffer.destroy)([buffer.stream()](/libcudacxx/api/cuda::buffer::buffer.stream()))
+</Note>
+
+</Tab>
+</Tabs>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition |
+|---|---|
+| \`value_type\` | \`_Tp\` |
+| \`reference\` | \`_Tp &\` |
+| \`const_reference\` | \`const _Tp &\` |
+| \`pointer\` | \`_Tp *\` |
+| \`const_pointer\` | \`const _Tp *\` |
+| \`iterator\` | \`::cuda::heterogeneous_iterator< _Tp, _Properties... >\` |
+| \`const_iterator\` | \`::cuda::heterogeneous_iterator< const _Tp, _Properties... >\` |
+| \`reverse_iterator\` | \`::cuda::std::reverse_iterator< iterator >\` |
+| \`const_reverse_iterator\` | \`::cuda::std::reverse_iterator< const_iterator >\` |
+| \`size_type\` | \`::cuda::std::size_t\` |
+| \`difference_type\` | \`::cuda::std::ptrdiff_t\` |
+| \`properties_list\` | \`::cuda::mr::properties_list< _Properties... >\` |
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for group_member_example_v5 1`] = `
+"---
+title: thrust::mr::disjoint_unsynchronized_pool_resource
+description: "A memory resource adaptor allowing for pooling and caching allocations from \`Upstream\`, using \`Bookkeeper\` for management of that cached and pooled memory, allowing to cache portions of memory inaccessible from the host."
+---
+
+A memory resource adaptor allowing for pooling and caching allocations from \`Upstream\`, using \`Bookkeeper\` for management of that cached and pooled memory, allowing to cache portions of memory inaccessible from the host.
+
+On a typical memory resource, calls to \`allocate\` and \`deallocate\` actually allocate and deallocate memory. Pooling memory resources only allocate and deallocate memory from an external resource (the upstream memory resource) when there's no suitable memory currently cached; otherwise, they use memory they have acquired beforehand, to make memory allocation faster and more efficient.
+
+The disjoint version of the pool resources uses a separate upstream memory resource, \`Bookkeeper\`, to allocate memory necessary to manage the cached memory. There may be many reasons to do that; the canonical one is that \`Upstream\` allocates memory that is inaccessible to the code of the pool resource, which means that it cannot embed the necessary information in memory obtained from \`Upstream\`; for instance, \`Upstream\` can be a CUDA non-managed memory resource, or a CUDA managed memory resource whose memory we would prefer to not migrate back and forth between host and device when executing bookkeeping code.
+
+This is not the only case where it makes sense to use a disjoint pool resource, though. In a multi-core environment it may be beneficial to avoid stealing cache lines from other cores by writing over bookkeeping information embedded in an allocated block of memory. In such a case, one can imagine wanting to use a disjoint pool where both the upstream and the bookkeeper are of the same type, to allocate memory consistently, but separately for those two purposes.
+
+\`\`\`cpp showLineNumbers={false}
+#include <thrust/mr/disjoint_pool.h>
+\`\`\`
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="Upstream" type="typename">
+The type of memory resources that will be used for allocating memory blocks to be handed off to the user
+</ParamField>
+
+<ParamField path="Bookkeeper" type="typename">
+The type of memory resources that will be used for allocating bookkeeping memory
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+**Inherits from:** [\`thrust::mr::memory_resource< Upstream::pointer >\`](/library/api/thrust::mr::memory_resource) (public), [\`thrust::mr::validator2< Upstream, Bookkeeper >\`](/library/api/thrust::mr::validator2) (private)
+
+This class is marked <Badge intent="note" minimal>final</Badge>.
+
+---
+
+## Constructors
+
+### disjoint_unsynchronized_pool_resource <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Constructor">
+
+Constructor.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource", "pool_options": "/library/api/thrust::mr::pool_options"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::disjoint_unsynchronized_pool_resource(
+    Upstream *upstream,
+    Bookkeeper *bookkeeper,
+    pool_options options = get_default_options()
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="upstream" type="Upstream *">
+The upstream memory resource for allocations
+</ParamField>
+
+<ParamField path="bookkeeper" type="Bookkeeper *">
+The upstream memory resource for bookkeeping
+</ParamField>
+
+<ParamField path="options" type="pool_options" default="get_default_options()">
+Pool options to use
+</ParamField>
+
+</Tab>
+<Tab title="Constructor">
+
+Constructor.
+
+Upstream and bookkeeping resources are obtained by calling \`get_global_resource\` for their types.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource", "pool_options": "/library/api/thrust::mr::pool_options"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::disjoint_unsynchronized_pool_resource(
+    pool_options options = get_default_options()
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="options" type="pool_options" default="get_default_options()">
+Pool options to use
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### Destructor
+
+### ~disjoint_unsynchronized_pool_resource <Badge intent="note" minimal>inline</Badge>
+
+Destructor.
+
+Releases all held memory to upstream.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::~disjoint_unsynchronized_pool_resource()
+\`\`\`
+</CodeBlock>
+
+---
+
+## Methods
+
+### release <Badge intent="note" minimal>inline</Badge>
+
+Releases all held memory to upstream.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::release()
+\`\`\`
+</CodeBlock>
+
+### squeeze <Badge intent="note" minimal>inline</Badge>
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::squeeze()
+\`\`\`
+</CodeBlock>
+
+### do_allocate <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge> <Badge intent="note" minimal>virtual</Badge>
+
+Allocates memory of size at least \`bytes\` and alignment at least \`alignment\`.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+virtual void_ptr thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::do_allocate(
+    std::size_t bytes,
+    std::size_t alignment = THRUST_MR_DEFAULT_ALIGNMENT
+) override
+\`\`\`
+</CodeBlock>
+
+**Returns:** A pointer to void to the newly allocated memory.
+
+**Parameters**
+
+<ParamField path="bytes" type="std::size_t">
+Size, in bytes, that is requested from this allocation
+</ParamField>
+
+<ParamField path="alignment" type="std::size_t" default="THRUST_MR_DEFAULT_ALIGNMENT">
+Alignment that is requested from this allocation
+</ParamField>
+
+**Throws:** \`thrust::bad_alloc\` when no memory with requested size and alignment can be allocated.
+
+### do_allocate_impl <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+void_ptr thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::do_allocate_impl(
+    std::size_t bytes,
+    std::size_t alignment
+)
+\`\`\`
+</CodeBlock>
+
+### do_deallocate <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>virtual</Badge>
+
+Deallocates memory pointed to by \`p\`.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+virtual void thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::do_deallocate(
+    void_ptr p,
+    std::size_t n,
+    std::size_t alignment = THRUST_MR_DEFAULT_ALIGNMENT
+) override
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="p" type="void_ptr">
+Pointer to be deallocated
+</ParamField>
+
+<ParamField path="bytes" type="std::size_t">
+The size of the allocation. This must be equivalent to the value of \`bytes\` that was passed to the allocation function that returned \`p\`.
+</ParamField>
+
+<ParamField path="alignment" type="std::size_t" default="THRUST_MR_DEFAULT_ALIGNMENT">
+The size of the allocation. This must be equivalent to the value of \`alignment\` that was passed to the allocation function that returned \`p\`.
+</ParamField>
+
+### allocate <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Allocates memory of size at least \`bytes\` and alignment at least \`alignment\`.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource", "memory_resource": "/library/api/thrust::mr::memory_resource", "validator2": "/library/api/thrust::mr::validator2"}}>
+\`\`\`cpp showLineNumbers={false}
+pointer thrust::mr::memory_resource<Upstream::pointer>::allocate(
+    std::size_t bytes,
+    std::size_t alignment = THRUST_MR_DEFAULT_ALIGNMENT
+)
+\`\`\`
+</CodeBlock>
+
+**Returns:** A pointer to void to the newly allocated memory.
+
+**Parameters**
+
+<ParamField path="bytes" type="std::size_t">
+Size, in bytes, that is requested from this allocation
+</ParamField>
+
+<ParamField path="alignment" type="std::size_t" default="THRUST_MR_DEFAULT_ALIGNMENT">
+Alignment that is requested from this allocation
+</ParamField>
+
+**Throws:** \`thrust::bad_alloc\` when no memory with requested size and alignment can be allocated.
+
+### deallocate <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Deallocates memory pointed to by \`p\`.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource", "memory_resource": "/library/api/thrust::mr::memory_resource", "validator2": "/library/api/thrust::mr::validator2"}}>
+\`\`\`cpp showLineNumbers={false}
+void thrust::mr::memory_resource<Upstream::pointer>::deallocate(
+    pointer p,
+    std::size_t bytes,
+    std::size_t alignment = THRUST_MR_DEFAULT_ALIGNMENT
+) noexcept
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="p" type="pointer">
+Pointer to be deallocated
+</ParamField>
+
+<ParamField path="bytes" type="std::size_t">
+The size of the allocation. This must be equivalent to the value of \`bytes\` that was passed to the allocation function that returned \`p\`.
+</ParamField>
+
+<ParamField path="alignment" type="std::size_t" default="THRUST_MR_DEFAULT_ALIGNMENT">
+The alignment of the allocation. This must be equivalent to the value of \`alignment\` that was passed to the allocation function that returned \`p\`.
+</ParamField>
+
+### is_equal <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Compares this resource to the other one.
+
+The default implementation uses identity comparison, which is often the right thing to do and doesn't require RTTI involvement.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource", "memory_resource": "/library/api/thrust::mr::memory_resource", "validator2": "/library/api/thrust::mr::validator2"}}>
+\`\`\`cpp showLineNumbers={false}
+bool thrust::mr::memory_resource<Upstream::pointer>::is_equal(
+    const memory_resource &other
+) const noexcept
+\`\`\`
+</CodeBlock>
+
+**Returns:** whether the two resources are equivalent.
+
+**Parameters**
+
+<ParamField path="other" type="const memory_resource &">
+The other resource to compare this resource to
+</ParamField>
+
+### do_is_equal <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>virtual</Badge>
+
+Compares this resource to the other one.
+
+The default implementation uses identity comparison, which is often the right thing to do and doesn't require RTTI involvement.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource", "memory_resource": "/library/api/thrust::mr::memory_resource", "validator2": "/library/api/thrust::mr::validator2"}}>
+\`\`\`cpp showLineNumbers={false}
+virtual bool thrust::mr::memory_resource<Upstream::pointer>::do_is_equal(
+    const memory_resource &other
+) const noexcept
+\`\`\`
+</CodeBlock>
+
+**Returns:** whether the two resources are equivalent.
+
+**Parameters**
+
+<ParamField path="other" type="const memory_resource &">
+The other resource to compare this resource to
+</ParamField>
+
+---
+
+## Static methods
+
+### get_default_options <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>static</Badge>
+
+Get the default options for a disjoint pool.
+
+These are meant to be a sensible set of values for many use cases, and as such, may be tuned in the future. This function is exposed so that creating a set of options that are just a slight departure from the defaults is easy.
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource", "pool_options": "/library/api/thrust::mr::pool_options"}}>
+\`\`\`cpp showLineNumbers={false}
+static pool_options thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Bookkeeper>::get_default_options()
+\`\`\`
+</CodeBlock>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| \`void_ptr\` | \`typename Upstream::pointer\` |  |
+| \`char_ptr\` | \`typename thrust::detail::pointer_traits< void_ptr >::template rebind< char >::other\` |  |
+| \`chunk_vector\` | \`thrust::host_vector< chunk_descriptor, allocator< chunk_descriptor, Bookkeeper > >\` |  |
+| \`oversized_block_vector\` | \`thrust::host_vector< oversized_block_descriptor, allocator< oversized_block_descriptor, Bookkeeper > >\` |  |
+| \`pointer_vector\` | \`thrust::host_vector< void_ptr, allocator< void_ptr, Bookkeeper > >\` |  |
+| \`pool_vector\` | \`thrust::host_vector< pool, allocator< pool, Bookkeeper > >\` |  |
+| \`pointer\` | \`Upstream::pointer\` | Alias for the template parameter. |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| \`m_upstream\` | \`Upstream *\` |  |
+| \`m_bookkeeper\` | \`Bookkeeper *\` |  |
+| \`m_options\` | \`pool_options\` |  |
+| \`m_smallest_block_log2\` | \`std::size_t\` |  |
+| \`m_pools\` | \`pool_vector\` |  |
+| \`m_allocated\` | \`chunk_vector\` |  |
+| \`m_cached_oversized\` | \`oversized_block_vector\` |  |
+| \`m_oversized\` | \`oversized_block_vector\` |  |
+
+---
+
+## Inner classes
+
+### chunk_descriptor
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+struct thrust::mr::disjoint_unsynchronized_pool_resource::chunk_descriptor
+\`\`\`
+</CodeBlock>
+
+| Name | Type | Description |
+|---|---|---|
+| \`size\` | \`std::size_t\` |  |
+| \`pointer\` | \`void_ptr\` |  |
+| \`pool_idx\` | \`std::size_t\` |  |
+
+### oversized_block_descriptor
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+struct thrust::mr::disjoint_unsynchronized_pool_resource::oversized_block_descriptor
+\`\`\`
+</CodeBlock>
+
+| Name | Type | Description |
+|---|---|---|
+| \`size\` | \`std::size_t\` |  |
+| \`alignment\` | \`std::size_t\` |  |
+| \`pointer\` | \`void_ptr\` |  |
+
+### equal_pointers
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+struct thrust::mr::disjoint_unsynchronized_pool_resource::equal_pointers
+\`\`\`
+</CodeBlock>
+
+| Name | Type | Description |
+|---|---|---|
+| \`p\` | \`void_ptr\` |  |
+
+### matching_alignment
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+struct thrust::mr::disjoint_unsynchronized_pool_resource::matching_alignment
+\`\`\`
+</CodeBlock>
+
+| Name | Type | Description |
+|---|---|---|
+| \`requested\` | \`std::size_t\` |  |
+
+### pool
+
+<CodeBlock links={{"disjoint_unsynchronized_pool_resource": "/library/api/thrust::mr::disjoint_unsynchronized_pool_resource"}}>
+\`\`\`cpp showLineNumbers={false}
+struct thrust::mr::disjoint_unsynchronized_pool_resource::pool
+\`\`\`
+</CodeBlock>
+
+| Name | Type | Description |
+|---|---|---|
+| \`free_blocks\` | \`pointer_vector\` |  |
+| \`previous_allocated_count\` | \`std::size_t\` |  |
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for pointer_v5 1`] = `
+"---
+title: thrust::pointer
+description: "\`pointer\` stores a pointer to an object allocated in memory."
+---
+
+\`pointer\` stores a pointer to an object allocated in memory.
+
+Like [\`device_ptr\`](/library/api/thrust::device_ptr), this type ensures type safety when dispatching standard algorithms on ranges resident in memory.
+
+\`pointer\` generalizes [\`device_ptr\`](/library/api/thrust::device_ptr) by relaxing the backend system associated with the \`pointer\`. Instead of the backend system specified by \`THRUST_DEVICE_SYSTEM\`, \`pointer's\` system is given by its second template parameter, \`Tag\`. For the purpose of Thrust dispatch, [\`device_ptr<Element>\`](/library/api/thrust::device_ptr) and [\`pointer<Element,device_system_tag>\`](/library/api/thrust::pointer::pointer<Element,device_system_tag>) are considered equivalent.
+
+The raw pointer encapsulated by a \`pointer\` may be obtained through its [\`get\`](/library/api/thrust::pointer::get) member function or the \`raw_pointer_cast\` free function.
+
+\`\`\`cpp showLineNumbers={false}
+#include <thrust/pointer.h>
+\`\`\`
+
+<Note>
+\`pointer\` is not a smart pointer; it is the client's responsibility to deallocate memory pointer to by \`pointer\`.
+</Note>
+
+**See also:**
+[device_ptr](/library/api/thrust::device_ptr),
+reference,
+raw_pointer_cast
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="Element" type="typename">
+Specifies the type of the pointed-to object.
+</ParamField>
+
+<ParamField path="Tag" type="typename">
+Specifies the system with which this \`pointer\` is associated. This may be any Thrust backend system, or a user-defined tag.
+</ParamField>
+
+<ParamField path="Reference" type="typename">
+Allows the client to specify the reference type returned upon derereference. By default, this type is \`reference<Element,pointer>\`.
+</ParamField>
+
+<ParamField path="Derived" type="typename">
+Allows the client to specify the name of the derived type when \`pointer\` is used as a base class. This is useful to ensure that arithmetic on values of the derived type return values of the derived type as a result. By default, this type is [\`pointer<Element,Tag,Reference>\`](/library/api/thrust::pointer::pointer<Element,Tag,Reference>).
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+**Inherits from:** [\`thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >\`](/library/api/thrust::iterator_adaptor) (public)
+
+---
+
+## Constructors
+
+### pointer <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Default">
+
+\`pointer's\` default constructor initializes its encapsulated pointer to \`0\`
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::pointer<Element, Tag, Reference, Derived>::pointer()
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="From nullptr">
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::pointer<Element, Tag, Reference, Derived>::pointer(::cuda::std::nullptr_t)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="From raw pointer">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+This constructor allows construction of a [\`pointer<const T, ...>\`](/library/api/thrust::pointer::pointer<const T, ...>) from a \`T*\`.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherElement>
+thrust::pointer<Element, Tag, Reference, Derived>::pointer(OtherElement *ptr)
+\`\`\`
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="OtherElement" type="typename">
+\`OtherElement\` shall be convertible to \`Element\`.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="ptr" type="OtherElement *">
+A raw pointer to copy from, presumed to point to a location in \`Tag's\` memory.
+</ParamField>
+
+</Tab>
+<Tab title="Copy">
+
+This constructor allows initialization from another pointer-like object.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherPointer,
+          detail::enable_if_pointer_is_convertible_t< OtherPointer, pointer > *>
+thrust::pointer<Element, Tag, Reference, Derived>::pointer(const OtherPointer &other)
+\`\`\`
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="OtherPointer" type="typename">
+The tag associated with \`OtherPointer\` shall be convertible to \`Tag\`, and its element type shall be convertible to \`Element\`.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="other" type="const OtherPointer &">
+The \`OtherPointer\` to copy.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Assignment operators
+
+### operator= <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+derived_type & thrust::pointer<Element, Tag, Reference, Derived>::operator=(::cuda::std::nullptr_t)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Overload 2">
+
+Assignment operator allows assigning from another pointer-like object whose element type is convertible to \`Element\`.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename OtherPointer>
+detail::enable_if_pointer_is_convertible_t<OtherPointer, pointer, derived_type &> thrust::pointer<Element, Tag, Reference, Derived>::operator=(
+    const OtherPointer &other
+)
+\`\`\`
+</CodeBlock>
+
+**Returns:** \`*this\`
+
+**Template parameters**
+
+<ParamField path="OtherPointer" type="typename">
+The tag associated with \`OtherPointer\` shall be convertible to \`Tag\`, and its element type shall be convertible to \`Element\`.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="other" type="const OtherPointer &">
+The other pointer-like object to assign from.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### dereference <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename SuperRef>
+SuperRef thrust::pointer<Element, Tag, Reference, Derived>::dereference() const
+\`\`\`
+</CodeBlock>
+
+### get <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+\`get\` returns this \`pointer's\` encapsulated raw pointer.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+Element * thrust::pointer<Element, Tag, Reference, Derived>::get() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** This \`pointer's\` raw pointer.
+
+### operator-> <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+Element * thrust::pointer<Element, Tag, Reference, Derived>::operator->() const
+\`\`\`
+</CodeBlock>
+
+### operator bool <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>explicit</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::pointer<Element, Tag, Reference, Derived>::operator bool() const
+\`\`\`
+</CodeBlock>
+
+### base <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+\`\`\`cpp showLineNumbers={false}
+Base const  & thrust::iterator_adaptor<Derived, Base, Value, System, Traversal, Reference, Difference>::base() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A \`const\` reference to the \`Base\` iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor) adapts.
+
+### base_reference <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+\`\`\`cpp showLineNumbers={false}
+Base const  & thrust::iterator_adaptor<Derived, Base, Value, System, Traversal, Reference, Difference>::base_reference() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A \`const\` reference to the \`Base\` iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor) adapts.
+
+</Tab>
+<Tab title="Overload 2">
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+\`\`\`cpp showLineNumbers={false}
+Base & thrust::iterator_adaptor<Derived, Base, Value, System, Traversal, Reference, Difference>::base_reference()
+\`\`\`
+</CodeBlock>
+
+**Returns:** A mutable reference to the \`Base\` iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor) adapts.
+
+</Tab>
+</Tabs>
+
+---
+
+## Static methods
+
+### pointer_to <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>static</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+\`\`\`cpp showLineNumbers={false}
+static derived_type thrust::pointer<Element, Tag, Reference, Derived>::pointer_to(
+    typename detail::pointer_traits_detail::pointer_to_param<Element>::type r
+)
+\`\`\`
+</CodeBlock>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| \`super_t\` | \`typename detail::pointer_base< Element, Tag, Reference, Derived >::type\` |  |
+| \`derived_type\` | \`typename detail::pointer_base< Element, Tag, Reference, Derived >::derived_type\` |  |
+| \`raw_pointer\` | \`typename super_t::base_type\` | The type of the raw pointer. |
+| \`base_type\` | \`Base\` | The type of iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor)\`'s\` \`adapts\`. |
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for raises_example_v5 1`] = `
+"---
+title: "cuda::stream"
+description: "An owning wrapper for cudaStream_t."
+---
+
+An owning wrapper for cudaStream_t.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cuda/stream.h>
+\`\`\`
+
+**Inherits from:** [\`cuda::stream_ref\`](/libcudacxx/api/cuda::stream_ref) (public)
+
+---
+
+## Constructors
+
+### stream <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+Constructs a stream on a specified device and with specified priority.
+
+Priority is defaulted to [stream::default_priority](/libcudacxx/api/cuda::stream::default_priority)
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "device_ref": "/libcudacxx/api/cuda::device_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::stream::stream(
+    device_ref __dev,
+    int __priority = default_priority
+)
+\`\`\`
+</CodeBlock>
+
+**Throws:** \`cuda_error\` if stream creation fails
+
+</Tab>
+<Tab title="No-init">
+
+<Badge intent="note" minimal>explicit</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Construct a new \`stream\` object into the moved-from state.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::stream::stream(no_init_t) noexcept
+\`\`\`
+</CodeBlock>
+
+<Info title="Postconditions">
+[\`stream()\`](/libcudacxx/api/cuda::stream::stream()) returns an invalid stream handle
+</Info>
+
+</Tab>
+<Tab title="Move-construct a new \`stream\` object">
+
+<Badge intent="note" minimal>noexcept</Badge>
+
+Move-construct a new \`stream\` object.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::stream::stream(stream &&__other) noexcept
+\`\`\`
+</CodeBlock>
+
+<Info title="Postconditions">
+\`__other\` is in moved-from state.
+</Info>
+
+</Tab>
+<Tab title="From native handle">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::stream::stream(::cudaStream_t __handle)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Copy (deleted)">
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::stream::stream(const stream &) = delete
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### Destructor
+
+### ~stream <Badge intent="note" minimal>inline</Badge>
+
+Destroy the \`stream\` object.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+cuda::stream::~stream()
+\`\`\`
+</CodeBlock>
+
+<Note>
+If the stream fails to be destroyed, the error is silently ignored.
+</Note>
+
+---
+
+## Assignment operators
+
+### operator= <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Move-assign a \`stream\` object">
+
+Move-assign a \`stream\` object.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+stream & cuda::stream::operator=(stream &&__other) noexcept
+\`\`\`
+</CodeBlock>
+
+<Info title="Postconditions">
+\`__other\` is in a moved-from state.
+</Info>
+
+</Tab>
+<Tab title="Deleted overload">
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+stream & cuda::stream::operator=(const stream &) = delete
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### release <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Retrieve the native \`cudaStream_t\` handle and give up ownership.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+::cudaStream_t cuda::stream::release()
+\`\`\`
+</CodeBlock>
+
+<Info title="Postconditions">
+The stream object is in a moved-from state.
+</Info>
+
+**Returns:** cudaStream_t The native handle being held by the \`stream\` object.
+
+### get <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the wrapped \`cudaStream_t\` handle.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+value_type cuda::stream::get() const noexcept
+\`\`\`
+</CodeBlock>
+
+### sync <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+Synchronizes the wrapped stream.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::stream::sync() const
+\`\`\`
+</CodeBlock>
+
+**Throws:** \`cuda::cuda_error\` if synchronization fails.
+
+### wait <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<Tabs>
+<Tab title="Deprecated">
+
+Deprecated.
+
+Use [sync()](/libcudacxx/api/cuda::stream_ref::sync()) instead.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::stream::wait() const
+\`\`\`
+</CodeBlock>
+
+<Error title="Deprecated">
+Use [sync()](/libcudacxx/api/cuda::stream_ref::sync()) instead.
+</Error>
+
+</Tab>
+<Tab title="Const">
+
+Make all future work submitted into this stream depend on completion of the specified event.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "event_ref": "/libcudacxx/api/cuda::event_ref", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::stream::wait(event_ref __ev) const
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__ev" type="event_ref">
+Event that this stream should wait for
+</ParamField>
+
+**Throws:** \`cuda_error\` if inserting the dependency fails
+
+</Tab>
+<Tab title="Const">
+
+Make all future work submitted into this stream depend on completion of all work from the specified stream.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+void cuda::stream::wait(stream_ref __other) const
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="stream_ref">
+Stream that this stream should wait for
+</ParamField>
+
+**Throws:** \`cuda_error\` if inserting the dependency fails
+
+</Tab>
+</Tabs>
+
+### is_done <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Queries if all operations on the stream have completed.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+bool cuda::stream::is_done() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** \`true\` if all operations have completed, or \`false\` if not.
+
+**Throws:** \`cuda::cuda_error\` if the query fails.
+
+### ready <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Queries if all operations on the wrapped stream have completed.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+bool cuda::stream::ready() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** \`true\` if all operations have completed, or \`false\` if not.
+
+**Throws:** \`cuda::cuda_error\` if the query fails.
+
+### priority <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Queries the priority of the wrapped stream.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+int cuda::stream::priority() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** value representing the priority of the wrapped stream.
+
+**Throws:** \`cuda::cuda_error\` if the query fails.
+
+### id <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Get the unique ID of the stream.
+
+Stream handles are sometimes reused, but ID is guaranteed to be unique.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+stream_id cuda::stream::id() const
+\`\`\`
+</CodeBlock>
+
+**Returns:** The unique ID of the stream
+
+**Throws:** \`cuda_error\` if the ID query fails
+
+### record_event <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Create a new event and record it into this stream.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "event": "/libcudacxx/api/cuda::event", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+event cuda::stream::record_event(event_flags __flags = event_flags::none) const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A new event that was recorded into this stream
+
+**Throws:** \`cuda_error\` if event creation or record failed
+
+### record_timed_event <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Create a new timed event and record it into this stream.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "timed_event": "/libcudacxx/api/cuda::timed_event", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+timed_event cuda::stream::record_timed_event(event_flags __flags = event_flags::none) const
+\`\`\`
+</CodeBlock>
+
+**Returns:** A new timed event that was recorded into this stream
+
+**Throws:** \`cuda_error\` if event creation or record failed
+
+### device <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Get device under which this stream was created.
+
+Note: In case of a stream created under a \`green_context\` the device on which that \`green_context\` was created is returned
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "device_ref": "/libcudacxx/api/cuda::device_ref", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+device_ref cuda::stream::device() const
+\`\`\`
+</CodeBlock>
+
+**Throws:** \`cuda_error\` if device check fails
+
+### query <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Queries the [\`stream_ref\`](/libcudacxx/api/cuda::stream_ref) for itself.
+
+This makes [\`stream_ref\`](/libcudacxx/api/cuda::stream_ref) usable in places where we expect an environment with a [\`get_stream_t\`](/libcudacxx/api/cuda::get_stream_t) query
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream", "get_stream_t": "/libcudacxx/api/cuda::get_stream_t", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+\`\`\`cpp showLineNumbers={false}
+stream_ref cuda::stream::query(const ::cuda::get_stream_t &) const noexcept
+\`\`\`
+</CodeBlock>
+
+---
+
+## Static methods
+
+### from_native_handle <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Construct an \`stream\` object from a native \`cudaStream_t\` handle.
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+static stream cuda::stream::from_native_handle(::cudaStream_t __handle)
+\`\`\`
+</CodeBlock>
+
+<Note>
+The constructed \`stream\` object takes ownership of the native handle.
+</Note>
+
+**Returns:** stream The constructed \`stream\` object
+
+**Parameters**
+
+<ParamField path="__handle" type="::cudaStream_t">
+The native handle
+</ParamField>
+
+</Tab>
+<Tab title="Deleted overloads">
+
+The following overloads are deleted to prevent misuse:
+
+<CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
+\`\`\`cpp showLineNumbers={false}
+static stream cuda::stream::from_native_handle(int) = delete;
+static stream cuda::stream::from_native_handle(::cuda::std::nullptr_t) = delete;
+static stream cuda::stream::from_native_handle(invalid_stream_t) = delete;
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition |
+|---|---|
+| \`value_type\` | \`::cudaStream_t\` |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| \`default_priority\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`int\` |  |
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for simple_struct_v5 1`] = `
+"---
+title: cub::ArgMax
+description: "Arg max functor (keeps the value and offset of the first occurrence of the larger item)."
+---
+
+Arg max functor (keeps the value and offset of the first occurrence of the larger item).
+
+---
+
+## Methods
+
+### operator() <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+Boolean max operator, preferring the item having the smaller offset in case of ties.
+
+<CodeBlock links={{"ArgMax": "/library/api/cub::ArgMax"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename T, typename OffsetT>
+KeyValuePair<OffsetT, T> cub::ArgMax::operator()(
+    const KeyValuePair<OffsetT, T> &a,
+    const KeyValuePair<OffsetT, T> &b
+) const
+\`\`\`
+</CodeBlock>
+"
+`;
+
+exports[`Snapshot: Rendered output > should match snapshot for warp_reduce_v5 1`] = `
+"---
+title: cub::WarpReduce
+description: ""
+---
+
+The \`WarpReduce\` class provides collective  methods for computing a parallel
+reduction of items partitioned across a CUDA thread warp.
+
+![](../../img/warp_reduce_logo.png)
+
+## Performance considerations
+
+- Uses special instructions when applicable (e.g., warp \`SHFL\` instructions)
+- Uses synchronization-free communication between warp lanes when applicable
+- Incurs zero bank conflicts for most types
+- Computation is slightly more efficient (i.e., having lower instruction overhead) for:
+
+  - Summation (**vs.** generic reduction)
+  - The architecture's warp size is a whole multiple of \`LogicalWarpThreads\`
+
+## Example
+
+@warpcollective{WarpReduce}
+
+The code snippet below illustrates four concurrent warp sum reductions within a block of 128 threads (one per each
+of the 32-thread warps).
+
+The corresponding output \`aggregate\` in threads 0, 32, 64, and 96 will be
+\`496\`, \`1520\`, \`2544\`, and \`3568\`, respectively (and is undefined in other threads).
+
+The code snippet below illustrates a single warp sum reduction within a block of 128 threads.
+
+The corresponding output \`aggregate\` in thread0 will be \`496\` (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+    // Allocate WarpReduce shared memory for 4 warps
+    __shared__ typename WarpReduce::TempStorage temp_storage[4];
+    // Obtain one input item per thread
+    int thread_data = ...
+    // Return the warp-wide sums to each lane0 (threads 0, 32, 64, and 96)
+    int warp_id   = threadIdx.x / 32;
+    int aggregate = WarpReduce(temp_storage[warp_id]).Sum(thread_data);
+}
+
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+    ...
+    // Only the first warp performs a reduction
+    if (threadIdx.x < 32)
+    {
+        // Obtain one input item per thread
+        int thread_data = ...
+        // Return the warp-wide sum to lane0
+        int aggregate = WarpReduce(temp_storage).Sum(thread_data);
+    }
+}
+\`\`\`
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="T" type="typename">
+The reduction input/output element type
+</ParamField>
+
+<ParamField path="LogicalWarpThreads" type="int" default="detail::warp_threads">
+**[optional]** The number of threads per "logical" warp (may be less than the number of hardware warp threads). Default is the warp size of the targeted CUDA compute-capability (e.g., 32 threads for SM20).
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Collective constructors
+
+### WarpReduce <Badge intent="note" minimal>inline</Badge>
+
+Collective constructor using the specified memory allocation as temporary storage.
+Logical warp and lane identifiers are constructed from \`threadIdx.x\`.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce", "TempStorage": "/library/api/cub::_warp_reduce::_temp_storage"}}>
+\`\`\`cpp showLineNumbers={false}
+cub::WarpReduce<T, LogicalWarpThreads>::WarpReduce(TempStorage &temp_storage)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="temp_storage" type="TempStorage &">
+Reference to memory allocation having layout type [TempStorage](/library/api/cub::_warp_reduce::_temp_storage)
+</ParamField>
+
+---
+
+## Summation reductions
+
+### Sum <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes a warp-wide sum in the calling warp.
+The output is valid in warp *lane*<sub>0</sub>.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Sum(T input)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+</Tab>
+<Tab title="Overload 2">
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename InputType,
+          ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
+T cub::WarpReduce<T, LogicalWarpThreads>::Sum(const InputType &input)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes a partially-full warp-wide sum in the calling warp.
+The output is valid in warp *lane*<sub>0</sub>.
+
+All threads across the calling warp must agree on the same value for \`valid_items\`.
+Otherwise the result is undefined.
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
+    T input,
+    int valid_items
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="valid_items" type="int">
+Total number of valid items in the calling thread's logical warp (may be less than \`LogicalWarpThreads\`)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### Max <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Max(T input)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Overload 2">
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename InputType,
+          ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
+T cub::WarpReduce<T, LogicalWarpThreads>::Max(const InputType &input)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Overload 3">
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Max(
+    T input,
+    int valid_items
+)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### Min <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Min(T input)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Overload 2">
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename InputType,
+          ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
+T cub::WarpReduce<T, LogicalWarpThreads>::Min(const InputType &input)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Overload 3">
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+T cub::WarpReduce<T, LogicalWarpThreads>::Min(
+    T input,
+    int valid_items
+)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### HeadSegmentedSum <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Computes a segmented sum in the calling warp where segments are defined by head-flags.
+The sum of each segment is returned to the first lane in that segment
+(which always includes *lane*<sub>0</sub>).
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename FlagT>
+T cub::WarpReduce<T, LogicalWarpThreads>::HeadSegmentedSum(
+    T input,
+    FlagT head_flag
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="head_flag" type="FlagT">
+Head flag denoting whether or not \`input\` is the start of a new segment
+</ParamField>
+
+### TailSegmentedSum <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Computes a segmented sum in the calling warp where segments are defined by tail-flags.
+The sum of each segment is returned to the first lane in that segment
+(which always includes *lane*<sub>0</sub>).
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename FlagT>
+T cub::WarpReduce<T, LogicalWarpThreads>::TailSegmentedSum(
+    T input,
+    FlagT tail_flag
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="tail_flag" type="FlagT">
+Head flag denoting whether or not \`input\` is the start of a new segment
+</ParamField>
+
+---
+
+## Generic reductions
+
+### Reduce <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<Tabs>
+<Tab title="Overload 1">
+
+Computes a warp-wide reduction in the calling warp using the specified binary reduction
+functor. The output is valid in warp *lane*<sub>0</sub>.
+
+Supports non-commutative reduction operators
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ReductionOp>
+T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
+    T input,
+    ReductionOp reduction_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction operator
+</ParamField>
+
+</Tab>
+<Tab title="Overload 2">
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename InputType, typename ReductionOp>
+T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
+    const InputType &input,
+    ReductionOp reduction_op
+)
+\`\`\`
+</CodeBlock>
+
+</Tab>
+<Tab title="Overload 3">
+
+Computes a partially-full warp-wide reduction in the calling warp using the specified binary
+reduction functor. The output is valid in warp *lane*<sub>0</sub>.
+
+All threads across the calling warp must agree on the same value for \`valid_items\`.
+Otherwise the result is undefined.
+
+Supports non-commutative reduction operators
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ReductionOp>
+T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
+    T input,
+    ReductionOp reduction_op,
+    int valid_items
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Binary reduction operator
+</ParamField>
+
+<ParamField path="valid_items" type="int">
+Total number of valid items in the calling thread's logical warp (may be less than \`LogicalWarpThreads\`)
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### HeadSegmentedReduce <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Computes a segmented reduction in the calling warp where segments are defined by head-flags.
+The reduction of each segment is returned to the first lane in that segment
+(which always includes *lane*<sub>0</sub>).
+
+Supports non-commutative reduction operators
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ReductionOp, typename FlagT>
+T cub::WarpReduce<T, LogicalWarpThreads>::HeadSegmentedReduce(
+    T input,
+    FlagT head_flag,
+    ReductionOp reduction_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="head_flag" type="FlagT">
+Head flag denoting whether or not \`input\` is the start of a new segment
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Reduction operator
+</ParamField>
+
+### TailSegmentedReduce <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Computes a segmented reduction in the calling warp where segments are defined by tail-flags.
+The reduction of each segment is returned to the first lane in that segment
+(which always includes *lane*<sub>0</sub>).
+
+Supports non-commutative reduction operators
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+template <typename ReductionOp, typename FlagT>
+T cub::WarpReduce<T, LogicalWarpThreads>::TailSegmentedReduce(
+    T input,
+    FlagT tail_flag,
+    ReductionOp reduction_op
+)
+\`\`\`
+</CodeBlock>
+
+*Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+**Template parameters**
+
+<ParamField path="ReductionOp" type="typename">
+**[inferred]** Binary reduction operator type having member \`T operator()(const T &a, const T &b)\`
+</ParamField>
+
+**Parameters**
+
+<ParamField path="input" type="T">
+Calling thread's input
+</ParamField>
+
+<ParamField path="tail_flag" type="FlagT">
+Tail flag denoting whether or not \`input\` is the end of the current segment
+</ParamField>
+
+<ParamField path="reduction_op" type="ReductionOp">
+Reduction operator
+</ParamField>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| \`_TempStorage\` | \`typename InternalWarpReduce::TempStorage\` | Shared memory storage layout type for [WarpReduce](/library/api/cub::_warp_reduce). |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| \`is_full_warp\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` |  |
+| \`is_power_of_two\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` |  |
+| \`temp_storage\` | \`_TempStorage &\` | Shared storage reference. |
+
+---
+
+## Inner classes
+
+### TempStorage
+
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
+\`\`\`cpp showLineNumbers={false}
+struct cub::WarpReduce::TempStorage
+\`\`\`
+</CodeBlock>
+
+The operations exposed by [WarpReduce](/library/api/cub::_warp_reduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+
+**Inherits from:** \`Uninitialized< _TempStorage >\` (public)
+"
+`;

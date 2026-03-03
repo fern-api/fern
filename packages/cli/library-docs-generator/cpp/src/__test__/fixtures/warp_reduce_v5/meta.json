@@ -1,0 +1,11 @@
+{
+  "compound_name": "WarpReduce",
+  "qualified_name": "cub::WarpReduce",
+  "repo": "CUB",
+  "compound_kind": "class",
+  "namespace_path": [
+    "cub"
+  ],
+  "golden_page": "cub/warp_reduce_v5.mdx",
+  "status": "MATCHED"
+}

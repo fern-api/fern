@@ -1,0 +1,126 @@
+---
+title: thrust::strided_iterator
+description: "An iterator adaptor that wraps another iterator and moves it by a specified stride each time it is incremented or decremented."
+---
+
+A [`strided_iterator`](/library/api/thrust::strided_iterator) wraps another iterator and moves it by a specified stride each time it is incremented or decremented.
+
+```cpp showLineNumbers={false}
+#include <thrust/strided_iterator.h>
+```
+
+<Error title="Deprecated">
+Use `cuda::strided_iterator` instead.
+</Error>
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="RandomAccessIterator" type="typename">
+A random access iterator.
+</ParamField>
+
+<ParamField path="StrideHolder" type="typename">
+Either a [runtime_value](/library/api/thrust::runtime_value) or a [compile_time_value](/library/api/thrust::compile_time_value) specifying the stride.
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+**Inherits from:** [`thrust::iterator_adaptor< strided_iterator< RandomAccessIterator, StrideHolder >, RandomAccessIterator >`](/library/api/thrust::iterator_adaptor) (public), `StrideHolder` (private)
+
+---
+
+## Constructors
+
+### strided_iterator
+
+<Tabs>
+<Tab title="Default">
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
+```cpp showLineNumbers={false}
+thrust::strided_iterator< RandomAccessIterator, StrideHolder >::strided_iterator() = default
+```
+</CodeBlock>
+
+</Tab>
+<Tab title="From iterator and stride">
+
+<Badge intent="note" minimal>inline</Badge>
+
+Creates a [strided_iterator](/library/api/thrust::strided_iterator) from an existing iterator and a stride.
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
+```cpp showLineNumbers={false}
+thrust::strided_iterator< RandomAccessIterator, StrideHolder >::strided_iterator(
+    RandomAccessIterator it,
+    StrideHolder stride = {}
+)
+```
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### stride_holder <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+Returns either the [runtime_value](/library/api/thrust::runtime_value) or the [compile_time_value](/library/api/thrust::compile_time_value) holding the stride's value.
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
+```cpp showLineNumbers={false}
+const auto & thrust::strided_iterator< RandomAccessIterator, StrideHolder >::stride_holder() const
+```
+</CodeBlock>
+
+### stride <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+Returns the stride's value.
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
+```cpp showLineNumbers={false}
+difference_type thrust::strided_iterator< RandomAccessIterator, StrideHolder >::stride() const
+```
+</CodeBlock>
+
+### base <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+```cpp showLineNumbers={false}
+RandomAccessIterator const & thrust::iterator_adaptor< strided_iterator< RandomAccessIterator, StrideHolder >, RandomAccessIterator, use_default, use_default, use_default, use_default, use_default >::base() const
+```
+</CodeBlock>
+
+**Returns:** A `const` reference to the `Base` iterator this [`iterator_adaptor`](/library/api/thrust::iterator_adaptor) adapts.
+
+### base_reference <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+```cpp showLineNumbers={false}
+RandomAccessIterator const & thrust::iterator_adaptor< strided_iterator< RandomAccessIterator, StrideHolder >, RandomAccessIterator, use_default, use_default, use_default, use_default, use_default >::base_reference() const
+```
+</CodeBlock>
+
+**Returns:** A `const` reference to the `Base` iterator this [`iterator_adaptor`](/library/api/thrust::iterator_adaptor) adapts.
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| `base_type` | `RandomAccessIterator` | The type of iterator this [`iterator_adaptor`](/library/api/thrust::iterator_adaptor)'s adapts. |
+
+---
+
+## Member variables
+
+| Name | Type | Description |
+|---|---|---|
+| `has_static_stride` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | `bool` | |

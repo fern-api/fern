@@ -1,0 +1,11 @@
+{
+  "compound_name": "pointer",
+  "qualified_name": "thrust::pointer",
+  "repo": "Thrust",
+  "compound_kind": "class",
+  "namespace_path": [
+    "thrust"
+  ],
+  "golden_page": "thrust/pointer_v5.mdx",
+  "status": "MATCHED"
+}

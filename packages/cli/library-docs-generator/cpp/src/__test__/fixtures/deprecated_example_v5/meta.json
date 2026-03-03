@@ -1,0 +1,11 @@
+{
+  "compound_name": "strided_iterator",
+  "qualified_name": "thrust::strided_iterator",
+  "repo": "Thrust",
+  "compound_kind": "class",
+  "namespace_path": [
+    "thrust"
+  ],
+  "golden_page": "thrust/deprecated_example_v5.mdx",
+  "status": "MATCHED"
+}

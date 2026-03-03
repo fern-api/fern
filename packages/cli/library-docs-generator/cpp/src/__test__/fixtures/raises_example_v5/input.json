@@ -1,0 +1,2272 @@
+{
+  "name": "stream",
+  "path": "cuda::stream",
+  "kind": "struct",
+  "templateParams": [],
+  "baseClasses": [
+    {
+      "name": "cuda::stream_ref",
+      "typeInfo": {
+        "parts": [
+          {
+            "text": "cuda::stream_ref",
+            "refid": "classcuda_1_1stream__ref",
+            "kindref": "compound"
+          }
+        ],
+        "display": "cuda::stream_ref"
+      },
+      "access": "public",
+      "isVirtual": false
+    }
+  ],
+  "derivedClasses": [],
+  "docstring": {
+    "summary": [
+      {
+        "text": "An owning wrapper for cudaStream_t. ",
+        "type": "text"
+      }
+    ],
+    "description": [],
+    "params": [],
+    "templateParamsDoc": [],
+    "raises": [],
+    "examples": [],
+    "notes": [],
+    "warnings": [],
+    "remarks": [],
+    "preconditions": [],
+    "postconditions": [],
+    "seeAlso": [],
+    "returns": null,
+    "deprecated": null
+  },
+  "isAbstract": false,
+  "isFinal": false,
+  "includeHeader": "stream.h",
+  "methods": [
+    {
+      "name": "stream",
+      "path": "cuda::stream::stream",
+      "signature": "cuda::stream::stream(device_ref __dev, int __priority=default_priority)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__dev",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "device_ref",
+                "refid": "classcuda_1_1device__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "device_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__priority",
+          "typeInfo": {
+            "parts": [
+              "int"
+            ],
+            "display": "int"
+          },
+          "defaultValue": {
+            "parts": [
+              {
+                "text": "default_priority",
+                "refid": "structcuda_1_1stream_1aea984ac2b5a695338223621e3f3e0f0a",
+                "kindref": "member"
+              }
+            ],
+            "display": "default_priority"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Constructs a stream on a specified device and with specified priority. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "Priority is defaulted to ",
+                "type": "text"
+              },
+              {
+                "text": "stream::default_priority",
+                "refid": "structcuda_1_1stream_1aea984ac2b5a695338223621e3f3e0f0a",
+                "kindref": "member",
+                "type": "ref"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "cuda_error",
+            "description": [
+              {
+                "text": "if stream creation fails ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "stream",
+      "path": "cuda::stream::stream",
+      "signature": "cuda::stream::stream(no_init_t) noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "no_init_t"
+            ],
+            "display": "no_init_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Construct a new ",
+            "type": "text"
+          },
+          {
+            "code": "stream",
+            "refid": "structcuda_1_1stream",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " object into the moved-from state. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [
+          [
+            {
+              "code": "stream()",
+              "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+              "kindref": "member",
+              "type": "codeRef"
+            },
+            {
+              "text": " returns an invalid stream handle ",
+              "type": "text"
+            }
+          ]
+        ],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": true,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "stream",
+      "path": "cuda::stream::stream",
+      "signature": "cuda::stream::stream(stream &&__other) noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              "stream &&"
+            ],
+            "display": "stream &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Move-construct a new ",
+            "type": "text"
+          },
+          {
+            "code": "stream",
+            "refid": "structcuda_1_1stream",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " object. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [
+          [
+            {
+              "code": "__other",
+              "type": "code"
+            },
+            {
+              "text": " is in moved-from state. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "stream",
+      "path": "cuda::stream::stream",
+      "signature": "cuda::stream::stream(const stream &)=delete",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "const stream &"
+            ],
+            "display": "const stream &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "~stream",
+      "path": "cuda::stream::~stream",
+      "signature": "cuda::stream::~stream()",
+      "templateParams": [],
+      "parameters": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Destroy the ",
+            "type": "text"
+          },
+          {
+            "code": "stream",
+            "refid": "structcuda_1_1stream",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " object. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "If the stream fails to be destroyed, the error is silently ignored. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "cuda::stream::operator=",
+      "signature": "stream & cuda::stream::operator=(stream &&__other) noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "stream",
+                "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+                "kindref": "member"
+              },
+              " &&"
+            ],
+            "display": "stream &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream",
+            "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "stream &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Move-assign a ",
+            "type": "text"
+          },
+          {
+            "code": "stream",
+            "refid": "structcuda_1_1stream",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " object. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [
+          [
+            {
+              "code": "__other",
+              "type": "code"
+            },
+            {
+              "text": " is in a moved-from state. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "cuda::stream::operator=",
+      "signature": "stream & cuda::stream::operator=(const stream &)=delete",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "stream",
+                "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const stream &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream",
+            "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "stream &"
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "release",
+      "path": "cuda::stream::release",
+      "signature": "::cudaStream_t cuda::stream::release()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "::cudaStream_t"
+        ],
+        "display": "::cudaStream_t"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Retrieve the native ",
+            "type": "text"
+          },
+          {
+            "code": "cudaStream_t",
+            "type": "code"
+          },
+          {
+            "text": " handle and give up ownership. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "cudaStream_t The native handle being held by the ",
+            "type": "text"
+          },
+          {
+            "code": "stream",
+            "refid": "structcuda_1_1stream",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " object.",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [
+          [
+            {
+              "text": "The stream object is in a moved-from state. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "get",
+      "path": "cuda::stream_ref::get",
+      "signature": "value_type cuda::stream_ref::get() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "value_type",
+            "refid": "classcuda_1_1stream__ref_1aafcae21296f7cd007b399967f32ef2a6",
+            "kindref": "member"
+          }
+        ],
+        "display": "value_type"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the wrapped ",
+            "type": "text"
+          },
+          {
+            "code": "cudaStream_t",
+            "type": "code"
+          },
+          {
+            "text": " handle. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "sync",
+      "path": "cuda::stream_ref::sync",
+      "signature": "void cuda::stream_ref::sync() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Synchronizes the wrapped stream. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "cuda::cuda_error",
+            "description": [
+              {
+                "text": "if synchronization fails. ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "wait",
+      "path": "cuda::stream_ref::wait",
+      "signature": "void cuda::stream_ref::wait() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Deprecated. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "Use ",
+                "type": "text"
+              },
+              {
+                "text": "sync()",
+                "refid": "classcuda_1_1stream__ref_1add8a88ef722b050ee1c43a9810d5fc32",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": " instead.",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": [
+          {
+            "text": "Use ",
+            "type": "text"
+          },
+          {
+            "text": "sync()",
+            "refid": "classcuda_1_1stream__ref_1add8a88ef722b050ee1c43a9810d5fc32",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " instead. ",
+            "type": "text"
+          }
+        ],
+        "returns": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "wait",
+      "path": "cuda::stream_ref::wait",
+      "signature": "void cuda::stream_ref::wait(event_ref __ev) const",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__ev",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "event_ref",
+                "refid": "classcuda_1_1event__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "event_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Make all future work submitted into this stream depend on completion of the specified event. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__ev",
+            "description": [
+              {
+                "text": "Event that this stream should wait for",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "cuda_error",
+            "description": [
+              {
+                "text": "if inserting the dependency fails ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "wait",
+      "path": "cuda::stream_ref::wait",
+      "signature": "void cuda::stream_ref::wait(stream_ref __other) const",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "stream_ref",
+                "refid": "classcuda_1_1stream__ref_1a2fd504a996595e4ee25d49e518df1512",
+                "kindref": "member"
+              }
+            ],
+            "display": "stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Make all future work submitted into this stream depend on completion of all work from the specified stream. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [
+              {
+                "text": "Stream that this stream should wait for",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "cuda_error",
+            "description": [
+              {
+                "text": "if inserting the dependency fails ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "is_done",
+      "path": "cuda::stream_ref::is_done",
+      "signature": "bool cuda::stream_ref::is_done() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Queries if all operations on the stream have completed. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "code": "true",
+            "type": "code"
+          },
+          {
+            "text": " if all operations have completed, or ",
+            "type": "text"
+          },
+          {
+            "code": "false",
+            "type": "code"
+          },
+          {
+            "text": " if not. ",
+            "type": "text"
+          }
+        ],
+        "raises": [
+          {
+            "exception": "cuda::cuda_error",
+            "description": [
+              {
+                "text": "if the query fails.",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ready",
+      "path": "cuda::stream_ref::ready",
+      "signature": "bool cuda::stream_ref::ready() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Queries if all operations on the wrapped stream have completed. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "code": "true",
+            "type": "code"
+          },
+          {
+            "text": " if all operations have completed, or ",
+            "type": "text"
+          },
+          {
+            "code": "false",
+            "type": "code"
+          },
+          {
+            "text": " if not. ",
+            "type": "text"
+          }
+        ],
+        "raises": [
+          {
+            "exception": "cuda::cuda_error",
+            "description": [
+              {
+                "text": "if the query fails.",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "priority",
+      "path": "cuda::stream_ref::priority",
+      "signature": "int cuda::stream_ref::priority() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "int"
+        ],
+        "display": "int"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Queries the priority of the wrapped stream. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "value representing the priority of the wrapped stream. ",
+            "type": "text"
+          }
+        ],
+        "raises": [
+          {
+            "exception": "cuda::cuda_error",
+            "description": [
+              {
+                "text": "if the query fails.",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "id",
+      "path": "cuda::stream_ref::id",
+      "signature": "stream_id cuda::stream_ref::id() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream_id",
+            "refid": "namespacecuda_1a58f7ed50f4c1fa64f81b1fe4435a8bcd",
+            "kindref": "member"
+          }
+        ],
+        "display": "stream_id"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Get the unique ID of the stream. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "Stream handles are sometimes reused, but ID is guaranteed to be unique.",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "The unique ID of the stream",
+            "type": "text"
+          }
+        ],
+        "raises": [
+          {
+            "exception": "cuda_error",
+            "description": [
+              {
+                "text": "if the ID query fails ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "record_event",
+      "path": "cuda::stream_ref::record_event",
+      "signature": "event cuda::stream_ref::record_event(event_flags __flags=event_flags::none) const",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__flags",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "event_flags",
+                "refid": "namespacecuda_1a1490dfdf5252b57ba976f845d551ee38",
+                "kindref": "member"
+              }
+            ],
+            "display": "event_flags"
+          },
+          "defaultValue": {
+            "parts": [
+              {
+                "text": "event_flags::none",
+                "refid": "namespacecuda_1a1490dfdf5252b57ba976f845d551ee38a334c4a4c42fdb79d7ebc3e73b517e6f8",
+                "kindref": "member"
+              }
+            ],
+            "display": "event_flags::none"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "event",
+            "refid": "classcuda_1_1event",
+            "kindref": "compound"
+          }
+        ],
+        "display": "event"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Create a new event and record it into this stream. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A new event that was recorded into this stream",
+            "type": "text"
+          }
+        ],
+        "raises": [
+          {
+            "exception": "cuda_error",
+            "description": [
+              {
+                "text": "if event creation or record failed ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "record_timed_event",
+      "path": "cuda::stream_ref::record_timed_event",
+      "signature": "timed_event cuda::stream_ref::record_timed_event(event_flags __flags=event_flags::none) const",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__flags",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "event_flags",
+                "refid": "namespacecuda_1a1490dfdf5252b57ba976f845d551ee38",
+                "kindref": "member"
+              }
+            ],
+            "display": "event_flags"
+          },
+          "defaultValue": {
+            "parts": [
+              {
+                "text": "event_flags::none",
+                "refid": "namespacecuda_1a1490dfdf5252b57ba976f845d551ee38a334c4a4c42fdb79d7ebc3e73b517e6f8",
+                "kindref": "member"
+              }
+            ],
+            "display": "event_flags::none"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "timed_event",
+            "refid": "classcuda_1_1timed__event",
+            "kindref": "compound"
+          }
+        ],
+        "display": "timed_event"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Create a new timed event and record it into this stream. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A new timed event that was recorded into this stream",
+            "type": "text"
+          }
+        ],
+        "raises": [
+          {
+            "exception": "cuda_error",
+            "description": [
+              {
+                "text": "if event creation or record failed ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device",
+      "path": "cuda::stream_ref::device",
+      "signature": "device_ref cuda::stream_ref::device() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "device_ref",
+            "refid": "classcuda_1_1device__ref",
+            "kindref": "compound"
+          }
+        ],
+        "display": "device_ref"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Get device under which this stream was created. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "Note: In case of a stream created under a ",
+                "type": "text"
+              },
+              {
+                "code": "green_context",
+                "type": "code"
+              },
+              {
+                "text": " the device on which that ",
+                "type": "text"
+              },
+              {
+                "code": "green_context",
+                "type": "code"
+              },
+              {
+                "text": " was created is returned",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "cuda_error",
+            "description": [
+              {
+                "text": "if device check fails ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "query",
+      "path": "cuda::stream_ref::query",
+      "signature": "stream_ref cuda::stream_ref::query(const ::cuda::get_stream_t &) const noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "::cuda::get_stream_t",
+                "refid": "structcuda_1_1get__stream__t",
+                "kindref": "compound"
+              },
+              " &"
+            ],
+            "display": "const ::cuda::get_stream_t &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream_ref",
+            "refid": "classcuda_1_1stream__ref_1a2fd504a996595e4ee25d49e518df1512",
+            "kindref": "member"
+          }
+        ],
+        "display": "stream_ref"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Queries the ",
+            "type": "text"
+          },
+          {
+            "code": "stream_ref",
+            "refid": "classcuda_1_1stream__ref",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " for itself. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "This makes ",
+                "type": "text"
+              },
+              {
+                "code": "stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " usable in places where we expect an environment with a ",
+                "type": "text"
+              },
+              {
+                "code": "get_stream_t",
+                "refid": "structcuda_1_1get__stream__t",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " query ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "stream",
+      "path": "cuda::stream::stream",
+      "signature": "cuda::stream::stream(::cudaStream_t __handle)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__handle",
+          "typeInfo": {
+            "parts": [
+              "::cudaStream_t"
+            ],
+            "display": "::cudaStream_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "staticMethods": [
+    {
+      "name": "from_native_handle",
+      "path": "cuda::stream::from_native_handle",
+      "signature": "static stream cuda::stream::from_native_handle(::cudaStream_t __handle)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__handle",
+          "typeInfo": {
+            "parts": [
+              "::cudaStream_t"
+            ],
+            "display": "::cudaStream_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream",
+            "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+            "kindref": "member"
+          }
+        ],
+        "display": "stream"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Construct an ",
+            "type": "text"
+          },
+          {
+            "code": "stream",
+            "refid": "structcuda_1_1stream",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " object from a native ",
+            "type": "text"
+          },
+          {
+            "code": "cudaStream_t",
+            "type": "code"
+          },
+          {
+            "text": " handle. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__handle",
+            "description": [
+              {
+                "text": "The native handle",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "stream The constructed ",
+            "type": "text"
+          },
+          {
+            "code": "stream",
+            "refid": "structcuda_1_1stream",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " object",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "The constructed ",
+              "type": "text"
+            },
+            {
+              "code": "stream",
+              "refid": "structcuda_1_1stream",
+              "kindref": "compound",
+              "type": "codeRef"
+            },
+            {
+              "text": " object takes ownership of the native handle. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": true,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "from_native_handle",
+      "path": "cuda::stream::from_native_handle",
+      "signature": "static stream cuda::stream::from_native_handle(int)=delete",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "int"
+            ],
+            "display": "int"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream",
+            "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+            "kindref": "member"
+          }
+        ],
+        "display": "stream"
+      },
+      "isStatic": true,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "from_native_handle",
+      "path": "cuda::stream::from_native_handle",
+      "signature": "static stream cuda::stream::from_native_handle(::cuda::std::nullptr_t)=delete",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "::cuda::std::nullptr_t"
+            ],
+            "display": "::cuda::std::nullptr_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream",
+            "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+            "kindref": "member"
+          }
+        ],
+        "display": "stream"
+      },
+      "isStatic": true,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "from_native_handle",
+      "path": "cuda::stream::from_native_handle",
+      "signature": "static stream cuda::stream::from_native_handle(invalid_stream_t)=delete",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "invalid_stream_t",
+                "refid": "namespacecuda_1a868e48acce54903d47d3f1f484fa1f74",
+                "kindref": "member"
+              }
+            ],
+            "display": "invalid_stream_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream",
+            "refid": "structcuda_1_1stream_1a03b34d2470d527716927d0ed2540b515",
+            "kindref": "member"
+          }
+        ],
+        "display": "stream"
+      },
+      "isStatic": true,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "friendFunctions": [],
+  "typedefs": [
+    {
+      "name": "value_type",
+      "path": "cuda::stream_ref::value_type",
+      "typeInfo": {
+        "parts": [
+          "::cudaStream_t"
+        ],
+        "display": "::cudaStream_t"
+      },
+      "templateParams": [],
+      "docstring": null
+    }
+  ],
+  "memberVariables": [
+    {
+      "name": "default_priority",
+      "path": "cuda::stream::default_priority",
+      "typeInfo": {
+        "parts": [
+          "int"
+        ],
+        "display": "int"
+      },
+      "templateParams": [],
+      "isStatic": true,
+      "isConstexpr": true,
+      "isMutable": false,
+      "initializer": null,
+      "docstring": null
+    }
+  ],
+  "enums": [],
+  "innerClasses": [],
+  "relatedMemberRefs": [],
+  "sectionLabels": {}
+}

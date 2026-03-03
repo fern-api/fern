@@ -1,0 +1,48 @@
+---
+title: cub::ArgMax
+description: "Arg max functor that keeps the value and offset of the first occurrence of the larger item."
+---
+
+Arg max functor (keeps the value and offset of the first occurrence of the larger item).
+
+`ArgMax` is a binary functor that operates on [`KeyValuePair`](/library/api/cub::KeyValuePair) instances, returning the pair with the larger value. In case of ties, the pair with the smaller offset is preferred.
+
+---
+
+## Methods
+
+### operator() <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+Boolean max operator, preferring the item having the smaller offset in case of ties.
+
+<CodeBlock links={{"KeyValuePair": "/library/api/cub::KeyValuePair"}}>
+```cpp showLineNumbers={false}
+template <typename T, typename OffsetT>
+KeyValuePair<OffsetT, T> cub::ArgMax::operator()(
+    const KeyValuePair<OffsetT, T> &a,
+    const KeyValuePair<OffsetT, T> &b
+) const
+```
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="T" type="typename">
+**[inferred]** Value type
+</ParamField>
+
+<ParamField path="OffsetT" type="typename">
+**[inferred]** Offset type
+</ParamField>
+
+**Parameters**
+
+<ParamField path="a" type="const KeyValuePair<OffsetT, T> &">
+First input key-value pair
+</ParamField>
+
+<ParamField path="b" type="const KeyValuePair<OffsetT, T> &">
+Second input key-value pair
+</ParamField>
+
+**Returns:** The [`KeyValuePair`](/library/api/cub::KeyValuePair) with the larger value (ties broken by smaller offset)

@@ -1,0 +1,11 @@
+{
+  "compound_name": "BlockScan",
+  "qualified_name": "cub::BlockScan",
+  "repo": "CUB",
+  "compound_kind": "class",
+  "namespace_path": [
+    "cub"
+  ],
+  "golden_page": "cub/block_scan_v5.mdx",
+  "status": "MATCHED"
+}

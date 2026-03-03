@@ -1,0 +1,2294 @@
+{
+  "name": "counting_iterator",
+  "path": "cuda::counting_iterator",
+  "kind": "class",
+  "templateParams": [
+    {
+      "type": "class _Start",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "::cuda::std::enable_if_t<::cuda::std::weakly_incrementable< _Start >, int >",
+      "defaultValue": {
+        "parts": [
+          "0"
+        ],
+        "display": "0"
+      },
+      "isVariadic": false,
+      "name": null
+    },
+    {
+      "type": "::cuda::std::enable_if_t<::cuda::std::copyable< _Start >, int >",
+      "defaultValue": {
+        "parts": [
+          "0"
+        ],
+        "display": "0"
+      },
+      "isVariadic": false,
+      "name": null
+    }
+  ],
+  "baseClasses": [
+    {
+      "name": "__counting_iterator_category< _Start >",
+      "access": "public",
+      "isVirtual": false,
+      "typeInfo": null
+    }
+  ],
+  "derivedClasses": [],
+  "docstring": {
+    "summary": [
+      {
+        "text": "A ",
+        "type": "text"
+      },
+      {
+        "code": "counting_iterator",
+        "refid": "classcuda_1_1counting__iterator",
+        "kindref": "compound",
+        "type": "codeRef"
+      },
+      {
+        "text": " represents an iterator into a range of sequentially increasing values. ",
+        "type": "text"
+      }
+    ],
+    "description": [
+      {
+        "segments": [
+          {
+            "text": "\nThis iterator is useful for creating a range filled with a sequence without explicitly storing it in memory. Using ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " saves memory capacity and bandwidth.",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "The following code snippet demonstrates how to create a ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " whose ",
+            "type": "text"
+          },
+          {
+            "code": "value_type",
+            "refid": "classcuda_1_1counting__iterator_1a139788b7f7404213e314ace8b3c36cd7",
+            "kindref": "member",
+            "type": "codeRef"
+          },
+          {
+            "text": " is ",
+            "type": "text"
+          },
+          {
+            "code": "int",
+            "type": "code"
+          },
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      }
+    ],
+    "params": [],
+    "templateParamsDoc": [
+      {
+        "name": "_Start",
+        "description": [
+          {
+            "text": "the value type of the ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ".",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      }
+    ],
+    "raises": [],
+    "examples": [
+      {
+        "type": "codeBlock",
+        "code": "#include <cuda/iterator>\n...\n// create iterators\ncuda::counting_iterator first(10);\ncuda::counting_iterator last = first + 3;\n\nfirst[0]   // returns 10\nfirst[1]   // returns 11\nfirst[100] // returns 110\n\n// sum of [first, last)\nstd::reduce(first, last);   // returns 33 (i.e. 10 + 11 + 12)\n\n// initialize vector to [0,1,2,..]\ncuda::counting_iterator iter(0);\nstd::vector<int> vec(500);\nstd::copy(iter, iter + vec.size(), vec.begin());",
+        "language": "cpp"
+      }
+    ],
+    "notes": [],
+    "warnings": [],
+    "remarks": [],
+    "preconditions": [],
+    "postconditions": [],
+    "seeAlso": [],
+    "returns": null,
+    "deprecated": null
+  },
+  "isAbstract": false,
+  "isFinal": false,
+  "includeHeader": "counting_iterator.h",
+  "methods": [
+    {
+      "name": "counting_iterator",
+      "path": "cuda::counting_iterator::counting_iterator",
+      "signature": "cuda::counting_iterator< _Start,, >::counting_iterator()",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< ::cuda::std::default_initializable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "constexpr"
+        ],
+        "display": "constexpr"
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::is_nothrow_default_constructible_v< _Start2 >",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "docstring": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "counting_iterator",
+      "path": "cuda::counting_iterator::counting_iterator",
+      "signature": "cuda::counting_iterator< _Start,, >::counting_iterator(_Start __value)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__value",
+          "typeInfo": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "constexpr"
+        ],
+        "display": "constexpr"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Creates a ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " from an initial value. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__value",
+            "description": [
+              {
+                "text": "The value to store in the ",
+                "type": "text"
+              },
+              {
+                "code": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::is_nothrow_move_constructible_v< _Start >",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator*",
+      "path": "cuda::counting_iterator::operator*",
+      "signature": "_Start cuda::counting_iterator< _Start,, >::operator*() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "_Start"
+        ],
+        "display": "_Start"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the value currently stored in the ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::is_nothrow_copy_constructible_v< _Start >",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator[]",
+      "path": "cuda::counting_iterator::operator[]",
+      "signature": "_Start2 cuda::counting_iterator< _Start,, >::operator[](difference_type __n) const",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __advanceable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__n",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "difference_type",
+                "refid": "classcuda_1_1counting__iterator_1aa69e469cbe1bf689fa4e8a0c933b1d8e",
+                "kindref": "member"
+              }
+            ],
+            "display": "difference_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "_Start2"
+        ],
+        "display": "_Start2"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the value currently stored in the ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " advanced by a number of steps. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__n",
+            "description": [
+              {
+                "text": "The amount of elements to advance ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::is_nothrow_copy_constructible_v< _Start2 > &&noexcept(::cuda::std::declval< const _Start2 & >()+__n)",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator++",
+      "path": "cuda::counting_iterator::operator++",
+      "signature": "counting_iterator & cuda::counting_iterator< _Start,, >::operator++()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "counting_iterator &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Increments the stored value. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "++::cuda::std::declval< _Start & >()",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator++",
+      "path": "cuda::counting_iterator::operator++",
+      "signature": "auto cuda::counting_iterator< _Start,, >::operator++(int)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "int"
+            ],
+            "display": "int"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "auto"
+        ],
+        "display": "auto"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Increments the stored value. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "noexcept(++::cuda::std::declval< _Start & >()) &&::cuda::std::is_nothrow_copy_constructible_v< _Start >",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator--",
+      "path": "cuda::counting_iterator::operator--",
+      "signature": "counting_iterator & cuda::counting_iterator< _Start,, >::operator--()",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __decrementable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "counting_iterator &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Decrements the stored value. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "--::cuda::std::declval< _Start2 & >()",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator--",
+      "path": "cuda::counting_iterator::operator--",
+      "signature": "counting_iterator cuda::counting_iterator< _Start,, >::operator--(int)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __decrementable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "int"
+            ],
+            "display": "int"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+            "kindref": "member"
+          }
+        ],
+        "display": "counting_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Decrements the stored value. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "noexcept(--::cuda::std::declval< _Start2 & >()) &&::cuda::std::is_nothrow_copy_constructible_v< _Start >",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator+=",
+      "path": "cuda::counting_iterator::operator+=",
+      "signature": "counting_iterator & cuda::counting_iterator< _Start,, >::operator+=(difference_type __n)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__n",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "difference_type",
+                "refid": "classcuda_1_1counting__iterator_1aa69e469cbe1bf689fa4e8a0c933b1d8e",
+                "kindref": "member"
+              }
+            ],
+            "display": "difference_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "counting_iterator &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Increments the stored value by a given number of elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__n",
+            "description": [
+              {
+                "text": "The number of elements to increment ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::__integer_like< _Start >",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator-=",
+      "path": "cuda::counting_iterator::operator-=",
+      "signature": "counting_iterator & cuda::counting_iterator< _Start,, >::operator-=(difference_type __n)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __advanceable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__n",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "difference_type",
+                "refid": "classcuda_1_1counting__iterator_1aa69e469cbe1bf689fa4e8a0c933b1d8e",
+                "kindref": "member"
+              }
+            ],
+            "display": "difference_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "counting_iterator &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Decrements the stored value by a given number of elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__n",
+            "description": [
+              {
+                "text": "The amount of elements to decrement ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::__integer_like< _Start2 >",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "staticMethods": [],
+  "friendFunctions": [
+    {
+      "name": "operator+",
+      "path": "cuda::counting_iterator::operator+",
+      "signature": "counting_iterator operator+(counting_iterator __iter, difference_type __n)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __advanceable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__iter",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              }
+            ],
+            "display": "counting_iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__n",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "difference_type",
+                "refid": "classcuda_1_1counting__iterator_1aa69e469cbe1bf689fa4e8a0c933b1d8e",
+                "kindref": "member"
+              }
+            ],
+            "display": "difference_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+            "kindref": "member"
+          }
+        ],
+        "display": "counting_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Creates a copy of a ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " advanced by a given number of elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__iter",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " to advance ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__n",
+            "description": [
+              {
+                "text": "The amount of elements to advance ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::__integer_like< _Start2 >",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator+",
+      "path": "cuda::counting_iterator::operator+",
+      "signature": "counting_iterator operator+(difference_type __n, counting_iterator __iter)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __advanceable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__n",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "difference_type",
+                "refid": "classcuda_1_1counting__iterator_1aa69e469cbe1bf689fa4e8a0c933b1d8e",
+                "kindref": "member"
+              }
+            ],
+            "display": "difference_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__iter",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              }
+            ],
+            "display": "counting_iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+            "kindref": "member"
+          }
+        ],
+        "display": "counting_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Creates a copy of a ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " advanced by a given number of elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__iter",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " to advance ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__n",
+            "description": [
+              {
+                "text": "The amount of elements to advance ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::__integer_like< _Start2 >",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator-",
+      "path": "cuda::counting_iterator::operator-",
+      "signature": "counting_iterator operator-(counting_iterator __iter, difference_type __n)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __advanceable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__iter",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              }
+            ],
+            "display": "counting_iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__n",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "difference_type",
+                "refid": "classcuda_1_1counting__iterator_1aa69e469cbe1bf689fa4e8a0c933b1d8e",
+                "kindref": "member"
+              }
+            ],
+            "display": "difference_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+            "kindref": "member"
+          }
+        ],
+        "display": "counting_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Creates a copy of a ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " decremented by a given number of elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__iter",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " to decrement ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__n",
+            "description": [
+              {
+                "text": "The amount of elements to decrement ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::__integer_like< _Start2 >",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator-",
+      "path": "cuda::counting_iterator::operator-",
+      "signature": "difference_type operator-(const counting_iterator &__x, const counting_iterator &__y)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __advanceable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__x",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__y",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "difference_type",
+            "refid": "classcuda_1_1counting__iterator_1aa69e469cbe1bf689fa4e8a0c933b1d8e",
+            "kindref": "member"
+          }
+        ],
+        "display": "difference_type"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the distance between two ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "The difference between the stored values ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::__integer_like< _Start2 >",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator==",
+      "path": "cuda::counting_iterator::operator==",
+      "signature": "bool operator==(const counting_iterator &__x, const counting_iterator &__y)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< ::cuda::std::equality_comparable< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__x",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__y",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Compares two ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " for equality. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "True if the stored values compare equal ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::declval< const _Start2 & >()==::cuda::std::declval< const _Start2 & >()",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator<",
+      "path": "cuda::counting_iterator::operator<",
+      "signature": "bool operator<(const counting_iterator &__x, const counting_iterator &__y)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< ::cuda::std::totally_ordered< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__x",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__y",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Compares two ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " for less than. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "True if stored values compare less than ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::declval< const _Start2 & >()< ::cuda::std::declval< const _Start2 & >()",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator>",
+      "path": "cuda::counting_iterator::operator>",
+      "signature": "bool operator>(const counting_iterator &__x, const counting_iterator &__y)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< ::cuda::std::totally_ordered< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__x",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__y",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Compares two ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " for greater than. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "True if stored values compare greater than ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::declval< const _Start2 & >()< ::cuda::std::declval< const _Start2 & >()",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator<=",
+      "path": "cuda::counting_iterator::operator<=",
+      "signature": "bool operator<=(const counting_iterator &__x, const counting_iterator &__y)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< ::cuda::std::totally_ordered< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__x",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__y",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Compares two ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " for less equal. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "True if stored values compare less equal ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::declval< const _Start2 & >()< ::cuda::std::declval< const _Start2 & >()",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator>=",
+      "path": "cuda::counting_iterator::operator>=",
+      "signature": "bool operator>=(const counting_iterator &__x, const counting_iterator &__y)",
+      "templateParams": [
+        {
+          "type": "class _Start2",
+          "defaultValue": {
+            "parts": [
+              "_Start"
+            ],
+            "display": "_Start"
+          },
+          "isVariadic": false,
+          "name": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< ::cuda::std::totally_ordered< _Start2 >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__x",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__y",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "counting_iterator",
+                "refid": "classcuda_1_1counting__iterator_1aed0856006cb1718b56d2f23f8b88ee41",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const counting_iterator &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Compares two ",
+            "type": "text"
+          },
+          {
+            "code": "counting_iterator",
+            "refid": "classcuda_1_1counting__iterator",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " for greater equal. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "True if stored values compare greater equal ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "::cuda::std::declval< const _Start2 & >()< ::cuda::std::declval< const _Start2 & >()",
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "typedefs": [
+    {
+      "name": "iterator_concept",
+      "path": "cuda::counting_iterator::iterator_concept",
+      "typeInfo": {
+        "parts": [
+          "::cuda::std::conditional_t< __advanceable< _Start >, ::cuda::std::random_access_iterator_tag, ::cuda::std::conditional_t< __decrementable< _Start >, ::cuda::std::bidirectional_iterator_tag, ::cuda::std::conditional_t<::cuda::std::incrementable< _Start >, ::cuda::std::forward_iterator_tag, ::cuda::std::input_iterator_tag > > >"
+        ],
+        "display": "::cuda::std::conditional_t< __advanceable< _Start >, ::cuda::std::random_access_iterator_tag, ::cuda::std::conditional_t< __decrementable< _Start >, ::cuda::std::bidirectional_iterator_tag, ::cuda::std::conditional_t<::cuda::std::incrementable< _Start >, ::cuda::std::forward_iterator_tag, ::cuda::std::input_iterator_tag > > >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "value_type",
+      "path": "cuda::counting_iterator::value_type",
+      "typeInfo": {
+        "parts": [
+          "_Start"
+        ],
+        "display": "_Start"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "difference_type",
+      "path": "cuda::counting_iterator::difference_type",
+      "typeInfo": {
+        "parts": [
+          "_IotaDiffT< _Start >"
+        ],
+        "display": "_IotaDiffT< _Start >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "reference",
+      "path": "cuda::counting_iterator::reference",
+      "typeInfo": {
+        "parts": [
+          "_Start"
+        ],
+        "display": "_Start"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "pointer",
+      "path": "cuda::counting_iterator::pointer",
+      "typeInfo": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "templateParams": [],
+      "docstring": null
+    }
+  ],
+  "memberVariables": [],
+  "enums": [],
+  "innerClasses": [],
+  "relatedMemberRefs": [
+    "group__iterators_1ga9d2f63c494c90b291254007413dd6fcd"
+  ],
+  "sectionLabels": {}
+}

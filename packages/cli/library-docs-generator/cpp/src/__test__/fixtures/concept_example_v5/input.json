@@ -1,0 +1,79 @@
+{
+  "name": "resource_with",
+  "path": "cuda::mr::resource_with",
+  "templateParams": [
+    {
+      "type": "class _Resource",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "class...",
+      "name": "_Properties",
+      "isVariadic": true,
+      "defaultValue": null
+    }
+  ],
+  "docstring": {
+    "summary": [
+      {
+        "text": "The ",
+        "type": "text"
+      },
+      {
+        "code": "resource_with",
+        "type": "code"
+      },
+      {
+        "text": " concept verifies that a type Resource satisfies the ",
+        "type": "text"
+      },
+      {
+        "code": "resource",
+        "refid": "namespacecuda_1_1mr_1a088b9969d28095119c248fe038e2a824",
+        "kindref": "member",
+        "type": "codeRef"
+      },
+      {
+        "text": " concept and also satisfies all the provided Properties. ",
+        "type": "text"
+      }
+    ],
+    "description": [
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      }
+    ],
+    "params": [],
+    "templateParamsDoc": [
+      {
+        "name": "_Resource",
+        "description": [],
+        "direction": null
+      },
+      {
+        "name": "_Properties",
+        "description": [],
+        "direction": null
+      }
+    ],
+    "raises": [],
+    "examples": [],
+    "notes": [],
+    "warnings": [],
+    "remarks": [],
+    "preconditions": [],
+    "postconditions": [],
+    "seeAlso": [],
+    "returns": null,
+    "deprecated": null
+  },
+  "constraintExpression": null
+}

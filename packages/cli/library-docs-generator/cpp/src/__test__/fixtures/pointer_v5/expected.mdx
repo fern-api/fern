@@ -1,0 +1,295 @@
+---
+title: thrust::pointer
+description: "A tagged pointer type that stores a pointer to an object allocated in memory, generalizing device_ptr with configurable backend systems."
+---
+
+`pointer` stores a pointer to an object allocated in memory.
+
+Like [`device_ptr`](/library/api/thrust::device_ptr), this type ensures type safety when dispatching standard algorithms on ranges resident in memory.
+
+`pointer` generalizes [`device_ptr`](/library/api/thrust::device_ptr) by relaxing the backend system associated with the `pointer`. Instead of the backend system specified by `THRUST_DEVICE_SYSTEM`, `pointer`'s system is given by its second template parameter, `Tag`. For the purpose of Thrust dispatch, [`device_ptr<Element>`](/library/api/thrust::device_ptr) and `pointer<Element,device_system_tag>` are considered equivalent.
+
+The raw pointer encapsulated by a `pointer` may be obtained through its [`get`](/library/api/thrust::pointer::get) member function or the `raw_pointer_cast` free function.
+
+```cpp showLineNumbers={false}
+#include <thrust/pointer.h>
+```
+
+<Note>
+`pointer` is not a smart pointer; it is the client's responsibility to deallocate memory pointer to by `pointer`.
+</Note>
+
+**See also:**
+[device_ptr](/library/api/thrust::device_ptr),
+reference,
+[raw_pointer_cast](/library/api/thrust::raw_pointer_cast)
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="Element" type="typename">
+Specifies the type of the pointed-to object.
+</ParamField>
+
+<ParamField path="Tag" type="typename">
+Specifies the system with which this `pointer` is associated. This may be any Thrust backend system, or a user-defined tag.
+</ParamField>
+
+<ParamField path="Reference" type="typename">
+Allows the client to specify the reference type returned upon dereference. By default, this type is `reference<Element,pointer>`.
+</ParamField>
+
+<ParamField path="Derived" type="typename">
+Allows the client to specify the name of the derived type when `pointer` is used as a base class. This is useful to ensure that arithmetic on values of the derived type return values of the derived type as a result. By default, this type is `pointer<Element,Tag,Reference>`.
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+**Inherits from:** [`thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >`](/library/api/thrust::iterator_adaptor) (public)
+
+---
+
+## Constructors
+
+### pointer <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="Default">
+
+`pointer`'s default constructor initializes its encapsulated pointer to `0`.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+thrust::pointer< Element, Tag, Reference, Derived >::pointer()
+```
+</CodeBlock>
+
+</Tab>
+<Tab title="From nullptr">
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+thrust::pointer< Element, Tag, Reference, Derived >::pointer(
+    ::cuda::std::nullptr_t
+)
+```
+</CodeBlock>
+
+</Tab>
+<Tab title="From raw pointer">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+This constructor allows construction of a `pointer<const T, ...>` from a `T *`.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+template <typename OtherElement>
+thrust::pointer< Element, Tag, Reference, Derived >::pointer(
+    OtherElement *ptr
+)
+```
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="OtherElement" type="typename">
+`OtherElement` shall be convertible to `Element`.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="ptr" type="OtherElement *">
+A raw pointer to copy from, presumed to point to a location in `Tag`'s memory.
+</ParamField>
+
+</Tab>
+<Tab title="From other pointer">
+
+This constructor allows initialization from another pointer-like object.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+template <typename OtherPointer,
+          detail::enable_if_pointer_is_convertible_t<OtherPointer, pointer> * = nullptr>
+thrust::pointer< Element, Tag, Reference, Derived >::pointer(
+    const OtherPointer &other
+)
+```
+</CodeBlock>
+
+**Template parameters**
+
+<ParamField path="OtherPointer" type="typename">
+The tag associated with `OtherPointer` shall be convertible to `Tag`, and its element type shall be convertible to `Element`.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="other" type="const OtherPointer &">
+The `OtherPointer` to copy.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Assignment operators
+
+### operator= <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="From nullptr">
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+derived_type& thrust::pointer< Element, Tag, Reference, Derived >::operator=(
+    ::cuda::std::nullptr_t
+)
+```
+</CodeBlock>
+
+**Returns:** A reference to the derived pointer type.
+
+</Tab>
+<Tab title="From other pointer">
+
+Assignment operator allows assigning from another pointer-like object whose element type is convertible to `Element`.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+template <typename OtherPointer>
+detail::enable_if_pointer_is_convertible_t<OtherPointer, pointer, derived_type &>
+thrust::pointer< Element, Tag, Reference, Derived >::operator=(
+    const OtherPointer &other
+)
+```
+</CodeBlock>
+
+**Returns:** A reference to `*this`.
+
+**Template parameters**
+
+<ParamField path="OtherPointer" type="typename">
+The tag associated with `OtherPointer` shall be convertible to `Tag`, and its element type shall be convertible to `Element`.
+</ParamField>
+
+**Parameters**
+
+<ParamField path="other" type="const OtherPointer &">
+The other pointer-like object to assign from.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Methods
+
+### get <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+`get` returns this `pointer`'s encapsulated raw pointer.
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+Element * thrust::pointer< Element, Tag, Reference, Derived >::get() const
+```
+</CodeBlock>
+
+**Returns:** This `pointer`'s raw pointer.
+
+### operator-> <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+Element * thrust::pointer< Element, Tag, Reference, Derived >::operator->() const
+```
+</CodeBlock>
+
+### operator bool <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>explicit</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+thrust::pointer< Element, Tag, Reference, Derived >::operator bool() const
+```
+</CodeBlock>
+
+### dereference <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+template <typename SuperRef = typename super_t::reference>
+SuperRef thrust::pointer< Element, Tag, Reference, Derived >::dereference() const
+```
+</CodeBlock>
+
+### base <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+```cpp showLineNumbers={false}
+Base const & thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >::base() const
+```
+</CodeBlock>
+
+**Returns:** A `const` reference to the `Base` iterator this [`iterator_adaptor`](/library/api/thrust::iterator_adaptor) adapts.
+
+### base_reference
+
+<Tabs>
+<Tab title="Mutable">
+
+<Badge intent="note" minimal>inline</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+```cpp showLineNumbers={false}
+Base & thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >::base_reference()
+```
+</CodeBlock>
+
+**Returns:** A mutable reference to the `Base` iterator this [`iterator_adaptor`](/library/api/thrust::iterator_adaptor) adapts.
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+```cpp showLineNumbers={false}
+Base const & thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >::base_reference() const
+```
+</CodeBlock>
+
+**Returns:** A `const` reference to the `Base` iterator this [`iterator_adaptor`](/library/api/thrust::iterator_adaptor) adapts.
+
+</Tab>
+</Tabs>
+
+---
+
+## Static methods
+
+### pointer_to <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>static</Badge>
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
+```cpp showLineNumbers={false}
+static derived_type thrust::pointer< Element, Tag, Reference, Derived >::pointer_to(
+    typename detail::pointer_traits_detail::pointer_to_param< Element >::type r
+)
+```
+</CodeBlock>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition | Description |
+|---|---|---|
+| `super_t` | `typename detail::pointer_base< Element, Tag, Reference, Derived >::type` | |
+| `derived_type` | `typename detail::pointer_base< Element, Tag, Reference, Derived >::derived_type` | |
+| `raw_pointer` | `typename super_t::base_type` | The type of the raw pointer. |
+| `base_type` | `Base` | The type of iterator this [`iterator_adaptor`](/library/api/thrust::iterator_adaptor)'s adapts. |

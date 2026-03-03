@@ -1,0 +1,825 @@
+---
+title: "cuda::buffer"
+description: "A memory-safe buffer for managing typed, property-annotated device memory with stream-ordered allocation."
+---
+
+```cpp showLineNumbers={false}
+#include <cuda/buffer.h>
+```
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="_Tp" type="class">
+The type to be stored in the buffer.
+</ParamField>
+
+<ParamField path="_Properties..." type="class...">
+The properties the allocated memory satisfies.
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Constructors
+
+### buffer
+
+<Tabs>
+<Tab title="Copy">
+
+<Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>explicit</Badge>
+
+Copy-constructs from a buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+cuda::buffer<_Tp, _Properties>::buffer(
+    const buffer &__other
+)
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="const buffer &">
+The other buffer.
+</ParamField>
+
+</Tab>
+<Tab title="Move">
+
+<Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Move-constructs from a buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+cuda::buffer<_Tp, _Properties>::buffer(
+    buffer &&__other
+) noexcept
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="buffer &&">
+The other buffer. After move construction, the other buffer can only be assigned to or destroyed.
+</ParamField>
+
+</Tab>
+<Tab title="From matching properties (copy)">
+
+<Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>explicit</Badge>
+
+Copy-constructs from a buffer with matching properties.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+template <class... _OtherProperties>
+cuda::buffer<_Tp, _Properties>::buffer(
+    const buffer<_Tp, _OtherProperties...> &__other
+)
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="const buffer<_Tp, _OtherProperties...> &">
+The other buffer.
+</ParamField>
+
+</Tab>
+<Tab title="From matching properties (move)">
+
+<Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Move-constructs from a buffer with matching properties.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+template <class... _OtherProperties>
+cuda::buffer<_Tp, _Properties>::buffer(
+    buffer<_Tp, _OtherProperties...> &&__other
+) noexcept
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="buffer<_Tp, _OtherProperties...> &&">
+The other buffer. After move construction, the other buffer can only be assigned to or destroyed.
+</ParamField>
+
+</Tab>
+<Tab title="Empty">
+
+<Badge intent="note" minimal>inline</Badge>
+
+Constructs an empty buffer using an environment.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+template <class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    const _Env &__env = {}
+)
+```
+</CodeBlock>
+
+<Note>
+No memory is allocated.
+</Note>
+
+**Parameters**
+
+<ParamField path="__env" type="const _Env &">
+The environment providing the needed information.
+</ParamField>
+
+</Tab>
+<Tab title="Sized (no-init)">
+
+<Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>explicit</Badge>
+
+Constructs a buffer of size `__size` using a memory and leaves all elements uninitialized.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+template <class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    const size_type __size,
+    ::cuda::no_init_t,
+    const _Env &__env = {}
+)
+```
+</CodeBlock>
+
+<Warning>
+This constructor does **NOT** initialize any elements. It is the user's responsibility to ensure that the elements within `[vec.begin(), vec.end())` are properly initialized.
+</Warning>
+
+**Parameters**
+
+<ParamField path="__size" type="const size_type">
+The size of the buffer.
+</ParamField>
+
+<ParamField path="__env" type="const _Env &">
+The environment used to query the memory resource.
+</ParamField>
+
+</Tab>
+<Tab title="From iterator range">
+
+<Badge intent="note" minimal>inline</Badge>
+
+Constructs a buffer using a memory resource and copy-constructs all elements from the forward range `[__first, __last)`.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+template <class _Iter, class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    _Iter __first,
+    _Iter __last,
+    const _Env &__env = {}
+)
+```
+</CodeBlock>
+
+<Note>
+If `__first == __last` then no memory is allocated.
+</Note>
+
+**Parameters**
+
+<ParamField path="__first" type="_Iter">
+The start of the input sequence.
+</ParamField>
+
+<ParamField path="__last" type="_Iter">
+The end of the input sequence.
+</ParamField>
+
+<ParamField path="__env" type="const _Env &">
+The environment used to query the memory resource.
+</ParamField>
+
+</Tab>
+<Tab title="From initializer_list">
+
+<Badge intent="note" minimal>inline</Badge>
+
+Constructs a buffer using a memory resource and copy-constructs all elements from `__ilist`.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+template <class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    ::cuda::std::initializer_list<_Tp> __ilist,
+    const _Env &__env = {}
+)
+```
+</CodeBlock>
+
+<Note>
+If `__ilist.size() == 0` then no memory is allocated.
+</Note>
+
+**Parameters**
+
+<ParamField path="__ilist" type="::cuda::std::initializer_list<_Tp>">
+The initializer_list being copied into the buffer.
+</ParamField>
+
+<ParamField path="__env" type="const _Env &">
+The environment used to query the memory resource.
+</ParamField>
+
+</Tab>
+<Tab title="From range">
+
+<Badge intent="note" minimal>inline</Badge>
+
+Constructs a buffer using a memory resource and an input range.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+template <class _Range, class _Resource, class _Env>
+cuda::buffer<_Tp, _Properties>::buffer(
+    ::cuda::stream_ref __stream,
+    _Resource &&__resource,
+    _Range &&__range,
+    const _Env &__env = {}
+)
+```
+</CodeBlock>
+
+<Note>
+If `__range.size() == 0` then no memory is allocated.
+</Note>
+
+**Parameters**
+
+<ParamField path="__range" type="_Range &&">
+The input range to be moved into the buffer.
+</ParamField>
+
+<ParamField path="__env" type="const _Env &">
+The environment used to query the memory resource.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Assignment operators
+
+### operator= <Badge intent="note" minimal>inline</Badge>
+
+Move assignment operator.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::operator=(
+    buffer &&__other
+)
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="buffer &&">
+The buffer to move from.
+</ParamField>
+
+---
+
+## Element access
+
+### get_unsynchronized <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Mutable">
+
+<Badge intent="note" minimal>nodiscard</Badge>
+
+Returns a reference to the `__n`'th element of the async_vector.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+reference cuda::buffer<_Tp, _Properties>::get_unsynchronized(
+    const size_type __n
+) noexcept
+```
+</CodeBlock>
+
+**Returns:** A mutable reference to the element at position `__n`.
+
+**Parameters**
+
+<ParamField path="__n" type="const size_type">
+The index of the element.
+</ParamField>
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns a reference to the `__n`'th element of the async_vector.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_reference cuda::buffer<_Tp, _Properties>::get_unsynchronized(
+    const size_type __n
+) const noexcept
+```
+</CodeBlock>
+
+**Returns:** A const reference to the element at position `__n`.
+
+**Parameters**
+
+<ParamField path="__n" type="const size_type">
+The index of the element.
+</ParamField>
+
+</Tab>
+</Tabs>
+
+### data <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Mutable">
+
+<Badge intent="note" minimal>nodiscard</Badge>
+
+Returns a pointer to the first element of the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+pointer cuda::buffer<_Tp, _Properties>::data() noexcept
+```
+</CodeBlock>
+
+**Returns:** A mutable pointer to the first element.
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns a pointer to the first element of the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_pointer cuda::buffer<_Tp, _Properties>::data() const noexcept
+```
+</CodeBlock>
+
+**Returns:** A const pointer to the first element.
+
+</Tab>
+</Tabs>
+
+---
+
+## Iterators
+
+### begin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Mutable">
+
+<Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an iterator to the first element of the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+iterator cuda::buffer<_Tp, _Properties>::begin() noexcept
+```
+</CodeBlock>
+
+**Returns:** A mutable iterator to the first element.
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable iterator to the first element of the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_iterator cuda::buffer<_Tp, _Properties>::begin() const noexcept
+```
+</CodeBlock>
+
+**Returns:** An immutable iterator to the first element.
+
+</Tab>
+</Tabs>
+
+### cbegin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable iterator to the first element of the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_iterator cuda::buffer<_Tp, _Properties>::cbegin() const noexcept
+```
+</CodeBlock>
+
+**Returns:** An immutable iterator to the first element.
+
+### end <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Mutable">
+
+<Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an iterator to the element following the last element of the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+iterator cuda::buffer<_Tp, _Properties>::end() noexcept
+```
+</CodeBlock>
+
+**Returns:** A mutable iterator to one past the last element.
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable iterator to the element following the last element of the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_iterator cuda::buffer<_Tp, _Properties>::end() const noexcept
+```
+</CodeBlock>
+
+**Returns:** An immutable iterator to one past the last element.
+
+</Tab>
+</Tabs>
+
+### cend <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable iterator to the element following the last element of the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_iterator cuda::buffer<_Tp, _Properties>::cend() const noexcept
+```
+</CodeBlock>
+
+**Returns:** An immutable iterator to one past the last element.
+
+### rbegin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Mutable">
+
+<Badge intent="note" minimal>nodiscard</Badge>
+
+Returns a reverse iterator to the first element of the reversed buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+reverse_iterator cuda::buffer<_Tp, _Properties>::rbegin() noexcept
+```
+</CodeBlock>
+
+**Returns:** A mutable reverse iterator to the first element of the reversed buffer.
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable reverse iterator to the first element of the reversed buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_reverse_iterator cuda::buffer<_Tp, _Properties>::rbegin() const noexcept
+```
+</CodeBlock>
+
+**Returns:** An immutable reverse iterator to the first element of the reversed buffer.
+
+</Tab>
+</Tabs>
+
+### crbegin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable reverse iterator to the first element of the reversed buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_reverse_iterator cuda::buffer<_Tp, _Properties>::crbegin() const noexcept
+```
+</CodeBlock>
+
+**Returns:** An immutable reverse iterator to the first element of the reversed buffer.
+
+### rend <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Mutable">
+
+<Badge intent="note" minimal>nodiscard</Badge>
+
+Returns a reverse iterator to the element following the last element of the reversed buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+reverse_iterator cuda::buffer<_Tp, _Properties>::rend() noexcept
+```
+</CodeBlock>
+
+**Returns:** A mutable reverse iterator to one past the last element of the reversed buffer.
+
+</Tab>
+<Tab title="Const">
+
+<Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable reverse iterator to the element following the last element of the reversed buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_reverse_iterator cuda::buffer<_Tp, _Properties>::rend() const noexcept
+```
+</CodeBlock>
+
+**Returns:** An immutable reverse iterator to one past the last element of the reversed buffer.
+
+</Tab>
+</Tabs>
+
+### crend <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns an immutable reverse iterator to the element following the last element of the reversed buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const_reverse_iterator cuda::buffer<_Tp, _Properties>::crend() const noexcept
+```
+</CodeBlock>
+
+**Returns:** An immutable reverse iterator to one past the last element of the reversed buffer.
+
+---
+
+## Capacity
+
+### size <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the current number of elements stored in the buffer.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+size_type cuda::buffer<_Tp, _Properties>::size() const noexcept
+```
+</CodeBlock>
+
+**Returns:** `size_type` -- the number of elements in the buffer.
+
+### empty <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns true if the buffer is empty.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+bool cuda::buffer<_Tp, _Properties>::empty() const noexcept
+```
+</CodeBlock>
+
+**Returns:** `true` if the buffer contains no elements, `false` otherwise.
+
+---
+
+## Resource and stream management
+
+### memory_resource <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+const __resource_t& cuda::buffer<_Tp, _Properties>::memory_resource() const noexcept
+```
+</CodeBlock>
+
+**Returns:** A const reference to the memory resource used by this buffer.
+
+### stream <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the stored stream.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+stream_ref cuda::buffer<_Tp, _Properties>::stream() const noexcept
+```
+</CodeBlock>
+
+**Returns:** [`stream_ref`](/libcudacxx/api/cuda::stream_ref)
+
+<Note>
+Stream used to allocate the buffer is initially stored in the buffer, but can be changed with [`set_stream`](/libcudacxx/api/cuda::buffer::set_stream).
+</Note>
+
+### set_stream <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge>
+
+Replaces the stored stream.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::set_stream(
+    stream_ref __new_stream
+)
+```
+</CodeBlock>
+
+<Note>
+Always synchronizes with the old stream.
+</Note>
+
+**Parameters**
+
+<ParamField path="__new_stream" type="stream_ref">
+The new stream.
+</ParamField>
+
+---
+
+## Modifiers
+
+### swap <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Swaps the contents of a buffer with those of `__other`.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::swap(
+    buffer &__other
+) noexcept
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__other" type="buffer &">
+The buffer to swap with.
+</ParamField>
+
+### destroy <Badge intent="note" minimal>inline</Badge>
+
+<Tabs>
+<Tab title="With stream">
+
+Destroys the buffer, deallocates the buffer and destroys the memory resource.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::destroy(
+    ::cuda::stream_ref __stream
+)
+```
+</CodeBlock>
+
+<Warning>
+After this explicit destroy call, the buffer can only be assigned to or destroyed.
+</Warning>
+
+**Parameters**
+
+<ParamField path="__stream" type="::cuda::stream_ref">
+The stream to deallocate the buffer on.
+</ParamField>
+
+</Tab>
+<Tab title="Default stream">
+
+Destroys the buffer, deallocates the buffer and destroys the memory resource.
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+void cuda::buffer<_Tp, _Properties>::destroy()
+```
+</CodeBlock>
+
+<Note>
+Uses the stored stream to deallocate the buffer.
+</Note>
+
+<Warning>
+After this explicit destroy call, the buffer can only be assigned to or destroyed.
+</Warning>
+
+</Tab>
+</Tabs>
+
+---
+
+## Friend functions
+
+### swap <Badge intent="note" minimal>noexcept</Badge>
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+void swap(
+    buffer &__lhs,
+    buffer &__rhs
+) noexcept
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__lhs" type="buffer &">
+The first buffer.
+</ParamField>
+
+<ParamField path="__rhs" type="buffer &">
+The second buffer.
+</ParamField>
+
+### transform_launch_argument <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Mutable">
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+template <class _DeviceAccessible>
+::cuda::std::span<_Tp> transform_launch_argument(
+    ::cuda::stream_ref,
+    buffer &__self
+) noexcept
+```
+</CodeBlock>
+
+</Tab>
+<Tab title="Const">
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer", "stream_ref": "/libcudacxx/api/cuda::stream_ref"}}>
+```cpp showLineNumbers={false}
+template <class _DeviceAccessible>
+::cuda::std::span<const _Tp> transform_launch_argument(
+    ::cuda::stream_ref,
+    const buffer &__self
+) noexcept
+```
+</CodeBlock>
+
+</Tab>
+</Tabs>
+
+### get_property <Badge intent="note" minimal>noexcept</Badge>
+
+<CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
+```cpp showLineNumbers={false}
+template <class _Property>
+void get_property(
+    const buffer &,
+    _Property
+) noexcept
+```
+</CodeBlock>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition |
+|---|---|
+| `value_type` | `_Tp` |
+| `reference` | `_Tp &` |
+| `const_reference` | `const _Tp &` |
+| `pointer` | `_Tp *` |
+| `const_pointer` | `const _Tp *` |
+| `iterator` | `::cuda::heterogeneous_iterator<_Tp, _Properties...>` |
+| `const_iterator` | `::cuda::heterogeneous_iterator<const _Tp, _Properties...>` |
+| `reverse_iterator` | `::cuda::std::reverse_iterator<iterator>` |
+| `const_reverse_iterator` | `::cuda::std::reverse_iterator<const_iterator>` |
+| `size_type` | `::cuda::std::size_t` |
+| `difference_type` | `::cuda::std::ptrdiff_t` |
+| `properties_list` | `::cuda::mr::properties_list<_Properties...>` |

@@ -1,0 +1,3821 @@
+{
+  "name": "buffer",
+  "path": "cuda::buffer",
+  "kind": "class",
+  "templateParams": [
+    {
+      "type": "class _Tp",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "class...",
+      "name": "_Properties",
+      "isVariadic": true,
+      "defaultValue": null
+    }
+  ],
+  "baseClasses": [],
+  "derivedClasses": [],
+  "docstring": {
+    "summary": [],
+    "description": [
+      {
+        "content": "embed:rst:leading-asterisk \n//! .. _libcudacxx-containers-buffer:\n//!\n//! buffer\n//! -------------\n//!\n//! ``buffer`` is a container that provides resizable typed storage allocated\n//! from a given :ref:`memory resource\n//! <libcudacxx-extended-api-memory-resources-resource>`. It handles alignment,\n//! release and growth of the allocation. The elements are initialized during\n//! construction, which may require a kernel launch.\n//!\n//! In addition to being type-safe, ``buffer`` also takes a set of\n//! :ref:`properties <libcudacxx-extended-api-memory-resources-properties>` to\n//! ensure that e.g. execution space constraints are checked at compile time.\n//! However, only stateless properties can be forwarded. To use a stateful\n//! property, implement :ref:`get_property(const buffer&, Property)\n//! <libcudacxx-extended-api-memory-resources-properties>`.\n//!\n//! ",
+        "format": "rst",
+        "type": "verbatim"
+      },
+      {
+        "segments": [
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      }
+    ],
+    "params": [],
+    "templateParamsDoc": [
+      {
+        "name": "_Tp",
+        "description": [
+          {
+            "text": "the type to be stored in the buffer ",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "_Properties...",
+        "description": [
+          {
+            "text": "The properties the allocated memory satisfies ",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      }
+    ],
+    "raises": [],
+    "examples": [],
+    "notes": [],
+    "warnings": [],
+    "remarks": [],
+    "preconditions": [],
+    "postconditions": [],
+    "seeAlso": [],
+    "returns": null,
+    "deprecated": null
+  },
+  "isAbstract": false,
+  "isFinal": false,
+  "includeHeader": "buffer.h",
+  "methods": [
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(const buffer &__other)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              "const buffer &"
+            ],
+            "display": "const buffer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Copy-constructs from a buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [
+              {
+                "text": "The other buffer. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(buffer &&__other) noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              "buffer &&"
+            ],
+            "display": "buffer &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Move-constructs from a buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [
+              {
+                "text": "The other buffer. After move construction, the other buffer can only be assigned to or destroyed. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(const buffer< _Tp, _OtherProperties... > &__other)",
+      "templateParams": [
+        {
+          "type": "class...",
+          "name": "_OtherProperties",
+          "isVariadic": true,
+          "defaultValue": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __properties_match< _OtherProperties... >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": true,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              "const buffer< _Tp, _OtherProperties... > &"
+            ],
+            "display": "const buffer< _Tp, _OtherProperties... > &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Copy-constructs from a buffer with matching properties. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [
+              {
+                "text": "The other buffer. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(buffer< _Tp, _OtherProperties... > &&__other) noexcept",
+      "templateParams": [
+        {
+          "type": "class...",
+          "name": "_OtherProperties",
+          "isVariadic": true,
+          "defaultValue": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t< __properties_match< _OtherProperties... >, int >",
+          "defaultValue": {
+            "parts": [
+              "0"
+            ],
+            "display": "0"
+          },
+          "isVariadic": true,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              "buffer< _Tp, _OtherProperties... > &&"
+            ],
+            "display": "buffer< _Tp, _OtherProperties... > &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Move-constructs from a buffer with matching properties. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [
+              {
+                "text": "The other buffer. After move construction, the other buffer can only be assigned to or destroyed. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(::cuda::stream_ref __stream, _Resource &&__resource, const _Env &__env={})",
+      "templateParams": [
+        {
+          "type": "class _Resource",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "class _Env",
+          "defaultValue": {
+            "parts": [
+              "::cuda::std::execution::env<>"
+            ],
+            "display": "::cuda::std::execution::env<>"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__stream",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "::cuda::stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__resource",
+          "typeInfo": {
+            "parts": [
+              "_Resource &&"
+            ],
+            "display": "_Resource &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__env",
+          "typeInfo": {
+            "parts": [
+              "const _Env &"
+            ],
+            "display": "const _Env &"
+          },
+          "defaultValue": {
+            "parts": [
+              "{}"
+            ],
+            "display": "{}"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Constructs an empty buffer using an environment. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__env",
+            "description": [
+              {
+                "text": "The environment providing the needed information ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "No memory is allocated. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(::cuda::stream_ref __stream, _Resource &&__resource, const size_type __size, ::cuda::no_init_t, const _Env &__env={})",
+      "templateParams": [
+        {
+          "type": "class _Resource",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "class _Env",
+          "defaultValue": {
+            "parts": [
+              "::cuda::std::execution::env<>"
+            ],
+            "display": "::cuda::std::execution::env<>"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__stream",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "::cuda::stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__resource",
+          "typeInfo": {
+            "parts": [
+              "_Resource &&"
+            ],
+            "display": "_Resource &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__size",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "size_type",
+                "refid": "classcuda_1_1buffer_1a783ea9eba4dcadb4e07c8a39c07bec0f",
+                "kindref": "member"
+              }
+            ],
+            "display": "const size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "::cuda::no_init_t"
+            ],
+            "display": "::cuda::no_init_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__env",
+          "typeInfo": {
+            "parts": [
+              "const _Env &"
+            ],
+            "display": "const _Env &"
+          },
+          "defaultValue": {
+            "parts": [
+              "{}"
+            ],
+            "display": "{}"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Constructs a buffer of size ",
+            "type": "text"
+          },
+          {
+            "code": "__size",
+            "type": "code"
+          },
+          {
+            "text": " using a memory and leaves all elements uninitialized. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__env",
+            "description": [
+              {
+                "text": "The environment used to query the memory resource. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__size",
+            "description": [
+              {
+                "text": "The size of the buffer. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [
+          [
+            {
+              "text": "This constructor does ",
+              "type": "text"
+            },
+            {
+              "text": "NOT",
+              "type": "emphasis"
+            },
+            {
+              "text": " initialize any elements. It is the user's responsibility to ensure that the elements within ",
+              "type": "text"
+            },
+            {
+              "code": "[vec.begin(), vec.end())",
+              "type": "code"
+            },
+            {
+              "text": " are properly initialized, e.g with ",
+              "type": "text"
+            },
+            {
+              "code": "cuda::std::uninitialized_copy",
+              "type": "code"
+            },
+            {
+              "text": ". At the destruction of the ",
+              "type": "text"
+            },
+            {
+              "code": "buffer",
+              "type": "code"
+            },
+            {
+              "text": " all elements in the range ",
+              "type": "text"
+            },
+            {
+              "code": "[vec.begin(), vec.end())",
+              "type": "code"
+            },
+            {
+              "text": " will be destroyed. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(::cuda::stream_ref __stream, _Resource &&__resource, _Iter __first, _Iter __last, const _Env &__env={})",
+      "templateParams": [
+        {
+          "type": "class _Iter",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "class _Resource",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "class _Env",
+          "defaultValue": {
+            "parts": [
+              "::cuda::std::execution::env<>"
+            ],
+            "display": "::cuda::std::execution::env<>"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__stream",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "::cuda::stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__resource",
+          "typeInfo": {
+            "parts": [
+              "_Resource &&"
+            ],
+            "display": "_Resource &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__first",
+          "typeInfo": {
+            "parts": [
+              "_Iter"
+            ],
+            "display": "_Iter"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__last",
+          "typeInfo": {
+            "parts": [
+              "_Iter"
+            ],
+            "display": "_Iter"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__env",
+          "typeInfo": {
+            "parts": [
+              "const _Env &"
+            ],
+            "display": "const _Env &"
+          },
+          "defaultValue": {
+            "parts": [
+              "{}"
+            ],
+            "display": "{}"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Constructs a buffer using a memory resource and copy-constructs all elements from the forward range ",
+            "type": "text"
+          },
+          {
+            "code": "[__first, __last)",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__env",
+            "description": [
+              {
+                "text": "The environment used to query the memory resource. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__first",
+            "description": [
+              {
+                "text": "The start of the input sequence. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__last",
+            "description": [
+              {
+                "text": "The end of the input sequence. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "If ",
+              "type": "text"
+            },
+            {
+              "code": "__first == __last",
+              "type": "code"
+            },
+            {
+              "text": " then no memory is allocated ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(::cuda::stream_ref __stream, _Resource &&__resource, ::cuda::std::initializer_list< _Tp > __ilist, const _Env &__env={})",
+      "templateParams": [
+        {
+          "type": "class _Resource",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "class _Env",
+          "defaultValue": {
+            "parts": [
+              "::cuda::std::execution::env<>"
+            ],
+            "display": "::cuda::std::execution::env<>"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__stream",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "::cuda::stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__resource",
+          "typeInfo": {
+            "parts": [
+              "_Resource &&"
+            ],
+            "display": "_Resource &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__ilist",
+          "typeInfo": {
+            "parts": [
+              "::cuda::std::initializer_list< _Tp >"
+            ],
+            "display": "::cuda::std::initializer_list< _Tp >"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__env",
+          "typeInfo": {
+            "parts": [
+              "const _Env &"
+            ],
+            "display": "const _Env &"
+          },
+          "defaultValue": {
+            "parts": [
+              "{}"
+            ],
+            "display": "{}"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Constructs a buffer using a memory resource and copy-constructs all elements from ",
+            "type": "text"
+          },
+          {
+            "code": "__ilist",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__env",
+            "description": [
+              {
+                "text": "The environment used to query the memory resource. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__ilist",
+            "description": [
+              {
+                "text": "The initializer_list being copied into the buffer. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "If ",
+              "type": "text"
+            },
+            {
+              "code": "__ilist.size() == 0",
+              "type": "code"
+            },
+            {
+              "text": " then no memory is allocated ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "buffer",
+      "path": "cuda::buffer::buffer",
+      "signature": "cuda::buffer< _Tp, _Properties >::buffer(::cuda::stream_ref __stream, _Resource &&__resource, _Range &&__range, const _Env &__env={})",
+      "templateParams": [
+        {
+          "type": "class _Range",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "class _Resource",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "class _Env",
+          "defaultValue": {
+            "parts": [
+              "::cuda::std::execution::env<>"
+            ],
+            "display": "::cuda::std::execution::env<>"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "__stream",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "::cuda::stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__resource",
+          "typeInfo": {
+            "parts": [
+              "_Resource &&"
+            ],
+            "display": "_Resource &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__range",
+          "typeInfo": {
+            "parts": [
+              "_Range &&"
+            ],
+            "display": "_Range &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__env",
+          "typeInfo": {
+            "parts": [
+              "const _Env &"
+            ],
+            "display": "const _Env &"
+          },
+          "defaultValue": {
+            "parts": [
+              "{}"
+            ],
+            "display": "{}"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Constructs a buffer using a memory resource and an input range. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__env",
+            "description": [
+              {
+                "text": "The environment used to query the memory resource. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__range",
+            "description": [
+              {
+                "text": "The input range to be moved into the buffer. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "If ",
+              "type": "text"
+            },
+            {
+              "code": "__range.size() == 0",
+              "type": "code"
+            },
+            {
+              "text": " then no memory is allocated. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "begin",
+      "path": "cuda::buffer::begin",
+      "signature": "iterator cuda::buffer< _Tp, _Properties >::begin() noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "iterator",
+            "refid": "classcuda_1_1buffer_1a9d620aaef91c65d3e0c0c801c6150f6b",
+            "kindref": "member"
+          }
+        ],
+        "display": "iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an iterator to the first element of the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "If the buffer is empty, the returned iterator will be equal to ",
+                "type": "text"
+              },
+              {
+                "text": "end()",
+                "refid": "classcuda_1_1buffer_1af5b31bfaee411b16d98999c7804bae68",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "begin",
+      "path": "cuda::buffer::begin",
+      "signature": "const_iterator cuda::buffer< _Tp, _Properties >::begin() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_iterator",
+            "refid": "classcuda_1_1buffer_1a1e79985c2429543ac5f4f281081baafc",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an immutable iterator to the first element of the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "If the buffer is empty, the returned iterator will be equal to ",
+                "type": "text"
+              },
+              {
+                "text": "end()",
+                "refid": "classcuda_1_1buffer_1af5b31bfaee411b16d98999c7804bae68",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "cbegin",
+      "path": "cuda::buffer::cbegin",
+      "signature": "const_iterator cuda::buffer< _Tp, _Properties >::cbegin() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_iterator",
+            "refid": "classcuda_1_1buffer_1a1e79985c2429543ac5f4f281081baafc",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an immutable iterator to the first element of the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "If the buffer is empty, the returned iterator will be equal to ",
+                "type": "text"
+              },
+              {
+                "text": "end()",
+                "refid": "classcuda_1_1buffer_1af5b31bfaee411b16d98999c7804bae68",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "end",
+      "path": "cuda::buffer::end",
+      "signature": "iterator cuda::buffer< _Tp, _Properties >::end() noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "iterator",
+            "refid": "classcuda_1_1buffer_1a9d620aaef91c65d3e0c0c801c6150f6b",
+            "kindref": "member"
+          }
+        ],
+        "display": "iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an iterator to the element following the last element of the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "This element acts as a placeholder; attempting to access it results in undefined behavior. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "end",
+      "path": "cuda::buffer::end",
+      "signature": "const_iterator cuda::buffer< _Tp, _Properties >::end() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_iterator",
+            "refid": "classcuda_1_1buffer_1a1e79985c2429543ac5f4f281081baafc",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an immutable iterator to the element following the last element of the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "This element acts as a placeholder; attempting to access it results in undefined behavior. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "cend",
+      "path": "cuda::buffer::cend",
+      "signature": "const_iterator cuda::buffer< _Tp, _Properties >::cend() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_iterator",
+            "refid": "classcuda_1_1buffer_1a1e79985c2429543ac5f4f281081baafc",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an immutable iterator to the element following the last element of the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "This element acts as a placeholder; attempting to access it results in undefined behavior. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "rbegin",
+      "path": "cuda::buffer::rbegin",
+      "signature": "reverse_iterator cuda::buffer< _Tp, _Properties >::rbegin() noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "reverse_iterator",
+            "refid": "classcuda_1_1buffer_1a34800899d2ed0aba9a83c6f24fdf7193",
+            "kindref": "member"
+          }
+        ],
+        "display": "reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns a reverse iterator to the first element of the reversed buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "It corresponds to the last element of the non-reversed buffer. If the buffer is empty, the returned iterator is equal to ",
+                "type": "text"
+              },
+              {
+                "text": "rend()",
+                "refid": "classcuda_1_1buffer_1a2b542d89286a47b65c2f60c3f46f9b8f",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "rbegin",
+      "path": "cuda::buffer::rbegin",
+      "signature": "const_reverse_iterator cuda::buffer< _Tp, _Properties >::rbegin() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_reverse_iterator",
+            "refid": "classcuda_1_1buffer_1af423da7e4bc88d4d75e2494b0b9029d4",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an immutable reverse iterator to the first element of the reversed buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "It corresponds to the last element of the non-reversed buffer. If the buffer is empty, the returned iterator is equal to ",
+                "type": "text"
+              },
+              {
+                "text": "rend()",
+                "refid": "classcuda_1_1buffer_1a2b542d89286a47b65c2f60c3f46f9b8f",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "crbegin",
+      "path": "cuda::buffer::crbegin",
+      "signature": "const_reverse_iterator cuda::buffer< _Tp, _Properties >::crbegin() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_reverse_iterator",
+            "refid": "classcuda_1_1buffer_1af423da7e4bc88d4d75e2494b0b9029d4",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an immutable reverse iterator to the first element of the reversed buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "It corresponds to the last element of the non-reversed buffer. If the buffer is empty, the returned iterator is equal to ",
+                "type": "text"
+              },
+              {
+                "text": "rend()",
+                "refid": "classcuda_1_1buffer_1a2b542d89286a47b65c2f60c3f46f9b8f",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "rend",
+      "path": "cuda::buffer::rend",
+      "signature": "reverse_iterator cuda::buffer< _Tp, _Properties >::rend() noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "reverse_iterator",
+            "refid": "classcuda_1_1buffer_1a34800899d2ed0aba9a83c6f24fdf7193",
+            "kindref": "member"
+          }
+        ],
+        "display": "reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns a reverse iterator to the element following the last element of the reversed buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "It corresponds to the element preceding the first element of the non-reversed buffer. This element acts as a placeholder, attempting to access it results in undefined behavior. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "rend",
+      "path": "cuda::buffer::rend",
+      "signature": "const_reverse_iterator cuda::buffer< _Tp, _Properties >::rend() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_reverse_iterator",
+            "refid": "classcuda_1_1buffer_1af423da7e4bc88d4d75e2494b0b9029d4",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an immutable reverse iterator to the element following the last element of the reversed buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "It corresponds to the element preceding the first element of the non-reversed buffer. This element acts as a placeholder, attempting to access it results in undefined behavior. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "crend",
+      "path": "cuda::buffer::crend",
+      "signature": "const_reverse_iterator cuda::buffer< _Tp, _Properties >::crend() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_reverse_iterator",
+            "refid": "classcuda_1_1buffer_1af423da7e4bc88d4d75e2494b0b9029d4",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns an immutable reverse iterator to the element following the last element of the reversed buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "It corresponds to the element preceding the first element of the non-reversed buffer. This element acts as a placeholder, attempting to access it results in undefined behavior. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "data",
+      "path": "cuda::buffer::data",
+      "signature": "pointer cuda::buffer< _Tp, _Properties >::data() noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "pointer",
+            "refid": "classcuda_1_1buffer_1a1a4c746bc8f3f198ca039a4a7e7799ee",
+            "kindref": "member"
+          }
+        ],
+        "display": "pointer"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns a pointer to the first element of the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "If the buffer has not allocated memory the pointer will be null. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "data",
+      "path": "cuda::buffer::data",
+      "signature": "const_pointer cuda::buffer< _Tp, _Properties >::data() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_pointer",
+            "refid": "classcuda_1_1buffer_1aae4464983d664e9ebbbaea1757cf75fa",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_pointer"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns a pointer to the first element of the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "If the buffer has not allocated memory the pointer will be null. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "get_unsynchronized",
+      "path": "cuda::buffer::get_unsynchronized",
+      "signature": "reference cuda::buffer< _Tp, _Properties >::get_unsynchronized(const size_type __n) noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__n",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "size_type",
+                "refid": "classcuda_1_1buffer_1a783ea9eba4dcadb4e07c8a39c07bec0f",
+                "kindref": "member"
+              }
+            ],
+            "display": "const size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "reference",
+            "refid": "classcuda_1_1buffer_1a9788e796ffb6e777c01432b8b49a0df5",
+            "kindref": "member"
+          }
+        ],
+        "display": "reference"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns a reference to the ",
+            "type": "text"
+          },
+          {
+            "code": "__n",
+            "type": "code"
+          },
+          {
+            "text": " 'th element of the async_vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__n",
+            "description": [
+              {
+                "text": "The index of the element we want to access ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "Does not synchronize with the stored stream ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "get_unsynchronized",
+      "path": "cuda::buffer::get_unsynchronized",
+      "signature": "const_reference cuda::buffer< _Tp, _Properties >::get_unsynchronized(const size_type __n) const noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__n",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "size_type",
+                "refid": "classcuda_1_1buffer_1a783ea9eba4dcadb4e07c8a39c07bec0f",
+                "kindref": "member"
+              }
+            ],
+            "display": "const size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "const_reference",
+            "refid": "classcuda_1_1buffer_1ace091589472d8afb2ec9481c4eab1991",
+            "kindref": "member"
+          }
+        ],
+        "display": "const_reference"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns a reference to the ",
+            "type": "text"
+          },
+          {
+            "code": "__n",
+            "type": "code"
+          },
+          {
+            "text": " 'th element of the async_vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__n",
+            "description": [
+              {
+                "text": "The index of the element we want to access ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "Does not synchronize with the stored stream ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "size",
+      "path": "cuda::buffer::size",
+      "signature": "size_type cuda::buffer< _Tp, _Properties >::size() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "size_type",
+            "refid": "classcuda_1_1buffer_1a783ea9eba4dcadb4e07c8a39c07bec0f",
+            "kindref": "member"
+          }
+        ],
+        "display": "size_type"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the current number of elements stored in the buffer. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "empty",
+      "path": "cuda::buffer::empty",
+      "signature": "bool cuda::buffer< _Tp, _Properties >::empty() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns true if the buffer is empty. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "memory_resource",
+      "path": "cuda::buffer::memory_resource",
+      "signature": "const __resource_t & cuda::buffer< _Tp, _Properties >::memory_resource() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const __resource_t &"
+        ],
+        "display": "const __resource_t &"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Returns a \\c const reference to the :ref:`any_resource <libcudacxx-memory-resource-any-resource>` that holds the\n//! memory resource used to allocate the buffer\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "stream",
+      "path": "cuda::buffer::stream",
+      "signature": "stream_ref cuda::buffer< _Tp, _Properties >::stream() const noexcept",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "stream_ref",
+            "refid": "classcuda_1_1stream__ref",
+            "kindref": "compound"
+          }
+        ],
+        "display": "stream_ref"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the stored stream. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "Stream used to allocate the buffer is initially stored in the buffer, but can be changed with ",
+              "type": "text"
+            },
+            {
+              "code": "set_stream",
+              "refid": "classcuda_1_1buffer_1a89b281dd7a3db8b5c75bd0a68d8a24e0",
+              "kindref": "member",
+              "type": "codeRef"
+            },
+            {
+              "text": " ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "set_stream",
+      "path": "cuda::buffer::set_stream",
+      "signature": "void cuda::buffer< _Tp, _Properties >::set_stream(stream_ref __new_stream)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__new_stream",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Replaces the stored stream. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__new_stream",
+            "description": [
+              {
+                "text": "the new stream ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "Always synchronizes with the old stream ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": true,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "cuda::buffer::operator=",
+      "signature": "void cuda::buffer< _Tp, _Properties >::operator=(buffer &&__other)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "buffer",
+                "refid": "classcuda_1_1buffer_1a99504dd9c828766d0225147cd3fcd7d3",
+                "kindref": "member"
+              },
+              " &&"
+            ],
+            "display": "buffer &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Move assignment operator. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [
+              {
+                "text": "The other buffer. After move assignment, the other buffer can only be assigned to or destroyed. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "swap",
+      "path": "cuda::buffer::swap",
+      "signature": "void cuda::buffer< _Tp, _Properties >::swap(buffer &__other) noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__other",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "buffer",
+                "refid": "classcuda_1_1buffer_1a99504dd9c828766d0225147cd3fcd7d3",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "buffer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Swaps the contents of a buffer with those of ",
+            "type": "text"
+          },
+          {
+            "code": "__other",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__other",
+            "description": [
+              {
+                "text": "The other buffer. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "destroy",
+      "path": "cuda::buffer::destroy",
+      "signature": "void cuda::buffer< _Tp, _Properties >::destroy(::cuda::stream_ref __stream)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__stream",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "::cuda::stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Destroys the buffer, deallocates the buffer and destroys the memory resource. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__stream",
+            "description": [
+              {
+                "text": "The stream to deallocate the buffer on. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [
+          [
+            {
+              "text": "After this explicit destroy call, the buffer can only be assigned to or destroyed. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "destroy",
+      "path": "cuda::buffer::destroy",
+      "signature": "void cuda::buffer< _Tp, _Properties >::destroy()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Destroys the buffer, deallocates the buffer and destroys the memory resource. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [
+          [
+            {
+              "text": "Uses the stored stream to deallocate the buffer, equivalent to calling ",
+              "type": "text"
+            },
+            {
+              "text": "buffer.destroy",
+              "refid": "classcuda_1_1buffer_1a8fef3ae9068f34d647c6b1a24899df08",
+              "kindref": "member",
+              "type": "ref"
+            },
+            {
+              "text": "(",
+              "type": "text"
+            },
+            {
+              "text": "buffer.stream()",
+              "refid": "classcuda_1_1buffer_1a99afefb5a2e146e15e7b66dcb56d2c09",
+              "kindref": "member",
+              "type": "ref"
+            },
+            {
+              "text": ") ",
+              "type": "text"
+            }
+          ]
+        ],
+        "warnings": [
+          [
+            {
+              "text": "After this explicit destroy call, the buffer can only be assigned to or destroyed. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "staticMethods": [],
+  "friendFunctions": [
+    {
+      "name": "swap",
+      "path": "cuda::buffer::swap",
+      "signature": "void swap(buffer &__lhs, buffer &__rhs) noexcept",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "__lhs",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "buffer",
+                "refid": "classcuda_1_1buffer_1a99504dd9c828766d0225147cd3fcd7d3",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "buffer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__rhs",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "buffer",
+                "refid": "classcuda_1_1buffer_1a99504dd9c828766d0225147cd3fcd7d3",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "buffer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Swaps the contents of two buffers. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "__lhs",
+            "description": [
+              {
+                "text": "One buffer. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "__rhs",
+            "description": [
+              {
+                "text": "The other buffer. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "transform_launch_argument",
+      "path": "cuda::buffer::transform_launch_argument",
+      "signature": "::cuda::std::span< _Tp > transform_launch_argument(::cuda::stream_ref, buffer &__self) noexcept",
+      "templateParams": [
+        {
+          "type": "class _DeviceAccessible",
+          "defaultValue": {
+            "parts": [
+              {
+                "text": "::cuda::mr::device_accessible",
+                "refid": "structcuda_1_1mr_1_1device__accessible",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::mr::device_accessible"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "::cuda::stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__self",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "buffer",
+                "refid": "classcuda_1_1buffer_1a99504dd9c828766d0225147cd3fcd7d3",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "buffer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "::cuda::std::span< _Tp >"
+        ],
+        "display": "::cuda::std::span< _Tp >"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Causes the buffer to be treated as a span when passed to cuda::launch. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [
+          [
+            {
+              "text": "The buffer must have the ",
+              "type": "text"
+            },
+            {
+              "text": "cuda::mr::device_accessible",
+              "refid": "structcuda_1_1mr_1_1device__accessible",
+              "kindref": "compound",
+              "type": "ref"
+            },
+            {
+              "text": " property. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "requiresClause": "(::cuda::std::__is_included_in_v<_DeviceAccessible, _Properties...>)    ",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null
+    },
+    {
+      "name": "transform_launch_argument",
+      "path": "cuda::buffer::transform_launch_argument",
+      "signature": "::cuda::std::span< const _Tp > transform_launch_argument(::cuda::stream_ref, const buffer &__self) noexcept",
+      "templateParams": [
+        {
+          "type": "class _DeviceAccessible",
+          "defaultValue": {
+            "parts": [
+              {
+                "text": "::cuda::mr::device_accessible",
+                "refid": "structcuda_1_1mr_1_1device__accessible",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::mr::device_accessible"
+          },
+          "isVariadic": false,
+          "name": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "::cuda::stream_ref",
+                "refid": "classcuda_1_1stream__ref",
+                "kindref": "compound"
+              }
+            ],
+            "display": "::cuda::stream_ref"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "__self",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "buffer",
+                "refid": "classcuda_1_1buffer_1a99504dd9c828766d0225147cd3fcd7d3",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const buffer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "::cuda::std::span< const _Tp >"
+        ],
+        "display": "::cuda::std::span< const _Tp >"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Causes the buffer to be treated as a span when passed to cuda::launch. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [
+          [
+            {
+              "text": "The buffer must have the ",
+              "type": "text"
+            },
+            {
+              "text": "cuda::mr::device_accessible",
+              "refid": "structcuda_1_1mr_1_1device__accessible",
+              "kindref": "compound",
+              "type": "ref"
+            },
+            {
+              "text": " property. ",
+              "type": "text"
+            }
+          ]
+        ],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": true,
+      "virtuality": "non-virtual",
+      "requiresClause": "( ::cuda::std::__is_included_in_v<_DeviceAccessible, _Properties...>)    ",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null
+    },
+    {
+      "name": "get_property",
+      "path": "cuda::buffer::get_property",
+      "signature": "void get_property(const buffer &, _Property) noexcept",
+      "templateParams": [
+        {
+          "type": "class _Property",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "::cuda::std::enable_if_t<(!property_with_value< _Property >) &&::cuda::std::__is_included_in_v< _Property, int >=0 >",
+          "name": "_Properties",
+          "isVariadic": true,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "buffer",
+                "refid": "classcuda_1_1buffer_1a99504dd9c828766d0225147cd3fcd7d3",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const buffer &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "_Property"
+            ],
+            "display": "_Property"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Forwards the passed properties. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "typedefs": [
+    {
+      "name": "value_type",
+      "path": "cuda::buffer::value_type",
+      "typeInfo": {
+        "parts": [
+          "_Tp"
+        ],
+        "display": "_Tp"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "reference",
+      "path": "cuda::buffer::reference",
+      "typeInfo": {
+        "parts": [
+          "_Tp &"
+        ],
+        "display": "_Tp &"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "const_reference",
+      "path": "cuda::buffer::const_reference",
+      "typeInfo": {
+        "parts": [
+          "const _Tp &"
+        ],
+        "display": "const _Tp &"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "pointer",
+      "path": "cuda::buffer::pointer",
+      "typeInfo": {
+        "parts": [
+          "_Tp *"
+        ],
+        "display": "_Tp *"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "const_pointer",
+      "path": "cuda::buffer::const_pointer",
+      "typeInfo": {
+        "parts": [
+          "const _Tp *"
+        ],
+        "display": "const _Tp *"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "iterator",
+      "path": "cuda::buffer::iterator",
+      "typeInfo": {
+        "parts": [
+          {
+            "text": "::cuda::heterogeneous_iterator",
+            "refid": "classcuda_1_1heterogeneous__iterator",
+            "kindref": "compound"
+          },
+          "< _Tp, _Properties... >"
+        ],
+        "display": "::cuda::heterogeneous_iterator< _Tp, _Properties... >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "const_iterator",
+      "path": "cuda::buffer::const_iterator",
+      "typeInfo": {
+        "parts": [
+          {
+            "text": "::cuda::heterogeneous_iterator",
+            "refid": "classcuda_1_1heterogeneous__iterator",
+            "kindref": "compound"
+          },
+          "< const _Tp, _Properties... >"
+        ],
+        "display": "::cuda::heterogeneous_iterator< const _Tp, _Properties... >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "reverse_iterator",
+      "path": "cuda::buffer::reverse_iterator",
+      "typeInfo": {
+        "parts": [
+          "::cuda::std::reverse_iterator< ",
+          {
+            "text": "iterator",
+            "refid": "classcuda_1_1buffer_1a9d620aaef91c65d3e0c0c801c6150f6b",
+            "kindref": "member"
+          },
+          " >"
+        ],
+        "display": "::cuda::std::reverse_iterator< iterator >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "const_reverse_iterator",
+      "path": "cuda::buffer::const_reverse_iterator",
+      "typeInfo": {
+        "parts": [
+          "::cuda::std::reverse_iterator< ",
+          {
+            "text": "const_iterator",
+            "refid": "classcuda_1_1buffer_1a1e79985c2429543ac5f4f281081baafc",
+            "kindref": "member"
+          },
+          " >"
+        ],
+        "display": "::cuda::std::reverse_iterator< const_iterator >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "size_type",
+      "path": "cuda::buffer::size_type",
+      "typeInfo": {
+        "parts": [
+          "::cuda::std::size_t"
+        ],
+        "display": "::cuda::std::size_t"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "difference_type",
+      "path": "cuda::buffer::difference_type",
+      "typeInfo": {
+        "parts": [
+          "::cuda::std::ptrdiff_t"
+        ],
+        "display": "::cuda::std::ptrdiff_t"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "properties_list",
+      "path": "cuda::buffer::properties_list",
+      "typeInfo": {
+        "parts": [
+          {
+            "text": "::cuda::mr::properties_list",
+            "refid": "structcuda_1_1mr_1_1properties__list",
+            "kindref": "compound"
+          },
+          "< _Properties... >"
+        ],
+        "display": "::cuda::mr::properties_list< _Properties... >"
+      },
+      "templateParams": [],
+      "docstring": null
+    }
+  ],
+  "memberVariables": [],
+  "enums": [],
+  "innerClasses": [],
+  "relatedMemberRefs": [],
+  "sectionLabels": {}
+}

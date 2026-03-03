@@ -1,0 +1,1493 @@
+{
+  "name": "BlockReduce",
+  "path": "cub::BlockReduce",
+  "kind": "class",
+  "templateParams": [
+    {
+      "type": "typename T",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "int",
+      "name": "BlockDimX",
+      "isVariadic": false,
+      "defaultValue": null
+    },
+    {
+      "type": "BlockReduceAlgorithm",
+      "name": "Algorithm",
+      "defaultValue": {
+        "parts": [
+          {
+            "text": "BLOCK_REDUCE_WARP_REDUCTIONS",
+            "refid": "namespacecub_1add0251c713859b8974806079e498d10aa993903176f938273fa1ff5d4daa808e5",
+            "kindref": "member"
+          }
+        ],
+        "display": "BLOCK_REDUCE_WARP_REDUCTIONS"
+      },
+      "isVariadic": false
+    },
+    {
+      "type": "int",
+      "name": "BlockDimY",
+      "defaultValue": {
+        "parts": [
+          "1"
+        ],
+        "display": "1"
+      },
+      "isVariadic": false
+    },
+    {
+      "type": "int",
+      "name": "BlockDimZ",
+      "defaultValue": {
+        "parts": [
+          "1"
+        ],
+        "display": "1"
+      },
+      "isVariadic": false
+    }
+  ],
+  "baseClasses": [],
+  "derivedClasses": [],
+  "docstring": {
+    "summary": [],
+    "description": [
+      {
+        "content": "embed:rst:leading-asterisk \n//! The BlockReduce class provides :ref:`collective <collective-primitives>` methods for computing a\n//! parallel reduction of items partitioned across a CUDA thread block.\n//!\n//! Overview\n//! +++++++++++++++++++++++++++++++++++++++++++++\n//!\n//! - A `reduction <http://en.wikipedia.org/wiki/Reduce_(higher-order_function)>`_ (or *fold*) uses a\n//!   binary combining operator to compute a single aggregate from a list of input elements.\n//! - @rowmajor\n//! - BlockReduce can be optionally specialized by algorithm to accommodate different\n//!   latency/throughput workload profiles:\n//!\n//!   #. :cpp:enumerator:`cub::BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY`:\n//!      An efficient \"raking\" reduction algorithm that only supports commutative reduction operators.\n//!   #. :cpp:enumerator:`cub::BLOCK_REDUCE_RAKING`:\n//!      An efficient \"raking\" reduction algorithm that supports commutative and non-commutative\n//!      reduction operators.\n//!   #. :cpp:enumerator:`cub::BLOCK_REDUCE_WARP_REDUCTIONS`:\n//!      A quick \"tiled warp-reductions\" reduction algorithm that supports commutative and\n//!      non-commutative reduction operators.\n//!   #. :cpp:enumerator:`cub::BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC`:\n//!      A quick \"tiled warp-reductions\" reduction algorithm that supports commutative and\n//!      non-commutative reduction operators. This variant uses atomic operations to reduce the\n//!      warp-wide reduction results, making it non-deterministic, i.e. the order of reduction\n//!      operations is not guaranteed to be the same across different invocations of the same\n//!      kernel.\n//!\n//! Performance Considerations\n//! +++++++++++++++++++++++++++++++++++++++++++++\n//!\n//! - @granularity\n//! - Very efficient (only one synchronization barrier).\n//! - Incurs zero bank conflicts for most types\n//! - Computation is slightly more efficient (i.e., having lower instruction overhead) for:\n//!   - Summation (vs. generic reduction)\n//!   - ``BLOCK_THREADS`` is a multiple of the architecture's warp size\n//!   - Every thread has a valid input (i.e., full vs. partial-tiles)\n//! - See cub::BlockReduceAlgorithm for performance details regarding algorithmic alternatives\n//!\n//! A Simple Example\n//! +++++++++++++++++++++++++++++++++++++++++++++\n//!\n//! @blockcollective{BlockReduce}\n//!\n//! The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in\n//! a :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads where each thread\n//! owns 4 consecutive items.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>\n//!\n//!    __global__ void ExampleKernel(...)\n//!    {\n//!        // Specialize BlockReduce for a 1D block of 128 threads of type int\n//!        using BlockReduce = cub::BlockReduce<int, 128>;\n//!\n//!        // Allocate shared memory for BlockReduce\n//!        __shared__ typename BlockReduce::TempStorage temp_storage;\n//!\n//!        // Obtain a segment of consecutive items that are blocked across threads\n//!        int thread_data[4];\n//!        ...\n//!\n//!        // Compute the block-wide sum for thread0\n//!        int aggregate = BlockReduce(temp_storage).Sum(thread_data);\n//!    }\n//!\n//! Re-using dynamically allocating shared memory\n//! +++++++++++++++++++++++++++++++++++++++++++++\n//!\n//! The ``block/example_block_reduce_dyn_smem.cu`` example illustrates usage of dynamically shared\n//! memory with BlockReduce and how to re-purpose the same memory region.\n//!\n//! ",
+        "format": "rst",
+        "type": "verbatim"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      }
+    ],
+    "params": [],
+    "templateParamsDoc": [
+      {
+        "name": "T",
+        "description": [
+          {
+            "text": "Data type being reduced",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "BlockDimX",
+        "description": [
+          {
+            "text": "The thread block length in threads along the X dimension",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "Algorithm",
+        "description": [
+          {
+            "text": "[optional]",
+            "type": "bold"
+          },
+          {
+            "text": " ",
+            "type": "text"
+          },
+          {
+            "text": "cub::BlockReduceAlgorithm",
+            "refid": "namespacecub_1add0251c713859b8974806079e498d10a",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " enumerator specifying the underlying algorithm to use (default: ",
+            "type": "text"
+          },
+          {
+            "text": "cub::BLOCK_REDUCE_WARP_REDUCTIONS",
+            "refid": "namespacecub_1add0251c713859b8974806079e498d10aa993903176f938273fa1ff5d4daa808e5",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ")",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "BlockDimY",
+        "description": [
+          {
+            "text": "[optional]",
+            "type": "bold"
+          },
+          {
+            "text": " The thread block length in threads along the Y dimension (default: 1)",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "BlockDimZ",
+        "description": [
+          {
+            "text": "[optional]",
+            "type": "bold"
+          },
+          {
+            "text": " The thread block length in threads along the Z dimension (default: 1) ",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      }
+    ],
+    "raises": [],
+    "examples": [],
+    "notes": [],
+    "warnings": [],
+    "remarks": [],
+    "preconditions": [],
+    "postconditions": [],
+    "seeAlso": [],
+    "returns": null,
+    "deprecated": null
+  },
+  "isAbstract": false,
+  "isFinal": false,
+  "methods": [
+    {
+      "name": "BlockReduce",
+      "path": "cub::BlockReduce::BlockReduce",
+      "signature": "cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::BlockReduce()",
+      "templateParams": [],
+      "parameters": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Collective constructor using a private static allocation of shared memory as temporary storage. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "BlockReduce",
+      "path": "cub::BlockReduce::BlockReduce",
+      "signature": "cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::BlockReduce(TempStorage &temp_storage)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "temp_storage",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "TempStorage",
+                "refid": "structcub_1_1_block_reduce_1_1_temp_storage",
+                "kindref": "compound"
+              },
+              " &"
+            ],
+            "display": "TempStorage &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Collective constructor using the specified memory allocation as temporary storage. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n* .. versionadded:: 2.2.0\n*    First appears in CUDA Toolkit 12.3.\n* ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "temp_storage",
+            "description": [
+              {
+                "text": "Reference to memory allocation having layout type ",
+                "type": "text"
+              },
+              {
+                "text": "TempStorage",
+                "refid": "structcub_1_1_block_reduce_1_1_temp_storage",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "Reduce",
+      "path": "cub::BlockReduce::Reduce",
+      "signature": "T cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::Reduce(T input, ReductionOp reduction_op)",
+      "templateParams": [
+        {
+          "type": "typename ReductionOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "reduction_op",
+          "typeInfo": {
+            "parts": [
+              "ReductionOp"
+            ],
+            "display": "ReductionOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "T"
+        ],
+        "display": "T"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes a block-wide reduction for thread\\ :sub:`0` using the specified binary reduction functor.\n//! Each thread contributes one input element.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The return value is undefined in threads other than thread\\ :sub:`0`.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a max reduction of 128 integer items that are partitioned\n//! across 128 threads.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>\n//!\n//!    __global__ void ExampleKernel(...)\n//!    {\n//!        // Specialize BlockReduce for a 1D block of 128 threads of type int\n//!        using BlockReduce = cub::BlockReduce<int, 128>;\n//!\n//!        // Allocate shared memory for BlockReduce\n//!        __shared__ typename BlockReduce::TempStorage temp_storage;\n//!\n//!        // Each thread obtains an input item\n//!        int thread_data;\n//!        ...\n//!\n//!        // Compute the block-wide max for thread0\n//!        int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{});\n//!    }\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "reduction_op",
+            "description": [
+              {
+                "text": "Binary reduction functor ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ReductionOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary reduction functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "Reduce",
+      "path": "cub::BlockReduce::Reduce",
+      "signature": "T cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::Reduce(T(&inputs)[ITEMS_PER_THREAD], ReductionOp reduction_op)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ReductionOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "inputs",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "reduction_op",
+          "typeInfo": {
+            "parts": [
+              "ReductionOp"
+            ],
+            "display": "ReductionOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "T"
+        ],
+        "display": "T"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes a block-wide reduction for thread\\ :sub:`0` using the specified binary reduction\n//! functor. Each thread contributes an array of consecutive input elements.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The return value is undefined in threads other than thread\\ :sub:`0`.\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a max reduction of 512 integer items that are partitioned in a\n//! :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads where each thread owns\n//! 4 consecutive items.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>\n//!\n//!    __global__ void ExampleKernel(...)\n//!    {\n//!        // Specialize BlockReduce for a 1D block of 128 threads of type int\n//!        using BlockReduce = cub::BlockReduce<int, 128>;\n//!\n//!        // Allocate shared memory for BlockReduce\n//!        __shared__ typename BlockReduce::TempStorage temp_storage;\n//!\n//!        // Obtain a segment of consecutive items that are blocked across threads\n//!        int thread_data[4];\n//!        ...\n//!\n//!        // Compute the block-wide max for thread0\n//!        int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{});\n//!    }\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "inputs",
+            "description": [
+              {
+                "text": "Calling thread's input segment",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "reduction_op",
+            "description": [
+              {
+                "text": "Binary reduction functor ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ReductionOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary reduction functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "Reduce",
+      "path": "cub::BlockReduce::Reduce",
+      "signature": "T cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::Reduce(T input, ReductionOp reduction_op, int num_valid)",
+      "templateParams": [
+        {
+          "type": "typename ReductionOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "reduction_op",
+          "typeInfo": {
+            "parts": [
+              "ReductionOp"
+            ],
+            "display": "ReductionOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "num_valid",
+          "typeInfo": {
+            "parts": [
+              "int"
+            ],
+            "display": "int"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "T"
+        ],
+        "display": "T"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes a block-wide reduction for thread\\ :sub:`0` using the specified binary reduction\n//! functor. The first ``num_valid`` threads each contribute one input element.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The return value is undefined in threads other than thread<sub>0</sub>.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a max reduction of a partially-full tile of integer items\n//! that are partitioned across 128 threads.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>\n//!\n//!    __global__ void ExampleKernel(int num_valid, ...)\n//!    {\n//!        // Specialize BlockReduce for a 1D block of 128 threads of type int\n//!        using BlockReduce = cub::BlockReduce<int, 128>;\n//!\n//!        // Allocate shared memory for BlockReduce\n//!        __shared__ typename BlockReduce::TempStorage temp_storage;\n//!\n//!        // Each thread obtains an input item\n//!        int thread_data;\n//!        if (threadIdx.x < num_valid) thread_data = ...\n//!\n//!        // Compute the block-wide max for thread0\n//!        int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{}, num_valid);\n//!    }\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "reduction_op",
+            "description": [
+              {
+                "text": "Binary reduction functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "num_valid",
+            "description": [
+              {
+                "text": "Number of threads containing valid elements (may be less than BLOCK_THREADS) ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ReductionOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary reduction functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "Sum",
+      "path": "cub::BlockReduce::Sum",
+      "signature": "T cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::Sum(T input)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "T"
+        ],
+        "display": "T"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes a block-wide reduction for thread\\ :sub:`0` using addition (+) as the reduction operator.\n//! Each thread contributes one input element.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The return value is undefined in threads other than thread\\ :sub:`0`.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a sum reduction of 128 integer items that are partitioned\n//! across 128 threads.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>\n//!\n//!    __global__ void ExampleKernel(...)\n//!    {\n//!        // Specialize BlockReduce for a 1D block of 128 threads of type int\n//!        using BlockReduce = cub::BlockReduce<int, 128>;\n//!\n//!        // Allocate shared memory for BlockReduce\n//!        __shared__ typename BlockReduce::TempStorage temp_storage;\n//!\n//!        // Each thread obtains an input item\n//!        int thread_data;\n//!        ...\n//!\n//!        // Compute the block-wide sum for thread0\n//!        int aggregate = BlockReduce(temp_storage).Sum(thread_data);\n//!    }\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "Sum",
+      "path": "cub::BlockReduce::Sum",
+      "signature": "T cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::Sum(T(&inputs)[ITEMS_PER_THREAD])",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "inputs",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "T"
+        ],
+        "display": "T"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction\n//! operator. Each thread contributes an array of consecutive input elements.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The return value is undefined in threads other than thread\\ :sub:`0`.\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in a\n//! :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads where each thread owns\n//! 4 consecutive items.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>\n//!\n//!    __global__ void ExampleKernel(...)\n//!    {\n//!        // Specialize BlockReduce for a 1D block of 128 threads of type int\n//!        using BlockReduce = cub::BlockReduce<int, 128>;\n//!\n//!        // Allocate shared memory for BlockReduce\n//!        __shared__ typename BlockReduce::TempStorage temp_storage;\n//!\n//!        // Obtain a segment of consecutive items that are blocked across threads\n//!        int thread_data[4];\n//!        ...\n//!\n//!        // Compute the block-wide sum for thread0\n//!        int aggregate = BlockReduce(temp_storage).Sum(thread_data);\n//!    }\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "inputs",
+            "description": [
+              {
+                "text": "Calling thread's input segment ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "Sum",
+      "path": "cub::BlockReduce::Sum",
+      "signature": "T cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::Sum(T input, int num_valid)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "num_valid",
+          "typeInfo": {
+            "parts": [
+              "int"
+            ],
+            "display": "int"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "T"
+        ],
+        "display": "T"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes a block-wide reduction for thread\\ :sub:`0` using addition (+) as the reduction\n//! operator. The first ``num_valid`` threads each contribute one input element.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The return value is undefined in threads other than thread\\ :sub:`0`.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a sum reduction of a partially-full tile of integer items\n//! that are partitioned across 128 threads.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>\n//!\n//!    __global__ void ExampleKernel(int num_valid, ...)\n//!    {\n//!        // Specialize BlockReduce for a 1D block of 128 threads of type int\n//!        using BlockReduce = cub::BlockReduce<int, 128>;\n//!\n//!        // Allocate shared memory for BlockReduce\n//!        __shared__ typename BlockReduce::TempStorage temp_storage;\n//!\n//!        // Each thread obtains an input item (up to num_items)\n//!        int thread_data;\n//!        if (threadIdx.x < num_valid)\n//!            thread_data = ...\n//!\n//!        // Compute the block-wide sum for thread0\n//!        int aggregate = BlockReduce(temp_storage).Sum(thread_data, num_valid);\n//!    }\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "num_valid",
+            "description": [
+              {
+                "text": "Number of threads containing valid elements (may be less than BLOCK_THREADS) ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "PrivateStorage",
+      "path": "cub::BlockReduce::PrivateStorage",
+      "signature": "_TempStorage & cub::BlockReduce< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::PrivateStorage()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "_TempStorage",
+            "refid": "classcub_1_1_block_reduce_1a482a5d2d7eab228d6fbb86c3c509d419",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "_TempStorage &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Internal storage allocator. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "staticMethods": [],
+  "friendFunctions": [],
+  "typedefs": [
+    {
+      "name": "WarpReductions",
+      "path": "cub::BlockReduce::WarpReductions",
+      "typeInfo": {
+        "parts": [
+          "detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ >"
+        ],
+        "display": "detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "WarpReductionsNondeterministic",
+      "path": "cub::BlockReduce::WarpReductionsNondeterministic",
+      "typeInfo": {
+        "parts": [
+          "detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ, false >"
+        ],
+        "display": "detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ, false >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "RakingCommutativeOnly",
+      "path": "cub::BlockReduce::RakingCommutativeOnly",
+      "typeInfo": {
+        "parts": [
+          "detail::BlockReduceRakingCommutativeOnly< T, BlockDimX, BlockDimY, BlockDimZ >"
+        ],
+        "display": "detail::BlockReduceRakingCommutativeOnly< T, BlockDimX, BlockDimY, BlockDimZ >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "Raking",
+      "path": "cub::BlockReduce::Raking",
+      "typeInfo": {
+        "parts": [
+          "detail::BlockReduceRaking< T, BlockDimX, BlockDimY, BlockDimZ >"
+        ],
+        "display": "detail::BlockReduceRaking< T, BlockDimX, BlockDimY, BlockDimZ >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "InternalBlockReduce",
+      "path": "cub::BlockReduce::InternalBlockReduce",
+      "typeInfo": {
+        "parts": [
+          "::cuda::std::_If< Algorithm==",
+          {
+            "text": "BLOCK_REDUCE_WARP_REDUCTIONS",
+            "refid": "namespacecub_1add0251c713859b8974806079e498d10aa993903176f938273fa1ff5d4daa808e5",
+            "kindref": "member"
+          },
+          ", ",
+          {
+            "text": "WarpReductions",
+            "refid": "classcub_1_1_block_reduce_1a1e1bc6165d878bedc55bdfff41e98e6b",
+            "kindref": "member"
+          },
+          ", ::cuda::std::_If< Algorithm==",
+          {
+            "text": "BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC",
+            "refid": "namespacecub_1add0251c713859b8974806079e498d10aa727eaf7a3ea386862cf74a396395d517",
+            "kindref": "member"
+          },
+          ", ",
+          {
+            "text": "WarpReductionsNondeterministic",
+            "refid": "classcub_1_1_block_reduce_1ab3abc8f21cb7c9691891c693d602de26",
+            "kindref": "member"
+          },
+          ", ::cuda::std::_If< Algorithm==",
+          {
+            "text": "BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY",
+            "refid": "namespacecub_1add0251c713859b8974806079e498d10aa508e99516231cd77f27295b233ca34b9",
+            "kindref": "member"
+          },
+          ", ",
+          {
+            "text": "RakingCommutativeOnly",
+            "refid": "classcub_1_1_block_reduce_1a4d916472ac9bcfd22186e3bfa808c6cf",
+            "kindref": "member"
+          },
+          ", ",
+          {
+            "text": "Raking",
+            "refid": "classcub_1_1_block_reduce_1aaa3eba3bd13dfce639deb17ad0bf87f7",
+            "kindref": "member"
+          },
+          " > > >"
+        ],
+        "display": "::cuda::std::_If< Algorithm==BLOCK_REDUCE_WARP_REDUCTIONS, WarpReductions, ::cuda::std::_If< Algorithm==BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC, WarpReductionsNondeterministic, ::cuda::std::_If< Algorithm==BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY, RakingCommutativeOnly, Raking > > >"
+      },
+      "templateParams": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Internal specialization type. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      }
+    },
+    {
+      "name": "_TempStorage",
+      "path": "cub::BlockReduce::_TempStorage",
+      "typeInfo": {
+        "parts": [
+          "typename InternalBlockReduce::TempStorage"
+        ],
+        "display": "typename InternalBlockReduce::TempStorage"
+      },
+      "templateParams": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Shared memory storage layout type for ",
+            "type": "text"
+          },
+          {
+            "text": "BlockReduce",
+            "refid": "classcub_1_1_block_reduce",
+            "kindref": "compound",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      }
+    }
+  ],
+  "memberVariables": [
+    {
+      "name": "BLOCK_THREADS",
+      "path": "cub::BlockReduce::BLOCK_THREADS",
+      "typeInfo": {
+        "parts": [
+          "int"
+        ],
+        "display": "int"
+      },
+      "templateParams": [],
+      "isStatic": true,
+      "isConstexpr": true,
+      "isMutable": false,
+      "docstring": {
+        "summary": [
+          {
+            "text": "The thread block size in threads. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "initializer": null
+    },
+    {
+      "name": "temp_storage",
+      "path": "cub::BlockReduce::temp_storage",
+      "typeInfo": {
+        "parts": [
+          {
+            "text": "_TempStorage",
+            "refid": "classcub_1_1_block_reduce_1a482a5d2d7eab228d6fbb86c3c509d419",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "_TempStorage &"
+      },
+      "templateParams": [],
+      "isStatic": false,
+      "isConstexpr": false,
+      "isMutable": false,
+      "docstring": {
+        "summary": [
+          {
+            "text": "Shared storage reference. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "initializer": null
+    },
+    {
+      "name": "linear_tid",
+      "path": "cub::BlockReduce::linear_tid",
+      "typeInfo": {
+        "parts": [
+          "unsigned int"
+        ],
+        "display": "unsigned int"
+      },
+      "templateParams": [],
+      "isStatic": false,
+      "isConstexpr": false,
+      "isMutable": false,
+      "docstring": {
+        "summary": [
+          {
+            "text": "Linear thread-id. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "initializer": null
+    }
+  ],
+  "enums": [],
+  "innerClasses": [
+    {
+      "name": "TempStorage",
+      "path": "cub::BlockReduce::TempStorage",
+      "kind": "struct",
+      "templateParams": [],
+      "baseClasses": [
+        {
+          "name": "Uninitialized< _TempStorage >",
+          "access": "public",
+          "isVirtual": false,
+          "typeInfo": null
+        }
+      ],
+      "derivedClasses": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "The operations exposed by ",
+            "type": "text"
+          },
+          {
+            "text": "BlockReduce",
+            "refid": "classcub_1_1_block_reduce",
+            "kindref": "compound",
+            "type": "ref"
+          },
+          {
+            "text": " require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the ",
+            "type": "text"
+          },
+          {
+            "code": "__shared__",
+            "type": "code"
+          },
+          {
+            "text": " keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or ",
+            "type": "text"
+          },
+          {
+            "code": "union",
+            "type": "code"
+          },
+          {
+            "text": "'d with other storage allocation types to facilitate memory reuse. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isAbstract": false,
+      "isFinal": false,
+      "methods": [],
+      "staticMethods": [],
+      "friendFunctions": [],
+      "typedefs": [],
+      "memberVariables": [],
+      "enums": [],
+      "innerClasses": [],
+      "relatedMemberRefs": [],
+      "sectionLabels": {},
+      "includeHeader": null
+    }
+  ],
+  "relatedMemberRefs": [],
+  "sectionLabels": {
+    "classcub_1_1_block_reduce_1a42e0254fd4996e0330427471f2ee8f1c": "Collective constructors",
+    "classcub_1_1_block_reduce_1a414e8f57d3817190828f5ebd9317ade6": "Collective constructors",
+    "classcub_1_1_block_reduce_1af1606d4876bdbd8cadf23f54ca7a3d5c": "Generic reductions",
+    "classcub_1_1_block_reduce_1a6084ac7cfe388a68dce1ea54dfc8efa0": "Generic reductions",
+    "classcub_1_1_block_reduce_1a37c4b6112370873ab73bc5e440ebeedd": "Generic reductions",
+    "classcub_1_1_block_reduce_1ae113a80de5f5638c5d91bdd9c68ef823": "Summation reductions",
+    "classcub_1_1_block_reduce_1ab258541101a8b4360ccfeba64ae5b36e": "Summation reductions",
+    "classcub_1_1_block_reduce_1a8072b19900b8dee1c0459ba55400b34e": "Summation reductions"
+  },
+  "includeHeader": null
+}

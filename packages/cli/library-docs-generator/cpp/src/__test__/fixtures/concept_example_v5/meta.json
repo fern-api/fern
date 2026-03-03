@@ -1,0 +1,12 @@
+{
+  "compound_name": "resource_with",
+  "qualified_name": "cuda::mr::resource_with",
+  "repo": "libcudacxx",
+  "compound_kind": "concept",
+  "namespace_path": [
+    "cuda",
+    "mr"
+  ],
+  "golden_page": "libcudacxx/concept_example_v5.mdx",
+  "status": "MATCHED"
+}

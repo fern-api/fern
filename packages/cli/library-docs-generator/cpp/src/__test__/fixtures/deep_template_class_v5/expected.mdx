@@ -1,0 +1,247 @@
+---
+title: "cuda::counting_iterator"
+description: "An iterator that represents a range of sequentially increasing values without storing them in memory."
+---
+
+A `counting_iterator` represents an iterator into a range of sequentially increasing values.
+
+This iterator is useful for creating a range filled with a sequence without explicitly storing it in memory. Using `counting_iterator` saves memory capacity and bandwidth.
+
+```cpp showLineNumbers={false}
+#include <cuda/counting_iterator.h>
+```
+
+**Inherits from:** `__counting_iterator_category<_Start>` (public)
+
+## Example
+
+The code snippet below demonstrates how to create a `counting_iterator` whose `value_type` is `int`.
+
+```cpp showLineNumbers={false}
+#include <cuda/iterator>
+...
+// create iterators
+cuda::counting_iterator first(10);
+cuda::counting_iterator last = first + 3;
+
+first[0]   // returns 10
+first[1]   // returns 11
+first[100] // returns 110
+
+// sum of [first, last)
+std::reduce(first, last);   // returns 33 (i.e. 10 + 11 + 12)
+
+// initialize vector to [0,1,2,..]
+cuda::counting_iterator iter(0);
+std::vector<int> vec(500);
+std::copy(iter, iter + vec.size(), vec.begin());
+```
+
+The remaining template parameters are SFINAE constraints that require `_Start` to model `::cuda::std::weakly_incrementable` and `::cuda::std::copyable`. They are not intended to be specified directly.
+
+<AccordionGroup>
+<Accordion title="Template parameters">
+
+<ParamField path="_Start" type="class">
+The value type of the [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator).
+</ParamField>
+
+</Accordion>
+</AccordionGroup>
+
+---
+
+## Constructors
+
+### counting_iterator <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+<Tabs>
+<Tab title="Default">
+
+Default-constructs the stored value.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+cuda::counting_iterator<_Start,,>::counting_iterator()
+```
+</CodeBlock>
+
+</Tab>
+<Tab title="From value">
+
+<Badge intent="note" minimal>explicit</Badge>
+
+Creates a `counting_iterator` from an initial value.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+cuda::counting_iterator<_Start,,>::counting_iterator(
+    _Start __value
+)
+```
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="__value" type="_Start">
+The value to store in the [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator).
+</ParamField>
+
+</Tab>
+</Tabs>
+
+---
+
+## Element access
+
+### operator* <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the value currently stored in the [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator).
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+_Start cuda::counting_iterator<_Start,,>::operator*() const
+```
+</CodeBlock>
+
+**Returns:** The current value stored in this iterator.
+
+### operator[] <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
+
+Returns the value currently stored in the [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator) advanced by a number of steps.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+_Start2 cuda::counting_iterator<_Start,,>::operator[](
+    difference_type __n
+) const
+```
+</CodeBlock>
+
+**Returns:** The value at offset `__n` from the current stored value.
+
+**Parameters**
+
+<ParamField path="__n" type="difference_type">
+The amount of elements to advance.
+</ParamField>
+
+---
+
+## Increment operators
+
+### operator++ <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Increments the stored value.
+
+<Tabs>
+<Tab title="Pre-increment">
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+counting_iterator& cuda::counting_iterator<_Start,,>::operator++()
+```
+</CodeBlock>
+
+**Returns:** A reference to this [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator) after incrementing.
+
+</Tab>
+<Tab title="Post-increment">
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+auto cuda::counting_iterator<_Start,,>::operator++(int)
+```
+</CodeBlock>
+
+**Returns:** A copy of this [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator) before incrementing.
+
+</Tab>
+</Tabs>
+
+### operator-- <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Decrements the stored value.
+
+<Tabs>
+<Tab title="Pre-decrement">
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+counting_iterator& cuda::counting_iterator<_Start,,>::operator--()
+```
+</CodeBlock>
+
+**Returns:** A reference to this [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator) after decrementing.
+
+</Tab>
+<Tab title="Post-decrement">
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+counting_iterator cuda::counting_iterator<_Start,,>::operator--(int)
+```
+</CodeBlock>
+
+**Returns:** A copy of this [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator) before decrementing.
+
+</Tab>
+</Tabs>
+
+---
+
+## Compound assignment operators
+
+### operator+= <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Increments the stored value by a given number of elements.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+counting_iterator& cuda::counting_iterator<_Start,,>::operator+=(
+    difference_type __n
+)
+```
+</CodeBlock>
+
+**Returns:** A reference to this [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator) after advancing.
+
+**Parameters**
+
+<ParamField path="__n" type="difference_type">
+The number of positions to advance.
+</ParamField>
+
+### operator-= <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
+
+Decrements the stored value by a given number of elements.
+
+<CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
+```cpp showLineNumbers={false}
+counting_iterator& cuda::counting_iterator<_Start,,>::operator-=(
+    difference_type __n
+)
+```
+</CodeBlock>
+
+**Returns:** A reference to this [`counting_iterator`](/libcudacxx/api/cuda::counting_iterator) after retreating.
+
+**Parameters**
+
+<ParamField path="__n" type="difference_type">
+The number of positions to retreat.
+</ParamField>
+
+---
+
+## Types
+
+### Typedefs
+
+| Name | Definition |
+|---|---|
+| `iterator_concept` | `::cuda::std::conditional_t<__advanceable<_Start>, ::cuda::std::random_access_iterator_tag, ::cuda::std::conditional_t<__decrementable<_Start>, ::cuda::std::bidirectional_iterator_tag, ::cuda::std::conditional_t<::cuda::std::incrementable<_Start>, ::cuda::std::forward_iterator_tag, ::cuda::std::input_iterator_tag>>>` |
+| `value_type` | `_Start` |
+| `difference_type` | `_IotaDiffT<_Start>` |
+| `reference` | `_Start` |
+| `pointer` | `void` |

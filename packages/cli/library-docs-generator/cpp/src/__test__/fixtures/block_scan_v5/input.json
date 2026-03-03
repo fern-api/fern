@@ -1,0 +1,5493 @@
+{
+  "name": "BlockScan",
+  "path": "cub::BlockScan",
+  "kind": "class",
+  "templateParams": [
+    {
+      "type": "typename T",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "int",
+      "name": "BlockDimX",
+      "isVariadic": false,
+      "defaultValue": null
+    },
+    {
+      "type": "BlockScanAlgorithm",
+      "name": "Algorithm",
+      "defaultValue": {
+        "parts": [
+          {
+            "text": "BLOCK_SCAN_RAKING",
+            "refid": "namespacecub_1abec44bba36037c547e7e84906d0d23aba0fa6cac57b7df2f475a67af053b9371c",
+            "kindref": "member"
+          }
+        ],
+        "display": "BLOCK_SCAN_RAKING"
+      },
+      "isVariadic": false
+    },
+    {
+      "type": "int",
+      "name": "BlockDimY",
+      "defaultValue": {
+        "parts": [
+          "1"
+        ],
+        "display": "1"
+      },
+      "isVariadic": false
+    },
+    {
+      "type": "int",
+      "name": "BlockDimZ",
+      "defaultValue": {
+        "parts": [
+          "1"
+        ],
+        "display": "1"
+      },
+      "isVariadic": false
+    }
+  ],
+  "baseClasses": [],
+  "derivedClasses": [],
+  "docstring": {
+    "summary": [],
+    "description": [
+      {
+        "content": "embed:rst:leading-asterisk \n//! The BlockScan class provides :ref:`collective <collective-primitives>` methods for computing a parallel prefix\n//! sum/scan of items partitioned across a CUDA thread block.\n//!\n//! Overview\n//! +++++++++++++++++++++++++++++++++++++++++++++\n//!\n//! - Given a list of input elements and a binary reduction operator, a\n//!   `prefix scan <http://en.wikipedia.org/wiki/Prefix_sum>`_ produces an output list where each element is computed\n//!   to be the reduction of the elements occurring earlier in the input list. *Prefix sum* connotes a prefix scan with\n//!   the addition operator. The term *inclusive indicates* that the *i*\\ :sup:`th` output reduction incorporates\n//!   the *i*\\ :sup:`th` input. The term *exclusive* indicates the *i*\\ :sup:`th` input is not incorporated into\n//!   the *i*\\ :sup:`th` output reduction.\n//! - @rowmajor\n//! - BlockScan can be optionally specialized by algorithm to accommodate different workload profiles:\n//!\n//!   #. :cpp:enumerator:`cub::BLOCK_SCAN_RAKING`:\n//!      An efficient (high throughput) \"raking reduce-then-scan\" prefix scan algorithm.\n//!   #. :cpp:enumerator:`cub::BLOCK_SCAN_RAKING_MEMOIZE`:\n//!      Similar to cub::BLOCK_SCAN_RAKING, but having higher throughput at the expense of additional\n//!      register pressure for intermediate storage.\n//!   #. :cpp:enumerator:`cub::BLOCK_SCAN_WARP_SCANS`:\n//!      A quick (low latency) \"tiled warpscans\" prefix scan algorithm.\n//!\n//! Performance Considerations\n//! +++++++++++++++++++++++++++++++++++++++++++++\n//!\n//! - @granularity\n//! - Uses special instructions when applicable (e.g., warp ``SHFL``)\n//! - Uses synchronization-free communication between warp lanes when applicable\n//! - Invokes a minimal number of minimal block-wide synchronization barriers (only\n//!   one or two depending on algorithm selection)\n//! - Incurs zero bank conflicts for most types\n//! - Computation is slightly more efficient (i.e., having lower instruction overhead) for:\n//!\n//!   - Prefix sum variants (vs. generic scan)\n//!   - @blocksize\n//!\n//! - See cub::BlockScanAlgorithm for performance details regarding algorithmic alternatives\n//!\n//! A Simple Example\n//! +++++++++++++++++++++++++++++++++++++++++++++\n//!\n//! @blockcollective{BlockScan}\n//!\n//! The code snippet below illustrates an exclusive prefix sum of 512 integer items that\n//! are partitioned in a :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads\n//! where each thread owns 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-sum-array\n//!     :end-before: example-end exclusive-sum-array\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{[1,1,1,1], [1,1,1,1], ..., [1,1,1,1]}``.\n//! The corresponding output ``thread_data`` in those threads will be\n//! ``{[0,1,2,3], [4,5,6,7], ..., [508,509,510,511]}``.\n//!\n//! Re-using dynamically allocating shared memory\n//! +++++++++++++++++++++++++++++++++++++++++++++\n//!\n//! The ``block/example_block_reduce_dyn_smem.cu`` example illustrates usage of dynamically shared memory with\n//! BlockReduce and how to re-purpose the same memory region.\n//! This example can be easily adapted to the storage required by BlockScan.\n//!\n//! ",
+        "format": "rst",
+        "type": "verbatim"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      }
+    ],
+    "params": [],
+    "templateParamsDoc": [
+      {
+        "name": "T",
+        "description": [
+          {
+            "text": "Data type being scanned",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "BlockDimX",
+        "description": [
+          {
+            "text": "The thread block length in threads along the X dimension",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "Algorithm",
+        "description": [
+          {
+            "text": "[optional]",
+            "type": "bold"
+          },
+          {
+            "text": " ",
+            "type": "text"
+          },
+          {
+            "text": "cub::BlockScanAlgorithm",
+            "refid": "namespacecub_1abec44bba36037c547e7e84906d0d23ab",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " enumerator specifying the underlying algorithm to use (default: ",
+            "type": "text"
+          },
+          {
+            "text": "cub::BLOCK_SCAN_RAKING",
+            "refid": "namespacecub_1abec44bba36037c547e7e84906d0d23aba0fa6cac57b7df2f475a67af053b9371c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ")",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "BlockDimY",
+        "description": [
+          {
+            "text": "[optional]",
+            "type": "bold"
+          },
+          {
+            "text": " The thread block length in threads along the Y dimension (default: 1)",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      },
+      {
+        "name": "BlockDimZ",
+        "description": [
+          {
+            "text": "[optional]",
+            "type": "bold"
+          },
+          {
+            "text": " The thread block length in threads along the Z dimension (default: 1) ",
+            "type": "text"
+          }
+        ],
+        "direction": null
+      }
+    ],
+    "raises": [],
+    "examples": [],
+    "notes": [],
+    "warnings": [],
+    "remarks": [],
+    "preconditions": [],
+    "postconditions": [],
+    "seeAlso": [],
+    "returns": null,
+    "deprecated": null
+  },
+  "isAbstract": false,
+  "isFinal": false,
+  "methods": [
+    {
+      "name": "BlockScan",
+      "path": "cub::BlockScan::BlockScan",
+      "signature": "cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::BlockScan()",
+      "templateParams": [],
+      "parameters": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Collective constructor using a private static allocation of shared memory as temporary storage. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "BlockScan",
+      "path": "cub::BlockScan::BlockScan",
+      "signature": "cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::BlockScan(TempStorage &temp_storage)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "temp_storage",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "TempStorage",
+                "refid": "structcub_1_1_block_scan_1_1_temp_storage",
+                "kindref": "compound"
+              },
+              " &"
+            ],
+            "display": "TempStorage &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Collective constructor using the specified memory allocation as temporary storage. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n* .. versionadded:: 2.2.0\n*    First appears in CUDA Toolkit 12.3.\n* ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "temp_storage",
+            "description": [
+              {
+                "text": "Reference to memory allocation having layout type ",
+                "type": "text"
+              },
+              {
+                "text": "TempStorage",
+                "refid": "structcub_1_1_block_scan_1_1_temp_storage",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveSum",
+      "path": "cub::BlockScan::ExclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveSum(T input, T &output)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes one input element. The value of 0 is applied as the initial value, and is assigned\n//! to ``output`` in *thread*\\ :sub:`0`.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @identityzero\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an exclusive prefix sum of 128 integer items that\n//! are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-sum-single\n//!     :end-before: example-end exclusive-sum-single\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is ``1, 1, ..., 1``.\n//! The corresponding output ``thread_data`` in those threads will be ``0, 1, ..., 127``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ") ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveSum",
+      "path": "cub::BlockScan::ExclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveSum(T input, T &output, T &block_aggregate)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes one input element.\n//! The value of 0 is applied as the initial value, and is assigned to ``output`` in *thread*\\ :sub:`0`.\n//! Also provides every thread with the block-wide ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @identityzero\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an exclusive prefix sum of 128 integer items that\n//! are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-sum-aggregate\n//!     :end-before: example-end exclusive-sum-aggregate\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is ``1, 1, ..., 1``.\n//! The corresponding output ``thread_data`` in those threads will be ``0, 1, ..., 127``.\n//! Furthermore the value ``128`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveSum",
+      "path": "cub::BlockScan::ExclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveSum(T input, T &output, BlockPrefixCallbackOp &block_prefix_callback_op)",
+      "templateParams": [
+        {
+          "type": "typename BlockPrefixCallbackOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_prefix_callback_op",
+          "typeInfo": {
+            "parts": [
+              "BlockPrefixCallbackOp &"
+            ],
+            "display": "BlockPrefixCallbackOp &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes one input element.  Instead of using 0 as the block-wide prefix, the call-back functor\n//! ``block_prefix_callback_op`` is invoked by the first warp in the block, and the value returned by\n//! *lane*\\ :sub:`0` in that warp is used as the \"seed\" value that logically prefixes the thread block's\n//! scan inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @identityzero\n//! - The ``block_prefix_callback_op`` functor must implement a member function\n//!   ``T operator()(T block_aggregate)``. The functor will be invoked by the first warp of threads in the block,\n//!   however only the return value from *lane*\\ :sub:`0` is applied as the block-wide prefix. Can be stateful.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a single thread block that progressively\n//! computes an exclusive prefix sum over multiple \"tiles\" of input using a\n//! prefix functor to maintain a running total between block-wide scans.  Each tile consists\n//! of 128 integer items that are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin block-prefix-callback-op\n//!     :end-before: example-end block-prefix-callback-op\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-sum-single-prefix-callback\n//!     :end-before: example-end exclusive-sum-single-prefix-callback\n//!\n//! Suppose the input ``d_data`` is ``1, 1, 1, 1, 1, 1, 1, 1, ...``.\n//! The corresponding output for the first segment will be ``0, 1, ..., 127``.\n//! The output for the second segment will be ``128, 129, ..., 255``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "block_prefix_callback_op",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   *warp*\\ :sub:`0` only call-back functor for specifying a block-wide prefix to be applied to\n//!   the logical input sequence.\n//!   ",
+                "type": "text"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "inout"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "BlockPrefixCallbackOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Call-back functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(T block_aggregate)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveSum",
+      "path": "cub::BlockScan::ExclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveSum(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD])",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes an array of consecutive input elements.\n//! The value of 0 is applied as the initial value, and is assigned to ``output[0]`` in *thread*\\ :sub:`0`.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @identityzero\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an exclusive prefix sum of 512 integer items that\n//! are partitioned in a :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads\n//! where each thread owns 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-sum-array\n//!     :end-before: example-end exclusive-sum-array\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{ [1,1,1,1], [1,1,1,1], ..., [1,1,1,1] }``.\n//! The corresponding output ``thread_data`` in those threads will be\n//! ``{ [0,1,2,3], [4,5,6,7], ..., [508,509,510,511] }``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ") ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveSum",
+      "path": "cub::BlockScan::ExclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveSum(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], T &block_aggregate)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes an array of consecutive input elements.\n//! The value of 0 is applied as the initial value, and is assigned to ``output[0]`` in *thread*\\ :sub:`0`.\n//! Also provides every thread with the block-wide ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @identityzero\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an exclusive prefix sum of 512 integer items that are partitioned in\n//! a :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads where each thread owns\n//! 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-sum-array-aggregate\n//!     :end-before: example-end exclusive-sum-array-aggregate\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{ [1,1,1,1], [1,1,1,1], ..., [1,1,1,1] }``.\n//! The corresponding output ``thread_data`` in those threads will be\n//! ``{ [0,1,2,3], [4,5,6,7], ..., [508,509,510,511] }``.\n//! Furthermore the value ``512`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveSum",
+      "path": "cub::BlockScan::ExclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveSum(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], BlockPrefixCallbackOp &block_prefix_callback_op)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename BlockPrefixCallbackOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "block_prefix_callback_op",
+          "typeInfo": {
+            "parts": [
+              "BlockPrefixCallbackOp &"
+            ],
+            "display": "BlockPrefixCallbackOp &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes an array of consecutive input elements.\n//! Instead of using 0 as the block-wide prefix, the call-back functor ``block_prefix_callback_op`` is invoked by\n//! the first warp in the block, and the value returned by *lane*\\ :sub:`0` in that warp is used as the \"seed\"\n//! value that logically prefixes the thread block's scan inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @identityzero\n//! - The ``block_prefix_callback_op`` functor must implement a member function ``T operator()(T block_aggregate)``.\n//!   The functor will be invoked by the first warp of threads in the block, however only the return value from\n//!   *lane*\\ :sub:`0` is applied as the block-wide prefix. Can be stateful.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a single thread block that progressively\n//! computes an exclusive prefix sum over multiple \"tiles\" of input using a\n//! prefix functor to maintain a running total between block-wide scans.  Each tile consists\n//! of 512 integer items that are partitioned in a :ref:`blocked arrangement <flexible-data-arrangement>`\n//! across 128 threads where each thread owns 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin block-prefix-callback-op\n//!     :end-before: example-end block-prefix-callback-op\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-sum-prefix-callback\n//!     :end-before: example-end exclusive-sum-prefix-callback\n//!\n//! Suppose the input ``d_data`` is ``1, 1, 1, 1, 1, 1, 1, 1, ...``.\n//! The corresponding output for the first segment will be ``0, 1, 2, 3, ..., 510, 511``.\n//! The output for the second segment will be ``512, 513, 514, 515, ..., 1022, 1023``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "block_prefix_callback_op",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   *warp*\\ :sub:`0` only call-back functor for specifying a block-wide prefix to be applied to\n//!   the logical input sequence.\n//!   ",
+                "type": "text"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "inout"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "BlockPrefixCallbackOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Call-back functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(T block_aggregate)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveScan",
+      "path": "cub::BlockScan::ExclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveScan(T input, T &output, T initial_value, ScanOp scan_op)",
+      "templateParams": [
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "initial_value",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes one input element.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an exclusive prefix max scan of 128 integer items that\n//! are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-scan-single\n//!     :end-before: example-end exclusive-scan-single\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is ``0, -1, 2, -3, ..., 126, -127``.\n//! The corresponding output ``thread_data`` in those threads will be ``INT_MIN, 0, 0, 2, ..., 124, 126``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "initial_value",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   Initial value to seed the exclusive scan (and is assigned to `output[0]` in *thread*\\ :sub:`0`)\n//!   ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveScan",
+      "path": "cub::BlockScan::ExclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveScan(T input, T &output, T initial_value, ScanOp scan_op, T &block_aggregate)",
+      "templateParams": [
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "initial_value",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes one input element.\n//! Also provides every thread with the block-wide ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an exclusive prefix max scan of 128 integer items that\n//! are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-scan-aggregate\n//!     :end-before: example-end exclusive-scan-aggregate\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is ``0, -1, 2, -3, ..., 126, -127``.\n//! The corresponding output ``thread_data`` in those threads will be ``INT_MIN, 0, 0, 2, ..., 124, 126``.\n//! Furthermore the value ``126`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! .. note::\n//!\n//!    ``initial_value`` is not applied to the block-wide aggregate.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "initial_value",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   Initial value to seed the exclusive scan (and is assigned to ``output[0]`` in *thread*\\ :sub:`0`). It is not\n//!   taken into account for ``block_aggregate``.\n//!\n//!   ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveScan",
+      "path": "cub::BlockScan::ExclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveScan(T input, T &output, ScanOp scan_op, BlockPrefixCallbackOp &block_prefix_callback_op)",
+      "templateParams": [
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename BlockPrefixCallbackOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_prefix_callback_op",
+          "typeInfo": {
+            "parts": [
+              "BlockPrefixCallbackOp &"
+            ],
+            "display": "BlockPrefixCallbackOp &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes one input element. The call-back functor ``block_prefix_callback_op`` is invoked by\n//! the first warp in the block, and the value returned by *lane*\\ :sub:`0` in that warp is used as\n//! the \"seed\" value that logically prefixes the thread block's scan inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The ``block_prefix_callback_op`` functor must implement a member function ``T operator()(T block_aggregate)``.\n//!   The functor will be invoked by the first warp of threads in the block, however only the return value from\n//!   *lane*\\ :sub:`0` is applied as the block-wide prefix. Can be stateful.\n//! - Supports non-commutative scan operators.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a single thread block that progressively\n//! computes an exclusive prefix max scan over multiple \"tiles\" of input using a\n//! prefix functor to maintain a running total between block-wide scans.\n//! Each tile consists of 128 integer items that are partitioned across 128 threads.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>\n//!\n//!    // A stateful callback functor that maintains a running prefix to be applied\n//!    // during consecutive scan operations.\n//!    struct BlockPrefixCallbackOp\n//!    {\n//!        // Running prefix\n//!        int running_total;\n//!\n//!        // Constructor\n//!        __device__ BlockPrefixCallbackOp(int running_total) : running_total(running_total) {}\n//!\n//!        // Callback operator to be entered by the first warp of threads in the block.\n//!        // Thread-0 is responsible for returning a value for seeding the block-wide scan.\n//!        __device__ int operator()(int block_aggregate)\n//!        {\n//!            int old_prefix = running_total;\n//!            running_total = (block_aggregate > old_prefix) ? block_aggregate : old_prefix;\n//!            return old_prefix;\n//!        }\n//!    };\n//!\n//!    __global__ void ExampleKernel(int *d_data, int num_items, ...)\n//!    {\n//!        // Specialize BlockScan for a 1D block of 128 threads\n//!        using BlockScan = cub::BlockScan<int, 128>;\n//!\n//!        // Allocate shared memory for BlockScan\n//!        __shared__ typename BlockScan::TempStorage temp_storage;\n//!\n//!        // Initialize running total\n//!        BlockPrefixCallbackOp prefix_op(INT_MIN);\n//!\n//!        // Have the block iterate over segments of items\n//!        for (int block_offset = 0; block_offset < num_items; block_offset += 128)\n//!        {\n//!            // Load a segment of consecutive items that are blocked across threads\n//!            int thread_data = d_data[block_offset + threadIdx.x];\n//!\n//!            // Collectively compute the block-wide exclusive prefix max scan\n//!            BlockScan(temp_storage).ExclusiveScan(\n//!                thread_data, thread_data, INT_MIN, cuda::maximum<>{}, prefix_op);\n//!            __syncthreads();\n//!\n//!            // Store scanned items to output segment\n//!            d_data[block_offset + threadIdx.x] = thread_data;\n//!        }\n//!    }\n//!\n//! Suppose the input ``d_data`` is ``0, -1, 2, -3, 4, -5, ...``.\n//! The corresponding output for the first segment will be ``INT_MIN, 0, 0, 2, ..., 124, 126``.\n//! The output for the second segment will be ``126, 128, 128, 130, ..., 252, 254``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_prefix_callback_op",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   *warp*\\ :sub:`0` only call-back functor for specifying a block-wide prefix to be applied to\n//!   the logical input sequence.\n//!   ",
+                "type": "text"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "inout"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "BlockPrefixCallbackOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Call-back functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(T block_aggregate)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveScan",
+      "path": "cub::BlockScan::ExclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveScan(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], T initial_value, ScanOp scan_op)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "initial_value",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes an array of consecutive input elements.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an exclusive prefix max scan of 512 integer\n//! items that are partitioned in a [<em>blocked arrangement</em>](../index.html#sec5sec3)\n//! across 128 threads where each thread owns 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-scan-array\n//!     :end-before: example-end exclusive-scan-array\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{ [0,-1,2,-3], [4,-5,6,-7], ..., [508,-509,510,-511] }``.\n//! The corresponding output ``thread_data`` in those threads will be\n//! ``{ [INT_MIN,0,0,2], [2,4,4,6], ..., [506,508,508,510] }``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "initial_value",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   Initial value to seed the exclusive scan (and is assigned to `output[0]` in *thread*\\ :sub:`0`)\n//!   ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveScan",
+      "path": "cub::BlockScan::ExclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveScan(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], T initial_value, ScanOp scan_op, T &block_aggregate)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "initial_value",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes an array of consecutive input elements.\n//! Also provides every thread with the block-wide ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an exclusive prefix max scan of 512 integer items that are partitioned in\n//! a :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads where each thread owns\n//! 4 consecutive items.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>\n//!\n//!    __global__ void ExampleKernel(...)\n//!    {\n//!        // Specialize BlockScan for a 1D block of 128 threads of type int\n//!        using BlockScan = cub::BlockScan<int, 128>;\n//!\n//!        // Allocate shared memory for BlockScan\n//!        __shared__ typename BlockScan::TempStorage temp_storage;\n//!\n//!        // Obtain a segment of consecutive items that are blocked across threads\n//!        int thread_data[4];\n//!        ...\n//!\n//!        // Collectively compute the block-wide exclusive prefix max scan\n//!        int block_aggregate;\n//!        BlockScan(temp_storage).ExclusiveScan(\n//!            thread_data, thread_data, INT_MIN, cuda::maximum<>{}, block_aggregate);\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{ [0,-1,2,-3], [4,-5,6,-7], ..., [508,-509,510,-511] }``.\n//! The corresponding output ``thread_data`` in those threads will be\n//! ``{ [INT_MIN,0,0,2], [2,4,4,6], ..., [506,508,508,510] }``.\n//! Furthermore the value ``510`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! .. note::\n//!\n//!    ``initial_value`` is not applied to the block-wide aggregate.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "initial_value",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   Initial value to seed the exclusive scan (and is assigned to `output[0]` in *thread*\\ :sub:`0`). It is not taken\n//!   into account for ``block_aggregate``.\n//!   ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "ExclusiveScan",
+      "path": "cub::BlockScan::ExclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::ExclusiveScan(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], ScanOp scan_op, BlockPrefixCallbackOp &block_prefix_callback_op)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename BlockPrefixCallbackOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_prefix_callback_op",
+          "typeInfo": {
+            "parts": [
+              "BlockPrefixCallbackOp &"
+            ],
+            "display": "BlockPrefixCallbackOp &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an exclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes an array of consecutive input elements.\n//! The call-back functor ``block_prefix_callback_op`` is invoked by the first warp in the block, and the value\n//! returned by *lane*\\ :sub:`0` in that warp is used as the \"seed\" value that logically prefixes the thread\n//! block's scan inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The ``block_prefix_callback_op`` functor must implement a member function\n//!   ``T operator()(T block_aggregate)``. The functor will be invoked by the\n//!   first warp of threads in the block, however only the return value from\n//!   *lane*\\ :sub:`0` is applied as the block-wide prefix. Can be stateful.\n//! - Supports non-commutative scan operators.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a single thread block that progressively\n//! computes an exclusive prefix max scan over multiple \"tiles\" of input using a\n//! prefix functor to maintain a running total between block-wide scans. Each tile consists\n//! of 128 integer items that are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin block-prefix-callback-max-op\n//!     :end-before: example-end block-prefix-callback-max-op\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin exclusive-scan-prefix-callback\n//!     :end-before: example-end exclusive-scan-prefix-callback\n//!\n//! Suppose the input ``d_data`` is ``0, -1, 2, -3, 4, -5, ...``.\n//! The corresponding output for the first segment will be\n//! ``INT_MIN, 0, 0, 2, 2, 4, ..., 508, 510``.\n//! The output for the second segment will be\n//! ``510, 512, 512, 514, 514, 516, ..., 1020, 1022``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_prefix_callback_op",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   *warp*\\ :sub:`0` only call-back functor for specifying a block-wide prefix to be applied to\n//!   the logical input sequence.\n//!   ",
+                "type": "text"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "inout"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "BlockPrefixCallbackOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Call-back functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(T block_aggregate)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveSum",
+      "path": "cub::BlockScan::InclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveSum(T input, T &output)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using addition (+)\n//! as the scan operator. Each thread contributes one input element.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix sum of 128 integer items that\n//! are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-sum-single\n//!     :end-before: example-end inclusive-sum-single\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is ``1, 1, ..., 1``.\n//! The corresponding output ``thread_data`` in those threads will be ``1, 2, ..., 128``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ") ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveSum",
+      "path": "cub::BlockScan::InclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveSum(T input, T &output, T &block_aggregate)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes one input element.\n//! Also provides every thread with the block-wide ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix sum of 128 integer items that\n//! are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-sum-single-aggregate\n//!     :end-before: example-end inclusive-sum-single-aggregate\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is ``1, 1, ..., 1``.\n//! The corresponding output ``thread_data`` in those threads will be ``1, 2, ..., 128``.\n//! Furthermore the value ``128`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveSum",
+      "path": "cub::BlockScan::InclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveSum(T input, T &output, BlockPrefixCallbackOp &block_prefix_callback_op)",
+      "templateParams": [
+        {
+          "type": "typename BlockPrefixCallbackOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_prefix_callback_op",
+          "typeInfo": {
+            "parts": [
+              "BlockPrefixCallbackOp &"
+            ],
+            "display": "BlockPrefixCallbackOp &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes one input element. Instead of using 0 as the block-wide prefix, the call-back functor\n//! ``block_prefix_callback_op`` is invoked by the first warp in the block, and the value returned by\n//! *lane*\\ :sub:`0` in that warp is used as the \"seed\" value that logically prefixes the thread block's\n//! scan inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The ``block_prefix_callback_op`` functor must implement a member function\n//!   ``T operator()(T block_aggregate)``. The functor will be invoked by the first warp of threads in the block,\n//!   however only the return value from *lane*\\ :sub:`0` is applied as the block-wide prefix. Can be stateful.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a single thread block that progressively\n//! computes an inclusive prefix sum over multiple \"tiles\" of input using a\n//! prefix functor to maintain a running total between block-wide scans.\n//! Each tile consists of 128 integer items that are partitioned across 128 threads.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>\n//!\n//!    // A stateful callback functor that maintains a running prefix to be applied\n//!    // during consecutive scan operations.\n//!    struct BlockPrefixCallbackOp\n//!    {\n//!        // Running prefix\n//!        int running_total;\n//!\n//!        // Constructor\n//!        __device__ BlockPrefixCallbackOp(int running_total) : running_total(running_total) {}\n//!\n//!        // Callback operator to be entered by the first warp of threads in the block.\n//!        // Thread-0 is responsible for returning a value for seeding the block-wide scan.\n//!        __device__ int operator()(int block_aggregate)\n//!        {\n//!            int old_prefix = running_total;\n//!            running_total += block_aggregate;\n//!            return old_prefix;\n//!        }\n//!    };\n//!\n//!    __global__ void ExampleKernel(int *d_data, int num_items, ...)\n//!    {\n//!        // Specialize BlockScan for a 1D block of 128 threads\n//!        using BlockScan = cub::BlockScan<int, 128>;\n//!\n//!        // Allocate shared memory for BlockScan\n//!        __shared__ typename BlockScan::TempStorage temp_storage;\n//!\n//!        // Initialize running total\n//!        BlockPrefixCallbackOp prefix_op(0);\n//!\n//!        // Have the block iterate over segments of items\n//!        for (int block_offset = 0; block_offset < num_items; block_offset += 128)\n//!        {\n//!            // Load a segment of consecutive items that are blocked across threads\n//!            int thread_data = d_data[block_offset + threadIdx.x];\n//!\n//!            // Collectively compute the block-wide inclusive prefix sum\n//!            BlockScan(temp_storage).InclusiveSum(\n//!                thread_data, thread_data, prefix_op);\n//!            __syncthreads();\n//!\n//!            // Store scanned items to output segment\n//!            d_data[block_offset + threadIdx.x] = thread_data;\n//!        }\n//!\n//! Suppose the input ``d_data`` is ``1, 1, 1, 1, 1, 1, 1, 1, ...``.\n//! The corresponding output for the first segment will be ``1, 2, ..., 128``.\n//! The output for the second segment will be ``129, 130, ..., 256``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "block_prefix_callback_op",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   *warp*\\ :sub:`0` only call-back functor for specifying a block-wide prefix to be applied\n//!   to the logical input sequence.\n//!   ",
+                "type": "text"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "inout"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "BlockPrefixCallbackOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Call-back functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(T block_aggregate)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveSum",
+      "path": "cub::BlockScan::InclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveSum(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD])",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes an array of consecutive input elements.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix sum of 512 integer items that\n//! are partitioned in a :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads\n//! where each thread owns 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-sum-array\n//!     :end-before: example-end inclusive-sum-array\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{ [1,1,1,1], [1,1,1,1], ..., [1,1,1,1] }``. The corresponding output\n//! ``thread_data`` in those threads will be ``{ [1,2,3,4], [5,6,7,8], ..., [509,510,511,512] }``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ") ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveSum",
+      "path": "cub::BlockScan::InclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveSum(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], T &block_aggregate)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes an array of consecutive input elements.\n//! Also provides every thread with the block-wide ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix sum of 512 integer items that\n//! are partitioned in a :ref:`blocked arrangement <flexible-data-arrangement>` across 128 threads\n//! where each thread owns 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-sum-array-aggregate\n//!     :end-before: example-end inclusive-sum-array-aggregate\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{ [1,1,1,1], [1,1,1,1], ..., [1,1,1,1] }``. The\n//! corresponding output ``thread_data`` in those threads will be\n//! ``{ [1,2,3,4], [5,6,7,8], ..., [509,510,511,512] }``.\n//! Furthermore the value ``512`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveSum",
+      "path": "cub::BlockScan::InclusiveSum",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveSum(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], BlockPrefixCallbackOp &block_prefix_callback_op)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename BlockPrefixCallbackOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "block_prefix_callback_op",
+          "typeInfo": {
+            "parts": [
+              "BlockPrefixCallbackOp &"
+            ],
+            "display": "BlockPrefixCallbackOp &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.\n//! Each thread contributes an array of consecutive input elements.\n//! Instead of using 0 as the block-wide prefix, the call-back functor ``block_prefix_callback_op`` is invoked by\n//! the first warp in the block, and the value returned by *lane*\\ :sub:`0` in that warp is used as the \"seed\"\n//! value that logically prefixes the thread block's scan inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The ``block_prefix_callback_op`` functor must implement a member function\n//!   ``T operator()(T block_aggregate)``. The functor will be invoked by the first warp of threads in the block,\n//!   however only the return value from *lane*\\ :sub:`0` is applied as the block-wide prefix. Can be stateful.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a single thread block that progressively\n//! computes an inclusive prefix sum over multiple \"tiles\" of input using a\n//! prefix functor to maintain a running total between block-wide scans.  Each tile consists\n//! of 512 integer items that are partitioned in a :ref:`blocked arrangement <flexible-data-arrangement>`\n//! across 128 threads where each thread owns 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin block-prefix-callback-op\n//!     :end-before: example-end block-prefix-callback-op\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-scan-prefix-callback\n//!     :end-before: example-end inclusive-scan-prefix-callback\n//!\n//! Suppose the input ``d_data`` is ``1, 1, 1, 1, 1, 1, 1, 1, ...``.\n//! The corresponding output for the first segment will be\n//! ``1, 2, 3, 4, ..., 511, 512``. The output for the second segment will be\n//! ``513, 514, 515, 516, ..., 1023, 1024``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "block_prefix_callback_op",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   *warp*\\ :sub:`0` only call-back functor for specifying a block-wide prefix to be applied to the\n//!   logical input sequence.\n//!   ",
+                "type": "text"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "inout"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "BlockPrefixCallbackOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Call-back functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(T block_aggregate)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveScan",
+      "path": "cub::BlockScan::InclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveScan(T input, T &output, ScanOp scan_op)",
+      "templateParams": [
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes one input element.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix max scan of 128 integer items that\n//! are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-scan-single\n//!     :end-before: example-end inclusive-scan-single\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``0, -1, 2, -3, ..., 126, -127``. The corresponding output ``thread_data``\n//! in those threads will be ``0, 0, 2, 2, ..., 126, 126``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveScan",
+      "path": "cub::BlockScan::InclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveScan(T input, T &output, ScanOp scan_op, T &block_aggregate)",
+      "templateParams": [
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes one input element. Also provides every thread with the block-wide\n//! ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix max scan of 128\n//! integer items that are partitioned across 128 threads.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>\n//!\n//!    __global__ void ExampleKernel(...)\n//!    {\n//!        // Specialize BlockScan for a 1D block of 128 threads of type int\n//!        using BlockScan = cub::BlockScan<int, 128>;\n//!\n//!        // Allocate shared memory for BlockScan\n//!        __shared__ typename BlockScan::TempStorage temp_storage;\n//!\n//!        // Obtain input item for each thread\n//!        int thread_data;\n//!        ...\n//!\n//!        // Collectively compute the block-wide inclusive prefix max scan\n//!        int block_aggregate;\n//!        BlockScan(temp_storage).InclusiveScan(thread_data, thread_data, cuda::maximum<>{}, block_aggregate);\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``0, -1, 2, -3, ..., 126, -127``. The corresponding output ``thread_data``\n//! in those threads will be ``0, 0, 2, 2, ..., 126, 126``. Furthermore the value\n//! ``126`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "Block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveScan",
+      "path": "cub::BlockScan::InclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveScan(T input, T &output, ScanOp scan_op, BlockPrefixCallbackOp &block_prefix_callback_op)",
+      "templateParams": [
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename BlockPrefixCallbackOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_prefix_callback_op",
+          "typeInfo": {
+            "parts": [
+              "BlockPrefixCallbackOp &"
+            ],
+            "display": "BlockPrefixCallbackOp &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes one input element. The call-back functor ``block_prefix_callback_op``\n//! is invoked by the first warp in the block, and the value returned by *lane*\\ :sub:`0` in that warp is used as\n//! the \"seed\" value that logically prefixes the thread block's scan inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The ``block_prefix_callback_op`` functor must implement a member function\n//!   ``T operator()(T block_aggregate)``. The functor's input parameter\n//!   The functor will be invoked by the first warp of threads in the block,\n//!   however only the return value from *lane*\\ :sub:`0` is applied\n//!   as the block-wide prefix. Can be stateful.\n//! - Supports non-commutative scan operators.\n//! - @rowmajor\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a single thread block that progressively\n//! computes an inclusive prefix max scan over multiple \"tiles\" of input using a\n//! prefix functor to maintain a running total between block-wide scans.  Each tile consists\n//! of 128 integer items that are partitioned across 128 threads.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin block-prefix-callback-max-op\n//!     :end-before: example-end block-prefix-callback-max-op\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-scan-prefix-callback-max\n//!     :end-before: example-end inclusive-scan-prefix-callback-max\n//!\n//! Suppose the input ``d_data`` is ``0, -1, 2, -3, 4, -5, ...``.\n//! The corresponding output for the first segment will be\n//! ``0, 0, 2, 2, ..., 126, 126``. The output for the second segment\n//! will be ``128, 128, 130, 130, ..., 254, 254``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input item",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output item (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_prefix_callback_op",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   *warp*\\ :sub:`0` only call-back functor for specifying a block-wide prefix to be applied to\n//!   the logical input sequence.\n//!   ",
+                "type": "text"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "inout"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "BlockPrefixCallbackOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Call-back functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(T block_aggregate)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveScan",
+      "path": "cub::BlockScan::InclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveScan(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], ScanOp scan_op)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes an array of consecutive input elements.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix max scan of 512 integer items that\n//! are partitioned in a [<em>blocked arrangement</em>](../index.html#sec5sec3) across 128 threads\n//! where each thread owns 4 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/examples/block/example_block_scan.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-scan-array\n//!     :end-before: example-end inclusive-scan-array\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{ [0,-1,2,-3], [4,-5,6,-7], ..., [508,-509,510,-511] }``.\n//! The corresponding output ``thread_data`` in those threads will be\n//! ``{ [0,0,2,2], [4,4,6,6], ..., [508,508,510,510] }``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveScan",
+      "path": "cub::BlockScan::InclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveScan(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], T initial_value, ScanOp scan_op)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "initial_value",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes an array of consecutive input elements.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix max scan of 128 integer items that\n//! are partitioned in a :ref:`blocked arrangement <flexible-data-arrangement>` across 64 threads\n//! where each thread owns 2 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/test/catch2_test_block_scan_api.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-scan-array-init-value\n//!     :end-before: example-end inclusive-scan-array-init-value\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "initial_value",
+            "description": [
+              {
+                "text": "Initial value to seed the inclusive scan (uniform across block)",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor ",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveScan",
+      "path": "cub::BlockScan::InclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveScan(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], ScanOp scan_op, T &block_aggregate)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes an array of consecutive input elements. Also provides every thread\n//! with the block-wide ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix max scan of 512 integer items that\n//! are partitioned in a [<em>blocked arrangement</em>](../index.html#sec5sec3) across 128 threads\n//! where each thread owns 4 consecutive items.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>\n//!\n//!    __global__ void ExampleKernel(...)\n//!    {\n//!        // Specialize BlockScan for a 1D block of 128 threads of type int\n//!        using BlockScan = cub::BlockScan<int, 128>;\n//!\n//!        // Allocate shared memory for BlockScan\n//!        __shared__ typename BlockScan::TempStorage temp_storage;\n//!\n//!        // Obtain a segment of consecutive items that are blocked across threads\n//!        int thread_data[4];\n//!        ...\n//!\n//!        // Collectively compute the block-wide inclusive prefix max scan\n//!        int block_aggregate;\n//!        BlockScan(temp_storage).InclusiveScan(thread_data, thread_data, cuda::maximum<>{}, block_aggregate);\n//!\n//! Suppose the set of input ``thread_data`` across the block of threads is\n//! ``{ [0,-1,2,-3], [4,-5,6,-7], ..., [508,-509,510,-511] }``.\n//! The corresponding output ``thread_data`` in those threads will be\n//! ``{ [0,0,2,2], [4,4,6,6], ..., [508,508,510,510] }``.\n//! Furthermore the value ``510`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "Block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveScan",
+      "path": "cub::BlockScan::InclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveScan(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], T initial_value, ScanOp scan_op, T &block_aggregate)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "initial_value",
+          "typeInfo": {
+            "parts": [
+              "T"
+            ],
+            "display": "T"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_aggregate",
+          "typeInfo": {
+            "parts": [
+              "T &"
+            ],
+            "display": "T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes an array of consecutive input elements. Also provides every thread\n//! with the block-wide ``block_aggregate`` of all inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - Supports non-commutative scan operators.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates an inclusive prefix max scan of 128 integer items that\n//! are partitioned in a :ref:`blocked arrangement <flexible-data-arrangement>` across 64 threads\n//! where each thread owns 2 consecutive items.\n//!\n//! .. literalinclude:: ../../../cub/test/catch2_test_block_scan_api.cu\n//!     :language: c++\n//!     :dedent:\n//!     :start-after: example-begin inclusive-scan-array-aggregate-init-value\n//!     :end-before: example-end inclusive-scan-array-aggregate-init-value\n//!\n//! The value ``126`` will be stored in ``block_aggregate`` for all threads.\n//!\n//! .. note::\n//!\n//!    ``initial_value`` is not applied to the block-wide aggregate.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "initial_value",
+            "description": [
+              {
+                "text": "Initial value to seed the inclusive scan (uniform across block). It is not taken into account for ",
+                "type": "text"
+              },
+              {
+                "code": "block_aggregate",
+                "type": "code"
+              },
+              {
+                "text": ".",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_aggregate",
+            "description": [
+              {
+                "text": "Block-wide aggregate reduction of input items ",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "InclusiveScan",
+      "path": "cub::BlockScan::InclusiveScan",
+      "signature": "void cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::InclusiveScan(T(&input)[ITEMS_PER_THREAD], T(&output)[ITEMS_PER_THREAD], ScanOp scan_op, BlockPrefixCallbackOp &block_prefix_callback_op)",
+      "templateParams": [
+        {
+          "type": "int",
+          "name": "ITEMS_PER_THREAD",
+          "isVariadic": false,
+          "defaultValue": null
+        },
+        {
+          "type": "typename ScanOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename BlockPrefixCallbackOp",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "input",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "output",
+          "typeInfo": {
+            "parts": [
+              "T(&)"
+            ],
+            "display": "T(&)"
+          },
+          "arraySuffix": "[ITEMS_PER_THREAD]",
+          "defaultValue": null
+        },
+        {
+          "name": "scan_op",
+          "typeInfo": {
+            "parts": [
+              "ScanOp"
+            ],
+            "display": "ScanOp"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "block_prefix_callback_op",
+          "typeInfo": {
+            "parts": [
+              "BlockPrefixCallbackOp &"
+            ],
+            "display": "BlockPrefixCallbackOp &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk \n//! Computes an inclusive block-wide prefix scan using the specified binary ``scan_op`` functor.\n//! Each thread contributes an array of consecutive input elements.\n//! The call-back functor ``block_prefix_callback_op`` is invoked by the first warp in the block,\n//! and the value returned by *lane*\\ :sub:`0` in that warp is used as the \"seed\" value that logically prefixes the\n//! thread block's scan inputs.\n//!\n//! .. versionadded:: 2.2.0\n//!    First appears in CUDA Toolkit 12.3.\n//!\n//! - The ``block_prefix_callback_op`` functor must implement a member function ``T operator()(T block_aggregate)``.\n//!   The functor will be invoked by the first warp of threads in the block, however only the return value\n//!   from *lane*\\ :sub:`0` is applied as the block-wide prefix. Can be stateful.\n//! - Supports non-commutative scan operators.\n//! - @blocked\n//! - @granularity\n//! - @smemreuse\n//!\n//! Snippet\n//! +++++++\n//!\n//! The code snippet below illustrates a single thread block that progressively\n//! computes an inclusive prefix max scan over multiple \"tiles\" of input using a\n//! prefix functor to maintain a running total between block-wide scans.  Each tile consists\n//! of 128 integer items that are partitioned across 128 threads.\n//!\n//! .. code-block:: c++\n//!\n//!    #include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>\n//!\n//!    // A stateful callback functor that maintains a running prefix to be applied\n//!    // during consecutive scan operations.\n//!    struct BlockPrefixCallbackOp\n//!    {\n//!        // Running prefix\n//!        int running_total;\n//!\n//!        // Constructor\n//!        __device__ BlockPrefixCallbackOp(int running_total) : running_total(running_total) {}\n//!\n//!        // Callback operator to be entered by the first warp of threads in the block.\n//!        // Thread-0 is responsible for returning a value for seeding the block-wide scan.\n//!        __device__ int operator()(int block_aggregate)\n//!        {\n//!            int old_prefix = running_total;\n//!            running_total = (block_aggregate > old_prefix) ? block_aggregate : old_prefix;\n//!            return old_prefix;\n//!        }\n//!    };\n//!\n//!    __global__ void ExampleKernel(int *d_data, int num_items, ...)\n//!    {\n//!        // Specialize BlockLoad, BlockStore, and BlockScan for a 1D block of 128 threads, 4 ints per thread\n//!        using BlockLoad = cub::BlockLoad<int*, 128, 4, BLOCK_LOAD_TRANSPOSE>  ;\n//!        using BlockStore = cub::BlockStore<int, 128, 4, BLOCK_STORE_TRANSPOSE> ;\n//!        using BlockScan = cub::BlockScan<int, 128>                            ;\n//!\n//!        // Allocate aliased shared memory for BlockLoad, BlockStore, and BlockScan\n//!        __shared__ union {\n//!            typename BlockLoad::TempStorage     load;\n//!            typename BlockScan::TempStorage     scan;\n//!            typename BlockStore::TempStorage    store;\n//!        } temp_storage;\n//!\n//!        // Initialize running total\n//!        BlockPrefixCallbackOp prefix_op(0);\n//!\n//!        // Have the block iterate over segments of items\n//!        for (int block_offset = 0; block_offset < num_items; block_offset += 128 * 4)\n//!        {\n//!            // Load a segment of consecutive items that are blocked across threads\n//!            int thread_data[4];\n//!            BlockLoad(temp_storage.load).Load(d_data + block_offset, thread_data);\n//!            __syncthreads();\n//!\n//!            // Collectively compute the block-wide inclusive prefix max scan\n//!            BlockScan(temp_storage.scan).InclusiveScan(\n//!                thread_data, thread_data, cuda::maximum<>{}, prefix_op);\n//!            __syncthreads();\n//!\n//!            // Store scanned items to output segment\n//!            BlockStore(temp_storage.store).Store(d_data + block_offset, thread_data);\n//!            __syncthreads();\n//!        }\n//!\n//! Suppose the input ``d_data`` is ``0, -1, 2, -3, 4, -5, ...``.\n//! The corresponding output for the first segment will be\n//! ``0, 0, 2, 2, 4, 4, ..., 510, 510``. The output for the second\n//! segment will be ``512, 512, 514, 514, 516, 516, ..., 1022, 1022``.\n//!\n//! ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "input",
+            "description": [
+              {
+                "text": "Calling thread's input items",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "output",
+            "description": [
+              {
+                "text": "Calling thread's output items (may be aliased to ",
+                "type": "text"
+              },
+              {
+                "code": "input",
+                "type": "code"
+              },
+              {
+                "text": ")",
+                "type": "text"
+              }
+            ],
+            "direction": "out"
+          },
+          {
+            "name": "scan_op",
+            "description": [
+              {
+                "text": "Binary scan functor",
+                "type": "text"
+              }
+            ],
+            "direction": "in"
+          },
+          {
+            "name": "block_prefix_callback_op",
+            "description": [
+              {
+                "text": "embed:rst:leading-asterisk \n//!   *warp*\\ :sub:`0` only call-back functor for specifying a block-wide prefix to be applied to\n//!   the logical input sequence.\n//!   ",
+                "type": "text"
+              },
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "direction": "inout"
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "ITEMS_PER_THREAD",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " The number of consecutive items partitioned onto each thread.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "ScanOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Binary scan functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(const T &a, const T &b)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "BlockPrefixCallbackOp",
+            "description": [
+              {
+                "text": "[inferred]",
+                "type": "bold"
+              },
+              {
+                "text": " Call-back functor type having member ",
+                "type": "text"
+              },
+              {
+                "code": "T operator()(T block_aggregate)",
+                "type": "code"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "PrivateStorage",
+      "path": "cub::BlockScan::PrivateStorage",
+      "signature": "_TempStorage & cub::BlockScan< T, BlockDimX, Algorithm, BlockDimY, BlockDimZ >::PrivateStorage()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "_TempStorage",
+            "refid": "classcub_1_1_block_scan_1ace896f99c82b0fac1f47c1da6626db19",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "_TempStorage &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Internal storage allocator. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "staticMethods": [],
+  "friendFunctions": [],
+  "typedefs": [
+    {
+      "name": "WarpScans",
+      "path": "cub::BlockScan::WarpScans",
+      "typeInfo": {
+        "parts": [
+          "detail::BlockScanWarpScans< T, BlockDimX, BlockDimY, BlockDimZ >"
+        ],
+        "display": "detail::BlockScanWarpScans< T, BlockDimX, BlockDimY, BlockDimZ >"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "Raking",
+      "path": "cub::BlockScan::Raking",
+      "typeInfo": {
+        "parts": [
+          "detail::BlockScanRaking< T, BlockDimX, BlockDimY, BlockDimZ,(",
+          {
+            "text": "SAFE_ALGORITHM",
+            "refid": "classcub_1_1_block_scan_1a94f20dfaf6480ef685789e5082e34d49",
+            "kindref": "member"
+          },
+          "==",
+          {
+            "text": "BLOCK_SCAN_RAKING_MEMOIZE",
+            "refid": "namespacecub_1abec44bba36037c547e7e84906d0d23abadc8dfe7760ac97ddde467ecf1070674f",
+            "kindref": "member"
+          },
+          ")>"
+        ],
+        "display": "detail::BlockScanRaking< T, BlockDimX, BlockDimY, BlockDimZ,(SAFE_ALGORITHM==BLOCK_SCAN_RAKING_MEMOIZE)>"
+      },
+      "templateParams": [],
+      "docstring": null
+    },
+    {
+      "name": "InternalBlockScan",
+      "path": "cub::BlockScan::InternalBlockScan",
+      "typeInfo": {
+        "parts": [
+          "::cuda::std::_If< ",
+          {
+            "text": "SAFE_ALGORITHM",
+            "refid": "classcub_1_1_block_scan_1a94f20dfaf6480ef685789e5082e34d49",
+            "kindref": "member"
+          },
+          "==",
+          {
+            "text": "BLOCK_SCAN_WARP_SCANS",
+            "refid": "namespacecub_1abec44bba36037c547e7e84906d0d23aba7f51e58246eb53f1a97bd1bc8c0f400f",
+            "kindref": "member"
+          },
+          ", ",
+          {
+            "text": "WarpScans",
+            "refid": "classcub_1_1_block_scan_1a5711e977b398ef588269de9eccadab9c",
+            "kindref": "member"
+          },
+          ", ",
+          {
+            "text": "Raking",
+            "refid": "classcub_1_1_block_scan_1ad2b3948b42cd7b7d777d15b0e7dec7d5",
+            "kindref": "member"
+          },
+          " >"
+        ],
+        "display": "::cuda::std::_If< SAFE_ALGORITHM==BLOCK_SCAN_WARP_SCANS, WarpScans, Raking >"
+      },
+      "templateParams": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Define the delegate type for the desired algorithm. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      }
+    },
+    {
+      "name": "_TempStorage",
+      "path": "cub::BlockScan::_TempStorage",
+      "typeInfo": {
+        "parts": [
+          "typename InternalBlockScan::TempStorage"
+        ],
+        "display": "typename InternalBlockScan::TempStorage"
+      },
+      "templateParams": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Shared memory storage layout type for ",
+            "type": "text"
+          },
+          {
+            "text": "BlockScan",
+            "refid": "classcub_1_1_block_scan",
+            "kindref": "compound",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      }
+    }
+  ],
+  "memberVariables": [
+    {
+      "name": "BLOCK_THREADS",
+      "path": "cub::BlockScan::BLOCK_THREADS",
+      "typeInfo": {
+        "parts": [
+          "int"
+        ],
+        "display": "int"
+      },
+      "templateParams": [],
+      "isStatic": true,
+      "isConstexpr": true,
+      "isMutable": false,
+      "docstring": {
+        "summary": [
+          {
+            "text": "The thread block size in threads. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "initializer": null
+    },
+    {
+      "name": "SAFE_ALGORITHM",
+      "path": "cub::BlockScan::SAFE_ALGORITHM",
+      "typeInfo": {
+        "parts": [
+          {
+            "text": "BlockScanAlgorithm",
+            "refid": "namespacecub_1abec44bba36037c547e7e84906d0d23ab",
+            "kindref": "member"
+          }
+        ],
+        "display": "BlockScanAlgorithm"
+      },
+      "templateParams": [],
+      "isStatic": true,
+      "isConstexpr": true,
+      "isMutable": false,
+      "docstring": {
+        "summary": [
+          {
+            "text": "Ensure the template parameterization meets the requirements of the specified algorithm. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "Currently, the BLOCK_SCAN_WARP_SCANS policy cannot be used with thread block sizes not a multiple of the architectural warp size. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "initializer": null
+    },
+    {
+      "name": "temp_storage",
+      "path": "cub::BlockScan::temp_storage",
+      "typeInfo": {
+        "parts": [
+          {
+            "text": "_TempStorage",
+            "refid": "classcub_1_1_block_scan_1ace896f99c82b0fac1f47c1da6626db19",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "_TempStorage &"
+      },
+      "templateParams": [],
+      "isStatic": false,
+      "isConstexpr": false,
+      "isMutable": false,
+      "docstring": {
+        "summary": [
+          {
+            "text": "Shared storage reference. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "initializer": null
+    },
+    {
+      "name": "linear_tid",
+      "path": "cub::BlockScan::linear_tid",
+      "typeInfo": {
+        "parts": [
+          "unsigned int"
+        ],
+        "display": "unsigned int"
+      },
+      "templateParams": [],
+      "isStatic": false,
+      "isConstexpr": false,
+      "isMutable": false,
+      "docstring": {
+        "summary": [
+          {
+            "text": "Linear thread-id. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "initializer": null
+    }
+  ],
+  "enums": [],
+  "innerClasses": [
+    {
+      "name": "TempStorage",
+      "path": "cub::BlockScan::TempStorage",
+      "kind": "struct",
+      "templateParams": [],
+      "baseClasses": [
+        {
+          "name": "Uninitialized< _TempStorage >",
+          "access": "public",
+          "isVirtual": false,
+          "typeInfo": null
+        }
+      ],
+      "derivedClasses": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "The operations exposed by ",
+            "type": "text"
+          },
+          {
+            "text": "BlockScan",
+            "refid": "classcub_1_1_block_scan",
+            "kindref": "compound",
+            "type": "ref"
+          },
+          {
+            "text": " require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the ",
+            "type": "text"
+          },
+          {
+            "code": "__shared__",
+            "type": "code"
+          },
+          {
+            "text": " keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or ",
+            "type": "text"
+          },
+          {
+            "code": "union",
+            "type": "code"
+          },
+          {
+            "text": "'d with other storage allocation types to facilitate memory reuse. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isAbstract": false,
+      "isFinal": false,
+      "methods": [],
+      "staticMethods": [],
+      "friendFunctions": [],
+      "typedefs": [],
+      "memberVariables": [],
+      "enums": [],
+      "innerClasses": [],
+      "relatedMemberRefs": [],
+      "sectionLabels": {},
+      "includeHeader": null
+    }
+  ],
+  "relatedMemberRefs": [],
+  "sectionLabels": {
+    "classcub_1_1_block_scan_1ac743e2d00dbc5e8e30d58435072579f4": "Collective constructors",
+    "classcub_1_1_block_scan_1a3b2afa31709bf024fb9723f7aca3739d": "Collective constructors",
+    "classcub_1_1_block_scan_1a01bf806fa935227e1657026b3a5fe7e6": "Exclusive prefix sum operations",
+    "classcub_1_1_block_scan_1a15c69826f3be0e1177082178ac32c228": "Exclusive prefix sum operations",
+    "classcub_1_1_block_scan_1a9dc1af50f40b5800d92fb63c3552fca6": "Exclusive prefix sum operations",
+    "classcub_1_1_block_scan_1a39825e0f45dd4e5dcdc19b3addd66fa6": "Exclusive prefix sum operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1ace3dd687667af03873acd10f6e3561e4": "Exclusive prefix sum operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1aabb662bb840f7014dad2b143c8357968": "Exclusive prefix sum operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1a20806e3787568ebea79223b2c00b09d2": "Exclusive prefix scan operations",
+    "classcub_1_1_block_scan_1af9e0ca6b3f7760256b8e56bdedea244d": "Exclusive prefix scan operations",
+    "classcub_1_1_block_scan_1a4a18d694b47535dbe70d7d7ca9425f0c": "Exclusive prefix scan operations",
+    "classcub_1_1_block_scan_1afbd1a4ba81a80dcd2216651f4f2c8ba8": "Exclusive prefix scan operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1a617adefea9978ddd17b9d0b82a4c1e8b": "Exclusive prefix scan operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1a0bfa48199edc35ed8125eaaf142b05b4": "Exclusive prefix scan operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1ac1186066f7b0d08015687ec5a7b18e3f": "Inclusive prefix sum operations",
+    "classcub_1_1_block_scan_1a1fa90be68fdef67533556dbdbca0e591": "Inclusive prefix sum operations",
+    "classcub_1_1_block_scan_1a8c8e5a63a4bacb4eb1e7c54ac47cdb13": "Inclusive prefix sum operations",
+    "classcub_1_1_block_scan_1a89696dceeb0608a6f7b7171e31dd3bcc": "Inclusive prefix sum operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1a5515799fd5881c5e860b96156af24a4e": "Inclusive prefix sum operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1aa7a159659c26b8bf79799f8d3aae8cfb": "Inclusive prefix sum operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1a21e49625847b3b52c59668bbf00cc913": "Inclusive prefix scan operations",
+    "classcub_1_1_block_scan_1a5fb943b8a3677c9df2ccf2dff2d2ccb3": "Inclusive prefix scan operations",
+    "classcub_1_1_block_scan_1a60ad41fc53ed0d0187a8890a51149aeb": "Inclusive prefix scan operations",
+    "classcub_1_1_block_scan_1af8c67aacd4f0ac564a6bee10cbfd065a": "Inclusive prefix scan operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1afebc426fa59173cb742459a26c4b8390": "Inclusive prefix scan operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1a81861faf81586f45aaa17f3c4eeb9855": "Inclusive prefix scan operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1a565aa8cc2381e9b9da35f095d779c384": "Inclusive prefix scan operations (multiple data per thread)",
+    "classcub_1_1_block_scan_1a201905c5957baf1b596e287acce212bc": "Inclusive prefix scan operations (multiple data per thread)"
+  },
+  "includeHeader": null
+}

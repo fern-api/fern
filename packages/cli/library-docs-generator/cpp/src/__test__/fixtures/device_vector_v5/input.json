@@ -1,0 +1,6807 @@
+{
+  "name": "device_vector",
+  "path": "thrust::device_vector",
+  "kind": "class",
+  "templateParams": [
+    {
+      "type": "typename T",
+      "isVariadic": false,
+      "name": null,
+      "defaultValue": null
+    },
+    {
+      "type": "typename Alloc",
+      "defaultValue": {
+        "parts": [
+          {
+            "text": "thrust::device_allocator",
+            "refid": "classthrust_1_1device__allocator",
+            "kindref": "compound"
+          },
+          "<T>"
+        ],
+        "display": "thrust::device_allocator<T>"
+      },
+      "isVariadic": false,
+      "name": null
+    }
+  ],
+  "baseClasses": [
+    {
+      "name": "detail::vector_base< T, thrust::device_allocator< T > >",
+      "access": "public",
+      "isVirtual": false,
+      "typeInfo": null
+    }
+  ],
+  "derivedClasses": [],
+  "docstring": {
+    "summary": [
+      {
+        "text": "A ",
+        "type": "text"
+      },
+      {
+        "code": "device_vector",
+        "refid": "classthrust_1_1device__vector",
+        "kindref": "compound",
+        "type": "codeRef"
+      },
+      {
+        "text": " is a container that supports random access to elements, constant time removal of elements at the end, and linear time insertion and removal of elements at the beginning or in the middle. ",
+        "type": "text"
+      }
+    ],
+    "description": [
+      {
+        "segments": [
+          {
+            "text": "The number of elements in a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " may vary dynamically; memory management is automatic. The memory associated with a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " resides in the memory accessible to devices.",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "segments": [
+          {
+            "text": "\n",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      },
+      {
+        "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+        "format": "rst",
+        "type": "verbatim"
+      },
+      {
+        "segments": [
+          {
+            "text": " ",
+            "type": "text"
+          }
+        ],
+        "type": "paragraph"
+      }
+    ],
+    "params": [],
+    "templateParamsDoc": [],
+    "raises": [],
+    "examples": [],
+    "notes": [],
+    "warnings": [],
+    "remarks": [],
+    "preconditions": [],
+    "postconditions": [],
+    "seeAlso": [
+      [
+        {
+          "text": "https://en.cppreference.com/w/cpp/container/vector",
+          "url": "https://en.cppreference.com/w/cpp/container/vector",
+          "type": "link"
+        },
+        {
+          "text": " ",
+          "type": "text"
+        }
+      ],
+      [
+        {
+          "text": "device_allocator",
+          "refid": "classthrust_1_1device__allocator",
+          "kindref": "compound",
+          "type": "ref"
+        },
+        {
+          "text": " ",
+          "type": "text"
+        }
+      ],
+      [
+        {
+          "text": "host_vector",
+          "refid": "classthrust_1_1host__vector",
+          "kindref": "compound",
+          "type": "ref"
+        },
+        {
+          "text": " ",
+          "type": "text"
+        }
+      ],
+      [
+        {
+          "text": "universal_vector",
+          "refid": "group__containers_1gad5dde8286b70c6621e86161bcbd4a396",
+          "kindref": "member",
+          "type": "ref"
+        }
+      ]
+    ],
+    "returns": null,
+    "deprecated": null
+  },
+  "isAbstract": false,
+  "isFinal": false,
+  "includeHeader": "device_vector.h",
+  "methods": [
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector()",
+      "templateParams": [],
+      "parameters": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor creates an empty ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(const Alloc &alloc)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "alloc",
+          "typeInfo": {
+            "parts": [
+              "const Alloc &"
+            ],
+            "display": "const Alloc &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor creates an empty ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "alloc",
+            "description": [
+              {
+                "text": "The allocator to use by this ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "~device_vector",
+      "path": "thrust::device_vector::~device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::~device_vector()",
+      "templateParams": [],
+      "parameters": [],
+      "docstring": {
+        "summary": [
+          {
+            "text": "The destructor erases the elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(size_type n)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor creates a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with the given size. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The number of elements to initially create. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(size_type n, default_init_t)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "default_init_t"
+            ],
+            "display": "default_init_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor creates a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with the given size, performing only default-initialization instead of value-initialization. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The number of elements to initially create. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(size_type n, no_init_t)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "no_init_t"
+            ],
+            "display": "no_init_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor creates a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with the given size, without initializing elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "It mandates that the element type is trivially default-constructible. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The number of elements to initially create. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(size_type n, const Alloc &alloc)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "alloc",
+          "typeInfo": {
+            "parts": [
+              "const Alloc &"
+            ],
+            "display": "const Alloc &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor creates a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with the given size. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The number of elements to initially create. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "alloc",
+            "description": [
+              {
+                "text": "The allocator to use by this ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(size_type n, const value_type &value)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "value",
+          "typeInfo": {
+            "parts": [
+              "const value_type &"
+            ],
+            "display": "const value_type &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor creates a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with copies of an exemplar element. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The number of elements to initially create. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "value",
+            "description": [
+              {
+                "text": "An element to copy. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(size_type n, const value_type &value, const Alloc &alloc)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "value",
+          "typeInfo": {
+            "parts": [
+              "const value_type &"
+            ],
+            "display": "const value_type &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "alloc",
+          "typeInfo": {
+            "parts": [
+              "const Alloc &"
+            ],
+            "display": "const Alloc &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor creates a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with copies of an exemplar element. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The number of elements to initially create. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "value",
+            "description": [
+              {
+                "text": "An element to copy. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "alloc",
+            "description": [
+              {
+                "text": "The allocator to use by this ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(const device_vector &v)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const device_vector &"
+            ],
+            "display": "const device_vector &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Copy constructor copies from an exemplar ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " to copy. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(const device_vector &v, const Alloc &alloc)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const device_vector &"
+            ],
+            "display": "const device_vector &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "alloc",
+          "typeInfo": {
+            "parts": [
+              "const Alloc &"
+            ],
+            "display": "const Alloc &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Copy constructor copies from an exemplar ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " to copy. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "alloc",
+            "description": [
+              {
+                "text": "The allocator to use by this ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(device_vector &&v)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "device_vector &&"
+            ],
+            "display": "device_vector &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Move constructor moves from another ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": " to move. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(device_vector &&v, const Alloc &alloc)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "device_vector &&"
+            ],
+            "display": "device_vector &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "alloc",
+          "typeInfo": {
+            "parts": [
+              "const Alloc &"
+            ],
+            "display": "const Alloc &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Move constructor moves from another ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": " to move. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "alloc",
+            "description": [
+              {
+                "text": "The allocator to use by this ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "thrust::device_vector::operator=",
+      "signature": "device_vector & thrust::device_vector< T, Alloc >::operator=(const device_vector &v)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "const device_vector &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "device_vector",
+            "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "device_vector &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Copy assign operator copies another ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with the same type. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " to copy. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "thrust::device_vector::operator=",
+      "signature": "device_vector & thrust::device_vector< T, Alloc >::operator=(device_vector &&v)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+                "kindref": "member"
+              },
+              " &&"
+            ],
+            "display": "device_vector &&"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "device_vector",
+            "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "device_vector &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Move assign operator moves from another ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": " to move. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(const device_vector< OtherT, OtherAlloc > &v)",
+      "templateParams": [
+        {
+          "type": "typename OtherT",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename OtherAlloc",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const device_vector< OtherT, OtherAlloc > &"
+            ],
+            "display": "const device_vector< OtherT, OtherAlloc > &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Copy constructor copies from an exemplar ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with different type. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": true,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "thrust::device_vector::operator=",
+      "signature": "device_vector & thrust::device_vector< T, Alloc >::operator=(const device_vector< OtherT, OtherAlloc > &v)",
+      "templateParams": [
+        {
+          "type": "typename OtherT",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename OtherAlloc",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const ",
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+                "kindref": "member"
+              },
+              "< OtherT, OtherAlloc > &"
+            ],
+            "display": "const device_vector< OtherT, OtherAlloc > &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "device_vector",
+            "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "device_vector &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Assign operator copies from an exemplar ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " with different type. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(const std::vector< OtherT, OtherAlloc > &v)",
+      "templateParams": [
+        {
+          "type": "typename OtherT",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename OtherAlloc",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const std::vector< OtherT, OtherAlloc > &"
+            ],
+            "display": "const std::vector< OtherT, OtherAlloc > &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Copy constructor copies from an exemplar ",
+            "type": "text"
+          },
+          {
+            "code": "std::vector",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "std::vector",
+                "type": "code"
+              },
+              {
+                "text": " to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "thrust::device_vector::operator=",
+      "signature": "device_vector & thrust::device_vector< T, Alloc >::operator=(const std::vector< OtherT, OtherAlloc > &v)",
+      "templateParams": [
+        {
+          "type": "typename OtherT",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename OtherAlloc",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const std::vector< OtherT, OtherAlloc > &"
+            ],
+            "display": "const std::vector< OtherT, OtherAlloc > &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "device_vector",
+            "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "device_vector &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Assign operator copies from an exemplar ",
+            "type": "text"
+          },
+          {
+            "code": "std::vector",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "std::vector",
+                "type": "code"
+              },
+              {
+                "text": " to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(const detail::vector_base< OtherT, OtherAlloc > &v)",
+      "templateParams": [
+        {
+          "type": "typename OtherT",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename OtherAlloc",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const detail::vector_base< OtherT, OtherAlloc > &"
+            ],
+            "display": "const detail::vector_base< OtherT, OtherAlloc > &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "Copy construct from a ",
+            "type": "text"
+          },
+          {
+            "code": "vector_base",
+            "type": "code"
+          },
+          {
+            "text": " whose element type is convertible to ",
+            "type": "text"
+          },
+          {
+            "code": "T",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "vector_base",
+                "type": "code"
+              },
+              {
+                "text": " to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "thrust::device_vector::operator=",
+      "signature": "device_vector & thrust::device_vector< T, Alloc >::operator=(const detail::vector_base< OtherT, OtherAlloc > &v)",
+      "templateParams": [
+        {
+          "type": "typename OtherT",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        },
+        {
+          "type": "typename OtherAlloc",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              "const detail::vector_base< OtherT, OtherAlloc > &"
+            ],
+            "display": "const detail::vector_base< OtherT, OtherAlloc > &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "device_vector",
+            "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "device_vector &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Assign a ",
+            "type": "text"
+          },
+          {
+            "code": "vector_base",
+            "type": "code"
+          },
+          {
+            "text": " whose element type is convertible to ",
+            "type": "text"
+          },
+          {
+            "code": "T",
+            "type": "code"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The ",
+                "type": "text"
+              },
+              {
+                "code": "vector_base",
+                "type": "code"
+              },
+              {
+                "text": " to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(::cuda::std::initializer_list< T > il)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "il",
+          "typeInfo": {
+            "parts": [
+              "::cuda::std::initializer_list< T >"
+            ],
+            "display": "::cuda::std::initializer_list< T >"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor builds a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " from an intializer_list. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "il",
+            "description": [
+              {
+                "text": "The intializer_list. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(::cuda::std::initializer_list< T > il, const Alloc &alloc)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "il",
+          "typeInfo": {
+            "parts": [
+              "::cuda::std::initializer_list< T >"
+            ],
+            "display": "::cuda::std::initializer_list< T >"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "alloc",
+          "typeInfo": {
+            "parts": [
+              "const Alloc &"
+            ],
+            "display": "const Alloc &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor builds a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " from an intializer_list. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "il",
+            "description": [
+              {
+                "text": "The intializer_list. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "alloc",
+            "description": [
+              {
+                "text": "The allocator to use by this ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator=",
+      "path": "thrust::device_vector::operator=",
+      "signature": "device_vector & thrust::device_vector< T, Alloc >::operator=(::cuda::std::initializer_list< T > il)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "il",
+          "typeInfo": {
+            "parts": [
+              "::cuda::std::initializer_list< T >"
+            ],
+            "display": "::cuda::std::initializer_list< T >"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          {
+            "text": "device_vector",
+            "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+            "kindref": "member"
+          },
+          " &"
+        ],
+        "display": "device_vector &"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Assign an ",
+            "type": "text"
+          },
+          {
+            "code": "intializer_list",
+            "type": "code"
+          },
+          {
+            "text": " with a matching element type. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "il",
+            "description": [
+              {
+                "text": "The intializer_list. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(InputIterator first, InputIterator last)",
+      "templateParams": [
+        {
+          "type": "typename InputIterator",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "first",
+          "typeInfo": {
+            "parts": [
+              "InputIterator"
+            ],
+            "display": "InputIterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "last",
+          "typeInfo": {
+            "parts": [
+              "InputIterator"
+            ],
+            "display": "InputIterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor builds a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " from a range. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "first",
+            "description": [
+              {
+                "text": "The beginning of the range. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "last",
+            "description": [
+              {
+                "text": "The end of the range.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "device_vector",
+      "path": "thrust::device_vector::device_vector",
+      "signature": "thrust::device_vector< T, Alloc >::device_vector(InputIterator first, InputIterator last, const Alloc &alloc)",
+      "templateParams": [
+        {
+          "type": "typename InputIterator",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "first",
+          "typeInfo": {
+            "parts": [
+              "InputIterator"
+            ],
+            "display": "InputIterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "last",
+          "typeInfo": {
+            "parts": [
+              "InputIterator"
+            ],
+            "display": "InputIterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "alloc",
+          "typeInfo": {
+            "parts": [
+              "const Alloc &"
+            ],
+            "display": "const Alloc &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "docstring": {
+        "summary": [
+          {
+            "text": "This constructor builds a ",
+            "type": "text"
+          },
+          {
+            "code": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "codeRef"
+          },
+          {
+            "text": " from a range. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "first",
+            "description": [
+              {
+                "text": "The beginning of the range. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "last",
+            "description": [
+              {
+                "text": "The end of the range. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "alloc",
+            "description": [
+              {
+                "text": "The allocator to use by this ",
+                "type": "text"
+              },
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "ref"
+              },
+              {
+                "text": ".",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "returnType": null,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "resize",
+      "path": "thrust::device_vector::resize",
+      "signature": "void thrust::device_vector< T, Alloc >::resize(size_type new_size, const value_type &x=value_type())",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "new_size",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "x",
+          "typeInfo": {
+            "parts": [
+              "const value_type &"
+            ],
+            "display": "const value_type &"
+          },
+          "defaultValue": {
+            "parts": [
+              "value_type()"
+            ],
+            "display": "value_type()"
+          },
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Resizes this vector to the specified number of elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\nThis method will resize this vector to the specified number of elements. If the number is smaller than this vector's current size this vector is truncated, otherwise this vector is extended and new elements are populated with given data.",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "new_size",
+            "description": [
+              {
+                "text": "Number of elements this vector should contain. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "x",
+            "description": [
+              {
+                "text": "Data with which new elements should be populated. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "std::length_error",
+            "description": [
+              {
+                "text": "If n exceeds ",
+                "type": "text"
+              },
+              {
+                "text": "max_size()",
+                "refid": "classthrust_1_1device__vector_1ab941097c8a885638e53c32e2199f372d",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ".",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "resize",
+      "path": "thrust::device_vector::resize",
+      "signature": "void thrust::device_vector< T, Alloc >::resize(size_type new_size, default_init_t)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "new_size",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "default_init_t"
+            ],
+            "display": "default_init_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Resizes this vector to the specified number of elements, performing default-initialization instead of value-initialization. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "new_size",
+            "description": [
+              {
+                "text": "Number of elements this vector should contain. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "std::length_error",
+            "description": [
+              {
+                "text": "If n exceeds ",
+                "type": "text"
+              },
+              {
+                "text": "max_size()",
+                "refid": "classthrust_1_1device__vector_1ab941097c8a885638e53c32e2199f372d",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "resize",
+      "path": "thrust::device_vector::resize",
+      "signature": "void thrust::device_vector< T, Alloc >::resize(size_type new_size, no_init_t)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "new_size",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "",
+          "typeInfo": {
+            "parts": [
+              "no_init_t"
+            ],
+            "display": "no_init_t"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Resizes this vector_base to the specified number of elements, without initializing elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "It mandates that the element type is trivially default-constructible. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "new_size",
+            "description": [
+              {
+                "text": "Number of elements this vector_base should contain. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "std::length_error",
+            "description": [
+              {
+                "text": "If n exceeds ",
+                "type": "text"
+              },
+              {
+                "text": "max_size()",
+                "refid": "classthrust_1_1device__vector_1ab941097c8a885638e53c32e2199f372d",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "size",
+      "path": "thrust::device_vector::size",
+      "signature": "size_type thrust::device_vector< T, Alloc >::size() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "size_type"
+        ],
+        "display": "size_type"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the number of elements in this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "max_size",
+      "path": "thrust::device_vector::max_size",
+      "signature": "size_type thrust::device_vector< T, Alloc >::max_size() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "size_type"
+        ],
+        "display": "size_type"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " of the largest possible vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "The largest possible return value of ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "reserve",
+      "path": "thrust::device_vector::reserve",
+      "signature": "void thrust::device_vector< T, Alloc >::reserve(size_type n)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "If n is less than or equal to ",
+            "type": "text"
+          },
+          {
+            "text": "capacity()",
+            "refid": "classthrust_1_1device__vector_1a2efaad3108bc5f3331257025fd47fbbc",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ", this call has no effect. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "Otherwise, this method is a request for allocation of additional memory. If the request is successful, then ",
+                "type": "text"
+              },
+              {
+                "text": "capacity()",
+                "refid": "classthrust_1_1device__vector_1a2efaad3108bc5f3331257025fd47fbbc",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": " is greater than or equal to n; otherwise, ",
+                "type": "text"
+              },
+              {
+                "text": "capacity()",
+                "refid": "classthrust_1_1device__vector_1a2efaad3108bc5f3331257025fd47fbbc",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": " is unchanged. In either case, ",
+                "type": "text"
+              },
+              {
+                "text": "size()",
+                "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": " is unchanged. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [
+          {
+            "exception": "std::length_error",
+            "description": [
+              {
+                "text": "If n exceeds ",
+                "type": "text"
+              },
+              {
+                "text": "max_size()",
+                "refid": "classthrust_1_1device__vector_1ab941097c8a885638e53c32e2199f372d",
+                "kindref": "member",
+                "type": "ref"
+              },
+              {
+                "text": ".",
+                "type": "text"
+              }
+            ]
+          }
+        ],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "capacity",
+      "path": "thrust::device_vector::capacity",
+      "signature": "size_type thrust::device_vector< T, Alloc >::capacity() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "size_type"
+        ],
+        "display": "size_type"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Returns the number of elements which have been reserved in this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "shrink_to_fit",
+      "path": "thrust::device_vector::shrink_to_fit",
+      "signature": "void thrust::device_vector< T, Alloc >::shrink_to_fit()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method shrinks the capacity of this vector to exactly fit its elements. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator[]",
+      "path": "thrust::device_vector::operator[]",
+      "signature": "reference thrust::device_vector< T, Alloc >::operator[](size_type n)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "reference"
+        ],
+        "display": "reference"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Subscript access to the data contained in this vector_dev. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\nThis operator allows for easy, array-style, data access. Note that data access with this operator is unchecked and out_of_range lookups are not defined. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The index of the element for which data should be accessed. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "Read/write reference to data.",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "operator[]",
+      "path": "thrust::device_vector::operator[]",
+      "signature": "const_reference thrust::device_vector< T, Alloc >::operator[](size_type n) const",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "const_reference"
+        ],
+        "display": "const_reference"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Subscript read access to the data contained in this vector_dev. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\nThis operator allows for easy, array-style, data access. Note that data access with this operator is unchecked and out_of_range lookups are not defined. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The index of the element for which data should be accessed. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "Read reference to data.",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "begin",
+      "path": "thrust::device_vector::begin",
+      "signature": "iterator thrust::device_vector< T, Alloc >::begin()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "iterator"
+        ],
+        "display": "iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns an iterator pointing to the beginning of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "mStart ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "begin",
+      "path": "thrust::device_vector::begin",
+      "signature": "const_iterator thrust::device_vector< T, Alloc >::begin() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_iterator"
+        ],
+        "display": "const_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_iterator pointing to the beginning of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "mStart ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "cbegin",
+      "path": "thrust::device_vector::cbegin",
+      "signature": "const_iterator thrust::device_vector< T, Alloc >::cbegin() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_iterator"
+        ],
+        "display": "const_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_iterator pointing to the beginning of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "mStart ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "rbegin",
+      "path": "thrust::device_vector::rbegin",
+      "signature": "reverse_iterator thrust::device_vector< T, Alloc >::rbegin()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "reverse_iterator"
+        ],
+        "display": "reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a reverse_iterator pointing to the beginning of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A reverse_iterator pointing to the beginning of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "rbegin",
+      "path": "thrust::device_vector::rbegin",
+      "signature": "const_reverse_iterator thrust::device_vector< T, Alloc >::rbegin() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_reverse_iterator"
+        ],
+        "display": "const_reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_reverse_iterator pointing to the beginning of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A const_reverse_iterator pointing to the beginning of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "crbegin",
+      "path": "thrust::device_vector::crbegin",
+      "signature": "const_reverse_iterator thrust::device_vector< T, Alloc >::crbegin() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_reverse_iterator"
+        ],
+        "display": "const_reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_reverse_iterator pointing to the beginning of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A const_reverse_iterator pointing to the beginning of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "end",
+      "path": "thrust::device_vector::end",
+      "signature": "iterator thrust::device_vector< T, Alloc >::end()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "iterator"
+        ],
+        "display": "iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns an iterator pointing to one element past the last of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "begin()",
+            "refid": "classthrust_1_1device__vector_1a2a5f6eb657d3040bfc4651378a6ba3ce",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " + ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "end",
+      "path": "thrust::device_vector::end",
+      "signature": "const_iterator thrust::device_vector< T, Alloc >::end() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_iterator"
+        ],
+        "display": "const_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_iterator pointing to one element past the last of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "begin()",
+            "refid": "classthrust_1_1device__vector_1a2a5f6eb657d3040bfc4651378a6ba3ce",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " + ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "cend",
+      "path": "thrust::device_vector::cend",
+      "signature": "const_iterator thrust::device_vector< T, Alloc >::cend() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_iterator"
+        ],
+        "display": "const_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_iterator pointing to one element past the last of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "begin()",
+            "refid": "classthrust_1_1device__vector_1a2a5f6eb657d3040bfc4651378a6ba3ce",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " + ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "rend",
+      "path": "thrust::device_vector::rend",
+      "signature": "reverse_iterator thrust::device_vector< T, Alloc >::rend()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "reverse_iterator"
+        ],
+        "display": "reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a reverse_iterator pointing to one element past the last of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "rbegin()",
+            "refid": "classthrust_1_1device__vector_1a7ba5e5b715b151e75cca35943f9da04e",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " + ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "rend",
+      "path": "thrust::device_vector::rend",
+      "signature": "const_reverse_iterator thrust::device_vector< T, Alloc >::rend() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_reverse_iterator"
+        ],
+        "display": "const_reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_reverse_iterator pointing to one element past the last of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "rbegin()",
+            "refid": "classthrust_1_1device__vector_1a7ba5e5b715b151e75cca35943f9da04e",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " + ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "crend",
+      "path": "thrust::device_vector::crend",
+      "signature": "const_reverse_iterator thrust::device_vector< T, Alloc >::crend() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_reverse_iterator"
+        ],
+        "display": "const_reverse_iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_reverse_iterator pointing to one element past the last of this vector's reversed sequence. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "rbegin()",
+            "refid": "classthrust_1_1device__vector_1a7ba5e5b715b151e75cca35943f9da04e",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " + ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": ". ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "front",
+      "path": "thrust::device_vector::front",
+      "signature": "const_reference thrust::device_vector< T, Alloc >::front() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_reference"
+        ],
+        "display": "const_reference"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_reference referring to the first element of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "The first element of this vector. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "front",
+      "path": "thrust::device_vector::front",
+      "signature": "reference thrust::device_vector< T, Alloc >::front()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "reference"
+        ],
+        "display": "reference"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a reference pointing to the first element of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "The first element of this vector. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "back",
+      "path": "thrust::device_vector::back",
+      "signature": "const_reference thrust::device_vector< T, Alloc >::back() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_reference"
+        ],
+        "display": "const_reference"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const reference pointing to the last element of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "The last element of this vector. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "back",
+      "path": "thrust::device_vector::back",
+      "signature": "reference thrust::device_vector< T, Alloc >::back()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "reference"
+        ],
+        "display": "reference"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a reference referring to the last element of this vector_dev. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "The last element of this vector. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "data",
+      "path": "thrust::device_vector::data",
+      "signature": "pointer thrust::device_vector< T, Alloc >::data()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          {
+            "text": "pointer",
+            "refid": "classthrust_1_1pointer",
+            "kindref": "compound"
+          }
+        ],
+        "display": "pointer"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a pointer to this vector's first element. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A pointer to the first element of this vector. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "data",
+      "path": "thrust::device_vector::data",
+      "signature": "const_pointer thrust::device_vector< T, Alloc >::data() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "const_pointer"
+        ],
+        "display": "const_pointer"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a const_pointer to this vector's first element. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "a const_pointer to the first element of this vector.",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "clear",
+      "path": "thrust::device_vector::clear",
+      "signature": "void thrust::device_vector< T, Alloc >::clear()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method resizes this vector to 0. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "empty",
+      "path": "thrust::device_vector::empty",
+      "signature": "bool thrust::device_vector< T, Alloc >::empty() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "bool"
+        ],
+        "display": "bool"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns true iff ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " == 0. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "true if ",
+            "type": "text"
+          },
+          {
+            "text": "size()",
+            "refid": "classthrust_1_1device__vector_1a23d5746465a7a780ae65d04bac1aad5c",
+            "kindref": "member",
+            "type": "ref"
+          },
+          {
+            "text": " == 0; false, otherwise.",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "push_back",
+      "path": "thrust::device_vector::push_back",
+      "signature": "void thrust::device_vector< T, Alloc >::push_back(const value_type &x)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "x",
+          "typeInfo": {
+            "parts": [
+              "const value_type &"
+            ],
+            "display": "const value_type &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method appends the given element to the end of this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "x",
+            "description": [
+              {
+                "text": "The element to append.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "pop_back",
+      "path": "thrust::device_vector::pop_back",
+      "signature": "void thrust::device_vector< T, Alloc >::pop_back()",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method erases the last element of this vector, invalidating all iterators and references to it. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "swap",
+      "path": "thrust::device_vector::swap",
+      "signature": "void thrust::device_vector< T, Alloc >::swap(device_vector &v)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "v",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "device_vector &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method swaps the contents of this ",
+            "type": "text"
+          },
+          {
+            "text": "device_vector",
+            "refid": "classthrust_1_1device__vector",
+            "kindref": "compound",
+            "type": "ref"
+          },
+          {
+            "text": " with another vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "v",
+            "description": [
+              {
+                "text": "The vector with which to swap.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "erase",
+      "path": "thrust::device_vector::erase",
+      "signature": "iterator thrust::device_vector< T, Alloc >::erase(iterator pos)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "pos",
+          "typeInfo": {
+            "parts": [
+              "iterator"
+            ],
+            "display": "iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "iterator"
+        ],
+        "display": "iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method removes the element at position pos. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "pos",
+            "description": [
+              {
+                "text": "The position of the element of interest. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "An iterator pointing to the new location of the element that followed the element at position pos. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "erase",
+      "path": "thrust::device_vector::erase",
+      "signature": "iterator thrust::device_vector< T, Alloc >::erase(iterator first, iterator last)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "first",
+          "typeInfo": {
+            "parts": [
+              "iterator"
+            ],
+            "display": "iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "last",
+          "typeInfo": {
+            "parts": [
+              "iterator"
+            ],
+            "display": "iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "iterator"
+        ],
+        "display": "iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method removes the range of elements [first,last) from this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "first",
+            "description": [
+              {
+                "text": "The beginning of the range of elements to remove. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "last",
+            "description": [
+              {
+                "text": "The end of the range of elements to remove. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "An iterator pointing to the new location of the element that followed the last element in the sequence [first,last). ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "insert",
+      "path": "thrust::device_vector::insert",
+      "signature": "iterator thrust::device_vector< T, Alloc >::insert(iterator position, const T &x)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "position",
+          "typeInfo": {
+            "parts": [
+              "iterator"
+            ],
+            "display": "iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "x",
+          "typeInfo": {
+            "parts": [
+              "const T &"
+            ],
+            "display": "const T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "iterator"
+        ],
+        "display": "iterator"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method inserts a single copy of a given exemplar value at the specified position in this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "position",
+            "description": [
+              {
+                "text": "The insertion position. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "x",
+            "description": [
+              {
+                "text": "The exemplar element to copy & insert. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "An iterator pointing to the newly inserted element. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "insert",
+      "path": "thrust::device_vector::insert",
+      "signature": "void thrust::device_vector< T, Alloc >::insert(iterator position, size_type n, const T &x)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "position",
+          "typeInfo": {
+            "parts": [
+              "iterator"
+            ],
+            "display": "iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "x",
+          "typeInfo": {
+            "parts": [
+              "const T &"
+            ],
+            "display": "const T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method inserts a copy of an exemplar value to a range at the specified position in this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "position",
+            "description": [
+              {
+                "text": "The insertion position ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The number of insertions to perform. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "x",
+            "description": [
+              {
+                "text": "The value to replicate and insert.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "insert",
+      "path": "thrust::device_vector::insert",
+      "signature": "void thrust::device_vector< T, Alloc >::insert(iterator position, InputIterator first, InputIterator last)",
+      "templateParams": [
+        {
+          "type": "typename InputIterator",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "position",
+          "typeInfo": {
+            "parts": [
+              "iterator"
+            ],
+            "display": "iterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "first",
+          "typeInfo": {
+            "parts": [
+              "InputIterator"
+            ],
+            "display": "InputIterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "last",
+          "typeInfo": {
+            "parts": [
+              "InputIterator"
+            ],
+            "display": "InputIterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method inserts a copy of an input range at the specified position in this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "position",
+            "description": [
+              {
+                "text": "The insertion position. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "first",
+            "description": [
+              {
+                "text": "The beginning of the range to copy. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "last",
+            "description": [
+              {
+                "text": "The end of the range to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "InputIterator",
+            "description": [
+              {
+                "text": "is a model of <a href=\"https://en.cppreference.com/w/cpp/iterator/input_iterator>Input\n  Iterator</a>, and \\p InputIterator's \\c value_type is a model of <a\n  href=\"",
+                "type": "text"
+              },
+              {
+                "text": "https://en.cppreference.com/w/cpp/named_req/CopyAssignable",
+                "url": "https://en.cppreference.com/w/cpp/named_req/CopyAssignable",
+                "type": "link"
+              },
+              {
+                "text": "\">Assignable.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "assign",
+      "path": "thrust::device_vector::assign",
+      "signature": "void thrust::device_vector< T, Alloc >::assign(size_type n, const T &x)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "n",
+          "typeInfo": {
+            "parts": [
+              "size_type"
+            ],
+            "display": "size_type"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "x",
+          "typeInfo": {
+            "parts": [
+              "const T &"
+            ],
+            "display": "const T &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This version of ",
+            "type": "text"
+          },
+          {
+            "code": "assign",
+            "type": "code"
+          },
+          {
+            "text": " replicates a given exemplar ",
+            "type": "text"
+          },
+          {
+            "code": "n",
+            "type": "code"
+          },
+          {
+            "text": " times into this vector. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "n",
+            "description": [
+              {
+                "text": "The number of times to copy ",
+                "type": "text"
+              },
+              {
+                "code": "x",
+                "type": "code"
+              },
+              {
+                "text": ". ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "x",
+            "description": [
+              {
+                "text": "The exemplar element to replicate.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "assign",
+      "path": "thrust::device_vector::assign",
+      "signature": "void thrust::device_vector< T, Alloc >::assign(InputIterator first, InputIterator last)",
+      "templateParams": [
+        {
+          "type": "typename InputIterator",
+          "isVariadic": false,
+          "name": null,
+          "defaultValue": null
+        }
+      ],
+      "parameters": [
+        {
+          "name": "first",
+          "typeInfo": {
+            "parts": [
+              "InputIterator"
+            ],
+            "display": "InputIterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "last",
+          "typeInfo": {
+            "parts": [
+              "InputIterator"
+            ],
+            "display": "InputIterator"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This version of ",
+            "type": "text"
+          },
+          {
+            "code": "assign",
+            "type": "code"
+          },
+          {
+            "text": " makes this vector a copy of a given input range. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          },
+          {
+            "content": "embed:rst:leading-asterisk\n*     .. versionadded:: 2.2.0\n*  ",
+            "format": "rst",
+            "type": "verbatim"
+          },
+          {
+            "segments": [
+              {
+                "text": " ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [
+          {
+            "name": "first",
+            "description": [
+              {
+                "text": "The beginning of the range to copy. ",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          },
+          {
+            "name": "last",
+            "description": [
+              {
+                "text": "The end of the range to copy.",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "templateParamsDoc": [
+          {
+            "name": "InputIterator",
+            "description": [
+              {
+                "text": "is a model of ",
+                "type": "text"
+              },
+              {
+                "text": "Input Iterator",
+                "url": "https://en.cppreference.com/w/cpp/named_req/InputIterator",
+                "type": "link"
+              },
+              {
+                "text": ".",
+                "type": "text"
+              }
+            ],
+            "direction": null
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    },
+    {
+      "name": "get_allocator",
+      "path": "thrust::device_vector::get_allocator",
+      "signature": "allocator_type thrust::device_vector< T, Alloc >::get_allocator() const",
+      "templateParams": [],
+      "parameters": [],
+      "returnType": {
+        "parts": [
+          "allocator_type"
+        ],
+        "display": "allocator_type"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "This method returns a copy of this vector's allocator. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "text": "\n",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "returns": [
+          {
+            "text": "A copy of the allocator used by this vector. ",
+            "type": "text"
+          }
+        ],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": true,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": false,
+      "isExplicit": false,
+      "isNoexcept": false,
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "noexceptExpression": null,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "staticMethods": [],
+  "friendFunctions": [
+    {
+      "name": "swap",
+      "path": "thrust::device_vector::swap",
+      "signature": "void swap(device_vector &a, device_vector &b)",
+      "templateParams": [],
+      "parameters": [
+        {
+          "name": "a",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "device_vector &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        },
+        {
+          "name": "b",
+          "typeInfo": {
+            "parts": [
+              {
+                "text": "device_vector",
+                "refid": "classthrust_1_1device__vector_1a2e54b3b336dbb0439806d5e7dea2bbfc",
+                "kindref": "member"
+              },
+              " &"
+            ],
+            "display": "device_vector &"
+          },
+          "defaultValue": null,
+          "arraySuffix": null
+        }
+      ],
+      "returnType": {
+        "parts": [
+          "void"
+        ],
+        "display": "void"
+      },
+      "docstring": {
+        "summary": [
+          {
+            "text": "Exchanges the values of two vectors. ",
+            "type": "text"
+          }
+        ],
+        "description": [
+          {
+            "segments": [
+              {
+                "code": "x",
+                "type": "code"
+              },
+              {
+                "text": " The first ",
+                "type": "text"
+              },
+              {
+                "code": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " of interest. ",
+                "type": "text"
+              },
+              {
+                "code": "y",
+                "type": "code"
+              },
+              {
+                "text": " The second ",
+                "type": "text"
+              },
+              {
+                "code": "device_vector",
+                "refid": "classthrust_1_1device__vector",
+                "kindref": "compound",
+                "type": "codeRef"
+              },
+              {
+                "text": " of interest. ",
+                "type": "text"
+              }
+            ],
+            "type": "paragraph"
+          }
+        ],
+        "params": [],
+        "templateParamsDoc": [],
+        "raises": [],
+        "examples": [],
+        "notes": [],
+        "warnings": [],
+        "remarks": [],
+        "preconditions": [],
+        "postconditions": [],
+        "seeAlso": [],
+        "returns": null,
+        "deprecated": null
+      },
+      "isStatic": false,
+      "isConst": false,
+      "isConstexpr": false,
+      "isVolatile": false,
+      "isInline": true,
+      "isExplicit": false,
+      "isNoexcept": true,
+      "noexceptExpression": "a.swap(b)",
+      "isNoDiscard": false,
+      "virtuality": "non-virtual",
+      "isDeleted": false,
+      "refQualifier": null,
+      "requiresClause": null
+    }
+  ],
+  "typedefs": [
+    {
+      "name": "Parent",
+      "path": "thrust::device_vector::Parent",
+      "typeInfo": {
+        "parts": [
+          "detail::vector_base< T, Alloc >"
+        ],
+        "display": "detail::vector_base< T, Alloc >"
+      },
+      "templateParams": [],
+      "docstring": null
+    }
+  ],
+  "memberVariables": [],
+  "enums": [],
+  "innerClasses": [],
+  "relatedMemberRefs": [],
+  "sectionLabels": {}
+}

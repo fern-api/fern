@@ -1,0 +1,683 @@
+/**
+ * Renders a full C++ class/struct page as MDX.
+ *
+ * Page structure:
+ * 1. Frontmatter (title + description)
+ * 2. Preamble (before first ---)
+ *    - Summary paragraphs
+ *    - Include header (bare code block)
+ *    - Callouts (deprecated, warnings, notes)
+ *    - See also
+ *    - Performance considerations (H2, for CUB classes)
+ *    - Example (H2, class-level)
+ *    - Template parameters (AccordionGroup)
+ *    - Inherits from
+ *    - Final/abstract annotation
+ * 3. Body sections (each separated by ---)
+ *    - Driven by IR sectionLabels and member groupings
+ *    - Constructors, Assignment operators, Methods, Types, Member variables, Inner classes, etc.
+ */
+
+import type {
+    CppClassIr,
+    CppFunctionIr,
+    CppDocstringIr,
+    CppDocBlock
+} from "../../../src/types/CppLibraryDocsIr.js";
+import type { RenderContext, CompoundMeta } from "../context.js";
+import { buildLinkPath, getShortName, needsQuoting, stripTemplateArgs } from "../context.js";
+import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath } from "./DescriptionRenderer.js";
+import type { ParsedVerbatim } from "./DescriptionRenderer.js";
+import { renderClassTemplateParams } from "./ParamRenderer.js";
+import { renderBareCodeBlock } from "./SignatureRenderer.js";
+import { renderBadge } from "./BadgeRenderer.js";
+import {
+    renderSingleMethod,
+    renderOverloadedMethod,
+    renderDestructor,
+    renderMethodContent,
+    groupFunctionsByName
+} from "./MethodRenderer.js";
+import {
+    renderTypedefTable,
+    renderMemberVariableTable,
+    renderInnerClass,
+    renderEnum
+} from "./TableRenderer.js";
+
+// ---------------------------------------------------------------------------
+// Frontmatter
+// ---------------------------------------------------------------------------
+
+/**
+ * Generate YAML frontmatter for a class page.
+ */
+function renderFrontmatter(cls: CppClassIr, meta: CompoundMeta): string {
+    const title = needsQuoting(cls.path) ? `"${cls.path}"` : cls.path;
+    const description = meta.description
+        ?? (cls.docstring ? renderSegmentsTrimmed(cls.docstring.summary) : "");
+
+    const lines: string[] = [];
+    lines.push("---");
+    lines.push(`title: ${title}`);
+    lines.push(`description: "${description.replace(/"/g, '\\"')}"`);
+    lines.push("---");
+    return lines.join("\n");
+}
+
+// ---------------------------------------------------------------------------
+// Preamble
+// ---------------------------------------------------------------------------
+
+/**
+ * Render the preamble section (before the first --- separator).
+ */
+function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
+    const lines: string[] = [];
+    const docstring = cls.docstring;
+
+    // 1. Summary paragraphs and description blocks
+    // For classes with verbatim RST blocks in description, parse them to extract
+    // overview content, performance considerations, and examples.
+    let parsedVerbatim: ParsedVerbatim | undefined = undefined;
+
+    if (docstring) {
+        if (docstring.summary.length > 0) {
+            const summary = renderSegmentsTrimmed(docstring.summary);
+            if (summary) {
+                lines.push(summary);
+                lines.push("");
+            }
+        }
+
+        // Check for verbatim RST blocks in description
+        const hasVerbatim = docstring.description.some(
+            b => b.type === "verbatim" && (b.format === "rst" || b.content.startsWith("embed:rst"))
+        );
+
+        if (hasVerbatim) {
+            // Parse the verbatim block to extract structured content
+            for (const block of docstring.description) {
+                if (block.type === "verbatim" && (block.format === "rst" || block.content.startsWith("embed:rst"))) {
+                    parsedVerbatim = convertVerbatimRst(block.content);
+                    break;
+                }
+            }
+            // Render the overview content from the parsed verbatim
+            if (parsedVerbatim?.overviewContent) {
+                lines.push(parsedVerbatim.overviewContent);
+                lines.push("");
+            }
+        } else if (docstring.description.length > 0) {
+            // No verbatim blocks -- render description blocks normally
+            const desc = renderDescriptionBlocks(docstring.description);
+            if (desc) {
+                lines.push(desc);
+                lines.push("");
+            }
+        }
+    }
+
+    // 2. Include header (prepend namespace path prefix)
+    if (cls.includeHeader) {
+        const namespacePath = ctx.meta.namespacePath;
+        const prefix = namespacePath.length > 0 ? namespacePath.join("/") + "/" : "";
+        lines.push(renderBareCodeBlock(`#include <${prefix}${cls.includeHeader}>`, "cpp"));
+        lines.push("");
+    }
+
+    // 3. Callouts
+    // Deprecated
+    if (docstring?.deprecated) {
+        const depText = renderSegmentsTrimmed(docstring.deprecated);
+        if (depText) {
+            lines.push(`<Error title="Deprecated">`);
+            lines.push(depText);
+            lines.push("</Error>");
+            lines.push("");
+        }
+    }
+
+    // Warnings
+    if (docstring?.warnings) {
+        for (const warning of docstring.warnings) {
+            const text = renderSegmentsTrimmed(warning);
+            if (text) {
+                lines.push("<Warning>");
+                lines.push(text);
+                lines.push("</Warning>");
+                lines.push("");
+            }
+        }
+    }
+
+    // Notes
+    if (docstring?.notes) {
+        for (const note of docstring.notes) {
+            const text = renderSegmentsTrimmed(note);
+            if (text) {
+                lines.push("<Note>");
+                lines.push(text);
+                lines.push("</Note>");
+                lines.push("");
+            }
+        }
+    }
+
+    // 4. See also (class-level) -- multi-line format per golden pages
+    if (docstring?.seeAlso && docstring.seeAlso.length > 0) {
+        const seeAlsoParts: string[] = [];
+        for (const sa of docstring.seeAlso) {
+            const text = renderSegmentsTrimmed(sa);
+            if (text) {
+                seeAlsoParts.push(text);
+            }
+        }
+        if (seeAlsoParts.length > 0) {
+            lines.push("**See also:**");
+            for (let i = 0; i < seeAlsoParts.length; i++) {
+                const trailing = i < seeAlsoParts.length - 1 ? "," : "";
+                lines.push(`${seeAlsoParts[i]}${trailing}`);
+            }
+            lines.push("");
+        }
+    }
+
+    // 5. Performance considerations (H2 in preamble, from parsed verbatim RST)
+    if (parsedVerbatim?.performanceContent) {
+        lines.push("## Performance considerations");
+        lines.push("");
+        lines.push(parsedVerbatim.performanceContent);
+        lines.push("");
+    }
+
+    // 6. Class-level examples
+    if (docstring?.examples && docstring.examples.length > 0) {
+        lines.push("## Example");
+        lines.push("");
+        for (const example of docstring.examples) {
+            const lang = example.language || "cpp";
+            lines.push(renderBareCodeBlock(example.code, lang));
+            lines.push("");
+        }
+    } else if (parsedVerbatim?.exampleCode) {
+        // Example extracted from verbatim RST block
+        lines.push("## Example");
+        lines.push("");
+        if (parsedVerbatim.exampleDescription) {
+            lines.push(parsedVerbatim.exampleDescription);
+            lines.push("");
+        }
+        const lang = parsedVerbatim.exampleLanguage || "cpp";
+        lines.push(renderBareCodeBlock(parsedVerbatim.exampleCode, lang));
+        lines.push("");
+    }
+
+    // 7. Template parameters (AccordionGroup)
+    if (cls.templateParams.length > 0) {
+        const tplParams = renderClassTemplateParams(cls.templateParams, cls.docstring);
+        if (tplParams) {
+            lines.push(tplParams);
+            lines.push("");
+        }
+    }
+
+    // 8. Inherits from
+    if (cls.baseClasses.length > 0) {
+        const baseLinks = cls.baseClasses.map(bc => {
+            const access = `(${bc.access})`;
+            // Display text preserves template args; URL strips them
+            const displayText = bc.typeInfo?.display ?? bc.name;
+            if (bc.typeInfo?.resolvedPath) {
+                const linkUrl = buildLinkPath(stripTemplateArgs(bc.typeInfo.resolvedPath));
+                return `[\`${displayText}\`](${linkUrl}) ${access}`;
+            }
+            // Try to build a link from the name (strip template args from URL)
+            const linkUrl = buildLinkPath(stripTemplateArgs(bc.name));
+            if (bc.typeInfo?.display) {
+                return `[\`${bc.typeInfo.display}\`](${linkUrl}) ${access}`;
+            }
+            return `[\`${displayText}\`](${linkUrl}) ${access}`;
+        });
+        lines.push(`**Inherits from:** ${baseLinks.join(", ")}`);
+        lines.push("");
+    }
+
+    // 9. Final annotation
+    if (cls.isFinal) {
+        lines.push(`This class is marked ${renderBadge("final")}.`);
+        lines.push("");
+    }
+
+    // Trim trailing blank lines
+    while (lines.length > 0 && lines[lines.length - 1] === "") {
+        lines.pop();
+    }
+
+    return lines.join("\n");
+}
+
+// ---------------------------------------------------------------------------
+// Body section rendering
+// ---------------------------------------------------------------------------
+
+/**
+ * Determine the section order for a class.
+ * Uses sectionLabels from the IR to determine section headings and ordering.
+ */
+interface MethodSection {
+    label: string;
+    methods: CppFunctionIr[];
+}
+
+/**
+ * Build a mapping from method path to section label.
+ *
+ * The IR's sectionLabels may use either:
+ * 1. Method paths as keys (direct lookup works), or
+ * 2. Doxygen refids as keys (positional correspondence with methods array).
+ *
+ * This function handles both cases by first trying direct path lookup,
+ * then falling back to positional mapping when keys are refids.
+ */
+function buildMethodToLabelMap(cls: CppClassIr): Map<string, string> {
+    const labelMap = new Map<string, string>();
+    const labelKeys = Object.keys(cls.sectionLabels);
+
+    if (labelKeys.length === 0) {
+        return labelMap;
+    }
+
+    // Check if any key directly matches a method path
+    const hasDirectPathMatch = cls.methods.some(m => cls.sectionLabels[m.path] != null);
+
+    if (hasDirectPathMatch) {
+        // Keys are method paths -- direct lookup
+        for (const method of cls.methods) {
+            const label = cls.sectionLabels[method.path];
+            if (label != null) {
+                // Use index-based key to handle duplicate paths (overloads)
+                labelMap.set(`${cls.methods.indexOf(method)}`, label);
+            }
+        }
+        // Re-key by method index
+        const result = new Map<string, string>();
+        for (let i = 0; i < cls.methods.length; i++) {
+            const label = cls.sectionLabels[cls.methods[i]!.path];
+            if (label != null) {
+                result.set(String(i), label);
+            }
+        }
+        return result;
+    }
+
+    // Keys are Doxygen refids -- use positional correspondence.
+    // The sectionLabels entries correspond to methods in order.
+    for (let i = 0; i < labelKeys.length && i < cls.methods.length; i++) {
+        const label = cls.sectionLabels[labelKeys[i]!]!;
+        labelMap.set(String(i), label);
+    }
+
+    return labelMap;
+}
+
+/**
+ * Categorize methods into sections based on sectionLabels and method characteristics.
+ *
+ * The IR's sectionLabels maps function refids (or paths) to their section labels.
+ * Methods with the same label are grouped together.
+ */
+function categorizeMethodSections(cls: CppClassIr): MethodSection[] {
+    // Build index-based label map that handles both refid and path keys
+    const labelMap = buildMethodToLabelMap(cls);
+    const hasLabels = labelMap.size > 0;
+
+    if (hasLabels) {
+        // Use IR-provided section labels (resolved from refids or paths)
+        const sections: MethodSection[] = [];
+        const sectionMap = new Map<string, CppFunctionIr[]>();
+        const sectionOrder: string[] = [];
+
+        for (let i = 0; i < cls.methods.length; i++) {
+            const method = cls.methods[i]!;
+            const label = labelMap.get(String(i)) ?? "Methods";
+            if (!sectionMap.has(label)) {
+                sectionMap.set(label, []);
+                sectionOrder.push(label);
+            }
+            sectionMap.get(label)!.push(method);
+        }
+
+        for (const label of sectionOrder) {
+            const methods = sectionMap.get(label)!;
+            if (methods.length > 0) {
+                sections.push({ label, methods });
+            }
+        }
+
+        return sections;
+    }
+
+    // Auto-categorize when sectionLabels is empty or keys don't match method paths
+    const className = getShortName(cls.path);
+    const constructors: CppFunctionIr[] = [];
+    const destructors: CppFunctionIr[] = [];
+    const assignmentOps: CppFunctionIr[] = [];
+    const regularMethods: CppFunctionIr[] = [];
+
+    for (const method of cls.methods) {
+        const shortName = getShortName(method.name);
+        if (shortName === className) {
+            constructors.push(method);
+        } else if (shortName === `~${className}`) {
+            destructors.push(method);
+        } else if (method.name === "operator=") {
+            assignmentOps.push(method);
+        } else {
+            regularMethods.push(method);
+        }
+    }
+
+    const sections: MethodSection[] = [];
+
+    // Constructors (including destructors at the end)
+    if (constructors.length > 0 || destructors.length > 0) {
+        sections.push({
+            label: "Constructors",
+            methods: [...constructors, ...destructors]
+        });
+    }
+
+    // Assignment operators
+    if (assignmentOps.length > 0) {
+        sections.push({
+            label: "Assignment operators",
+            methods: assignmentOps
+        });
+    }
+
+    // Regular methods
+    if (regularMethods.length > 0) {
+        sections.push({
+            label: "Methods",
+            methods: regularMethods
+        });
+    }
+
+    return sections;
+}
+
+/**
+ * Render a section of methods (a group under an H2 heading).
+ * Methods with the same name are grouped as overloads.
+ * Different method names within the same section are separated by ---.
+ */
+function renderMethodSection(
+    label: string,
+    methods: CppFunctionIr[],
+    cls: CppClassIr,
+    ctx: RenderContext
+): string {
+    const lines: string[] = [];
+    lines.push(`## ${label}`);
+    lines.push("");
+
+    const groups = groupFunctionsByName(methods);
+    const groupEntries = Array.from(groups.entries());
+
+    // Check for constructor section: identify constructors and destructors
+    const className = getShortName(cls.path);
+    const isConstructorSection = label.toLowerCase().includes("constructor");
+
+    for (let i = 0; i < groupEntries.length; i++) {
+        const [name, funcs] = groupEntries[i]!;
+
+        // Detect destructor
+        if (name.startsWith("~")) {
+            if (funcs.length === 1) {
+                lines.push(renderDestructor(funcs[0]!, cls, ctx));
+            } else {
+                // Multiple destructor overloads (unusual but handle gracefully)
+                for (const func of funcs) {
+                    lines.push(renderDestructor(func, cls, ctx));
+                }
+            }
+        } else if (funcs.length === 1) {
+            lines.push(renderSingleMethod(funcs[0]!, cls, ctx));
+        } else {
+            lines.push(renderOverloadedMethod(funcs, cls, ctx, {
+                isConstructor: isConstructorSection && name === className
+            }));
+        }
+
+        // BUG 8 fix: No --- separators between methods within the same H2 section.
+        // The --- separators only appear between H2 sections (handled in renderClassPage).
+        if (i < groupEntries.length - 1) {
+            lines.push("");
+        }
+    }
+
+    return lines.join("\n");
+}
+
+/**
+ * Render the static methods section.
+ */
+function renderStaticMethodsSection(
+    cls: CppClassIr,
+    ctx: RenderContext
+): string {
+    if (cls.staticMethods.length === 0) {
+        return "";
+    }
+
+    const lines: string[] = [];
+
+    // Check if static methods have matching section labels
+    const sectionMap = new Map<string, CppFunctionIr[]>();
+    const sectionOrder: string[] = [];
+
+    for (const method of cls.staticMethods) {
+        const label = cls.sectionLabels[method.path] ?? "Static methods";
+        if (!sectionMap.has(label)) {
+            sectionMap.set(label, []);
+            sectionOrder.push(label);
+        }
+        sectionMap.get(label)!.push(method);
+    }
+
+    for (const label of sectionOrder) {
+        const methods = sectionMap.get(label)!;
+        lines.push(renderMethodSection(label, methods, cls, ctx));
+    }
+
+    return lines.join("\n");
+}
+
+/**
+ * Render the friend functions section.
+ */
+function renderFriendFunctionsSection(
+    cls: CppClassIr,
+    ctx: RenderContext
+): string {
+    if (cls.friendFunctions.length === 0) {
+        return "";
+    }
+
+    const lines: string[] = [];
+    lines.push("## Friend functions");
+    lines.push("");
+
+    const groups = groupFunctionsByName(cls.friendFunctions);
+    const groupEntries = Array.from(groups.entries());
+
+    for (let i = 0; i < groupEntries.length; i++) {
+        const [name, funcs] = groupEntries[i]!;
+
+        if (funcs.length === 1) {
+            lines.push(renderSingleMethod(funcs[0]!, cls, ctx));
+        } else {
+            lines.push(renderOverloadedMethod(funcs, cls, ctx));
+        }
+
+        // BUG 8 fix: No --- separators between methods within the same H2 section.
+        if (i < groupEntries.length - 1) {
+            lines.push("");
+        }
+    }
+
+    return lines.join("\n");
+}
+
+/**
+ * Render the Types section (typedefs + enums).
+ */
+function renderTypesSection(cls: CppClassIr): string {
+    if (cls.typedefs.length === 0 && cls.enums.length === 0) {
+        return "";
+    }
+
+    const lines: string[] = [];
+    lines.push("## Types");
+    lines.push("");
+
+    // Typedefs
+    if (cls.typedefs.length > 0) {
+        lines.push("### Typedefs");
+        lines.push("");
+        lines.push(renderTypedefTable(cls.typedefs));
+    }
+
+    // Enums
+    if (cls.enums.length > 0) {
+        if (cls.typedefs.length > 0) {
+            lines.push("");
+        }
+        for (const enumIr of cls.enums) {
+            lines.push(renderEnum(enumIr));
+        }
+    }
+
+    return lines.join("\n");
+}
+
+/**
+ * Render the Member Variables section.
+ */
+function renderMemberVariablesSection(cls: CppClassIr): string {
+    if (cls.memberVariables.length === 0) {
+        return "";
+    }
+
+    const lines: string[] = [];
+    lines.push("## Member variables");
+    lines.push("");
+    lines.push(renderMemberVariableTable(cls.memberVariables, cls.path));
+
+    return lines.join("\n");
+}
+
+/**
+ * Render the Inner Classes section.
+ */
+function renderInnerClassesSection(cls: CppClassIr): string {
+    if (cls.innerClasses.length === 0) {
+        return "";
+    }
+
+    const lines: string[] = [];
+    lines.push("## Inner classes");
+    lines.push("");
+
+    for (let i = 0; i < cls.innerClasses.length; i++) {
+        lines.push(renderInnerClass(cls.innerClasses[i]!, cls.path));
+        if (i < cls.innerClasses.length - 1) {
+            lines.push("");
+        }
+    }
+
+    return lines.join("\n");
+}
+
+// ---------------------------------------------------------------------------
+// Main class page renderer
+// ---------------------------------------------------------------------------
+
+/**
+ * Render a full class/struct page as MDX.
+ */
+export function renderClassPage(cls: CppClassIr, meta: CompoundMeta): string {
+    // BUG 30: Set current page path for self-reference detection in renderSegment
+    setCurrentPagePath(cls.path);
+
+    const ctx: RenderContext = { meta };
+    const sections: string[] = [];
+
+    // Frontmatter
+    sections.push(renderFrontmatter(cls, meta));
+
+    // Preamble
+    const preamble = renderPreamble(cls, ctx);
+    if (preamble) {
+        sections.push("");
+        sections.push(preamble);
+    }
+
+    // Body sections
+    const bodySections: string[] = [];
+
+    // Method sections (regular methods grouped by section label)
+    const methodSections = categorizeMethodSections(cls);
+    for (const section of methodSections) {
+        bodySections.push(renderMethodSection(section.label, section.methods, cls, ctx));
+    }
+
+    // Static methods
+    const staticSection = renderStaticMethodsSection(cls, ctx);
+    if (staticSection) {
+        bodySections.push(staticSection);
+    }
+
+    // BUG 28: Friend functions section is intentionally omitted.
+    // Golden pages consistently omit friend functions from class pages.
+    // The data is still available in the IR (cls.friendFunctions) if needed in the future.
+
+    // Types
+    const typesSection = renderTypesSection(cls);
+    if (typesSection) {
+        bodySections.push(typesSection);
+    }
+
+    // Member variables
+    const memberVarsSection = renderMemberVariablesSection(cls);
+    if (memberVarsSection) {
+        bodySections.push(memberVarsSection);
+    }
+
+    // Inner classes
+    const innerClassesSection = renderInnerClassesSection(cls);
+    if (innerClassesSection) {
+        bodySections.push(innerClassesSection);
+    }
+
+    // Join body sections with --- separators
+    if (bodySections.length > 0) {
+        sections.push("");
+        sections.push("---");
+
+        for (let i = 0; i < bodySections.length; i++) {
+            sections.push("");
+            sections.push(bodySections[i]!);
+            if (i < bodySections.length - 1) {
+                sections.push("");
+                sections.push("---");
+            }
+        }
+    }
+
+    // BUG 30: Clear current page path after rendering
+    setCurrentPagePath(undefined);
+
+    return sections.join("\n") + "\n";
+}
