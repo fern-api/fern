@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index";
 import * as SeedExhaustive from "../../../index.js";
 
 export declare namespace InlinedRequestsClient {
@@ -21,9 +20,14 @@ export class InlinedRequestsClient {
         this._options = normalizeClientOptions(options);
         this._client =
             client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), ((e) => {
-                throw e;
-            }) as any);
+            new core.HttpClient(
+                this._options,
+                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+                    new Error(`HTTP ${args.statusCode} error`)) as any,
+                ((e: unknown) => {
+                    throw e;
+                }) as any,
+            );
     }
 
     /**

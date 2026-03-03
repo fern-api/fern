@@ -3,7 +3,6 @@
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index";
 import { ContainerClient } from "../resources/container/client/Client.js";
 import { ContentTypeClient } from "../resources/contentType/client/Client.js";
 import { EnumClient } from "../resources/enum/client/Client.js";
@@ -39,9 +38,14 @@ export class EndpointsClient {
         this._options = normalizeClientOptionsWithAuth(options);
         this._client =
             client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), ((e) => {
-                throw e;
-            }) as any);
+            new core.HttpClient(
+                this._options,
+                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+                    new Error(`HTTP ${args.statusCode} error`)) as any,
+                ((e: unknown) => {
+                    throw e;
+                }) as any,
+            );
     }
 
     public get container(): ContainerClient {

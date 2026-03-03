@@ -3,7 +3,6 @@
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
 import { ApiClient } from "../resources/api/client/Client.js";
 
 export declare namespace NestedNoAuthClient {
@@ -19,9 +18,14 @@ export class NestedNoAuthClient {
         this._options = normalizeClientOptions(options);
         this._client =
             client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedOauthClientCredentialsError(args), ((e) => {
-                throw e;
-            }) as any);
+            new core.HttpClient(
+                this._options,
+                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+                    new Error(`HTTP ${args.statusCode} error`)) as any,
+                ((e: unknown) => {
+                    throw e;
+                }) as any,
+            );
     }
 
     public get api(): ApiClient {

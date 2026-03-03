@@ -8,7 +8,6 @@ import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Clie
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 import * as core from "./core/index.js";
-import * as errors from "./errors/index";
 
 export declare namespace SeedExhaustiveClient {
     export type Options = BaseClientOptions;
@@ -27,9 +26,14 @@ export class SeedExhaustiveClient {
 
     constructor(options: SeedExhaustiveClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), ((e) => {
-            throw e;
-        }) as any);
+        this._client = new core.HttpClient(
+            this._options,
+            ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+                new Error(`HTTP ${args.statusCode} error`)) as any,
+            ((e: unknown) => {
+                throw e;
+            }) as any,
+        );
     }
 
     public get endpoints(): EndpointsClient {

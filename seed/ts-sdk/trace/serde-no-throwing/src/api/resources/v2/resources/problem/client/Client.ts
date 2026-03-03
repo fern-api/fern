@@ -5,7 +5,6 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as environments from "../../../../../../environments.js";
-import * as errors from "../../../../../../errors/index";
 import * as serializers from "../../../../../../serialization/index.js";
 import * as SeedTrace from "../../../../../index.js";
 
@@ -23,9 +22,14 @@ export class ProblemClient {
         this._options = normalizeClientOptions(options);
         this._client =
             client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), ((e) => {
-                throw e;
-            }) as any);
+            new core.HttpClient(
+                this._options,
+                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+                    new Error(`HTTP ${args.statusCode} error`)) as any,
+                ((e: unknown) => {
+                    throw e;
+                }) as any,
+            );
     }
 
     /**

@@ -969,9 +969,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
      */
     private getCtorHttpClientStatement(context: SdkContext): Code {
         const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
-        const errorRef = getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression());
+        const statusCodeErrorFactory = this.getStatusCodeErrorFactoryRef(context);
         const nonStatusCodeErrorHandler = this.getNonStatusCodeErrorHandlerRef(context);
-        return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${nonStatusCodeErrorHandler});`;
+        return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, ${statusCodeErrorFactory}, ${nonStatusCodeErrorHandler});`;
     }
 
     /**
@@ -980,9 +980,24 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
      */
     private getCtorHttpClientExpression(context: SdkContext): Code {
         const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
-        const errorRef = getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression());
+        const statusCodeErrorFactory = this.getStatusCodeErrorFactoryRef(context);
         const nonStatusCodeErrorHandler = this.getNonStatusCodeErrorHandlerRef(context);
-        return code`new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${nonStatusCodeErrorHandler})`;
+        return code`new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, ${statusCodeErrorFactory}, ${nonStatusCodeErrorHandler})`;
+    }
+
+    /**
+     * Returns a reference to the status-code error factory.
+     * In never-throw-errors mode, the errors directory may not exist, so we use an inline
+     * factory that creates a generic Error. The HttpClient won't actually be used for
+     * endpoints in never-throw-errors mode (canUseClientRequest excludes them), but the
+     * constructor still needs a valid factory function reference.
+     */
+    private getStatusCodeErrorFactoryRef(context: SdkContext): string {
+        if (this.neverThrowErrors) {
+            return "((args: { statusCode: number; body: unknown; rawResponse: unknown }) => new Error(`HTTP ${args.statusCode} error`)) as any";
+        }
+        const errorRef = getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression());
+        return `(args) => new ${errorRef}(args)`;
     }
 
     /**
@@ -994,7 +1009,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
      */
     private getNonStatusCodeErrorHandlerRef(context: SdkContext): string {
         if (this.neverThrowErrors) {
-            return "((e) => { throw e; }) as any";
+            return "((e: unknown) => { throw e; }) as any";
         }
         return getTextOfTsNode(
             context.nonStatusCodeErrorHandler

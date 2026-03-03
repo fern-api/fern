@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as errors from "../../../../../../errors/index.js";
 import * as SeedOauthClientCredentials from "../../../../../index.js";
 
 export declare namespace ApiClient {
@@ -21,9 +20,14 @@ export class ApiClient {
         this._options = normalizeClientOptionsWithAuth(options);
         this._client =
             client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedOauthClientCredentialsError(args), ((e) => {
-                throw e;
-            }) as any);
+            new core.HttpClient(
+                this._options,
+                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+                    new Error(`HTTP ${args.statusCode} error`)) as any,
+                ((e: unknown) => {
+                    throw e;
+                }) as any,
+            );
     }
 
     /**
