@@ -70,7 +70,7 @@ export class ReadmeImporter extends DocsImporter<object> {
                 tabId: this.kebabCaseWithoutEmojis(tab.name),
                 tabConfig: {
                     slug: tab.url,
-                    displayName: tab.name
+                    "display-name": tab.name
                 }
             });
             const absolutePathToOutputDirectory = fsUtilsJoin(
