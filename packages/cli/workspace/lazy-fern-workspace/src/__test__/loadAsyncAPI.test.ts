@@ -682,10 +682,7 @@ describe("loadAsyncAPI — external $ref resolution", () => {
 
     it("throws on self-referencing file", async () => {
         // self.yml references itself
-        await writeFile(
-            join(tempDir, "self.yml"),
-            yaml.dump({ SelfType: { $ref: "./self.yml#/SelfType" } })
-        );
+        await writeFile(join(tempDir, "self.yml"), yaml.dump({ SelfType: { $ref: "./self.yml#/SelfType" } }));
 
         const doc = {
             asyncapi: "2.6.0",
@@ -764,8 +761,6 @@ describe("loadAsyncAPI — external $ref resolution", () => {
         const sendMessage = messages["sendMessage"] as Record<string, unknown>;
 
         // URL refs should be preserved as-is for AbstractSpecConverter.resolveAllExternalRefs
-        expect(sendMessage["$ref"]).toBe(
-            "https://example.com/specs/asyncapi.json#/components/messages/sendMessage"
-        );
+        expect(sendMessage["$ref"]).toBe("https://example.com/specs/asyncapi.json#/components/messages/sendMessage");
     });
 });

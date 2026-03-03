@@ -259,7 +259,15 @@ export async function resolveExternalRefs(
 
         // Recursively resolve the loaded content, now with registry active
         const refDir = dirname(absoluteRefPath);
-        const resolved = await resolveExternalRefs(parsed, refDir, mainFileAbsPath, registry, true, newVisited, fileCache);
+        const resolved = await resolveExternalRefs(
+            parsed,
+            refDir,
+            mainFileAbsPath,
+            registry,
+            true,
+            newVisited,
+            fileCache
+        );
 
         // Merge sibling properties onto the resolved content. Sibling props
         // take precedence (they act as overrides per AsyncAPI 3.x / OAS 3.1).
@@ -272,7 +280,15 @@ export async function resolveExternalRefs(
     // No external $ref — recursively process every property value
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(record)) {
-        result[key] = await resolveExternalRefs(value, baseDir, mainFileAbsPath, registry, applyRegistry, visited, fileCache);
+        result[key] = await resolveExternalRefs(
+            value,
+            baseDir,
+            mainFileAbsPath,
+            registry,
+            applyRegistry,
+            visited,
+            fileCache
+        );
     }
     return result;
 }
