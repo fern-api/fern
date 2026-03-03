@@ -218,10 +218,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/NotDeprecatedSettings"
-  /generally-available-endpoint:
+  /general-availability-endpoint:
     get:
-      x-fern-availability: "generally-available"
-      operationId: getGenerallyAvailable
+      x-fern-availability: "general-availability"
+      operationId: getGeneralAvailability
       responses:
         "200":
           description: OK
