@@ -237,15 +237,19 @@ export class ReactQueryGenerator {
             typeImports.push("QueryKey");
         }
         if (needsUseInfiniteQuery) {
+            typeImports.push("UseInfiniteQueryOptions");
             typeImports.push("UseInfiniteQueryResult");
         }
         if (needsUseMutation) {
+            typeImports.push("UseMutationOptions");
             typeImports.push("UseMutationResult");
         }
         if (needsUseQuery) {
+            typeImports.push("UseQueryOptions");
             typeImports.push("UseQueryResult");
         }
         if (needsUseSuspenseQuery) {
+            typeImports.push("UseSuspenseQueryOptions");
             typeImports.push("UseSuspenseQueryResult");
         }
 
@@ -364,16 +368,19 @@ export class ReactQueryGenerator {
                     // useInfiniteQuery hook
                     const useInfiniteFnName = `use${functionPrefix}Infinite`;
                     const useInfiniteReturnType = `UseInfiniteQueryResult<InfiniteData<Awaited<${returnTypeName}>, unknown>, Error>`;
+                    const infiniteOptionsType = `Omit<UseInfiniteQueryOptions<Awaited<${returnTypeName}>, Error, InfiniteData<Awaited<${returnTypeName}>, unknown>, QueryKey, unknown>, "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam">`;
                     if (hasRequestParams) {
                         lines.push(
-                            `export function ${useInfiniteFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${useInfiniteReturnType} {`
+                            `export function ${useInfiniteFnName}(client: ClientInstance, args: ${paramsTypeName}, options?: ${infiniteOptionsType}): ${useInfiniteReturnType} {`
                         );
-                        lines.push(`    return useInfiniteQuery(${infiniteFnName}(client, ...args));`);
+                        lines.push(
+                            `    return useInfiniteQuery({ ...${infiniteFnName}(client, ...args), ...options });`
+                        );
                     } else {
                         lines.push(
-                            `export function ${useInfiniteFnName}(client: ClientInstance): ${useInfiniteReturnType} {`
+                            `export function ${useInfiniteFnName}(client: ClientInstance, options?: ${infiniteOptionsType}): ${useInfiniteReturnType} {`
                         );
-                        lines.push(`    return useInfiniteQuery(${infiniteFnName}(client));`);
+                        lines.push(`    return useInfiniteQuery({ ...${infiniteFnName}(client), ...options });`);
                     }
                     lines.push(`}`);
                     lines.push(``);
@@ -404,14 +411,17 @@ export class ReactQueryGenerator {
                 // === useQuery hook ===
                 const useQueryFnName = `use${functionPrefix}`;
                 const useQueryReturnType = `UseQueryResult<Awaited<${returnTypeName}>, Error>`;
+                const queryOptionsType = `Omit<UseQueryOptions<Awaited<${returnTypeName}>, Error, Awaited<${returnTypeName}>, QueryKey>, "queryKey" | "queryFn">`;
                 if (hasRequestParams) {
                     lines.push(
-                        `export function ${useQueryFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${useQueryReturnType} {`
+                        `export function ${useQueryFnName}(client: ClientInstance, args: ${paramsTypeName}, options?: ${queryOptionsType}): ${useQueryReturnType} {`
                     );
-                    lines.push(`    return useQuery(${queryFnName}(client, ...args));`);
+                    lines.push(`    return useQuery({ ...${queryFnName}(client, ...args), ...options });`);
                 } else {
-                    lines.push(`export function ${useQueryFnName}(client: ClientInstance): ${useQueryReturnType} {`);
-                    lines.push(`    return useQuery(${queryFnName}(client));`);
+                    lines.push(
+                        `export function ${useQueryFnName}(client: ClientInstance, options?: ${queryOptionsType}): ${useQueryReturnType} {`
+                    );
+                    lines.push(`    return useQuery({ ...${queryFnName}(client), ...options });`);
                 }
                 lines.push(`}`);
                 lines.push(``);
@@ -419,16 +429,17 @@ export class ReactQueryGenerator {
                 // === useSuspenseQuery hook ===
                 const useSuspenseFnName = `useSuspense${functionPrefix}`;
                 const useSuspenseReturnType = `UseSuspenseQueryResult<Awaited<${returnTypeName}>, Error>`;
+                const suspenseOptionsType = `Omit<UseSuspenseQueryOptions<Awaited<${returnTypeName}>, Error, Awaited<${returnTypeName}>, QueryKey>, "queryKey" | "queryFn">`;
                 if (hasRequestParams) {
                     lines.push(
-                        `export function ${useSuspenseFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${useSuspenseReturnType} {`
+                        `export function ${useSuspenseFnName}(client: ClientInstance, args: ${paramsTypeName}, options?: ${suspenseOptionsType}): ${useSuspenseReturnType} {`
                     );
-                    lines.push(`    return useSuspenseQuery(${queryFnName}(client, ...args));`);
+                    lines.push(`    return useSuspenseQuery({ ...${queryFnName}(client, ...args), ...options });`);
                 } else {
                     lines.push(
-                        `export function ${useSuspenseFnName}(client: ClientInstance): ${useSuspenseReturnType} {`
+                        `export function ${useSuspenseFnName}(client: ClientInstance, options?: ${suspenseOptionsType}): ${useSuspenseReturnType} {`
                     );
-                    lines.push(`    return useSuspenseQuery(${queryFnName}(client));`);
+                    lines.push(`    return useSuspenseQuery({ ...${queryFnName}(client), ...options });`);
                 }
                 lines.push(`}`);
                 lines.push(``);
@@ -477,21 +488,25 @@ export class ReactQueryGenerator {
                 const useMutationFnName = `use${functionPrefix}Mutation`;
                 if (hasRequestParams) {
                     const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, ${paramsTypeName}, unknown>`;
+                    const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, ${paramsTypeName}, unknown>, "mutationFn">`;
                     lines.push(
-                        `export function ${useMutationFnName}(client: ClientInstance): ${useMutationReturnType} {`
+                        `export function ${useMutationFnName}(client: ClientInstance, options?: ${mutationOptionsType}): ${useMutationReturnType} {`
                     );
                     lines.push(
                         `    return useMutation<Awaited<${returnTypeName}>, Error, ${paramsTypeName}, unknown>({`
                     );
                     lines.push(`        mutationFn: (args) => ${clientAccess}.${endpointUnsafeName}(...args),`);
+                    lines.push(`        ...options,`);
                     lines.push(`    });`);
                 } else {
                     const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, void, unknown>`;
+                    const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, void, unknown>, "mutationFn">`;
                     lines.push(
-                        `export function ${useMutationFnName}(client: ClientInstance): ${useMutationReturnType} {`
+                        `export function ${useMutationFnName}(client: ClientInstance, options?: ${mutationOptionsType}): ${useMutationReturnType} {`
                     );
                     lines.push(`    return useMutation<Awaited<${returnTypeName}>, Error, void, unknown>({`);
                     lines.push(`        mutationFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
+                    lines.push(`        ...options,`);
                     lines.push(`    });`);
                 }
                 lines.push(`}`);

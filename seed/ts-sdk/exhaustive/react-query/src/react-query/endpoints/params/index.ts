@@ -3,8 +3,11 @@
 import type {
     QueryClient,
     QueryKey,
+    UseMutationOptions,
     UseMutationResult,
+    UseQueryOptions,
     UseQueryResult,
+    UseSuspenseQueryOptions,
     UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
@@ -31,16 +34,24 @@ export function GetWithPathOptions(
 
 export function useGetWithPath(
     client: ClientInstance,
-    ...args: GetWithPathParams
+    args: GetWithPathParams,
+    options?: Omit<
+        UseQueryOptions<Awaited<GetWithPathReturnType>, Error, Awaited<GetWithPathReturnType>, QueryKey>,
+        "queryKey" | "queryFn"
+    >,
 ): UseQueryResult<Awaited<GetWithPathReturnType>, Error> {
-    return useQuery(GetWithPathOptions(client, ...args));
+    return useQuery({ ...GetWithPathOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithPath(
     client: ClientInstance,
-    ...args: GetWithPathParams
+    args: GetWithPathParams,
+    options?: Omit<
+        UseSuspenseQueryOptions<Awaited<GetWithPathReturnType>, Error, Awaited<GetWithPathReturnType>, QueryKey>,
+        "queryKey" | "queryFn"
+    >,
 ): UseSuspenseQueryResult<Awaited<GetWithPathReturnType>, Error> {
-    return useSuspenseQuery(GetWithPathOptions(client, ...args));
+    return useSuspenseQuery({ ...GetWithPathOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithPath(queryClient: QueryClient, ...args: GetWithPathParams): Promise<void> {
@@ -70,16 +81,29 @@ export function GetWithInlinePathOptions(
 
 export function useGetWithInlinePath(
     client: ClientInstance,
-    ...args: GetWithInlinePathParams
+    args: GetWithInlinePathParams,
+    options?: Omit<
+        UseQueryOptions<Awaited<GetWithInlinePathReturnType>, Error, Awaited<GetWithInlinePathReturnType>, QueryKey>,
+        "queryKey" | "queryFn"
+    >,
 ): UseQueryResult<Awaited<GetWithInlinePathReturnType>, Error> {
-    return useQuery(GetWithInlinePathOptions(client, ...args));
+    return useQuery({ ...GetWithInlinePathOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithInlinePath(
     client: ClientInstance,
-    ...args: GetWithInlinePathParams
+    args: GetWithInlinePathParams,
+    options?: Omit<
+        UseSuspenseQueryOptions<
+            Awaited<GetWithInlinePathReturnType>,
+            Error,
+            Awaited<GetWithInlinePathReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseSuspenseQueryResult<Awaited<GetWithInlinePathReturnType>, Error> {
-    return useSuspenseQuery(GetWithInlinePathOptions(client, ...args));
+    return useSuspenseQuery({ ...GetWithInlinePathOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithInlinePath(queryClient: QueryClient, ...args: GetWithInlinePathParams): Promise<void> {
@@ -111,16 +135,24 @@ export function GetWithQueryOptions(
 
 export function useGetWithQuery(
     client: ClientInstance,
-    ...args: GetWithQueryParams
+    args: GetWithQueryParams,
+    options?: Omit<
+        UseQueryOptions<Awaited<GetWithQueryReturnType>, Error, Awaited<GetWithQueryReturnType>, QueryKey>,
+        "queryKey" | "queryFn"
+    >,
 ): UseQueryResult<Awaited<GetWithQueryReturnType>, Error> {
-    return useQuery(GetWithQueryOptions(client, ...args));
+    return useQuery({ ...GetWithQueryOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithQuery(
     client: ClientInstance,
-    ...args: GetWithQueryParams
+    args: GetWithQueryParams,
+    options?: Omit<
+        UseSuspenseQueryOptions<Awaited<GetWithQueryReturnType>, Error, Awaited<GetWithQueryReturnType>, QueryKey>,
+        "queryKey" | "queryFn"
+    >,
 ): UseSuspenseQueryResult<Awaited<GetWithQueryReturnType>, Error> {
-    return useSuspenseQuery(GetWithQueryOptions(client, ...args));
+    return useSuspenseQuery({ ...GetWithQueryOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithQuery(queryClient: QueryClient, ...args: GetWithQueryParams): Promise<void> {
@@ -152,16 +184,34 @@ export function GetWithAllowMultipleQueryOptions(
 
 export function useGetWithAllowMultipleQuery(
     client: ClientInstance,
-    ...args: GetWithAllowMultipleQueryParams
+    args: GetWithAllowMultipleQueryParams,
+    options?: Omit<
+        UseQueryOptions<
+            Awaited<GetWithAllowMultipleQueryReturnType>,
+            Error,
+            Awaited<GetWithAllowMultipleQueryReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseQueryResult<Awaited<GetWithAllowMultipleQueryReturnType>, Error> {
-    return useQuery(GetWithAllowMultipleQueryOptions(client, ...args));
+    return useQuery({ ...GetWithAllowMultipleQueryOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithAllowMultipleQuery(
     client: ClientInstance,
-    ...args: GetWithAllowMultipleQueryParams
+    args: GetWithAllowMultipleQueryParams,
+    options?: Omit<
+        UseSuspenseQueryOptions<
+            Awaited<GetWithAllowMultipleQueryReturnType>,
+            Error,
+            Awaited<GetWithAllowMultipleQueryReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseSuspenseQueryResult<Awaited<GetWithAllowMultipleQueryReturnType>, Error> {
-    return useSuspenseQuery(GetWithAllowMultipleQueryOptions(client, ...args));
+    return useSuspenseQuery({ ...GetWithAllowMultipleQueryOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithAllowMultipleQuery(
@@ -196,16 +246,34 @@ export function GetWithPathAndQueryOptions(
 
 export function useGetWithPathAndQuery(
     client: ClientInstance,
-    ...args: GetWithPathAndQueryParams
+    args: GetWithPathAndQueryParams,
+    options?: Omit<
+        UseQueryOptions<
+            Awaited<GetWithPathAndQueryReturnType>,
+            Error,
+            Awaited<GetWithPathAndQueryReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseQueryResult<Awaited<GetWithPathAndQueryReturnType>, Error> {
-    return useQuery(GetWithPathAndQueryOptions(client, ...args));
+    return useQuery({ ...GetWithPathAndQueryOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithPathAndQuery(
     client: ClientInstance,
-    ...args: GetWithPathAndQueryParams
+    args: GetWithPathAndQueryParams,
+    options?: Omit<
+        UseSuspenseQueryOptions<
+            Awaited<GetWithPathAndQueryReturnType>,
+            Error,
+            Awaited<GetWithPathAndQueryReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseSuspenseQueryResult<Awaited<GetWithPathAndQueryReturnType>, Error> {
-    return useSuspenseQuery(GetWithPathAndQueryOptions(client, ...args));
+    return useSuspenseQuery({ ...GetWithPathAndQueryOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithPathAndQuery(
@@ -242,16 +310,34 @@ export function GetWithInlinePathAndQueryOptions(
 
 export function useGetWithInlinePathAndQuery(
     client: ClientInstance,
-    ...args: GetWithInlinePathAndQueryParams
+    args: GetWithInlinePathAndQueryParams,
+    options?: Omit<
+        UseQueryOptions<
+            Awaited<GetWithInlinePathAndQueryReturnType>,
+            Error,
+            Awaited<GetWithInlinePathAndQueryReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseQueryResult<Awaited<GetWithInlinePathAndQueryReturnType>, Error> {
-    return useQuery(GetWithInlinePathAndQueryOptions(client, ...args));
+    return useQuery({ ...GetWithInlinePathAndQueryOptions(client, ...args), ...options });
 }
 
 export function useSuspenseGetWithInlinePathAndQuery(
     client: ClientInstance,
-    ...args: GetWithInlinePathAndQueryParams
+    args: GetWithInlinePathAndQueryParams,
+    options?: Omit<
+        UseSuspenseQueryOptions<
+            Awaited<GetWithInlinePathAndQueryReturnType>,
+            Error,
+            Awaited<GetWithInlinePathAndQueryReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseSuspenseQueryResult<Awaited<GetWithInlinePathAndQueryReturnType>, Error> {
-    return useSuspenseQuery(GetWithInlinePathAndQueryOptions(client, ...args));
+    return useSuspenseQuery({ ...GetWithInlinePathAndQueryOptions(client, ...args), ...options });
 }
 
 export function invalidateGetWithInlinePathAndQuery(
@@ -280,9 +366,14 @@ export function ModifyWithPathMutationOptions(client: ClientInstance): {
 
 export function useModifyWithPathMutation(
     client: ClientInstance,
+    options?: Omit<
+        UseMutationOptions<Awaited<ModifyWithPathReturnType>, Error, ModifyWithPathParams, unknown>,
+        "mutationFn"
+    >,
 ): UseMutationResult<Awaited<ModifyWithPathReturnType>, Error, ModifyWithPathParams, unknown> {
     return useMutation<Awaited<ModifyWithPathReturnType>, Error, ModifyWithPathParams, unknown>({
         mutationFn: (args) => client.endpoints.params.modifyWithPath(...args),
+        ...options,
     });
 }
 
@@ -299,9 +390,14 @@ export function ModifyWithInlinePathMutationOptions(client: ClientInstance): {
 
 export function useModifyWithInlinePathMutation(
     client: ClientInstance,
+    options?: Omit<
+        UseMutationOptions<Awaited<ModifyWithInlinePathReturnType>, Error, ModifyWithInlinePathParams, unknown>,
+        "mutationFn"
+    >,
 ): UseMutationResult<Awaited<ModifyWithInlinePathReturnType>, Error, ModifyWithInlinePathParams, unknown> {
     return useMutation<Awaited<ModifyWithInlinePathReturnType>, Error, ModifyWithInlinePathParams, unknown>({
         mutationFn: (args) => client.endpoints.params.modifyWithInlinePath(...args),
+        ...options,
     });
 }
 
@@ -318,8 +414,13 @@ export function UploadWithPathMutationOptions(client: ClientInstance): {
 
 export function useUploadWithPathMutation(
     client: ClientInstance,
+    options?: Omit<
+        UseMutationOptions<Awaited<UploadWithPathReturnType>, Error, UploadWithPathParams, unknown>,
+        "mutationFn"
+    >,
 ): UseMutationResult<Awaited<UploadWithPathReturnType>, Error, UploadWithPathParams, unknown> {
     return useMutation<Awaited<UploadWithPathReturnType>, Error, UploadWithPathParams, unknown>({
         mutationFn: (args) => client.endpoints.params.uploadWithPath(...args),
+        ...options,
     });
 }

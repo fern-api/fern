@@ -4,8 +4,11 @@ import type {
     InfiniteData,
     QueryClient,
     QueryKey,
+    UseInfiniteQueryOptions,
     UseInfiniteQueryResult,
+    UseQueryOptions,
     UseQueryResult,
+    UseSuspenseQueryOptions,
     UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 import { useInfiniteQuery, useQuery, useSuspenseQuery } from "@tanstack/react-query";
@@ -48,9 +51,19 @@ export function ListItemsInfiniteOptions(
 
 export function useListItemsInfinite(
     client: ClientInstance,
-    ...args: ListItemsParams
+    args: ListItemsParams,
+    options?: Omit<
+        UseInfiniteQueryOptions<
+            Awaited<ListItemsReturnType>,
+            Error,
+            InfiniteData<Awaited<ListItemsReturnType>, unknown>,
+            QueryKey,
+            unknown
+        >,
+        "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam"
+    >,
 ): UseInfiniteQueryResult<InfiniteData<Awaited<ListItemsReturnType>, unknown>, Error> {
-    return useInfiniteQuery(ListItemsInfiniteOptions(client, ...args));
+    return useInfiniteQuery({ ...ListItemsInfiniteOptions(client, ...args), ...options });
 }
 
 export function ListItemsOptions(
@@ -65,16 +78,24 @@ export function ListItemsOptions(
 
 export function useListItems(
     client: ClientInstance,
-    ...args: ListItemsParams
+    args: ListItemsParams,
+    options?: Omit<
+        UseQueryOptions<Awaited<ListItemsReturnType>, Error, Awaited<ListItemsReturnType>, QueryKey>,
+        "queryKey" | "queryFn"
+    >,
 ): UseQueryResult<Awaited<ListItemsReturnType>, Error> {
-    return useQuery(ListItemsOptions(client, ...args));
+    return useQuery({ ...ListItemsOptions(client, ...args), ...options });
 }
 
 export function useSuspenseListItems(
     client: ClientInstance,
-    ...args: ListItemsParams
+    args: ListItemsParams,
+    options?: Omit<
+        UseSuspenseQueryOptions<Awaited<ListItemsReturnType>, Error, Awaited<ListItemsReturnType>, QueryKey>,
+        "queryKey" | "queryFn"
+    >,
 ): UseSuspenseQueryResult<Awaited<ListItemsReturnType>, Error> {
-    return useSuspenseQuery(ListItemsOptions(client, ...args));
+    return useSuspenseQuery({ ...ListItemsOptions(client, ...args), ...options });
 }
 
 export function invalidateListItems(queryClient: QueryClient, ...args: ListItemsParams): Promise<void> {

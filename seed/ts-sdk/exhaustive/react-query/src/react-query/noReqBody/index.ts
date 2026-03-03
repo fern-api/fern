@@ -3,8 +3,11 @@
 import type {
     QueryClient,
     QueryKey,
+    UseMutationOptions,
     UseMutationResult,
+    UseQueryOptions,
     UseQueryResult,
+    UseSuspenseQueryOptions,
     UseSuspenseQueryResult,
 } from "@tanstack/react-query";
 import { useMutation, useQuery, useSuspenseQuery } from "@tanstack/react-query";
@@ -30,14 +33,32 @@ export function GetWithNoRequestBodyOptions(client: ClientInstance): {
 
 export function useGetWithNoRequestBody(
     client: ClientInstance,
+    options?: Omit<
+        UseQueryOptions<
+            Awaited<GetWithNoRequestBodyReturnType>,
+            Error,
+            Awaited<GetWithNoRequestBodyReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseQueryResult<Awaited<GetWithNoRequestBodyReturnType>, Error> {
-    return useQuery(GetWithNoRequestBodyOptions(client));
+    return useQuery({ ...GetWithNoRequestBodyOptions(client), ...options });
 }
 
 export function useSuspenseGetWithNoRequestBody(
     client: ClientInstance,
+    options?: Omit<
+        UseSuspenseQueryOptions<
+            Awaited<GetWithNoRequestBodyReturnType>,
+            Error,
+            Awaited<GetWithNoRequestBodyReturnType>,
+            QueryKey
+        >,
+        "queryKey" | "queryFn"
+    >,
 ): UseSuspenseQueryResult<Awaited<GetWithNoRequestBodyReturnType>, Error> {
-    return useSuspenseQuery(GetWithNoRequestBodyOptions(client));
+    return useSuspenseQuery({ ...GetWithNoRequestBodyOptions(client), ...options });
 }
 
 export function invalidateGetWithNoRequestBody(queryClient: QueryClient): Promise<void> {
@@ -60,8 +81,10 @@ export function PostWithNoRequestBodyMutationOptions(client: ClientInstance): {
 
 export function usePostWithNoRequestBodyMutation(
     client: ClientInstance,
+    options?: Omit<UseMutationOptions<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown>, "mutationFn">,
 ): UseMutationResult<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown> {
     return useMutation<Awaited<PostWithNoRequestBodyReturnType>, Error, void, unknown>({
         mutationFn: () => client.noReqBody.postWithNoRequestBody(),
+        ...options,
     });
 }
