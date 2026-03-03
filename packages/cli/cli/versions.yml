@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.1.2
+  changelogEntry:
+    - summary: |
+        Include required global headers in dynamic snippet examples. Previously,
+        global headers configured via `x-fern-global-headers` were missing from
+        dynamic SDK snippets on docs sites, even when marked as required. Also
+        fixes header value lookup in all generator snippet generators (Python,
+        TypeScript, Go, C#, PHP, Ruby) to correctly resolve values by wire name.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
 - version: 4.1.1
   changelogEntry:
     - summary: |
