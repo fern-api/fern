@@ -5,7 +5,7 @@ namespace SeedEnum;
 
 public partial class PathParamClient : IPathParamClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PathParamClient(RawClient client)
     {
@@ -49,7 +49,9 @@ public partial class PathParamClient : IPathParamClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

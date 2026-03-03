@@ -6,7 +6,7 @@ namespace SeedUndiscriminatedUnions;
 
 public partial class UnionClient : IUnionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UnionClient(RawClient client)
     {
@@ -58,7 +58,9 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<
@@ -102,7 +104,9 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -138,7 +142,9 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<
@@ -166,7 +172,9 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -202,7 +210,9 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -228,7 +238,9 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -264,7 +276,9 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -290,7 +304,9 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -328,7 +344,9 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<
@@ -358,7 +376,9 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -403,7 +423,9 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -429,7 +451,9 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -465,7 +489,9 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -491,7 +517,9 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedUndiscriminatedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

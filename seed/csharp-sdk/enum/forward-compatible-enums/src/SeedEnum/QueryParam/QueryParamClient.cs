@@ -4,7 +4,7 @@ namespace SeedEnum;
 
 public partial class QueryParamClient : IQueryParamClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal QueryParamClient(RawClient client)
     {
@@ -53,7 +53,9 @@ public partial class QueryParamClient : IQueryParamClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -110,7 +112,9 @@ public partial class QueryParamClient : IQueryParamClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
