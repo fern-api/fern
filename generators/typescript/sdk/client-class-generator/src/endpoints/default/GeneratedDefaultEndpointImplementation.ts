@@ -420,10 +420,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                             ts.factory.createCallExpression(
                                                 this.generatedSdkClientClass.getReferenceToFetcher(context),
                                                 [responseReturnType], // Generic type argument
-                                                [
-                                                    ts.factory.createIdentifier("request"),
-                                                    this.buildFetchOptionsArg()
-                                                ]
+                                                [ts.factory.createIdentifier("request"), this.buildFetchOptionsArg()]
                                             )
                                         )
                                     )
@@ -1059,11 +1056,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             this.response.getResponseVariableName(),
                             undefined,
                             undefined,
-                                            context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
-                                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                                cast: undefined,
-                                                additionalArgs: [this.buildFetchOptionsArg()]
-                                            })
+                            context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
+                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
+                                cast: undefined,
+                                additionalArgs: [this.buildFetchOptionsArg()]
+                            })
                         )
                     ],
                     ts.NodeFlags.Const
