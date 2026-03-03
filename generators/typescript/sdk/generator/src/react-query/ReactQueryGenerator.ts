@@ -231,7 +231,9 @@ export class ReactQueryGenerator {
         if (needsQueryClient) {
             typeImports.push("QueryClient");
         }
-        typeImports.push("QueryKey");
+        if (needsUseQuery) {
+            typeImports.push("QueryKey");
+        }
         if (needsUseInfiniteQuery) {
             typeImports.push("UseInfiniteQueryResult");
         }
