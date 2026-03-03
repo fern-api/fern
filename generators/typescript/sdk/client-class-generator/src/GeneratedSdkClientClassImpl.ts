@@ -950,9 +950,27 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     /**
      * Generates the constructor statement that creates the HttpClient instance.
      * Only used in root clients; non-root clients receive the HttpClient via constructor parameter.
+     *
+     * Emits:
+     *   this._client = new HttpClient(
+     *       this._options,
+     *       (args) => new errors.SeedXxxError(args),
+     *       handleNonStatusCodeError
+     *   );
      */
-    private getCtorHttpClientStatement(_context: SdkContext): Code {
-        return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${getTextOfTsNode(_context.coreUtilities.fetcher.HttpClient._getReferenceTo())}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER});`;
+    private getCtorHttpClientStatement(context: SdkContext): Code {
+        const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
+        const errorRef = getTextOfTsNode(context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression());
+        const handleNonStatusCodeErrorRef = getTextOfTsNode(
+            context.nonStatusCodeErrorHandler
+                .getReferenceToHandleNonStatusCodeError({
+                    importsManager: context.importsManager,
+                    exportsManager: context.exportsManager,
+                    sourceFile: context.sourceFile
+                })
+                .getExpression()
+        );
+        return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, (args) => new ${errorRef}(args), ${handleNonStatusCodeErrorRef});`;
     }
 
     /**

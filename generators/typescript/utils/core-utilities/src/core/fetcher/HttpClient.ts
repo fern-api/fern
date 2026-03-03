@@ -51,7 +51,8 @@ export interface EndpointConfig {
 
 /**
  * Options for constructing an HttpClient.
- * These are the normalized client options that the HttpClient needs.
+ * These mirror the NormalizedClientOptions shape so the HttpClient can be
+ * constructed with `this._options` directly from the generated client.
  */
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
@@ -65,33 +66,41 @@ export interface HttpClientOptions {
 }
 
 /**
- * Initialization parameters for the HttpClient.
- */
-export interface HttpClientInit {
-    /** Normalized client options */
-    options: HttpClientOptions;
-    /** Factory to create the SDK-specific error for status-code errors */
-    createStatusCodeError: (args: { statusCode: number; body: unknown; rawResponse: RawResponse }) => Error;
-    /** Handler for non-status-code errors (timeout, network, unknown, etc.) */
-    handleNonStatusCodeError: (error: Fetcher.Error, rawResponse: RawResponse, method: string, path: string) => never;
-}
-
-/**
  * A composable HTTP client that encapsulates all shared HTTP mechanics:
  * URL resolution, auth, header merging, timeout/retry, error handling.
  *
  * Created once at the top-level client and injected into all sub-clients.
  * Sub-clients become thin wrappers that only describe what's unique per endpoint.
+ *
+ * @param options - Normalized client options (baseUrl, auth, headers, etc.)
+ * @param createStatusCodeError - Factory to create the SDK-specific generic error for status-code errors.
+ * @param handleNonStatusCodeError - Handler for non-status-code errors (timeout, network, unknown, etc.)
  */
 export class HttpClient {
     private readonly _options: HttpClientOptions;
-    private readonly _createStatusCodeError: HttpClientInit["createStatusCodeError"];
-    private readonly _handleNonStatusCodeError: HttpClientInit["handleNonStatusCodeError"];
+    private readonly _createStatusCodeError: (
+        args: { statusCode: number; body: unknown; rawResponse: RawResponse },
+    ) => Error;
+    private readonly _handleNonStatusCodeError: (
+        error: Fetcher.Error,
+        rawResponse: RawResponse,
+        method: string,
+        path: string,
+    ) => never;
 
-    constructor(init: HttpClientInit) {
-        this._options = init.options;
-        this._createStatusCodeError = init.createStatusCodeError;
-        this._handleNonStatusCodeError = init.handleNonStatusCodeError;
+    constructor(
+        options: HttpClientOptions,
+        createStatusCodeError: (args: { statusCode: number; body: unknown; rawResponse: RawResponse }) => Error,
+        handleNonStatusCodeError: (
+            error: Fetcher.Error,
+            rawResponse: RawResponse,
+            method: string,
+            path: string,
+        ) => never,
+    ) {
+        this._options = options;
+        this._createStatusCodeError = createStatusCodeError;
+        this._handleNonStatusCodeError = handleNonStatusCodeError;
     }
 
     /** Expose normalized options for sub-clients that need them (e.g. pagination) */
@@ -113,11 +122,13 @@ export class HttpClient {
             ? (await this._options.authProvider.getAuthRequest({ endpointMetadata: config.endpointMetadata })).headers
             : {};
 
-        // 2. Headers: endpoint-specific → auth → global → per-request
+        // 2. Headers: auth → global → endpoint-specific → per-request
+        //    This matches the exact merge order of the existing generated code:
+        //    mergeHeaders(authHeaders, this._options?.headers, [mergeOnlyDefinedHeaders({...}),] requestOptions?.headers)
         const headers = mergeHeaders(
-            config.headers != null ? mergeOnlyDefinedHeaders(config.headers) : undefined,
             authHeaders,
             this._options.headers,
+            config.headers != null ? mergeOnlyDefinedHeaders(config.headers) : undefined,
             config.requestOptions?.headers,
         );
 
@@ -126,23 +137,16 @@ export class HttpClient {
             ? { ...config.queryParameters, ...config.requestOptions?.queryParams }
             : config.requestOptions?.queryParams;
 
-        // 4. Smart defaults: body present → JSON
-        const hasBody = config.body !== undefined;
-        const requestType = config.requestType ?? (hasBody ? "json" : undefined);
-        const contentType = config.contentType ?? (requestType === "json" ? "application/json" : undefined);
-
-        // 5. Resolve URL
-        const baseUrl =
-            (await Supplier.get(this._options.baseUrl)) ?? (await Supplier.get(this._options.environment));
-        const url = baseUrl ? join(baseUrl, config.path) : config.path;
-
-        // 6. Fetch
+        // 4. Fetch — matches the exact fetcher call pattern of existing generated code
         const response = await fetcherImpl({
-            url,
+            url: join(
+                (await Supplier.get(this._options.baseUrl)) ?? (await Supplier.get(this._options.environment)),
+                config.path,
+            ),
             method: config.method,
             headers,
-            contentType,
-            requestType,
+            contentType: config.contentType,
+            requestType: config.requestType,
             responseType: config.responseType,
             queryParameters,
             body: config.body,
@@ -156,7 +160,7 @@ export class HttpClient {
             endpointMetadata: config.endpointMetadata,
         });
 
-        // 7. Success
+        // 5. Success
         if (response.ok) {
             const data = config.transformResponse
                 ? (config.transformResponse(response.body) as T)
@@ -164,7 +168,7 @@ export class HttpClient {
             return { data, rawResponse: response.rawResponse };
         }
 
-        // 8. Status-code errors: check endpoint-specific map, then fall through to generic
+        // 6. Status-code errors: check endpoint-specific map, then fall through to generic
         if (response.error.reason === "status-code") {
             const factory = config.errorMap?.[response.error.statusCode];
             if (factory) {
@@ -177,7 +181,7 @@ export class HttpClient {
             });
         }
 
-        // 9. Non-status-code errors (timeout, network, etc.)
+        // 7. Non-status-code errors (timeout, network, etc.)
         return this._handleNonStatusCodeError(response.error, response.rawResponse, config.method, config.path);
     }
 }
