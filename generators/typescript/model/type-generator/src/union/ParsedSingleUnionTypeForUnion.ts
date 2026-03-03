@@ -79,7 +79,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     }
 
     public getTypeName(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName;
+        return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.unsafeName);
     }
 
     public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
@@ -92,17 +92,17 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
 
     public getBuilderName(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName);
         } else {
-            return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.wireValue);
         }
     }
 
     public getVisitorKey(): string {
         if (this.includeSerdeLayer && !this.retainOriginalCasing) {
-            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName);
         } else {
-            return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+            return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.wireValue);
         }
     }
 
@@ -120,4 +120,13 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
             return singleProperty.name.wireValue;
         }
     }
+}
+
+const STARTS_WITH_DIGIT = /^\d/;
+
+function sanitizeIdentifier(name: string): string {
+    if (STARTS_WITH_DIGIT.test(name)) {
+        return `_${name}`;
+    }
+    return name;
 }

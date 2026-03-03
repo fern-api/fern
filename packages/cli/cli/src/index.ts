@@ -1,1 +1,1 @@
-export { validateAPIWorkspaceAndLogIssues } from "./commands/validate/validateAPIWorkspaceAndLogIssues.js";
+export { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";

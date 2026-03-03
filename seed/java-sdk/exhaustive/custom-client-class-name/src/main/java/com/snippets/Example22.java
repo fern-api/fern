@@ -1,8 +1,8 @@
 package com.snippets;
 
 import com.seed.exhaustive.Best;
-import com.seed.exhaustive.resources.types.object.types.ObjectWithDatetimeLikeString;
-import java.time.OffsetDateTime;
+import com.seed.exhaustive.resources.types.object.types.ObjectWithUnknownField;
+import java.util.HashMap;
 
 public class Example22 {
     public static void main(String[] args) {
@@ -11,9 +11,12 @@ public class Example22 {
 
         client.endpoints()
                 .object()
-                .getAndReturnWithDatetimeLikeString(ObjectWithDatetimeLikeString.builder()
-                        .datetimeLikeString("2023-08-31T14:15:22Z")
-                        .actualDatetime(OffsetDateTime.parse("2023-08-31T14:15:22Z"))
+                .getAndReturnWithUnknownField(ObjectWithUnknownField.builder()
+                        .unknown(new HashMap<String, Object>() {
+                            {
+                                put("$ref", "https://example.com/schema");
+                            }
+                        })
                         .build());
     }
 }

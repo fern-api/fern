@@ -5,7 +5,7 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst.js";
 import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules.js";
 import { getAllRules } from "./getAllRules.js";
-import { Rule, RuleVisitors } from "./Rule.js";
+import { NamedRuleVisitors, Rule } from "./Rule.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
 export async function validateGeneratorsWorkspace(
@@ -27,7 +27,12 @@ export async function runRulesOnWorkspace({
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];
 
-    const allRuleVisitors = await Promise.all(rules.map((rule) => rule.create({ workspace, logger })));
+    const allRuleVisitors: NamedRuleVisitors[] = await Promise.all(
+        rules.map(async (rule) => ({
+            name: rule.name,
+            visitors: await rule.create({ workspace, logger })
+        }))
+    );
 
     if (workspace.generatorsConfiguration?.rawConfiguration) {
         const violationsForGeneratorsYml = await validateGeneratorsYmlFile({
@@ -47,7 +52,7 @@ async function validateGeneratorsYmlFile({
     cliVersion
 }: {
     contents: generatorsYml.GeneratorsConfigurationSchema;
-    allRuleVisitors: RuleVisitors[];
+    allRuleVisitors: NamedRuleVisitors[];
     cliVersion: string;
 }): Promise<ValidationViolation[]> {
     const violations: ValidationViolation[] = [];

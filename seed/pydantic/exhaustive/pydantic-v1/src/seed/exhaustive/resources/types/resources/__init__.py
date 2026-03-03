@@ -13,6 +13,7 @@ from .object import (
     ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithRequiredField,
+    ObjectWithUnknownField,
     OptionalAlias,
 )
 from .union import Animal, Animal_Cat, Animal_Dog, Cat, Dog, MixedType
@@ -32,6 +33,7 @@ __all__ = [
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
+    "ObjectWithUnknownField",
     "OptionalAlias",
     "WeatherReport",
     "docs",

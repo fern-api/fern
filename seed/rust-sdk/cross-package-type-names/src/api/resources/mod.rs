@@ -9,7 +9,7 @@
 //! - **FolderD**
 //! - **Foo**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod commons;
 pub mod folder_a;
@@ -30,10 +30,9 @@ impl CrossPackageTypeNamesClient {
             config: config.clone(),
             folder_a: FolderAClient::new(config.clone())?,
             folder_d: FolderDClient::new(config.clone())?,
-            foo: FooClient::new(config.clone())?
+            foo: FooClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use commons::CommonsClient;

@@ -9,8 +9,8 @@ export interface OpenRpcSpec {
     /** Path to the OpenRPC specification file */
     openrpc: AbsoluteFilePath;
 
-    /** Path to the overrides file */
-    overrides?: AbsoluteFilePath;
+    /** Path to the overrides file(s) */
+    overrides?: AbsoluteFilePath | AbsoluteFilePath[];
 
     /** OpenRPC-specific settings */
     settings?: schemas.OpenRpcSettingsSchema;

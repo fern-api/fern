@@ -9,6 +9,7 @@ from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
 from .object_with_map_of_map import ObjectWithMapOfMap
 from .object_with_optional_field import ObjectWithOptionalField
 from .object_with_required_field import ObjectWithRequiredField
+from .object_with_unknown_field import ObjectWithUnknownField
 from .optional_alias import OptionalAlias
 
 __all__ = [
@@ -19,5 +20,6 @@ __all__ = [
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
+    "ObjectWithUnknownField",
     "OptionalAlias",
 ]

@@ -11,23 +11,24 @@ pub struct OptionalArgsRequest {
 }
 impl OptionalArgsRequest {
     pub fn to_multipart(self) -> reqwest::multipart::Form {
-    let mut form = reqwest::multipart::Form::new();
+        let mut form = reqwest::multipart::Form::new();
 
-    if let Some(ref file_data) = self.image_file {
-        form = form.part(
-            "image_file",
-            reqwest::multipart::Part::bytes(file_data.clone())
-                .file_name("image_file")
-                .mime_str("application/octet-stream").unwrap()
-        );
-    }
-
-    if let Some(ref value) = self.request {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("request", json_str);
+        if let Some(ref file_data) = self.image_file {
+            form = form.part(
+                "image_file",
+                reqwest::multipart::Part::bytes(file_data.clone())
+                    .file_name("image_file")
+                    .mime_str("application/octet-stream")
+                    .unwrap(),
+            );
         }
-    }
 
-    form
-}
+        if let Some(ref value) = self.request {
+            if let Ok(json_str) = serde_json::to_string(value) {
+                form = form.text("request", json_str);
+            }
+        }
+
+        form
+    }
 }

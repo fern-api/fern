@@ -39,6 +39,24 @@
             "payload": "Pet",
             "signature": undefined,
           },
+          "newPet": {
+            "audiences": [],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "id": 1000000,
+                  "name": "name",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "Pet",
+            "signature": undefined,
+          },
         },
       },
       "rawContents": "webhooks:
@@ -53,6 +71,15 @@
           id: 123
           name: Scratch
           tag: Cat
+  newPet:
+    audiences: []
+    method: POST
+    headers: {}
+    payload: Pet
+    examples:
+      - payload:
+          id: 1000000
+          name: name
 types:
   Pet:
     properties:

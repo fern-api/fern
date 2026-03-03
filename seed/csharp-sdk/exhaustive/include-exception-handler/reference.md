@@ -1106,6 +1106,51 @@ await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
 </dl>
 </details>
 
+<details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnWithUnknownFieldAsync</a>(ObjectWithUnknownField { ... }) -> WithRawResponseTask&lt;ObjectWithUnknownField&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Endpoints.Object.GetAndReturnWithUnknownFieldAsync(
+    new ObjectWithUnknownField
+    {
+        Unknown = new Dictionary<object, object?>() { { "$ref", "https://example.com/schema" } },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Endpoints.Object.<a href="/src/SeedExhaustive/Endpoints/Object/ObjectClient.cs">GetAndReturnWithDatetimeLikeStringAsync</a>(ObjectWithDatetimeLikeString { ... }) -> WithRawResponseTask&lt;ObjectWithDatetimeLikeString&gt;</code></summary>
 <dl>
 <dd>

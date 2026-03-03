@@ -12,13 +12,11 @@ class TakerParty(UniversalBaseModel):
 
     @typing.overload
     def __init__(self, trader: Trader) -> None: ...
-
     @typing.overload
     def __init__(self, *, trader: Trader) -> None: ...
-
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
-            kwargs.pop('trader', None)
+            kwargs.pop("trader", None)
             super().__init__(trader=args[0], **kwargs)
         else:
             super().__init__(**kwargs)

@@ -11,13 +11,11 @@ class Trader(UniversalBaseModel):
 
     @typing.overload
     def __init__(self, uuid_: int) -> None: ...
-
     @typing.overload
     def __init__(self, *, uuid_: int) -> None: ...
-
     def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
         if args:
-            kwargs.pop('uuid_', None)
+            kwargs.pop("uuid_", None)
             super().__init__(uuid_=args[0], **kwargs)
         else:
             super().__init__(**kwargs)

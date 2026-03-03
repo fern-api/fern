@@ -13,8 +13,16 @@ class Identifier_Isin(UniversalBaseModel):
     identifier_type: typing.Literal["isin"] = "isin"
     isin: str
 
-    def __init__(self, isin: str, **kwargs: typing.Any) -> None:
-        super().__init__(isin=isin, **kwargs)
+    @typing.overload
+    def __init__(self, isin: str) -> None: ...
+    @typing.overload
+    def __init__(self, *, isin: str) -> None: ...
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        if args:
+            kwargs.pop("isin", None)
+            super().__init__(isin=args[0], **kwargs)
+        else:
+            super().__init__(**kwargs)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -30,8 +38,16 @@ class Identifier_Cusip(UniversalBaseModel):
     identifier_type: typing.Literal["cusip"] = "cusip"
     cusip: str
 
-    def __init__(self, cusip: str, **kwargs: typing.Any) -> None:
-        super().__init__(cusip=cusip, **kwargs)
+    @typing.overload
+    def __init__(self, cusip: str) -> None: ...
+    @typing.overload
+    def __init__(self, *, cusip: str) -> None: ...
+    def __init__(self, *args: typing.Any, **kwargs: typing.Any) -> None:
+        if args:
+            kwargs.pop("cusip", None)
+            super().__init__(cusip=args[0], **kwargs)
+        else:
+            super().__init__(**kwargs)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -40,7 +40,7 @@ export declare namespace RawClient {
     }
 
     export interface CreateHttpRequestWrapperArgs {
-        baseUrl: ast.CodeBlock;
+        baseUrl?: ast.CodeBlock;
         /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
@@ -84,10 +84,14 @@ export class RawClient extends WithGeneration {
         requestType
     }: RawClient.CreateHttpRequestWrapperArgs): RawClient.CreateHttpRequestWrapperCodeBlock {
         const args: Arguments = [
-            {
-                name: "BaseUrl",
-                assignment: baseUrl
-            },
+            ...(baseUrl != null
+                ? [
+                      {
+                          name: "BaseUrl",
+                          assignment: baseUrl
+                      }
+                  ]
+                : []),
             {
                 name: "Method",
                 assignment: this.getCsharpHttpMethod(endpoint.method)

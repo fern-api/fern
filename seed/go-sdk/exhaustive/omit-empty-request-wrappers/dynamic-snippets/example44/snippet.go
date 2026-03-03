@@ -3,7 +3,6 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
     context "context"
 )
 
@@ -16,13 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.Animal{
-        Dog: &types.Dog{
-            Name: "name",
-            LikesToWoof: true,
-        },
-    }
-    client.Endpoints.Union.GetAndReturnUnion(
+    request := []byte("SGVsbG8gd29ybGQh")
+    client.Endpoints.Primitive.GetAndReturnBase64(
         context.TODO(),
         request,
     )

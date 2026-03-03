@@ -7,7 +7,14 @@ type IntermediateRepresentation = FernIr.IntermediateRepresentation;
 type TypeId = FernIr.TypeId;
 type FernFilepath = FernIr.FernFilepath;
 
-import { join } from "path";
+/**
+ * Browser-compatible path join for C# project paths.
+ * Joins path segments with "/" separator, filtering empty segments.
+ */
+function join(...segments: string[]): string {
+    return segments.filter(Boolean).join("/");
+}
+
 import * as ast from "../ast/index.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
 import { Type } from "../ast/types/IType.js";

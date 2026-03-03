@@ -21,7 +21,7 @@ export function testGenerateReference({
 
             const args = [path.join(__dirname, "../../bin/cli"), "generate-reference", "--config", file.path];
             const { stdout } = await execa("node", args);
-            expect(stdout).toMatchFileSnapshot(`__snapshots__/${fixtureName}.md`);
+            await expect(stdout).toMatchFileSnapshot(`__snapshots__/${fixtureName}.md`);
         });
     });
 }

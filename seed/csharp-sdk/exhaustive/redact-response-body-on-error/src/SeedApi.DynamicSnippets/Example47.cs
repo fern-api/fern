@@ -12,7 +12,7 @@ public class Example47
             }
         );
 
-        await client.Endpoints.Urls.WithEndingSlashAsync();
+        await client.Endpoints.Urls.WithMixedCaseAsync();
     }
 
 }

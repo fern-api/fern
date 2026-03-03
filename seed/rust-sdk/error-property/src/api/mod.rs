@@ -11,6 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ErrorsClient, PropertyBasedErrorClient, ErrorPropertyClient};
-pub use types::{*};
-
+pub use resources::{ErrorPropertyClient, ErrorsClient, PropertyBasedErrorClient};
+pub use types::*;

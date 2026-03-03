@@ -9,5 +9,4 @@
 
 pub mod resources;
 
-pub use resources::{ServiceClient, BearerTokenEnvironmentVariableClient};
-
+pub use resources::{BearerTokenEnvironmentVariableClient, ServiceClient};
