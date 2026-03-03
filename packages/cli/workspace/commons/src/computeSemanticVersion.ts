@@ -2,7 +2,6 @@ import type { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { getLatestTag as getLatestTagFromGithub } from "@fern-api/github";
 import type { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { assert } from "console";
 import latestVersion from "latest-version";
 import semver from "semver";
 
@@ -133,7 +132,7 @@ export function getRegistryInfoFromOutputMode(outputMode: FernFiddle.remoteGen.O
     const outputModeType = outputMode.type;
     switch (outputModeType) {
         case "publish":
-            return getRegistryInfoFromPublishOutputMode(outputMode)
+            return getRegistryInfoFromPublishOutputMode(outputMode);
         case "publishV2":
             return getRegistryInfoFromPublishV2(outputMode.publishV2);
         case "downloadFiles":
@@ -172,7 +171,7 @@ function getRegistryInfoFromGithubPublishInfo(publishInfo: FernFiddle.GithubPubl
         case "postman":
             return { registryUrl: undefined, token: undefined, username: undefined };
         default:
-            assertNever(publishInfoType)
+            assertNever(publishInfoType);
     }
 }
 
