@@ -119,14 +119,10 @@ export class DynamicTypeMapper {
                 return java.Type.bytes();
             case "BIG_INTEGER":
                 return java.Type.bigInteger();
-            default: {
-                // Forward-compatible: handle primitive types not yet in the published SDK
-                const primitiveStr: string = primitive;
-                if (primitiveStr === "DATE_TIME_RFC_2822") {
-                    return java.Type.dateTime();
-                }
+            case "DATE_TIME_RFC_2822":
+                return java.Type.dateTime();
+            default:
                 assertNever(primitive);
-            }
         }
     }
 }

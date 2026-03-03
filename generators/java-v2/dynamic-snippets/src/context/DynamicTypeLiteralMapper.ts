@@ -673,14 +673,10 @@ export class DynamicTypeLiteralMapper {
                 return "DateTime";
             case "BASE_64":
                 return "Base64";
-            default: {
-                // Forward-compatible: handle primitive types not yet in the published SDK
-                const primitiveStr: string = primitive;
-                if (primitiveStr === "DATE_TIME_RFC_2822") {
-                    return "DateTimeRfc2822";
-                }
+            case "DATE_TIME_RFC_2822":
+                return "DateTimeRfc2822";
+            default:
                 assertNever(primitive);
-            }
         }
     }
 
@@ -879,18 +875,15 @@ export class DynamicTypeLiteralMapper {
                 }
                 return java.TypeLiteral.bigInteger(bigInt);
             }
-            default: {
-                // Forward-compatible: handle primitive types not yet in the published SDK
-                const primitiveStr: string = primitive;
-                if (primitiveStr === "DATE_TIME_RFC_2822") {
-                    const dateTime = this.context.getValueAsString({ value });
-                    if (dateTime == null) {
-                        return java.TypeLiteral.nop();
-                    }
-                    return java.TypeLiteral.dateTime(dateTime);
+            case "DATE_TIME_RFC_2822": {
+                const dateTime = this.context.getValueAsString({ value });
+                if (dateTime == null) {
+                    return java.TypeLiteral.nop();
                 }
-                assertNever(primitive);
+                return java.TypeLiteral.dateTime(dateTime);
             }
+            default:
+                assertNever(primitive);
         }
     }
 
