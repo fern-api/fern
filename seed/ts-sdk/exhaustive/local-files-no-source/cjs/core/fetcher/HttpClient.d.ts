@@ -80,6 +80,8 @@ export interface HttpClientOptions {
     logging?: LogConfig | Logger;
     /** Custom fetcher function. When provided, HttpClient.fetch() uses this instead of the default fetcherImpl. */
     fetcher?: FetchFunction;
+    /** Default base URL to use when neither baseUrl nor environment is provided. Set from the SDK's default environment. */
+    defaultBaseUrl?: string;
 }
 /**
  * A composable HTTP client that encapsulates all shared HTTP mechanics:

@@ -71,14 +71,14 @@ export class HttpClient {
     }
     _execute(config) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
             // 1. Query params: endpoint-specific + per-request
             const queryParameters = config.queryParameters
                 ? Object.assign(Object.assign({}, config.queryParameters), (_a = config.requestOptions) === null || _a === void 0 ? void 0 : _a.queryParams) : (_b = config.requestOptions) === null || _b === void 0 ? void 0 : _b.queryParams;
             // 2. Build Fetcher.Args and delegate to fetch() for header merging
             const endpointHeaders = config.headers != null ? mergeOnlyDefinedHeaders(config.headers) : {};
             const response = yield this.fetch({
-                url: join((_e = (_d = (_c = config.baseUrl) !== null && _c !== void 0 ? _c : (yield Supplier.get(this._options.baseUrl))) !== null && _d !== void 0 ? _d : (yield Supplier.get(this._options.environment))) !== null && _e !== void 0 ? _e : "", config.path),
+                url: join((_f = (_e = (_d = (_c = config.baseUrl) !== null && _c !== void 0 ? _c : (yield Supplier.get(this._options.baseUrl))) !== null && _d !== void 0 ? _d : (yield Supplier.get(this._options.environment))) !== null && _e !== void 0 ? _e : this._options.defaultBaseUrl) !== null && _f !== void 0 ? _f : "", config.path),
                 method: config.method,
                 headers: endpointHeaders,
                 contentType: config.contentType,
@@ -88,13 +88,13 @@ export class HttpClient {
                 body: config.body,
                 duplex: config.duplex,
                 timeoutMs: this._resolveTimeoutMs(config),
-                maxRetries: (_g = (_f = config.requestOptions) === null || _f === void 0 ? void 0 : _f.maxRetries) !== null && _g !== void 0 ? _g : this._options.maxRetries,
-                abortSignal: (_h = config.requestOptions) === null || _h === void 0 ? void 0 : _h.abortSignal,
+                maxRetries: (_h = (_g = config.requestOptions) === null || _g === void 0 ? void 0 : _g.maxRetries) !== null && _h !== void 0 ? _h : this._options.maxRetries,
+                abortSignal: (_j = config.requestOptions) === null || _j === void 0 ? void 0 : _j.abortSignal,
                 withCredentials: config.withCredentials,
                 fetchFn: this._options.fetch,
                 logging: this._options.logging,
             }, {
-                requestHeaders: (_j = config.requestOptions) === null || _j === void 0 ? void 0 : _j.headers,
+                requestHeaders: (_k = config.requestOptions) === null || _k === void 0 ? void 0 : _k.headers,
                 endpointMetadata: config.endpointMetadata,
             });
             // 3. Success
@@ -106,7 +106,7 @@ export class HttpClient {
             }
             // 4. Status-code errors: check endpoint-specific handler, then fall through to generic
             if (response.error.reason === "status-code") {
-                const customError = (_k = config.errorHandler) === null || _k === void 0 ? void 0 : _k.call(config, response.error.statusCode, response.error.body, response.rawResponse);
+                const customError = (_l = config.errorHandler) === null || _l === void 0 ? void 0 : _l.call(config, response.error.statusCode, response.error.body, response.rawResponse);
                 if (customError) {
                     throw customError;
                 }
