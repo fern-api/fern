@@ -16,7 +16,7 @@ describe("docs.yml navigation collapsible config", () => {
                 {
                     section: "Section",
                     contents: [],
-                    collapsedByDefault: true
+                    "collapsed-by-default": true
                 }
             ]
         };
@@ -69,7 +69,7 @@ describe("docs.yml navigation collapsible config", () => {
                     section: "Section",
                     contents: [],
                     collapsible: true,
-                    collapsedByDefault: true
+                    "collapsed-by-default": true
                 }
             ]
         };
