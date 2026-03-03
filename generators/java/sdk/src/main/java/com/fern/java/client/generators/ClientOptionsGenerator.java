@@ -728,9 +728,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
             builder.addMethod(MethodSpec.methodBuilder("addInterceptor")
                     .addModifiers(Modifier.PUBLIC)
-                    .addJavadoc("Add a custom OkHttp interceptor to the client.\n"
-                            + "Interceptors are applied to the OkHttpClient when the client is built.\n"
-                            + "This can be used for custom request signing, logging, or other request/response modifications.\n")
+                    .addJavadoc(
+                            "Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors are applied to the OkHttpClient when the client is built.\n"
+                                    + "This can be used for custom request signing, logging, or other request/response modifications.\n")
                     .returns(builderClassName)
                     .addParameter(Interceptor.class, "interceptor")
                     .addStatement("this.interceptors.add(interceptor)")

@@ -96,9 +96,9 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     }
 
     /**
-     * If true, expose an {@code addInterceptor(Interceptor)} method on the client builder
-     * that allows SDK users to add custom OkHttp interceptors (e.g., for PKCV client validation).
-     * The interceptors are applied to the OkHttpClient when building the client.
+     * If true, expose an {@code addInterceptor(Interceptor)} method on the client builder that allows SDK users to add
+     * custom OkHttp interceptors (e.g., for PKCV client validation). The interceptors are applied to the OkHttpClient
+     * when building the client.
      */
     @Value.Default
     @JsonProperty("custom-interceptors")

@@ -608,9 +608,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
             clientBuilder.addMethod(MethodSpec.methodBuilder("addInterceptor")
                     .addModifiers(Modifier.PUBLIC)
-                    .addJavadoc("Add a custom OkHttp interceptor to the client.\n"
-                            + "Interceptors are applied to the OkHttpClient when the client is built.\n"
-                            + "This can be used for custom request signing, logging, or other request/response modifications.\n")
+                    .addJavadoc(
+                            "Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors are applied to the OkHttpClient when the client is built.\n"
+                                    + "This can be used for custom request signing, logging, or other request/response modifications.\n")
                     .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                     .addParameter(Interceptor.class, "interceptor")
                     .addStatement("this.interceptors.add(interceptor)")
@@ -756,8 +757,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             buildClientOptionsMethodBuilder.addStatement("setApiPathParameters(builder)");
         }
 
-        buildClientOptionsMethodBuilder
-                .addStatement("setHttpClient(builder)");
+        buildClientOptionsMethodBuilder.addStatement("setHttpClient(builder)");
 
         // Add setInterceptors call when custom-interceptors is enabled
         if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
