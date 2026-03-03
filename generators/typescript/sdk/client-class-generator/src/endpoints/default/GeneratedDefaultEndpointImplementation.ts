@@ -4,6 +4,7 @@ import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from 
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
+import { buildFetchOptionsArg } from "../utils/buildFetchOptionsArg.js";
 import { buildUrl } from "../utils/buildUrl.js";
 import { generateEndpointMetadata } from "../utils/generateEndpointMetadata.js";
 import { HEADERS_VAR_NAME } from "../utils/generateHeaders.js";
@@ -418,9 +419,16 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                         undefined,
                                         ts.factory.createAwaitExpression(
                                             ts.factory.createCallExpression(
-                                                this.generatedSdkClientClass.getReferenceToFetcher(context),
+                                                this.generatedSdkClientClass.getReferenceToFetcher(),
                                                 [responseReturnType], // Generic type argument
-                                                [ts.factory.createIdentifier("request"), this.buildFetchOptionsArg()]
+                                                [
+                                                    ts.factory.createIdentifier("request"),
+                                                    buildFetchOptionsArg({
+                                                        requestOptionsParameterName: REQUEST_OPTIONS_PARAMETER_NAME,
+                                                        generateEndpointMetadata: this.generateEndpointMetadata,
+                                                        generatedSdkClientClass: this.generatedSdkClientClass
+                                                    })
+                                                ]
                                             )
                                         )
                                     )
@@ -657,7 +665,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             fetcherArgs.fetchFn = fetchFn;
         }
 
-        const logging = this.generatedSdkClientClass.getReferenceToLogger(context);
+        const logging = this.generatedSdkClientClass.getReferenceToLogger();
         if (logging != null) {
             fetcherArgs.logging = logging;
         }
@@ -842,7 +850,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         // headers (only if endpoint-specific headers were generated)
-        // Check if the clientMode header statements created the _headers variable declaration
         const hasEndpointSpecificHeaders = statements.some(
             (stmt) =>
                 ts.isVariableStatement(stmt) &&
@@ -985,33 +992,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
     }
 
-    /**
-     * Builds the second argument to this._client.fetch() containing per-request headers
-     * and endpoint metadata. HttpClient.fetch() uses these for auth + global + per-request
-     * header merging.
-     */
-    private buildFetchOptionsArg(): ts.Expression {
-        const properties: ts.ObjectLiteralElementLike[] = [
-            ts.factory.createPropertyAssignment(
-                "requestHeaders",
-                ts.factory.createPropertyAccessChain(
-                    ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                    "headers"
-                )
-            )
-        ];
-        if (this.generateEndpointMetadata) {
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    "endpointMetadata",
-                    this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                )
-            );
-        }
-        return ts.factory.createObjectLiteralExpression(properties, true);
-    }
-
     private invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
@@ -1036,7 +1016,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 )
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
-            logging: this.generatedSdkClientClass.getReferenceToLogger(context),
+            logging: this.generatedSdkClientClass.getReferenceToLogger(),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
@@ -1057,9 +1037,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             undefined,
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
-                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
+                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(),
                                 cast: undefined,
-                                additionalArgs: [this.buildFetchOptionsArg()]
+                                additionalArgs: [
+                                    buildFetchOptionsArg({
+                                        requestOptionsParameterName: REQUEST_OPTIONS_PARAMETER_NAME,
+                                        generateEndpointMetadata: this.generateEndpointMetadata,
+                                        generatedSdkClientClass: this.generatedSdkClientClass
+                                    })
+                                ]
                             })
                         )
                     ],

@@ -1,4 +1,5 @@
 export * from "./appendPropertyToFormData.js";
+export * from "./buildFetchOptionsArg.js";
 export * from "./buildUrl.js";
 export * from "./GeneratedQueryParams.js";
 export * from "./generateEndpointMetadata.js";

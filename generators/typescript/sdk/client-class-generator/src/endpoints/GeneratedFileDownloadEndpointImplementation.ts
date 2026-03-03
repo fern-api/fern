@@ -7,6 +7,7 @@ import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointR
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl.js";
 import { getReadableTypeNode } from "../getReadableTypeNode.js";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse.js";
+import { buildFetchOptionsArg } from "./utils/buildFetchOptionsArg.js";
 import { buildUrl } from "./utils/buildUrl.js";
 import { generateEndpointMetadata } from "./utils/generateEndpointMetadata.js";
 import { getAvailabilityDocs } from "./utils/getAvailabilityDocs.js";
@@ -210,28 +211,6 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         }
     }
 
-    private buildFetchOptionsArg(): ts.Expression {
-        const properties: ts.ObjectLiteralElementLike[] = [
-            ts.factory.createPropertyAssignment(
-                "requestHeaders",
-                ts.factory.createPropertyAccessChain(
-                    ts.factory.createIdentifier("requestOptions"),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                    "headers"
-                )
-            )
-        ];
-        if (this.generateEndpointMetadata) {
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    "endpointMetadata",
-                    this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
-                )
-            );
-        }
-        return ts.factory.createObjectLiteralExpression(properties, true);
-    }
-
     public invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
@@ -256,7 +235,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 )
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
-            logging: this.generatedSdkClientClass.getReferenceToLogger(context),
+            logging: this.generatedSdkClientClass.getReferenceToLogger(),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             responseType: (() => {
                 switch (this.fileResponseType) {
@@ -283,7 +262,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                             undefined,
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
-                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
+                                referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(),
                                 cast: (() => {
                                     switch (this.fileResponseType) {
                                         case "stream":
@@ -298,7 +277,13 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                                             assertNever(this.fileResponseType);
                                     }
                                 })(),
-                                additionalArgs: [this.buildFetchOptionsArg()]
+                                additionalArgs: [
+                                    buildFetchOptionsArg({
+                                        requestOptionsParameterName: "requestOptions",
+                                        generateEndpointMetadata: this.generateEndpointMetadata,
+                                        generatedSdkClientClass: this.generatedSdkClientClass
+                                    })
+                                ]
                             })
                         )
                     ],

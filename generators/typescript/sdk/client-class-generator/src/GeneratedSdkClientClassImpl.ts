@@ -700,86 +700,45 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const httpClientParamType = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceToType());
 
-        if (this.authProvider && this.anyEndpointWithAuth) {
-            if (this.isRoot) {
-                // Root client: constructor(options) - creates HttpClient internally
-                const parameters = [
-                    {
-                        name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
-                        type: optionsParamType,
-                        initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
-                    }
-                ];
-                const statements = code`
-                    ${this.getCtorOptionsStatementsWithAuth(context)}
-                    ${this.getCtorHttpClientStatement(context)}
-                `;
-                serviceClass.ctors.push({
-                    parameters,
-                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
-                });
-            } else {
-                // Non-root client: constructor(options, client?) - receives HttpClient or creates one
-                const parameters = [
-                    {
-                        name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
-                        type: optionsParamType,
-                        initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
-                    },
+        // Build constructor: auth vs no-auth determines normalization, root vs non-root determines parameters and HttpClient wiring
+        const hasAuth = this.authProvider != null && this.anyEndpointWithAuth;
+        const optionsStatement = hasAuth
+            ? this.getCtorOptionsStatementsWithAuth(context)
+            : this.getCtorOptionsStatements(context);
+
+        const optionsParam = {
+            name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
+            type: optionsParamType,
+            initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
+        };
+
+        if (this.isRoot) {
+            // Root client: constructor(options) - creates HttpClient internally
+            const statements = code`
+                ${optionsStatement}
+                ${this.getCtorHttpClientStatement(context)}
+            `;
+            serviceClass.ctors.push({
+                parameters: [optionsParam],
+                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+            });
+        } else {
+            // Non-root client: constructor(options, client?) - receives HttpClient or creates one
+            const statements = code`
+                ${optionsStatement}
+                this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME} ?? ${this.getCtorHttpClientExpression(context)};
+            `;
+            serviceClass.ctors.push({
+                parameters: [
+                    optionsParam,
                     {
                         name: GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME,
                         type: httpClientParamType,
                         hasQuestionToken: true
                     }
-                ];
-                const statements = code`
-                    ${this.getCtorOptionsStatementsWithAuth(context)}
-                    this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME} ?? ${this.getCtorHttpClientExpression(context)};
-                `;
-                serviceClass.ctors.push({
-                    parameters,
-                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
-                });
-            }
-        } else {
-            if (this.isRoot) {
-                // Root client without auth: constructor(options) - creates HttpClient internally
-                const statements = code`
-                    ${this.getCtorOptionsStatements(context)}
-                    ${this.getCtorHttpClientStatement(context)}
-                `;
-                serviceClass.ctors.push({
-                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } }),
-                    parameters: [
-                        {
-                            name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
-                            type: optionsParamType,
-                            initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
-                        }
-                    ]
-                });
-            } else {
-                // Non-root client without auth: constructor(options, client?) - receives HttpClient or creates one
-                const statements = code`
-                    ${this.getCtorOptionsStatements(context)}
-                    this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME} ?? ${this.getCtorHttpClientExpression(context)};
-                `;
-                serviceClass.ctors.push({
-                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } }),
-                    parameters: [
-                        {
-                            name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
-                            type: optionsParamType,
-                            initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
-                        },
-                        {
-                            name: GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME,
-                            type: httpClientParamType,
-                            hasQuestionToken: true
-                        }
-                    ]
-                });
-            }
+                ],
+                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+            });
         }
 
         let isIdempotent = false;
@@ -1283,7 +1242,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getReferenceToLogger(_context: SdkContext): ts.Expression {
+    public getReferenceToLogger(): ts.Expression {
         return this.getReferenceToOption(GeneratedSdkClientClassImpl.LOGGING_FIELD_NAME);
     }
 
@@ -1294,7 +1253,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getReferenceToFetcher(context: SdkContext): ts.Expression {
+    public getReferenceToFetcher(): ts.Expression {
         // ALL endpoints route through this._client.fetch() so that every HTTP call
         // goes through HttpClient. Custom fetcher is passed to HttpClient at construction time.
         return ts.factory.createPropertyAccessExpression(
