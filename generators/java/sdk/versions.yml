@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.40.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for form-urlencoded request body encoding.
+        The generator now uses `+` for spaces (matching Java's `URLEncoder.encode()`)
+        instead of `%20` (from `encodeURIComponent`), serializes arrays as
+        `[val1, val2]` (matching Java's `List.toString()`), and serializes objects
+        as JSON strings.
+      type: fix
+    - summary: |
+        Fix wire test generation for RFC 2822 date fields. The expected response
+        body in wire tests now converts RFC 2822 dates (e.g.
+        `Thu, 30 Jul 2015 20:00:00 +0000`) to ISO 8601 with Z suffix (e.g.
+        `2015-07-30T20:00:00Z`) to match Jackson's `JavaTimeModule` serialization
+        of `OffsetDateTime`. The mock response body retains RFC 2822 dates since
+        the SDK's `Rfc2822DateTimeDeserializer` handles them correctly.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
 - version: 3.40.5
   changelogEntry:
     - summary: |
