@@ -20,12 +20,12 @@
         "fs": false,
         "os": false,
         "path": false,
-        "stream": false
+        "stream": false,
+        "crypto": false
     },
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -35,6 +35,17 @@
                 "default": "./dist/cjs/index.js"
             },
             "default": "./dist/cjs/index.js"
+        },
+        "./user": {
+            "import": {
+                "types": "./dist/esm/api/resources/user/exports.d.mts",
+                "default": "./dist/esm/api/resources/user/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/user/exports.d.ts",
+                "default": "./dist/cjs/api/resources/user/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/user/exports.js"
         },
         "./package.json": "./package.json"
     },
@@ -57,7 +68,7 @@
         "@biomejs/biome": "2.4.3",
         "@types/node": "^18.19.70",
         "msw": "2.11.2",
-        "oxfmt": "0.27.0",
+        "oxfmt": "0.35.0",
         "ts-loader": "^9.5.1",
         "typescript": "~5.7.2",
         "vitest": "^3.2.4",

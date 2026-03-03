@@ -29,7 +29,6 @@ public partial class AuthClient : IAuthClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/token",
                     Headers = _headers,

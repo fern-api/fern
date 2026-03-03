@@ -94,6 +94,7 @@ types:
           Optional multipart form data payload for webhooks that use multipart/form-data content type.
           This is populated when the webhook request body uses multipart/form-data encoding.
       response: optional<ResponseWithExample>
+      signatureVerification: optional<finalIr.WebhookSignatureVerification>
       examples: list<finalIr.WebhookExampleCall>
 
   MultipartFormDataWebhookPayloadWithExample:
@@ -441,6 +442,7 @@ types:
       double: DoubleWithExample
       string: StringSchemaWithExample
       datetime: DatetimeWithExample
+      datetimeRfc2822: DatetimeWithExample
       date: DateWithExample
       base64: Base64WithExample
       boolean: BooleanWithExample

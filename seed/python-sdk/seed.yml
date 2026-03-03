@@ -424,7 +424,6 @@ scripts:
 allowedFailures:
   - any-auth
   - endpoint-security-auth
-  - examples:client-filename
   - examples:legacy-wire-tests
   - exhaustive:additional_init_exports
   - exhaustive:deps_with_min_python_version

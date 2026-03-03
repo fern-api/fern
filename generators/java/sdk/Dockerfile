@@ -25,6 +25,13 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar \
        /opt/gradle/lib/kotlin-stdlib-*.jar
 
+# Replace vulnerable jackson-core in Gradle distribution to fix GHSA-72hv-8253-57qq
+# (async parser bypasses maxNumberLength constraint, leading to potential DoS)
+RUN rm -f /opt/gradle/lib/jackson-core-*.jar && \
+    curl -sL https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.18.6/jackson-core-2.18.6.jar \
+      -o /opt/gradle/lib/jackson-core-2.18.6.jar && \
+    echo "e7e1bfa50f0a79db37e6aa37db111cf03aebf4a484b359d21127ab43ab2398c6  /opt/gradle/lib/jackson-core-2.18.6.jar" | sha256sum -c -
+
 # Update packages to get latest security fixes and remove unnecessary packages
 # Amazon Linux 2023 uses dnf instead of apt-get
 # Note: Amazon Linux 2023 has fewer pre-installed packages than Ubuntu, so we only
@@ -90,6 +97,22 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     mv package tar && \
     rm tar-7.5.8.tgz
 
+# Patch minimatch to 10.2.3 to fix GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74
+# (ReDoS via combinatorial backtracking in matchOne() and nested *() extglobs)
+RUN for dir in \
+      /usr/local/lib/node_modules/glob/node_modules/minimatch \
+      /usr/local/lib/node_modules/npm/node_modules/minimatch \
+      /usr/local/lib/node_modules/npm/node_modules/glob/node_modules/minimatch; do \
+      if [ -d "$dir" ]; then \
+        rm -rf "$dir" && \
+        cd "$(dirname "$dir")" && \
+        curl -sL https://registry.npmjs.org/minimatch/-/minimatch-10.2.3.tgz -o minimatch-10.2.3.tgz && \
+        tar -xzf minimatch-10.2.3.tgz && \
+        mv package minimatch && \
+        rm minimatch-10.2.3.tgz; \
+      fi; \
+    done
+
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
 COPY --from=node /assets/features.yml /assets/features.yml
@@ -99,30 +122,5 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
     git config --global user.name "fern-api"
 
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
-
-RUN npm install -f -g @fern-api/generator-cli@0.5.3
-
-# Patch @octokit/request to fix CVE-2025-25290 (ReDoS vulnerability)
-# Use npm pack + tar to replace the package without running npm install (which fails due to workspace: protocol)
-# Also install fast-content-type-parse which is a new dependency in @octokit/request@10.0.7
-# Note: Skip patching if @octokit directory doesn't exist (may be different in newer versions)
-RUN OCTOKIT_DIR="/usr/local/lib/node_modules/@fern-api/generator-cli/node_modules/@octokit" && \
-    if [ -d "$OCTOKIT_DIR" ]; then \
-        cd "$OCTOKIT_DIR" && \
-        rm -rf request && \
-        npm pack @octokit/request@10.0.7 && \
-        tar -xzf octokit-request-10.0.7.tgz && \
-        mv package request && \
-        rm octokit-request-10.0.7.tgz && \
-        cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules && \
-        if [ ! -d "fast-content-type-parse" ]; then \
-            npm pack fast-content-type-parse@2.0.1 && \
-            tar -xzf fast-content-type-parse-2.0.1.tgz && \
-            mv package fast-content-type-parse && \
-            rm fast-content-type-parse-2.0.1.tgz; \
-        fi; \
-    else \
-        echo "Skipping @octokit/request patch - directory does not exist (may be patched in newer version)"; \
-    fi
 
 ENTRYPOINT ["sh", "/init.sh"]

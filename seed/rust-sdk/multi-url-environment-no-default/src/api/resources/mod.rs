@@ -5,7 +5,7 @@
 //! - **Ec2**
 //! - **S3**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod ec_2;
 pub mod s_3;
@@ -20,10 +20,9 @@ impl MultiUrlEnvironmentNoDefaultClient {
         Ok(Self {
             config: config.clone(),
             ec_2: Ec2Client::new(config.clone())?,
-            s_3: S3Client::new(config.clone())?
+            s_3: S3Client::new(config.clone())?,
         })
     }
-
 }
 
 pub use ec_2::Ec2Client;

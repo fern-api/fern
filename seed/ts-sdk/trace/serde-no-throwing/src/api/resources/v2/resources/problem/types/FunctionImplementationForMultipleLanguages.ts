@@ -3,5 +3,5 @@
 import type * as SeedTrace from "../../../../../index.js";
 
 export interface FunctionImplementationForMultipleLanguages {
-    codeByLanguage: Record<SeedTrace.Language, SeedTrace.v2.FunctionImplementation | undefined>;
+    codeByLanguage: Partial<Record<SeedTrace.Language, SeedTrace.v2.FunctionImplementation>>;
 }

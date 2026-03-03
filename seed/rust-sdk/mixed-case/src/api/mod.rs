@@ -11,6 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{ServiceClient, MixedCaseClient};
-pub use types::{*};
-
+pub use resources::{MixedCaseClient, ServiceClient};
+pub use types::*;

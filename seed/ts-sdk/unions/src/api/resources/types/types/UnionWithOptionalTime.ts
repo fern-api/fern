@@ -27,10 +27,10 @@ import type * as SeedUnions from "../../../index.js";
  *         value: undefined
  *     }
  */
-export type UnionWithOptionalTime = SeedUnions.UnionWithOptionalTime.Date_ | SeedUnions.UnionWithOptionalTime.Datetime;
+export type UnionWithOptionalTime = SeedUnions.UnionWithOptionalTime.Date | SeedUnions.UnionWithOptionalTime.Datetime;
 
 export namespace UnionWithOptionalTime {
-    export interface Date_ {
+    export interface Date {
         type: "date";
         value?: string;
     }

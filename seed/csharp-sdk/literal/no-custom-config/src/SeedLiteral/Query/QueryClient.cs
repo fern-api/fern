@@ -40,7 +40,6 @@ public partial class QueryClient : IQueryClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "query",
                     QueryString = _queryString,

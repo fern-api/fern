@@ -4,26 +4,26 @@ import type * as FernSeedConfig from "../../../index.js";
 
 export interface SeedWorkspaceConfiguration {
     image: string;
-    imageAliases?: string[];
+    imageAliases?: string[] | undefined;
     displayName: string;
     irVersion: string;
     test: FernSeedConfig.TestConfiguration;
     publish: FernSeedConfig.PublishConfiguration;
     /** The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object. */
-    changelogLocation?: string;
-    language?: FernSeedConfig.Language;
-    defaultCustomConfig?: Record<string, unknown>;
+    changelogLocation?: string | undefined;
+    language?: FernSeedConfig.Language | undefined;
+    defaultCustomConfig?: Record<string, unknown> | undefined;
     defaultOutputMode: FernSeedConfig.OutputMode;
     generatorType: FernSeedConfig.GeneratorType;
-    buildScripts?: FernSeedConfig.BuildScripts;
+    buildScripts?: FernSeedConfig.BuildScripts | undefined;
     /** Configuration that will be used for any custom fixture specified by --custom-fixture */
-    customFixtureConfig?: FernSeedConfig.FixtureConfigurations;
-    fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]>;
-    scripts?: FernSeedConfig.ContainerScriptConfig[];
+    customFixtureConfig?: FernSeedConfig.FixtureConfigurations | undefined;
+    fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]> | undefined;
+    scripts?: FernSeedConfig.ContainerScriptConfig[] | undefined;
     /**
      * List any fixtures that are okay to fail. For normal fixtures
      * just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
      */
-    allowedFailures?: string[];
-    features?: FernSeedConfig.GeneratorFeatures;
+    allowedFailures?: string[] | undefined;
+    features?: FernSeedConfig.GeneratorFeatures | undefined;
 }

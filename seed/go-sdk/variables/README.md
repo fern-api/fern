@@ -38,6 +38,7 @@ func do() {
     client := client.NewClient()
     client.Service.Post(
         context.TODO(),
+        "<endpointParam>",
     )
 }
 ```

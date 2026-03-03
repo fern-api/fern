@@ -30,7 +30,6 @@ public partial class EnumClient : IEnumClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/enum",
                     Body = request,

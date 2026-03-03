@@ -15,8 +15,9 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension.js";
 import { FernOpenAPIExtension } from "../../index.js";
 import { convertAvailability } from "../../schema/convertAvailability.js";
-import { convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
+import { convertReferenceObject, convertSchema, resetTitleCollisionTracker } from "../../schema/convertSchemas.js";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
+import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
 import { getSchemas } from "../../utils/getSchemas.js";
 import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
 import { ExampleWebsocketSessionFactory, SessionExampleBuilderInput } from "../ExampleWebsocketSessionFactory.js";
@@ -169,9 +170,9 @@ export function parseAsyncAPIV3({
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
+        const serverNameOverride = getExtension<string>(server, FernAsyncAPIExtension.FERN_SERVER_NAME);
         servers[serverId] = {
-            // Always preserve server names from AsyncAPI spec
-            name: serverId,
+            name: serverNameOverride ?? serverId,
             url: constructServerUrl(server.protocol, server.host)
         };
     }
@@ -291,37 +292,58 @@ export function parseAsyncAPIV3({
                     FernAsyncAPIExtension.FERN_PARAMETER_OPTIONAL
                 );
                 const parameterName = upperFirst(camelCase(channelPath)) + upperFirst(camelCase(name));
-                const parameterSchemaObject = {
-                    ...resolvedParameter,
-                    type: "string" as OpenAPIV3.NonArraySchemaObjectType,
-                    title: parameterName,
-                    example: resolvedParameter.examples?.[0],
-                    default: resolvedParameter.default,
-                    enum: resolvedParameter.enum,
-                    required: undefined
-                };
-                let parameterSchema: SchemaWithExample = convertSchema(
-                    parameterSchemaObject,
-                    false,
-                    false,
-                    context,
-                    [parameterKey],
-                    source,
-                    context.namespace
-                );
-                if (isOptional) {
-                    parameterSchema = SchemaWithExample.optional({
-                        value: parameterSchema,
-                        description: undefined,
-                        availability: undefined,
-                        generatedName: "",
-                        title: parameterName,
-                        namespace: undefined,
-                        groupName: undefined,
-                        nameOverride: undefined,
-                        inline: undefined
-                    });
-                }
+                const baseParameterSchema: SchemaWithExample =
+                    resolvedParameter.schema != null
+                        ? isReferenceObject(resolvedParameter.schema)
+                            ? convertReferenceObject(
+                                  resolvedParameter.schema,
+                                  false,
+                                  false,
+                                  context,
+                                  [parameterKey],
+                                  undefined,
+                                  source,
+                                  context.namespace
+                              )
+                            : convertSchema(
+                                  resolvedParameter.schema,
+                                  false,
+                                  false,
+                                  context,
+                                  [parameterKey],
+                                  source,
+                                  context.namespace
+                              )
+                        : convertSchema(
+                              {
+                                  ...resolvedParameter,
+                                  type: "string" as OpenAPIV3.NonArraySchemaObjectType,
+                                  title: parameterName,
+                                  example: resolvedParameter.examples?.[0],
+                                  default: resolvedParameter.default,
+                                  enum: resolvedParameter.enum,
+                                  required: undefined
+                              },
+                              false,
+                              false,
+                              context,
+                              [parameterKey],
+                              source,
+                              context.namespace
+                          );
+                const parameterSchema = isOptional
+                    ? SchemaWithExample.optional({
+                          value: baseParameterSchema,
+                          description: undefined,
+                          availability: undefined,
+                          generatedName: "",
+                          title: parameterName,
+                          namespace: undefined,
+                          groupName: undefined,
+                          nameOverride: undefined,
+                          inline: undefined
+                      })
+                    : baseParameterSchema;
                 const parameterObject = {
                     name: parameterKey,
                     description: resolvedParameter.description,
@@ -355,45 +377,54 @@ export function parseAsyncAPIV3({
             const fernExamples: WebsocketSessionExampleExtension[] = getFernExamples(channel);
             const messages: WebsocketMessageSchema[] = channelEvents[channelPath]?.__parsedMessages ?? [];
             let examples: WebsocketSessionExample[] = [];
-            if (fernExamples.length > 0) {
-                examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
-                    context,
-                    extensionExamples: fernExamples,
-                    handshake: {
-                        headers,
-                        queryParameters
-                    },
-                    source,
-                    namespace: context.namespace
-                });
-            } else {
-                const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
-                const { examplePublishMessage, exampleSubscribeMessage } = getExampleSchemas({
-                    messages,
-                    messageSchemas: messageSchemas[channelPath] ?? {}
-                });
-                if (examplePublishMessage != null) {
-                    exampleBuilderInputs.push(examplePublishMessage);
+            try {
+                if (fernExamples.length > 0) {
+                    examples = exampleFactory.buildWebsocketSessionExamplesForExtension({
+                        context,
+                        extensionExamples: fernExamples,
+                        handshake: {
+                            headers,
+                            queryParameters
+                        },
+                        source,
+                        namespace: context.namespace
+                    });
+                } else {
+                    const exampleBuilderInputs: SessionExampleBuilderInput[] = [];
+                    const { examplePublishMessage, exampleSubscribeMessage } = getExampleSchemas({
+                        messages,
+                        messageSchemas: messageSchemas[channelPath] ?? {}
+                    });
+                    if (examplePublishMessage != null) {
+                        exampleBuilderInputs.push(examplePublishMessage);
+                    }
+                    if (exampleSubscribeMessage != null) {
+                        exampleBuilderInputs.push(exampleSubscribeMessage);
+                    }
+                    const autogenExample = exampleFactory.buildWebsocketSessionExample({
+                        handshake: {
+                            headers,
+                            queryParameters
+                        },
+                        messages: exampleBuilderInputs
+                    });
+                    if (autogenExample != null) {
+                        examples.push(autogenExample);
+                    }
                 }
-                if (exampleSubscribeMessage != null) {
-                    exampleBuilderInputs.push(exampleSubscribeMessage);
-                }
-                const autogenExample = exampleFactory.buildWebsocketSessionExample({
-                    handshake: {
-                        headers,
-                        queryParameters
-                    },
-                    messages: exampleBuilderInputs
-                });
-                if (autogenExample != null) {
-                    examples.push(autogenExample);
-                }
+            } catch (error) {
+                context.logger.warn(
+                    `Failed to build examples for channel ${channelPath}: ${error instanceof Error ? error.message : String(error)}`
+                );
             }
 
             const groupName = getExtension<string | string[] | undefined>(
                 channel,
                 FernAsyncAPIExtension.FERN_SDK_GROUP_NAME
             );
+
+            // Extract connect method name from x-fern-sdk-method-name extension
+            const connectMethodName = getExtension<string>(channel, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME);
 
             const channelServers = (
                 channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
@@ -429,6 +460,7 @@ export function parseAsyncAPIV3({
                 ),
                 messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
+                connectMethodName,
                 servers: channelServers,
                 path: parsedChannelPath,
                 description: channel.description,
@@ -546,21 +578,27 @@ function convertMessageReferencesToWebsocketSchemas({
     const results: WebsocketMessageSchema[] = [];
 
     messages.forEach((message, i) => {
-        const channelMessage = context.resolveMessageReference(message.ref, true);
-        let schemaId = channelMessage.name as string;
+        try {
+            const channelMessage = context.resolveMessageReference(message.ref, true);
+            let schemaId = channelMessage.name as string;
 
-        if (duplicatedMessageIds.includes(schemaId)) {
-            schemaId = `${channelPath}_${schemaId}`;
-        }
+            if (duplicatedMessageIds.includes(schemaId)) {
+                schemaId = `${channelPath}_${schemaId}`;
+            }
 
-        const schema = messageSchemas[schemaId];
-        if (schema != null) {
-            results.push({
-                origin,
-                name: schemaId ?? `${origin}Message${i + 1}`,
-                body: convertSchemaWithExampleToSchema(schema),
-                methodName: message.methodName
-            });
+            const schema = messageSchemas[schemaId];
+            if (schema != null) {
+                results.push({
+                    origin,
+                    name: schemaId ?? `${origin}Message${i + 1}`,
+                    body: convertSchemaWithExampleToSchema(schema),
+                    methodName: message.methodName
+                });
+            }
+        } catch (error) {
+            context.logger.warn(
+                `Skipping message reference ${message.ref.$ref} in channel ${channelPath}: ${error instanceof Error ? error.message : String(error)}`
+            );
         }
     });
 

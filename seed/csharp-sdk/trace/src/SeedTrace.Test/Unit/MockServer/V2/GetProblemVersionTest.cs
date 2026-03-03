@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using SeedTrace.Core;
 using SeedTrace.Test_.Unit.MockServer;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer.V2;
 
@@ -321,10 +321,6 @@ public class GetProblemVersionTest : BaseMockServerTest
             );
 
         var response = await Client.V2.Problem.GetProblemVersionAsync("problemId", 1);
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<SeedTrace.V2.ProblemInfoV2>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

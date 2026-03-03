@@ -29,7 +29,6 @@ public partial class OrganizationsClient : IOrganizationsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/{0}/organizations/{1}/",
@@ -98,7 +97,6 @@ public partial class OrganizationsClient : IOrganizationsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/{0}/organizations/{1}/users/{2}",
@@ -171,7 +169,6 @@ public partial class OrganizationsClient : IOrganizationsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = string.Format(
                         "/{0}/organizations/{1}/search",

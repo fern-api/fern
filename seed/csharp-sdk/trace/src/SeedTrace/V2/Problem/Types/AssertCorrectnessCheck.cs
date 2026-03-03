@@ -179,16 +179,23 @@ public record AssertCorrectnessCheck
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "deepEquality" => json.Deserialize<SeedTrace.V2.DeepEqualityCorrectnessCheck?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.DeepEqualityCorrectnessCheck"
-                    ),
+                "deepEquality" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.DeepEqualityCorrectnessCheck?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.DeepEqualityCorrectnessCheck"
+                        ),
                 "custom" =>
-                    json.Deserialize<SeedTrace.V2.VoidFunctionDefinitionThatTakesActualResult?>(
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.VoidFunctionDefinitionThatTakesActualResult?>(
                         options
                     )
                         ?? throw new JsonException(

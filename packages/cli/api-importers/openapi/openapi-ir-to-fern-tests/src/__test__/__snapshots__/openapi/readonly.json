@@ -129,8 +129,8 @@
                 "type": "optional<string>",
               },
               "name": "optional<string>",
-              "settings": "optional<UserSettings>",
-              "stats": "optional<UserStats>",
+              "settings": "optional<UserSettingsRead>",
+              "stats": "optional<UserStatsRead>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -264,8 +264,8 @@ types:
       createdAt:
         type: optional<datetime>
         access: read-only
-      settings: optional<UserSettings>
-      stats: optional<UserStats>
+      settings: optional<UserSettingsRead>
+      stats: optional<UserStatsRead>
     source:
       openapi: ../openapi.yml
   UserSettingsRead:

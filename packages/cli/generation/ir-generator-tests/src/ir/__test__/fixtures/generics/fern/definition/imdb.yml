@@ -44,3 +44,46 @@ types:
     properties:
       vanilla-value: CreateMovieRequest
       vanilla-other-value: Movie
+
+  # Nested generics: generic types whose properties reference other generic types
+  Data<T>:
+    properties:
+      id: string
+      type: string
+      attributes: T
+
+  Request<T>:
+    properties:
+      data: list<Data<T>>
+
+  User:
+    properties:
+      name: string
+      userId: string
+      zipCode: optional<string>
+
+  CreateUsersRequest:
+    type: Request<User>
+
+  # Multi-param nested generic
+  Pair<A, B>:
+    properties:
+      first: A
+      second: B
+
+  NestedPair<T>:
+    properties:
+      pair: Pair<T, string>
+      items: list<T>
+
+  NestedPairOfMovies:
+    type: NestedPair<Movie>
+
+  # Nested generic with optional wrapper
+  OptionalWrapper<T>:
+    properties:
+      value: optional<T>
+      items: list<T>
+
+  WrappedMovie:
+    type: OptionalWrapper<Movie>

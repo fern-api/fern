@@ -159,3 +159,4 @@ client.update_foo(
 </dd>
 </dl>
 </details>
+

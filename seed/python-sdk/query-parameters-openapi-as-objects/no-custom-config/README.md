@@ -80,6 +80,8 @@ client.search(
         tags=["tags", "tags"],
     ),
     filter="filter",
+    tags="tags",
+    optional_tags="optionalTags",
     neighbor=User(
         name="name",
         tags=["tags", "tags"],
@@ -146,6 +148,8 @@ async def main() -> None:
             tags=["tags", "tags"],
         ),
         filter="filter",
+        tags="tags",
+        optional_tags="optionalTags",
         neighbor=User(
             name="name",
             tags=["tags", "tags"],

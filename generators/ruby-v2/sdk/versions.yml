@@ -1,5 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.4
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of a hardcoded constant. Docker Compose
+        now uses dynamic port mapping (`0:8080`) to avoid port conflicts when running
+        multiple SDK tests in parallel. Falls back to `http://localhost:8080` if the
+        variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 61
+
+- version: 1.0.3
+  changelogEntry:
+    - summary: |
+        Use generator-cli JS API directly instead of subprocess spawning.
+        Remove generator-cli from Docker image since it is now bundled via esbuild.
+      type: chore
+  createdAt: "2026-02-26"
+  irVersion: 61
+- version: 1.0.2
+  changelogEntry:
+    - summary: |
+        Rename `Union#member?` to `Union#type_member?` to avoid rubocop-minitest's
+        `Minitest/AssertIncludes` cop incorrectly autocorrecting `assert obj.member?(x)`
+        to `assert_includes obj, x`. The autocorrected form calls `Module#include?` which
+        raises `TypeError: wrong argument type Class (expected Module)` on union type tests.
+      type: fix
+  createdAt: "2026-02-24"
+  irVersion: 61
+
 - version: 1.0.1
   changelogEntry:
     - summary: |

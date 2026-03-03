@@ -22,13 +22,15 @@ export function command<T extends GlobalArgs = GlobalArgs>(
     name: string,
     description: string,
     handler: CommandHandler<T>,
-    builder?: BuilderCallback<GlobalArgs, T>
+    builder?: BuilderCallback<GlobalArgs, T>,
+    parentPath?: string
 ): void {
+    const fullName = parentPath != null ? `${parentPath} ${name}` : name;
     cli.command(
         name,
         description,
         (yargs) => {
-            const configured = yargs.version(false).usage(`$0 ${name} [options]\n\n${description}`);
+            const configured = yargs.version(false).usage(`$0 ${fullName} [options]\n\n${description}`);
             return builder != null ? builder(configured) : configured;
         },
         withContext(handler) as unknown as () => void

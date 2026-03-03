@@ -1,5 +1,5 @@
-use base64::Engine;
 use crate::{join_url, ApiError, ClientConfig, OAuthTokenProvider, RequestOptions};
+use base64::Engine;
 use futures::{Stream, StreamExt};
 use reqwest::{
     header::{HeaderName, HeaderValue},
@@ -270,7 +270,10 @@ impl HttpClient {
             .or(self.config.api_key.as_ref());
 
         if let Some(key) = api_key {
-            headers.insert("x-api-key", key.parse().map_err(|_| ApiError::InvalidHeader)?);
+            headers.insert(
+                "x-api-key",
+                key.parse().map_err(|_| ApiError::InvalidHeader)?,
+            );
         }
 
         // Apply bearer token - priority: request options > OAuth > config
@@ -357,10 +360,8 @@ impl HttpClient {
         }
 
         // Parse the token response
-        let token_response: OAuthTokenResponse = response
-            .json()
-            .await
-            .map_err(ApiError::Network)?;
+        let token_response: OAuthTokenResponse =
+            response.json().await.map_err(ApiError::Network)?;
 
         let expires_in = token_response.expires_in.unwrap_or(3600) as u64;
         Ok((token_response.access_token, expires_in))
@@ -485,7 +486,9 @@ impl HttpClient {
         let base64_string: String = serde_json::from_str(&text).map_err(ApiError::Serialization)?;
         base64::engine::general_purpose::STANDARD
             .decode(&base64_string)
-            .map_err(|e| ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e))))
+            .map_err(|e| {
+                ApiError::Serialization(SerdeError::custom(format!("base64 decode error: {}", e)))
+            })
     }
 
     /// Execute a request and return a streaming response (for large file downloads)
@@ -667,9 +670,7 @@ impl HttpClient {
         );
         req.headers_mut().insert(
             "Cache-Control",
-            "no-store"
-                .parse()
-                .map_err(|_| ApiError::InvalidHeader)?,
+            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
         );
 
         // Execute with retries

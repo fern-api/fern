@@ -35,3 +35,17 @@ export const DOCKER_IMAGE_TO_LANGUAGE: Record<string, Language> = {
     "fernapi/fern-fastapi-server": "python",
     "fernapi/fern-java-spring": "java"
 };
+
+/**
+ * Mapping of Docker image names to their changelog documentation URLs.
+ */
+export const DOCKER_IMAGE_TO_CHANGELOG_URL: Record<string, string> = {
+    "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
+    "fernapi/fern-python-sdk": "https://buildwithfern.com/learn/sdks/generators/python/changelog",
+    "fernapi/fern-go-sdk": "https://buildwithfern.com/learn/sdks/generators/go/changelog",
+    "fernapi/fern-java-sdk": "https://buildwithfern.com/learn/sdks/generators/java/changelog",
+    "fernapi/fern-csharp-sdk": "https://buildwithfern.com/learn/sdks/generators/csharp/changelog",
+    "fernapi/fern-php-sdk": "https://buildwithfern.com/learn/sdks/generators/php/changelog",
+    "fernapi/fern-ruby-sdk": "https://buildwithfern.com/learn/sdks/generators/ruby/changelog",
+    "fernapi/fern-swift-sdk": "https://buildwithfern.com/learn/sdks/generators/swift/changelog"
+};

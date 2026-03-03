@@ -41,7 +41,17 @@ export async function listDocsPreview({
         });
 
         if (!listResponse.ok) {
-            return context.failAndThrow("Failed to fetch docs URLs", listResponse.error);
+            switch (listResponse.error.error) {
+                case "UnauthorizedError":
+                    return context.failAndThrow(
+                        "Unauthorized to list preview deployments. Please run 'fern login' to refresh your credentials, or set the FERN_TOKEN environment variable."
+                    );
+                default:
+                    return context.failAndThrow(
+                        "Failed to fetch preview deployments. Please check your network connection and try again.",
+                        listResponse.error
+                    );
+            }
         }
 
         // Preview URLs match the pattern: {org}-preview-{hash}.docs.buildwithfern.com

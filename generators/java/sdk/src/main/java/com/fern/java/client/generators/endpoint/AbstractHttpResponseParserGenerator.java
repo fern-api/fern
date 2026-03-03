@@ -1904,20 +1904,36 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         private Void visitUriOrPathPagination(
                 ResponseProperty nextProperty, ResponseProperty resultsProperty, boolean isUri) {
-            // Extract next token from response
-            SnippetAndResultType nextSnippet = getNestedPropertySnippet(
-                    nextProperty.getPropertyPath().map(path -> path.stream()
-                            .map(PropertyPathItem::getName)
-                            .collect(Collectors.toList())),
-                    nextProperty.getProperty(),
-                    body.getResponseBodyType());
+            // Build the next property getter chain that preserves Optional<String>.
+            // UriPage.create/PathPage.create expect Optional<String>, so we must NOT
+            // unwrap the optional (which getNestedPropertySnippet would do via .orElse(null)).
+            // Instead, we build the getter chain directly.
+            CodeBlock.Builder nextGetterBuilder = CodeBlock.builder();
+            if (nextProperty.getPropertyPath().isPresent()) {
+                for (PropertyPathItem pathItem : nextProperty.getPropertyPath().get()) {
+                    nextGetterBuilder.add(
+                            ".get$L()", pathItem.getName().getPascalCase().getUnsafeName());
+                }
+            }
+            nextGetterBuilder.add(
+                    ".get$L()",
+                    nextProperty
+                            .getProperty()
+                            .getName()
+                            .getName()
+                            .getPascalCase()
+                            .getUnsafeName());
+            CodeBlock nextGetterCode = nextGetterBuilder.build();
+
+            TypeName optionalStringType =
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(String.class));
             CodeBlock nextBlock = CodeBlock.builder()
                     .add(
                             "$T $L = $L",
-                            nextSnippet.typeName,
+                            optionalStringType,
                             variables.getStartingAfterVariableName(),
                             variables.getParsedResponseVariableName())
-                    .add(nextSnippet.codeBlock)
+                    .add(nextGetterCode)
                     .build();
             httpResponseBuilder.addStatement(nextBlock);
 
@@ -1943,9 +1959,10 @@ public abstract class AbstractHttpResponseParserGenerator {
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
 
             // Build the getNext lambda: _response -> _response.getNext()
+            // Must return Optional<String> to match UriPage.create/PathPage.create signature
             CodeBlock getNextLambda = CodeBlock.builder()
                     .add("_response -> _response")
-                    .add(nextSnippet.codeBlock)
+                    .add(nextGetterCode)
                     .build();
 
             // Build the getItems lambda: _response -> _response.getData()

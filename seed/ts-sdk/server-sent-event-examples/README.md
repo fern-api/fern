@@ -14,6 +14,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Exception Handling](#exception-handling)
 - [Streaming Response](#streaming-response)
 - [Advanced](#advanced)
+  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -101,6 +102,16 @@ for await (const item of response) {
 ```
 
 ## Advanced
+
+### Subpackage Exports
+
+This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+```typescript
+import { CompletionsClient } from '@fern/server-sent-event-examples/completions';
+
+const client = new CompletionsClient({...});
+```
 
 ### Additional Headers
 

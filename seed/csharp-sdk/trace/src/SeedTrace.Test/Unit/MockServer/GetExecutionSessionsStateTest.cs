@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedTrace;
-using SeedTrace.Core;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
@@ -45,10 +44,6 @@ public class GetExecutionSessionsStateTest : BaseMockServerTest
             );
 
         var response = await Client.Submission.GetExecutionSessionsStateAsync();
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<GetExecutionSessionStateResponse>(mockResponse))
-                .UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

@@ -181,7 +181,7 @@ abstract class JsonSerializableType implements \JsonSerializable
         // Fill in any missing properties with defaults
         foreach ($properties as $property) {
             if (!isset($args[$property->getName()])) {
-                $args[$property->getName()] = $property->getDefaultValue() ?? null;
+                $args[$property->getName()] = $property->hasDefaultValue() ? $property->getDefaultValue() : null;
             }
         }
 

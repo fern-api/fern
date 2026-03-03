@@ -5,7 +5,7 @@
  */
 export interface ScriptCommandsByPhase {
     /** Commands to run during the build phase */
-    build?: string[];
+    build?: string[] | undefined;
     /** Commands to run during the test phase */
-    test?: string[];
+    test?: string[] | undefined;
 }

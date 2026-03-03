@@ -13,6 +13,7 @@ export function visitPackageMarkerYamlAst(
         types: noop,
         service: noop,
         webhooks: noop,
+        "webhook-signature": noop,
         errors: noop,
         channel: noop,
         export: (export_) => {

@@ -228,7 +228,6 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 types: defaultTypesExport,
                 exports: {
                     ".": {
-                        types: defaultTypesExport,
                         import: {
                             types: mjsTypesFile,
                             default: mjsFile
@@ -250,13 +249,11 @@ export class SimpleTypescriptProject extends TypescriptProject {
                         const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.d.ts`;
                         const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.mjs`;
                         const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.d.mts`;
-                        const defaultTypesExport = this.outputEsm ? mjsTypesFile : cjsTypesFile;
                         const defaultExport = this.outputEsm ? mjsFile : cjsFile;
 
                         return {
                             ...acc,
                             [`./${exportKey}`]: {
-                                types: defaultTypesExport,
                                 import: {
                                     types: mjsTypesFile,
                                     default: mjsFile
@@ -324,7 +321,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 fs: false,
                 os: false,
                 path: false,
-                stream: false
+                stream: false,
+                crypto: false
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 

@@ -34,7 +34,6 @@ public partial class PackageClient : IPackageClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     QueryString = _queryString,

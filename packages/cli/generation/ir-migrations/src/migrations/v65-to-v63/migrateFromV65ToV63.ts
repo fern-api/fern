@@ -157,6 +157,11 @@ function convertType(type: IrVersions.V65.Type): IrVersions.V63.types.Type {
     }
 }
 
+// V65 adds DATE_TIME_RFC_2822 to PrimitiveTypeV1 and PrimitiveTypeV2.
+// V63 does not have this variant. The serializer uses skipValidation: true
+// and unrecognizedObjectKeys: "passthrough", so the new primitive value is
+// handled at serialization time for all nested TypeReferences throughout the IR.
+
 function convertHttpService(
     service: IrVersions.V65.HttpService,
     context: IrMigrationContext
@@ -279,8 +284,9 @@ function convertWebhookGroup(webhookGroup: IrVersions.V65.WebhookGroup): IrVersi
 }
 
 function convertWebhook(webhook: IrVersions.V65.Webhook): IrVersions.V63.webhooks.Webhook {
+    const { signatureVerification: _, ...rest } = webhook;
     return {
-        ...webhook,
+        ...rest,
         availability: convertAvailability(webhook.availability),
         headers: webhook.headers?.map((h) => convertHttpHeader(h)),
         payload: convertWebhookPayload(webhook.payload)
