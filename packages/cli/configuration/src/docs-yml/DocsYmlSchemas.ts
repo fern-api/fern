@@ -2,19 +2,19 @@ import { z } from "zod";
 
 // ===== Simple type aliases =====
 
-const TabId = z.string();
+export const TabId = z.string();
 
-const ChangelogFolderRelativePath = z.string();
+export const ChangelogFolderRelativePath = z.string();
 
-const AudienceId = z.string();
+export const AudienceId = z.string();
 
-const RoleId = z.string();
+export const RoleId = z.string();
 
-const LibraryName = z.string();
+export const LibraryName = z.string();
 
 // ===== Enums =====
 
-const ProgrammingLanguage = z.enum([
+export const ProgrammingLanguage = z.enum([
     "typescript",
     "javascript",
     "python",
@@ -34,53 +34,84 @@ const ProgrammingLanguage = z.enum([
     "js"
 ]);
 
-const Language = z.enum(["en", "es", "fr", "de", "it", "pt", "ja", "zh", "ko", "el", "no", "pl", "ru", "sv", "tr"]);
+export const Language = z.enum([
+    "en",
+    "es",
+    "fr",
+    "de",
+    "it",
+    "pt",
+    "ja",
+    "zh",
+    "ko",
+    "el",
+    "no",
+    "pl",
+    "ru",
+    "sv",
+    "tr"
+]);
 
-const PageActionOption = z.enum(["copy-page", "view-as-markdown", "ask-ai", "chatgpt", "claude", "cursor", "vscode"]);
+export const PageActionOption = z.enum([
+    "copy-page",
+    "view-as-markdown",
+    "ask-ai",
+    "chatgpt",
+    "claude",
+    "cursor",
+    "vscode"
+]);
 
-const AIChatLocation = z.enum(["docs", "slack", "discord"]);
+export const AIChatLocation = z.enum(["docs", "slack", "discord"]);
 
-const AIChatModel = z.enum(["claude-3.7", "claude-4", "command-a"]);
+export const AIChatModel = z.enum(["claude-3.7", "claude-4", "command-a"]);
 
-const EditThisPageLaunch = z.enum(["github", "dashboard"]);
+export const EditThisPageLaunch = z.enum(["github", "dashboard"]);
 
-const Availability = z.enum(["stable", "generally-available", "in-development", "pre-release", "deprecated", "beta"]);
+export const Availability = z.enum([
+    "stable",
+    "generally-available",
+    "in-development",
+    "pre-release",
+    "deprecated",
+    "beta"
+]);
 
-const VersionAvailability = z.enum(["deprecated", "ga", "stable", "beta"]);
+export const VersionAvailability = z.enum(["deprecated", "ga", "stable", "beta"]);
 
-const TitleSource = z.enum(["frontmatter", "filename"]);
+export const TitleSource = z.enum(["frontmatter", "filename"]);
 
-const LibraryLanguage = z.enum(["python", "cpp"]);
+export const LibraryLanguage = z.enum(["python", "cpp"]);
 
-const FontStyle = z.enum(["normal", "italic"]);
+export const FontStyle = z.enum(["normal", "italic"]);
 
-const FontDisplay = z.enum(["auto", "block", "swap", "fallback", "optional"]);
+export const FontDisplay = z.enum(["auto", "block", "swap", "fallback", "optional"]);
 
-const SearchbarPlacement = z.enum(["header", "header-tabs", "sidebar"]);
+export const SearchbarPlacement = z.enum(["header", "header-tabs", "sidebar"]);
 
-const TabsPlacement = z.enum(["header", "sidebar"]);
+export const TabsPlacement = z.enum(["header", "sidebar"]);
 
-const SwitcherPlacement = z.enum(["header", "sidebar"]);
+export const SwitcherPlacement = z.enum(["header", "sidebar"]);
 
-const ContentAlignment = z.enum(["center", "left"]);
+export const ContentAlignment = z.enum(["center", "left"]);
 
-const HeaderPosition = z.enum(["fixed", "static"]);
+export const HeaderPosition = z.enum(["fixed", "static"]);
 
-const ProductSwitcherThemeConfig = z.enum(["default", "toggle"]);
+export const ProductSwitcherThemeConfig = z.enum(["default", "toggle"]);
 
-const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
+export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
 
-const FooterNavThemeConfig = z.enum(["default", "minimal"]);
+export const FooterNavThemeConfig = z.enum(["default", "minimal"]);
 
-const TabsThemeConfig = z.enum(["default", "bubble"]);
+export const TabsThemeConfig = z.enum(["default", "bubble"]);
 
-const BodyThemeConfig = z.enum(["default", "canvas"]);
+export const BodyThemeConfig = z.enum(["default", "canvas"]);
 
-const SidebarThemeConfig = z.enum(["default", "minimal"]);
+export const SidebarThemeConfig = z.enum(["default", "minimal"]);
 
-const PageActionsThemeConfig = z.enum(["default", "toolbar"]);
+export const PageActionsThemeConfig = z.enum(["default", "toolbar"]);
 
-const HttpSnippetLanguage = z.enum([
+export const HttpSnippetLanguage = z.enum([
     "curl",
     "csharp",
     "go",
@@ -93,92 +124,92 @@ const HttpSnippetLanguage = z.enum([
     "typescript"
 ]);
 
-const Target = z.enum(["_blank", "_self", "_parent", "_top"]);
+export const Target = z.enum(["_blank", "_self", "_parent", "_top"]);
 
-const TwitterCardSetting = z.enum(["summary", "summary_large_image", "app", "player"]);
+export const TwitterCardSetting = z.enum(["summary", "summary_large_image", "app", "player"]);
 
-const JsScriptStrategy = z.enum(["beforeInteractive", "afterInteractive", "lazyOnload"]);
+export const JsScriptStrategy = z.enum(["beforeInteractive", "afterInteractive", "lazyOnload"]);
 
 // ===== Simple undiscriminated unions =====
 
-const FontWeight = z.union([z.string(), z.number().int()]);
+export const FontWeight = z.union([z.string(), z.number().int()]);
 
-const ColorThemedConfig = z.object({
+export const ColorThemedConfig = z.object({
     dark: z.string().optional(),
     light: z.string().optional()
 });
 
-const ColorConfig = z.union([z.string(), ColorThemedConfig]);
+export const ColorConfig = z.union([z.string(), ColorThemedConfig]);
 
-const Audience = z.union([AudienceId, z.array(AudienceId)]);
+export const Audience = z.union([AudienceId, z.array(AudienceId)]);
 
-const Role = z.union([RoleId, z.array(RoleId)]);
+export const Role = z.union([RoleId, z.array(RoleId)]);
 
-const CustomDomain = z.union([z.string(), z.array(z.string())]);
+export const CustomDomain = z.union([z.string(), z.array(z.string())]);
 
-const HttpSnippetsConfig = z.union([z.boolean(), z.array(HttpSnippetLanguage)]);
+export const HttpSnippetsConfig = z.union([z.boolean(), z.array(HttpSnippetLanguage)]);
 
-const BackgroundImageThemedConfig = z.object({
+export const BackgroundImageThemedConfig = z.object({
     dark: z.string().optional(),
     light: z.string().optional()
 });
 
-const BackgroundImageConfiguration = z.union([z.string(), BackgroundImageThemedConfig]);
+export const BackgroundImageConfiguration = z.union([z.string(), BackgroundImageThemedConfig]);
 
-const CssConfig = z.union([z.string(), z.array(z.string())]);
+export const CssConfig = z.union([z.string(), z.array(z.string())]);
 
 // ===== Base/mixin schemas =====
 
-const WithPermissions = z.object({
+export const WithPermissions = z.object({
     viewers: Role.optional(),
     orphaned: z.boolean().optional()
 });
 
-const FeatureFlag = z.object({
+export const FeatureFlag = z.object({
     flag: z.string(),
     "fallback-value": z.unknown().optional(),
     match: z.unknown().optional()
 });
 
-const FeatureFlagConfiguration = z.union([z.string(), FeatureFlag, z.array(FeatureFlag)]);
+export const FeatureFlagConfiguration = z.union([z.string(), FeatureFlag, z.array(FeatureFlag)]);
 
-const WithFeatureFlags = z.object({
+export const WithFeatureFlags = z.object({
     "feature-flag": FeatureFlagConfiguration.optional()
 });
 
-const WithViewers = z.object({
+export const WithViewers = z.object({
     viewers: Role.optional()
 });
 
 // ===== Analytics schemas =====
 
-const SegmentConfig = z.object({
+export const SegmentConfig = z.object({
     "write-key": z.string()
 });
 
-const FullStoryAnalyticsConfig = z.object({
+export const FullStoryAnalyticsConfig = z.object({
     "org-id": z.string()
 });
 
-const IntercomConfig = z.object({
+export const IntercomConfig = z.object({
     "app-id": z.string(),
     "api-base": z.string().optional()
 });
 
-const PostHogConfig = z.object({
+export const PostHogConfig = z.object({
     "api-key": z.string(),
     endpoint: z.string().optional()
 });
 
-const GTMConfig = z.object({
+export const GTMConfig = z.object({
     "container-id": z.string()
 });
 
-const GoogleAnalytics4Config = z.object({
+export const GoogleAnalytics4Config = z.object({
     "measurement-id": z.string()
 });
 
-const AnalyticsConfig = z.object({
+export const AnalyticsConfig = z.object({
     segment: SegmentConfig.optional(),
     fullstory: FullStoryAnalyticsConfig.optional(),
     intercom: IntercomConfig.optional(),
@@ -189,19 +220,19 @@ const AnalyticsConfig = z.object({
 
 // ===== AI schemas =====
 
-const AiExamplesConfig = z.object({
+export const AiExamplesConfig = z.object({
     enabled: z.boolean().optional(),
     style: z.string().optional()
 });
 
-const AIChatWebsiteDatasource = z.object({
+export const AIChatWebsiteDatasource = z.object({
     url: z.string(),
     title: z.string().optional()
 });
 
-const AIChatDatasource = AIChatWebsiteDatasource;
+export const AIChatDatasource = AIChatWebsiteDatasource;
 
-const AIChatConfig = z.object({
+export const AIChatConfig = z.object({
     model: AIChatModel.optional(),
     "system-prompt": z.string().optional(),
     location: z.array(AIChatLocation).optional(),
@@ -210,15 +241,15 @@ const AIChatConfig = z.object({
 
 // ===== Font schemas =====
 
-const FontConfigVariant = z.object({
+export const FontConfigVariant = z.object({
     path: z.string(),
     weight: FontWeight.optional(),
     style: FontStyle.optional()
 });
 
-const FontConfigPath = z.union([z.string(), FontConfigVariant]);
+export const FontConfigPath = z.union([z.string(), FontConfigVariant]);
 
-const FontConfig = z.object({
+export const FontConfig = z.object({
     name: z.string().optional(),
     path: z.string().optional(),
     weight: FontWeight.optional(),
@@ -231,7 +262,7 @@ const FontConfig = z.object({
 
 // ===== Typography =====
 
-const DocsTypographyConfig = z.object({
+export const DocsTypographyConfig = z.object({
     headingsFont: FontConfig.optional(),
     bodyFont: FontConfig.optional(),
     codeFont: FontConfig.optional()
@@ -239,7 +270,7 @@ const DocsTypographyConfig = z.object({
 
 // ===== Theme schemas =====
 
-const ThemeConfig = z.object({
+export const ThemeConfig = z.object({
     sidebar: SidebarThemeConfig.optional(),
     body: BodyThemeConfig.optional(),
     tabs: TabsThemeConfig.optional(),
@@ -251,7 +282,7 @@ const ThemeConfig = z.object({
 
 // ===== Layout schemas =====
 
-const LayoutConfig = z.object({
+export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
     "content-width": z.string().optional(),
     "sidebar-width": z.string().optional(),
@@ -268,7 +299,7 @@ const LayoutConfig = z.object({
 
 // ===== Settings =====
 
-const DocsSettingsConfig = z.object({
+export const DocsSettingsConfig = z.object({
     "search-text": z.string().optional(),
     "disable-search": z.boolean().optional(),
     "dark-mode-code": z.boolean().optional(),
@@ -285,7 +316,7 @@ const DocsSettingsConfig = z.object({
 
 // ===== Colors =====
 
-const ColorsConfiguration = z.object({
+export const ColorsConfiguration = z.object({
     "accent-primary": ColorConfig.optional(),
     accentPrimary: ColorConfig.optional(),
     background: ColorConfig.optional(),
@@ -309,7 +340,7 @@ const ColorsConfiguration = z.object({
 
 // ===== Page actions =====
 
-const CustomPageAction = z.object({
+export const CustomPageAction = z.object({
     title: z.string(),
     subtitle: z.string().optional(),
     url: z.string(),
@@ -317,7 +348,7 @@ const CustomPageAction = z.object({
     default: z.boolean().optional()
 });
 
-const PageActionOptions = z.object({
+export const PageActionOptions = z.object({
     "copy-page": z.boolean().optional(),
     "view-as-markdown": z.boolean().optional(),
     "ask-ai": z.boolean().optional(),
@@ -328,28 +359,28 @@ const PageActionOptions = z.object({
     custom: z.array(CustomPageAction).optional()
 });
 
-const PageActionsConfig = z.object({
+export const PageActionsConfig = z.object({
     default: PageActionOption.optional(),
     options: PageActionOptions.optional()
 });
 
 // ===== Edit this page =====
 
-const GithubEditThisPageConfig = z.object({
+export const GithubEditThisPageConfig = z.object({
     host: z.string().optional(),
     owner: z.string(),
     repo: z.string(),
     branch: z.string().optional()
 });
 
-const EditThisPageConfig = z.object({
+export const EditThisPageConfig = z.object({
     github: GithubEditThisPageConfig.optional(),
     launch: EditThisPageLaunch.optional()
 });
 
 // ===== Docs Instance =====
 
-const DocsInstance = z.object({
+export const DocsInstance = z.object({
     url: z.string(),
     "custom-domain": CustomDomain.optional(),
     private: z.boolean().optional(),
@@ -359,7 +390,7 @@ const DocsInstance = z.object({
 
 // ===== Logo =====
 
-const LogoConfiguration = z.object({
+export const LogoConfiguration = z.object({
     dark: z.string().optional(),
     light: z.string().optional(),
     height: z.number().optional(),
@@ -369,7 +400,7 @@ const LogoConfiguration = z.object({
 
 // ===== Link =====
 
-const LinkConfiguration = z.object({
+export const LinkConfiguration = z.object({
     link: z.string(),
     href: z.string(),
     icon: z.string().optional(),
@@ -378,14 +409,14 @@ const LinkConfiguration = z.object({
 
 // ===== Snippets =====
 
-const VersionedSnippetLanguageConfiguration = z.object({
+export const VersionedSnippetLanguageConfiguration = z.object({
     version: z.string(),
     package: z.string()
 });
 
-const SnippetLanguageConfiguration = z.union([z.string(), VersionedSnippetLanguageConfiguration]);
+export const SnippetLanguageConfiguration = z.union([z.string(), VersionedSnippetLanguageConfiguration]);
 
-const SnippetsConfiguration = z.object({
+export const SnippetsConfiguration = z.object({
     python: SnippetLanguageConfiguration.optional(),
     typescript: SnippetLanguageConfiguration.optional(),
     go: SnippetLanguageConfiguration.optional(),
@@ -399,11 +430,11 @@ const SnippetsConfiguration = z.object({
 
 // ===== Playground =====
 
-const PlaygroundButtonSettings = z.object({
+export const PlaygroundButtonSettings = z.object({
     href: z.string().optional()
 });
 
-const PlaygroundSettings = z.object({
+export const PlaygroundSettings = z.object({
     hidden: z.boolean().optional(),
     environments: z.array(z.string()).optional(),
     button: PlaygroundButtonSettings.optional(),
@@ -413,13 +444,13 @@ const PlaygroundSettings = z.object({
 
 // ===== Announcement =====
 
-const AnnouncementConfig = z.object({
+export const AnnouncementConfig = z.object({
     message: z.string()
 });
 
 // ===== Navbar =====
 
-const NavbarLinkConfig = WithViewers.merge(
+export const NavbarLinkConfig = WithViewers.merge(
     z.object({
         href: z.string().optional(),
         target: Target.optional(),
@@ -431,16 +462,16 @@ const NavbarLinkConfig = WithViewers.merge(
     })
 );
 
-const NavbarGithubConfigWithOptions = WithViewers.merge(
+export const NavbarGithubConfigWithOptions = WithViewers.merge(
     z.object({
         url: z.string(),
         target: Target.optional()
     })
 );
 
-const NavbarGithubConfig = z.union([z.string(), NavbarGithubConfigWithOptions]);
+export const NavbarGithubConfig = z.union([z.string(), NavbarGithubConfigWithOptions]);
 
-const NavbarDropdownConfig = WithViewers.merge(
+export const NavbarDropdownConfig = WithViewers.merge(
     z.object({
         links: z.array(NavbarLinkConfig),
         text: z.string().optional(),
@@ -450,7 +481,7 @@ const NavbarDropdownConfig = WithViewers.merge(
     })
 );
 
-const NavbarLink = z.union([
+export const NavbarLink = z.union([
     NavbarLinkConfig.merge(z.object({ type: z.literal("filled") })),
     NavbarLinkConfig.merge(z.object({ type: z.literal("outlined") })),
     NavbarLinkConfig.merge(z.object({ type: z.literal("minimal") })),
@@ -462,7 +493,7 @@ const NavbarLink = z.union([
 
 // ===== Footer links =====
 
-const FooterLinksConfig = z.object({
+export const FooterLinksConfig = z.object({
     github: z.string().optional(),
     twitter: z.string().optional(),
     x: z.string().optional(),
@@ -479,25 +510,25 @@ const FooterLinksConfig = z.object({
 
 // ===== JS Config =====
 
-const JsFileConfigSettings = z.object({
+export const JsFileConfigSettings = z.object({
     path: z.string(),
     strategy: JsScriptStrategy.optional()
 });
 
-const JsFileConfig = z.union([z.string(), JsFileConfigSettings]);
+export const JsFileConfig = z.union([z.string(), JsFileConfigSettings]);
 
-const JsRemoteConfig = z.object({
+export const JsRemoteConfig = z.object({
     url: z.string(),
     strategy: JsScriptStrategy.optional()
 });
 
-const JsConfigOptions = z.union([JsRemoteConfig, JsFileConfig]);
+export const JsConfigOptions = z.union([JsRemoteConfig, JsFileConfig]);
 
-const JsConfig = z.union([JsConfigOptions, z.array(JsConfigOptions)]);
+export const JsConfig = z.union([JsConfigOptions, z.array(JsConfigOptions)]);
 
 // ===== Metadata =====
 
-const MetadataConfig = z.object({
+export const MetadataConfig = z.object({
     "og:site_name": z.string().optional(),
     "og:title": z.string().optional(),
     "og:description": z.string().optional(),
@@ -519,7 +550,7 @@ const MetadataConfig = z.object({
 
 // ===== Redirects =====
 
-const RedirectConfig = z.object({
+export const RedirectConfig = z.object({
     source: z.string(),
     destination: z.string(),
     permanent: z.boolean().optional()
@@ -527,13 +558,13 @@ const RedirectConfig = z.object({
 
 // ===== Integrations =====
 
-const IntegrationsConfig = z.object({
+export const IntegrationsConfig = z.object({
     intercom: z.string().optional()
 });
 
 // ===== Experimental =====
 
-const ExperimentalConfig = z.object({
+export const ExperimentalConfig = z.object({
     "mdx-components": z.array(z.string()).optional(),
     "disable-stream-toggle": z.boolean().optional(),
     "openapi-parser-v2": z.boolean().optional(),
@@ -547,22 +578,22 @@ const ExperimentalConfig = z.object({
 
 // ===== Library schemas =====
 
-const GitLibraryInputSchema = z.object({
+export const GitLibraryInputSchema = z.object({
     git: z.string(),
     subpath: z.string().optional()
 });
 
-const PathLibraryInputSchema = z.object({
+export const PathLibraryInputSchema = z.object({
     path: z.string()
 });
 
-const LibraryInputConfiguration = z.union([GitLibraryInputSchema, PathLibraryInputSchema]);
+export const LibraryInputConfiguration = z.union([GitLibraryInputSchema, PathLibraryInputSchema]);
 
-const LibraryOutputConfiguration = z.object({
+export const LibraryOutputConfiguration = z.object({
     path: z.string()
 });
 
-const LibraryConfiguration = z.object({
+export const LibraryConfiguration = z.object({
     input: LibraryInputConfiguration,
     output: LibraryOutputConfiguration,
     lang: LibraryLanguage
@@ -570,7 +601,7 @@ const LibraryConfiguration = z.object({
 
 // ===== Page Configuration =====
 
-const PageConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const PageConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         page: z.string(),
         path: z.string(),
@@ -584,7 +615,7 @@ const PageConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
 
 // ===== Changelog Configuration =====
 
-const ChangelogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const ChangelogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         changelog: ChangelogFolderRelativePath,
         title: z.string().optional(),
@@ -596,7 +627,7 @@ const ChangelogConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
 
 // ===== Library Reference Configuration =====
 
-const LibraryReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const LibraryReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         library: LibraryName,
         title: z.string().optional(),
@@ -606,7 +637,7 @@ const LibraryReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).me
 
 // ===== Folder Configuration =====
 
-const FolderConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const FolderConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         folder: z.string(),
         title: z.string().optional(),
@@ -624,7 +655,7 @@ const FolderConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
 
 // ===== Recursive types: ApiReferenceLayoutItem =====
 
-const ApiReferenceEndpointConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const ApiReferenceEndpointConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         endpoint: z.string(),
         title: z.string().optional(),
@@ -636,7 +667,7 @@ const ApiReferenceEndpointConfiguration = WithPermissions.merge(WithFeatureFlags
     })
 );
 
-const ApiReferenceOperationConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const ApiReferenceOperationConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         operation: z.string(),
         title: z.string().optional(),
@@ -647,7 +678,7 @@ const ApiReferenceOperationConfiguration = WithPermissions.merge(WithFeatureFlag
 );
 
 // Use z.lazy for recursive ApiReferenceLayoutItem
-const ApiReferenceLayoutItem: z.ZodType<unknown> = z.lazy(() =>
+export const ApiReferenceLayoutItem: z.ZodType<unknown> = z.lazy(() =>
     z.union([
         z.string(),
         z.record(z.string(), ApiReferencePackageConfiguration),
@@ -659,7 +690,7 @@ const ApiReferenceLayoutItem: z.ZodType<unknown> = z.lazy(() =>
     ])
 );
 
-const ApiReferenceSectionConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const ApiReferenceSectionConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         section: z.string(),
         "referenced-packages": z.array(z.string()).optional(),
@@ -676,7 +707,7 @@ const ApiReferenceSectionConfiguration = WithPermissions.merge(WithFeatureFlags)
     })
 );
 
-const ApiReferencePackageConfigurationWithOptions = WithPermissions.merge(WithFeatureFlags).merge(
+export const ApiReferencePackageConfigurationWithOptions = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         title: z.string().optional(),
         summary: z.string().optional(),
@@ -690,13 +721,13 @@ const ApiReferencePackageConfigurationWithOptions = WithPermissions.merge(WithFe
     })
 );
 
-const ApiReferencePackageConfiguration: z.ZodType<unknown> = z.lazy(() =>
+export const ApiReferencePackageConfiguration: z.ZodType<unknown> = z.lazy(() =>
     z.union([z.array(ApiReferenceLayoutItem), ApiReferencePackageConfigurationWithOptions])
 );
 
 // ===== API Reference Configuration =====
 
-const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         api: z.string(),
         "api-name": z.string().optional(),
@@ -724,7 +755,7 @@ const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
 // ===== Recursive types: NavigationItem =====
 
 // Use z.lazy for recursive NavigationItem
-const NavigationItem: z.ZodType<unknown> = z.lazy(() =>
+export const NavigationItem: z.ZodType<unknown> = z.lazy(() =>
     z.union([
         PageConfiguration,
         SectionConfiguration,
@@ -736,7 +767,7 @@ const NavigationItem: z.ZodType<unknown> = z.lazy(() =>
     ])
 );
 
-const SectionConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
+export const SectionConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         section: z.string(),
         path: z.string().optional(),
@@ -754,9 +785,9 @@ const SectionConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
 
 // ===== Navigation schemas =====
 
-const UntabbedNavigationConfig = z.array(NavigationItem);
+export const UntabbedNavigationConfig = z.array(NavigationItem);
 
-const TabVariant = WithPermissions.merge(WithFeatureFlags).merge(
+export const TabVariant = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         title: z.string(),
         subtitle: z.string().optional(),
@@ -769,25 +800,25 @@ const TabVariant = WithPermissions.merge(WithFeatureFlags).merge(
     })
 );
 
-const TabbedNavigationItemWithLayout = z.object({
+export const TabbedNavigationItemWithLayout = z.object({
     tab: TabId,
     layout: z.array(NavigationItem).optional()
 });
 
-const TabbedNavigationItemWithVariants = z.object({
+export const TabbedNavigationItemWithVariants = z.object({
     tab: TabId,
     variants: z.array(TabVariant)
 });
 
-const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
+export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
 
-const TabbedNavigationConfig = z.array(TabbedNavigationItem);
+export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
 
-const NavigationConfig = z.union([UntabbedNavigationConfig, TabbedNavigationConfig]);
+export const NavigationConfig = z.union([UntabbedNavigationConfig, TabbedNavigationConfig]);
 
 // ===== Tab Config =====
 
-const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
+export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
         icon: z.string().optional(),
@@ -802,7 +833,7 @@ const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
 
 // ===== Version Config =====
 
-const VersionConfig = WithPermissions.merge(WithFeatureFlags).merge(
+export const VersionConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
         path: z.string(),
@@ -814,7 +845,7 @@ const VersionConfig = WithPermissions.merge(WithFeatureFlags).merge(
     })
 );
 
-const VersionFileConfig = z.object({
+export const VersionFileConfig = z.object({
     tabs: z.record(TabId, TabConfig).optional(),
     "landing-page": PageConfiguration.optional(),
     navigation: NavigationConfig
@@ -822,7 +853,7 @@ const VersionFileConfig = z.object({
 
 // ===== Product schemas =====
 
-const ProductConfigBase = WithPermissions.merge(WithFeatureFlags).merge(
+export const ProductConfigBase = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
         subtitle: z.string().optional(),
@@ -833,7 +864,7 @@ const ProductConfigBase = WithPermissions.merge(WithFeatureFlags).merge(
     })
 );
 
-const InternalProduct = ProductConfigBase.merge(
+export const InternalProduct = ProductConfigBase.merge(
     z.object({
         path: z.string(),
         slug: z.string().optional(),
@@ -841,16 +872,16 @@ const InternalProduct = ProductConfigBase.merge(
     })
 );
 
-const ExternalProduct = ProductConfigBase.merge(
+export const ExternalProduct = ProductConfigBase.merge(
     z.object({
         href: z.string(),
         target: Target.optional()
     })
 );
 
-const ProductConfig = z.union([InternalProduct, ExternalProduct]);
+export const ProductConfig = z.union([InternalProduct, ExternalProduct]);
 
-const RelativeProductPath = WithPermissions.merge(WithFeatureFlags).merge(
+export const RelativeProductPath = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
         path: z.string(),
@@ -858,13 +889,13 @@ const RelativeProductPath = WithPermissions.merge(WithFeatureFlags).merge(
     })
 );
 
-const AbsoluteProductPath = z.object({
+export const AbsoluteProductPath = z.object({
     href: z.string()
 });
 
-const ProductPath = z.union([RelativeProductPath, AbsoluteProductPath]);
+export const ProductPath = z.union([RelativeProductPath, AbsoluteProductPath]);
 
-const ProductFileConfig = z.object({
+export const ProductFileConfig = z.object({
     tabs: z.record(TabId, TabConfig).optional(),
     "landing-page": PageConfiguration.optional(),
     navigation: NavigationConfig
@@ -872,7 +903,7 @@ const ProductFileConfig = z.object({
 
 // ===== Main DocsConfiguration =====
 
-const DocsConfiguration = z.object({
+export const DocsConfiguration = z.object({
     instances: z.array(DocsInstance),
     title: z.string().optional(),
     libraries: z.record(LibraryName, LibraryConfiguration).optional(),
@@ -909,139 +940,3 @@ const DocsConfiguration = z.object({
     header: z.string().optional(),
     footer: z.string().optional()
 });
-
-// Suppress unused variable warnings. These schemas are not exported intentionally.
-// They will be exported in a future PR to replace the existing SDK-generated schemas.
-void TabId;
-void ChangelogFolderRelativePath;
-void AudienceId;
-void RoleId;
-void LibraryName;
-void ProgrammingLanguage;
-void Language;
-void PageActionOption;
-void AIChatLocation;
-void AIChatModel;
-void EditThisPageLaunch;
-void Availability;
-void VersionAvailability;
-void TitleSource;
-void LibraryLanguage;
-void FontStyle;
-void FontDisplay;
-void SearchbarPlacement;
-void TabsPlacement;
-void SwitcherPlacement;
-void ContentAlignment;
-void HeaderPosition;
-void ProductSwitcherThemeConfig;
-void LanguageSwitcherThemeConfig;
-void FooterNavThemeConfig;
-void TabsThemeConfig;
-void BodyThemeConfig;
-void SidebarThemeConfig;
-void PageActionsThemeConfig;
-void HttpSnippetLanguage;
-void Target;
-void TwitterCardSetting;
-void JsScriptStrategy;
-void FontWeight;
-void ColorThemedConfig;
-void ColorConfig;
-void Audience;
-void Role;
-void CustomDomain;
-void HttpSnippetsConfig;
-void BackgroundImageThemedConfig;
-void BackgroundImageConfiguration;
-void CssConfig;
-void WithPermissions;
-void FeatureFlag;
-void FeatureFlagConfiguration;
-void WithFeatureFlags;
-void WithViewers;
-void SegmentConfig;
-void FullStoryAnalyticsConfig;
-void IntercomConfig;
-void PostHogConfig;
-void GTMConfig;
-void GoogleAnalytics4Config;
-void AnalyticsConfig;
-void AiExamplesConfig;
-void AIChatWebsiteDatasource;
-void AIChatDatasource;
-void AIChatConfig;
-void FontConfigVariant;
-void FontConfigPath;
-void FontConfig;
-void DocsTypographyConfig;
-void ThemeConfig;
-void LayoutConfig;
-void DocsSettingsConfig;
-void ColorsConfiguration;
-void CustomPageAction;
-void PageActionOptions;
-void PageActionsConfig;
-void GithubEditThisPageConfig;
-void EditThisPageConfig;
-void DocsInstance;
-void LogoConfiguration;
-void LinkConfiguration;
-void VersionedSnippetLanguageConfiguration;
-void SnippetLanguageConfiguration;
-void SnippetsConfiguration;
-void PlaygroundButtonSettings;
-void PlaygroundSettings;
-void AnnouncementConfig;
-void NavbarLinkConfig;
-void NavbarGithubConfigWithOptions;
-void NavbarGithubConfig;
-void NavbarDropdownConfig;
-void NavbarLink;
-void FooterLinksConfig;
-void JsFileConfigSettings;
-void JsFileConfig;
-void JsRemoteConfig;
-void JsConfigOptions;
-void JsConfig;
-void MetadataConfig;
-void RedirectConfig;
-void IntegrationsConfig;
-void ExperimentalConfig;
-void GitLibraryInputSchema;
-void PathLibraryInputSchema;
-void LibraryInputConfiguration;
-void LibraryOutputConfiguration;
-void LibraryConfiguration;
-void PageConfiguration;
-void ChangelogConfiguration;
-void LibraryReferenceConfiguration;
-void FolderConfiguration;
-void ApiReferenceEndpointConfiguration;
-void ApiReferenceOperationConfiguration;
-void ApiReferenceLayoutItem;
-void ApiReferenceSectionConfiguration;
-void ApiReferencePackageConfigurationWithOptions;
-void ApiReferencePackageConfiguration;
-void ApiReferenceConfiguration;
-void NavigationItem;
-void SectionConfiguration;
-void UntabbedNavigationConfig;
-void TabVariant;
-void TabbedNavigationItemWithLayout;
-void TabbedNavigationItemWithVariants;
-void TabbedNavigationItem;
-void TabbedNavigationConfig;
-void NavigationConfig;
-void TabConfig;
-void VersionConfig;
-void VersionFileConfig;
-void ProductConfigBase;
-void InternalProduct;
-void ExternalProduct;
-void ProductConfig;
-void RelativeProductPath;
-void AbsoluteProductPath;
-void ProductPath;
-void ProductFileConfig;
-void DocsConfiguration;
