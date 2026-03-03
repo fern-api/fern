@@ -107,8 +107,10 @@ func (o *ObjectWithDatetimeAlias) UnmarshalJSON(data []byte) error {
 	type embed ObjectWithDatetimeAlias
 	var unmarshaler = struct {
 		embed
-		DateTime         *internal.DateTime `json:"dateTime"`
-		OptionalDatetime *internal.DateTime `json:"optionalDatetime,omitempty"`
+		DateTime              *internal.DateTime `json:"dateTime"`
+		DatetimeAlias         *internal.DateTime `json:"datetimeAlias"`
+		OptionalDatetime      *internal.DateTime `json:"optionalDatetime,omitempty"`
+		OptionalDatetimeAlias *internal.DateTime `json:"optionalDatetimeAlias,omitempty"`
 	}{
 		embed: embed(*o),
 	}
@@ -117,7 +119,9 @@ func (o *ObjectWithDatetimeAlias) UnmarshalJSON(data []byte) error {
 	}
 	*o = ObjectWithDatetimeAlias(unmarshaler.embed)
 	o.DateTime = unmarshaler.DateTime.Time()
+	o.DatetimeAlias = unmarshaler.DatetimeAlias.Time()
 	o.OptionalDatetime = unmarshaler.OptionalDatetime.TimePtr()
+	o.OptionalDatetimeAlias = unmarshaler.OptionalDatetimeAlias.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *o)
 	if err != nil {
 		return err
@@ -131,12 +135,16 @@ func (o *ObjectWithDatetimeAlias) MarshalJSON() ([]byte, error) {
 	type embed ObjectWithDatetimeAlias
 	var marshaler = struct {
 		embed
-		DateTime         *internal.DateTime `json:"dateTime"`
-		OptionalDatetime *internal.DateTime `json:"optionalDatetime,omitempty"`
+		DateTime              *internal.DateTime `json:"dateTime"`
+		DatetimeAlias         *internal.DateTime `json:"datetimeAlias"`
+		OptionalDatetime      *internal.DateTime `json:"optionalDatetime,omitempty"`
+		OptionalDatetimeAlias *internal.DateTime `json:"optionalDatetimeAlias,omitempty"`
 	}{
-		embed:            embed(*o),
-		DateTime:         internal.NewDateTime(o.DateTime),
-		OptionalDatetime: internal.NewOptionalDateTime(o.OptionalDatetime),
+		embed:                 embed(*o),
+		DateTime:              internal.NewDateTime(o.DateTime),
+		DatetimeAlias:         internal.NewDateTime(o.DatetimeAlias),
+		OptionalDatetime:      internal.NewOptionalDateTime(o.OptionalDatetime),
+		OptionalDatetimeAlias: internal.NewOptionalDateTime(o.OptionalDatetimeAlias),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
 	return json.Marshal(explicitMarshaler)
