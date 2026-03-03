@@ -112,9 +112,9 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
 
-        // biome-ignore lint/suspicious/noExplicitAny: Type cast needed because java-v2/sdk uses @fern-fern/ir-sdk@65.4.0
-        // (for uri/path pagination types) while java-dynamic-snippets uses @fern-api/dynamic-ir-sdk@61.7.0
-        // (constrained by browser-compatible-base). Runtime data shapes are compatible; only TS types diverge.
+        // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
+        // Runtime data shapes are compatible; only TS types diverge across SDK versions.
+        // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
         const convertedIr: any = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertedIr,
