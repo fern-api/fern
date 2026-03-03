@@ -410,9 +410,11 @@ describe("getRegistryInfoFromOutputMode", () => {
             type: "publishV2" as const,
             publishV2: {
                 type: "npmOverride" as const,
-                registryUrl: "https://npm.pkg.github.com",
-                packageName: "@org/pkg",
-                token: "npm-secret-token"
+                npmOverride: {
+                    registryUrl: "https://npm.pkg.github.com",
+                    packageName: "@org/pkg",
+                    token: "npm-secret-token"
+                }
             }
         };
         // biome-ignore lint/suspicious/noExplicitAny: test stub
@@ -426,10 +428,12 @@ describe("getRegistryInfoFromOutputMode", () => {
             type: "publishV2" as const,
             publishV2: {
                 type: "pypiOverride" as const,
-                registryUrl: "https://upload.pypi.org/legacy/",
-                username: "__token__",
-                password: "pypi-secret-token",
-                coordinate: "my-package"
+                pypiOverride: {
+                    registryUrl: "https://upload.pypi.org/legacy/",
+                    username: "__token__",
+                    password: "pypi-secret-token",
+                    coordinate: "my-package"
+                }
             }
         };
         // biome-ignore lint/suspicious/noExplicitAny: test stub
@@ -443,10 +447,12 @@ describe("getRegistryInfoFromOutputMode", () => {
             type: "publishV2" as const,
             publishV2: {
                 type: "mavenOverride" as const,
-                registryUrl: "https://s01.oss.sonatype.org/content/repositories/releases/",
-                username: "user",
-                password: "maven-secret",
-                coordinate: "com.example:lib"
+                mavenOverride: {
+                    registryUrl: "https://s01.oss.sonatype.org/content/repositories/releases/",
+                    username: "user",
+                    password: "maven-secret",
+                    coordinate: "com.example:lib"
+                }
             }
         };
         // biome-ignore lint/suspicious/noExplicitAny: test stub
@@ -460,9 +466,11 @@ describe("getRegistryInfoFromOutputMode", () => {
             type: "publishV2" as const,
             publishV2: {
                 type: "nugetOverride" as const,
-                registryUrl: "https://nuget.org/",
-                packageName: "MyPkg",
-                apiKey: "nuget-api-key"
+                nugetOverride: {
+                    registryUrl: "https://nuget.org/",
+                    packageName: "MyPkg",
+                    apiKey: "nuget-api-key"
+                }
             }
         };
         // biome-ignore lint/suspicious/noExplicitAny: test stub
@@ -476,9 +484,11 @@ describe("getRegistryInfoFromOutputMode", () => {
             type: "publishV2" as const,
             publishV2: {
                 type: "rubyGemsOverride" as const,
-                registryUrl: "https://rubygems.org/",
-                packageName: "my-gem",
-                apiKey: "rubygems-api-key"
+                rubyGemsOverride: {
+                    registryUrl: "https://rubygems.org/",
+                    packageName: "my-gem",
+                    apiKey: "rubygems-api-key"
+                }
             }
         };
         // biome-ignore lint/suspicious/noExplicitAny: test stub
@@ -492,9 +502,11 @@ describe("getRegistryInfoFromOutputMode", () => {
             type: "publishV2" as const,
             publishV2: {
                 type: "cratesOverride" as const,
-                registryUrl: "https://crates.io/api/v1/crates",
-                packageName: "my-crate",
-                token: "crates-token"
+                cratesOverride: {
+                    registryUrl: "https://crates.io/api/v1/crates",
+                    packageName: "my-crate",
+                    token: "crates-token"
+                }
             }
         };
         // biome-ignore lint/suspicious/noExplicitAny: test stub

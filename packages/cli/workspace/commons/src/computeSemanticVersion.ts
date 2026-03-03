@@ -159,17 +159,32 @@ function getRegistryInfoFromGithubV2PublishInfo(publishInfo: FernFiddle.GithubPu
 function getRegistryInfoFromPublishV2(publishV2: FernFiddle.PublishOutputModeV2): RegistryInfo {
     switch (publishV2.type) {
         case "npmOverride":
-            return { registryUrl: publishV2.registryUrl, token: publishV2.token };
+            return { registryUrl: publishV2.npmOverride?.registryUrl, token: publishV2.npmOverride?.token };
         case "mavenOverride":
-            return { registryUrl: publishV2.registryUrl, token: publishV2.password };
+            return {
+                registryUrl: publishV2.mavenOverride?.registryUrl,
+                token: publishV2.mavenOverride?.password
+            };
         case "pypiOverride":
-            return { registryUrl: publishV2.registryUrl, token: publishV2.password };
+            return {
+                registryUrl: publishV2.pypiOverride?.registryUrl,
+                token: publishV2.pypiOverride?.password
+            };
         case "nugetOverride":
-            return { registryUrl: publishV2.registryUrl, token: publishV2.apiKey };
+            return {
+                registryUrl: publishV2.nugetOverride?.registryUrl,
+                token: publishV2.nugetOverride?.apiKey
+            };
         case "rubyGemsOverride":
-            return { registryUrl: publishV2.registryUrl, token: publishV2.apiKey };
+            return {
+                registryUrl: publishV2.rubyGemsOverride?.registryUrl,
+                token: publishV2.rubyGemsOverride?.apiKey
+            };
         case "cratesOverride":
-            return { registryUrl: publishV2.registryUrl, token: publishV2.token };
+            return {
+                registryUrl: publishV2.cratesOverride?.registryUrl,
+                token: publishV2.cratesOverride?.token
+            };
         case "postman":
             return { registryUrl: undefined, token: undefined };
         default:
