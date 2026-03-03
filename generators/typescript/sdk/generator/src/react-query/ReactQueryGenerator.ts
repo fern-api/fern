@@ -96,9 +96,11 @@ export class ReactQueryGenerator {
         for (const group of serviceGroups) {
             const serviceFileContent = this.generateServiceFile(group);
             const serviceDirPath = this.getServiceDirPath(group.servicePath);
-            // If this service also has child sub-services, use _service.ts to avoid
-            // overwriting with the barrel index.ts
-            const fileName = hasChildServices(group) ? "_service.ts" : "index.ts";
+
+            // If this is the root service (empty servicePath), write to react-query/root/index.ts
+            // so it doesn't collide with the react-query/index.ts barrel file.
+            const isRootService = group.servicePath.length === 0;
+            const fileName = isRootService ? "index.ts" : hasChildServices(group) ? "_service.ts" : "index.ts";
             const filepath = `${reactQueryDir}/${serviceDirPath}/${fileName}`;
 
             this.rootDirectory.createSourceFile(`/${filepath}`, serviceFileContent, { overwrite: true });
@@ -490,6 +492,23 @@ export class ReactQueryGenerator {
         const root: DirNode = { children: new Map(), isService: false, safeName: "", unsafeName: "" };
 
         for (const group of serviceGroups) {
+            // Root-level service endpoints live under the synthetic `root/` directory.
+            // Represent them in the barrel tree as a `root` child namespace.
+            if (group.servicePath.length === 0) {
+                let rootChild = root.children.get("root");
+                if (rootChild == null) {
+                    rootChild = {
+                        children: new Map(),
+                        isService: false,
+                        safeName: "root",
+                        unsafeName: "root"
+                    };
+                    root.children.set("root", rootChild);
+                }
+                rootChild.isService = true;
+                continue;
+            }
+
             let current = root;
             for (const part of group.servicePath) {
                 let child = current.children.get(part.unsafeName);
@@ -505,11 +524,6 @@ export class ReactQueryGenerator {
                 current = child;
             }
             current.isService = true;
-
-            // Handle root-level services (empty path)
-            if (group.servicePath.length === 0) {
-                root.isService = true;
-            }
         }
 
         // Generate barrel files by traversing the tree
