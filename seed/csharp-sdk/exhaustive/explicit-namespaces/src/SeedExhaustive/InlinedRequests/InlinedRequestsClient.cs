@@ -44,7 +44,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
@@ -70,7 +70,7 @@ public partial class InlinedRequestsClient : IInlinedRequestsClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 switch (response.StatusCode)

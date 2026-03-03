@@ -43,7 +43,7 @@ public partial class ServiceClient : IServiceClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 switch (response.StatusCode)

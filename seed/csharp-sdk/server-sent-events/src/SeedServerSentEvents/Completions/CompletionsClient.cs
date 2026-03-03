@@ -70,7 +70,7 @@ public partial class CompletionsClient : ICompletionsClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -135,7 +135,7 @@ public partial class CompletionsClient : ICompletionsClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

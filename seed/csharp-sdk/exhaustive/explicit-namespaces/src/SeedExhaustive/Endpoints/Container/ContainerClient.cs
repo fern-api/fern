@@ -42,7 +42,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
@@ -68,7 +68,7 @@ public partial class ContainerClient : IContainerClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -106,7 +106,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(
@@ -134,7 +134,7 @@ public partial class ContainerClient : IContainerClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -170,7 +170,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
@@ -196,7 +196,7 @@ public partial class ContainerClient : IContainerClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -234,7 +234,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(
@@ -262,7 +262,7 @@ public partial class ContainerClient : IContainerClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -300,7 +300,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
@@ -326,7 +326,7 @@ public partial class ContainerClient : IContainerClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -364,7 +364,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<
@@ -392,7 +392,7 @@ public partial class ContainerClient : IContainerClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -430,7 +430,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<
@@ -460,7 +460,7 @@ public partial class ContainerClient : IContainerClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -496,7 +496,7 @@ public partial class ContainerClient : IContainerClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
@@ -522,7 +522,7 @@ public partial class ContainerClient : IContainerClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

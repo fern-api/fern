@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.5
+  changelogEntry:
+    - summary: |
+        Pass cancellation token to `ReadAsStringAsync()` calls in generated endpoint methods,
+        ensuring cancellation is respected during response body reading. A polyfill extension
+        method is included for target frameworks older than .NET 5 where the overload is not
+        natively available.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
 - version: 2.23.4
   changelogEntry:
     - summary: |

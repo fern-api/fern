@@ -54,7 +54,7 @@ public partial class ObjectClient : IObjectClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ObjectWithOptionalField>(
@@ -84,7 +84,7 @@ public partial class ObjectClient : IObjectClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -127,7 +127,7 @@ public partial class ObjectClient : IObjectClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ObjectWithRequiredField>(
@@ -157,7 +157,7 @@ public partial class ObjectClient : IObjectClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -198,7 +198,7 @@ public partial class ObjectClient : IObjectClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
@@ -226,7 +226,7 @@ public partial class ObjectClient : IObjectClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -269,7 +269,7 @@ public partial class ObjectClient : IObjectClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<NestedObjectWithOptionalField>(
@@ -299,7 +299,7 @@ public partial class ObjectClient : IObjectClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -346,7 +346,7 @@ public partial class ObjectClient : IObjectClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<NestedObjectWithRequiredField>(
@@ -376,7 +376,7 @@ public partial class ObjectClient : IObjectClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -419,7 +419,7 @@ public partial class ObjectClient : IObjectClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<NestedObjectWithRequiredField>(
@@ -449,7 +449,7 @@ public partial class ObjectClient : IObjectClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -492,7 +492,7 @@ public partial class ObjectClient : IObjectClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ObjectWithUnknownField>(
@@ -522,7 +522,7 @@ public partial class ObjectClient : IObjectClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -565,7 +565,7 @@ public partial class ObjectClient : IObjectClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<ObjectWithDatetimeLikeString>(
@@ -595,7 +595,7 @@ public partial class ObjectClient : IObjectClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,

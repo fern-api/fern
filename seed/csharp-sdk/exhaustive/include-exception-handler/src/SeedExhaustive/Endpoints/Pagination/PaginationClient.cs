@@ -71,7 +71,7 @@ public partial class PaginationClient : IPaginationClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<PaginatedResponse>(responseBody)!;
@@ -99,7 +99,7 @@ public partial class PaginationClient : IPaginationClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,

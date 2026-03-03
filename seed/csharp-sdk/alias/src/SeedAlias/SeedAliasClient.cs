@@ -60,7 +60,7 @@ public partial class SeedAliasClient : ISeedAliasClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedAliasApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -50,7 +50,7 @@ public partial class ImdbClient : IImdbClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -78,7 +78,7 @@ public partial class ImdbClient : IImdbClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedApiApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -121,7 +121,7 @@ public partial class ImdbClient : IImdbClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<Movie>(responseBody)!;
@@ -149,7 +149,7 @@ public partial class ImdbClient : IImdbClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         switch (response.StatusCode)

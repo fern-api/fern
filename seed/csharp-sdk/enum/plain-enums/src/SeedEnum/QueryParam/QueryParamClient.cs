@@ -53,7 +53,7 @@ public partial class QueryParamClient : IQueryParamClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -110,7 +110,7 @@ public partial class QueryParamClient : IQueryParamClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

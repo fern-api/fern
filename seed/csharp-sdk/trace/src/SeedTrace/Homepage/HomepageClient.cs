@@ -37,7 +37,7 @@ public partial class HomepageClient : IHomepageClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
@@ -63,7 +63,7 @@ public partial class HomepageClient : IHomepageClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -118,7 +118,7 @@ public partial class HomepageClient : IHomepageClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

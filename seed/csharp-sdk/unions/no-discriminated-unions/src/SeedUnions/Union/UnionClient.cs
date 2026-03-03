@@ -38,7 +38,7 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<object>(responseBody)!;
@@ -64,7 +64,7 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -100,7 +100,7 @@ public partial class UnionClient : IUnionClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -126,7 +126,7 @@ public partial class UnionClient : IUnionClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedUnionsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

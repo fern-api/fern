@@ -39,7 +39,7 @@ public partial class UnknownClient : IUnknownClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
@@ -65,7 +65,7 @@ public partial class UnknownClient : IUnknownClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedUnknownAsAnyApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -101,7 +101,7 @@ public partial class UnknownClient : IUnknownClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
@@ -127,7 +127,7 @@ public partial class UnknownClient : IUnknownClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedUnknownAsAnyApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

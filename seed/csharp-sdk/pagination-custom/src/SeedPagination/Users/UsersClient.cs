@@ -56,7 +56,7 @@ public partial class UsersClient : IUsersClient
             }
 
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                 throw new SeedPaginationApiException(
                     $"Error with status code {response.StatusCode}",
                     response.StatusCode,

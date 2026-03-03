@@ -59,7 +59,7 @@ public partial class SeedLicenseClient : ISeedLicenseClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedLicenseApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -159,6 +159,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.Headers,
                 AsIsFiles.HeadersBuilder,
                 AsIsFiles.HeaderValue,
+                AsIsFiles.HttpContentExtensions,
                 AsIsFiles.HttpMethodExtensions,
                 AsIsFiles.IIsRetryableContent,
                 AsIsFiles.JsonRequest,

@@ -40,7 +40,7 @@ public partial class ProblemClient : IProblemClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<LightweightProblemInfoV2>>(
@@ -68,7 +68,7 @@ public partial class ProblemClient : IProblemClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -102,7 +102,7 @@ public partial class ProblemClient : IProblemClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
@@ -128,7 +128,7 @@ public partial class ProblemClient : IProblemClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -166,7 +166,7 @@ public partial class ProblemClient : IProblemClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
@@ -192,7 +192,7 @@ public partial class ProblemClient : IProblemClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -232,7 +232,7 @@ public partial class ProblemClient : IProblemClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
@@ -258,7 +258,7 @@ public partial class ProblemClient : IProblemClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

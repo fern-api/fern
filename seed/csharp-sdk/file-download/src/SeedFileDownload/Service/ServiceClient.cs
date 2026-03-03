@@ -49,7 +49,7 @@ public partial class ServiceClient : IServiceClient
             };
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedFileDownloadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -89,7 +89,7 @@ public partial class ServiceClient : IServiceClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedFileDownloadApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

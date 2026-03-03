@@ -58,7 +58,7 @@ public partial class DummyClient : IDummyClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedStreamingApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

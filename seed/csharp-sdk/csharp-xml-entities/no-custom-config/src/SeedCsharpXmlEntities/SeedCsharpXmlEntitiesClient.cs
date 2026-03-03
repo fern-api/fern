@@ -54,7 +54,7 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             try
             {
                 var responseData = JsonUtils.Deserialize<TimeZoneModel>(responseBody)!;
@@ -80,7 +80,7 @@ public partial class SeedCsharpXmlEntitiesClient : ISeedCsharpXmlEntitiesClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
             throw new SeedCsharpXmlEntitiesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

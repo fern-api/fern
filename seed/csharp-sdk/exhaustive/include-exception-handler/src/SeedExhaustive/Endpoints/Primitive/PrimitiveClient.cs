@@ -51,7 +51,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -79,7 +79,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -120,7 +120,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<int>(responseBody)!;
@@ -148,7 +148,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -189,7 +189,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<long>(responseBody)!;
@@ -217,7 +217,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -258,7 +258,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<double>(responseBody)!;
@@ -286,7 +286,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -327,7 +327,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -355,7 +355,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -396,7 +396,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<DateTime>(responseBody)!;
@@ -424,7 +424,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -465,7 +465,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<DateOnly>(responseBody)!;
@@ -493,7 +493,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -534,7 +534,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -562,7 +562,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
@@ -603,7 +603,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     .ConfigureAwait(false);
                 if (response.StatusCode is >= 200 and < 400)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     try
                     {
                         var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -631,7 +631,7 @@ public partial class PrimitiveClient : IPrimitiveClient
                     }
                 }
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
                     throw new SeedExhaustiveApiException(
                         $"Error with status code {response.StatusCode}",
                         response.StatusCode,
