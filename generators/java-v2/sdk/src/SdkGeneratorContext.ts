@@ -377,7 +377,10 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         } else if (pagination.type === "custom") {
             return undefined;
         } else {
-            // Handle uri, path, and any future pagination types that have a results property
+            // Handle uri, path, and any future pagination types that have a results property.
+            // When the published IR SDK doesn't include these union members, the raw JSON passes
+            // through undeserialized (via allowUnrecognizedUnionMembers). In raw JSON, discriminant
+            // fields use "_type" instead of "type". We need to handle both forms.
             const paginationAny = pagination as unknown as { results?: FernIr.ResponseProperty };
             const resultsProperty = paginationAny.results;
             if (resultsProperty?.property?.valueType) {
@@ -387,23 +390,58 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return undefined;
     }
 
+    /**
+     * Normalizes raw IR JSON objects by recursively converting "_type" fields to "type".
+     *
+     * When the published IR SDK doesn't include uri/path as Pagination union members,
+     * the raw JSON passes through undeserialized (via allowUnrecognizedUnionMembers: true).
+     * In raw IR JSON, discriminant fields use "_type" (e.g., {"_type": "container", ...})
+     * instead of the deserialized "type" field. This normalizer converts them so that
+     * downstream code (e.g., javaTypeMapper.convert()) can process the objects correctly.
+     */
+    private normalizeRawIrType<T>(obj: T): T {
+        if (obj == null || typeof obj !== "object") {
+            return obj;
+        }
+        if (Array.isArray(obj)) {
+            return obj.map((item) => this.normalizeRawIrType(item)) as unknown as T;
+        }
+        const result: Record<string, unknown> = {};
+        for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
+            const normalizedKey = key === "_type" ? "type" : key;
+            result[normalizedKey] = this.normalizeRawIrType(value);
+        }
+        return result as unknown as T;
+    }
+
+    /**
+     * Extracts the pagination item type from a TypeReference.
+     *
+     * Handles both deserialized IR objects (where discriminant is "type") and raw IR JSON
+     * (where discriminant is "_type") by normalizing before processing.
+     */
     private extractPaginationItemType(valueType: FernIr.TypeReference): java.Type | undefined {
         if (!valueType) {
             return undefined;
         }
 
+        // Normalize raw IR JSON: convert "_type" → "type" so downstream code works correctly.
+        // For already-deserialized objects, this is a no-op since they already use "type".
+        const normalized = this.normalizeRawIrType(valueType);
+
         // If it's a list container, extract the item type
-        if (valueType.type === "container" && valueType.container) {
-            if (valueType.container.type === "list" && valueType.container.list) {
-                const innerType = valueType.container.list;
+        if (normalized.type === "container" && normalized.container) {
+            if (normalized.container.type === "list" && normalized.container.list) {
+                const innerType = normalized.container.list;
                 return this.javaTypeMapper.convert({ reference: innerType });
-            } else if (valueType.container.type === "optional" && valueType.container.optional) {
-                return this.extractPaginationItemType(valueType.container.optional);
+            } else if (normalized.container.type === "optional" && normalized.container.optional) {
+                return this.extractPaginationItemType(normalized.container.optional);
             }
         }
 
-        if (valueType.type === "named" && valueType.typeId) {
-            const typeDecl = this.ir.types[valueType.typeId];
+        if (normalized.type === "named" && (normalized as unknown as { typeId?: string }).typeId) {
+            const typeId = (normalized as unknown as { typeId: string }).typeId;
+            const typeDecl = this.ir.types[typeId];
             if (typeDecl?.shape.type === "object") {
                 // Look for the first list property in the object
                 for (const prop of typeDecl.shape.properties) {
