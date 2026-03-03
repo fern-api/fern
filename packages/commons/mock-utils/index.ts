@@ -339,7 +339,7 @@ export class WireMock {
             if (maybeDatetime != null) {
                 // Use ISO string but strip trailing zero milliseconds (.000Z -> Z)
                 // to match RFC3339 format used by SDKs (e.g., Go's time.RFC3339)
-                return maybeDatetime.toISOString().replace(/\.000Z$/, "Z");
+                return maybeDatetime.toISOString().replace(/\.\d{3}Z$/, "Z");
             }
             return value.jsonExample;
         }
