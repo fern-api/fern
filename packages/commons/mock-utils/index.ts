@@ -336,7 +336,12 @@ export class WireMock {
     private exampleToQueryOrHeaderValue({ value }: { value: FernIr.ExampleTypeReference }): string | undefined {
         if (typeof value.jsonExample === "string") {
             const maybeDatetime = this.getDateTime(value);
-            return maybeDatetime != null ? maybeDatetime.toISOString() : value.jsonExample;
+            if (maybeDatetime != null) {
+                // Use ISO string but strip trailing zero milliseconds (.000Z -> Z)
+                // to match RFC3339 format used by SDKs (e.g., Go's time.RFC3339)
+                return maybeDatetime.toISOString().replace(/\.000Z$/, "Z");
+            }
+            return value.jsonExample;
         }
         if (typeof value.jsonExample === "number") {
             return value.jsonExample.toString();

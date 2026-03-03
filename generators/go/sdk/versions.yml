@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.26.2
+  changelogEntry:
+    - summary: |
+        Fix WireMock datetime query parameter matching. The mock-utils datetime serialization
+        now strips trailing zero milliseconds (e.g., `.000Z` -> `Z`) to produce RFC3339 format
+        consistent with Go's `time.RFC3339` and other SDK datetime serialization formats.
+        Previously, `Date.toISOString()` always included `.000Z` which caused WireMock to
+        reject requests from SDKs that send datetime values without zero milliseconds.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 61
+
 - version: 1.26.1
   changelogEntry:
     - summary: |
