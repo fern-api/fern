@@ -452,8 +452,9 @@ export abstract class AbstractSpecConverter<
          */
         const { convertedSchema, inlinedTypes } = output;
 
-        const shouldPostfixId = Object.keys(inlinedTypes).some((inlineTypeId) => inlineTypeId === typeId);
-        const safeTypeId = shouldPostfixId ? `${typeId}Wrapper` : typeId;
+        const namespacedTypeId = this.context.getNamespacedSchemaId(typeId);
+        const shouldPostfixId = Object.keys(inlinedTypes).some((inlineTypeId) => inlineTypeId === namespacedTypeId);
+        const safeTypeId = shouldPostfixId ? `${namespacedTypeId}Wrapper` : namespacedTypeId;
 
         this.addTypeToPackage(safeTypeId);
         this.addTypesToIr({

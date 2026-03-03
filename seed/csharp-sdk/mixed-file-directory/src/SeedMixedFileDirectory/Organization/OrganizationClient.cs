@@ -5,7 +5,7 @@ namespace SeedMixedFileDirectory;
 
 public partial class OrganizationClient : IOrganizationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal OrganizationClient(RawClient client)
     {

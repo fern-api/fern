@@ -5,7 +5,7 @@ namespace SeedCsharpNamespaceCollision.System;
 
 public partial class SystemClient : ISystemClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SystemClient(RawClient client)
     {

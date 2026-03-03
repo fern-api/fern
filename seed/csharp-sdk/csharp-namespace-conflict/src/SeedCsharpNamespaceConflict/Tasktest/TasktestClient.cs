@@ -4,7 +4,7 @@ namespace SeedCsharpNamespaceConflict;
 
 public partial class TasktestClient : ITasktestClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal TasktestClient(RawClient client)
     {

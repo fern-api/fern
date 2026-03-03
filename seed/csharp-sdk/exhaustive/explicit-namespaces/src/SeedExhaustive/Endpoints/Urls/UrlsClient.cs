@@ -6,7 +6,7 @@ namespace SeedExhaustive.Endpoints.Urls;
 
 public partial class UrlsClient : IUrlsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UrlsClient(RawClient client)
     {

@@ -6,7 +6,7 @@ namespace SeedTrace.V2;
 
 public partial class ProblemClient : IProblemClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ProblemClient(RawClient client)
     {

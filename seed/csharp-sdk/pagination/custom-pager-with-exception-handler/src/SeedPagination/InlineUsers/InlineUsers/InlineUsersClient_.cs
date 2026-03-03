@@ -6,7 +6,7 @@ namespace SeedPagination.InlineUsers;
 
 public partial class InlineUsersClient_ : IInlineUsersClient_
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal InlineUsersClient_(RawClient client)
     {

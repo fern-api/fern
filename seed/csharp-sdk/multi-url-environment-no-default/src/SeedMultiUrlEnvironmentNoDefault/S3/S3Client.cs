@@ -5,7 +5,7 @@ namespace SeedMultiUrlEnvironmentNoDefault;
 
 public partial class S3Client : IS3Client
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal S3Client(RawClient client)
     {

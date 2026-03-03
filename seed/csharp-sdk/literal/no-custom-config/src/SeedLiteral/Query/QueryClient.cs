@@ -5,7 +5,7 @@ namespace SeedLiteral;
 
 public partial class QueryClient : IQueryClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal QueryClient(RawClient client)
     {

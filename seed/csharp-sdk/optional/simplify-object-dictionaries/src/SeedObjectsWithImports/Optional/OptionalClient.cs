@@ -5,7 +5,7 @@ namespace SeedObjectsWithImports;
 
 public partial class OptionalClient : IOptionalClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal OptionalClient(RawClient client)
     {

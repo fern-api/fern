@@ -5,7 +5,7 @@ namespace SeedVersion;
 
 public partial class UserClient : IUserClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UserClient(RawClient client)
     {

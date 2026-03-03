@@ -7,7 +7,7 @@ namespace SeedExhaustive.Endpoints.Object;
 
 public partial class ObjectClient : IObjectClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ObjectClient(RawClient client)
     {

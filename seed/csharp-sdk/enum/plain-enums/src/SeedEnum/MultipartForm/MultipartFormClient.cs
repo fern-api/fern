@@ -4,7 +4,7 @@ namespace SeedEnum;
 
 public partial class MultipartFormClient : IMultipartFormClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal MultipartFormClient(RawClient client)
     {

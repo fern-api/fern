@@ -8,7 +8,7 @@ namespace SeedExhaustive.InlinedRequests;
 
 public partial class InlinedRequestsClient : IInlinedRequestsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal InlinedRequestsClient(RawClient client)
     {

@@ -5,7 +5,7 @@ namespace SeedTrace;
 
 public partial class MigrationClient : IMigrationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal MigrationClient(RawClient client)
     {

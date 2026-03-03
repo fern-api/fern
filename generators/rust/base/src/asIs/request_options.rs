@@ -51,3 +51,121 @@ impl RequestOptions {
         self
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_default_has_no_values() {
+        let opts = RequestOptions::default();
+        assert!(opts.api_key.is_none());
+        assert!(opts.token.is_none());
+        assert!(opts.max_retries.is_none());
+        assert!(opts.timeout_seconds.is_none());
+        assert!(opts.additional_headers.is_empty());
+        assert!(opts.additional_query_params.is_empty());
+    }
+
+    #[test]
+    fn test_new_equals_default() {
+        let opts = RequestOptions::new();
+        assert!(opts.api_key.is_none());
+        assert!(opts.token.is_none());
+        assert!(opts.max_retries.is_none());
+        assert!(opts.timeout_seconds.is_none());
+        assert!(opts.additional_headers.is_empty());
+        assert!(opts.additional_query_params.is_empty());
+    }
+
+    #[test]
+    fn test_api_key() {
+        let opts = RequestOptions::new().api_key("my-key");
+        assert_eq!(opts.api_key, Some("my-key".to_string()));
+    }
+
+    #[test]
+    fn test_token() {
+        let opts = RequestOptions::new().token("my-token");
+        assert_eq!(opts.token, Some("my-token".to_string()));
+    }
+
+    #[test]
+    fn test_max_retries() {
+        let opts = RequestOptions::new().max_retries(3);
+        assert_eq!(opts.max_retries, Some(3));
+    }
+
+    #[test]
+    fn test_timeout_seconds() {
+        let opts = RequestOptions::new().timeout_seconds(30);
+        assert_eq!(opts.timeout_seconds, Some(30));
+    }
+
+    #[test]
+    fn test_additional_header() {
+        let opts = RequestOptions::new().additional_header("X-Custom", "value");
+        assert_eq!(
+            opts.additional_headers.get("X-Custom"),
+            Some(&"value".to_string())
+        );
+    }
+
+    #[test]
+    fn test_additional_headers_accumulate() {
+        let opts = RequestOptions::new()
+            .additional_header("X-First", "1")
+            .additional_header("X-Second", "2");
+        assert_eq!(opts.additional_headers.len(), 2);
+        assert_eq!(
+            opts.additional_headers.get("X-First"),
+            Some(&"1".to_string())
+        );
+        assert_eq!(
+            opts.additional_headers.get("X-Second"),
+            Some(&"2".to_string())
+        );
+    }
+
+    #[test]
+    fn test_additional_query_param() {
+        let opts = RequestOptions::new().additional_query_param("page", "1");
+        assert_eq!(
+            opts.additional_query_params.get("page"),
+            Some(&"1".to_string())
+        );
+    }
+
+    #[test]
+    fn test_additional_query_params_accumulate() {
+        let opts = RequestOptions::new()
+            .additional_query_param("page", "1")
+            .additional_query_param("limit", "10");
+        assert_eq!(opts.additional_query_params.len(), 2);
+        assert_eq!(
+            opts.additional_query_params.get("page"),
+            Some(&"1".to_string())
+        );
+        assert_eq!(
+            opts.additional_query_params.get("limit"),
+            Some(&"10".to_string())
+        );
+    }
+
+    #[test]
+    fn test_full_method_chaining() {
+        let opts = RequestOptions::new()
+            .api_key("key")
+            .token("tok")
+            .max_retries(5)
+            .timeout_seconds(60)
+            .additional_header("X-Foo", "bar")
+            .additional_query_param("q", "search");
+        assert_eq!(opts.api_key, Some("key".to_string()));
+        assert_eq!(opts.token, Some("tok".to_string()));
+        assert_eq!(opts.max_retries, Some(5));
+        assert_eq!(opts.timeout_seconds, Some(60));
+        assert_eq!(opts.additional_headers.len(), 1);
+        assert_eq!(opts.additional_query_params.len(), 1);
+    }
+}

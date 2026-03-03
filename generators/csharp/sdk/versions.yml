@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.4
+  changelogEntry:
+    - summary: |
+        Remove unused `using System.Text.Json.Serialization` import from `StringEnum.cs`.
+      type: chore
+  createdAt: "2026-03-03"
+  irVersion: 62
+
+- version: 2.23.3
+  changelogEntry:
+    - summary: |
+        Remove duplicate `WithRawResponse<T>` and `WithRawResponseTask<T>` structs
+        from the internal `Core` namespace. These types were already generated in the
+        public root namespace (via `Core/Public/`), making the `Core/` copies redundant.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
+- version: 2.23.2
+  changelogEntry:
+    - summary: |
+        Fix incorrect XML doc comment on `MaxRetries` property in `ClientOptions`,
+        `RequestOptions`, and `IRequestOptions`. The summary previously read
+        "The http client used to make requests." (copy-paste from `HttpClient`)
+        and now correctly reads "The max number of retries to attempt."
+      type: fix
+    - summary: |
+        Add missing `readonly` modifier to `_client` field in generated sub-clients.
+        The root client already had `private readonly RawClient _client` but sub-clients
+        only had `private RawClient _client`, despite the field being assigned once in
+        the constructor and never reassigned.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
 - version: 2.23.1
   changelogEntry:
     - summary: |

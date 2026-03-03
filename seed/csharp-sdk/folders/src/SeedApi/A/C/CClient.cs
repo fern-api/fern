@@ -5,7 +5,7 @@ namespace SeedApi.A.C;
 
 public partial class CClient : ICClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal CClient(RawClient client)
     {

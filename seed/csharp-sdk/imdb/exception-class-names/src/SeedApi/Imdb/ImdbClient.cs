@@ -5,7 +5,7 @@ namespace SeedApi;
 
 public partial class ImdbClient : IImdbClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ImdbClient(RawClient client)
     {

@@ -4,7 +4,7 @@ namespace SeedInferredAuthImplicit;
 
 public partial class SimpleClient : ISimpleClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SimpleClient(RawClient client)
     {

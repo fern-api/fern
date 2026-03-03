@@ -4,7 +4,7 @@ namespace SeedMultiUrlEnvironment;
 
 public partial class Ec2Client : IEc2Client
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal Ec2Client(RawClient client)
     {

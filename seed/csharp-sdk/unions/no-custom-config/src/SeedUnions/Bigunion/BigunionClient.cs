@@ -5,7 +5,7 @@ namespace SeedUnions;
 
 public partial class BigunionClient : IBigunionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal BigunionClient(RawClient client)
     {

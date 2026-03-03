@@ -5,7 +5,7 @@ namespace SeedErrorProperty;
 
 public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PropertyBasedErrorClient(RawClient client)
     {

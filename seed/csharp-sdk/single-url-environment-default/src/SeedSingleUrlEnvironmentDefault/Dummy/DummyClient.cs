@@ -5,7 +5,7 @@ namespace SeedSingleUrlEnvironmentDefault;
 
 public partial class DummyClient : IDummyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal DummyClient(RawClient client)
     {

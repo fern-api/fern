@@ -5,7 +5,7 @@ namespace SeedLiteral;
 
 public partial class HeadersClient : IHeadersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal HeadersClient(RawClient client)
     {

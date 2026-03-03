@@ -5,7 +5,7 @@ namespace SeedPagination;
 
 public partial class ComplexClient : IComplexClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ComplexClient(RawClient client)
     {

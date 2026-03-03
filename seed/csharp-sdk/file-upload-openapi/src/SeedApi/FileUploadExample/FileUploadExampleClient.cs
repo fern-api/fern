@@ -5,7 +5,7 @@ namespace SeedApi;
 
 public partial class FileUploadExampleClient : IFileUploadExampleClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FileUploadExampleClient(RawClient client)
     {

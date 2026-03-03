@@ -5,7 +5,7 @@ namespace SeedLiteral;
 
 public partial class InlinedClient : IInlinedClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal InlinedClient(RawClient client)
     {

@@ -5,7 +5,7 @@ namespace SeedNoRetries;
 
 public partial class RetriesClient : IRetriesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal RetriesClient(RawClient client)
     {

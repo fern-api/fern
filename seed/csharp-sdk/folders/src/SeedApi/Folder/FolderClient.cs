@@ -5,7 +5,7 @@ namespace SeedApi.Folder;
 
 public partial class FolderClient : IFolderClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FolderClient(RawClient client)
     {

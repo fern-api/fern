@@ -7,7 +7,7 @@ namespace SeedExhaustive.Endpoints.HttpMethods;
 
 public partial class HttpMethodsClient : IHttpMethodsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal HttpMethodsClient(RawClient client)
     {

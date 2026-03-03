@@ -5,7 +5,7 @@ namespace SeedApi;
 
 public partial class DataserviceClient : IDataserviceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal DataserviceClient(RawClient client)
     {

@@ -4,7 +4,7 @@ namespace SeedNurseryApi;
 
 public partial class PackageClient : IPackageClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PackageClient(RawClient client)
     {

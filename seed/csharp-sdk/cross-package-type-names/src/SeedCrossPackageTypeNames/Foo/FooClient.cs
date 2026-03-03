@@ -5,7 +5,7 @@ namespace SeedCrossPackageTypeNames;
 
 public partial class FooClient : IFooClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FooClient(RawClient client)
     {

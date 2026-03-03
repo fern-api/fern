@@ -7,7 +7,7 @@ namespace SeedExhaustive.NoReqBody;
 
 public partial class NoReqBodyClient : INoReqBodyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NoReqBodyClient(RawClient client)
     {
