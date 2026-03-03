@@ -16,6 +16,7 @@ import {
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter.js";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse.js";
+import { GeneratedNonThrowingEndpointResponse } from "./endpoint-response/GeneratedNonThrowingEndpointResponse.js";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
@@ -736,6 +737,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
         // No specific endpoint errors (for now - errorMap support can be added later)
         if (this.endpoint.errors.length > 0) {
+            return false;
+        }
+        // Not non-throwing mode (HttpClient always throws on errors)
+        if (this.response instanceof GeneratedNonThrowingEndpointResponse) {
+            return false;
+        }
+        // Not non-default timeout (HttpClient can't express "infinity" or custom defaults per-endpoint)
+        if (this.defaultTimeoutInSeconds !== undefined && this.defaultTimeoutInSeconds !== 60) {
             return false;
         }
         return true;
