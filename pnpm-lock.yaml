@@ -7067,6 +7067,9 @@ importers:
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-fern/fiddle-sdk':
+        specifier: 'catalog:'
+        version: 0.0.775
       '@redocly/openapi-core':
         specifier: 'catalog:'
         version: 1.34.6

@@ -163,9 +163,7 @@ export class FernDocsBuilderImpl extends FernDocsBuilder {
 
         await writeFile(
             join(absolutePathToFernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
-            yaml.dump(
-                this.docsYml
-            )
+            yaml.dump(this.docsYml)
         );
 
         await Promise.all(

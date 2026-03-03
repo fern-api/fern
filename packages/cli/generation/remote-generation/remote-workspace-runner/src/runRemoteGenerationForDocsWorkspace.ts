@@ -100,7 +100,9 @@ export async function runRemoteGenerationForDocsWorkspace({
             disableTemplates,
             skipUpload,
             withAiExamples:
-                docsWorkspace.config["ai-examples"]?.enabled ?? docsWorkspace.config.experimental?.["ai-examples"] ?? true,
+                docsWorkspace.config["ai-examples"]?.enabled ??
+                docsWorkspace.config.experimental?.["ai-examples"] ??
+                true,
             excludeApis: docsWorkspace.config.experimental?.["exclude-apis"] ?? false,
             targetAudiences: maybeInstance.audiences
                 ? Array.isArray(maybeInstance.audiences)

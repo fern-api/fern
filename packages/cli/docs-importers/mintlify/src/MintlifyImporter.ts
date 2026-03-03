@@ -60,7 +60,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                     url: tab.url,
                     navigationBuilder: builder.getNavigationBuilder({
                         tabId: tab.url,
-                        tabConfig: { slug: tab.url, displayName: tab.name }
+                        tabConfig: { slug: tab.url, "display-name": tab.name }
                     })
                 };
             }
@@ -72,7 +72,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                         url: anchor.url,
                         navigationBuilder: builder.getNavigationBuilder({
                             tabId: anchor.name,
-                            tabConfig: { href: anchor.url, displayName: anchor.name }
+                            tabConfig: { href: anchor.url, "display-name": anchor.name }
                         })
                     };
                 } else if ("url" in anchor && anchor.url != null) {
@@ -81,7 +81,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                         url: anchor.url,
                         navigationBuilder: builder.getNavigationBuilder({
                             tabId: anchor.url,
-                            tabConfig: { slug: anchor.url, displayName: anchor.name }
+                            tabConfig: { slug: anchor.url, "display-name": anchor.name }
                         })
                     };
                 }
@@ -169,7 +169,7 @@ export class MintlifyImporter extends DocsImporter<MintlifyImporter.Args> {
                 url: "documentation",
                 navigationBuilder: builder.getNavigationBuilder({
                     tabId: "documentation",
-                    tabConfig: { displayName: "Documentation", slug: "documentation" }
+                    tabConfig: { "display-name": "Documentation", slug: "documentation" }
                 })
             };
         }

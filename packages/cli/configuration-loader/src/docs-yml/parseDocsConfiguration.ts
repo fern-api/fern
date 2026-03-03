@@ -345,9 +345,9 @@ function convertPageActions(
     return {
         default: convertedDefault,
         options: {
-                askAi: pageActions.options?.["ask-ai"] ?? true,
-                copyPage: pageActions.options?.["copy-page"] ?? true,
-                viewAsMarkdown: pageActions.options?.["view-as-markdown"] ?? true,
+            askAi: pageActions.options?.["ask-ai"] ?? true,
+            copyPage: pageActions.options?.["copy-page"] ?? true,
+            viewAsMarkdown: pageActions.options?.["view-as-markdown"] ?? true,
             openAi: pageActions.options?.chatgpt ?? true,
             claude: pageActions.options?.claude ?? true,
             cursor: pageActions.options?.cursor ?? true,
@@ -443,7 +443,9 @@ function convertLayoutConfig(
 
     return {
         pageWidth:
-            layout["page-width"]?.trim().toLowerCase() === "full" ? { type: "full" } : parseSizeConfig(layout["page-width"]),
+            layout["page-width"]?.trim().toLowerCase() === "full"
+                ? { type: "full" }
+                : parseSizeConfig(layout["page-width"]),
         contentWidth: parseSizeConfig(layout["content-width"]),
         sidebarWidth: parseSizeConfig(layout["sidebar-width"]),
         headerHeight: parseSizeConfig(layout["header-height"]),
@@ -1314,45 +1316,49 @@ function parseApiReferenceLayoutItem(
             }
         ];
     }
-    return Object.entries(item as Record<string, unknown>).map(([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
-        if (isRawApiRefPackageConfiguration(value)) {
+    return Object.entries(item as Record<string, unknown>).map(
+        ([key, value]): docsYml.ParsedApiReferenceLayoutItem.Package => {
+            if (isRawApiRefPackageConfiguration(value)) {
+                return {
+                    type: "package",
+                    title: value.title,
+                    package: key,
+                    overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
+                    contents:
+                        value.contents?.flatMap((value) =>
+                            parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                        ) ?? [],
+                    slug: value.slug,
+                    hidden: value.hidden,
+                    skipUrlSlug: value["skip-slug"],
+                    icon: resolveIconPath(value.icon, absolutePathToConfig),
+                    playground: value.playground,
+                    availability: value.availability,
+                    viewers: parseRoles(value.viewers),
+                    orphaned: value.orphaned,
+                    featureFlags: convertFeatureFlag(value["feature-flag"])
+                };
+            }
             return {
                 type: "package",
-                title: value.title,
+                title: undefined,
                 package: key,
-                overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
-                contents:
-                    value.contents?.flatMap((value) =>
-                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
-                    ) ?? [],
-                slug: value.slug,
-                hidden: value.hidden,
-                skipUrlSlug: value["skip-slug"],
-                icon: resolveIconPath(value.icon, absolutePathToConfig),
-                playground: value.playground,
-                availability: value.availability,
-                viewers: parseRoles(value.viewers),
-                orphaned: value.orphaned,
-                featureFlags: convertFeatureFlag(value["feature-flag"])
+                overviewAbsolutePath: undefined,
+                contents: (value as docsYml.RawSchemas.ApiReferenceLayoutItem[]).flatMap((value) =>
+                    parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                ),
+                hidden: false,
+                slug: undefined,
+                skipUrlSlug: false,
+                icon: undefined,
+                playground: undefined,
+                availability: undefined,
+                viewers: undefined,
+                orphaned: undefined,
+                featureFlags: undefined
             };
         }
-        return {
-            type: "package",
-            title: undefined,
-            package: key,
-            overviewAbsolutePath: undefined,
-            contents: (value as docsYml.RawSchemas.ApiReferenceLayoutItem[]).flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig, context)),
-            hidden: false,
-            slug: undefined,
-            skipUrlSlug: false,
-            icon: undefined,
-            playground: undefined,
-            availability: undefined,
-            viewers: undefined,
-            orphaned: undefined,
-            featureFlags: undefined
-        };
-    });
+    );
 }
 
 function convertSnippetsConfiguration({
