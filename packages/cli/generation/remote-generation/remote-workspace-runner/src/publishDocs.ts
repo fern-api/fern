@@ -81,7 +81,7 @@ export async function publishDocs({
     ossWorkspaces: OSSWorkspace[];
     context: TaskContext;
     preview: boolean;
-    editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
+    editThisPage: docsYml.RawSchemas.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;

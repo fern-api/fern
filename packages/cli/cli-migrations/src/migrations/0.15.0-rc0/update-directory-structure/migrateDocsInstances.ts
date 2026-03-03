@@ -4,12 +4,12 @@ import { DocsURL } from "./docs-config/index.js";
 
 export function migrateDocsInstances(docsURLs: docsYml.RawSchemas.DocsInstance[]): DocsURL[] {
     return docsURLs.map((docsURL) => {
-        if (Array.isArray(docsURL.customDomain)) {
+        if (Array.isArray(docsURL["custom-domain"])) {
             throw new Error("Expected custom-domain to be a string, but it was an array.");
         }
         return {
             ...docsURL,
-            customDomain: docsURL.customDomain
+            customDomain: docsURL["custom-domain"]
         };
     });
 }

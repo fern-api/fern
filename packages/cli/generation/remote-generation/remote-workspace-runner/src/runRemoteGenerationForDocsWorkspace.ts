@@ -70,11 +70,11 @@ export async function runRemoteGenerationForDocsWorkspace({
     // TODO: validate custom domains
     const customDomains: string[] = [];
 
-    if (maybeInstance.customDomain != null) {
-        if (typeof maybeInstance.customDomain === "string") {
-            customDomains.push(maybeInstance.customDomain);
-        } else if (Array.isArray(maybeInstance.customDomain)) {
-            customDomains.push(...maybeInstance.customDomain);
+    if (maybeInstance["custom-domain"] != null) {
+        if (typeof maybeInstance["custom-domain"] === "string") {
+            customDomains.push(maybeInstance["custom-domain"]);
+        } else if (Array.isArray(maybeInstance["custom-domain"])) {
+            customDomains.push(...maybeInstance["custom-domain"]);
         }
     }
 
@@ -95,7 +95,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             apiWorkspaces,
             ossWorkspaces,
             preview,
-            editThisPage: maybeInstance.editThisPage,
+            editThisPage: maybeInstance["edit-this-page"],
             isPrivate: maybeInstance.private,
             disableTemplates,
             skipUpload,
