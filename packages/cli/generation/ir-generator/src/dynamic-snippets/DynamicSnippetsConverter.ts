@@ -931,13 +931,9 @@ export class DynamicSnippetsConverter {
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
                 continue;
             }
-            // Skip optional literal headers.
-            if (
-                header.valueType.type === "container" &&
-                header.valueType.container.type === "optional" &&
-                header.valueType.container.optional.type === "container" &&
-                header.valueType.container.optional.container.type === "literal"
-            ) {
+            // Skip optional headers - they are not required and should not be included
+            // in examples by default.
+            if (header.valueType.type === "container" && header.valueType.container.type === "optional") {
                 continue;
             }
             values[header.name.wireValue] = `<${header.name.wireValue}>`;
