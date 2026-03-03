@@ -59,7 +59,7 @@ export async function getColors(hast: HastRoot): Promise<docsYml.RawSchemas.Colo
 
     if (primaryHexCode && lightHexCode) {
         return {
-            accentPrimary: {
+            "accent-primary": {
                 dark: primaryHexCode,
                 light: lightHexCode
             },
@@ -70,7 +70,7 @@ export async function getColors(hast: HastRoot): Promise<docsYml.RawSchemas.Colo
         };
     } else if (primaryHexCode) {
         return {
-            accentPrimary: {
+            "accent-primary": {
                 dark: primaryHexCode,
                 light: primaryHexCode
             },

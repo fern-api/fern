@@ -1,5 +1,5 @@
 export const defaultColors = {
-    accentPrimary: {
+    "accent-primary": {
         dark: "#0D9373",
         light: "#55D799"
     },

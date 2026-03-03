@@ -57,7 +57,7 @@ function getDocsConfig(organization: string): docsYml.RawSchemas.DocsConfigurati
         title: `${titleCase(organization)} | Documentation`,
         navigation: [{ api: "API Reference", paginated: true }],
         colors: {
-            accentPrimary: "#ffffff",
+            "accent-primary": "#ffffff",
             background: "#000000"
         }
     };
