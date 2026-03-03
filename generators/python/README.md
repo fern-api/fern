@@ -105,6 +105,35 @@ config:
     boto3: 1.28.15
 ```
 
+#### ✨ `package_manager`
+
+**Type:** `"poetry"` or `"uv"`
+
+**Default:** `"poetry"`
+
+Controls the format of the generated `pyproject.toml`. By default, the generator outputs
+a Poetry-compatible `pyproject.toml` with `[tool.poetry]` sections. Set to `"uv"` to generate
+a PEP 621 standard `pyproject.toml` compatible with [uv](https://docs.astral.sh/uv/).
+
+When using `"uv"`:
+- Dependencies use PEP 508 format under `[project.dependencies]`
+- Dev dependencies use PEP 735 `[dependency-groups]`
+- Build backend is `hatchling` instead of `poetry-core`
+- `poetry.lock` is not generated; use `uv sync` instead of `poetry install`
+
+```yaml
+config:
+  package_manager: uv
+```
+
+After generation, install and run with:
+
+```bash
+uv sync          # Install dependencies
+uv run pytest .  # Run tests
+uv run mypy .    # Type check
+```
+
 #### ✨ `pydantic_config.include_union_utils`
 
 **Type:** boolean

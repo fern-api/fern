@@ -46,6 +46,12 @@ customFixtureConfig:
     use_typeddict_requests: true
   outputFolder: client-filename
 fixtures:
+  path-parameters:
+    - customConfig:
+        package_manager: uv
+      outputFolder: uv-package-manager
+    - customConfig: null
+      outputFolder: no-custom-config
   alias-extends:
     - customConfig: null
       outputFolder: no-custom-config

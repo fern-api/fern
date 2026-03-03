@@ -57,6 +57,7 @@ class Project:
         generator_exec_wrapper: Optional[GeneratorExecWrapper] = None,
         mypy_exclude: Optional[List[str]] = None,
         import_paths: Optional[List[str]] = None,
+        package_manager: str = "poetry",
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
 
@@ -110,6 +111,7 @@ class Project:
         self._enable_wire_tests = enable_wire_tests
         self._generator_exec_wrapper = generator_exec_wrapper
         self._mypy_exclude = mypy_exclude
+        self._package_manager = package_manager
 
     def get_module_path_for_imports(self) -> str:
         """
@@ -264,6 +266,7 @@ class Project:
                 enable_wire_tests=self._enable_wire_tests,
                 user_defined_toml=self._user_defined_toml,
                 mypy_exclude=self._mypy_exclude,
+                package_manager=self._package_manager,
             )
             py_project_toml.write()
 

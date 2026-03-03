@@ -163,6 +163,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # "page-index": offset increments by 1 each page.
     offset_semantics: Literal["item-index", "page-index"] = "item-index"
 
+    # Controls the package manager format for the generated pyproject.toml.
+    # "poetry" (default): Generates Poetry-compatible pyproject.toml with [tool.poetry] sections.
+    # "uv": Generates PEP 621 standard pyproject.toml with [project] sections, compatible with uv.
+    package_manager: Literal["poetry", "uv"] = "poetry"
+
     class Config:
         extra = pydantic.Extra.forbid
 

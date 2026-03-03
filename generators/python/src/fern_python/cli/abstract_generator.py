@@ -119,6 +119,10 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "import_paths" in generator_config.custom_config:
             import_paths = generator_config.custom_config.get("import_paths")
 
+        package_manager = "poetry"
+        if generator_config.custom_config is not None and "package_manager" in generator_config.custom_config:
+            package_manager = generator_config.custom_config.get("package_manager", "poetry")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -146,6 +150,7 @@ class AbstractGenerator(ABC):
             generator_exec_wrapper=generator_exec_wrapper,
             mypy_exclude=mypy_exclude,
             import_paths=import_paths,
+            package_manager=package_manager,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -191,11 +196,13 @@ class AbstractGenerator(ABC):
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_poetry_lock()
+            if package_manager == "poetry":
+                publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
-            publisher.run_poetry_lock()
+            if package_manager == "poetry":
+                publisher.run_poetry_lock()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)
