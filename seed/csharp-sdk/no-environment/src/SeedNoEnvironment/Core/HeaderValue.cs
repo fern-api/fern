@@ -36,18 +36,14 @@ internal sealed class HeaderValue
         Func<global::System.Threading.Tasks.Task<string>> value
     ) => new(value);
 
-    [global::System.Obsolete("Use the HeaderValue(string) constructor instead.")]
     public static HeaderValue FromString(string value) => new(value);
 
-    [global::System.Obsolete("Use the HeaderValue(Func<string>) constructor instead.")]
     public static HeaderValue FromFunc(Func<string> value) => new(value);
 
-    [global::System.Obsolete("Use the HeaderValue(Func<ValueTask<string>>) constructor instead.")]
     public static HeaderValue FromValueTaskFunc(
         Func<global::System.Threading.Tasks.ValueTask<string>> value
     ) => new(value);
 
-    [global::System.Obsolete("Use the HeaderValue(Func<Task<string>>) constructor instead.")]
     public static HeaderValue FromTaskFunc(
         Func<global::System.Threading.Tasks.Task<string>> value
     ) => new(value);
