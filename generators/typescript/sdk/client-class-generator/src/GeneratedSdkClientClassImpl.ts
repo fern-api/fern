@@ -800,8 +800,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             // Complex endpoints (streaming, pagination, file upload, non-throwing, etc.) use
             // the dual public/private pattern but still route through this._client.fetch().
             const canUseClientRequest =
-                endpoint instanceof GeneratedDefaultEndpointImplementation &&
-                endpoint.canUseClientRequest(context);
+                endpoint instanceof GeneratedDefaultEndpointImplementation && endpoint.canUseClientRequest(context);
 
             if (canUseClientRequest) {
                 // Single public method that returns this._client.request<T>(config) directly
