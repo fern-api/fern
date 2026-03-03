@@ -557,6 +557,17 @@ class CoreUtilities:
             )
         )
 
+    def encode_path_parameter(self, obj: AST.Expression) -> AST.Expression:
+        from fern_python.external_dependencies.urllib_parse import UrlLibParse
+
+        # Build str(jsonable_encoder(obj)) using a CodeWriter since str is a built-in
+        def write_str_call(writer: AST.NodeWriter) -> None:
+            writer.write("str(")
+            writer.write_node(self.jsonable_encoder(obj))
+            writer.write(")")
+
+        return UrlLibParse.quote(AST.Expression(AST.CodeWriter(write_str_call)))
+
     def serialize_datetime(self, datetime: AST.Expression) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(

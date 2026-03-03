@@ -35,3 +35,13 @@ class UrlLibParse:
                 args=[query],
             ),
         )
+
+    @staticmethod
+    def quote(value: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=_export("quote"),
+                args=[value],
+                kwargs=[("safe", AST.Expression('""'))],
+            ),
+        )

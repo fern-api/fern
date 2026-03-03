@@ -44,6 +44,7 @@ def copy_to_project(*, project: Project) -> None:
             replacements={
                 "core_utilities.shared.request_options": f"{module_path}.core.request_options",
                 "core_utilities.shared.http_client": f"{module_path}.core.http_client",
+                "core_utilities.shared.jsonable_encoder": f"{module_path}.core.jsonable_encoder",
             },
         ),
         AsIsFile(
