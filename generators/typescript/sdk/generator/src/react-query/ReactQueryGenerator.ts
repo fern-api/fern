@@ -465,6 +465,20 @@ export class ReactQueryGenerator {
                 lines.push(`}`);
                 lines.push(``);
             } else {
+                // Determine if this is a single-param or multi-param mutation.
+                // Single-param (no path params, just sdkRequest): unwrap tuple so users call mutate(request) not mutate([request])
+                // Multi-param (has path params): keep tuple since mutate() only accepts one argument
+                const hasPathParams = endpoint.allPathParameters.length > 0;
+                const isSingleParamMutation = hasRequestParams && !hasPathParams;
+                const isMultiParamMutation = hasRequestParams && hasPathParams;
+
+                // For single-param mutations, extract just the first element of the Parameters tuple
+                const mutationVarsType = isSingleParamMutation
+                    ? `${paramsTypeName}[0]`
+                    : isMultiParamMutation
+                      ? paramsTypeName
+                      : "void";
+
                 // === Mutation Options ===
                 const mutationFnName = `${functionPrefix}MutationOptions`;
                 if (hasRequestParams) {
@@ -486,19 +500,36 @@ export class ReactQueryGenerator {
 
                 // === useMutation hook ===
                 const useMutationFnName = `use${functionPrefix}Mutation`;
-                if (hasRequestParams) {
-                    const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, ${paramsTypeName}, unknown>`;
-                    const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, ${paramsTypeName}, unknown>, "mutationFn">`;
+                if (isSingleParamMutation) {
+                    // Single-param: TVariables is the unwrapped first param type
+                    // Users call mutate(request) instead of mutate([request])
+                    const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>`;
+                    const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>, "mutationFn">`;
                     lines.push(
                         `export function ${useMutationFnName}(client: ClientInstance, options?: ${mutationOptionsType}): ${useMutationReturnType} {`
                     );
                     lines.push(
-                        `    return useMutation<Awaited<${returnTypeName}>, Error, ${paramsTypeName}, unknown>({`
+                        `    return useMutation<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>({`
+                    );
+                    lines.push(`        mutationFn: (variables) => ${clientAccess}.${endpointUnsafeName}(variables),`);
+                    lines.push(`        ...options,`);
+                    lines.push(`    });`);
+                } else if (isMultiParamMutation) {
+                    // Multi-param: TVariables is the full tuple (path params + body)
+                    // Users call mutate([pathParam, request]) — tuple required for multi-param
+                    const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>`;
+                    const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>, "mutationFn">`;
+                    lines.push(
+                        `export function ${useMutationFnName}(client: ClientInstance, options?: ${mutationOptionsType}): ${useMutationReturnType} {`
+                    );
+                    lines.push(
+                        `    return useMutation<Awaited<${returnTypeName}>, Error, ${mutationVarsType}, unknown>({`
                     );
                     lines.push(`        mutationFn: (args) => ${clientAccess}.${endpointUnsafeName}(...args),`);
                     lines.push(`        ...options,`);
                     lines.push(`    });`);
                 } else {
+                    // No params: TVariables is void
                     const useMutationReturnType = `UseMutationResult<Awaited<${returnTypeName}>, Error, void, unknown>`;
                     const mutationOptionsType = `Omit<UseMutationOptions<Awaited<${returnTypeName}>, Error, void, unknown>, "mutationFn">`;
                     lines.push(

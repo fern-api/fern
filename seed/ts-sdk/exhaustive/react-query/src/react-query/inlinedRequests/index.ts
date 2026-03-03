@@ -28,7 +28,7 @@ export function usePostWithObjectBodyandResponseMutation(
         UseMutationOptions<
             Awaited<PostWithObjectBodyandResponseReturnType>,
             Error,
-            PostWithObjectBodyandResponseParams,
+            PostWithObjectBodyandResponseParams[0],
             unknown
         >,
         "mutationFn"
@@ -36,16 +36,16 @@ export function usePostWithObjectBodyandResponseMutation(
 ): UseMutationResult<
     Awaited<PostWithObjectBodyandResponseReturnType>,
     Error,
-    PostWithObjectBodyandResponseParams,
+    PostWithObjectBodyandResponseParams[0],
     unknown
 > {
     return useMutation<
         Awaited<PostWithObjectBodyandResponseReturnType>,
         Error,
-        PostWithObjectBodyandResponseParams,
+        PostWithObjectBodyandResponseParams[0],
         unknown
     >({
-        mutationFn: (args) => client.inlinedRequests.postWithObjectBodyandResponse(...args),
+        mutationFn: (variables) => client.inlinedRequests.postWithObjectBodyandResponse(variables),
         ...options,
     });
 }

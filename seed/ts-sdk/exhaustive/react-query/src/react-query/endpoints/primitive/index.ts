@@ -20,12 +20,12 @@ export function GetAndReturnStringMutationOptions(client: ClientInstance): {
 export function useGetAndReturnStringMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams, unknown> {
-    return useMutation<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnString(...args),
+): UseMutationResult<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnStringReturnType>, Error, GetAndReturnStringParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnString(variables),
         ...options,
     });
 }
@@ -44,12 +44,12 @@ export function GetAndReturnIntMutationOptions(client: ClientInstance): {
 export function useGetAndReturnIntMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams, unknown> {
-    return useMutation<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnInt(...args),
+): UseMutationResult<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnIntReturnType>, Error, GetAndReturnIntParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnInt(variables),
         ...options,
     });
 }
@@ -68,12 +68,12 @@ export function GetAndReturnLongMutationOptions(client: ClientInstance): {
 export function useGetAndReturnLongMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams, unknown> {
-    return useMutation<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnLong(...args),
+): UseMutationResult<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnLongReturnType>, Error, GetAndReturnLongParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnLong(variables),
         ...options,
     });
 }
@@ -92,12 +92,12 @@ export function GetAndReturnDoubleMutationOptions(client: ClientInstance): {
 export function useGetAndReturnDoubleMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams, unknown> {
-    return useMutation<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnDouble(...args),
+): UseMutationResult<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnDoubleReturnType>, Error, GetAndReturnDoubleParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDouble(variables),
         ...options,
     });
 }
@@ -116,12 +116,12 @@ export function GetAndReturnBoolMutationOptions(client: ClientInstance): {
 export function useGetAndReturnBoolMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams, unknown> {
-    return useMutation<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnBool(...args),
+): UseMutationResult<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnBoolReturnType>, Error, GetAndReturnBoolParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBool(variables),
         ...options,
     });
 }
@@ -140,12 +140,12 @@ export function GetAndReturnDatetimeMutationOptions(client: ClientInstance): {
 export function useGetAndReturnDatetimeMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams, unknown> {
-    return useMutation<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnDatetime(...args),
+): UseMutationResult<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnDatetimeReturnType>, Error, GetAndReturnDatetimeParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDatetime(variables),
         ...options,
     });
 }
@@ -164,12 +164,12 @@ export function GetAndReturnDateMutationOptions(client: ClientInstance): {
 export function useGetAndReturnDateMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams, unknown> {
-    return useMutation<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnDate(...args),
+): UseMutationResult<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnDateReturnType>, Error, GetAndReturnDateParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDate(variables),
         ...options,
     });
 }
@@ -188,12 +188,12 @@ export function GetAndReturnUuidMutationOptions(client: ClientInstance): {
 export function useGetAndReturnUuidMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams, unknown> {
-    return useMutation<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnUuid(...args),
+): UseMutationResult<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnUuidReturnType>, Error, GetAndReturnUuidParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnUuid(variables),
         ...options,
     });
 }
@@ -212,12 +212,12 @@ export function GetAndReturnBase64MutationOptions(client: ClientInstance): {
 export function useGetAndReturnBase64Mutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params, unknown> {
-    return useMutation<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params, unknown>({
-        mutationFn: (args) => client.endpoints.primitive.getAndReturnBase64(...args),
+): UseMutationResult<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params[0], unknown> {
+    return useMutation<Awaited<GetAndReturnBase64ReturnType>, Error, GetAndReturnBase64Params[0], unknown>({
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBase64(variables),
         ...options,
     });
 }

@@ -20,12 +20,12 @@ export function GetWithCustomHeaderMutationOptions(client: ClientInstance): {
 export function useGetWithCustomHeaderMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams, unknown>,
+        UseMutationOptions<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams, unknown> {
-    return useMutation<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams, unknown>({
-        mutationFn: (args) => client.reqWithHeaders.getWithCustomHeader(...args),
+): UseMutationResult<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams[0], unknown> {
+    return useMutation<Awaited<GetWithCustomHeaderReturnType>, Error, GetWithCustomHeaderParams[0], unknown>({
+        mutationFn: (variables) => client.reqWithHeaders.getWithCustomHeader(variables),
         ...options,
     });
 }

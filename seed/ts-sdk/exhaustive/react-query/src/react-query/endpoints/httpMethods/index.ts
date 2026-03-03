@@ -75,10 +75,10 @@ export function TestPostMutationOptions(client: ClientInstance): {
 
 export function useTestPostMutation(
     client: ClientInstance,
-    options?: Omit<UseMutationOptions<Awaited<TestPostReturnType>, Error, TestPostParams, unknown>, "mutationFn">,
-): UseMutationResult<Awaited<TestPostReturnType>, Error, TestPostParams, unknown> {
-    return useMutation<Awaited<TestPostReturnType>, Error, TestPostParams, unknown>({
-        mutationFn: (args) => client.endpoints.httpMethods.testPost(...args),
+    options?: Omit<UseMutationOptions<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown>, "mutationFn">,
+): UseMutationResult<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown> {
+    return useMutation<Awaited<TestPostReturnType>, Error, TestPostParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.httpMethods.testPost(variables),
         ...options,
     });
 }

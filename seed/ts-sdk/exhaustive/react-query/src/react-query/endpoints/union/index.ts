@@ -20,12 +20,12 @@ export function GetAndReturnUnionMutationOptions(client: ClientInstance): {
 export function useGetAndReturnUnionMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams, unknown> {
-    return useMutation<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams, unknown>({
-        mutationFn: (args) => client.endpoints.union.getAndReturnUnion(...args),
+): UseMutationResult<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnUnionReturnType>, Error, GetAndReturnUnionParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.union.getAndReturnUnion(variables),
         ...options,
     });
 }

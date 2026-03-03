@@ -28,7 +28,7 @@ export function useGetAndReturnWithOptionalFieldMutation(
         UseMutationOptions<
             Awaited<GetAndReturnWithOptionalFieldReturnType>,
             Error,
-            GetAndReturnWithOptionalFieldParams,
+            GetAndReturnWithOptionalFieldParams[0],
             unknown
         >,
         "mutationFn"
@@ -36,16 +36,16 @@ export function useGetAndReturnWithOptionalFieldMutation(
 ): UseMutationResult<
     Awaited<GetAndReturnWithOptionalFieldReturnType>,
     Error,
-    GetAndReturnWithOptionalFieldParams,
+    GetAndReturnWithOptionalFieldParams[0],
     unknown
 > {
     return useMutation<
         Awaited<GetAndReturnWithOptionalFieldReturnType>,
         Error,
-        GetAndReturnWithOptionalFieldParams,
+        GetAndReturnWithOptionalFieldParams[0],
         unknown
     >({
-        mutationFn: (args) => client.endpoints.object.getAndReturnWithOptionalField(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithOptionalField(variables),
         ...options,
     });
 }
@@ -72,7 +72,7 @@ export function useGetAndReturnWithRequiredFieldMutation(
         UseMutationOptions<
             Awaited<GetAndReturnWithRequiredFieldReturnType>,
             Error,
-            GetAndReturnWithRequiredFieldParams,
+            GetAndReturnWithRequiredFieldParams[0],
             unknown
         >,
         "mutationFn"
@@ -80,16 +80,16 @@ export function useGetAndReturnWithRequiredFieldMutation(
 ): UseMutationResult<
     Awaited<GetAndReturnWithRequiredFieldReturnType>,
     Error,
-    GetAndReturnWithRequiredFieldParams,
+    GetAndReturnWithRequiredFieldParams[0],
     unknown
 > {
     return useMutation<
         Awaited<GetAndReturnWithRequiredFieldReturnType>,
         Error,
-        GetAndReturnWithRequiredFieldParams,
+        GetAndReturnWithRequiredFieldParams[0],
         unknown
     >({
-        mutationFn: (args) => client.endpoints.object.getAndReturnWithRequiredField(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithRequiredField(variables),
         ...options,
     });
 }
@@ -109,12 +109,17 @@ export function GetAndReturnWithMapOfMapMutationOptions(client: ClientInstance):
 export function useGetAndReturnWithMapOfMapMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnWithMapOfMapReturnType>, Error, GetAndReturnWithMapOfMapParams, unknown>,
+        UseMutationOptions<
+            Awaited<GetAndReturnWithMapOfMapReturnType>,
+            Error,
+            GetAndReturnWithMapOfMapParams[0],
+            unknown
+        >,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnWithMapOfMapReturnType>, Error, GetAndReturnWithMapOfMapParams, unknown> {
-    return useMutation<Awaited<GetAndReturnWithMapOfMapReturnType>, Error, GetAndReturnWithMapOfMapParams, unknown>({
-        mutationFn: (args) => client.endpoints.object.getAndReturnWithMapOfMap(...args),
+): UseMutationResult<Awaited<GetAndReturnWithMapOfMapReturnType>, Error, GetAndReturnWithMapOfMapParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnWithMapOfMapReturnType>, Error, GetAndReturnWithMapOfMapParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithMapOfMap(variables),
         ...options,
     });
 }
@@ -141,7 +146,7 @@ export function useGetAndReturnNestedWithOptionalFieldMutation(
         UseMutationOptions<
             Awaited<GetAndReturnNestedWithOptionalFieldReturnType>,
             Error,
-            GetAndReturnNestedWithOptionalFieldParams,
+            GetAndReturnNestedWithOptionalFieldParams[0],
             unknown
         >,
         "mutationFn"
@@ -149,16 +154,16 @@ export function useGetAndReturnNestedWithOptionalFieldMutation(
 ): UseMutationResult<
     Awaited<GetAndReturnNestedWithOptionalFieldReturnType>,
     Error,
-    GetAndReturnNestedWithOptionalFieldParams,
+    GetAndReturnNestedWithOptionalFieldParams[0],
     unknown
 > {
     return useMutation<
         Awaited<GetAndReturnNestedWithOptionalFieldReturnType>,
         Error,
-        GetAndReturnNestedWithOptionalFieldParams,
+        GetAndReturnNestedWithOptionalFieldParams[0],
         unknown
     >({
-        mutationFn: (args) => client.endpoints.object.getAndReturnNestedWithOptionalField(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnNestedWithOptionalField(variables),
         ...options,
     });
 }
@@ -231,7 +236,7 @@ export function useGetAndReturnNestedWithRequiredFieldAsListMutation(
         UseMutationOptions<
             Awaited<GetAndReturnNestedWithRequiredFieldAsListReturnType>,
             Error,
-            GetAndReturnNestedWithRequiredFieldAsListParams,
+            GetAndReturnNestedWithRequiredFieldAsListParams[0],
             unknown
         >,
         "mutationFn"
@@ -239,16 +244,16 @@ export function useGetAndReturnNestedWithRequiredFieldAsListMutation(
 ): UseMutationResult<
     Awaited<GetAndReturnNestedWithRequiredFieldAsListReturnType>,
     Error,
-    GetAndReturnNestedWithRequiredFieldAsListParams,
+    GetAndReturnNestedWithRequiredFieldAsListParams[0],
     unknown
 > {
     return useMutation<
         Awaited<GetAndReturnNestedWithRequiredFieldAsListReturnType>,
         Error,
-        GetAndReturnNestedWithRequiredFieldAsListParams,
+        GetAndReturnNestedWithRequiredFieldAsListParams[0],
         unknown
     >({
-        mutationFn: (args) => client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(variables),
         ...options,
     });
 }
@@ -275,7 +280,7 @@ export function useGetAndReturnWithUnknownFieldMutation(
         UseMutationOptions<
             Awaited<GetAndReturnWithUnknownFieldReturnType>,
             Error,
-            GetAndReturnWithUnknownFieldParams,
+            GetAndReturnWithUnknownFieldParams[0],
             unknown
         >,
         "mutationFn"
@@ -283,16 +288,16 @@ export function useGetAndReturnWithUnknownFieldMutation(
 ): UseMutationResult<
     Awaited<GetAndReturnWithUnknownFieldReturnType>,
     Error,
-    GetAndReturnWithUnknownFieldParams,
+    GetAndReturnWithUnknownFieldParams[0],
     unknown
 > {
     return useMutation<
         Awaited<GetAndReturnWithUnknownFieldReturnType>,
         Error,
-        GetAndReturnWithUnknownFieldParams,
+        GetAndReturnWithUnknownFieldParams[0],
         unknown
     >({
-        mutationFn: (args) => client.endpoints.object.getAndReturnWithUnknownField(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithUnknownField(variables),
         ...options,
     });
 }
@@ -319,7 +324,7 @@ export function useGetAndReturnWithDatetimeLikeStringMutation(
         UseMutationOptions<
             Awaited<GetAndReturnWithDatetimeLikeStringReturnType>,
             Error,
-            GetAndReturnWithDatetimeLikeStringParams,
+            GetAndReturnWithDatetimeLikeStringParams[0],
             unknown
         >,
         "mutationFn"
@@ -327,16 +332,16 @@ export function useGetAndReturnWithDatetimeLikeStringMutation(
 ): UseMutationResult<
     Awaited<GetAndReturnWithDatetimeLikeStringReturnType>,
     Error,
-    GetAndReturnWithDatetimeLikeStringParams,
+    GetAndReturnWithDatetimeLikeStringParams[0],
     unknown
 > {
     return useMutation<
         Awaited<GetAndReturnWithDatetimeLikeStringReturnType>,
         Error,
-        GetAndReturnWithDatetimeLikeStringParams,
+        GetAndReturnWithDatetimeLikeStringParams[0],
         unknown
     >({
-        mutationFn: (args) => client.endpoints.object.getAndReturnWithDatetimeLikeString(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithDatetimeLikeString(variables),
         ...options,
     });
 }

@@ -20,12 +20,12 @@ export function GetAndReturnEnumMutationOptions(client: ClientInstance): {
 export function useGetAndReturnEnumMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams, unknown>,
+        UseMutationOptions<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams, unknown> {
-    return useMutation<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams, unknown>({
-        mutationFn: (args) => client.endpoints.enum.getAndReturnEnum(...args),
+): UseMutationResult<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown> {
+    return useMutation<Awaited<GetAndReturnEnumReturnType>, Error, GetAndReturnEnumParams[0], unknown>({
+        mutationFn: (variables) => client.endpoints.enum.getAndReturnEnum(variables),
         ...options,
     });
 }

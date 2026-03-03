@@ -20,12 +20,12 @@ export function PostWithNoAuthMutationOptions(client: ClientInstance): {
 export function usePostWithNoAuthMutation(
     client: ClientInstance,
     options?: Omit<
-        UseMutationOptions<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams, unknown>,
+        UseMutationOptions<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown>,
         "mutationFn"
     >,
-): UseMutationResult<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams, unknown> {
-    return useMutation<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams, unknown>({
-        mutationFn: (args) => client.noAuth.postWithNoAuth(...args),
+): UseMutationResult<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown> {
+    return useMutation<Awaited<PostWithNoAuthReturnType>, Error, PostWithNoAuthParams[0], unknown>({
+        mutationFn: (variables) => client.noAuth.postWithNoAuth(variables),
         ...options,
     });
 }
