@@ -10,10 +10,10 @@ type GetAndReturnEnumParams = Parameters<ClientInstance["endpoints"]["enum"]["ge
 type GetAndReturnEnumReturnType = ReturnType<ClientInstance["endpoints"]["enum"]["getAndReturnEnum"]>;
 
 export function GetAndReturnEnumMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnEnumParams) => GetAndReturnEnumReturnType;
+    mutationFn: (variables: GetAndReturnEnumParams[0]) => GetAndReturnEnumReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnEnumParams) => client.endpoints.enum.getAndReturnEnum(...args),
+        mutationFn: (variables) => client.endpoints.enum.getAndReturnEnum(variables),
     };
 }
 

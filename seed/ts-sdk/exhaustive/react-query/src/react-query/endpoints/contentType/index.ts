@@ -14,11 +14,10 @@ type PostJsonPatchContentTypeReturnType = ReturnType<
 >;
 
 export function PostJsonPatchContentTypeMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: PostJsonPatchContentTypeParams) => PostJsonPatchContentTypeReturnType;
+    mutationFn: (variables: PostJsonPatchContentTypeParams[0]) => PostJsonPatchContentTypeReturnType;
 } {
     return {
-        mutationFn: (...args: PostJsonPatchContentTypeParams) =>
-            client.endpoints.contentType.postJsonPatchContentType(...args),
+        mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentType(variables),
     };
 }
 
@@ -48,11 +47,12 @@ type PostJsonPatchContentWithCharsetTypeReturnType = ReturnType<
 >;
 
 export function PostJsonPatchContentWithCharsetTypeMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: PostJsonPatchContentWithCharsetTypeParams) => PostJsonPatchContentWithCharsetTypeReturnType;
+    mutationFn: (
+        variables: PostJsonPatchContentWithCharsetTypeParams[0],
+    ) => PostJsonPatchContentWithCharsetTypeReturnType;
 } {
     return {
-        mutationFn: (...args: PostJsonPatchContentWithCharsetTypeParams) =>
-            client.endpoints.contentType.postJsonPatchContentWithCharsetType(...args),
+        mutationFn: (variables) => client.endpoints.contentType.postJsonPatchContentWithCharsetType(variables),
     };
 }
 

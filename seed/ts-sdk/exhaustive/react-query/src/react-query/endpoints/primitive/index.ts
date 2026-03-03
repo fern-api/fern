@@ -10,10 +10,10 @@ type GetAndReturnStringParams = Parameters<ClientInstance["endpoints"]["primitiv
 type GetAndReturnStringReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnString"]>;
 
 export function GetAndReturnStringMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnStringParams) => GetAndReturnStringReturnType;
+    mutationFn: (variables: GetAndReturnStringParams[0]) => GetAndReturnStringReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnStringParams) => client.endpoints.primitive.getAndReturnString(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnString(variables),
     };
 }
 
@@ -34,10 +34,10 @@ type GetAndReturnIntParams = Parameters<ClientInstance["endpoints"]["primitive"]
 type GetAndReturnIntReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnInt"]>;
 
 export function GetAndReturnIntMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnIntParams) => GetAndReturnIntReturnType;
+    mutationFn: (variables: GetAndReturnIntParams[0]) => GetAndReturnIntReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnIntParams) => client.endpoints.primitive.getAndReturnInt(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnInt(variables),
     };
 }
 
@@ -58,10 +58,10 @@ type GetAndReturnLongParams = Parameters<ClientInstance["endpoints"]["primitive"
 type GetAndReturnLongReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnLong"]>;
 
 export function GetAndReturnLongMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnLongParams) => GetAndReturnLongReturnType;
+    mutationFn: (variables: GetAndReturnLongParams[0]) => GetAndReturnLongReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnLongParams) => client.endpoints.primitive.getAndReturnLong(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnLong(variables),
     };
 }
 
@@ -82,10 +82,10 @@ type GetAndReturnDoubleParams = Parameters<ClientInstance["endpoints"]["primitiv
 type GetAndReturnDoubleReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnDouble"]>;
 
 export function GetAndReturnDoubleMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnDoubleParams) => GetAndReturnDoubleReturnType;
+    mutationFn: (variables: GetAndReturnDoubleParams[0]) => GetAndReturnDoubleReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnDoubleParams) => client.endpoints.primitive.getAndReturnDouble(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDouble(variables),
     };
 }
 
@@ -106,10 +106,10 @@ type GetAndReturnBoolParams = Parameters<ClientInstance["endpoints"]["primitive"
 type GetAndReturnBoolReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnBool"]>;
 
 export function GetAndReturnBoolMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnBoolParams) => GetAndReturnBoolReturnType;
+    mutationFn: (variables: GetAndReturnBoolParams[0]) => GetAndReturnBoolReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnBoolParams) => client.endpoints.primitive.getAndReturnBool(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBool(variables),
     };
 }
 
@@ -130,10 +130,10 @@ type GetAndReturnDatetimeParams = Parameters<ClientInstance["endpoints"]["primit
 type GetAndReturnDatetimeReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnDatetime"]>;
 
 export function GetAndReturnDatetimeMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnDatetimeParams) => GetAndReturnDatetimeReturnType;
+    mutationFn: (variables: GetAndReturnDatetimeParams[0]) => GetAndReturnDatetimeReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnDatetimeParams) => client.endpoints.primitive.getAndReturnDatetime(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDatetime(variables),
     };
 }
 
@@ -154,10 +154,10 @@ type GetAndReturnDateParams = Parameters<ClientInstance["endpoints"]["primitive"
 type GetAndReturnDateReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnDate"]>;
 
 export function GetAndReturnDateMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnDateParams) => GetAndReturnDateReturnType;
+    mutationFn: (variables: GetAndReturnDateParams[0]) => GetAndReturnDateReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnDateParams) => client.endpoints.primitive.getAndReturnDate(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnDate(variables),
     };
 }
 
@@ -178,10 +178,10 @@ type GetAndReturnUuidParams = Parameters<ClientInstance["endpoints"]["primitive"
 type GetAndReturnUuidReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnUuid"]>;
 
 export function GetAndReturnUuidMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnUuidParams) => GetAndReturnUuidReturnType;
+    mutationFn: (variables: GetAndReturnUuidParams[0]) => GetAndReturnUuidReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnUuidParams) => client.endpoints.primitive.getAndReturnUuid(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnUuid(variables),
     };
 }
 
@@ -202,10 +202,10 @@ type GetAndReturnBase64Params = Parameters<ClientInstance["endpoints"]["primitiv
 type GetAndReturnBase64ReturnType = ReturnType<ClientInstance["endpoints"]["primitive"]["getAndReturnBase64"]>;
 
 export function GetAndReturnBase64MutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnBase64Params) => GetAndReturnBase64ReturnType;
+    mutationFn: (variables: GetAndReturnBase64Params[0]) => GetAndReturnBase64ReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnBase64Params) => client.endpoints.primitive.getAndReturnBase64(...args),
+        mutationFn: (variables) => client.endpoints.primitive.getAndReturnBase64(variables),
     };
 }
 

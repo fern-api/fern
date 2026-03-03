@@ -9,9 +9,9 @@ type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 type AddParams = Parameters<ClientInstance["endpoints"]["put"]["add"]>;
 type AddReturnType = ReturnType<ClientInstance["endpoints"]["put"]["add"]>;
 
-export function AddMutationOptions(client: ClientInstance): { mutationFn: (...args: AddParams) => AddReturnType } {
+export function AddMutationOptions(client: ClientInstance): { mutationFn: (args: AddParams) => AddReturnType } {
     return {
-        mutationFn: (...args: AddParams) => client.endpoints.put.add(...args),
+        mutationFn: (args) => client.endpoints.put.add(...args),
     };
 }
 

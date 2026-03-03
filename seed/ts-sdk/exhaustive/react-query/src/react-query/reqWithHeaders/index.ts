@@ -10,10 +10,10 @@ type GetWithCustomHeaderParams = Parameters<ClientInstance["reqWithHeaders"]["ge
 type GetWithCustomHeaderReturnType = ReturnType<ClientInstance["reqWithHeaders"]["getWithCustomHeader"]>;
 
 export function GetWithCustomHeaderMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetWithCustomHeaderParams) => GetWithCustomHeaderReturnType;
+    mutationFn: (variables: GetWithCustomHeaderParams[0]) => GetWithCustomHeaderReturnType;
 } {
     return {
-        mutationFn: (...args: GetWithCustomHeaderParams) => client.reqWithHeaders.getWithCustomHeader(...args),
+        mutationFn: (variables) => client.reqWithHeaders.getWithCustomHeader(variables),
     };
 }
 

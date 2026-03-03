@@ -14,11 +14,10 @@ type GetAndReturnListOfPrimitivesReturnType = ReturnType<
 >;
 
 export function GetAndReturnListOfPrimitivesMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnListOfPrimitivesParams) => GetAndReturnListOfPrimitivesReturnType;
+    mutationFn: (variables: GetAndReturnListOfPrimitivesParams[0]) => GetAndReturnListOfPrimitivesReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnListOfPrimitivesParams) =>
-            client.endpoints.container.getAndReturnListOfPrimitives(...args),
+        mutationFn: (variables) => client.endpoints.container.getAndReturnListOfPrimitives(variables),
     };
 }
 
@@ -58,11 +57,10 @@ type GetAndReturnListOfObjectsReturnType = ReturnType<
 >;
 
 export function GetAndReturnListOfObjectsMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnListOfObjectsParams) => GetAndReturnListOfObjectsReturnType;
+    mutationFn: (variables: GetAndReturnListOfObjectsParams[0]) => GetAndReturnListOfObjectsReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnListOfObjectsParams) =>
-            client.endpoints.container.getAndReturnListOfObjects(...args),
+        mutationFn: (variables) => client.endpoints.container.getAndReturnListOfObjects(variables),
     };
 }
 
@@ -97,11 +95,10 @@ type GetAndReturnSetOfPrimitivesReturnType = ReturnType<
 >;
 
 export function GetAndReturnSetOfPrimitivesMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnSetOfPrimitivesParams) => GetAndReturnSetOfPrimitivesReturnType;
+    mutationFn: (variables: GetAndReturnSetOfPrimitivesParams[0]) => GetAndReturnSetOfPrimitivesReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnSetOfPrimitivesParams) =>
-            client.endpoints.container.getAndReturnSetOfPrimitives(...args),
+        mutationFn: (variables) => client.endpoints.container.getAndReturnSetOfPrimitives(variables),
     };
 }
 
@@ -139,11 +136,10 @@ type GetAndReturnSetOfObjectsReturnType = ReturnType<
 >;
 
 export function GetAndReturnSetOfObjectsMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnSetOfObjectsParams) => GetAndReturnSetOfObjectsReturnType;
+    mutationFn: (variables: GetAndReturnSetOfObjectsParams[0]) => GetAndReturnSetOfObjectsReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnSetOfObjectsParams) =>
-            client.endpoints.container.getAndReturnSetOfObjects(...args),
+        mutationFn: (variables) => client.endpoints.container.getAndReturnSetOfObjects(variables),
     };
 }
 
@@ -173,11 +169,10 @@ type GetAndReturnMapPrimToPrimReturnType = ReturnType<
 >;
 
 export function GetAndReturnMapPrimToPrimMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnMapPrimToPrimParams) => GetAndReturnMapPrimToPrimReturnType;
+    mutationFn: (variables: GetAndReturnMapPrimToPrimParams[0]) => GetAndReturnMapPrimToPrimReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnMapPrimToPrimParams) =>
-            client.endpoints.container.getAndReturnMapPrimToPrim(...args),
+        mutationFn: (variables) => client.endpoints.container.getAndReturnMapPrimToPrim(variables),
     };
 }
 
@@ -212,11 +207,10 @@ type GetAndReturnMapOfPrimToObjectReturnType = ReturnType<
 >;
 
 export function GetAndReturnMapOfPrimToObjectMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnMapOfPrimToObjectParams) => GetAndReturnMapOfPrimToObjectReturnType;
+    mutationFn: (variables: GetAndReturnMapOfPrimToObjectParams[0]) => GetAndReturnMapOfPrimToObjectReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnMapOfPrimToObjectParams) =>
-            client.endpoints.container.getAndReturnMapOfPrimToObject(...args),
+        mutationFn: (variables) => client.endpoints.container.getAndReturnMapOfPrimToObject(variables),
     };
 }
 
@@ -257,12 +251,11 @@ type GetAndReturnMapOfPrimToUndiscriminatedUnionReturnType = ReturnType<
 
 export function GetAndReturnMapOfPrimToUndiscriminatedUnionMutationOptions(client: ClientInstance): {
     mutationFn: (
-        ...args: GetAndReturnMapOfPrimToUndiscriminatedUnionParams
+        variables: GetAndReturnMapOfPrimToUndiscriminatedUnionParams[0],
     ) => GetAndReturnMapOfPrimToUndiscriminatedUnionReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnMapOfPrimToUndiscriminatedUnionParams) =>
-            client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(...args),
+        mutationFn: (variables) => client.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion(variables),
     };
 }
 
@@ -298,10 +291,10 @@ type GetAndReturnOptionalParams = Parameters<ClientInstance["endpoints"]["contai
 type GetAndReturnOptionalReturnType = ReturnType<ClientInstance["endpoints"]["container"]["getAndReturnOptional"]>;
 
 export function GetAndReturnOptionalMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnOptionalParams) => GetAndReturnOptionalReturnType;
+    mutationFn: (variables: GetAndReturnOptionalParams[0]) => GetAndReturnOptionalReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnOptionalParams) => client.endpoints.container.getAndReturnOptional(...args),
+        mutationFn: (variables) => client.endpoints.container.getAndReturnOptional(variables),
     };
 }
 

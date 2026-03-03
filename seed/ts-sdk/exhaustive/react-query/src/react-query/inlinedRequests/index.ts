@@ -14,11 +14,10 @@ type PostWithObjectBodyandResponseReturnType = ReturnType<
 >;
 
 export function PostWithObjectBodyandResponseMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: PostWithObjectBodyandResponseParams) => PostWithObjectBodyandResponseReturnType;
+    mutationFn: (variables: PostWithObjectBodyandResponseParams[0]) => PostWithObjectBodyandResponseReturnType;
 } {
     return {
-        mutationFn: (...args: PostWithObjectBodyandResponseParams) =>
-            client.inlinedRequests.postWithObjectBodyandResponse(...args),
+        mutationFn: (variables) => client.inlinedRequests.postWithObjectBodyandResponse(variables),
     };
 }
 

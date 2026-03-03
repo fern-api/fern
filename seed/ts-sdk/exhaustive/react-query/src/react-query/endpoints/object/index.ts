@@ -14,11 +14,10 @@ type GetAndReturnWithOptionalFieldReturnType = ReturnType<
 >;
 
 export function GetAndReturnWithOptionalFieldMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnWithOptionalFieldParams) => GetAndReturnWithOptionalFieldReturnType;
+    mutationFn: (variables: GetAndReturnWithOptionalFieldParams[0]) => GetAndReturnWithOptionalFieldReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnWithOptionalFieldParams) =>
-            client.endpoints.object.getAndReturnWithOptionalField(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithOptionalField(variables),
     };
 }
 
@@ -58,11 +57,10 @@ type GetAndReturnWithRequiredFieldReturnType = ReturnType<
 >;
 
 export function GetAndReturnWithRequiredFieldMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnWithRequiredFieldParams) => GetAndReturnWithRequiredFieldReturnType;
+    mutationFn: (variables: GetAndReturnWithRequiredFieldParams[0]) => GetAndReturnWithRequiredFieldReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnWithRequiredFieldParams) =>
-            client.endpoints.object.getAndReturnWithRequiredField(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithRequiredField(variables),
     };
 }
 
@@ -98,11 +96,10 @@ type GetAndReturnWithMapOfMapParams = Parameters<ClientInstance["endpoints"]["ob
 type GetAndReturnWithMapOfMapReturnType = ReturnType<ClientInstance["endpoints"]["object"]["getAndReturnWithMapOfMap"]>;
 
 export function GetAndReturnWithMapOfMapMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnWithMapOfMapParams) => GetAndReturnWithMapOfMapReturnType;
+    mutationFn: (variables: GetAndReturnWithMapOfMapParams[0]) => GetAndReturnWithMapOfMapReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnWithMapOfMapParams) =>
-            client.endpoints.object.getAndReturnWithMapOfMap(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithMapOfMap(variables),
     };
 }
 
@@ -132,11 +129,12 @@ type GetAndReturnNestedWithOptionalFieldReturnType = ReturnType<
 >;
 
 export function GetAndReturnNestedWithOptionalFieldMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnNestedWithOptionalFieldParams) => GetAndReturnNestedWithOptionalFieldReturnType;
+    mutationFn: (
+        variables: GetAndReturnNestedWithOptionalFieldParams[0],
+    ) => GetAndReturnNestedWithOptionalFieldReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnNestedWithOptionalFieldParams) =>
-            client.endpoints.object.getAndReturnNestedWithOptionalField(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnNestedWithOptionalField(variables),
     };
 }
 
@@ -176,11 +174,10 @@ type GetAndReturnNestedWithRequiredFieldReturnType = ReturnType<
 >;
 
 export function GetAndReturnNestedWithRequiredFieldMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnNestedWithRequiredFieldParams) => GetAndReturnNestedWithRequiredFieldReturnType;
+    mutationFn: (args: GetAndReturnNestedWithRequiredFieldParams) => GetAndReturnNestedWithRequiredFieldReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnNestedWithRequiredFieldParams) =>
-            client.endpoints.object.getAndReturnNestedWithRequiredField(...args),
+        mutationFn: (args) => client.endpoints.object.getAndReturnNestedWithRequiredField(...args),
     };
 }
 
@@ -221,12 +218,11 @@ type GetAndReturnNestedWithRequiredFieldAsListReturnType = ReturnType<
 
 export function GetAndReturnNestedWithRequiredFieldAsListMutationOptions(client: ClientInstance): {
     mutationFn: (
-        ...args: GetAndReturnNestedWithRequiredFieldAsListParams
+        variables: GetAndReturnNestedWithRequiredFieldAsListParams[0],
     ) => GetAndReturnNestedWithRequiredFieldAsListReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnNestedWithRequiredFieldAsListParams) =>
-            client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList(variables),
     };
 }
 
@@ -266,11 +262,10 @@ type GetAndReturnWithUnknownFieldReturnType = ReturnType<
 >;
 
 export function GetAndReturnWithUnknownFieldMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnWithUnknownFieldParams) => GetAndReturnWithUnknownFieldReturnType;
+    mutationFn: (variables: GetAndReturnWithUnknownFieldParams[0]) => GetAndReturnWithUnknownFieldReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnWithUnknownFieldParams) =>
-            client.endpoints.object.getAndReturnWithUnknownField(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithUnknownField(variables),
     };
 }
 
@@ -310,11 +305,12 @@ type GetAndReturnWithDatetimeLikeStringReturnType = ReturnType<
 >;
 
 export function GetAndReturnWithDatetimeLikeStringMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnWithDatetimeLikeStringParams) => GetAndReturnWithDatetimeLikeStringReturnType;
+    mutationFn: (
+        variables: GetAndReturnWithDatetimeLikeStringParams[0],
+    ) => GetAndReturnWithDatetimeLikeStringReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnWithDatetimeLikeStringParams) =>
-            client.endpoints.object.getAndReturnWithDatetimeLikeString(...args),
+        mutationFn: (variables) => client.endpoints.object.getAndReturnWithDatetimeLikeString(variables),
     };
 }
 

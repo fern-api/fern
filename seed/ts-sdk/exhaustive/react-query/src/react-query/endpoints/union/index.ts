@@ -10,10 +10,10 @@ type GetAndReturnUnionParams = Parameters<ClientInstance["endpoints"]["union"]["
 type GetAndReturnUnionReturnType = ReturnType<ClientInstance["endpoints"]["union"]["getAndReturnUnion"]>;
 
 export function GetAndReturnUnionMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: GetAndReturnUnionParams) => GetAndReturnUnionReturnType;
+    mutationFn: (variables: GetAndReturnUnionParams[0]) => GetAndReturnUnionReturnType;
 } {
     return {
-        mutationFn: (...args: GetAndReturnUnionParams) => client.endpoints.union.getAndReturnUnion(...args),
+        mutationFn: (variables) => client.endpoints.union.getAndReturnUnion(variables),
     };
 }
 

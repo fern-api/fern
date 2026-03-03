@@ -357,10 +357,10 @@ type ModifyWithPathParams = Parameters<ClientInstance["endpoints"]["params"]["mo
 type ModifyWithPathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["modifyWithPath"]>;
 
 export function ModifyWithPathMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: ModifyWithPathParams) => ModifyWithPathReturnType;
+    mutationFn: (args: ModifyWithPathParams) => ModifyWithPathReturnType;
 } {
     return {
-        mutationFn: (...args: ModifyWithPathParams) => client.endpoints.params.modifyWithPath(...args),
+        mutationFn: (args) => client.endpoints.params.modifyWithPath(...args),
     };
 }
 
@@ -381,10 +381,10 @@ type ModifyWithInlinePathParams = Parameters<ClientInstance["endpoints"]["params
 type ModifyWithInlinePathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["modifyWithInlinePath"]>;
 
 export function ModifyWithInlinePathMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: ModifyWithInlinePathParams) => ModifyWithInlinePathReturnType;
+    mutationFn: (args: ModifyWithInlinePathParams) => ModifyWithInlinePathReturnType;
 } {
     return {
-        mutationFn: (...args: ModifyWithInlinePathParams) => client.endpoints.params.modifyWithInlinePath(...args),
+        mutationFn: (args) => client.endpoints.params.modifyWithInlinePath(...args),
     };
 }
 
@@ -405,10 +405,10 @@ type UploadWithPathParams = Parameters<ClientInstance["endpoints"]["params"]["up
 type UploadWithPathReturnType = ReturnType<ClientInstance["endpoints"]["params"]["uploadWithPath"]>;
 
 export function UploadWithPathMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: UploadWithPathParams) => UploadWithPathReturnType;
+    mutationFn: (args: UploadWithPathParams) => UploadWithPathReturnType;
 } {
     return {
-        mutationFn: (...args: UploadWithPathParams) => client.endpoints.params.uploadWithPath(...args),
+        mutationFn: (args) => client.endpoints.params.uploadWithPath(...args),
     };
 }
 

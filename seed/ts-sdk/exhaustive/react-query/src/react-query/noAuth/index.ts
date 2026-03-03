@@ -10,10 +10,10 @@ type PostWithNoAuthParams = Parameters<ClientInstance["noAuth"]["postWithNoAuth"
 type PostWithNoAuthReturnType = ReturnType<ClientInstance["noAuth"]["postWithNoAuth"]>;
 
 export function PostWithNoAuthMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: PostWithNoAuthParams) => PostWithNoAuthReturnType;
+    mutationFn: (variables: PostWithNoAuthParams[0]) => PostWithNoAuthReturnType;
 } {
     return {
-        mutationFn: (...args: PostWithNoAuthParams) => client.noAuth.postWithNoAuth(...args),
+        mutationFn: (variables) => client.noAuth.postWithNoAuth(variables),
     };
 }
 

@@ -66,10 +66,10 @@ type TestPostParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["tes
 type TestPostReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testPost"]>;
 
 export function TestPostMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: TestPostParams) => TestPostReturnType;
+    mutationFn: (variables: TestPostParams[0]) => TestPostReturnType;
 } {
     return {
-        mutationFn: (...args: TestPostParams) => client.endpoints.httpMethods.testPost(...args),
+        mutationFn: (variables) => client.endpoints.httpMethods.testPost(variables),
     };
 }
 
@@ -87,10 +87,10 @@ type TestPutParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["test
 type TestPutReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testPut"]>;
 
 export function TestPutMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: TestPutParams) => TestPutReturnType;
+    mutationFn: (args: TestPutParams) => TestPutReturnType;
 } {
     return {
-        mutationFn: (...args: TestPutParams) => client.endpoints.httpMethods.testPut(...args),
+        mutationFn: (args) => client.endpoints.httpMethods.testPut(...args),
     };
 }
 
@@ -108,10 +108,10 @@ type TestPatchParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["te
 type TestPatchReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testPatch"]>;
 
 export function TestPatchMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: TestPatchParams) => TestPatchReturnType;
+    mutationFn: (args: TestPatchParams) => TestPatchReturnType;
 } {
     return {
-        mutationFn: (...args: TestPatchParams) => client.endpoints.httpMethods.testPatch(...args),
+        mutationFn: (args) => client.endpoints.httpMethods.testPatch(...args),
     };
 }
 
@@ -129,10 +129,10 @@ type TestDeleteParams = Parameters<ClientInstance["endpoints"]["httpMethods"]["t
 type TestDeleteReturnType = ReturnType<ClientInstance["endpoints"]["httpMethods"]["testDelete"]>;
 
 export function TestDeleteMutationOptions(client: ClientInstance): {
-    mutationFn: (...args: TestDeleteParams) => TestDeleteReturnType;
+    mutationFn: (args: TestDeleteParams) => TestDeleteReturnType;
 } {
     return {
-        mutationFn: (...args: TestDeleteParams) => client.endpoints.httpMethods.testDelete(...args),
+        mutationFn: (args) => client.endpoints.httpMethods.testDelete(...args),
     };
 }
 

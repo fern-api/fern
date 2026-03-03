@@ -480,14 +480,19 @@ export class ReactQueryGenerator {
                       : "void";
 
                 // === Mutation Options ===
+                // The factory's mutationFn signature must match useMutation's (variables: TVariables) => Promise<TData>
+                // pattern so that the factory is safely composable with useMutation() directly.
                 const mutationFnName = `${functionPrefix}MutationOptions`;
-                if (hasRequestParams) {
-                    const mutationReturnType = `{ mutationFn: (...args: ${paramsTypeName}) => ${returnTypeName} }`;
+                if (isSingleParamMutation) {
+                    const mutationReturnType = `{ mutationFn: (variables: ${mutationVarsType}) => ${returnTypeName} }`;
                     lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
                     lines.push(`    return {`);
-                    lines.push(
-                        `        mutationFn: (...args: ${paramsTypeName}) => ${clientAccess}.${endpointUnsafeName}(...args),`
-                    );
+                    lines.push(`        mutationFn: (variables) => ${clientAccess}.${endpointUnsafeName}(variables),`);
+                } else if (isMultiParamMutation) {
+                    const mutationReturnType = `{ mutationFn: (args: ${mutationVarsType}) => ${returnTypeName} }`;
+                    lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
+                    lines.push(`    return {`);
+                    lines.push(`        mutationFn: (args) => ${clientAccess}.${endpointUnsafeName}(...args),`);
                 } else {
                     const mutationReturnType = `{ mutationFn: () => ${returnTypeName} }`;
                     lines.push(`export function ${mutationFnName}(client: ClientInstance): ${mutationReturnType} {`);
