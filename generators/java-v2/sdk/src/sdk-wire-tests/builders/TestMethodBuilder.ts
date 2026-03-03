@@ -289,10 +289,23 @@ export class TestMethodBuilder {
             return `[${value.join(", ")}]`;
         }
         if (typeof value === "object" && value !== null) {
-            // Java serializes objects as JSON strings
-            return JSON.stringify(value);
+            // Java's Map.toString() produces "{key1=value1, key2=value2}"
+            const entries = Object.entries(value);
+            return `{${entries.map(([k, v]) => `${k}=${v}`).join(", ")}}`;
+        }
+        if (typeof value === "string") {
+            return this.normalizeIso8601ForJava(value);
         }
         return String(value);
+    }
+
+    /**
+     * Normalizes ISO 8601 date strings to match Java's OffsetDateTime.toString() output.
+     * Java drops zero seconds (e.g. "2015-07-30T20:00:00Z" → "2015-07-30T20:00Z").
+     */
+    private normalizeIso8601ForJava(value: string): string {
+        // Match ISO 8601 with zero seconds: "2015-07-30T20:00:00Z" or "2015-07-30T20:00:00+00:00"
+        return value.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}):00(Z|[+-]\d{2}:\d{2})$/, "$1$2");
     }
 
     /**
