@@ -6,6 +6,7 @@ import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpoi
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { buildUrl } from "../utils/buildUrl.js";
 import { generateEndpointMetadata } from "../utils/generateEndpointMetadata.js";
+import { HEADERS_VAR_NAME } from "../utils/generateHeaders.js";
 import { getAvailabilityDocs } from "../utils/getAvailabilityDocs.js";
 import {
     getAbortSignalExpression,
@@ -710,8 +711,236 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         );
     }
 
+    /**
+     * Determines whether this endpoint can use the HttpClient.request() pattern
+     * (single synchronous method) instead of the dual public/private async pattern.
+     */
+    public canUseClientRequest(context: SdkContext): boolean {
+        // Not paginated
+        if (this.response.getPaginationInfo(context) != null) {
+            return false;
+        }
+        // Not streaming/file-download/bytes response
+        const responseType = this.endpoint.response?.body?.type;
+        if (responseType === "streaming" || responseType === "fileDownload" || responseType === "bytes") {
+            return false;
+        }
+        // Not HEAD method (returns headers as data)
+        if (this.endpoint.method === "HEAD") {
+            return false;
+        }
+        // Not file upload or bytes request (needs async form data building)
+        const requestType = this.endpoint.requestBody?.type;
+        if (requestType === "fileUpload" || requestType === "bytes") {
+            return false;
+        }
+        // No specific endpoint errors (for now - errorMap support can be added later)
+        if (this.endpoint.errors.length > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Generates the body statements for a single (non-async) public method
+     * that uses this._client.request<T>({config}). This eliminates the dual
+     * public/private method pattern for simple endpoints.
+     */
+    public getClientRequestStatements(context: SdkContext): ts.Statement[] {
+        const statements: ts.Statement[] = [];
+
+        // 1. Endpoint metadata
+        if (this.generateEndpointMetadata) {
+            statements.push(
+                ...generateEndpointMetadata({
+                    httpEndpoint: this.endpoint,
+                    context
+                })
+            );
+        }
+
+        // 2. Build request statements (destructuring, query params, endpoint-specific headers)
+        statements.push(...this.request.getBuildRequestStatements(context, { clientMode: true }));
+
+        // 3. Get fetcher request args for config properties
+        const requestArgs = this.request.getFetcherRequestArgs(context);
+
+        // 4. Build the URL path expression
+        const pathExpr = this.getPathExpression(context);
+
+        // 5. Build the config object properties
+        const configProperties: ts.ObjectLiteralElementLike[] = [];
+
+        // method
+        configProperties.push(
+            ts.factory.createPropertyAssignment(
+                ts.factory.createIdentifier("method"),
+                ts.factory.createStringLiteral(this.endpoint.method)
+            )
+        );
+
+        // path
+        configProperties.push(ts.factory.createPropertyAssignment(ts.factory.createIdentifier("path"), pathExpr));
+
+        // body (if present)
+        if (requestArgs.body != null) {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("body"), requestArgs.body)
+            );
+        }
+
+        // contentType (if not default)
+        if (requestArgs.contentType != null) {
+            const contentTypeExpr =
+                typeof requestArgs.contentType === "string"
+                    ? ts.factory.createStringLiteral(requestArgs.contentType)
+                    : requestArgs.contentType;
+            configProperties.push(
+                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("contentType"), contentTypeExpr)
+            );
+        }
+
+        // requestType (if present)
+        if (requestArgs.requestType != null) {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("requestType"),
+                    ts.factory.createStringLiteral(requestArgs.requestType)
+                )
+            );
+        }
+
+        // queryParameters (if present)
+        if (requestArgs.queryParameters != null) {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("queryParameters"),
+                    requestArgs.queryParameters
+                )
+            );
+        }
+
+        // headers (only if endpoint-specific headers were generated)
+        // Check if the clientMode header statements created the _headers variable declaration
+        const hasEndpointSpecificHeaders = statements.some(
+            (stmt) =>
+                ts.isVariableStatement(stmt) &&
+                stmt.declarationList.declarations.some(
+                    (decl) => ts.isIdentifier(decl.name) && decl.name.text === HEADERS_VAR_NAME
+                )
+        );
+        if (hasEndpointSpecificHeaders) {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("headers"),
+                    ts.factory.createIdentifier(HEADERS_VAR_NAME)
+                )
+            );
+        }
+
+        // responseType (for text responses)
+        if (this.endpoint.response?.body?.type === "text") {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("responseType"),
+                    ts.factory.createStringLiteral("text")
+                )
+            );
+        }
+
+        // withCredentials
+        if (this.includeCredentialsOnCrossOriginRequests) {
+            configProperties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("withCredentials"),
+                    ts.factory.createTrue()
+                )
+            );
+        }
+
+        // endpointMetadata
+        if (this.generateEndpointMetadata) {
+            const metadata = this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier();
+            configProperties.push(
+                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("endpointMetadata"), metadata)
+            );
+        }
+
+        // transformResponse (for serde layer deserialization)
+        if (this.includeSerdeLayer && this.endpoint.response?.body != null) {
+            const responseBody = this.endpoint.response.body;
+            if (responseBody.type === "json") {
+                const bodyParam = ts.factory.createIdentifier("body");
+                const deserializeExpr = context.sdkEndpointTypeSchemas
+                    .getGeneratedEndpointTypeSchemas(this.generatedSdkClientClass["packageId"], this.endpoint.name)
+                    .deserializeResponse(bodyParam, context);
+
+                configProperties.push(
+                    ts.factory.createPropertyAssignment(
+                        ts.factory.createIdentifier("transformResponse"),
+                        ts.factory.createArrowFunction(
+                            undefined,
+                            undefined,
+                            [ts.factory.createParameterDeclaration(undefined, undefined, bodyParam)],
+                            undefined,
+                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                            deserializeExpr
+                        )
+                    )
+                );
+            }
+        }
+
+        // requestOptions (shorthand property)
+        configProperties.push(
+            ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME))
+        );
+
+        // 6. Build the config object
+        const configObject = ts.factory.createObjectLiteralExpression(configProperties, true);
+
+        // 7. Build this._client.request<T>(config)
+        const returnType = this.response.getReturnType(context);
+        const clientRequestCall = ts.factory.createCallExpression(
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createPropertyAccessExpression(
+                    ts.factory.createThis(),
+                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER)
+                ),
+                ts.factory.createIdentifier("request")
+            ),
+            [returnType], // type argument
+            [configObject]
+        );
+
+        // 8. Return statement
+        statements.push(ts.factory.createReturnStatement(clientRequestCall));
+
+        return statements;
+    }
+
     public invokeFetcherAndReturnResponse(context: SdkContext): ts.Statement[] {
         return [...this.invokeFetcher(context), ...this.response.getReturnResponseStatements(context)];
+    }
+
+    /**
+     * Gets just the URL path expression (without base URL resolution).
+     * Used by getClientRequestStatements() since the HttpClient handles base URL internally.
+     */
+    private getPathExpression(context: SdkContext): ts.Expression {
+        const url = buildUrl({
+            endpoint: this.endpoint,
+            generatedClientClass: this.generatedSdkClientClass,
+            context,
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined,
+            getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
+            },
+            parameterNaming: this.parameterNaming
+        });
+        return url ?? ts.factory.createStringLiteral("");
     }
 
     private getReferenceToBaseUrl(context: SdkContext): ts.Expression {

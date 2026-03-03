@@ -19,7 +19,8 @@ export function generateHeaders({
     idempotencyHeaders,
     additionalHeaders = [],
     additionalSpreadHeaders = [],
-    headersToMergeAfterClientOptionsHeaders = []
+    headersToMergeAfterClientOptionsHeaders = [],
+    clientMode = false
 }: {
     context: SdkContext;
     intermediateRepresentation: FernIr.IntermediateRepresentation;
@@ -31,11 +32,14 @@ export function generateHeaders({
     additionalHeaders?: GeneratedHeader[];
     additionalSpreadHeaders?: ts.Expression[];
     headersToMergeAfterClientOptionsHeaders?: ts.Expression[];
+    /** When true, only generate endpoint-specific headers (no auth, global, or per-request). Used with HttpClient. */
+    clientMode?: boolean;
 }): ts.Statement[] {
     const statements: ts.Statement[] = [];
 
     let authProviderHeaders: ts.Expression | undefined;
     if (
+        !clientMode &&
         generatedSdkClientClass.hasAuthProvider() &&
         endpoint.auth &&
         context.authProvider.isAuthEndpoint(endpoint) === false
@@ -105,6 +109,36 @@ export function generateHeaders({
         onlyDefinedHeaders.push(
             ts.factory.createSpreadAssignment(ts.factory.createParenthesizedExpression(additionalSpreadHeader))
         );
+    }
+
+    // In clientMode, only generate endpoint-specific headers (HttpClient handles auth, global, per-request)
+    if (clientMode) {
+        if (onlyDefinedHeaders.length > 0) {
+            context.importsManager.addImportFromRoot("core/headers", {
+                namedImports: ["mergeOnlyDefinedHeaders"]
+            });
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                HEADERS_VAR_NAME,
+                                undefined,
+                                undefined,
+                                ts.factory.createCallExpression(
+                                    ts.factory.createIdentifier("mergeOnlyDefinedHeaders"),
+                                    undefined,
+                                    [ts.factory.createObjectLiteralExpression(onlyDefinedHeaders)]
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+        }
+        return statements;
     }
 
     context.importsManager.addImportFromRoot("core/headers", {

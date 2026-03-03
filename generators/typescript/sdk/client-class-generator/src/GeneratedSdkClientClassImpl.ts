@@ -94,7 +94,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
+    public static readonly CLIENT_PRIVATE_MEMBER = "_client";
     private static readonly OPTIONS_PARAMETER_NAME = "options";
+    private static readonly CLIENT_PARAMETER_NAME = "client";
     public static readonly METADATA_FOR_TOKEN_SUPPLIER_VAR = "_metadata";
     public static readonly AUTH_PROVIDER_FIELD_NAME = "authProvider";
     public static readonly LOGGING_FIELD_NAME = "logging";
@@ -571,12 +573,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public instantiate({
         referenceToClient,
-        referenceToOptions
+        referenceToOptions,
+        referenceToHttpClient
     }: {
         referenceToClient: ts.Expression;
         referenceToOptions: ts.Expression;
+        referenceToHttpClient?: ts.Expression;
     }): ts.Expression {
-        return ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions]);
+        const args = referenceToHttpClient ? [referenceToOptions, referenceToHttpClient] : [referenceToOptions];
+        return ts.factory.createNewExpression(referenceToClient, undefined, args);
     }
 
     public instantiateAsRoot(args: { context: SdkContext; npmPackage: NpmPackage }): ts.Expression {
@@ -673,46 +678,104 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             isReadonly: true
         });
 
+        // Add _client: HttpClient property
+        serviceClass.properties.push({
+            kind: StructureKind.Property,
+            name: GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER,
+            type: getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceToType()),
+            scope: Scope.Protected,
+            isReadonly: true
+        });
+
+        const optionsParamType = getTextOfTsNode(
+            ts.factory.createTypeReferenceNode(
+                ts.factory.createQualifiedName(
+                    ts.factory.createIdentifier(serviceModule.name),
+                    ts.factory.createIdentifier(optionsInterface.name)
+                )
+            )
+        );
+
+        const httpClientParamType = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceToType());
+
         if (this.authProvider && this.anyEndpointWithAuth) {
-            const parameters = [
-                {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
-                    type: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode(
-                            ts.factory.createQualifiedName(
-                                ts.factory.createIdentifier(serviceModule.name),
-                                ts.factory.createIdentifier(optionsInterface.name)
-                            )
-                        )
-                    ),
-                    initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
-                }
-            ];
-            const statements = code`
-                ${this.getCtorOptionsStatementsWithAuth(context)}
-            `;
-            serviceClass.ctors.push({
-                parameters,
-                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
-            });
-        } else {
-            serviceClass.ctors.push({
-                statements: this.getCtorOptionsStatements(context).toString({ dprintOptions: { indentWidth: 4 } }),
-                parameters: [
+            if (this.isRoot) {
+                // Root client: constructor(options) - creates HttpClient internally
+                const parameters = [
                     {
                         name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
-                        type: getTextOfTsNode(
-                            ts.factory.createTypeReferenceNode(
-                                ts.factory.createQualifiedName(
-                                    ts.factory.createIdentifier(serviceModule.name),
-                                    ts.factory.createIdentifier(optionsInterface.name)
-                                )
-                            )
-                        ),
+                        type: optionsParamType,
                         initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                     }
-                ]
-            });
+                ];
+                const statements = code`
+                    ${this.getCtorOptionsStatementsWithAuth(context)}
+                    ${this.getCtorHttpClientStatement(context)}
+                `;
+                serviceClass.ctors.push({
+                    parameters,
+                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+                });
+            } else {
+                // Non-root client: constructor(options, client) - receives HttpClient
+                const parameters = [
+                    {
+                        name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
+                        type: optionsParamType,
+                        initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
+                    },
+                    {
+                        name: GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME,
+                        type: httpClientParamType
+                    }
+                ];
+                const statements = code`
+                    ${this.getCtorOptionsStatementsWithAuth(context)}
+                    this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME};
+                `;
+                serviceClass.ctors.push({
+                    parameters,
+                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+                });
+            }
+        } else {
+            if (this.isRoot) {
+                // Root client without auth: constructor(options) - creates HttpClient internally
+                const statements = code`
+                    ${this.getCtorOptionsStatements(context)}
+                    ${this.getCtorHttpClientStatement(context)}
+                `;
+                serviceClass.ctors.push({
+                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } }),
+                    parameters: [
+                        {
+                            name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
+                            type: optionsParamType,
+                            initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
+                        }
+                    ]
+                });
+            } else {
+                // Non-root client without auth: constructor(options, client) - receives HttpClient
+                const statements = code`
+                    ${this.getCtorOptionsStatements(context)}
+                    this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME};
+                `;
+                serviceClass.ctors.push({
+                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } }),
+                    parameters: [
+                        {
+                            name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
+                            type: optionsParamType,
+                            initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
+                        },
+                        {
+                            name: GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME,
+                            type: httpClientParamType
+                        }
+                    ]
+                });
+            }
         }
 
         let isIdempotent = false;
@@ -728,79 +791,108 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
 
             const publicMethodName = endpoint.endpoint.name.camelCase.unsafeName;
-            const internalMethodName = `__${publicMethodName}`;
-            const publicStatements = [
-                ts.factory.createReturnStatement(
-                    context.coreUtilities.fetcher.HttpResponsePromise.fromPromise(
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createThis(),
-                                ts.factory.createIdentifier(internalMethodName)
-                            ),
-                            undefined,
-                            signature.parameters.map((p) => ts.factory.createIdentifier(p.name))
+
+            // Check if this endpoint can use the single-method HttpClient.request() pattern
+            const canUseClientRequest =
+                endpoint instanceof GeneratedDefaultEndpointImplementation && endpoint.canUseClientRequest(context);
+
+            if (canUseClientRequest) {
+                // Single public method that returns this._client.request<T>(config) directly
+                const clientRequestStatements = endpoint.getClientRequestStatements(context);
+                const publicMethod: MethodDeclarationStructure = {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
+                    name: publicMethodName,
+                    parameters: signature.parameters,
+                    returnType: getTextOfTsNode(
+                        context.coreUtilities.fetcher.HttpResponsePromise._getReferenceToType(
+                            signature.returnTypeWithoutPromise
+                        )
+                    ),
+                    statements: clientRequestStatements.map(getTextOfTsNode)
+                };
+
+                if (overloads.length === 0) {
+                    maybeAddDocsStructure(publicMethod, docs);
+                }
+
+                serviceClass.methods.push(publicMethod);
+            } else {
+                // Dual public/private pattern for complex endpoints (streaming, pagination, file upload, etc.)
+                const internalMethodName = `__${publicMethodName}`;
+                const publicStatements = [
+                    ts.factory.createReturnStatement(
+                        context.coreUtilities.fetcher.HttpResponsePromise.fromPromise(
+                            ts.factory.createCallExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createThis(),
+                                    ts.factory.createIdentifier(internalMethodName)
+                                ),
+                                undefined,
+                                signature.parameters.map((p) => ts.factory.createIdentifier(p.name))
+                            )
                         )
                     )
-                )
-            ];
+                ];
 
-            const publicMethod: MethodDeclarationStructure = {
-                kind: StructureKind.Method,
-                scope: Scope.Public,
-                name: publicMethodName,
-                parameters: signature.parameters,
-                returnType: getTextOfTsNode(
-                    context.coreUtilities.fetcher.HttpResponsePromise._getReferenceToType(
-                        signature.returnTypeWithoutPromise
-                    )
-                ),
-                statements: publicStatements.map(getTextOfTsNode)
-            };
+                const publicMethod: MethodDeclarationStructure = {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
+                    name: publicMethodName,
+                    parameters: signature.parameters,
+                    returnType: getTextOfTsNode(
+                        context.coreUtilities.fetcher.HttpResponsePromise._getReferenceToType(
+                            signature.returnTypeWithoutPromise
+                        )
+                    ),
+                    statements: publicStatements.map(getTextOfTsNode)
+                };
 
-            if (overloads.length === 0) {
-                maybeAddDocsStructure(publicMethod, docs);
-            }
+                if (overloads.length === 0) {
+                    maybeAddDocsStructure(publicMethod, docs);
+                }
 
-            const internalResponseStatements = endpoint.getStatements(context);
-            const internalMethod: MethodDeclarationStructure = {
-                kind: StructureKind.Method,
-                name: internalMethodName,
-                parameters: signature.parameters,
-                returnType: getTextOfTsNode(
-                    ts.factory.createTypeReferenceNode("Promise", [
-                        isPaginated
-                            ? signature.returnTypeWithoutPromise
-                            : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
-                                  signature.returnTypeWithoutPromise
-                              )
-                    ])
-                ),
-                scope: Scope.Private,
-                isAsync: true,
-                statements: internalResponseStatements.map(getTextOfTsNode),
-                overloads: overloads.map((overload) => ({
-                    parameters: overload.parameters,
+                const internalResponseStatements = endpoint.getStatements(context);
+                const internalMethod: MethodDeclarationStructure = {
+                    kind: StructureKind.Method,
+                    name: internalMethodName,
+                    parameters: signature.parameters,
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode("Promise", [
                             isPaginated
-                                ? overload.returnTypeWithoutPromise
+                                ? signature.returnTypeWithoutPromise
                                 : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
-                                      overload.returnTypeWithoutPromise
+                                      signature.returnTypeWithoutPromise
                                   )
                         ])
-                    )
-                }))
-            };
+                    ),
+                    scope: Scope.Private,
+                    isAsync: true,
+                    statements: internalResponseStatements.map(getTextOfTsNode),
+                    overloads: overloads.map((overload) => ({
+                        parameters: overload.parameters,
+                        returnType: getTextOfTsNode(
+                            ts.factory.createTypeReferenceNode("Promise", [
+                                isPaginated
+                                    ? overload.returnTypeWithoutPromise
+                                    : context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                          overload.returnTypeWithoutPromise
+                                      )
+                            ])
+                        )
+                    }))
+                };
 
-            if (isPaginated) {
-                // paginated only has one implementation, so copy the implementation from internal to public
-                Object.assign(publicMethod, internalMethod);
-                publicMethod.name = publicMethodName;
-                publicMethod.scope = Scope.Public;
-                serviceClass.methods.push(publicMethod);
-            } else {
-                serviceClass.methods.push(publicMethod);
-                serviceClass.methods.push(internalMethod);
+                if (isPaginated) {
+                    // paginated only has one implementation, so copy the implementation from internal to public
+                    Object.assign(publicMethod, internalMethod);
+                    publicMethod.name = publicMethodName;
+                    publicMethod.scope = Scope.Public;
+                    serviceClass.methods.push(publicMethod);
+                } else {
+                    serviceClass.methods.push(publicMethod);
+                    serviceClass.methods.push(internalMethod);
+                }
             }
         }
 
@@ -853,6 +945,24 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
 
         return code`this._options = normalizeClientOptionsWithAuth(options);`;
+    }
+
+    /**
+     * Generates the constructor statement that creates the HttpClient instance.
+     * Only used in root clients; non-root clients receive the HttpClient via constructor parameter.
+     */
+    private getCtorHttpClientStatement(_context: SdkContext): Code {
+        return code`this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = new ${getTextOfTsNode(_context.coreUtilities.fetcher.HttpClient._getReferenceTo())}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER});`;
+    }
+
+    /**
+     * Returns a reference to `this._client` for use by sub-client instantiation.
+     */
+    public getReferenceToClient(): ts.Expression {
+        return ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER)
+        );
     }
 
     public getBaseUrl(endpoint: FernIr.HttpEndpoint, context: SdkContext): ts.Expression {

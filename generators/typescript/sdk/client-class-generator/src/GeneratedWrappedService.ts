@@ -67,7 +67,8 @@ export class GeneratedWrappedService {
                                 ts.SyntaxKind.QuestionQuestionEqualsToken,
                                 generatedWrappedService.instantiate({
                                     referenceToClient: referenceToWrapped.getExpression(),
-                                    referenceToOptions: this.wrapperService.getReferenceToOptions()
+                                    referenceToOptions: this.wrapperService.getReferenceToOptions(),
+                                    referenceToHttpClient: this.wrapperService.getReferenceToClient()
                                 })
                             )
                         )

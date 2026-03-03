@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.54.0
+  changelogEntry:
+    - summary: |
+        Add composition-based HttpClient that deduplicates boilerplate across generated
+        endpoint methods. Simple endpoints (standard JSON GET/POST/PUT/PATCH/DELETE without
+        streaming, pagination, file upload, or custom errors) now generate a single public
+        method with `return this._client.request<T>({config})` instead of the dual
+        public/private async pattern. The HttpClient instance is created once at the root
+        client and injected into all sub-clients via constructor, eliminating redundant
+        options normalization. Complex endpoints (streaming, pagination, file upload) retain
+        the existing dual-method pattern.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+
 - version: 3.53.3
   changelogEntry:
     - summary: |

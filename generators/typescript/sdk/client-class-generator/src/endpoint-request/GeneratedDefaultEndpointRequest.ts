@@ -171,7 +171,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return result;
     }
 
-    public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
+    public getBuildRequestStatements(context: SdkContext, options?: { clientMode?: boolean }): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
@@ -184,7 +184,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
         statements.push(...this.getQueryParams(context).getBuildStatements(context));
 
-        statements.push(...this.initializeHeaders(context));
+        statements.push(...this.initializeHeaders(context, options?.clientMode));
 
         return statements;
     }
@@ -234,7 +234,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         }
     }
 
-    private initializeHeaders(context: SdkContext): ts.Statement[] {
+    private initializeHeaders(context: SdkContext, clientMode?: boolean): ts.Statement[] {
         return generateHeaders({
             context,
             intermediateRepresentation: this.ir,
@@ -242,7 +242,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             generatedSdkClientClass: this.generatedSdkClientClass,
             idempotencyHeaders: this.ir.idempotencyHeaders,
             service: this.service,
-            endpoint: this.endpoint
+            endpoint: this.endpoint,
+            clientMode
         });
     }
 

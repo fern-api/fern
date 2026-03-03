@@ -142,6 +142,15 @@ export interface Fetcher {
         fromPromise: (promise: ts.Expression) => ts.Expression;
         interceptFunction: (fn: ts.Expression) => ts.Expression;
     };
+
+    readonly HttpClient: {
+        _getReferenceToType: () => ts.TypeNode;
+        _getReferenceTo: () => ts.Expression;
+    };
+
+    readonly EndpointConfig: {
+        _getReferenceToType: () => ts.TypeNode;
+    };
 }
 
 export declare namespace Fetcher {
@@ -607,5 +616,17 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     )
             )();
         }
+    };
+
+    public readonly HttpClient = {
+        _getReferenceToType: this.withExportedName("HttpClient", (HttpClient) => () => HttpClient.getTypeNode()),
+        _getReferenceTo: this.withExportedName("HttpClient", (HttpClient) => () => HttpClient.getExpression())
+    };
+
+    public readonly EndpointConfig = {
+        _getReferenceToType: this.withExportedName(
+            "EndpointConfig",
+            (EndpointConfig) => () => EndpointConfig.getTypeNode()
+        )
     };
 }
