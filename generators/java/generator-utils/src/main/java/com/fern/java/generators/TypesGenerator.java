@@ -77,9 +77,7 @@ public final class TypesGenerator {
         return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), typeId -> {
             TypeDeclaration typeDeclaration =
                     generatorContext.getTypeDeclarations().get(typeId);
-            ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration
-                    .getShape()
-                    .getObject()
+            ObjectTypeDeclaration objectTypeDeclaration = resolveToObjectType(typeDeclaration, generatorContext)
                     .orElseThrow(() -> new IllegalStateException("Non-objects cannot be extended. Fix type "
                             + typeDeclaration.getName().getName() + " located in file"
                             + typeDeclaration.getName().getFernFilepath()));
@@ -87,6 +85,36 @@ public final class TypesGenerator {
                     new InterfaceGenerator(generatorContext, typeDeclaration.getName(), objectTypeDeclaration);
             return interfaceGenerator.generateFile();
         }));
+    }
+
+    private static Optional<ObjectTypeDeclaration> resolveToObjectType(
+            TypeDeclaration typeDeclaration, AbstractGeneratorContext<?, ?> generatorContext) {
+        // Check if this is directly an object
+        if (typeDeclaration.getShape().isObject()) {
+            return typeDeclaration.getShape().getObject();
+        }
+
+        // If it's an alias, resolve it
+        if (typeDeclaration.getShape().isAlias()) {
+            return typeDeclaration
+                    .getShape()
+                    .getAlias()
+                    .get()
+                    .getResolvedType()
+                    .getNamed()
+                    .flatMap(resolvedNamedType -> {
+                        TypeDeclaration resolvedDeclaration = generatorContext
+                                .getTypeDeclarations()
+                                .get(resolvedNamedType.getName().getTypeId());
+                        if (resolvedDeclaration == null) {
+                            return Optional.empty();
+                        }
+                        // Recursively resolve in case of nested aliases
+                        return resolveToObjectType(resolvedDeclaration, generatorContext);
+                    });
+        }
+
+        return Optional.empty();
     }
 
     public static final class Result {
