@@ -101,6 +101,9 @@ fixtures:
     #     enable-wire-tests: true
     #   outputFolder: wire-tests
     - customConfig:
+        custom-interceptors: true
+      outputFolder: custom-interceptors
+    - customConfig:
         publish-to: central
       outputFolder: publish-to
     - publishConfig:
