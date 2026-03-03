@@ -1,4 +1,55 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.2.2
+  changelogEntry:
+    - summary: |
+        Use registry URLs from output mode configuration as the primary lookup
+        strategy for semantic version checks. Previously, hardcoded public registry
+        URLs and environment variables were the default lookup strategy. Now the CLI
+        extracts the registry URL and auth token from the generator's output mode
+        (publishV2 or githubV2 publishInfo) and uses those as the primary source,
+        falling back to environment variables and then hardcoded defaults only when
+        the output mode does not specify a registry URL.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.2.1
+  changelogEntry:
+    - summary: |
+        Fix REST HTTP clients incorrectly using WebSocket environment URLs in
+        multi-URL environments with both OpenAPI and AsyncAPI servers.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.2.0
+  changelogEntry:
+    - summary: |
+        Adds support for per-generator headers overrides in `generators.yml`, allowing each generator in a group to specify its own headers that are merged with (and take precedence over) the top-level `api.headers` configuration.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.1.1
+  changelogEntry:
+    - summary: |
+        Add CLI subcommand for resolving customization conflicts on SDK generation PR branches.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.1.0
+  changelogEntry:
+    - summary: |
+        Add external `$ref` bundling for AsyncAPI documents. Multi-file AsyncAPI specs
+        that split schemas across separate YAML files (e.g. `$ref: './schemas/types.yml#/MyType'`)
+        are now resolved and inlined before parsing, matching the existing behavior for OpenAPI
+        documents. Previously these external references caused `fern check` and `fern generate`
+        to fail with "Failed to resolve schema reference".
+      type: feat
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 4.0.1
   changelogEntry:
     - summary: |

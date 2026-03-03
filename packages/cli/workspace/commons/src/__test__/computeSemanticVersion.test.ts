@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
+import type { RegistryInfo } from "../computeSemanticVersion.js";
 import {
     getLatestTag,
     getLatestVersionFromCrates,
@@ -8,7 +8,8 @@ import {
     getLatestVersionFromNpm,
     getLatestVersionFromNuget,
     getLatestVersionFromPypi,
-    getLatestVersionFromRubyGems
+    getLatestVersionFromRubyGems,
+    getRegistryInfoFromOutputMode
 } from "../computeSemanticVersion.js";
 
 // ─── Helpers ────────────────────────────────────────────────────────
@@ -398,6 +399,278 @@ describe("getLatestTag", () => {
     it("returns undefined for invalid repository format", async () => {
         const version = await getLatestTag("invalid-no-slash");
         expect(version).toBeUndefined();
+    });
+});
+
+// ─── getRegistryInfoFromOutputMode tests ─────────────────────────────
+
+describe("getRegistryInfoFromOutputMode", () => {
+    it("extracts npm registry URL and token from publishV2 npmOverride", () => {
+        const outputMode = {
+            type: "publishV2" as const,
+            publishV2: {
+                type: "npmOverride" as const,
+                npmOverride: {
+                    registryUrl: "https://npm.pkg.github.com",
+                    packageName: "@org/pkg",
+                    token: "npm-secret-token"
+                }
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBe("https://npm.pkg.github.com");
+        expect(info.token).toBe("npm-secret-token");
+    });
+
+    it("extracts pypi registry URL and token from publishV2 pypiOverride", () => {
+        const outputMode = {
+            type: "publishV2" as const,
+            publishV2: {
+                type: "pypiOverride" as const,
+                pypiOverride: {
+                    registryUrl: "https://upload.pypi.org/legacy/",
+                    username: "__token__",
+                    password: "pypi-secret-token",
+                    coordinate: "my-package"
+                }
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBe("https://upload.pypi.org/legacy/");
+        expect(info.token).toBe("pypi-secret-token");
+    });
+
+    it("extracts maven registry URL, token, and username from publishV2 mavenOverride", () => {
+        const outputMode = {
+            type: "publishV2" as const,
+            publishV2: {
+                type: "mavenOverride" as const,
+                mavenOverride: {
+                    registryUrl: "https://s01.oss.sonatype.org/content/repositories/releases/",
+                    username: "user",
+                    password: "maven-secret",
+                    coordinate: "com.example:lib"
+                }
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBe("https://s01.oss.sonatype.org/content/repositories/releases/");
+        expect(info.token).toBe("maven-secret");
+        expect(info.username).toBe("user");
+    });
+
+    it("extracts nuget registry URL and token from publishV2 nugetOverride", () => {
+        const outputMode = {
+            type: "publishV2" as const,
+            publishV2: {
+                type: "nugetOverride" as const,
+                nugetOverride: {
+                    registryUrl: "https://nuget.org/",
+                    packageName: "MyPkg",
+                    apiKey: "nuget-api-key"
+                }
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBe("https://nuget.org/");
+        expect(info.token).toBe("nuget-api-key");
+    });
+
+    it("extracts rubygems registry URL and token from publishV2 rubyGemsOverride", () => {
+        const outputMode = {
+            type: "publishV2" as const,
+            publishV2: {
+                type: "rubyGemsOverride" as const,
+                rubyGemsOverride: {
+                    registryUrl: "https://rubygems.org/",
+                    packageName: "my-gem",
+                    apiKey: "rubygems-api-key"
+                }
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBe("https://rubygems.org/");
+        expect(info.token).toBe("rubygems-api-key");
+    });
+
+    it("extracts crates registry URL and token from publishV2 cratesOverride", () => {
+        const outputMode = {
+            type: "publishV2" as const,
+            publishV2: {
+                type: "cratesOverride" as const,
+                cratesOverride: {
+                    registryUrl: "https://crates.io/api/v1/crates",
+                    packageName: "my-crate",
+                    token: "crates-token"
+                }
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBe("https://crates.io/api/v1/crates");
+        expect(info.token).toBe("crates-token");
+    });
+
+    it("extracts npm info from githubV2 publishInfo", () => {
+        const outputMode = {
+            type: "githubV2" as const,
+            githubV2: {
+                owner: "org",
+                repo: "sdk",
+                publishInfo: {
+                    type: "npm" as const,
+                    registryUrl: "https://npm.pkg.github.com",
+                    packageName: "@org/sdk",
+                    token: "gh-npm-token"
+                }
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBe("https://npm.pkg.github.com");
+        expect(info.token).toBe("gh-npm-token");
+    });
+
+    it("returns undefined for githubV2 without publishInfo", () => {
+        const outputMode = {
+            type: "githubV2" as const,
+            githubV2: {
+                owner: "org",
+                repo: "sdk"
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBeUndefined();
+        expect(info.token).toBeUndefined();
+    });
+
+    it("returns undefined for downloadFiles mode", () => {
+        const outputMode = {
+            type: "downloadFiles" as const
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBeUndefined();
+        expect(info.token).toBeUndefined();
+    });
+
+    it("returns undefined for publish mode", () => {
+        const outputMode = {
+            type: "publish" as const,
+            registryOverrides: {}
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub — OutputMode.Publish requires _visit
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBeUndefined();
+        expect(info.token).toBeUndefined();
+    });
+
+    it("returns undefined for postman publishV2", () => {
+        const outputMode = {
+            type: "publishV2" as const,
+            publishV2: {
+                type: "postman" as const,
+                apiKey: "postman-key",
+                workspaceId: "ws-123"
+            }
+        };
+        // biome-ignore lint/suspicious/noExplicitAny: test stub
+        const info = getRegistryInfoFromOutputMode(outputMode as any);
+        expect(info.registryUrl).toBeUndefined();
+        expect(info.token).toBeUndefined();
+    });
+});
+
+// ─── Registry info passthrough tests ─────────────────────────────────
+
+describe("getLatestVersionFromNpm with registryInfo", () => {
+    beforeEach(() => {
+        vi.stubGlobal("fetch", vi.fn());
+        delete process.env.NPM_TOKEN;
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+        vi.unstubAllGlobals();
+    });
+
+    it("uses registryUrl from output mode config instead of hardcoded URL", async () => {
+        const customRegistry: RegistryInfo = {
+            registryUrl: "https://npm.pkg.github.com",
+            token: "config-token",
+            username: undefined
+        };
+        vi.mocked(fetch).mockResolvedValueOnce(
+            mockFetchResponse({
+                "dist-tags": { latest: "1.0.0" },
+                name: "@org/pkg"
+            })
+        );
+
+        const version = await getLatestVersionFromNpm("@org/pkg", customRegistry);
+        expect(version).toBe("1.0.0");
+        expect(fetch).toHaveBeenCalledWith(
+            expect.stringContaining("npm.pkg.github.com"),
+            expect.objectContaining({
+                headers: expect.objectContaining({
+                    authorization: "Bearer config-token"
+                })
+            })
+        );
+    });
+
+    it("uses token from output mode config over NPM_TOKEN env var", async () => {
+        process.env.NPM_TOKEN = "env-token";
+        const customRegistry: RegistryInfo = {
+            registryUrl: undefined,
+            token: "config-token",
+            username: undefined
+        };
+        vi.mocked(fetch).mockResolvedValueOnce(
+            mockFetchResponse({
+                "dist-tags": { latest: "2.0.0" }
+            })
+        );
+
+        await getLatestVersionFromNpm("some-pkg", customRegistry);
+        expect(fetch).toHaveBeenCalledWith(
+            expect.any(String),
+            expect.objectContaining({
+                headers: expect.objectContaining({
+                    authorization: "Bearer config-token"
+                })
+            })
+        );
+    });
+
+    it("falls back to NPM_TOKEN when output mode token is empty", async () => {
+        process.env.NPM_TOKEN = "env-token";
+        const emptyRegistry: RegistryInfo = {
+            registryUrl: undefined,
+            token: "",
+            username: undefined
+        };
+        vi.mocked(fetch).mockResolvedValueOnce(
+            mockFetchResponse({
+                "dist-tags": { latest: "1.0.0" }
+            })
+        );
+
+        await getLatestVersionFromNpm("some-pkg", emptyRegistry);
+        expect(fetch).toHaveBeenCalledWith(
+            expect.stringContaining("registry.npmjs.org"),
+            expect.objectContaining({
+                headers: expect.objectContaining({
+                    authorization: "Bearer env-token"
+                })
+            })
+        );
     });
 });
 

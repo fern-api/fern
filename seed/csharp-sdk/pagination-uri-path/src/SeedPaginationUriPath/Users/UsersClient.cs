@@ -5,7 +5,7 @@ namespace SeedPaginationUriPath;
 
 public partial class UsersClient : IUsersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UsersClient(RawClient client)
     {
@@ -39,7 +39,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersUriPaginationResponse>(
@@ -67,7 +69,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationUriPathApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -103,7 +107,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPathPaginationResponse>(
@@ -131,7 +137,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationUriPathApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

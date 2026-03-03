@@ -5,7 +5,7 @@ namespace SeedLiteral;
 
 public partial class PathClient : IPathClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PathClient(RawClient client)
     {
@@ -38,7 +38,9 @@ public partial class PathClient : IPathClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<SendResponse>(responseBody)!;
@@ -64,7 +66,9 @@ public partial class PathClient : IPathClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedLiteralApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

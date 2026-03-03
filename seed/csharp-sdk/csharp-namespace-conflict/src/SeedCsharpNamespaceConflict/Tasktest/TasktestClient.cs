@@ -4,7 +4,7 @@ namespace SeedCsharpNamespaceConflict;
 
 public partial class TasktestClient : ITasktestClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal TasktestClient(RawClient client)
     {
@@ -42,7 +42,9 @@ public partial class TasktestClient : ITasktestClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedCsharpNamespaceConflictApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

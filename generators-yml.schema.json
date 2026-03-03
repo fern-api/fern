@@ -3945,6 +3945,19 @@
             }
           ]
         },
+        "headers": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.service.HttpHeaderSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {
