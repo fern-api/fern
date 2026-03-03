@@ -20,7 +20,7 @@ export class SeedApiClient {
     constructor(options: SeedApiClient.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._client = new core.HttpClient(
-            this._options,
+            { ...this._options, defaultBaseUrl: "https://api.example.com" },
             (args) => new errors.SeedApiError(args),
             handleNonStatusCodeError,
         );
