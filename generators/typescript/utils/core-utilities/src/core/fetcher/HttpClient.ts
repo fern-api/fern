@@ -81,6 +81,8 @@ export interface HttpClientOptions {
     logging?: LogConfig | Logger;
     /** Custom fetcher function. When provided, HttpClient.fetch() uses this instead of the default fetcherImpl. */
     fetcher?: FetchFunction;
+    /** Default base URL to use when neither baseUrl nor environment is provided. Set from the SDK's default environment. */
+    defaultBaseUrl?: string;
 }
 
 /**
@@ -184,6 +186,7 @@ export class HttpClient {
                     config.baseUrl ??
                         (await Supplier.get(this._options.baseUrl)) ??
                         ((await Supplier.get(this._options.environment)) as string) ??
+                        this._options.defaultBaseUrl ??
                         "",
                     config.path
                 ),

@@ -920,14 +920,43 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     /**
-     * Returns the expression `new HttpClient(this._options, errorFactory, errorHandler)`.
+     * Returns the expression `new HttpClient(options, errorFactory, errorHandler)`.
      * Used by root clients (assigned to this._client) and non-root clients (as fallback).
+     *
+     * For single-URL environments with a default, passes `defaultBaseUrl` so HttpClient
+     * can fall back to the default environment URL when the user doesn't provide one.
      */
     private getNewHttpClientExpression(context: SdkContext): Code {
         const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
         const statusCodeErrorFactory = this.getStatusCodeErrorFactoryRef(context);
         const nonStatusCodeErrorHandler = this.getNonStatusCodeErrorHandlerRef(context);
-        return code`new ${httpClientRef}(this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}, ${statusCodeErrorFactory}, ${nonStatusCodeErrorHandler})`;
+
+        const optionsRef = `this.${GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER}`;
+        const defaultBaseUrl = this.getDefaultBaseUrlString();
+        const optionsArg =
+            defaultBaseUrl != null ? `{ ...${optionsRef}, defaultBaseUrl: "${defaultBaseUrl}" }` : optionsRef;
+
+        return code`new ${httpClientRef}(${optionsArg}, ${statusCodeErrorFactory}, ${nonStatusCodeErrorHandler})`;
+    }
+
+    /**
+     * Returns the default base URL string for single-URL environments, or undefined
+     * for multi-URL environments (which handle defaults via config.baseUrl) and
+     * environments without a default.
+     */
+    private getDefaultBaseUrlString(): string | undefined {
+        const envConfig = this.intermediateRepresentation.environments;
+        if (envConfig == null || envConfig.defaultEnvironment == null) {
+            return undefined;
+        }
+        return FernIr.Environments._visit<string | undefined>(envConfig.environments, {
+            singleBaseUrl: (single) => {
+                const env = single.environments.find((e) => e.id === envConfig.defaultEnvironment);
+                return env?.url;
+            },
+            multipleBaseUrls: () => undefined,
+            _other: () => undefined
+        });
     }
 
     /**

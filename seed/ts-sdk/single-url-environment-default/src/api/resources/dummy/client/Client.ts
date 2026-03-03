@@ -21,7 +21,7 @@ export class DummyClient {
         this._client =
             client ??
             new core.HttpClient(
-                this._options,
+                { ...this._options, defaultBaseUrl: "https://production.com/api" },
                 (args) => new errors.SeedSingleUrlEnvironmentDefaultError(args),
                 handleNonStatusCodeError,
             );

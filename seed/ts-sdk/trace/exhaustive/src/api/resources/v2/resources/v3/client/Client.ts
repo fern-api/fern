@@ -19,7 +19,7 @@ export class V3Client {
         this._client =
             client ??
             new core.HttpClient(
-                this._options,
+                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                     new Error(`HTTP ${args.statusCode} error`)) as any,
                 ((e: unknown) => {

@@ -21,7 +21,7 @@ export class SeedApiClient {
     constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._client = new core.HttpClient(
-            this._options,
+            { ...this._options, defaultBaseUrl: "https://api.example.com/v1" },
             (args) => new errors.SeedApiError(args),
             handleNonStatusCodeError,
         );

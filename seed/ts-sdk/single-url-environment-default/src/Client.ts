@@ -21,7 +21,7 @@ export class SeedSingleUrlEnvironmentDefaultClient {
     constructor(options: SeedSingleUrlEnvironmentDefaultClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._client = new core.HttpClient(
-            this._options,
+            { ...this._options, defaultBaseUrl: "https://production.com/api" },
             (args) => new errors.SeedSingleUrlEnvironmentDefaultError(args),
             handleNonStatusCodeError,
         );

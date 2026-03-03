@@ -22,7 +22,11 @@ export class AdminClient {
         this._options = normalizeClientOptions(options);
         this._client =
             client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedTraceError(args), handleNonStatusCodeError);
+            new core.HttpClient(
+                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError,
+            );
     }
 
     /**
