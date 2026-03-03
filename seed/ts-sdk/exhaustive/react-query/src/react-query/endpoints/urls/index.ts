@@ -13,40 +13,43 @@ import type { SeedExhaustiveClient } from "../../../Client.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
+type WithMixedCaseParams = Parameters<ClientInstance["endpoints"]["urls"]["withMixedCase"]>;
 type WithMixedCaseReturnType = ReturnType<ClientInstance["endpoints"]["urls"]["withMixedCase"]>;
 
 export function WithMixedCaseQueryKey(): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "urls", "withMixedCase"] as const;
 }
 
-export function WithMixedCaseOptions(client: ClientInstance): {
-    queryKey: QueryKey;
-    queryFn: () => WithMixedCaseReturnType;
-} {
+export function WithMixedCaseOptions(
+    client: ClientInstance,
+    requestOptions?: WithMixedCaseParams[0],
+): { queryKey: QueryKey; queryFn: () => WithMixedCaseReturnType } {
     return {
         queryKey: WithMixedCaseQueryKey(),
-        queryFn: () => client.endpoints.urls.withMixedCase(),
+        queryFn: () => client.endpoints.urls.withMixedCase(requestOptions),
     };
 }
 
 export function useWithMixedCase(
     client: ClientInstance,
+    requestOptions?: WithMixedCaseParams[0],
     options?: Omit<
         UseQueryOptions<Awaited<WithMixedCaseReturnType>, Error, Awaited<WithMixedCaseReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<WithMixedCaseReturnType>, Error> {
-    return useQuery({ ...WithMixedCaseOptions(client), ...options });
+    return useQuery({ ...WithMixedCaseOptions(client, requestOptions), ...options });
 }
 
 export function useSuspenseWithMixedCase(
     client: ClientInstance,
+    requestOptions?: WithMixedCaseParams[0],
     options?: Omit<
         UseSuspenseQueryOptions<Awaited<WithMixedCaseReturnType>, Error, Awaited<WithMixedCaseReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<WithMixedCaseReturnType>, Error> {
-    return useSuspenseQuery({ ...WithMixedCaseOptions(client), ...options });
+    return useSuspenseQuery({ ...WithMixedCaseOptions(client, requestOptions), ...options });
 }
 
 export function invalidateWithMixedCase(queryClient: QueryClient): Promise<void> {
@@ -57,40 +60,43 @@ export function invalidateAllWithMixedCase(queryClient: QueryClient): Promise<vo
     return queryClient.invalidateQueries({ queryKey: ["SeedExhaustiveClient", "endpoints", "urls", "withMixedCase"] });
 }
 
+type NoEndingSlashParams = Parameters<ClientInstance["endpoints"]["urls"]["noEndingSlash"]>;
 type NoEndingSlashReturnType = ReturnType<ClientInstance["endpoints"]["urls"]["noEndingSlash"]>;
 
 export function NoEndingSlashQueryKey(): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "urls", "noEndingSlash"] as const;
 }
 
-export function NoEndingSlashOptions(client: ClientInstance): {
-    queryKey: QueryKey;
-    queryFn: () => NoEndingSlashReturnType;
-} {
+export function NoEndingSlashOptions(
+    client: ClientInstance,
+    requestOptions?: NoEndingSlashParams[0],
+): { queryKey: QueryKey; queryFn: () => NoEndingSlashReturnType } {
     return {
         queryKey: NoEndingSlashQueryKey(),
-        queryFn: () => client.endpoints.urls.noEndingSlash(),
+        queryFn: () => client.endpoints.urls.noEndingSlash(requestOptions),
     };
 }
 
 export function useNoEndingSlash(
     client: ClientInstance,
+    requestOptions?: NoEndingSlashParams[0],
     options?: Omit<
         UseQueryOptions<Awaited<NoEndingSlashReturnType>, Error, Awaited<NoEndingSlashReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<NoEndingSlashReturnType>, Error> {
-    return useQuery({ ...NoEndingSlashOptions(client), ...options });
+    return useQuery({ ...NoEndingSlashOptions(client, requestOptions), ...options });
 }
 
 export function useSuspenseNoEndingSlash(
     client: ClientInstance,
+    requestOptions?: NoEndingSlashParams[0],
     options?: Omit<
         UseSuspenseQueryOptions<Awaited<NoEndingSlashReturnType>, Error, Awaited<NoEndingSlashReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<NoEndingSlashReturnType>, Error> {
-    return useSuspenseQuery({ ...NoEndingSlashOptions(client), ...options });
+    return useSuspenseQuery({ ...NoEndingSlashOptions(client, requestOptions), ...options });
 }
 
 export function invalidateNoEndingSlash(queryClient: QueryClient): Promise<void> {
@@ -101,34 +107,37 @@ export function invalidateAllNoEndingSlash(queryClient: QueryClient): Promise<vo
     return queryClient.invalidateQueries({ queryKey: ["SeedExhaustiveClient", "endpoints", "urls", "noEndingSlash"] });
 }
 
+type WithEndingSlashParams = Parameters<ClientInstance["endpoints"]["urls"]["withEndingSlash"]>;
 type WithEndingSlashReturnType = ReturnType<ClientInstance["endpoints"]["urls"]["withEndingSlash"]>;
 
 export function WithEndingSlashQueryKey(): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "urls", "withEndingSlash"] as const;
 }
 
-export function WithEndingSlashOptions(client: ClientInstance): {
-    queryKey: QueryKey;
-    queryFn: () => WithEndingSlashReturnType;
-} {
+export function WithEndingSlashOptions(
+    client: ClientInstance,
+    requestOptions?: WithEndingSlashParams[0],
+): { queryKey: QueryKey; queryFn: () => WithEndingSlashReturnType } {
     return {
         queryKey: WithEndingSlashQueryKey(),
-        queryFn: () => client.endpoints.urls.withEndingSlash(),
+        queryFn: () => client.endpoints.urls.withEndingSlash(requestOptions),
     };
 }
 
 export function useWithEndingSlash(
     client: ClientInstance,
+    requestOptions?: WithEndingSlashParams[0],
     options?: Omit<
         UseQueryOptions<Awaited<WithEndingSlashReturnType>, Error, Awaited<WithEndingSlashReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<WithEndingSlashReturnType>, Error> {
-    return useQuery({ ...WithEndingSlashOptions(client), ...options });
+    return useQuery({ ...WithEndingSlashOptions(client, requestOptions), ...options });
 }
 
 export function useSuspenseWithEndingSlash(
     client: ClientInstance,
+    requestOptions?: WithEndingSlashParams[0],
     options?: Omit<
         UseSuspenseQueryOptions<
             Awaited<WithEndingSlashReturnType>,
@@ -139,7 +148,7 @@ export function useSuspenseWithEndingSlash(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<WithEndingSlashReturnType>, Error> {
-    return useSuspenseQuery({ ...WithEndingSlashOptions(client), ...options });
+    return useSuspenseQuery({ ...WithEndingSlashOptions(client, requestOptions), ...options });
 }
 
 export function invalidateWithEndingSlash(queryClient: QueryClient): Promise<void> {
@@ -152,34 +161,37 @@ export function invalidateAllWithEndingSlash(queryClient: QueryClient): Promise<
     });
 }
 
+type WithUnderscoresParams = Parameters<ClientInstance["endpoints"]["urls"]["withUnderscores"]>;
 type WithUnderscoresReturnType = ReturnType<ClientInstance["endpoints"]["urls"]["withUnderscores"]>;
 
 export function WithUnderscoresQueryKey(): QueryKey {
     return ["SeedExhaustiveClient", "endpoints", "urls", "withUnderscores"] as const;
 }
 
-export function WithUnderscoresOptions(client: ClientInstance): {
-    queryKey: QueryKey;
-    queryFn: () => WithUnderscoresReturnType;
-} {
+export function WithUnderscoresOptions(
+    client: ClientInstance,
+    requestOptions?: WithUnderscoresParams[0],
+): { queryKey: QueryKey; queryFn: () => WithUnderscoresReturnType } {
     return {
         queryKey: WithUnderscoresQueryKey(),
-        queryFn: () => client.endpoints.urls.withUnderscores(),
+        queryFn: () => client.endpoints.urls.withUnderscores(requestOptions),
     };
 }
 
 export function useWithUnderscores(
     client: ClientInstance,
+    requestOptions?: WithUnderscoresParams[0],
     options?: Omit<
         UseQueryOptions<Awaited<WithUnderscoresReturnType>, Error, Awaited<WithUnderscoresReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<WithUnderscoresReturnType>, Error> {
-    return useQuery({ ...WithUnderscoresOptions(client), ...options });
+    return useQuery({ ...WithUnderscoresOptions(client, requestOptions), ...options });
 }
 
 export function useSuspenseWithUnderscores(
     client: ClientInstance,
+    requestOptions?: WithUnderscoresParams[0],
     options?: Omit<
         UseSuspenseQueryOptions<
             Awaited<WithUnderscoresReturnType>,
@@ -190,7 +202,7 @@ export function useSuspenseWithUnderscores(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<WithUnderscoresReturnType>, Error> {
-    return useSuspenseQuery({ ...WithUnderscoresOptions(client), ...options });
+    return useSuspenseQuery({ ...WithUnderscoresOptions(client, requestOptions), ...options });
 }
 
 export function invalidateWithUnderscores(queryClient: QueryClient): Promise<void> {

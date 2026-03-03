@@ -15,24 +15,26 @@ import type { SeedExhaustiveClient } from "../../Client.js";
 
 type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 
+type GetWithNoRequestBodyParams = Parameters<ClientInstance["noReqBody"]["getWithNoRequestBody"]>;
 type GetWithNoRequestBodyReturnType = ReturnType<ClientInstance["noReqBody"]["getWithNoRequestBody"]>;
 
 export function GetWithNoRequestBodyQueryKey(): QueryKey {
     return ["SeedExhaustiveClient", "noReqBody", "getWithNoRequestBody"] as const;
 }
 
-export function GetWithNoRequestBodyOptions(client: ClientInstance): {
-    queryKey: QueryKey;
-    queryFn: () => GetWithNoRequestBodyReturnType;
-} {
+export function GetWithNoRequestBodyOptions(
+    client: ClientInstance,
+    requestOptions?: GetWithNoRequestBodyParams[0],
+): { queryKey: QueryKey; queryFn: () => GetWithNoRequestBodyReturnType } {
     return {
         queryKey: GetWithNoRequestBodyQueryKey(),
-        queryFn: () => client.noReqBody.getWithNoRequestBody(),
+        queryFn: () => client.noReqBody.getWithNoRequestBody(requestOptions),
     };
 }
 
 export function useGetWithNoRequestBody(
     client: ClientInstance,
+    requestOptions?: GetWithNoRequestBodyParams[0],
     options?: Omit<
         UseQueryOptions<
             Awaited<GetWithNoRequestBodyReturnType>,
@@ -43,11 +45,12 @@ export function useGetWithNoRequestBody(
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithNoRequestBodyReturnType>, Error> {
-    return useQuery({ ...GetWithNoRequestBodyOptions(client), ...options });
+    return useQuery({ ...GetWithNoRequestBodyOptions(client, requestOptions), ...options });
 }
 
 export function useSuspenseGetWithNoRequestBody(
     client: ClientInstance,
+    requestOptions?: GetWithNoRequestBodyParams[0],
     options?: Omit<
         UseSuspenseQueryOptions<
             Awaited<GetWithNoRequestBodyReturnType>,
@@ -58,7 +61,7 @@ export function useSuspenseGetWithNoRequestBody(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithNoRequestBodyReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithNoRequestBodyOptions(client), ...options });
+    return useSuspenseQuery({ ...GetWithNoRequestBodyOptions(client, requestOptions), ...options });
 }
 
 export function invalidateGetWithNoRequestBody(queryClient: QueryClient): Promise<void> {

@@ -119,44 +119,47 @@ export function invalidateAllGetWithInlinePath(queryClient: QueryClient): Promis
 type GetWithQueryParams = Parameters<ClientInstance["endpoints"]["params"]["getWithQuery"]>;
 type GetWithQueryReturnType = ReturnType<ClientInstance["endpoints"]["params"]["getWithQuery"]>;
 
-export function GetWithQueryQueryKey(...args: GetWithQueryParams): QueryKey {
-    return ["SeedExhaustiveClient", "endpoints", "params", "getWithQuery", ...args] as const;
+export function GetWithQueryQueryKey(request: GetWithQueryParams[0]): QueryKey {
+    return ["SeedExhaustiveClient", "endpoints", "params", "getWithQuery", request] as const;
 }
 
 export function GetWithQueryOptions(
     client: ClientInstance,
-    ...args: GetWithQueryParams
+    request: GetWithQueryParams[0],
+    requestOptions?: GetWithQueryParams[1],
 ): { queryKey: QueryKey; queryFn: () => GetWithQueryReturnType } {
     return {
-        queryKey: GetWithQueryQueryKey(...args),
-        queryFn: () => client.endpoints.params.getWithQuery(...args),
+        queryKey: GetWithQueryQueryKey(request),
+        queryFn: () => client.endpoints.params.getWithQuery(request, requestOptions),
     };
 }
 
 export function useGetWithQuery(
     client: ClientInstance,
-    args: GetWithQueryParams,
+    request: GetWithQueryParams[0],
+    requestOptions?: GetWithQueryParams[1],
     options?: Omit<
         UseQueryOptions<Awaited<GetWithQueryReturnType>, Error, Awaited<GetWithQueryReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithQueryReturnType>, Error> {
-    return useQuery({ ...GetWithQueryOptions(client, ...args), ...options });
+    return useQuery({ ...GetWithQueryOptions(client, request, requestOptions), ...options });
 }
 
 export function useSuspenseGetWithQuery(
     client: ClientInstance,
-    args: GetWithQueryParams,
+    request: GetWithQueryParams[0],
+    requestOptions?: GetWithQueryParams[1],
     options?: Omit<
         UseSuspenseQueryOptions<Awaited<GetWithQueryReturnType>, Error, Awaited<GetWithQueryReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithQueryReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithQueryOptions(client, ...args), ...options });
+    return useSuspenseQuery({ ...GetWithQueryOptions(client, request, requestOptions), ...options });
 }
 
-export function invalidateGetWithQuery(queryClient: QueryClient, ...args: GetWithQueryParams): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithQueryQueryKey(...args) });
+export function invalidateGetWithQuery(queryClient: QueryClient, request: GetWithQueryParams[0]): Promise<void> {
+    return queryClient.invalidateQueries({ queryKey: GetWithQueryQueryKey(request) });
 }
 
 export function invalidateAllGetWithQuery(queryClient: QueryClient): Promise<void> {
@@ -168,23 +171,25 @@ type GetWithAllowMultipleQueryReturnType = ReturnType<
     ClientInstance["endpoints"]["params"]["getWithAllowMultipleQuery"]
 >;
 
-export function GetWithAllowMultipleQueryQueryKey(...args: GetWithAllowMultipleQueryParams): QueryKey {
-    return ["SeedExhaustiveClient", "endpoints", "params", "getWithAllowMultipleQuery", ...args] as const;
+export function GetWithAllowMultipleQueryQueryKey(request: GetWithAllowMultipleQueryParams[0]): QueryKey {
+    return ["SeedExhaustiveClient", "endpoints", "params", "getWithAllowMultipleQuery", request] as const;
 }
 
 export function GetWithAllowMultipleQueryOptions(
     client: ClientInstance,
-    ...args: GetWithAllowMultipleQueryParams
+    request: GetWithAllowMultipleQueryParams[0],
+    requestOptions?: GetWithAllowMultipleQueryParams[1],
 ): { queryKey: QueryKey; queryFn: () => GetWithAllowMultipleQueryReturnType } {
     return {
-        queryKey: GetWithAllowMultipleQueryQueryKey(...args),
-        queryFn: () => client.endpoints.params.getWithAllowMultipleQuery(...args),
+        queryKey: GetWithAllowMultipleQueryQueryKey(request),
+        queryFn: () => client.endpoints.params.getWithAllowMultipleQuery(request, requestOptions),
     };
 }
 
 export function useGetWithAllowMultipleQuery(
     client: ClientInstance,
-    args: GetWithAllowMultipleQueryParams,
+    request: GetWithAllowMultipleQueryParams[0],
+    requestOptions?: GetWithAllowMultipleQueryParams[1],
     options?: Omit<
         UseQueryOptions<
             Awaited<GetWithAllowMultipleQueryReturnType>,
@@ -195,12 +200,13 @@ export function useGetWithAllowMultipleQuery(
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<GetWithAllowMultipleQueryReturnType>, Error> {
-    return useQuery({ ...GetWithAllowMultipleQueryOptions(client, ...args), ...options });
+    return useQuery({ ...GetWithAllowMultipleQueryOptions(client, request, requestOptions), ...options });
 }
 
 export function useSuspenseGetWithAllowMultipleQuery(
     client: ClientInstance,
-    args: GetWithAllowMultipleQueryParams,
+    request: GetWithAllowMultipleQueryParams[0],
+    requestOptions?: GetWithAllowMultipleQueryParams[1],
     options?: Omit<
         UseSuspenseQueryOptions<
             Awaited<GetWithAllowMultipleQueryReturnType>,
@@ -211,14 +217,14 @@ export function useSuspenseGetWithAllowMultipleQuery(
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<GetWithAllowMultipleQueryReturnType>, Error> {
-    return useSuspenseQuery({ ...GetWithAllowMultipleQueryOptions(client, ...args), ...options });
+    return useSuspenseQuery({ ...GetWithAllowMultipleQueryOptions(client, request, requestOptions), ...options });
 }
 
 export function invalidateGetWithAllowMultipleQuery(
     queryClient: QueryClient,
-    ...args: GetWithAllowMultipleQueryParams
+    request: GetWithAllowMultipleQueryParams[0],
 ): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: GetWithAllowMultipleQueryQueryKey(...args) });
+    return queryClient.invalidateQueries({ queryKey: GetWithAllowMultipleQueryQueryKey(request) });
 }
 
 export function invalidateAllGetWithAllowMultipleQuery(queryClient: QueryClient): Promise<void> {

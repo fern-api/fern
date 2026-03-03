@@ -283,11 +283,8 @@ export class ReactQueryGenerator {
 
             const hasRequestParams = endpoint.sdkRequest != null || endpoint.allPathParameters.length > 0;
 
-            // For mutations, always define Params so we can extract requestOptions type.
-            // For queries, only define Params when there are request params.
-            if (hasRequestParams || !isGetMethod) {
-                lines.push(`type ${paramsTypeName} = Parameters<${endpointMethodType}>;`);
-            }
+            // Always define Params so we can extract requestOptions type for both queries and mutations.
+            lines.push(`type ${paramsTypeName} = Parameters<${endpointMethodType}>;`);
             lines.push(`type ${returnTypeName} = ReturnType<${endpointMethodType}>;`);
             lines.push(``);
 
@@ -299,9 +296,22 @@ export class ReactQueryGenerator {
             ];
 
             if (isGetMethod) {
+                // Determine query parameter shape (same distinction as mutations for consistency).
+                // Single-param (sdkRequest, no path params): separate request from requestOptions for clean DX
+                // Multi-param (has path params): keep full tuple (requestOptions is part of the tuple)
+                // No-param: accept requestOptions explicitly
+                const hasPathParams = endpoint.allPathParameters.length > 0;
+                const isSingleParamQuery = hasRequestParams && !hasPathParams;
+                const isMultiParamQuery = hasRequestParams && hasPathParams;
+
                 // === Query Key ===
+                // For single-param queries, exclude requestOptions from the cache key to prevent
+                // cache pollution (different timeouts shouldn't create different cache entries).
                 const queryKeyFnName = `${functionPrefix}QueryKey`;
-                if (hasRequestParams) {
+                if (isSingleParamQuery) {
+                    lines.push(`export function ${queryKeyFnName}(request: ${paramsTypeName}[0]): QueryKey {`);
+                    lines.push(`    return [${keySegments.join(", ")}, request] as const;`);
+                } else if (isMultiParamQuery) {
                     lines.push(`export function ${queryKeyFnName}(...args: ${paramsTypeName}): QueryKey {`);
                     lines.push(`    return [${keySegments.join(", ")}, ...args] as const;`);
                 } else {
@@ -316,24 +326,37 @@ export class ReactQueryGenerator {
                     const paginationInfo = this.getPaginationInfo(endpoint.pagination);
                     const infiniteFnName = `${functionPrefix}InfiniteOptions`;
                     const infiniteReturnType = `{ queryKey: QueryKey; queryFn: (context: { pageParam: unknown }) => ${returnTypeName}; initialPageParam: unknown; getNextPageParam: (lastPage: Awaited<${returnTypeName}>, allPages: unknown, lastPageParam: unknown) => unknown }`;
-                    if (hasRequestParams) {
+                    if (isSingleParamQuery) {
+                        lines.push(
+                            `export function ${infiniteFnName}(client: ClientInstance, request: ${paramsTypeName}[0], requestOptions?: ${paramsTypeName}[1]): ${infiniteReturnType} {`
+                        );
+                    } else if (isMultiParamQuery) {
                         lines.push(
                             `export function ${infiniteFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${infiniteReturnType} {`
                         );
                     } else {
                         lines.push(
-                            `export function ${infiniteFnName}(client: ClientInstance): ${infiniteReturnType} {`
+                            `export function ${infiniteFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[0]): ${infiniteReturnType} {`
                         );
                     }
                     lines.push(`    return {`);
-                    if (hasRequestParams) {
+                    if (isSingleParamQuery) {
+                        lines.push(`        queryKey: ${queryKeyFnName}(request),`);
+                    } else if (isMultiParamQuery) {
                         lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
                     } else {
                         lines.push(`        queryKey: ${queryKeyFnName}(),`);
                     }
 
                     // Generate queryFn that injects pageParam into the request
-                    if (paginationInfo != null && hasRequestParams) {
+                    if (paginationInfo != null && isSingleParamQuery) {
+                        const { requestFieldName } = paginationInfo;
+                        lines.push(`        queryFn: ({ pageParam }) => {`);
+                        lines.push(
+                            `            return ${clientAccess}.${endpointUnsafeName}(pageParam != null ? { ...request, ${requestFieldName}: pageParam as never } : request, requestOptions);`
+                        );
+                        lines.push(`        },`);
+                    } else if (paginationInfo != null && isMultiParamQuery) {
                         const { requestFieldName } = paginationInfo;
                         lines.push(`        queryFn: ({ pageParam }) => {`);
                         lines.push(`            const [request, ...rest] = args;`);
@@ -341,10 +364,14 @@ export class ReactQueryGenerator {
                             `            return ${clientAccess}.${endpointUnsafeName}(pageParam != null ? { ...request, ${requestFieldName}: pageParam as never } : request, ...rest);`
                         );
                         lines.push(`        },`);
-                    } else if (hasRequestParams) {
+                    } else if (isSingleParamQuery) {
+                        lines.push(
+                            `        queryFn: () => ${clientAccess}.${endpointUnsafeName}(request, requestOptions),`
+                        );
+                    } else if (isMultiParamQuery) {
                         lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(...args),`);
                     } else {
-                        lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
+                        lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(requestOptions),`);
                     }
 
                     // Generate initialPageParam and getNextPageParam based on pagination type
@@ -371,7 +398,14 @@ export class ReactQueryGenerator {
                     const useInfiniteFnName = `use${functionPrefix}Infinite`;
                     const useInfiniteReturnType = `UseInfiniteQueryResult<InfiniteData<Awaited<${returnTypeName}>, unknown>, Error>`;
                     const infiniteOptionsType = `Omit<UseInfiniteQueryOptions<Awaited<${returnTypeName}>, Error, InfiniteData<Awaited<${returnTypeName}>, unknown>, QueryKey, unknown>, "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam">`;
-                    if (hasRequestParams) {
+                    if (isSingleParamQuery) {
+                        lines.push(
+                            `export function ${useInfiniteFnName}(client: ClientInstance, request: ${paramsTypeName}[0], requestOptions?: ${paramsTypeName}[1], options?: ${infiniteOptionsType}): ${useInfiniteReturnType} {`
+                        );
+                        lines.push(
+                            `    return useInfiniteQuery({ ...${infiniteFnName}(client, request, requestOptions), ...options });`
+                        );
+                    } else if (isMultiParamQuery) {
                         lines.push(
                             `export function ${useInfiniteFnName}(client: ClientInstance, args: ${paramsTypeName}, options?: ${infiniteOptionsType}): ${useInfiniteReturnType} {`
                         );
@@ -380,31 +414,44 @@ export class ReactQueryGenerator {
                         );
                     } else {
                         lines.push(
-                            `export function ${useInfiniteFnName}(client: ClientInstance, options?: ${infiniteOptionsType}): ${useInfiniteReturnType} {`
+                            `export function ${useInfiniteFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[0], options?: ${infiniteOptionsType}): ${useInfiniteReturnType} {`
                         );
-                        lines.push(`    return useInfiniteQuery({ ...${infiniteFnName}(client), ...options });`);
+                        lines.push(
+                            `    return useInfiniteQuery({ ...${infiniteFnName}(client, requestOptions), ...options });`
+                        );
                     }
                     lines.push(`}`);
                     lines.push(``);
                 }
 
                 // === Query Options ===
+                // For single-param and no-param queries, accept requestOptions explicitly
+                // (consistent with mutation factories). For multi-param, keep ...args spread.
                 const queryFnName = `${functionPrefix}Options`;
                 const queryReturnType = `{ queryKey: QueryKey; queryFn: () => ${returnTypeName} }`;
-                if (hasRequestParams) {
+                if (isSingleParamQuery) {
+                    lines.push(
+                        `export function ${queryFnName}(client: ClientInstance, request: ${paramsTypeName}[0], requestOptions?: ${paramsTypeName}[1]): ${queryReturnType} {`
+                    );
+                    lines.push(`    return {`);
+                    lines.push(`        queryKey: ${queryKeyFnName}(request),`);
+                    lines.push(
+                        `        queryFn: () => ${clientAccess}.${endpointUnsafeName}(request, requestOptions),`
+                    );
+                } else if (isMultiParamQuery) {
                     lines.push(
                         `export function ${queryFnName}(client: ClientInstance, ...args: ${paramsTypeName}): ${queryReturnType} {`
                     );
-                } else {
-                    lines.push(`export function ${queryFnName}(client: ClientInstance): ${queryReturnType} {`);
-                }
-                lines.push(`    return {`);
-                if (hasRequestParams) {
+                    lines.push(`    return {`);
                     lines.push(`        queryKey: ${queryKeyFnName}(...args),`);
                     lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(...args),`);
                 } else {
+                    lines.push(
+                        `export function ${queryFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[0]): ${queryReturnType} {`
+                    );
+                    lines.push(`    return {`);
                     lines.push(`        queryKey: ${queryKeyFnName}(),`);
-                    lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(),`);
+                    lines.push(`        queryFn: () => ${clientAccess}.${endpointUnsafeName}(requestOptions),`);
                 }
                 lines.push(`    };`);
                 lines.push(`}`);
@@ -414,16 +461,23 @@ export class ReactQueryGenerator {
                 const useQueryFnName = `use${functionPrefix}`;
                 const useQueryReturnType = `UseQueryResult<Awaited<${returnTypeName}>, Error>`;
                 const queryOptionsType = `Omit<UseQueryOptions<Awaited<${returnTypeName}>, Error, Awaited<${returnTypeName}>, QueryKey>, "queryKey" | "queryFn">`;
-                if (hasRequestParams) {
+                if (isSingleParamQuery) {
+                    lines.push(
+                        `export function ${useQueryFnName}(client: ClientInstance, request: ${paramsTypeName}[0], requestOptions?: ${paramsTypeName}[1], options?: ${queryOptionsType}): ${useQueryReturnType} {`
+                    );
+                    lines.push(
+                        `    return useQuery({ ...${queryFnName}(client, request, requestOptions), ...options });`
+                    );
+                } else if (isMultiParamQuery) {
                     lines.push(
                         `export function ${useQueryFnName}(client: ClientInstance, args: ${paramsTypeName}, options?: ${queryOptionsType}): ${useQueryReturnType} {`
                     );
                     lines.push(`    return useQuery({ ...${queryFnName}(client, ...args), ...options });`);
                 } else {
                     lines.push(
-                        `export function ${useQueryFnName}(client: ClientInstance, options?: ${queryOptionsType}): ${useQueryReturnType} {`
+                        `export function ${useQueryFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[0], options?: ${queryOptionsType}): ${useQueryReturnType} {`
                     );
-                    lines.push(`    return useQuery({ ...${queryFnName}(client), ...options });`);
+                    lines.push(`    return useQuery({ ...${queryFnName}(client, requestOptions), ...options });`);
                 }
                 lines.push(`}`);
                 lines.push(``);
@@ -432,23 +486,38 @@ export class ReactQueryGenerator {
                 const useSuspenseFnName = `useSuspense${functionPrefix}`;
                 const useSuspenseReturnType = `UseSuspenseQueryResult<Awaited<${returnTypeName}>, Error>`;
                 const suspenseOptionsType = `Omit<UseSuspenseQueryOptions<Awaited<${returnTypeName}>, Error, Awaited<${returnTypeName}>, QueryKey>, "queryKey" | "queryFn">`;
-                if (hasRequestParams) {
+                if (isSingleParamQuery) {
+                    lines.push(
+                        `export function ${useSuspenseFnName}(client: ClientInstance, request: ${paramsTypeName}[0], requestOptions?: ${paramsTypeName}[1], options?: ${suspenseOptionsType}): ${useSuspenseReturnType} {`
+                    );
+                    lines.push(
+                        `    return useSuspenseQuery({ ...${queryFnName}(client, request, requestOptions), ...options });`
+                    );
+                } else if (isMultiParamQuery) {
                     lines.push(
                         `export function ${useSuspenseFnName}(client: ClientInstance, args: ${paramsTypeName}, options?: ${suspenseOptionsType}): ${useSuspenseReturnType} {`
                     );
                     lines.push(`    return useSuspenseQuery({ ...${queryFnName}(client, ...args), ...options });`);
                 } else {
                     lines.push(
-                        `export function ${useSuspenseFnName}(client: ClientInstance, options?: ${suspenseOptionsType}): ${useSuspenseReturnType} {`
+                        `export function ${useSuspenseFnName}(client: ClientInstance, requestOptions?: ${paramsTypeName}[0], options?: ${suspenseOptionsType}): ${useSuspenseReturnType} {`
                     );
-                    lines.push(`    return useSuspenseQuery({ ...${queryFnName}(client), ...options });`);
+                    lines.push(
+                        `    return useSuspenseQuery({ ...${queryFnName}(client, requestOptions), ...options });`
+                    );
                 }
                 lines.push(`}`);
                 lines.push(``);
 
                 // === Cache invalidation helpers ===
+                // For single-param queries, invalidate by request only (not requestOptions).
                 const invalidateFnName = `invalidate${functionPrefix}`;
-                if (hasRequestParams) {
+                if (isSingleParamQuery) {
+                    lines.push(
+                        `export function ${invalidateFnName}(queryClient: QueryClient, request: ${paramsTypeName}[0]): Promise<void> {`
+                    );
+                    lines.push(`    return queryClient.invalidateQueries({ queryKey: ${queryKeyFnName}(request) });`);
+                } else if (isMultiParamQuery) {
                     lines.push(
                         `export function ${invalidateFnName}(queryClient: QueryClient, ...args: ${paramsTypeName}): Promise<void> {`
                     );

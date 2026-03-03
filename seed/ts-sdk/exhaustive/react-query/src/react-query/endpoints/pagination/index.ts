@@ -19,13 +19,14 @@ type ClientInstance = InstanceType<typeof SeedExhaustiveClient>;
 type ListItemsParams = Parameters<ClientInstance["endpoints"]["pagination"]["listItems"]>;
 type ListItemsReturnType = ReturnType<ClientInstance["endpoints"]["pagination"]["listItems"]>;
 
-export function ListItemsQueryKey(...args: ListItemsParams): QueryKey {
-    return ["SeedExhaustiveClient", "endpoints", "pagination", "listItems", ...args] as const;
+export function ListItemsQueryKey(request: ListItemsParams[0]): QueryKey {
+    return ["SeedExhaustiveClient", "endpoints", "pagination", "listItems", request] as const;
 }
 
 export function ListItemsInfiniteOptions(
     client: ClientInstance,
-    ...args: ListItemsParams
+    request: ListItemsParams[0],
+    requestOptions?: ListItemsParams[1],
 ): {
     queryKey: QueryKey;
     queryFn: (context: { pageParam: unknown }) => ListItemsReturnType;
@@ -33,12 +34,11 @@ export function ListItemsInfiniteOptions(
     getNextPageParam: (lastPage: Awaited<ListItemsReturnType>, allPages: unknown, lastPageParam: unknown) => unknown;
 } {
     return {
-        queryKey: ListItemsQueryKey(...args),
+        queryKey: ListItemsQueryKey(request),
         queryFn: ({ pageParam }) => {
-            const [request, ...rest] = args;
             return client.endpoints.pagination.listItems(
                 pageParam != null ? { ...request, cursor: pageParam as never } : request,
-                ...rest,
+                requestOptions,
             );
         },
         initialPageParam: undefined as unknown,
@@ -51,7 +51,8 @@ export function ListItemsInfiniteOptions(
 
 export function useListItemsInfinite(
     client: ClientInstance,
-    args: ListItemsParams,
+    request: ListItemsParams[0],
+    requestOptions?: ListItemsParams[1],
     options?: Omit<
         UseInfiniteQueryOptions<
             Awaited<ListItemsReturnType>,
@@ -63,43 +64,46 @@ export function useListItemsInfinite(
         "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam"
     >,
 ): UseInfiniteQueryResult<InfiniteData<Awaited<ListItemsReturnType>, unknown>, Error> {
-    return useInfiniteQuery({ ...ListItemsInfiniteOptions(client, ...args), ...options });
+    return useInfiniteQuery({ ...ListItemsInfiniteOptions(client, request, requestOptions), ...options });
 }
 
 export function ListItemsOptions(
     client: ClientInstance,
-    ...args: ListItemsParams
+    request: ListItemsParams[0],
+    requestOptions?: ListItemsParams[1],
 ): { queryKey: QueryKey; queryFn: () => ListItemsReturnType } {
     return {
-        queryKey: ListItemsQueryKey(...args),
-        queryFn: () => client.endpoints.pagination.listItems(...args),
+        queryKey: ListItemsQueryKey(request),
+        queryFn: () => client.endpoints.pagination.listItems(request, requestOptions),
     };
 }
 
 export function useListItems(
     client: ClientInstance,
-    args: ListItemsParams,
+    request: ListItemsParams[0],
+    requestOptions?: ListItemsParams[1],
     options?: Omit<
         UseQueryOptions<Awaited<ListItemsReturnType>, Error, Awaited<ListItemsReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseQueryResult<Awaited<ListItemsReturnType>, Error> {
-    return useQuery({ ...ListItemsOptions(client, ...args), ...options });
+    return useQuery({ ...ListItemsOptions(client, request, requestOptions), ...options });
 }
 
 export function useSuspenseListItems(
     client: ClientInstance,
-    args: ListItemsParams,
+    request: ListItemsParams[0],
+    requestOptions?: ListItemsParams[1],
     options?: Omit<
         UseSuspenseQueryOptions<Awaited<ListItemsReturnType>, Error, Awaited<ListItemsReturnType>, QueryKey>,
         "queryKey" | "queryFn"
     >,
 ): UseSuspenseQueryResult<Awaited<ListItemsReturnType>, Error> {
-    return useSuspenseQuery({ ...ListItemsOptions(client, ...args), ...options });
+    return useSuspenseQuery({ ...ListItemsOptions(client, request, requestOptions), ...options });
 }
 
-export function invalidateListItems(queryClient: QueryClient, ...args: ListItemsParams): Promise<void> {
-    return queryClient.invalidateQueries({ queryKey: ListItemsQueryKey(...args) });
+export function invalidateListItems(queryClient: QueryClient, request: ListItemsParams[0]): Promise<void> {
+    return queryClient.invalidateQueries({ queryKey: ListItemsQueryKey(request) });
 }
 
 export function invalidateAllListItems(queryClient: QueryClient): Promise<void> {
