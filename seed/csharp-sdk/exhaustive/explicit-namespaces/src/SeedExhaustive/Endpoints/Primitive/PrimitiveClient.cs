@@ -6,7 +6,7 @@ namespace SeedExhaustive.Endpoints.Primitive;
 
 public partial class PrimitiveClient : IPrimitiveClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PrimitiveClient(RawClient client)
     {

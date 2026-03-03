@@ -5,7 +5,7 @@ namespace SeedNullable;
 
 public partial class NullableClient : INullableClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NullableClient(RawClient client)
     {

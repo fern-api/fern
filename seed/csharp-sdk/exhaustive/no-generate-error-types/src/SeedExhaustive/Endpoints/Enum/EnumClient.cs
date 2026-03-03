@@ -7,7 +7,7 @@ namespace SeedExhaustive.Endpoints;
 
 public partial class EnumClient : IEnumClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal EnumClient(RawClient client)
     {

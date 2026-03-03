@@ -4,7 +4,7 @@ namespace SeedTrace;
 
 public partial class AdminClient : IAdminClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal AdminClient(RawClient client)
     {

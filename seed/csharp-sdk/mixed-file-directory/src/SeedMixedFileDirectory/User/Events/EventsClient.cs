@@ -7,7 +7,7 @@ namespace SeedMixedFileDirectory.User_;
 
 public partial class EventsClient : IEventsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal EventsClient(RawClient client)
     {

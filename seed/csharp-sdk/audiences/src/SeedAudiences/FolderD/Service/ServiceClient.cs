@@ -6,7 +6,7 @@ namespace SeedAudiences.FolderD;
 
 public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {

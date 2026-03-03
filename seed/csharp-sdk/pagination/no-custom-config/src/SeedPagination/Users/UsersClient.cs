@@ -5,7 +5,7 @@ namespace SeedPagination;
 
 public partial class UsersClient : IUsersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UsersClient(RawClient client)
     {

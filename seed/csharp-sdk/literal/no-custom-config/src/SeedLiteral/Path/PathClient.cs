@@ -5,7 +5,7 @@ namespace SeedLiteral;
 
 public partial class PathClient : IPathClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PathClient(RawClient client)
     {

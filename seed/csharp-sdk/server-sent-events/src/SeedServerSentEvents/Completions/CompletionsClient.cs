@@ -5,7 +5,7 @@ namespace SeedServerSentEvents;
 
 public partial class CompletionsClient : ICompletionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal CompletionsClient(RawClient client)
     {

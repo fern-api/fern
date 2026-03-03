@@ -5,7 +5,7 @@ namespace SeedTrace;
 
 public partial class SubmissionClient : ISubmissionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SubmissionClient(RawClient client)
     {

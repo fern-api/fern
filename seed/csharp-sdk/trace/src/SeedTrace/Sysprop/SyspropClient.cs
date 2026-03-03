@@ -5,7 +5,7 @@ namespace SeedTrace;
 
 public partial class SyspropClient : ISyspropClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SyspropClient(RawClient client)
     {

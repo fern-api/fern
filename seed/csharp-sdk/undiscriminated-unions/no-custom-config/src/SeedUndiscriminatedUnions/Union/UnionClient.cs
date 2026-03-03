@@ -6,7 +6,7 @@ namespace SeedUndiscriminatedUnions;
 
 public partial class UnionClient : IUnionClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UnionClient(RawClient client)
     {

@@ -5,7 +5,7 @@ namespace SeedTrace;
 
 public partial class HomepageClient : IHomepageClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal HomepageClient(RawClient client)
     {

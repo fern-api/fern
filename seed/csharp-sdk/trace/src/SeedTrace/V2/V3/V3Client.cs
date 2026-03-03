@@ -4,7 +4,7 @@ namespace SeedTrace.V2.V3;
 
 public partial class V3Client : IV3Client
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal V3Client(RawClient client)
     {

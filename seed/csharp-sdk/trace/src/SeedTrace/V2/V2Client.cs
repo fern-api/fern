@@ -6,7 +6,7 @@ namespace SeedTrace.V2;
 
 public partial class V2Client : IV2Client
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal V2Client(RawClient client)
     {

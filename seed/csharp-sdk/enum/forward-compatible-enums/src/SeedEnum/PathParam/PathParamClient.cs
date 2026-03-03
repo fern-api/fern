@@ -5,7 +5,7 @@ namespace SeedEnum;
 
 public partial class PathParamClient : IPathParamClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PathParamClient(RawClient client)
     {

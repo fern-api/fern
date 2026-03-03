@@ -5,7 +5,7 @@ namespace SeedLiteral;
 
 public partial class ReferenceClient : IReferenceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ReferenceClient(RawClient client)
     {

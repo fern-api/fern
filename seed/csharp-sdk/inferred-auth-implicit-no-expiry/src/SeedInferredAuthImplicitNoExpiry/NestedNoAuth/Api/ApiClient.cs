@@ -5,7 +5,7 @@ namespace SeedInferredAuthImplicitNoExpiry.NestedNoAuth;
 
 public partial class ApiClient : IApiClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ApiClient(RawClient client)
     {

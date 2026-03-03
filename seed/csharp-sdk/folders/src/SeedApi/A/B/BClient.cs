@@ -5,7 +5,7 @@ namespace SeedApi.A.B;
 
 public partial class BClient : IBClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal BClient(RawClient client)
     {

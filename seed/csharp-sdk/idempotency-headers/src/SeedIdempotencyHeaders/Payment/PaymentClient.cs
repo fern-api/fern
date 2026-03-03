@@ -5,7 +5,7 @@ namespace SeedIdempotencyHeaders;
 
 public partial class PaymentClient : IPaymentClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PaymentClient(RawClient client)
     {

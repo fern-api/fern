@@ -7,7 +7,7 @@ namespace SeedExhaustive.Endpoints.Params;
 
 public partial class ParamsClient : IParamsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ParamsClient(RawClient client)
     {

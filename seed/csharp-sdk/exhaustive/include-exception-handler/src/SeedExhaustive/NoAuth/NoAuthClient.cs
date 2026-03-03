@@ -5,7 +5,7 @@ namespace SeedExhaustive;
 
 public partial class NoAuthClient : INoAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NoAuthClient(RawClient client)
     {

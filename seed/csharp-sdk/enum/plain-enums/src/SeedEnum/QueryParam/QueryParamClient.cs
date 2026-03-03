@@ -4,7 +4,7 @@ namespace SeedEnum;
 
 public partial class QueryParamClient : IQueryParamClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal QueryParamClient(RawClient client)
     {

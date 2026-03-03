@@ -5,7 +5,7 @@ namespace SeedNullableOptional;
 
 public partial class NullableOptionalClient : INullableOptionalClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NullableOptionalClient(RawClient client)
     {

@@ -5,7 +5,7 @@ namespace SeedPathParameters;
 
 public partial class OrganizationsClient : IOrganizationsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal OrganizationsClient(RawClient client)
     {

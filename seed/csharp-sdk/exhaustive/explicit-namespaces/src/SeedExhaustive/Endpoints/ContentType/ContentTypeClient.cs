@@ -6,7 +6,7 @@ namespace SeedExhaustive.Endpoints.ContentType;
 
 public partial class ContentTypeClient : IContentTypeClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ContentTypeClient(RawClient client)
     {

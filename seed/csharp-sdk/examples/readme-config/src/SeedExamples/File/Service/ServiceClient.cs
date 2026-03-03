@@ -6,7 +6,7 @@ namespace SeedExamples.File_;
 
 public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {

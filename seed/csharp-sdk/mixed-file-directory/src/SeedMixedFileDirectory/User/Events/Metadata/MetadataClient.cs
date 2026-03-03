@@ -6,7 +6,7 @@ namespace SeedMixedFileDirectory.User_.Events;
 
 public partial class MetadataClient : IMetadataClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal MetadataClient(RawClient client)
     {

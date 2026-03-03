@@ -5,7 +5,7 @@ namespace SeedApi;
 
 public partial class TestGroupClient : ITestGroupClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal TestGroupClient(RawClient client)
     {

@@ -5,7 +5,7 @@ namespace SeedBasicAuthEnvironmentVariables;
 
 public partial class BasicAuthClient : IBasicAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal BasicAuthClient(RawClient client)
     {

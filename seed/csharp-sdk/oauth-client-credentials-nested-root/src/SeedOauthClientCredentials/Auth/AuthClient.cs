@@ -6,7 +6,7 @@ namespace SeedOauthClientCredentials.Auth;
 
 public partial class AuthClient : IAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal AuthClient(RawClient client)
     {

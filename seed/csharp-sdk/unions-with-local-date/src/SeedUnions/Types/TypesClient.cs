@@ -5,7 +5,7 @@ namespace SeedUnions;
 
 public partial class TypesClient : ITypesClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal TypesClient(RawClient client)
     {

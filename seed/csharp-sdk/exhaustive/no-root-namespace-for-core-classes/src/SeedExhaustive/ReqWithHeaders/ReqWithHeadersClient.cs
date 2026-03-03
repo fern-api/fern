@@ -4,7 +4,7 @@ namespace SeedExhaustive;
 
 public partial class ReqWithHeadersClient : IReqWithHeadersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ReqWithHeadersClient(RawClient client)
     {

@@ -8,7 +8,7 @@ namespace SeedExhaustive.Endpoints.Container;
 
 public partial class ContainerClient : IContainerClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ContainerClient(RawClient client)
     {

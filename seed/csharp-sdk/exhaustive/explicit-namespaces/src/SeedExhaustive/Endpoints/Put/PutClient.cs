@@ -6,7 +6,7 @@ namespace SeedExhaustive.Endpoints.Put;
 
 public partial class PutClient : IPutClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PutClient(RawClient client)
     {

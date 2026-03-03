@@ -7,7 +7,7 @@ namespace SeedExhaustive.Endpoints.Pagination;
 
 public partial class PaginationClient : IPaginationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PaginationClient(RawClient client)
     {

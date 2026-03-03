@@ -5,7 +5,7 @@ namespace SeedUnknownAsAny;
 
 public partial class UnknownClient : IUnknownClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UnknownClient(RawClient client)
     {

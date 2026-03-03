@@ -5,7 +5,7 @@ namespace SeedTrace;
 
 public partial class PlaylistClient : IPlaylistClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PlaylistClient(RawClient client)
     {
