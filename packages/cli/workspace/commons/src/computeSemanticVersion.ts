@@ -521,7 +521,11 @@ export async function getLatestVersionFromNuget(
         const headers: Record<string, string> = {};
         const token = registryInfo.token ?? undefined;
         if (token != null && token !== "") {
-            headers["X-NuGet-ApiKey"] = token;
+            // Use Basic auth for reading package metadata from private NuGet feeds.
+            // X-NuGet-ApiKey is only for push operations and is ignored by read endpoints.
+            // Basic auth with the API key as password is supported by Azure Artifacts,
+            // GitHub Packages, MyGet, and other common private NuGet feeds.
+            headers.authorization = `Basic ${Buffer.from(`:${token}`).toString("base64")}`;
         }
 
         const nugetUrl = `${flatContainerUrl}/${packageName.toLowerCase()}/index.json`;
