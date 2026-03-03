@@ -102,7 +102,7 @@ const base_keywords = new Set([
     "while"
 ]);
 
-const acessor_keywords = new Set(["get", "set", "init", "value", "add", "remove"]);
+const accessor_keywords = new Set(["get", "set", "init", "value", "add", "remove"]);
 const generic_keywords = new Set(["where"]);
 const linq_keywords = new Set(["from", "where", "select", "orderby", "groupby", "into", "let", "join", "on", "equals"]);
 const async_keywords = new Set(["async", "await"]);
@@ -525,14 +525,14 @@ export class TypeScope extends Identifier {
             const provenance = this.registry.model.provenance(property.jsonPath);
 
             if (provenance?.explicit) {
-                // if the origin is an IR node and the property has an explictly named origin, then it will not be a match,
-                // this should have been redirected (this should be avoided if possible by making explictly named properties created after properties that are IR-based)
-                // `BAD: getFieldName: ${this.fullyQualifiedName} for ${expectedName} found a IR-based property, but is being requested for an explictly named property.`
-                // You should redirect the explictly named property
+                // if the origin is an IR node and the property has an explicitly named origin, then it will not be a match,
+                // this should have been redirected (this should be avoided if possible by making explicitly named properties created after properties that are IR-based)
+                // `BAD: getFieldName: ${this.fullyQualifiedName} for ${expectedName} found a IR-based property, but is being requested for an explicitly named property.`
+                // You should redirect the explicitly named property
                 return expectedName;
             }
 
-            // this is a good match, (or at least it's not an explictly named property) we'll return the name
+            // this is a good match, (or at least it's not an explicitly named property) we'll return the name
 
             return property.name;
         }
@@ -1204,7 +1204,7 @@ export class NameRegistry {
                     multipartMethodName: classReferenceArgs.multipartMethodName,
                     multipartMethodNameForCollection: classReferenceArgs.multipartMethodNameForCollection
                 },
-                // the typescope is the common data across all copies of a class referecne
+                // the typescope is the common data across all copies of a class reference
                 new TypeScope(this, name, namespace, fullyQualifiedName),
                 this.generation
             ),

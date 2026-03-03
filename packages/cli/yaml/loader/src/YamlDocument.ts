@@ -1,7 +1,7 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { RelativeFilePath } from "@fern-api/path-utils";
 import { SourceLocation } from "@fern-api/source";
-import { type Document, isNode } from "yaml";
+import { type Document, isNode, type YAMLError } from "yaml";
 
 /**
  * A path to a value within a YAML document. Each element is either
@@ -33,6 +33,13 @@ export class YamlDocument {
         this.relativeFilePath = relativeFilePath;
         this.document = document;
         this.source = source;
+    }
+
+    /**
+     * Returns any errors found during YAML parsing (e.g., duplicate keys).
+     */
+    public get errors(): ReadonlyArray<YAMLError> {
+        return this.document.errors;
     }
 
     /**

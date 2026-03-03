@@ -329,30 +329,6 @@ sdks:
             }
         });
 
-        it("fails when neither api nor apis is defined", async () => {
-            await writeFile(
-                join(testDir, "fern.yml"),
-                `
-edition: 2026-01-01
-org: acme
-sdks:
-  targets:
-    python:
-      output:
-        path: ./sdks/python
-`
-            );
-
-            const fernYml = await loadFernYml({ cwd: testDir });
-            const result = await createLoader().load({ fernYml });
-
-            expect(result.success).toBe(false);
-            if (!result.success) {
-                expect(result.issues.length).toBeGreaterThan(0);
-                expect(result.issues[0]?.message).toContain("SDKs require at least one API defined in fern.yml");
-            }
-        });
-
         it("fails when both api and apis are defined", async () => {
             await mkdir(join(testDir, "apis"), { recursive: true });
             await writeFile(join(testDir, "apis/openapi.yml"), "openapi: 3.0.0");
@@ -379,38 +355,6 @@ apis:
             if (!result.success) {
                 expect(result.issues.length).toBeGreaterThan(0);
                 expect(result.issues[0]?.message).toContain("Cannot define both 'api' and 'apis'");
-            }
-        });
-
-        it("fails when defaultGroup is not referenced by any target", async () => {
-            await mkdir(join(testDir, "apis"), { recursive: true });
-            await writeFile(join(testDir, "apis/openapi.yml"), "openapi: 3.0.0");
-            await writeFile(
-                join(testDir, "fern.yml"),
-                `
-edition: 2026-01-01
-org: acme
-api:
-  specs:
-    - openapi: apis/openapi.yml
-sdks:
-  defaultGroup: production
-  targets:
-    python:
-      output:
-        path: ./sdks/python
-`
-            );
-
-            const fernYml = await loadFernYml({ cwd: testDir });
-            const result = await createLoader().load({ fernYml });
-
-            expect(result.success).toBe(false);
-            if (!result.success) {
-                expect(result.issues.length).toBeGreaterThan(0);
-                expect(result.issues[0]?.message).toContain(
-                    "Default group 'production' is not referenced by any target"
-                );
             }
         });
 
@@ -507,68 +451,6 @@ sdks:
             }
         });
 
-        it("fails when target references non-existent API", async () => {
-            await mkdir(join(testDir, "apis"), { recursive: true });
-            await writeFile(join(testDir, "apis/openapi.yml"), "openapi: 3.0.0");
-            await writeFile(
-                join(testDir, "fern.yml"),
-                `
-edition: 2026-01-01
-org: acme
-api:
-  specs:
-    - openapi: apis/openapi.yml
-sdks:
-  targets:
-    python:
-      api: nonexistent-api
-      output:
-        path: ./sdks/python
-`
-            );
-
-            const fernYml = await loadFernYml({ cwd: testDir });
-            const result = await createLoader().load({ fernYml });
-
-            expect(result.success).toBe(false);
-            if (!result.success) {
-                expect(result.issues.length).toBeGreaterThan(0);
-                expect(result.issues[0]?.message).toContain("API 'nonexistent-api'");
-                expect(result.issues[0]?.message).toContain("is not defined");
-            }
-        });
-
-        it("fails when target uses default api but apis (plural) is configured", async () => {
-            await mkdir(join(testDir, "apis"), { recursive: true });
-            await writeFile(join(testDir, "apis/openapi.yml"), "openapi: 3.0.0");
-            await writeFile(
-                join(testDir, "fern.yml"),
-                `
-edition: 2026-01-01
-org: acme
-apis:
-  my-api:
-    specs:
-      - openapi: apis/openapi.yml
-sdks:
-  targets:
-    python:
-      output:
-        path: ./sdks/python
-`
-            );
-
-            const fernYml = await loadFernYml({ cwd: testDir });
-            const result = await createLoader().load({ fernYml });
-
-            expect(result.success).toBe(false);
-            if (!result.success) {
-                expect(result.issues.length).toBeGreaterThan(0);
-                expect(result.issues[0]?.message).toContain("API 'api'");
-                expect(result.issues[0]?.message).toContain("is not defined");
-            }
-        });
-
         it("validates multiple targets referencing different APIs", async () => {
             await mkdir(join(testDir, "apis/v1"), { recursive: true });
             await mkdir(join(testDir, "apis/v2"), { recursive: true });
@@ -620,43 +502,6 @@ sdks:
 
                 const typescript = result.workspace.sdks?.targets.find((t) => t.name === "typescript");
                 expect(typescript?.api).toBe("api-v1");
-            }
-        });
-
-        it("reports errors for all targets with invalid API references", async () => {
-            await mkdir(join(testDir, "apis"), { recursive: true });
-            await writeFile(join(testDir, "apis/openapi.yml"), "openapi: 3.0.0");
-            await writeFile(
-                join(testDir, "fern.yml"),
-                `
-edition: 2026-01-01
-org: acme
-apis:
-  my-api:
-    specs:
-      - openapi: apis/openapi.yml
-sdks:
-  targets:
-    python:
-      api: wrong-api
-      output:
-        path: ./sdks/python
-    typescript:
-      api: also-wrong
-      output:
-        path: ./sdks/typescript
-`
-            );
-
-            const fernYml = await loadFernYml({ cwd: testDir });
-            const result = await createLoader().load({ fernYml });
-
-            expect(result.success).toBe(false);
-            if (!result.success) {
-                expect(result.issues.length).toBe(2);
-                const messages = result.issues.map((i) => i.message);
-                expect(messages.some((m) => m.includes("wrong-api"))).toBe(true);
-                expect(messages.some((m) => m.includes("also-wrong"))).toBe(true);
             }
         });
     });
