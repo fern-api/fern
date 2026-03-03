@@ -536,16 +536,7 @@ export class ReactQueryGenerator {
 
                 for (const [unsafeName, child] of node.children) {
                     const exportName = child.safeName;
-                    if (child.isService && child.children.size === 0) {
-                        // Leaf service: namespace re-export from direct child
-                        lines.push(`export * as ${exportName} from "./${unsafeName}/index.js";`);
-                    } else if (child.isService && child.children.size > 0) {
-                        // Service with sub-services: namespace re-export from child barrel
-                        lines.push(`export * as ${exportName} from "./${unsafeName}/index.js";`);
-                    } else {
-                        // Intermediate directory (not a service itself): namespace re-export
-                        lines.push(`export * as ${exportName} from "./${unsafeName}/index.js";`);
-                    }
+                    lines.push(`export * as ${exportName} from "./${unsafeName}/index.js";`);
                 }
 
                 lines.push(``);
