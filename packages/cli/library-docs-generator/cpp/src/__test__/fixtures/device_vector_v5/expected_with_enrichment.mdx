@@ -21,9 +21,11 @@ The number of elements in a `device_vector` may vary dynamically; memory managem
 <Accordion title="Template parameters">
 
 <ParamField path="T" type="typename">
+The element type of the vector.
 </ParamField>
 
 <ParamField path="Alloc" type="typename" default="thrust::device_allocator<T>">
+**[optional]** The allocator type used for memory management (default: [thrust::device_allocator](/library/api/thrust::device_allocator)`<T>`).
 </ParamField>
 
 </Accordion>

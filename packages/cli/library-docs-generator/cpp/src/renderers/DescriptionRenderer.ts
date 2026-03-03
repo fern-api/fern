@@ -225,11 +225,22 @@ export function renderSegmentsTrimmed(segments: CppDocSegment[]): string {
 // ---------------------------------------------------------------------------
 
 /**
+ * Shared expansion text for @smemreuse and @smemwarpreuse Doxygen macros.
+ */
+const SMEM_REUSE_TEXT =
+    "The block-wide aggregate of `temp_storage` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate `TempStorage` for each method call.";
+
+/**
  * Known Doxygen macros that should be expanded or removed.
  */
 const DOXYGEN_MACROS: Record<string, string> = {
-    "@rowmajor": "Threads are assumed to be in row-major order.",
+    "@rowmajor": "Assumes threads are in row-major order.",
     "@granularity": "Performance is sensitive to the degree of data movement across the block.",
+    "@smemreuse": SMEM_REUSE_TEXT,
+    "@smemwarpreuse": SMEM_REUSE_TEXT,
+    "@blocksize": "`BLOCK_THREADS` is a multiple of the architecture's warp size",
+    "@identityzero": "Uses the identity element (zero) as the initial value.",
+    "@blocked": "Data is in a blocked arrangement across threads.",
 };
 
 /**
@@ -316,12 +327,9 @@ export function convertVerbatimRst(content: string): ParsedVerbatim {
     const result: ParsedVerbatim = {
         overviewContent: "",
         performanceContent: undefined,
-        exampleTitle: undefined,
         exampleDescription: undefined,
         exampleCode: undefined,
-        exampleLanguage: undefined,
-        versionAnnotation: undefined,
-        otherSections: []
+        exampleLanguage: undefined
     };
 
     for (const section of sections) {
@@ -332,7 +340,7 @@ export function convertVerbatimRst(content: string): ParsedVerbatim {
             result.overviewContent = md;
         } else if (/performance/i.test(section.title)) {
             result.performanceContent = md;
-        } else if (/example/i.test(section.title) || /a simple example/i.test(section.title)) {
+        } else if (/example/i.test(section.title) || /snippet/i.test(section.title)) {
             // Parse example section: description text + code block
             parseExampleSection(section.lines, result);
         } else {
@@ -355,12 +363,9 @@ interface VerbatimSection {
 export interface ParsedVerbatim {
     overviewContent: string;
     performanceContent: string | undefined;
-    exampleTitle: string | undefined;
     exampleDescription: string | undefined;
     exampleCode: string | undefined;
     exampleLanguage: string | undefined;
-    versionAnnotation: string | undefined;
-    otherSections: Array<{ title: string; content: string }>;
 }
 
 /**
@@ -416,8 +421,8 @@ function parseExampleSection(lines: string[], result: ParsedVerbatim): void {
             continue;
         }
 
-        // Skip @blockcollective{Name} macros
-        if (/^@blockcollective\{.*\}/.test(line.trim())) {
+        // Skip @blockcollective{Name} and @warpcollective{Name} macros
+        if (/^@(?:blockcollective|warpcollective)\{.*\}/.test(line.trim())) {
             continue;
         }
 
@@ -640,14 +645,15 @@ function expandDoxygenMacros(line: string): string {
         }
     }
 
-    // @blockcollective{Name} -> empty (skip)
+    // @blockcollective{Name} -> empty (strip, just a Doxygen grouping directive)
     result = result.replace(/@blockcollective\{[^}]*\}/g, "");
 
-    // @smemwarpreuse and other unknown Doxygen macros at start of line -> remove
+    // @warpcollective{Name} -> empty (strip, just a Doxygen grouping directive)
+    result = result.replace(/@warpcollective\{[^}]*\}/g, "");
+
+    // Remove any remaining unknown Doxygen macros that are standalone on a line
     // Only remove if it's a standalone macro (not part of a word or email)
     result = result.replace(/^\s*@\w+\s*$/gm, "");
-    // Also handle inline macros that remain after known macro expansion
-    result = result.replace(/@smemwarpreuse/g, "");
 
     return result;
 }
@@ -752,6 +758,239 @@ export function extractVersionAnnotation(blocks: CppDocBlock[]): string | undefi
         }
     }
     return undefined;
+}
+
+// ---------------------------------------------------------------------------
+// Method-level verbatim RST structured extraction
+// ---------------------------------------------------------------------------
+
+/**
+ * Result of parsing a method-level verbatim RST block into structured MDX components.
+ */
+export interface ParsedMethodVerbatim {
+    /** Summary text (first paragraph(s) before versionadded or bullet list) */
+    descriptionText: string;
+    /** Warning items (e.g., "The return value is undefined...") */
+    warningItems: string[];
+    /** Note items (e.g., expanded macros like @rowmajor, @smemreuse) */
+    noteItems: string[];
+    /** Example description text (e.g., "The code snippet below illustrates...") */
+    exampleDescription: string | undefined;
+    /** Example code block content */
+    exampleCode: string | undefined;
+    /** Example code block language */
+    exampleLanguage: string | undefined;
+}
+
+/**
+ * Check if a bullet item text (after macro expansion) is an "explicit warning" item.
+ * Warning items describe undefined return values or output.
+ */
+function isExplicitWarningBulletItem(text: string): boolean {
+    return /return value is undefined/i.test(text) ||
+           /output is undefined/i.test(text) ||
+           /should not be relied upon/i.test(text);
+}
+
+/**
+ * Check if a bullet item text (after macro expansion) is the smemreuse/smemwarpreuse
+ * expansion about temp_storage being undefined.
+ * This content is classified as Warning when no other explicit warning exists,
+ * otherwise it goes into Note.
+ */
+function isSmemReuseContent(text: string): boolean {
+    return /`temp_storage`\s+is undefined/i.test(text) ||
+           /temp_storage.*is undefined after calling/i.test(text);
+}
+
+/**
+ * Parse a method-level verbatim RST block into structured components
+ * for rendering as MDX with Warning/Note callouts and Example sections.
+ *
+ * This handles the CUB pattern where method docstrings store all content
+ * (summary, warnings, notes, examples) inside a single verbatim RST block
+ * with empty structured fields (notes: [], warnings: [], examples: []).
+ *
+ * Note: convertVerbatimRst() already expands Doxygen macros via
+ * convertRstLinesToMarkdown -> expandDoxygenMacros. So the overviewContent
+ * we receive has macros already expanded into their full text.
+ * We classify bullet items by their content (not macro names).
+ */
+export function parseMethodVerbatimRst(content: string): ParsedMethodVerbatim {
+    const parsed = convertVerbatimRst(content);
+
+    const result: ParsedMethodVerbatim = {
+        descriptionText: "",
+        warningItems: [],
+        noteItems: [],
+        exampleDescription: parsed.exampleDescription ? reflowParagraphs(parsed.exampleDescription) : undefined,
+        exampleCode: parsed.exampleCode,
+        exampleLanguage: parsed.exampleLanguage
+    };
+
+    // Parse the overview content to separate summary from bullet list items.
+    // The overviewContent already has macros expanded and RST converted to MD.
+    const overviewText = parsed.overviewContent;
+
+    // Split into lines and classify
+    const lines = overviewText.split("\n");
+    const summaryLines: string[] = [];
+    const bulletItems: string[] = [];
+    let inBulletList = false;
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i]!;
+
+        // Detect bullet list items (- prefix)
+        if (/^\s*- /.test(line)) {
+            inBulletList = true;
+            // Extract the text after "- "
+            const itemText = line.replace(/^\s*- /, "").trim();
+            bulletItems.push(itemText);
+            continue;
+        }
+
+        // Continuation lines of bullet items (indented under a bullet)
+        if (inBulletList && /^\s{2,}/.test(line) && line.trim() !== "") {
+            // Append to last bullet item
+            if (bulletItems.length > 0) {
+                bulletItems[bulletItems.length - 1] += " " + line.trim();
+            }
+            continue;
+        }
+
+        // If we were in a bullet list and hit a non-indented non-bullet line, end the list
+        if (inBulletList && line.trim() !== "") {
+            inBulletList = false;
+        }
+
+        // Skip version annotations (they're extracted separately by extractVersionAnnotation)
+        if (/^\*Added in v[\d.]+\..*?\*$/.test(line)) {
+            continue;
+        }
+
+        // Empty lines
+        if (line.trim() === "") {
+            if (!inBulletList) {
+                summaryLines.push(line);
+            }
+            continue;
+        }
+
+        if (!inBulletList) {
+            summaryLines.push(line);
+        }
+    }
+
+    // Reflow paragraphs and then extract any standalone smemreuse paragraphs
+    // from the summary text. Standalone macros like @smemwarpreuse expand to
+    // a full paragraph that should be a Warning/Note, not description text.
+    const reflowed = reflowParagraphs(summaryLines.join("\n")).trim();
+    const paragraphs = reflowed.split(/\n\n+/);
+    const descParagraphs: string[] = [];
+    const standaloneMacroItems: string[] = [];
+
+    for (const para of paragraphs) {
+        const trimmed = para.trim();
+        if (!trimmed) {
+            continue;
+        }
+        if (isSmemReuseContent(trimmed)) {
+            standaloneMacroItems.push(trimmed);
+        } else {
+            descParagraphs.push(trimmed);
+        }
+    }
+
+    result.descriptionText = descParagraphs.join("\n\n");
+
+    // Combine bullet items and standalone macro paragraphs for classification
+    const allItems: string[] = [
+        ...bulletItems.filter(item => item.trim().length > 0),
+        ...standaloneMacroItems
+    ];
+
+    // Determine if there are any "explicit warning" items (e.g., "return value is undefined")
+    const hasExplicitWarning = allItems.some(
+        b => !isSmemReuseContent(b) && isExplicitWarningBulletItem(b)
+    );
+
+    // Classify items into warnings and notes:
+    // - Explicit warning items (return value undefined etc.) -> always Warning
+    // - smemreuse content (temp_storage undefined): Warning if no other explicit warning, Note otherwise
+    // - Everything else -> Note
+    for (const itemText of allItems) {
+        if (isSmemReuseContent(itemText)) {
+            if (hasExplicitWarning) {
+                result.noteItems.push(itemText);
+            } else {
+                result.warningItems.push(itemText);
+            }
+        } else if (isExplicitWarningBulletItem(itemText)) {
+            result.warningItems.push(itemText);
+        } else {
+            result.noteItems.push(itemText);
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Reflow multi-line paragraphs into single lines.
+ * A paragraph is a group of consecutive non-empty lines separated by blank lines.
+ * Within a paragraph, lines are joined with a single space.
+ */
+function reflowParagraphs(text: string): string {
+    return text.split(/\n\n+/).map(para => para.replace(/\n/g, " ").trim()).filter(Boolean).join("\n\n");
+}
+
+/**
+ * Check if the description blocks for a method contain a verbatim RST block.
+ * Returns the verbatim block's content string if found, or undefined.
+ */
+export function findVerbatimRstBlock(blocks: CppDocBlock[]): string | undefined {
+    for (const block of blocks) {
+        if (block.type === "verbatim" && (block.format === "rst" || block.content.startsWith("embed:rst"))) {
+            return block.content;
+        }
+    }
+    return undefined;
+}
+
+// ---------------------------------------------------------------------------
+// See also rendering (shared by class pages and method pages)
+// ---------------------------------------------------------------------------
+
+/**
+ * Render a "See also" section from an array of segment arrays.
+ * Returns the rendered MDX lines (including trailing blank line) or empty string
+ * if there are no valid see-also entries.
+ *
+ * Output format (multi-line, comma-separated except for last entry):
+ *   **See also:**
+ *   entry1,
+ *   entry2
+ */
+export function renderSeeAlso(seeAlsoItems: CppDocSegment[][]): string {
+    const parts: string[] = [];
+    for (const sa of seeAlsoItems) {
+        const text = renderSegmentsTrimmed(sa);
+        if (text) {
+            parts.push(text);
+        }
+    }
+    if (parts.length === 0) {
+        return "";
+    }
+    const lines: string[] = [];
+    lines.push("**See also:**");
+    for (let i = 0; i < parts.length; i++) {
+        const trailing = i < parts.length - 1 ? "," : "";
+        lines.push(`${parts[i]}${trailing}`);
+    }
+    lines.push("");
+    return lines.join("\n");
 }
 
 // ---------------------------------------------------------------------------

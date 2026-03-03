@@ -26,7 +26,7 @@ import type {
 } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext, CompoundMeta } from "../context.js";
 import { buildLinkPath, getShortName, needsQuoting, stripTemplateArgs } from "../context.js";
-import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath } from "./DescriptionRenderer.js";
+import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso } from "./DescriptionRenderer.js";
 import type { ParsedVerbatim } from "./DescriptionRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock } from "./SignatureRenderer.js";
@@ -91,18 +91,11 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
 
         // Check for verbatim RST blocks in description
-        const hasVerbatim = docstring.description.some(
-            b => b.type === "verbatim" && (b.format === "rst" || b.content.startsWith("embed:rst"))
-        );
+        const verbatimContent = findVerbatimRstBlock(docstring.description);
 
-        if (hasVerbatim) {
+        if (verbatimContent) {
             // Parse the verbatim block to extract structured content
-            for (const block of docstring.description) {
-                if (block.type === "verbatim" && (block.format === "rst" || block.content.startsWith("embed:rst"))) {
-                    parsedVerbatim = convertVerbatimRst(block.content);
-                    break;
-                }
-            }
+            parsedVerbatim = convertVerbatimRst(verbatimContent);
             // Render the overview content from the parsed verbatim
             if (parsedVerbatim?.overviewContent) {
                 lines.push(parsedVerbatim.overviewContent);
@@ -166,20 +159,9 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
 
     // 4. See also (class-level) -- multi-line format per golden pages
     if (docstring?.seeAlso && docstring.seeAlso.length > 0) {
-        const seeAlsoParts: string[] = [];
-        for (const sa of docstring.seeAlso) {
-            const text = renderSegmentsTrimmed(sa);
-            if (text) {
-                seeAlsoParts.push(text);
-            }
-        }
-        if (seeAlsoParts.length > 0) {
-            lines.push("**See also:**");
-            for (let i = 0; i < seeAlsoParts.length; i++) {
-                const trailing = i < seeAlsoParts.length - 1 ? "," : "";
-                lines.push(`${seeAlsoParts[i]}${trailing}`);
-            }
-            lines.push("");
+        const seeAlsoBlock = renderSeeAlso(docstring.seeAlso);
+        if (seeAlsoBlock) {
+            lines.push(seeAlsoBlock);
         }
     }
 
@@ -292,15 +274,7 @@ function buildMethodToLabelMap(cls: CppClassIr): Map<string, string> {
     const hasDirectPathMatch = cls.methods.some(m => cls.sectionLabels[m.path] != null);
 
     if (hasDirectPathMatch) {
-        // Keys are method paths -- direct lookup
-        for (const method of cls.methods) {
-            const label = cls.sectionLabels[method.path];
-            if (label != null) {
-                // Use index-based key to handle duplicate paths (overloads)
-                labelMap.set(`${cls.methods.indexOf(method)}`, label);
-            }
-        }
-        // Re-key by method index
+        // Keys are method paths -- direct lookup, keyed by method index
         const result = new Map<string, string>();
         for (let i = 0; i < cls.methods.length; i++) {
             const label = cls.sectionLabels[cls.methods[i]!.path];
@@ -322,6 +296,69 @@ function buildMethodToLabelMap(cls: CppClassIr): Map<string, string> {
 }
 
 /**
+ * Post-process sections to merge those that share the same method names and
+ * whose labels share a common prefix (e.g., "Exclusive prefix sum operations"
+ * and "Exclusive prefix sum operations (multiple data per thread)").
+ *
+ * When merged, the shorter/base label is used as the H2 section header,
+ * and all overloads go into a single Tabs group.
+ */
+function mergeSiblingMethodSections(sections: MethodSection[]): MethodSection[] {
+    const merged: MethodSection[] = [];
+
+    for (let i = 0; i < sections.length; i++) {
+        const current = sections[i]!;
+
+        // Check if this section can merge with subsequent sections
+        // Collect all sections that share the same method name set and
+        // whose labels start with the current label (or vice versa)
+        const toMerge: MethodSection[] = [current];
+        let baseLabel = current.label;
+
+        // Get the set of method names in the current section
+        const currentMethodNames = new Set(current.methods.map(m => m.name));
+
+        let j = i + 1;
+        while (j < sections.length) {
+            const next = sections[j]!;
+            const nextMethodNames = new Set(next.methods.map(m => m.name));
+
+            // Check if method name sets overlap (same method names)
+            const hasOverlap = [...currentMethodNames].some(n => nextMethodNames.has(n));
+
+            if (hasOverlap) {
+                // Check if one label is a prefix of the other
+                const shorter = baseLabel.length <= next.label.length ? baseLabel : next.label;
+                const longer = baseLabel.length <= next.label.length ? next.label : baseLabel;
+
+                if (longer.startsWith(shorter)) {
+                    toMerge.push(next);
+                    // Always use the shorter label as the base
+                    baseLabel = shorter;
+                    j++;
+                    continue;
+                }
+            }
+            break;
+        }
+
+        if (toMerge.length > 1) {
+            // Merge all methods from matched sections into one
+            const allMethods: CppFunctionIr[] = [];
+            for (const section of toMerge) {
+                allMethods.push(...section.methods);
+            }
+            merged.push({ label: baseLabel, methods: allMethods });
+            i = j - 1; // skip merged sections
+        } else {
+            merged.push(current);
+        }
+    }
+
+    return merged;
+}
+
+/**
  * Categorize methods into sections based on sectionLabels and method characteristics.
  *
  * The IR's sectionLabels maps function refids (or paths) to their section labels.
@@ -340,7 +377,7 @@ function categorizeMethodSections(cls: CppClassIr): MethodSection[] {
 
         for (let i = 0; i < cls.methods.length; i++) {
             const method = cls.methods[i]!;
-            const label = labelMap.get(String(i)) ?? "Methods";
+            const label = labelMap.get(String(i)) ?? "Utility methods";
             if (!sectionMap.has(label)) {
                 sectionMap.set(label, []);
                 sectionOrder.push(label);
@@ -355,7 +392,9 @@ function categorizeMethodSections(cls: CppClassIr): MethodSection[] {
             }
         }
 
-        return sections;
+        // Post-process: merge sibling sections that refer to the same methods
+        // (e.g., "Exclusive prefix sum operations" + "... (multiple data per thread)")
+        return mergeSiblingMethodSections(sections);
     }
 
     // Auto-categorize when sectionLabels is empty or keys don't match method paths
@@ -489,42 +528,6 @@ function renderStaticMethodsSection(
     for (const label of sectionOrder) {
         const methods = sectionMap.get(label)!;
         lines.push(renderMethodSection(label, methods, cls, ctx));
-    }
-
-    return lines.join("\n");
-}
-
-/**
- * Render the friend functions section.
- */
-function renderFriendFunctionsSection(
-    cls: CppClassIr,
-    ctx: RenderContext
-): string {
-    if (cls.friendFunctions.length === 0) {
-        return "";
-    }
-
-    const lines: string[] = [];
-    lines.push("## Friend functions");
-    lines.push("");
-
-    const groups = groupFunctionsByName(cls.friendFunctions);
-    const groupEntries = Array.from(groups.entries());
-
-    for (let i = 0; i < groupEntries.length; i++) {
-        const [name, funcs] = groupEntries[i]!;
-
-        if (funcs.length === 1) {
-            lines.push(renderSingleMethod(funcs[0]!, cls, ctx));
-        } else {
-            lines.push(renderOverloadedMethod(funcs, cls, ctx));
-        }
-
-        // BUG 8 fix: No --- separators between methods within the same H2 section.
-        if (i < groupEntries.length - 1) {
-            lines.push("");
-        }
     }
 
     return lines.join("\n");

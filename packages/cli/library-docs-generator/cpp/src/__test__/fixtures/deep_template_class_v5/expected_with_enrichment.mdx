@@ -37,6 +37,8 @@ std::vector<int> vec(500);
 std::copy(iter, iter + vec.size(), vec.begin());
 ```
 
+The remaining template parameters are SFINAE constraints that require `_Start` to model `::cuda::std::weakly_incrementable` and `::cuda::std::copyable`. They are not intended to be specified directly.
+
 <AccordionGroup>
 <Accordion title="Template parameters">
 

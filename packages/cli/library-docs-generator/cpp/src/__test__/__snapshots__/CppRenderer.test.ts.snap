@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Snapshot: Rendered output > should match snapshot for block_reduce_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders block_reduce_v5 1`] = `
 "---
 title: cub::BlockReduce
 description: ""
@@ -122,15 +122,9 @@ Reference to memory allocation having layout type [TempStorage](/library/api/cub
 ### Reduce <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
-Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction functor.
-Each thread contributes one input element.
-
-
-- The return value is undefined in threads other than thread<sub>0</sub>.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction functor. Each thread contributes one input element.
 
 <CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -143,6 +137,15 @@ T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Assumes threads are in row-major order.
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Note>
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
 
 **Template parameters**
 
@@ -160,16 +163,34 @@ Calling thread's input
 Binary reduction functor
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a max reduction of 128 integer items that are partitioned across 128 threads.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Each thread obtains an input item
+    int thread_data;
+    ...
+
+    // Compute the block-wide max for thread0
+    int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{});
+}
+\`\`\`
+
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Multiple items per thread">
 
-Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction
-functor. Each thread contributes an array of consecutive input elements.
-
-
-- The return value is undefined in threads other than thread<sub>0</sub>.
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction functor. Each thread contributes an array of consecutive input elements.
 
 <CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -182,6 +203,15 @@ T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Performance is sensitive to the degree of data movement across the block.
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Note>
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
 
 **Template parameters**
 
@@ -203,16 +233,34 @@ Calling thread's input segment
 Binary reduction functor
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a max reduction of 512 integer items that are partitioned in a blocked arrangement  across 128 threads where each thread owns 4 consecutive items.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Obtain a segment of consecutive items that are blocked across threads
+    int thread_data[4];
+    ...
+
+    // Compute the block-wide max for thread0
+    int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{});
+}
+\`\`\`
+
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Partial tile">
 
-Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction
-functor. The first \`num_valid\` threads each contribute one input element.
-
-
-- The return value is undefined in threads other than thread<sub>0</sub>.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes a block-wide reduction for thread<sub>0</sub> using the specified binary reduction functor. The first \`num_valid\` threads each contribute one input element.
 
 <CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -227,6 +275,15 @@ T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Note>
+Assumes threads are in row-major order.
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Note>
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
 **Template parameters**
 
 <ParamField path="ReductionOp" type="typename">
@@ -247,6 +304,30 @@ Binary reduction functor
 Number of threads containing valid elements (may be less than BLOCK_THREADS)
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a max reduction of a partially-full tile of integer items that are partitioned across 128 threads.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(int num_valid, ...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Each thread obtains an input item
+    int thread_data;
+    if (threadIdx.x < num_valid) thread_data = ...
+
+    // Compute the block-wide max for thread0
+    int aggregate = BlockReduce(temp_storage).Reduce(thread_data, cuda::maximum<>{}, num_valid);
+}
+\`\`\`
+
 </Tab>
 </Tabs>
 
@@ -257,15 +338,9 @@ Number of threads containing valid elements (may be less than BLOCK_THREADS)
 ### Sum <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
-Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction operator.
-Each thread contributes one input element.
-
-
-- The return value is undefined in threads other than thread<sub>0</sub>.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction operator. Each thread contributes one input element.
 
 <CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -275,22 +350,49 @@ T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(T input)
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Note>
+Assumes threads are in row-major order.
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Note>
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
 **Parameters**
 
 <ParamField path="input" type="T">
 Calling thread's input
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a sum reduction of 128 integer items that are partitioned across 128 threads.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Each thread obtains an input item
+    int thread_data;
+    ...
+
+    // Compute the block-wide sum for thread0
+    int aggregate = BlockReduce(temp_storage).Sum(thread_data);
+}
+\`\`\`
+
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Multiple items per thread">
 
-Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction
-operator. Each thread contributes an array of consecutive input elements.
-
-
-- The return value is undefined in threads other than thread<sub>0</sub>.
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction operator. Each thread contributes an array of consecutive input elements.
 
 <CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -300,6 +402,15 @@ T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(T(&inputs
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Performance is sensitive to the degree of data movement across the block.
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Note>
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
 
 **Template parameters**
 
@@ -313,16 +424,34 @@ T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(T(&inputs
 Calling thread's input segment
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in a blocked arrangement  across 128 threads where each thread owns 4 consecutive items.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Obtain a segment of consecutive items that are blocked across threads
+    int thread_data[4];
+    ...
+
+    // Compute the block-wide sum for thread0
+    int aggregate = BlockReduce(temp_storage).Sum(thread_data);
+}
+\`\`\`
+
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Partial tile">
 
-Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction
-operator. The first \`num_valid\` threads each contribute one input element.
-
-
-- The return value is undefined in threads other than thread<sub>0</sub>.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the reduction operator. The first \`num_valid\` threads each contribute one input element.
 
 <CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -335,6 +464,15 @@ T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Note>
+Assumes threads are in row-major order.
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Note>
+
+<Warning>
+The return value is undefined in threads other than thread<sub>0</sub>.
+</Warning>
+
 **Parameters**
 
 <ParamField path="input" type="T">
@@ -345,12 +483,37 @@ Calling thread's input
 Number of threads containing valid elements (may be less than BLOCK_THREADS)
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a sum reduction of a partially-full tile of integer items that are partitioned across 128 threads.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
+
+__global__ void ExampleKernel(int num_valid, ...)
+{
+    // Specialize BlockReduce for a 1D block of 128 threads of type int
+    using BlockReduce = cub::BlockReduce<int, 128>;
+
+    // Allocate shared memory for BlockReduce
+    __shared__ typename BlockReduce::TempStorage temp_storage;
+
+    // Each thread obtains an input item (up to num_items)
+    int thread_data;
+    if (threadIdx.x < num_valid)
+        thread_data = ...
+
+    // Compute the block-wide sum for thread0
+    int aggregate = BlockReduce(temp_storage).Sum(thread_data, num_valid);
+}
+\`\`\`
+
 </Tab>
 </Tabs>
 
 ---
 
-## Methods
+## Utility methods
 
 ### PrivateStorage <Badge intent="note" minimal>inline</Badge>
 
@@ -405,7 +568,7 @@ The operations exposed by [BlockReduce](/library/api/cub::_block_reduce) require
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for block_scan_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders block_scan_v5 1`] = `
 "---
 title: cub::BlockScan
 description: ""
@@ -425,7 +588,7 @@ sum/scan of items partitioned across a CUDA thread block.
 - Computation is slightly more efficient (i.e., having lower instruction overhead) for:
 
   - Prefix sum variants (vs. generic scan)
-  - @blocksize
+  - \`BLOCK_THREADS\` is a multiple of the architecture's warp size
 
 - See cub::BlockScanAlgorithm for performance details regarding algorithmic alternatives
 
@@ -503,16 +666,9 @@ Reference to memory allocation having layout type [TempStorage](/library/api/cub
 ### ExclusiveSum <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
-Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes one input element. The value of 0 is applied as the initial value, and is assigned
-to \`output\` in *thread*<sub>0</sub>.
-
-
-- @identityzero
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes one input element. The value of 0 is applied as the initial value, and is assigned to \`output\` in *thread*<sub>0</sub>.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -525,6 +681,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Note>
+Uses the identity element (zero) as the initial value.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
+
 **Parameters**
 
 <ParamField path="input" type="T">
@@ -536,17 +701,9 @@ Calling thread's output item (may be aliased to \`input\`)
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="With aggregate">
 
-Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes one input element.
-The value of 0 is applied as the initial value, and is assigned to \`output\` in *thread*<sub>0</sub>.
-Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
-
-
-- @identityzero
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes one input element. The value of 0 is applied as the initial value, and is assigned to \`output\` in *thread*<sub>0</sub>. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -559,6 +716,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Uses the identity element (zero) as the initial value.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Parameters**
 
@@ -575,21 +741,9 @@ Block-wide aggregate reduction of input items
 </ParamField>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="With prefix callback">
 
-Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes one input element.  Instead of using 0 as the block-wide prefix, the call-back functor
-\`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by
-*lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's
-scan inputs.
-
-
-- @identityzero
-- The \`block_prefix_callback_op\` functor must implement a member function
-  \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block,
-  however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes one input element.  Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -603,6 +757,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Uses the identity element (zero) as the initial value.
+The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block, however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -628,26 +792,9 @@ Embed:rst:leading-asterisk
 </ParamField>
 
 </Tab>
-</Tabs>
+<Tab title="Multiple items per thread">
 
----
-
-## Exclusive prefix sum operations (multiple data per thread)
-
-### ExclusiveSum <Badge intent="note" minimal>inline</Badge>
-
-<Tabs>
-<Tab title="Overload 1">
-
-Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes an array of consecutive input elements.
-The value of 0 is applied as the initial value, and is assigned to \`output[0]\` in *thread*<sub>0</sub>.
-
-
-- @identityzero
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes an array of consecutive input elements. The value of 0 is applied as the initial value, and is assigned to \`output[0]\` in *thread*<sub>0</sub>.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -660,6 +807,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Uses the identity element (zero) as the initial value.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -678,18 +835,9 @@ Calling thread's output items (may be aliased to \`input\`)
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Multiple items with aggregate">
 
-Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes an array of consecutive input elements.
-The value of 0 is applied as the initial value, and is assigned to \`output[0]\` in *thread*<sub>0</sub>.
-Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
-
-
-- @identityzero
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes an array of consecutive input elements. The value of 0 is applied as the initial value, and is assigned to \`output[0]\` in *thread*<sub>0</sub>. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -703,6 +851,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Uses the identity element (zero) as the initial value.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -725,22 +883,9 @@ Block-wide aggregate reduction of input items
 </ParamField>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Multiple items with prefix callback">
 
-Computes an exclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes an array of consecutive input elements.
-Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by
-the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed"
-value that logically prefixes the thread block's scan inputs.
-
-
-- @identityzero
-- The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`.
-  The functor will be invoked by the first warp of threads in the block, however only the return value from
-  *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes an array of consecutive input elements. Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -754,6 +899,17 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Uses the identity element (zero) as the initial value.
+The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block, however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -792,15 +948,9 @@ Embed:rst:leading-asterisk
 ### ExclusiveScan <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
-Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes one input element.
-
-
-- Supports non-commutative scan operators.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes one input element.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -815,6 +965,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -843,16 +1002,9 @@ Binary scan functor
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="With aggregate">
 
-Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes one input element.
-Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
-
-
-- Supports non-commutative scan operators.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes one input element. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -868,6 +1020,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -902,20 +1063,9 @@ Block-wide aggregate reduction of input items
 </ParamField>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="With prefix callback">
 
-Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes one input element. The call-back functor \`block_prefix_callback_op\` is invoked by
-the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as
-the "seed" value that logically prefixes the thread block's scan inputs.
-
-
-- The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`.
-  The functor will be invoked by the first warp of threads in the block, however only the return value from
-  *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
-- Supports non-commutative scan operators.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes one input element. The call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -930,6 +1080,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block, however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+Supports non-commutative scan operators.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -962,26 +1122,67 @@ Embed:rst:leading-asterisk
 //!
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a single thread block that progressively computes an exclusive prefix max scan over multiple "tiles" of input using a prefix functor to maintain a running total between block-wide scans. Each tile consists of 128 integer items that are partitioned across 128 threads.
+
+The corresponding output for the first segment will be \`INT_MIN, 0, 0, 2, ..., 124, 126\`. The output for the second segment will be \`126, 128, 128, 130, ..., 252, 254\`.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>
+
+// A stateful callback functor that maintains a running prefix to be applied
+// during consecutive scan operations.
+struct BlockPrefixCallbackOp
+{
+    // Running prefix
+    int running_total;
+
+    // Constructor
+    __device__ BlockPrefixCallbackOp(int running_total) : running_total(running_total) {}
+
+    // Callback operator to be entered by the first warp of threads in the block.
+    // Thread-0 is responsible for returning a value for seeding the block-wide scan.
+    __device__ int operator()(int block_aggregate)
+    {
+        int old_prefix = running_total;
+        running_total = (block_aggregate > old_prefix) ? block_aggregate : old_prefix;
+        return old_prefix;
+    }
+};
+
+__global__ void ExampleKernel(int *d_data, int num_items, ...)
+{
+    // Specialize BlockScan for a 1D block of 128 threads
+    using BlockScan = cub::BlockScan<int, 128>;
+
+    // Allocate shared memory for BlockScan
+    __shared__ typename BlockScan::TempStorage temp_storage;
+
+    // Initialize running total
+    BlockPrefixCallbackOp prefix_op(INT_MIN);
+
+    // Have the block iterate over segments of items
+    for (int block_offset = 0; block_offset < num_items; block_offset += 128)
+    {
+        // Load a segment of consecutive items that are blocked across threads
+        int thread_data = d_data[block_offset + threadIdx.x];
+
+        // Collectively compute the block-wide exclusive prefix max scan
+        BlockScan(temp_storage).ExclusiveScan(
+            thread_data, thread_data, INT_MIN, cuda::maximum<>{}, prefix_op);
+        __syncthreads();
+
+        // Store scanned items to output segment
+        d_data[block_offset + threadIdx.x] = thread_data;
+    }
+}
+\`\`\`
+
 </Tab>
-</Tabs>
+<Tab title="Multiple items with initial value">
 
----
-
-## Exclusive prefix scan operations (multiple data per thread)
-
-### ExclusiveScan <Badge intent="note" minimal>inline</Badge>
-
-<Tabs>
-<Tab title="Overload 1">
-
-Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes an array of consecutive input elements.
-
-
-- Supports non-commutative scan operators.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes an array of consecutive input elements.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -996,6 +1197,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1028,17 +1239,9 @@ Binary scan functor
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Multiple items with initial value and aggregate">
 
-Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes an array of consecutive input elements.
-Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
-
-
-- Supports non-commutative scan operators.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes an array of consecutive input elements. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1054,6 +1257,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1090,24 +1303,41 @@ Binary scan functor
 Block-wide aggregate reduction of input items
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates an exclusive prefix max scan of 512 integer items that are partitioned in a blocked arrangement  across 128 threads where each thread owns 4 consecutive items.
+
+\`{ [0,-1,2,-3], [4,-5,6,-7], ..., [508,-509,510,-511] }\`. The corresponding output \`thread_data\` in those threads will be \`{ [INT_MIN,0,0,2], [2,4,4,6], ..., [506,508,508,510] }\`. Furthermore the value \`510\` will be stored in \`block_aggregate\` for all threads.
+
+.. note::
+
+\`initial_value\` is not applied to the block-wide aggregate.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockScan for a 1D block of 128 threads of type int
+    using BlockScan = cub::BlockScan<int, 128>;
+
+    // Allocate shared memory for BlockScan
+    __shared__ typename BlockScan::TempStorage temp_storage;
+
+    // Obtain a segment of consecutive items that are blocked across threads
+    int thread_data[4];
+    ...
+
+    // Collectively compute the block-wide exclusive prefix max scan
+    int block_aggregate;
+    BlockScan(temp_storage).ExclusiveScan(
+        thread_data, thread_data, INT_MIN, cuda::maximum<>{}, block_aggregate);
+\`\`\`
+
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Multiple items with prefix callback">
 
-Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes an array of consecutive input elements.
-The call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value
-returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread
-block's scan inputs.
-
-
-- The \`block_prefix_callback_op\` functor must implement a member function
-  \`T operator()(T block_aggregate)\`. The functor will be invoked by the
-  first warp of threads in the block, however only the return value from
-  *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
-- Supports non-commutative scan operators.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an exclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes an array of consecutive input elements. The call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1122,6 +1352,17 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block, however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+Supports non-commutative scan operators.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1168,14 +1409,9 @@ Embed:rst:leading-asterisk
 ### InclusiveSum <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
-Computes an inclusive block-wide prefix scan using addition (+)
-as the scan operator. Each thread contributes one input element.
-
-
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes one input element.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1188,6 +1424,14 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Note>
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
+
 **Parameters**
 
 <ParamField path="input" type="T">
@@ -1199,15 +1443,9 @@ Calling thread's output item (may be aliased to \`input\`)
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="With aggregate">
 
-Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes one input element.
-Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
-
-
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes one input element. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1220,6 +1458,14 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Parameters**
 
@@ -1236,20 +1482,9 @@ Block-wide aggregate reduction of input items
 </ParamField>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="With prefix callback">
 
-Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes one input element. Instead of using 0 as the block-wide prefix, the call-back functor
-\`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by
-*lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's
-scan inputs.
-
-
-- The \`block_prefix_callback_op\` functor must implement a member function
-  \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block,
-  however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes one input element. Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1263,6 +1498,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block, however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1287,25 +1531,66 @@ Embed:rst:leading-asterisk
 //!
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a single thread block that progressively computes an inclusive prefix sum over multiple "tiles" of input using a prefix functor to maintain a running total between block-wide scans. Each tile consists of 128 integer items that are partitioned across 128 threads.
+
+The corresponding output for the first segment will be \`1, 2, ..., 128\`. The output for the second segment will be \`129, 130, ..., 256\`.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>
+
+// A stateful callback functor that maintains a running prefix to be applied
+// during consecutive scan operations.
+struct BlockPrefixCallbackOp
+{
+    // Running prefix
+    int running_total;
+
+    // Constructor
+    __device__ BlockPrefixCallbackOp(int running_total) : running_total(running_total) {}
+
+    // Callback operator to be entered by the first warp of threads in the block.
+    // Thread-0 is responsible for returning a value for seeding the block-wide scan.
+    __device__ int operator()(int block_aggregate)
+    {
+        int old_prefix = running_total;
+        running_total += block_aggregate;
+        return old_prefix;
+    }
+};
+
+__global__ void ExampleKernel(int *d_data, int num_items, ...)
+{
+    // Specialize BlockScan for a 1D block of 128 threads
+    using BlockScan = cub::BlockScan<int, 128>;
+
+    // Allocate shared memory for BlockScan
+    __shared__ typename BlockScan::TempStorage temp_storage;
+
+    // Initialize running total
+    BlockPrefixCallbackOp prefix_op(0);
+
+    // Have the block iterate over segments of items
+    for (int block_offset = 0; block_offset < num_items; block_offset += 128)
+    {
+        // Load a segment of consecutive items that are blocked across threads
+        int thread_data = d_data[block_offset + threadIdx.x];
+
+        // Collectively compute the block-wide inclusive prefix sum
+        BlockScan(temp_storage).InclusiveSum(
+            thread_data, thread_data, prefix_op);
+        __syncthreads();
+
+        // Store scanned items to output segment
+        d_data[block_offset + threadIdx.x] = thread_data;
+    }
+\`\`\`
+
 </Tab>
-</Tabs>
+<Tab title="Multiple items per thread">
 
----
-
-## Inclusive prefix sum operations (multiple data per thread)
-
-### InclusiveSum <Badge intent="note" minimal>inline</Badge>
-
-<Tabs>
-<Tab title="Overload 1">
-
-Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes an array of consecutive input elements.
-
-
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes an array of consecutive input elements.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1318,6 +1603,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1336,16 +1630,9 @@ Calling thread's output items (may be aliased to \`input\`)
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Multiple items with aggregate">
 
-Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes an array of consecutive input elements.
-Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
-
-
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes an array of consecutive input elements. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1359,6 +1646,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1381,21 +1677,9 @@ Block-wide aggregate reduction of input items
 </ParamField>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Multiple items with prefix callback">
 
-Computes an inclusive block-wide prefix scan using addition (+) as the scan operator.
-Each thread contributes an array of consecutive input elements.
-Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by
-the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed"
-value that logically prefixes the thread block's scan inputs.
-
-
-- The \`block_prefix_callback_op\` functor must implement a member function
-  \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block,
-  however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes an array of consecutive input elements. Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1409,6 +1693,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block, however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1447,15 +1741,9 @@ Embed:rst:leading-asterisk
 ### InclusiveScan <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
-Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes one input element.
-
-
-- Supports non-commutative scan operators.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes one input element.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1469,6 +1757,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1491,16 +1788,9 @@ Binary scan functor
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="With aggregate">
 
-Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes one input element. Also provides every thread with the block-wide
-\`block_aggregate\` of all inputs.
-
-
-- Supports non-commutative scan operators.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes one input element. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1515,6 +1805,15 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1540,23 +1839,36 @@ Binary scan functor
 Block-wide aggregate reduction of input items
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates an inclusive prefix max scan of 128 integer items that are partitioned across 128 threads.
+
+\`0, -1, 2, -3, ..., 126, -127\`. The corresponding output \`thread_data\` in those threads will be \`0, 0, 2, 2, ..., 126, 126\`. Furthermore the value \`126\` will be stored in \`block_aggregate\` for all threads.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockScan for a 1D block of 128 threads of type int
+    using BlockScan = cub::BlockScan<int, 128>;
+
+    // Allocate shared memory for BlockScan
+    __shared__ typename BlockScan::TempStorage temp_storage;
+
+    // Obtain input item for each thread
+    int thread_data;
+    ...
+
+    // Collectively compute the block-wide inclusive prefix max scan
+    int block_aggregate;
+    BlockScan(temp_storage).InclusiveScan(thread_data, thread_data, cuda::maximum<>{}, block_aggregate);
+\`\`\`
+
 </Tab>
-<Tab title="Overload 3">
+<Tab title="With prefix callback">
 
-Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes one input element. The call-back functor \`block_prefix_callback_op\`
-is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as
-the "seed" value that logically prefixes the thread block's scan inputs.
-
-
-- The \`block_prefix_callback_op\` functor must implement a member function
-  \`T operator()(T block_aggregate)\`. The functor's input parameter
-  The functor will be invoked by the first warp of threads in the block,
-  however only the return value from *lane*<sub>0</sub> is applied
-  as the block-wide prefix. Can be stateful.
-- Supports non-commutative scan operators.
-- Threads are assumed to be in row-major order.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes one input element. The call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1571,6 +1883,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`. The functor's input parameter The functor will be invoked by the first warp of threads in the block, however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+Supports non-commutative scan operators.
+Assumes threads are in row-major order.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1604,25 +1926,9 @@ Embed:rst:leading-asterisk
 </ParamField>
 
 </Tab>
-</Tabs>
+<Tab title="Multiple items per thread">
 
----
-
-## Inclusive prefix scan operations (multiple data per thread)
-
-### InclusiveScan <Badge intent="note" minimal>inline</Badge>
-
-<Tabs>
-<Tab title="Overload 1">
-
-Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes an array of consecutive input elements.
-
-
-- Supports non-commutative scan operators.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes an array of consecutive input elements.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1636,6 +1942,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1662,16 +1978,9 @@ Binary scan functor
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Multiple items with initial value">
 
-Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes an array of consecutive input elements.
-
-
-- Supports non-commutative scan operators.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes an array of consecutive input elements.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1686,6 +1995,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1716,17 +2035,9 @@ Binary scan functor
 </ParamField>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Multiple items with aggregate">
 
-Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes an array of consecutive input elements. Also provides every thread
-with the block-wide \`block_aggregate\` of all inputs.
-
-
-- Supports non-commutative scan operators.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes an array of consecutive input elements. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1741,6 +2052,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1770,18 +2091,36 @@ Binary scan functor
 Block-wide aggregate reduction of input items
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates an inclusive prefix max scan of 512 integer items that are partitioned in a [<em>blocked arrangement</em>](../index.html#sec5sec3) across 128 threads where each thread owns 4 consecutive items.
+
+\`{ [0,-1,2,-3], [4,-5,6,-7], ..., [508,-509,510,-511] }\`. The corresponding output \`thread_data\` in those threads will be \`{ [0,0,2,2], [4,4,6,6], ..., [508,508,510,510] }\`. Furthermore the value \`510\` will be stored in \`block_aggregate\` for all threads.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize BlockScan for a 1D block of 128 threads of type int
+    using BlockScan = cub::BlockScan<int, 128>;
+
+    // Allocate shared memory for BlockScan
+    __shared__ typename BlockScan::TempStorage temp_storage;
+
+    // Obtain a segment of consecutive items that are blocked across threads
+    int thread_data[4];
+    ...
+
+    // Collectively compute the block-wide inclusive prefix max scan
+    int block_aggregate;
+    BlockScan(temp_storage).InclusiveScan(thread_data, thread_data, cuda::maximum<>{}, block_aggregate);
+\`\`\`
+
 </Tab>
-<Tab title="Overload 4">
+<Tab title="Multiple items with initial value and aggregate">
 
-Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes an array of consecutive input elements. Also provides every thread
-with the block-wide \`block_aggregate\` of all inputs.
-
-
-- Supports non-commutative scan operators.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes an array of consecutive input elements. Also provides every thread with the block-wide \`block_aggregate\` of all inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1797,6 +2136,16 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+Supports non-commutative scan operators.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1831,22 +2180,9 @@ Block-wide aggregate reduction of input items
 </ParamField>
 
 </Tab>
-<Tab title="Overload 5">
+<Tab title="Multiple items with prefix callback">
 
-Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor.
-Each thread contributes an array of consecutive input elements.
-The call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block,
-and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the
-thread block's scan inputs.
-
-
-- The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`.
-  The functor will be invoked by the first warp of threads in the block, however only the return value
-  from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
-- Supports non-commutative scan operators.
-- @blocked
-- Performance is sensitive to the degree of data movement across the block.
-- @smemreuse
+Computes an inclusive block-wide prefix scan using the specified binary \`scan_op\` functor. Each thread contributes an array of consecutive input elements. The call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1861,6 +2197,17 @@ void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSca
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Note>
+The \`block_prefix_callback_op\` functor must implement a member function \`T operator()(T block_aggregate)\`. The functor will be invoked by the first warp of threads in the block, however only the return value from *lane*<sub>0</sub> is applied as the block-wide prefix. Can be stateful.
+Supports non-commutative scan operators.
+Data is in a blocked arrangement across threads.
+Performance is sensitive to the degree of data movement across the block.
+</Note>
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -1897,12 +2244,77 @@ Embed:rst:leading-asterisk
 //!
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a single thread block that progressively computes an inclusive prefix max scan over multiple "tiles" of input using a prefix functor to maintain a running total between block-wide scans.  Each tile consists of 128 integer items that are partitioned across 128 threads.
+
+The corresponding output for the first segment will be \`0, 0, 2, 2, 4, 4, ..., 510, 510\`. The output for the second segment will be \`512, 512, 514, 514, 516, 516, ..., 1022, 1022\`.
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>   // or equivalently <cub/block/block_scan.cuh>
+
+// A stateful callback functor that maintains a running prefix to be applied
+// during consecutive scan operations.
+struct BlockPrefixCallbackOp
+{
+    // Running prefix
+    int running_total;
+
+    // Constructor
+    __device__ BlockPrefixCallbackOp(int running_total) : running_total(running_total) {}
+
+    // Callback operator to be entered by the first warp of threads in the block.
+    // Thread-0 is responsible for returning a value for seeding the block-wide scan.
+    __device__ int operator()(int block_aggregate)
+    {
+        int old_prefix = running_total;
+        running_total = (block_aggregate > old_prefix) ? block_aggregate : old_prefix;
+        return old_prefix;
+    }
+};
+
+__global__ void ExampleKernel(int *d_data, int num_items, ...)
+{
+    // Specialize BlockLoad, BlockStore, and BlockScan for a 1D block of 128 threads, 4 ints per thread
+    using BlockLoad = cub::BlockLoad<int*, 128, 4, BLOCK_LOAD_TRANSPOSE>  ;
+    using BlockStore = cub::BlockStore<int, 128, 4, BLOCK_STORE_TRANSPOSE> ;
+    using BlockScan = cub::BlockScan<int, 128>                            ;
+
+    // Allocate aliased shared memory for BlockLoad, BlockStore, and BlockScan
+    __shared__ union {
+        typename BlockLoad::TempStorage     load;
+        typename BlockScan::TempStorage     scan;
+        typename BlockStore::TempStorage    store;
+    } temp_storage;
+
+    // Initialize running total
+    BlockPrefixCallbackOp prefix_op(0);
+
+    // Have the block iterate over segments of items
+    for (int block_offset = 0; block_offset < num_items; block_offset += 128 * 4)
+    {
+        // Load a segment of consecutive items that are blocked across threads
+        int thread_data[4];
+        BlockLoad(temp_storage.load).Load(d_data + block_offset, thread_data);
+        __syncthreads();
+
+        // Collectively compute the block-wide inclusive prefix max scan
+        BlockScan(temp_storage.scan).InclusiveScan(
+            thread_data, thread_data, cuda::maximum<>{}, prefix_op);
+        __syncthreads();
+
+        // Store scanned items to output segment
+        BlockStore(temp_storage.store).Store(d_data + block_offset, thread_data);
+        __syncthreads();
+    }
+\`\`\`
+
 </Tab>
 </Tabs>
 
 ---
 
-## Methods
+## Utility methods
 
 ### PrivateStorage <Badge intent="note" minimal>inline</Badge>
 
@@ -1956,7 +2368,7 @@ The operations exposed by [BlockScan](/library/api/cub::_block_scan) require a t
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for concept_example_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders concept_example_v5 1`] = `
 "---
 title: "cuda::mr::resource_with"
 description: "The \`resource_with\` concept verifies that a type Resource satisfies the [\`resource\`](/library/api/cuda::mr::resource) concept and also satisfies all the provided Properties."
@@ -1982,7 +2394,7 @@ concept resource_with = /* see description */;
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for deep_template_class_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders deep_template_class_v5 1`] = `
 "---
 title: "cuda::counting_iterator"
 description: "A \`counting_iterator\` represents an iterator into a range of sequentially increasing values."
@@ -2224,7 +2636,7 @@ The amount of elements to decrement
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for deprecated_example_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders deprecated_example_v5 1`] = `
 "---
 title: thrust::strided_iterator
 description: "A \`strided_iterator\` wraps another iterator and moves it by a specified stride each time it is incremented or decremented."
@@ -2354,7 +2766,7 @@ RandomAccessIterator const & thrust::iterator_adaptor<strided_iterator<RandomAcc
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for device_vector_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders device_vector_v5 1`] = `
 "---
 title: thrust::device_vector
 description: "A \`device_vector\` is a container that supports random access to elements, constant time removal of elements at the end, and linear time insertion and removal of elements at the beginning or in the middle."
@@ -2939,8 +3351,6 @@ The intializer_list.
 
 Resizes this vector to the specified number of elements.
 
-This method will resize this vector to the specified number of elements. If the number is smaller than this vector's current size this vector is truncated, otherwise this vector is extended and new elements are populated with given data.
-
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
 void thrust::device_vector<T, Alloc>::resize(
@@ -3036,8 +3446,6 @@ size_type thrust::device_vector<T, Alloc>::max_size() const
 ### reserve
 
 If n is less than or equal to [capacity()](/library/api/thrust::device_vector::capacity()), this call has no effect.
-
-Otherwise, this method is a request for allocation of additional memory. If the request is successful, then [capacity()](/library/api/thrust::device_vector::capacity()) is greater than or equal to n; otherwise, [capacity()](/library/api/thrust::device_vector::capacity()) is unchanged. In either case, [size()](/library/api/thrust::device_vector::size()) is unchanged.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -3691,7 +4099,7 @@ allocator_type thrust::device_vector<T, Alloc>::get_allocator() const
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for empty_docstring_class_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders empty_docstring_class_v5 1`] = `
 "---
 title: "cuda::buffer"
 description: ""
@@ -4283,8 +4691,7 @@ bool cuda::buffer<_Tp, _Properties>::empty() const noexcept
 
 ### memory_resource <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
-Returns a \\c const reference to the any_resource  that holds the
-memory resource used to allocate the buffer
+Returns a \\c const reference to the any_resource  that holds the memory resource used to allocate the buffer
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -4376,13 +4783,13 @@ void cuda::buffer<_Tp, _Properties>::destroy()
 \`\`\`
 </CodeBlock>
 
-<Warning>
-After this explicit destroy call, the buffer can only be assigned to or destroyed.
-</Warning>
-
 <Note>
 Uses the stored stream to deallocate the buffer, equivalent to calling [buffer.destroy](/libcudacxx/api/cuda::buffer::buffer.destroy)([buffer.stream()](/libcudacxx/api/cuda::buffer::buffer.stream()))
 </Note>
+
+<Warning>
+After this explicit destroy call, the buffer can only be assigned to or destroyed.
+</Warning>
 
 </Tab>
 </Tabs>
@@ -4410,7 +4817,7 @@ Uses the stored stream to deallocate the buffer, equivalent to calling [buffer.d
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for group_member_example_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders group_member_example_v5 1`] = `
 "---
 title: thrust::mr::disjoint_unsynchronized_pool_resource
 description: "A memory resource adaptor allowing for pooling and caching allocations from \`Upstream\`, using \`Bookkeeper\` for management of that cached and pooled memory, allowing to cache portions of memory inaccessible from the host."
@@ -4824,7 +5231,7 @@ struct thrust::mr::disjoint_unsynchronized_pool_resource::pool
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for pointer_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders pointer_v5 1`] = `
 "---
 title: thrust::pointer
 description: "\`pointer\` stores a pointer to an object allocated in memory."
@@ -5110,7 +5517,7 @@ static derived_type thrust::pointer<Element, Tag, Reference, Derived>::pointer_t
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for raises_example_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders raises_example_v5 1`] = `
 "---
 title: "cuda::stream"
 description: "An owning wrapper for cudaStream_t."
@@ -5301,7 +5708,7 @@ void cuda::stream::sync() const
 ### wait <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge>
 
 <Tabs>
-<Tab title="Deprecated">
+<Tab title="Const">
 
 Deprecated.
 
@@ -5535,7 +5942,7 @@ static stream cuda::stream::from_native_handle(invalid_stream_t) = delete;
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for simple_struct_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders simple_struct_v5 1`] = `
 "---
 title: cub::ArgMax
 description: "Arg max functor (keeps the value and offset of the first occurrence of the larger item)."
@@ -5563,7 +5970,7 @@ KeyValuePair<OffsetT, T> cub::ArgMax::operator()(
 "
 `;
 
-exports[`Snapshot: Rendered output > should match snapshot for warp_reduce_v5 1`] = `
+exports[`C++ Renderer Golden Page Convergence > renders warp_reduce_v5 1`] = `
 "---
 title: cub::WarpReduce
 description: ""
@@ -5585,8 +5992,6 @@ reduction of items partitioned across a CUDA thread warp.
   - The architecture's warp size is a whole multiple of \`LogicalWarpThreads\`
 
 ## Example
-
-@warpcollective{WarpReduce}
 
 The code snippet below illustrates four concurrent warp sum reductions within a block of 128 threads (one per each
 of the 32-thread warps).
@@ -5654,8 +6059,7 @@ The reduction input/output element type
 
 ### WarpReduce <Badge intent="note" minimal>inline</Badge>
 
-Collective constructor using the specified memory allocation as temporary storage.
-Logical warp and lane identifiers are constructed from \`threadIdx.x\`.
+Collective constructor using the specified memory allocation as temporary storage. Logical warp and lane identifiers are constructed from \`threadIdx.x\`.
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce", "TempStorage": "/library/api/cub::_warp_reduce::_temp_storage"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5676,10 +6080,9 @@ Reference to memory allocation having layout type [TempStorage](/library/api/cub
 ### Sum <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
-Computes a warp-wide sum in the calling warp.
-The output is valid in warp *lane*<sub>0</sub>.
+Computes a warp-wide sum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5689,8 +6092,35 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Sum(T input)
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
+
+**Example**
+
+The code snippet below illustrates four concurrent warp sum reductions within a block of 128 threads (one per each of the 32-thread warps).
+
+The corresponding output \`aggregate\` in threads 0, 32, 64, and 96 will \`496\`, \`1520\`, \`2544\`, and \`3568\`, respectively (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+    // Allocate WarpReduce shared memory for 4 warps
+    __shared__ typename WarpReduce::TempStorage temp_storage[4];
+    // Obtain one input item per thread
+    int thread_data = ...
+    // Return the warp-wide sums to each lane0
+    int warp_id = threadIdx.x / 32;
+    int aggregate = WarpReduce(temp_storage[warp_id]).Sum(thread_data);
+}
+\`\`\`
+
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Single item">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5701,13 +6131,11 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Sum(const InputType &input)
 </CodeBlock>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Single item">
 
-Computes a partially-full warp-wide sum in the calling warp.
-The output is valid in warp *lane*<sub>0</sub>.
+Computes a partially-full warp-wide sum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
 
-All threads across the calling warp must agree on the same value for \`valid_items\`.
-Otherwise the result is undefined.
+All threads across the calling warp must agree on the same value for \`valid_items\`. Otherwise the result is undefined.
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5720,6 +6148,10 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
+
 **Parameters**
 
 <ParamField path="input" type="T">
@@ -5730,13 +6162,40 @@ Calling thread's input
 Total number of valid items in the calling thread's logical warp (may be less than \`LogicalWarpThreads\`)
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a sum reduction within a single, partially-full block of 32 threads (one warp).
+
+The corresponding output \`aggregate\` in *lane*<sub>0</sub> is \`6\` (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(int *d_data, int valid_items)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item per thread if in range
+    int thread_data;
+    if (threadIdx.x < valid_items)
+        thread_data = d_data[threadIdx.x];
+
+    // Return the warp-wide sums to each lane0
+    int aggregate = WarpReduce(temp_storage).Sum(thread_data, valid_items);
+}
+\`\`\`
+
 </Tab>
 </Tabs>
 
 ### Max <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5745,7 +6204,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(T input)
 </CodeBlock>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Single item">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5756,7 +6215,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(const InputType &input)
 </CodeBlock>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Single item">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5773,7 +6232,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(
 ### Min <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5782,7 +6241,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Min(T input)
 </CodeBlock>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Single item">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5793,7 +6252,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Min(const InputType &input)
 </CodeBlock>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Single item">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5809,9 +6268,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Min(
 
 ### HeadSegmentedSum <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
-Computes a segmented sum in the calling warp where segments are defined by head-flags.
-The sum of each segment is returned to the first lane in that segment
-(which always includes *lane*<sub>0</sub>).
+Computes a segmented sum in the calling warp where segments are defined by head-flags. The sum of each segment is returned to the first lane in that segment (which always includes *lane*<sub>0</sub>).
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5825,6 +6282,10 @@ T cub::WarpReduce<T, LogicalWarpThreads>::HeadSegmentedSum(
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
+
 **Parameters**
 
 <ParamField path="input" type="T">
@@ -5835,11 +6296,36 @@ Calling thread's input
 Head flag denoting whether or not \`input\` is the start of a new segment
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a head-segmented warp sum reduction within a block of 32 threads (one warp).
+
+is \`{0, 1, 2, 3, ..., 31\` and is \`{1, 0, 0, 0, 1, 0, 0, 0, ..., 1, 0, 0, 0\`, respectively. The corresponding output \`aggregate\` in threads 0, 4, 8, etc. will be \`6\`, \`22\`, \`38\`, etc. (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item and flag per thread
+    int thread_data = ...
+    int head_flag = ...
+
+    // Return the warp-wide sums to each lane0
+    int aggregate = WarpReduce(temp_storage).HeadSegmentedSum(
+        thread_data, head_flag);
+}
+\`\`\`
+
 ### TailSegmentedSum <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
-Computes a segmented sum in the calling warp where segments are defined by tail-flags.
-The sum of each segment is returned to the first lane in that segment
-(which always includes *lane*<sub>0</sub>).
+Computes a segmented sum in the calling warp where segments are defined by tail-flags. The sum of each segment is returned to the first lane in that segment (which always includes *lane*<sub>0</sub>).
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5853,6 +6339,10 @@ T cub::WarpReduce<T, LogicalWarpThreads>::TailSegmentedSum(
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
 
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
+
 **Parameters**
 
 <ParamField path="input" type="T">
@@ -5863,6 +6353,32 @@ Calling thread's input
 Head flag denoting whether or not \`input\` is the start of a new segment
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a tail-segmented warp sum reduction within a block of 32 threads (one warp).
+
+is \`{0, 1, 2, 3, ..., 31}\` and is \`{0, 0, 0, 1, 0, 0, 0, 1, ..., 0, 0, 0, 1}\`, respectively. The corresponding output \`aggregate\` in threads 0, 4, 8, etc. will be \`6\`, \`22\`, \`38\`, etc. (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item and flag per thread
+    int thread_data = ...
+    int tail_flag = ...
+
+    // Return the warp-wide sums to each lane0
+    int aggregate = WarpReduce(temp_storage).TailSegmentedSum(
+        thread_data, tail_flag);
+\`\`\`
+
 ---
 
 ## Generic reductions
@@ -5870,10 +6386,9 @@ Head flag denoting whether or not \`input\` is the start of a new segment
 ### Reduce <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single item">
 
-Computes a warp-wide reduction in the calling warp using the specified binary reduction
-functor. The output is valid in warp *lane*<sub>0</sub>.
+Computes a warp-wide reduction in the calling warp using the specified binary reduction functor. The output is valid in warp *lane*<sub>0</sub>.
 
 Supports non-commutative reduction operators
 
@@ -5888,6 +6403,10 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -5905,8 +6424,34 @@ Calling thread's input
 Binary reduction operator
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates four concurrent warp max reductions within a block of 128 threads (one per each of the 32-thread warps).
+
+\`{0, 1, 2, 3, ..., 127}\`. The corresponding output \`aggregate\` in threads 0, 32, 64, and 96 will be \`31\`, \`63\`, \`95\`, and \`127\`, respectively (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for 4 warps
+    __shared__ typename WarpReduce::TempStorage temp_storage[4];
+
+    // Obtain one input item per thread
+    int thread_data = ...
+
+    // Return the warp-wide reductions to each lane0
+    int warp_id = threadIdx.x / 32;
+    int aggregate = WarpReduce(temp_storage[warp_id]).Reduce(
+        thread_data, cuda::maximum<>{});
+\`\`\`
+
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Single item">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5919,13 +6464,11 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
 </CodeBlock>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Single item">
 
-Computes a partially-full warp-wide reduction in the calling warp using the specified binary
-reduction functor. The output is valid in warp *lane*<sub>0</sub>.
+Computes a partially-full warp-wide reduction in the calling warp using the specified binary reduction functor. The output is valid in warp *lane*<sub>0</sub>.
 
-All threads across the calling warp must agree on the same value for \`valid_items\`.
-Otherwise the result is undefined.
+All threads across the calling warp must agree on the same value for \`valid_items\`. Otherwise the result is undefined.
 
 Supports non-commutative reduction operators
 
@@ -5941,6 +6484,10 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -5962,14 +6509,39 @@ Binary reduction operator
 Total number of valid items in the calling thread's logical warp (may be less than \`LogicalWarpThreads\`)
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a max reduction within a single, partially-full block of 32 threads (one warp).
+
+is \`4\`. The corresponding output \`aggregate\` in thread0 is \`3\` (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(int *d_data, int valid_items)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item per thread if in range
+    int thread_data;
+    if (threadIdx.x < valid_items)
+        thread_data = d_data[threadIdx.x];
+
+    // Return the warp-wide reductions to each lane0
+    int aggregate = WarpReduce(temp_storage).Reduce(
+        thread_data, cuda::maximum<>{}, valid_items);
+\`\`\`
+
 </Tab>
 </Tabs>
 
 ### HeadSegmentedReduce <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
-Computes a segmented reduction in the calling warp where segments are defined by head-flags.
-The reduction of each segment is returned to the first lane in that segment
-(which always includes *lane*<sub>0</sub>).
+Computes a segmented reduction in the calling warp where segments are defined by head-flags. The reduction of each segment is returned to the first lane in that segment (which always includes *lane*<sub>0</sub>).
 
 Supports non-commutative reduction operators
 
@@ -5985,6 +6557,10 @@ T cub::WarpReduce<T, LogicalWarpThreads>::HeadSegmentedReduce(
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -6006,11 +6582,35 @@ Head flag denoting whether or not \`input\` is the start of a new segment
 Reduction operator
 </ParamField>
 
+**Example**
+
+The code snippet below illustrates a head-segmented warp max reduction within a block of 32 threads (one warp).
+
+is \`{0, 1, 2, 3, ..., 31}\` and is \`{1, 0, 0, 0, 1, 0, 0, 0, ..., 1, 0, 0, 0}\`, respectively. The corresponding output \`aggregate\` in threads 0, 4, 8, etc. will be \`3\`, \`7\`, \`11\`, etc. (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item and flag per thread
+    int thread_data = ...
+    int head_flag = ...
+
+    // Return the warp-wide reductions to each lane0
+    int aggregate = WarpReduce(temp_storage).HeadSegmentedReduce(
+        thread_data, head_flag, cuda::maximum<>{});
+\`\`\`
+
 ### TailSegmentedReduce <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
-Computes a segmented reduction in the calling warp where segments are defined by tail-flags.
-The reduction of each segment is returned to the first lane in that segment
-(which always includes *lane*<sub>0</sub>).
+Computes a segmented reduction in the calling warp where segments are defined by tail-flags. The reduction of each segment is returned to the first lane in that segment (which always includes *lane*<sub>0</sub>).
 
 Supports non-commutative reduction operators
 
@@ -6026,6 +6626,10 @@ T cub::WarpReduce<T, LogicalWarpThreads>::TailSegmentedReduce(
 </CodeBlock>
 
 *Added in v2.2.0. First appears in CUDA Toolkit 12.3.*
+
+<Warning>
+The block-wide aggregate of \`temp_storage\` is undefined after calling this method and should not be used. To preserve the aggregate, use a separate \`TempStorage\` for each method call.
+</Warning>
 
 **Template parameters**
 
@@ -6046,6 +6650,32 @@ Tail flag denoting whether or not \`input\` is the end of the current segment
 <ParamField path="reduction_op" type="ReductionOp">
 Reduction operator
 </ParamField>
+
+**Example**
+
+The code snippet below illustrates a tail-segmented warp max reduction within a block of 32 threads (one warp).
+
+is \`{0, 1, 2, 3, ..., 31}\` and is \`{0, 0, 0, 1, 0, 0, 0, 1, ..., 0, 0, 0, 1}\`, respectively. The corresponding output \`aggregate\` in threads 0, 4, 8, etc. will be \`3\`, \`7\`, \`11\`, etc. (and is undefined in other threads).
+
+\`\`\`cpp showLineNumbers={false}
+#include <cub/cub.cuh>
+
+__global__ void ExampleKernel(...)
+{
+    // Specialize WarpReduce for type int
+    using WarpReduce = cub::WarpReduce<int>;
+
+    // Allocate WarpReduce shared memory for one warp
+    __shared__ typename WarpReduce::TempStorage temp_storage;
+
+    // Obtain one input item and flag per thread
+    int thread_data = ...
+    int tail_flag = ...
+
+    // Return the warp-wide reductions to each lane0
+    int aggregate = WarpReduce(temp_storage).TailSegmentedReduce(
+        thread_data, tail_flag, cuda::maximum<>{});
+\`\`\`
 
 ---
 

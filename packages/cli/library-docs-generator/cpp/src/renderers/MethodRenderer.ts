@@ -25,7 +25,8 @@ import {
     getOverloadSpecificQualifiers,
     renderBadges
 } from "./BadgeRenderer.js";
-import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, extractVersionAnnotation } from "./DescriptionRenderer.js";
+import { renderDescriptionBlocks, renderSegmentsTrimmed, extractVersionAnnotation, findVerbatimRstBlock, parseMethodVerbatimRst, renderSeeAlso } from "./DescriptionRenderer.js";
+import type { ParsedMethodVerbatim } from "./DescriptionRenderer.js";
 import { renderMethodTemplateParams, renderMethodParams } from "./ParamRenderer.js";
 import { renderSignatureCodeBlock, renderBareCodeBlock, renderCodeBlock } from "./SignatureRenderer.js";
 import type { RenderContext } from "../context.js";
@@ -151,7 +152,7 @@ function generateConstructorTabTitle(func: CppFunctionIr, index: number): string
         }
         // From native handle types (cudaStream_t, etc.)
         if (paramType.includes("cudaStream_t") || paramType.includes("cudaEvent_t") ||
-            paramType.includes("_t") && !paramType.includes("init_t") && !paramType.includes("nullptr_t")) {
+            (paramType.includes("_t") && !paramType.includes("init_t"))) {
             return "From native handle";
         }
         // no_init_t
@@ -206,13 +207,146 @@ function generateConstructorTabTitle(func: CppFunctionIr, index: number): string
 }
 
 /**
- * Generate a tab title for a method overload.
- * Uses docstring summary or parameter count/type differentiation.
+ * Detect whether a function has array-syntax parameters (ITEMS_PER_THREAD pattern).
+ * This indicates a "multiple items per thread" overload.
+ *
+ * Detection checks:
+ * 1. Parameter arraySuffix field containing ITEMS_PER_THREAD
+ * 2. Parameter typeInfo display containing array syntax
+ * 3. Template parameter named ITEMS_PER_THREAD
+ */
+function hasArrayParams(func: CppFunctionIr): boolean {
+    return func.parameters.some(p => {
+        // Check arraySuffix field (most reliable)
+        if (p.arraySuffix && p.arraySuffix.includes("ITEMS_PER_THREAD")) {
+            return true;
+        }
+        const typeDisplay = p.typeInfo?.display ?? "";
+        return typeDisplay.includes("[ITEMS_PER_THREAD]") ||
+            /\(\s*&\s*\)\s*\[/.test(typeDisplay);
+    }) || func.templateParams.some(tp => tp.name === "ITEMS_PER_THREAD");
+}
+
+/**
+ * Detect whether a function has a block_aggregate output parameter.
+ */
+function hasAggregateParam(func: CppFunctionIr): boolean {
+    return func.parameters.some(p => p.name === "block_aggregate");
+}
+
+/**
+ * Detect whether a function has a prefix callback template parameter.
+ */
+function hasPrefixCallbackParam(func: CppFunctionIr): boolean {
+    return func.templateParams.some(tp => {
+        const name = tp.name ?? "";
+        const type = tp.type ?? "";
+        return name.includes("PrefixCallbackOp") ||
+            name.includes("BlockPrefixCallbackOp") ||
+            type.includes("PrefixCallbackOp") ||
+            type.includes("BlockPrefixCallbackOp");
+    }) || func.parameters.some(p => {
+        const type = p.typeInfo?.display ?? "";
+        return type.includes("PrefixCallbackOp") || type.includes("BlockPrefixCallbackOp");
+    });
+}
+
+/**
+ * Detect whether a function has a num_valid / num_items parameter (partial tile).
+ */
+function hasPartialTileParam(func: CppFunctionIr): boolean {
+    return func.parameters.some(p =>
+        p.name === "num_valid" || p.name === "num_items"
+    );
+}
+
+/**
+ * Detect whether a function has an initial_value parameter.
+ */
+function hasInitialValueParam(func: CppFunctionIr): boolean {
+    return func.parameters.some(p =>
+        p.name === "initial_value" || p.name === "init_value"
+    );
+}
+
+/**
+ * Generate a semantic tab title for a method overload based on its
+ * parameters and template parameters relative to others in the group.
+ *
+ * Title patterns (from golden pages):
+ * - "Single item" — base overload with single T input
+ * - "Multiple items per thread" — has ITEMS_PER_THREAD array params
+ * - "With aggregate" — single item + block_aggregate param
+ * - "With prefix callback" — single item + BlockPrefixCallbackOp template param
+ * - "Multiple items with aggregate" — array params + block_aggregate
+ * - "Multiple items with prefix callback" — array params + BlockPrefixCallbackOp
+ * - "Multiple items with initial value" — array params + initial_value
+ * - "Multiple items with initial value and aggregate" — array + initial_value + aggregate
+ * - "Partial tile" — has num_valid parameter
  */
 function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
     // Check for deleted
     if (isEffectivelyDeleted(func)) {
         return `Deleted overload`;
+    }
+
+    const isMultiItem = hasArrayParams(func);
+    const hasAggregate = hasAggregateParam(func);
+    const hasPrefixCb = hasPrefixCallbackParam(func);
+    const isPartialTile = hasPartialTileParam(func);
+    const hasInitVal = hasInitialValueParam(func);
+
+    // Build semantic title from detected traits.
+    // For multi-item overloads, initial_value/aggregate/prefix callback are differentiators.
+    // For single-item overloads, only aggregate and prefix callback are differentiators
+    // (initial_value is often shared by all single-item overloads, e.g., ExclusiveScan).
+    if (isMultiItem) {
+        const traits: string[] = [];
+        if (hasInitVal) {
+            traits.push("initial value");
+        }
+        if (hasAggregate) {
+            traits.push("aggregate");
+        }
+        if (hasPrefixCb) {
+            traits.push("prefix callback");
+        }
+        if (traits.length > 0) {
+            return `Multiple items with ${traits.join(" and ")}`;
+        }
+        return "Multiple items per thread";
+    }
+
+    if (isPartialTile) {
+        return "Partial tile";
+    }
+
+    if (hasAggregate && hasPrefixCb) {
+        return "With aggregate and prefix callback";
+    }
+    if (hasPrefixCb) {
+        return "With prefix callback";
+    }
+    if (hasAggregate) {
+        return "With aggregate";
+    }
+
+    // If this overload has no special distinguishing traits (aggregate, prefix callback, etc.)
+    // it's the "base" single-item overload
+    // Check for single-item pattern: has at least one simple input param that's not an array
+    const hasSimpleInput = func.parameters.some(p => {
+        const typeDisplay = p.typeInfo?.display ?? "";
+        return (p.name === "input" || p.name === "data") &&
+            !typeDisplay.includes("[") && !typeDisplay.includes("(&)") &&
+            !(p.arraySuffix && p.arraySuffix.length > 0);
+    });
+    if (hasSimpleInput) {
+        return "Single item";
+    }
+
+    // Const/Mutable differentiation
+    if (func.isConst) {
+        return "Const";
     }
 
     // Use summary if short enough (with noun phrase extraction)
@@ -222,11 +356,6 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
         if (title) {
             return title;
         }
-    }
-
-    // Const/Mutable differentiation
-    if (func.isConst) {
-        return "Const";
     }
 
     return `Overload ${index + 1}`;
@@ -270,18 +399,31 @@ export function renderMethodContent(
         lines.push("");
     }
 
+    // Check if description contains a verbatim RST block for structured extraction
+    let parsedMethodRst: ParsedMethodVerbatim | undefined = undefined;
+    if (docstring?.description) {
+        const verbatimContent = findVerbatimRstBlock(docstring.description);
+        if (verbatimContent) {
+            parsedMethodRst = parseMethodVerbatimRst(verbatimContent);
+        }
+    }
+
     // 2. Description
     const descParts: string[] = [];
     if (docstring) {
-        // Summary
+        // Summary from structured docstring fields
         if (docstring.summary.length > 0) {
             const summary = renderSegmentsTrimmed(docstring.summary);
             if (summary) {
                 descParts.push(summary);
             }
         }
-        // Description blocks
-        if (docstring.description.length > 0) {
+        // Description: use structured RST extraction if available, else flat rendering
+        if (parsedMethodRst) {
+            if (parsedMethodRst.descriptionText) {
+                descParts.push(parsedMethodRst.descriptionText);
+            }
+        } else if (docstring.description.length > 0) {
             const desc = renderDescriptionBlocks(docstring.description);
             if (desc) {
                 descParts.push(desc);
@@ -322,27 +464,42 @@ export function renderMethodContent(
         }
     }
 
-    // Warnings
-    if (docstring?.warnings) {
-        for (const warning of docstring.warnings) {
-            const text = renderSegmentsTrimmed(warning);
-            if (text) {
-                lines.push("<Warning>");
-                lines.push(text);
-                lines.push("</Warning>");
-                lines.push("");
-            }
+    // Notes: use verbatim RST extraction when available, else structured docstring fields
+    // (Notes render before Warnings per golden page convention)
+    if (parsedMethodRst) {
+        if (parsedMethodRst.noteItems.length > 0) {
+            lines.push("<Note>");
+            lines.push(parsedMethodRst.noteItems.join("\n"));
+            lines.push("</Note>");
+            lines.push("");
         }
-    }
-
-    // Notes
-    if (docstring?.notes) {
+    } else if (docstring?.notes) {
         for (const note of docstring.notes) {
             const text = renderSegmentsTrimmed(note);
             if (text) {
                 lines.push("<Note>");
                 lines.push(text);
                 lines.push("</Note>");
+                lines.push("");
+            }
+        }
+    }
+
+    // Warnings: use verbatim RST extraction when available, else structured docstring fields
+    if (parsedMethodRst) {
+        for (const warningText of parsedMethodRst.warningItems) {
+            lines.push("<Warning>");
+            lines.push(warningText);
+            lines.push("</Warning>");
+            lines.push("");
+        }
+    } else if (docstring?.warnings) {
+        for (const warning of docstring.warnings) {
+            const text = renderSegmentsTrimmed(warning);
+            if (text) {
+                lines.push("<Warning>");
+                lines.push(text);
+                lines.push("</Warning>");
                 lines.push("");
             }
         }
@@ -408,7 +565,7 @@ export function renderMethodContent(
         }
     }
 
-    // 10. Examples
+    // 10. Examples: from structured docstring fields + verbatim RST extraction
     if (docstring?.examples && docstring.examples.length > 0) {
         for (const example of docstring.examples) {
             lines.push("**Example**");
@@ -419,24 +576,24 @@ export function renderMethodContent(
             lines.push(renderBareCodeBlock(example.code, lang));
             lines.push("");
         }
+    } else if (parsedMethodRst?.exampleCode) {
+        // Example extracted from verbatim RST block
+        lines.push("**Example**");
+        lines.push("");
+        if (parsedMethodRst.exampleDescription) {
+            lines.push(parsedMethodRst.exampleDescription);
+            lines.push("");
+        }
+        const lang = parsedMethodRst.exampleLanguage || "cpp";
+        lines.push(renderBareCodeBlock(parsedMethodRst.exampleCode, lang));
+        lines.push("");
     }
 
     // 11. See also (multi-line format per golden pages)
     if (docstring?.seeAlso && docstring.seeAlso.length > 0) {
-        const seeAlsoParts: string[] = [];
-        for (const sa of docstring.seeAlso) {
-            const text = renderSegmentsTrimmed(sa);
-            if (text) {
-                seeAlsoParts.push(text);
-            }
-        }
-        if (seeAlsoParts.length > 0) {
-            lines.push("**See also:**");
-            for (let i = 0; i < seeAlsoParts.length; i++) {
-                const trailing = i < seeAlsoParts.length - 1 ? "," : "";
-                lines.push(`${seeAlsoParts[i]}${trailing}`);
-            }
-            lines.push("");
+        const seeAlsoBlock = renderSeeAlso(docstring.seeAlso);
+        if (seeAlsoBlock) {
+            lines.push(seeAlsoBlock);
         }
     }
 
@@ -623,44 +780,6 @@ export function renderDestructor(
 
     const content = renderMethodContent(func, ownerClass, ctx);
     lines.push(content);
-
-    return lines.join("\n");
-}
-
-// ---------------------------------------------------------------------------
-// Deleted overloads group rendering
-// ---------------------------------------------------------------------------
-
-/**
- * Render a group of deleted overloads as a single tab with combined signatures.
- * Used when multiple overloads are all deleted (e.g., from_native_handle deleted overloads).
- */
-export function renderDeletedOverloadsTab(
-    funcs: CppFunctionIr[],
-    ownerClass: CppClassIr | undefined,
-    ctx: RenderContext
-): string {
-    if (funcs.length === 0) {
-        return "";
-    }
-
-    const lines: string[] = [];
-    const allDeleted = funcs.every(f => f.isDeleted);
-
-    if (allDeleted && funcs.length > 1) {
-        // Combine signatures into a single CodeBlock
-        lines.push("The following overloads are deleted to prevent misuse:");
-        lines.push("");
-
-        const signatures = funcs.map(f => f.signature + (f.isDeleted ? " = delete;" : ";")).join("\n");
-        lines.push(renderBareCodeBlock(signatures));
-    } else {
-        // Render individually
-        for (const func of funcs) {
-            const content = renderMethodContent(func, ownerClass, ctx);
-            lines.push(content);
-        }
-    }
 
     return lines.join("\n");
 }

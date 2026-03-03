@@ -1,6 +1,6 @@
 ---
 title: cub::ArgMax
-description: "Arg max functor that keeps the value and offset of the first occurrence of the larger item."
+description: "Arg max functor (keeps the value and offset of the first occurrence of the larger item)."
 ---
 
 Arg max functor (keeps the value and offset of the first occurrence of the larger item).
@@ -13,7 +13,7 @@ Arg max functor (keeps the value and offset of the first occurrence of the large
 
 Boolean max operator, preferring the item having the smaller offset in case of ties.
 
-<CodeBlock links={{"KeyValuePair": "/library/api/cub::KeyValuePair"}}>
+<CodeBlock links={{"ArgMax": "/library/api/cub::ArgMax"}}>
 ```cpp showLineNumbers={false}
 template <typename T, typename OffsetT>
 KeyValuePair<OffsetT, T> cub::ArgMax::operator()(
@@ -22,20 +22,3 @@ KeyValuePair<OffsetT, T> cub::ArgMax::operator()(
 ) const
 ```
 </CodeBlock>
-
-**Template parameters**
-
-<ParamField path="T" type="typename">
-</ParamField>
-
-<ParamField path="OffsetT" type="typename">
-</ParamField>
-
-**Parameters**
-
-<ParamField path="a" type="const KeyValuePair<OffsetT, T> &">
-</ParamField>
-
-<ParamField path="b" type="const KeyValuePair<OffsetT, T> &">
-</ParamField>
-
