@@ -238,8 +238,12 @@ export class JsonValidator {
         if (pagination.type === "cursor" || pagination.type === "offset") {
             // For now, return common patterns
             return "data";
+        } else if (pagination.type === "custom") {
+            return undefined;
+        } else {
+            // Handle uri, path, and any future pagination types
+            return "data";
         }
-        return undefined;
     }
 
     /**

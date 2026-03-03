@@ -376,6 +376,13 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             }
         } else if (pagination.type === "custom") {
             return undefined;
+        } else {
+            // Handle uri, path, and any future pagination types that have a results property
+            const paginationAny = pagination as unknown as { results?: FernIr.ResponseProperty };
+            const resultsProperty = paginationAny.results;
+            if (resultsProperty?.property?.valueType) {
+                return this.extractPaginationItemType(resultsProperty.property.valueType);
+            }
         }
         return undefined;
     }
