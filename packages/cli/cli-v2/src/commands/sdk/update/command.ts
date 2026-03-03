@@ -3,7 +3,6 @@ import inquirer from "inquirer";
 import type { Argv } from "yargs";
 import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
 import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
-import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
@@ -31,8 +30,6 @@ export declare namespace UpdateCommand {
 
 export class UpdateCommand {
     public async handle(context: Context, args: UpdateCommand.Args): Promise<void> {
-        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
-        const fernYml = await schemaLoader.loadOrThrow();
         const workspace = await context.loadWorkspaceOrThrow();
 
         const fernYmlPath = workspace.absoluteFilePath;
@@ -43,7 +40,7 @@ export class UpdateCommand {
         }
 
         const sdkChecker = new SdkChecker({ context });
-        const sdkCheckResult = await sdkChecker.check({ workspace, fernYml });
+        const sdkCheckResult = await sdkChecker.check({ workspace });
         if (sdkCheckResult.errorCount > 0) {
             throw CliError.exit();
         }
