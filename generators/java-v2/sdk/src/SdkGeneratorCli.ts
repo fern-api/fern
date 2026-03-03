@@ -112,9 +112,12 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
 
-        const convertedIr = convertIr(dynamicIr);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Type cast needed because java-v2/sdk uses
+        // @fern-fern/ir-sdk@65.4.0 (for uri/path pagination types) while java-dynamic-snippets uses
+        // @fern-api/dynamic-ir-sdk@61.7.0 (constrained by browser-compatible-base). The runtime data shapes
+        // are compatible; only the TypeScript types diverge across SDK versions.
+        const convertedIr: any = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            // NOTE: This will eventually become a shared library. See the generators/go-v2/sdk/src/SdkGeneratorCli.ts
             ir: convertedIr,
             config: context.config
         });

@@ -757,8 +757,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^65.4.0
-        version: 65.4.0
+        specifier: ^62.3.0
+        version: 62.6.0
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../../packages/cli/fern-definition/schema
@@ -1293,8 +1293,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^65.4.0
-        version: 65.4.0
+        specifier: ^61.7.0
+        version: 61.7.0
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast
@@ -9412,10 +9412,6 @@ packages:
     resolution: {integrity: sha512-eAaMlSVVUwKc9NDH16hvXo00WHIYSvjh2YvjC5M/bQyUkqt2t2OSOHGn09aYHWq5kf7Cb6wVJRURG19aRFbNYg==}
     engines: {node: '>=18.0.0'}
 
-  '@fern-api/dynamic-ir-sdk@65.4.0':
-    resolution: {integrity: sha512-4uuSpv96rPTpne5yWnsSnYkJ1NVEb36Kc9EanFP+ZmXVR8U0/orRCvG4w6dEHy9mk/736j0AECxZGDy51waqXg==}
-    engines: {node: '>=18.0.0'}
-
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28':
     resolution: {integrity: sha512-3qhAAuc4ZJWLaFtyZzaYXfF9OQ5iviNrvLDXtjKScKUNS134fR3v3c3xedCidTq5KedapuBECziUaOmmd6KXVA==}
     engines: {node: '>=18.0.0'}
@@ -15890,8 +15886,6 @@ snapshots:
   '@fern-api/dynamic-ir-sdk@62.6.0': {}
 
   '@fern-api/dynamic-ir-sdk@64.0.0': {}
-
-  '@fern-api/dynamic-ir-sdk@65.4.0': {}
 
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
