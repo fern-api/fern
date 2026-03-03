@@ -216,20 +216,30 @@ export class TestMethodBuilder {
                     // The mock response can contain RFC 2822 dates (the SDK's Rfc2822DateTimeDeserializer handles them),
                     // but after deserialization and re-serialization, Jackson outputs ISO 8601 with Z for UTC.
                     const normalizedResponseJson = this.convertRfc2822DatesToIso8601(expectedResponseJson);
+                    const responseWasNormalized =
+                        JSON.stringify(normalizedResponseJson) !== JSON.stringify(expectedResponseJson);
 
                     // Use the same resource file that was registered for mock setup, or inline for small payloads
                     if (responseResourcePath && this.resourceWriter && this.currentTestClassName) {
-                        // For resource files, we need to write a separate normalized version for expected comparison
-                        const normalizedResourcePath = this.resourceWriter.registerResource(
-                            this.currentTestClassName,
-                            testMethodName,
-                            "expected_response",
-                            normalizedResponseJson
-                        );
-                        writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
-                        writer.writeLine(
-                            `String expectedResponseBody = TestResources.loadResource("${normalizedResourcePath}");`
-                        );
+                        if (responseWasNormalized) {
+                            // Response had RFC 2822 dates that were converted — write a separate normalized resource
+                            const normalizedResourcePath = this.resourceWriter.registerResource(
+                                this.currentTestClassName,
+                                testMethodName,
+                                "expected_response",
+                                normalizedResponseJson
+                            );
+                            writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                            writer.writeLine(
+                                `String expectedResponseBody = TestResources.loadResource("${normalizedResourcePath}");`
+                            );
+                        } else {
+                            // No date conversion needed — reuse the original mock response resource
+                            writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                            writer.writeLine(
+                                `String expectedResponseBody = TestResources.loadResource("${responseResourcePath}");`
+                            );
+                        }
                     } else {
                         this.jsonValidator.formatMultilineJson(writer, "expectedResponseBody", normalizedResponseJson);
                     }
