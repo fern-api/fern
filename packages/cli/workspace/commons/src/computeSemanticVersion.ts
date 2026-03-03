@@ -1,6 +1,8 @@
 import type { generatorsYml } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 import { getLatestTag as getLatestTagFromGithub } from "@fern-api/github";
 import type { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { assert } from "console";
 import latestVersion from "latest-version";
 import semver from "semver";
 
@@ -44,6 +46,10 @@ export interface RegistryInfo {
     registryUrl: string | undefined;
     token: string | undefined;
     username: string | undefined;
+}
+
+export namespace RegistryInfo {
+    export const Empty: RegistryInfo = { registryUrl: undefined, token: undefined, username: undefined };
 }
 
 // ─── Default public registry URLs ───────────────────────────────────
@@ -124,20 +130,29 @@ export async function computeSemanticVersion({
  * @internal Exported for testing
  */
 export function getRegistryInfoFromOutputMode(outputMode: FernFiddle.remoteGen.OutputMode): RegistryInfo {
-    if (outputMode.type === "githubV2") {
-        return getRegistryInfoFromGithubV2PublishInfo(outputMode.githubV2.publishInfo);
+    const outputModeType = outputMode.type;
+    switch (outputModeType) {
+        case "publish":
+            return getRegistryInfoFromPublishOutputMode(outputMode)
+        case "publishV2":
+            return getRegistryInfoFromPublishV2(outputMode.publishV2);
+        case "downloadFiles":
+            return RegistryInfo.Empty;
+        case "github":
+            return getRegistryInfoFromGithubPublishInfo(outputMode.publishInfo);
+        case "githubV2":
+            return getRegistryInfoFromGithubPublishInfo(outputMode.githubV2.publishInfo);
+        default:
+            assertNever(outputModeType);
     }
-    if (outputMode.type === "publishV2") {
-        return getRegistryInfoFromPublishV2(outputMode.publishV2);
-    }
-    return { registryUrl: undefined, token: undefined, username: undefined };
 }
 
-function getRegistryInfoFromGithubV2PublishInfo(publishInfo: FernFiddle.GithubPublishInfo | undefined): RegistryInfo {
+function getRegistryInfoFromGithubPublishInfo(publishInfo: FernFiddle.GithubPublishInfo | undefined): RegistryInfo {
     if (publishInfo == null) {
         return { registryUrl: undefined, token: undefined, username: undefined };
     }
-    switch (publishInfo.type) {
+    const publishInfoType = publishInfo.type;
+    switch (publishInfoType) {
         case "npm":
             return { registryUrl: publishInfo.registryUrl, token: publishInfo.token, username: undefined };
         case "maven":
@@ -157,12 +172,13 @@ function getRegistryInfoFromGithubV2PublishInfo(publishInfo: FernFiddle.GithubPu
         case "postman":
             return { registryUrl: undefined, token: undefined, username: undefined };
         default:
-            return { registryUrl: undefined, token: undefined, username: undefined };
+            assertNever(publishInfoType)
     }
 }
 
 function getRegistryInfoFromPublishV2(publishV2: FernFiddle.PublishOutputModeV2): RegistryInfo {
-    switch (publishV2.type) {
+    const publishV2Type = publishV2.type;
+    switch (publishV2Type) {
         case "npmOverride":
             return { registryUrl: publishV2.npmOverride?.registryUrl, token: publishV2.npmOverride?.token, username: undefined };
         case "mavenOverride":
@@ -198,7 +214,26 @@ function getRegistryInfoFromPublishV2(publishV2: FernFiddle.PublishOutputModeV2)
         case "postman":
             return { registryUrl: undefined, token: undefined, username: undefined };
         default:
-            return { registryUrl: undefined, token: undefined, username: undefined };
+            assertNever(publishV2Type);
+    }
+}
+
+function getRegistryInfoFromPublishOutputMode(publishOutputMode: FernFiddle.PublishOutputMode): RegistryInfo {
+    const overrides = publishOutputMode.registryOverrides;
+    if (overrides.npm != null) {
+        return {
+            registryUrl: overrides.npm.registryUrl,
+            token: overrides.npm.token,
+            username: undefined,
+        }
+    } else if (overrides.maven != null) {
+        return {
+            registryUrl: overrides.maven.registryUrl,
+            token: overrides.maven.password,
+            username: overrides.maven.username
+        }
+    } else {
+        return RegistryInfo.Empty;
     }
 }
 
