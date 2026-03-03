@@ -1,4 +1,3 @@
-
 namespace SeedMixedCase.Core;
 
 public interface IStringEnum : IEquatable<string>

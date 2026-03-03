@@ -1,4 +1,3 @@
-
 namespace SeedPaginationUriPath.Core;
 
 public interface IStringEnum : IEquatable<string>

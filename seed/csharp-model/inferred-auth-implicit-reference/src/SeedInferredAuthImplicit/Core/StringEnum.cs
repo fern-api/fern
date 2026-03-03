@@ -1,4 +1,3 @@
-
 namespace SeedInferredAuthImplicit.Core;
 
 public interface IStringEnum : IEquatable<string>

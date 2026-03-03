@@ -1,4 +1,3 @@
-
 namespace SeedExtends.Core;
 
 public interface IStringEnum : IEquatable<string>

@@ -1,4 +1,3 @@
-
 namespace SeedErrors.Core;
 
 public interface IStringEnum : IEquatable<string>

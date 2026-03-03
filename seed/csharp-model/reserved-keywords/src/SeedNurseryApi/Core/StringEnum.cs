@@ -1,4 +1,3 @@
-
 namespace SeedNurseryApi.Core;
 
 public interface IStringEnum : IEquatable<string>

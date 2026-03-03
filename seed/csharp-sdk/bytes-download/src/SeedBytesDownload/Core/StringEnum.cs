@@ -1,4 +1,3 @@
-
 namespace SeedBytesDownload.Core;
 
 public interface IStringEnum : IEquatable<string>

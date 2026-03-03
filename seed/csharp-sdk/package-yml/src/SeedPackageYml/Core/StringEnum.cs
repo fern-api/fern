@@ -1,4 +1,3 @@
-
 namespace SeedPackageYml.Core;
 
 public interface IStringEnum : IEquatable<string>

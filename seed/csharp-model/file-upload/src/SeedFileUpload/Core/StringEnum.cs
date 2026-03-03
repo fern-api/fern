@@ -1,4 +1,3 @@
-
 namespace SeedFileUpload.Core;
 
 public interface IStringEnum : IEquatable<string>

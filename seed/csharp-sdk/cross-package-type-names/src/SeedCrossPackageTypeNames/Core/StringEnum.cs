@@ -1,4 +1,3 @@
-
 namespace SeedCrossPackageTypeNames.Core;
 
 public interface IStringEnum : IEquatable<string>

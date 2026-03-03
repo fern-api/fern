@@ -1,4 +1,3 @@
-
 namespace SeedAudiences.Core;
 
 public interface IStringEnum : IEquatable<string>

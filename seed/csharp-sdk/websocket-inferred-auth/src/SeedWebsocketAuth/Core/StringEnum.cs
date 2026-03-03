@@ -1,4 +1,3 @@
-
 namespace SeedWebsocketAuth.Core;
 
 public interface IStringEnum : IEquatable<string>

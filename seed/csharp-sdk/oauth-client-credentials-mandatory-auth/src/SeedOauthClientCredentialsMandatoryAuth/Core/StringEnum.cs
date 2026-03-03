@@ -1,4 +1,3 @@
-
 namespace SeedOauthClientCredentialsMandatoryAuth.Core;
 
 public interface IStringEnum : IEquatable<string>

@@ -1,4 +1,3 @@
-
 namespace SeedHttpHead.Core;
 
 public interface IStringEnum : IEquatable<string>

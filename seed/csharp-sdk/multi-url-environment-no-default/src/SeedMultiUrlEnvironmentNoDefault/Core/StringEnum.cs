@@ -1,4 +1,3 @@
-
 namespace SeedMultiUrlEnvironmentNoDefault.Core;
 
 public interface IStringEnum : IEquatable<string>

@@ -1,4 +1,3 @@
-
 namespace SeedCsharpNamespaceCollision.Core;
 
 public interface IStringEnum : IEquatable<string>

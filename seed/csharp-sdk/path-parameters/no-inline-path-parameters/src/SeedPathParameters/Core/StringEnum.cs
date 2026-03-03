@@ -1,4 +1,3 @@
-
 namespace SeedPathParameters.Core;
 
 public interface IStringEnum : IEquatable<string>

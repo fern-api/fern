@@ -1,4 +1,3 @@
-
 namespace SeedApiWideBasePath.Core;
 
 public interface IStringEnum : IEquatable<string>

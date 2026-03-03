@@ -1,4 +1,3 @@
-
 namespace SeedNoRetries.Core;
 
 public interface IStringEnum : IEquatable<string>

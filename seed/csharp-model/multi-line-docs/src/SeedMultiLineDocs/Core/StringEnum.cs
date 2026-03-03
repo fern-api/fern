@@ -1,4 +1,3 @@
-
 namespace SeedMultiLineDocs.Core;
 
 public interface IStringEnum : IEquatable<string>

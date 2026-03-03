@@ -1,4 +1,3 @@
-
 namespace SeedNullable.Core;
 
 public interface IStringEnum : IEquatable<string>

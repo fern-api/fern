@@ -1,4 +1,3 @@
-
 namespace SeedBasicAuth.Core;
 
 public interface IStringEnum : IEquatable<string>

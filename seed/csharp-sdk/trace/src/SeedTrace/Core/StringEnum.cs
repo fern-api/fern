@@ -1,4 +1,3 @@
-
 namespace SeedTrace.Core;
 
 public interface IStringEnum : IEquatable<string>

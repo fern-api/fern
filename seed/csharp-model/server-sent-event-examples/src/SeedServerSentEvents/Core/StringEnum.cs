@@ -1,4 +1,3 @@
-
 namespace SeedServerSentEvents.Core;
 
 public interface IStringEnum : IEquatable<string>

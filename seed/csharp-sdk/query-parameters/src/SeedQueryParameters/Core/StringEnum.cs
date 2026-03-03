@@ -1,4 +1,3 @@
-
 namespace SeedQueryParameters.Core;
 
 public interface IStringEnum : IEquatable<string>

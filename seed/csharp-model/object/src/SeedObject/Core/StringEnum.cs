@@ -1,4 +1,3 @@
-
 namespace SeedObject.Core;
 
 public interface IStringEnum : IEquatable<string>

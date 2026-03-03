@@ -1,4 +1,3 @@
-
 namespace SeedStreaming.Core;
 
 public interface IStringEnum : IEquatable<string>

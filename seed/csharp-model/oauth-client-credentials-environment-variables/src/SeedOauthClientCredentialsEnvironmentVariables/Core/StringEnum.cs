@@ -1,4 +1,3 @@
-
 namespace SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 public interface IStringEnum : IEquatable<string>

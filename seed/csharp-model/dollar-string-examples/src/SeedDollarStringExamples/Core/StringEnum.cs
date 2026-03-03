@@ -1,4 +1,3 @@
-
 namespace SeedDollarStringExamples.Core;
 
 public interface IStringEnum : IEquatable<string>

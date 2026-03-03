@@ -1,4 +1,3 @@
-
 namespace SeedCsharpXmlEntities.Core;
 
 public interface IStringEnum : IEquatable<string>

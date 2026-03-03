@@ -1,4 +1,3 @@
-
 namespace SeedWebhooks.Core;
 
 public interface IStringEnum : IEquatable<string>

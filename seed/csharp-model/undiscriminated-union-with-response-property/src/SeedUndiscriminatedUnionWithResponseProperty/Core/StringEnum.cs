@@ -1,4 +1,3 @@
-
 namespace SeedUndiscriminatedUnionWithResponseProperty.Core;
 
 public interface IStringEnum : IEquatable<string>
