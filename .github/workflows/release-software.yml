@@ -6,10 +6,38 @@ on:
       - main
     paths:
       # Auto-updated by scripts/release-setup.ts — do not edit manually
-      - "packages/cli/cli/versions.yml"
-      - "generators/python/sdk/versions.yml"
-      - "generators/go/sdk/versions.yml"
+      - "packages/cli/cli/changes/**"
+      - "generators/csharp/sdk/changes/**"
+      - "generators/go/sdk/changes/**"
+      - "generators/java/sdk/changes/**"
+      - "generators/php/sdk/changes/**"
+      - "generators/python/sdk/changes/**"
+      - "generators/ruby/sdk/changes/**"
+      - "generators/ruby-v2/sdk/changes/**"
+      - "generators/rust/sdk/changes/**"
+      - "generators/swift/sdk/changes/**"
+      - "generators/typescript/sdk/changes/**"
   workflow_dispatch:
+    inputs:
+      software:
+        description: "Which software to release"
+        required: false
+        default: "all"
+        type: choice
+        options:
+          # Auto-updated by scripts/release-setup.ts — do not edit manually
+          - all
+          - cli
+          - csharp
+          - go
+          - java
+          - php
+          - python
+          - ruby
+          - ruby-v2
+          - rust
+          - swift
+          - typescript
 
 # Prevent concurrent release runs to avoid git conflicts
 concurrency:
@@ -57,4 +85,4 @@ jobs:
 
       - name: Run releases for all configured software
         if: steps.check-author.outputs.skip != 'true'
-        run: npx tsx scripts/release-all.ts
+        run: npx tsx scripts/release-all.ts ${{ inputs.software || 'all' }}

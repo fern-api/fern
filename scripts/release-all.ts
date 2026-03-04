@@ -4,7 +4,21 @@ import { spawnSync } from "child_process";
 import { listConfiguredSoftware } from "./release-config.js";
 
 function main(): void {
-    const softwareList = listConfiguredSoftware();
+    const softwareArg = process.argv[2] ?? "all";
+    const allSoftware = listConfiguredSoftware();
+
+    let softwareList: string[];
+    if (softwareArg === "all") {
+        softwareList = allSoftware;
+    } else {
+        softwareList = softwareArg.split(",").map((s) => s.trim());
+        for (const sw of softwareList) {
+            if (!allSoftware.includes(sw)) {
+                console.error(`Unknown software "${sw}". Available: ${allSoftware.join(", ")}`);
+                process.exit(1);
+            }
+        }
+    }
 
     console.log(`Software configured for release: ${softwareList.join(", ")}`);
 

@@ -119,25 +119,35 @@ function updateReleasesWorkflowPaths(): void {
     }
 
     const config = loadReleaseConfig();
+    const softwareKeys = Object.keys(config.software);
+
     const pathLines = Object.values(config.software)
-        .map((s) => `      - "${s.versionsFile}"`)
+        .map((s) => `      - "${getChangelogFolder(s)}/**"`)
         .join("\n");
 
-    const content = readFileSync(workflowPath, "utf-8");
+    const optionLines = ["          - all", ...softwareKeys.map((k) => `          - ${k}`)].join("\n");
 
-    // Replace everything between the sync comment and the next non-path line
-    const updated = content.replace(
+    let content = readFileSync(workflowPath, "utf-8");
+
+    // Replace push paths between the sync comment and the next non-path line
+    const pathsUpdated = content.replace(
         /( {6}# Auto-updated by scripts\/release-setup\.ts — do not edit manually\n)(?: {6}- "[^"]*"\n)*/,
         `$1${pathLines}\n`
     );
 
-    if (updated === content) {
-        console.log("   ⚠️  Could not find paths marker in release-software.yml — update manually");
+    // Replace workflow_dispatch options between the sync comment and the next non-option line
+    const fullyUpdated = pathsUpdated.replace(
+        /( {10}# Auto-updated by scripts\/release-setup\.ts — do not edit manually\n)(?: {10}- .+\n)*/,
+        `$1${optionLines}\n`
+    );
+
+    if (fullyUpdated === content) {
+        console.log("   ⚠️  Could not find markers in release-software.yml — update manually");
         return;
     }
 
-    writeFileSync(workflowPath, updated);
-    console.log("   ✅ Updated .github/workflows/release-software.yml paths");
+    writeFileSync(workflowPath, fullyUpdated);
+    console.log("   ✅ Updated .github/workflows/release-software.yml paths and options");
 }
 
 function ensureCleanWorkingTree(): void {
