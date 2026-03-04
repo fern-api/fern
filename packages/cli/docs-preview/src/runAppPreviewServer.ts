@@ -790,12 +790,31 @@ export async function runAppPreviewServer({
     // Track the current server process
     let serverProcess: ReturnType<typeof runExeca> | null = null;
 
+    /**
+     * Kill a process and all its descendants by process group.
+     * The process must have been spawned with detached: true.
+     */
+    const killProcessTree = (pid: number, signal: NodeJS.Signals = "SIGTERM"): boolean => {
+        try {
+            // Negative PID sends signal to the entire process group
+            process.kill(-pid, signal);
+            return true;
+        } catch (err) {
+            // ESRCH means the process group doesn't exist (already exited)
+            if ((err as NodeJS.ErrnoException).code !== "ESRCH") {
+                context.logger.debug(`Failed to kill process group ${pid}: ${err}`);
+            }
+            return false;
+        }
+    };
+
     // Function to start the Next.js server
     const startNextJsServer = (): Promise<void> => {
         return new Promise((resolve) => {
             serverProcess = runExeca(context.logger, "node", [serverPath], {
                 env,
-                doNotPipeOutput: true
+                doNotPipeOutput: true,
+                detached: true
             });
 
             const checkReady = (data: Buffer) => {
@@ -837,7 +856,7 @@ export async function runAppPreviewServer({
         });
     };
 
-    // Function to stop the current Next.js server and wait for it to fully exit
+    // Function to stop the current Next.js server and all its child processes
     const stopNextJsServer = (): Promise<void> => {
         return new Promise((resolve) => {
             if (serverProcess == null || serverProcess.killed) {
@@ -846,7 +865,8 @@ export async function runAppPreviewServer({
             }
 
             const proc = serverProcess;
-            context.logger.debug(`Killing server process with PID: ${proc.pid}`);
+            const pid = proc.pid;
+            context.logger.debug(`Killing server process tree with PID: ${pid}`);
 
             let resolved = false;
             const done = () => {
@@ -861,25 +881,34 @@ export async function runAppPreviewServer({
                 done();
             });
 
-            try {
-                proc.kill();
-            } catch (err) {
-                context.logger.error(`Failed to kill server process: ${err}`);
-                done();
-                return;
+            // Kill the entire process group (server + any child workers)
+            if (pid != null) {
+                killProcessTree(pid, "SIGTERM");
+            } else {
+                try {
+                    proc.kill();
+                } catch (err) {
+                    context.logger.error(`Failed to kill server process: ${err}`);
+                    done();
+                    return;
+                }
             }
 
-            // If graceful shutdown takes too long, force kill
+            // If graceful shutdown takes too long, force kill the process group
             setTimeout(() => {
                 if (!proc.killed) {
-                    context.logger.debug(`Force killing server process with PID: ${proc.pid}`);
-                    try {
-                        proc.kill("SIGKILL");
-                    } catch (err) {
-                        context.logger.error(`Failed to force kill server process: ${err}`);
+                    context.logger.debug(`Force killing server process tree with PID: ${pid}`);
+                    if (pid != null) {
+                        killProcessTree(pid, "SIGKILL");
+                    } else {
+                        try {
+                            proc.kill("SIGKILL");
+                        } catch (err) {
+                            context.logger.error(`Failed to force kill server process: ${err}`);
+                        }
                     }
                 }
-                // Give a brief moment after SIGKILL for the OS to reclaim resources
+                // Brief wait after SIGKILL for OS to reclaim resources
                 setTimeout(done, 500);
             }, 3000);
         });
@@ -985,21 +1014,22 @@ export async function runAppPreviewServer({
 
     const cleanup = () => {
         if (serverProcess != null && !serverProcess.killed) {
-            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
-            try {
-                serverProcess.kill();
+            const pid = serverProcess.pid;
+            context.logger.debug(`Killing server process tree with PID: ${pid}`);
+            if (pid != null) {
+                killProcessTree(pid, "SIGTERM");
                 setTimeout(() => {
                     if (serverProcess != null && !serverProcess.killed) {
-                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
-                        try {
-                            serverProcess.kill("SIGKILL");
-                        } catch (err) {
-                            context.logger.error(`Failed to force kill server process: ${err}`);
-                        }
+                        context.logger.debug(`Force killing server process tree with PID: ${pid}`);
+                        killProcessTree(pid, "SIGKILL");
                     }
                 }, 2000);
-            } catch (err) {
-                context.logger.error(`Failed to kill server process: ${err}`);
+            } else {
+                try {
+                    serverProcess.kill();
+                } catch (err) {
+                    context.logger.error(`Failed to kill server process: ${err}`);
+                }
             }
         }
 
