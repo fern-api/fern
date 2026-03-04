@@ -100,9 +100,7 @@ export class WireTestGenerator {
             // Skip bytes request body endpoints — they cannot be properly exercised in wire tests
             // and have no corresponding wiremock mappings (wiremock mapping generation also skips them).
             if (endpoint.requestBody?.type === "bytes") {
-                this.context.logger.debug(
-                    `Skipping wire test for endpoint ${endpoint.id} - bytes request body`
-                );
+                this.context.logger.debug(`Skipping wire test for endpoint ${endpoint.id} - bytes request body`);
                 continue;
             }
 
