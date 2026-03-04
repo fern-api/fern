@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.4.0
+  changelogEntry:
+    - summary: |
+        Support `hidden: true` in markdown frontmatter for folder-based navigation.
+        Pages with `hidden: true` in their frontmatter are now excluded from the
+        sidebar when using `folder:` entries in `docs.yml`. Sections whose `index.mdx`
+        has `hidden: true` are also hidden. Previously, frontmatter `hidden` was only
+        respected for SEO/search indexing in folder-based navigation.
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 65
+
 - version: 4.3.1
   changelogEntry:
     - summary: |
