@@ -14,8 +14,18 @@ import { renderCompoundPage } from "../renderers/CompoundPageRenderer.js";
 import type { CppClassIr, CppConceptIr } from "../../../src/types/CppLibraryDocsIr.js";
 import { FIXTURES_DIR, FIXTURES, metaToCompoundMeta, type FixtureMeta } from "./fixture-utils.js";
 
+// Only run fixture tests when fixture data is present (gitignored for CI)
+const AVAILABLE_FIXTURES = FIXTURES.filter((name) =>
+    fs.existsSync(path.join(FIXTURES_DIR, name, "input.json")),
+);
+
 describe("C++ Renderer Reference Page Convergence", () => {
-    for (const name of FIXTURES) {
+    if (AVAILABLE_FIXTURES.length === 0) {
+        it.skip("no fixtures available (run locally with fixture data)", () => {});
+        return;
+    }
+
+    for (const name of AVAILABLE_FIXTURES) {
         it(`renders ${name}`, () => {
             const dir = path.join(FIXTURES_DIR, name);
             const input = JSON.parse(fs.readFileSync(path.join(dir, "input.json"), "utf-8"));
