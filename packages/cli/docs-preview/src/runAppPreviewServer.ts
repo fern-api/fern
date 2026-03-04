@@ -9,6 +9,7 @@ import cors from "cors";
 import express from "express";
 import { readFile, rm } from "fs/promises";
 import http, { type IncomingMessage } from "http";
+import net from "net";
 import path from "path";
 import { type Duplex } from "stream";
 import Watcher from "watcher";
@@ -18,6 +19,40 @@ import { type BunServer, createBunServer } from "./createBunServer.js";
 import { DebugLogger } from "./DebugLogger.js";
 import { downloadBundle, getPathToBundleFolder, getPathToPreviewFolder } from "./downloadLocalDocsBundle.js";
 import { getPreviewDocsDefinition } from "./previewDocs.js";
+
+/**
+ * Check if a port is available by attempting to create a server on it.
+ * Resolves true if available, false if in use.
+ */
+function isPortAvailable(port: number): Promise<boolean> {
+    return new Promise((resolve) => {
+        const server = net.createServer();
+        server.once("error", () => {
+            resolve(false);
+        });
+        server.once("listening", () => {
+            server.close(() => {
+                resolve(true);
+            });
+        });
+        server.listen(port, "0.0.0.0");
+    });
+}
+
+/**
+ * Wait until a port becomes available, polling at a given interval.
+ * Rejects after maxWaitMs if the port is still in use.
+ */
+async function waitForPortAvailable(port: number, maxWaitMs = 10000, pollIntervalMs = 200): Promise<void> {
+    const start = Date.now();
+    while (Date.now() - start < maxWaitMs) {
+        if (await isPortAvailable(port)) {
+            return;
+        }
+        await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
+    }
+    throw new Error(`Port ${port} did not become available within ${maxWaitMs}ms`);
+}
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -802,7 +837,7 @@ export async function runAppPreviewServer({
         });
     };
 
-    // Function to stop the current Next.js server
+    // Function to stop the current Next.js server and wait for it to fully exit
     const stopNextJsServer = (): Promise<void> => {
         return new Promise((resolve) => {
             if (serverProcess == null || serverProcess.killed) {
@@ -810,31 +845,56 @@ export async function runAppPreviewServer({
                 return;
             }
 
-            context.logger.debug(`Killing server process with PID: ${serverProcess.pid}`);
-            try {
-                serverProcess.kill();
-                // Give it a moment to clean up
-                setTimeout(() => {
-                    if (serverProcess != null && !serverProcess.killed) {
-                        context.logger.debug(`Force killing server process with PID: ${serverProcess.pid}`);
-                        try {
-                            serverProcess.kill("SIGKILL");
-                        } catch (err) {
-                            context.logger.error(`Failed to force kill server process: ${err}`);
-                        }
-                    }
+            const proc = serverProcess;
+            context.logger.debug(`Killing server process with PID: ${proc.pid}`);
+
+            let resolved = false;
+            const done = () => {
+                if (!resolved) {
+                    resolved = true;
                     resolve();
-                }, 1000);
+                }
+            };
+
+            // Resolve when the process actually exits
+            proc.on("exit", () => {
+                done();
+            });
+
+            try {
+                proc.kill();
             } catch (err) {
                 context.logger.error(`Failed to kill server process: ${err}`);
-                resolve();
+                done();
+                return;
             }
+
+            // If graceful shutdown takes too long, force kill
+            setTimeout(() => {
+                if (!proc.killed) {
+                    context.logger.debug(`Force killing server process with PID: ${proc.pid}`);
+                    try {
+                        proc.kill("SIGKILL");
+                    } catch (err) {
+                        context.logger.error(`Failed to force kill server process: ${err}`);
+                    }
+                }
+                // Give a brief moment after SIGKILL for the OS to reclaim resources
+                setTimeout(done, 500);
+            }, 3000);
         });
     };
 
-    // Function to restart the Next.js server
+    // Function to restart the Next.js server, ensuring the port is free first
     const restartNextJsServer = async (): Promise<void> => {
         await stopNextJsServer();
+        try {
+            await waitForPortAvailable(port);
+        } catch (err) {
+            context.logger.warn(
+                `Port ${port} may still be in use: ${err instanceof Error ? err.message : String(err)}`
+            );
+        }
         await startNextJsServer();
     };
 
