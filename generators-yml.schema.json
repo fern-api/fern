@@ -2030,6 +2030,26 @@
             }
           ]
         },
+        "respect-writeonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-access-modifiers": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "respect-forward-compatible-enums": {
           "oneOf": [
             {
@@ -2567,6 +2587,26 @@
           ]
         },
         "respect-readonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-writeonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-access-modifiers": {
           "oneOf": [
             {
               "type": "boolean"
