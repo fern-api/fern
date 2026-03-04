@@ -6740,8 +6740,8 @@ importers:
         specifier: workspace:*
         version: link:../task-context
       posthog-node:
-        specifier: ^5.14.0
-        version: 5.24.7
+        specifier: ^5.26.2
+        version: 5.26.2
       uuid:
         specifier: 'catalog:'
         version: 9.0.1
@@ -10063,6 +10063,9 @@ packages:
   '@posthog/core@1.17.0':
     resolution: {integrity: sha512-8pDNL+/u9ojzXloA5wILVDXBCV5daJ7w2ipCALQlEEZmL752cCKhRpbyiHn3tjKXh3Hy6aOboJneYa1JdlVHrQ==}
 
+  '@posthog/core@1.23.2':
+    resolution: {integrity: sha512-zTDdda9NuSHrnwSOfFMxX/pyXiycF4jtU1kTr8DL61dHhV+7LF6XF1ndRZZTuaGGbfbb/GJYkEsjEX9SXfNZeQ==}
+
   '@puppeteer/browsers@2.11.2':
     resolution: {integrity: sha512-GBY0+2lI9fDrjgb5dFL9+enKXqyOPok9PXg/69NVkjW3bikbK9RQrNrI3qccQXmDNN7ln4j/yL89Qgvj/tfqrw==}
     engines: {node: '>=18'}
@@ -13299,6 +13302,10 @@ packages:
 
   posthog-node@5.24.7:
     resolution: {integrity: sha512-IJ0Zj+v+eg/JQMZ75n0Hcp4NzuQzWcZjqFjcUQs6RhW2l5FiQIq09sKJMleXX33hYxD6sfjFsDTqugJlgeAohg==}
+    engines: {node: ^20.20.0 || >=22.22.0}
+
+  posthog-node@5.26.2:
+    resolution: {integrity: sha512-fAivzhkhwsZiq6b3YdMYQ5av4Zo5ggV5BC9Uwr5id5N6y0o4OCOTYlKg3O+O+I6SvbbZNYIUZIjgQMWz2yIMkw==}
     engines: {node: ^20.20.0 || >=22.22.0}
 
   prelude-ls@1.2.1:
@@ -16654,6 +16661,10 @@ snapshots:
       config-chain: 1.1.13
 
   '@posthog/core@1.17.0':
+    dependencies:
+      cross-spawn: 7.0.5
+
+  '@posthog/core@1.23.2':
     dependencies:
       cross-spawn: 7.0.5
 
@@ -20324,6 +20335,10 @@ snapshots:
   posthog-node@5.24.7:
     dependencies:
       '@posthog/core': 1.17.0
+
+  posthog-node@5.26.2:
+    dependencies:
+      '@posthog/core': 1.23.2
 
   prelude-ls@1.2.1: {}
 
