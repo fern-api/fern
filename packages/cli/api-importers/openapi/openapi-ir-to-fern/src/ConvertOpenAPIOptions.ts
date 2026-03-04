@@ -60,6 +60,13 @@ export interface ConvertOpenAPIOptions {
     authSchemes?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
 
     /**
+     * Overrides or extends the global headers for this generator.
+     * When provided, these headers are merged with the top-level api.headers configuration,
+     * with per-generator headers taking precedence for same-key headers.
+     */
+    headers?: Record<string, RawSchemas.HttpHeaderSchema>;
+
+    /**
      * If true, the converter will convert nullable schemas to optional nullable.
      * If false, the converter will convert nullable schemas to required nullable.
      * Defaults to true.

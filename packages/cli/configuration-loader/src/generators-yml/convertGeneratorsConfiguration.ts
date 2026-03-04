@@ -643,11 +643,17 @@ function getApiOverride({
     generator: generatorsYml.GeneratorInvocationSchema;
 }): generatorsYml.GeneratorInvocation["apiOverride"] {
     // Generator-level overrides take priority
-    if (generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null) {
+    if (
+        generator.api?.specs != null ||
+        generator.api?.auth != null ||
+        generator.api?.["auth-schemes"] != null ||
+        generator.api?.headers != null
+    ) {
         return {
             specs: generator.api?.specs,
             auth: generator.api?.auth,
-            "auth-schemes": generator.api?.["auth-schemes"]
+            "auth-schemes": generator.api?.["auth-schemes"],
+            headers: generator.api?.headers
         };
     }
 

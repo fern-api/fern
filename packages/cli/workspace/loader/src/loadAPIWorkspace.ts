@@ -338,7 +338,7 @@ export async function loadAPIWorkspace({
     // check if directory is empty
     if (await isPathEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
         const apiFolderName = absolutePathToWorkspace.split("/").pop();
-        context.logger.warn(`Detected empty API definiton: ${apiFolderName}. Remove to resolve error.`);
+        context.logger.warn(`Detected empty API definition: ${apiFolderName}. Remove to resolve error.`);
     }
 
     // Build a detailed diagnostic message so users know exactly what was checked

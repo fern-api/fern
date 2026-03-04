@@ -1818,6 +1818,12 @@ types:
       "twitter:card":
         type: optional<TwitterCardSetting>
         docs: The Twitter Card type. Options are `summary`, `summary_large_image`, `app`, or `player`.
+      "og:dynamic":
+        type: optional<boolean>
+        docs: When true, enables dynamic OG image generation for pages that don't have a custom og:image set.
+      "og:background-image":
+        type: optional<string>
+        docs: A custom background image for dynamically generated OG images. Can be a URL or a file path.
       canonical-host:
         type: optional<string>
         docs: |
