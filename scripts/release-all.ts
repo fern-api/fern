@@ -1,24 +1,10 @@
 #!/usr/bin/env tsx
 // biome-ignore-all lint/suspicious/noConsole: CLI script requires console output for user feedback
 import { spawnSync } from "child_process";
-import { readFileSync } from "fs";
-import { join } from "path";
-
-interface SoftwareConfig {
-    name: string;
-    versionsFile: string;
-    changelogFolder?: string;
-    softwareDirectory?: string;
-}
-
-interface ReleaseConfig {
-    software: Record<string, SoftwareConfig>;
-}
+import { listConfiguredSoftware } from "./release-config.js";
 
 function main(): void {
-    const configPath = join(__dirname, "..", "release-config.json");
-    const config: ReleaseConfig = JSON.parse(readFileSync(configPath, "utf-8"));
-    const softwareList = Object.keys(config.software);
+    const softwareList = listConfiguredSoftware();
 
     console.log(`Software configured for release: ${softwareList.join(", ")}`);
 

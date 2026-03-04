@@ -1,19 +1,7 @@
 #!/usr/bin/env tsx
 // biome-ignore-all lint/suspicious/noConsole: CLI script requires console output for user feedback
 import { execSync } from "child_process";
-import { existsSync, readFileSync } from "fs";
-import { dirname, join } from "path";
-
-interface SoftwareConfig {
-    name: string;
-    versionsFile: string;
-    changelogFolder?: string;
-    softwareDirectory?: string;
-}
-
-interface ReleaseConfig {
-    software: Record<string, SoftwareConfig>;
-}
+import { getChangelogFolder, getSoftwareDirectory, getUnreleasedDir, loadReleaseConfig } from "./release-config.js";
 
 interface ValidationError {
     software: string;
@@ -29,13 +17,12 @@ function main(): void {
         process.exit(1);
     }
 
-    const configPath = join(__dirname, "..", "release-config.json");
-    if (!existsSync(configPath)) {
-        console.log("\u26a0\ufe0f  release-config.json not found, skipping validation");
+    const config = loadReleaseConfig();
+
+    if (Object.keys(config.software).length === 0) {
+        console.log("\u26a0\ufe0f  No software configured in release-config.json, skipping validation");
         process.exit(0);
     }
-
-    const config: ReleaseConfig = JSON.parse(readFileSync(configPath, "utf-8"));
 
     const changedFilesOutput = execSync(`git diff --name-only origin/${baseRef}...HEAD`, {
         encoding: "utf-8"
@@ -58,11 +45,9 @@ function main(): void {
     const errors: ValidationError[] = [];
 
     for (const [, softwareConfig] of Object.entries(config.software)) {
-        const softwareDir =
-            softwareConfig.softwareDirectory ||
-            (softwareConfig.versionsFile.includes("/") ? dirname(softwareConfig.versionsFile) : ".");
-        const changelogFolder = softwareConfig.changelogFolder || softwareDir + "/changes";
-        const unreleasedDir = changelogFolder + "/unreleased";
+        const softwareDir = getSoftwareDirectory(softwareConfig);
+        const changelogFolder = getChangelogFolder(softwareConfig);
+        const unreleasedDir = getUnreleasedDir(softwareConfig);
 
         const softwareChanges = changedFiles.filter(
             (file) => file.startsWith(softwareDir + "/") && !file.startsWith(changelogFolder + "/")
