@@ -796,8 +796,14 @@ export async function runAppPreviewServer({
      */
     const killProcessTree = (pid: number, signal: NodeJS.Signals = "SIGTERM"): boolean => {
         try {
-            // Negative PID sends signal to the entire process group
-            process.kill(-pid, signal);
+            if (process.platform === "win32") {
+                // Windows: use taskkill to terminate the process tree
+                const { execFileSync } = require("child_process") as typeof import("child_process");
+                execFileSync("taskkill", ["/pid", pid.toString(), "/T", "/F"], { stdio: "ignore" });
+            } else {
+                // Unix: negative PID sends signal to the entire process group
+                process.kill(-pid, signal);
+            }
             return true;
         } catch (err) {
             // ESRCH means the process group doesn't exist (already exited)
