@@ -341,8 +341,9 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
             expect(shape.shape.type).toBe("union");
             if (shape.shape.type === "union") {
                 // baseProperties should NOT be empty
-                expect(shape.shape.baseProperties.length).toBeGreaterThan(0);
-                const basePropertyNames = shape.shape.baseProperties.map((p) => p.name.wireValue);
+                const baseProps = shape.shape.baseProperties ?? [];
+                expect(baseProps.length).toBeGreaterThan(0);
+                const basePropertyNames = baseProps.map((p) => p.name.wireValue);
                 expect(basePropertyNames).toContain("timestamp");
                 expect(basePropertyNames).toContain("actor");
                 expect(basePropertyNames).toContain("workspace");
