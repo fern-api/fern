@@ -5,9 +5,10 @@
  * Takes a C++ IR compound entry (class/concept) and produces Fern-compatible MDX output.
  */
 
+export type { CompoundMeta, RenderContext } from "./context.js";
+export { buildLinkPath, createRenderContext, getShortName } from "./context.js";
 export { renderClassPage } from "./renderers/ClassPageRenderer.js";
-export { renderConceptPage } from "./renderers/ConceptPageRenderer.js";
-export { renderCompoundPage } from "./renderers/CompoundPageRenderer.js";
 export type { CppCompoundIr } from "./renderers/CompoundPageRenderer.js";
-export type { RenderContext, CompoundMeta } from "./context.js";
-export { createRenderContext, buildLinkPath, getShortName } from "./context.js";
+export { renderCompoundPage } from "./renderers/CompoundPageRenderer.js";
+export { renderConceptPage } from "./renderers/ConceptPageRenderer.js";
+export { renderSegmentsTrimmed } from "./renderers/DescriptionRenderer.js";

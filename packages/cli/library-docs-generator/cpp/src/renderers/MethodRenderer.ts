@@ -33,6 +33,22 @@ import type { RenderContext } from "../context.js";
 import { getShortName, buildLinkPath } from "../context.js";
 
 // ---------------------------------------------------------------------------
+// MDX heading escaping
+// ---------------------------------------------------------------------------
+
+/**
+ * Escape `<` in method/operator names for safe use in MDX headings.
+ *
+ * In MDX, a bare `<` in heading text is parsed as a JSX tag opening,
+ * causing parse errors for operators like `operator<<`. We escape `<` to
+ * `&lt;` but leave `>` and other characters alone since they don't trigger
+ * JSX tag parsing in heading context.
+ */
+function escapeNameForHeading(name: string): string {
+    return name.replace(/</g, "&lt;");
+}
+
+// ---------------------------------------------------------------------------
 // Tab title generation
 // ---------------------------------------------------------------------------
 
@@ -972,7 +988,7 @@ export function renderSingleMethod(
     const lines: string[] = [];
     const qualifiers = getFunctionQualifiers(func);
     const badgeStr = qualifiers.length > 0 ? ` ${renderBadges(qualifiers)}` : "";
-    const displayName = func.name;
+    const displayName = escapeNameForHeading(func.name);
 
     lines.push(`### ${displayName}${badgeStr}`);
     lines.push("");
@@ -1126,7 +1142,7 @@ export function renderOverloadedMethod(
     }
 
     const lines: string[] = [];
-    const displayName = funcs[0]!.name;
+    const displayName = escapeNameForHeading(funcs[0]!.name);
 
     // Common qualifiers go on the H3 heading (computed from all funcs, including deleted)
     const commonQuals = getCommonQualifiers(funcs);

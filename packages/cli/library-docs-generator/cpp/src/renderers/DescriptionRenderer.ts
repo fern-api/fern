@@ -46,6 +46,17 @@ function escapeAngleBrackets(text: string): string {
 }
 
 /**
+ * Escape characters that are special in MDX/JSX context.
+ *
+ * In MDX, bare `<` is treated as a JSX tag opening, `{` as a JSX expression,
+ * and `>` can close a tag. These must be escaped with HTML entities when they
+ * appear in plain text (not inside code blocks or backtick spans).
+ */
+export function escapeMdxText(text: string): string {
+    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\{/g, "&#123;").replace(/\}/g, "&#125;");
+}
+
+/**
  * Check if a type info parts item is a CppTypeRef (has refid).
  */
 export function isTypeRef(item: CppTypeInfoPartsItem): item is CppTypeRef {
@@ -298,12 +309,93 @@ function sanitizeHtmlAnchorsForMdx(text: string): string {
 }
 
 /**
+ * Escape remaining MDX-special characters in rendered segment text.
+ *
+ * After HTML anchor sanitization, any remaining bare `<`, `>`, `{`, `}`
+ * outside of backtick code spans need to be escaped as HTML entities
+ * to prevent the MDX parser from interpreting them as JSX.
+ *
+ * This function splits the text on backtick boundaries and only escapes
+ * content outside backtick spans. It preserves valid HTML tags like
+ * `<sub>`, `<sup>`, `<br>`, and their closing counterparts.
+ */
+function escapeRemainingMdxSpecials(text: string): string {
+    // Split on backtick-delimited spans (inline code).
+    // Handle both double-backtick (``...``) and single-backtick (`...`) code spans.
+    // We need to preserve content inside backticks as-is.
+    const parts = text.split(/(``[^`]*``|`[^`]*`)/);
+    return parts.map((part, i) => {
+        // Odd-indexed parts are backtick-wrapped (code spans) -- leave as-is
+        if (i % 2 === 1) {
+            return part;
+        }
+        // Even-indexed parts are outside backticks -- escape MDX specials.
+        // Preserve known safe HTML tags (sub, sup, br, em, strong, code, etc.)
+        // by temporarily replacing them, escaping everything else, then restoring.
+        const safeTags: Array<{ placeholder: string; original: string }> = [];
+        let escaped = part;
+
+        // Protect safe HTML tags from escaping
+        escaped = escaped.replace(/<(\/?)(?:sub|sup|br|em|strong|code)(\s[^>]*)?\/?>/gi, (match) => {
+            const placeholder = `\x00SAFE${safeTags.length}\x00`;
+            safeTags.push({ placeholder, original: match });
+            return placeholder;
+        });
+
+        // Escape remaining angle brackets and curly braces
+        escaped = escaped
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/\{/g, "&#123;")
+            .replace(/\}/g, "&#125;");
+
+        // Restore safe tags
+        for (const { placeholder, original } of safeTags) {
+            escaped = escaped.replace(placeholder, original);
+        }
+
+        return escaped;
+    }).join("");
+}
+
+/**
+ * Escape MDX-special characters in multi-line content while preserving
+ * fenced code blocks (```...```) and inline backtick spans.
+ *
+ * Used for verbatim block output and other multi-line rendered content
+ * that may contain code blocks alongside prose text with `<`, `>`, `{`, `}`.
+ */
+export function escapeMultilineMdxSpecials(text: string): string {
+    const lines = text.split("\n");
+    const result: string[] = [];
+    let inCodeBlock = false;
+
+    for (const line of lines) {
+        if (/^```/.test(line)) {
+            inCodeBlock = !inCodeBlock;
+            result.push(line);
+            continue;
+        }
+        if (inCodeBlock) {
+            result.push(line);
+            continue;
+        }
+        // Outside code blocks, escape MDX specials using the inline escaper
+        result.push(escapeRemainingMdxSpecials(line));
+    }
+
+    return result.join("\n");
+}
+
+/**
  * Render an array of inline segments to a single MDX string.
  */
 export function renderSegments(segments: CppDocSegment[]): string {
     const raw = segments.map(renderSegment).join("");
     // Sanitize any raw HTML anchor tags that may have leaked through from the IR
-    return sanitizeHtmlAnchorsForMdx(raw);
+    const sanitized = sanitizeHtmlAnchorsForMdx(raw);
+    // Escape any remaining MDX-special characters (< > { }) outside code spans
+    return escapeRemainingMdxSpecials(sanitized);
 }
 
 /**
@@ -745,8 +837,15 @@ function convertRstLinesToMarkdown(lines: string[]): string {
         joinedProse[j] = leading + rest.replace(/  +/g, " ");
     }
 
+    // After joining prose lines, apply inline markup conversion again to handle
+    // RST double-backtick code spans (``code``) that were split across lines.
+    // The per-line convertRstInlineMarkup missed these because the opening ``
+    // and closing `` were on different lines before joining.
+    let finalResult = joinedProse.join("\n");
+    finalResult = finalResult.replace(/``([^`]+)``/g, "`$1`");
+
     // Re-number ordered lists (RST uses #. for auto-numbering)
-    return renumberOrderedLists(joinedProse.join("\n"));
+    return renumberOrderedLists(finalResult);
 }
 
 const STRUCTURAL_LINE_RE = /^(\s*[-*]\s|\s*\d+\.\s|#{1,6}\s|<|>|\*Added in|\*Deprecated|```)/;
@@ -1099,6 +1198,15 @@ export function parseMethodVerbatimRst(content: string): ParsedMethodVerbatim {
         }
     }
 
+    // Escape MDX-special characters in all text outputs (< > { })
+    result.descriptionText = escapeMultilineMdxSpecials(result.descriptionText);
+    result.warningItems = result.warningItems.map(item => escapeMultilineMdxSpecials(item));
+    result.noteItems = result.noteItems.map(item => escapeMultilineMdxSpecials(item));
+    if (result.exampleDescription) {
+        result.exampleDescription = escapeMultilineMdxSpecials(result.exampleDescription);
+    }
+    // Note: exampleCode is NOT escaped -- it goes into a fenced code block
+
     return result;
 }
 
@@ -1190,9 +1298,11 @@ export function renderBlock(block: CppDocBlock): string {
                 // Strip version annotations from overview -- they're extracted separately
                 let content = parsed.overviewContent;
                 content = content.replace(/^\*Added in v[\d.]+\..*?\*$/gm, "").trim();
-                return content;
+                // Escape MDX-special characters outside code blocks/spans
+                return escapeMultilineMdxSpecials(content);
             }
-            return block.content;
+            // Raw verbatim content (non-RST): escape MDX specials
+            return escapeMultilineMdxSpecials(block.content);
         }
         case "list": {
             return renderList(block.ordered, block.items);

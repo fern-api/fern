@@ -26,7 +26,7 @@ import type {
 } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext, CompoundMeta } from "../context.js";
 import { buildLinkPath, getShortName, needsQuoting, stripTemplateArgs, registerClassMembers, clearClassMembers } from "../context.js";
-import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso } from "./DescriptionRenderer.js";
+import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso, escapeMultilineMdxSpecials } from "./DescriptionRenderer.js";
 import type { ParsedVerbatim } from "./DescriptionRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock } from "./SignatureRenderer.js";
@@ -116,7 +116,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
                     .replace(/^\*Added in v[\d.]+\.\*$/gm, "")
                     .trim();
                 if (overview) {
-                    lines.push(overview);
+                    lines.push(escapeMultilineMdxSpecials(overview));
                     lines.push("");
                 }
             }
@@ -188,7 +188,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
     if (parsedVerbatim?.performanceContent) {
         lines.push("## Performance considerations");
         lines.push("");
-        lines.push(parsedVerbatim.performanceContent);
+        lines.push(escapeMultilineMdxSpecials(parsedVerbatim.performanceContent));
         lines.push("");
     }
 
@@ -206,7 +206,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         lines.push("## Example");
         lines.push("");
         if (parsedVerbatim.exampleDescription) {
-            lines.push(parsedVerbatim.exampleDescription);
+            lines.push(escapeMultilineMdxSpecials(parsedVerbatim.exampleDescription));
             lines.push("");
         }
         const lang = parsedVerbatim.exampleLanguage || "cpp";
