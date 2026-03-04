@@ -26,6 +26,10 @@ inputs:
     description: "JSON array of paths to exclude from determinism verification step, typically package manager/lock files"
     required: false
     default: '["seed/*/.mock/*"]'
+  skip-git-diff-check:
+    description: "Whether to skip the git diff check (used by auto-update-seed where changes are expected)"
+    required: false
+    default: "false"
 
 outputs:
   start_time:
@@ -105,7 +109,7 @@ runs:
 
     # Fail CI if seed produced changes to any git-tracked files (excluding known non-deterministic paths like .mock and lock files)
     - name: Ensure no pending git changes
-      if: always() && !cancelled()
+      if: always() && !cancelled() && inputs.skip-git-diff-check != 'true'
       shell: bash
       run: |
         # Parse JSON array and build exclude arguments
