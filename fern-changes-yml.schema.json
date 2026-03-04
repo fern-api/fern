@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "CLI Changelog Entry",
-    "description": "Schema for CLI changelog entries in the unreleased directory",
+        "title": "Changelog Entry",
+        "description": "Schema for changelog entries in the unreleased directory",
     "type": "array",
     "items": {
         "$ref": "#/definitions/ChangelogEntry"

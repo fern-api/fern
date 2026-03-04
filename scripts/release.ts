@@ -19,6 +19,8 @@ interface ChangelogEntry {
     type: "fix" | "chore" | "feat" | "internal" | "break";
 }
 
+const VALID_CHANGELOG_TYPES = new Set(["fix", "chore", "feat", "internal", "break"]);
+
 type Severity = "major" | "minor" | "patch";
 
 function getSeverityFromType(type: ChangelogEntry["type"]): Severity {
@@ -31,6 +33,50 @@ function getSeverityFromType(type: ChangelogEntry["type"]): Severity {
             return "minor";
         case "break":
             return "major";
+        default: {
+            const _exhaustive: never = type;
+            throw new Error(`Unknown changelog type: ${_exhaustive}`);
+        }
+    }
+}
+
+/**
+ * Validates a parsed changelog entry against the expected schema
+ * (mirrors fern-changes-yml.schema.json).
+ */
+function validateChangelogEntry(entry: unknown, filename: string, index: number): asserts entry is ChangelogEntry {
+    if (typeof entry !== "object" || entry === null) {
+        console.error(`Error in ${filename}, entry ${index + 1}: Expected an object, got ${typeof entry}`);
+        process.exit(1);
+    }
+
+    const obj = entry as Record<string, unknown>;
+
+    if (typeof obj.summary !== "string" || obj.summary.trim() === "") {
+        console.error(
+            `Error in ${filename}, entry ${index + 1}: Missing or empty "summary" field. ` +
+                `Expected a non-empty string.`
+        );
+        process.exit(1);
+    }
+
+    if (typeof obj.type !== "string" || !VALID_CHANGELOG_TYPES.has(obj.type)) {
+        console.error(
+            `Error in ${filename}, entry ${index + 1}: Invalid "type" field: ${JSON.stringify(obj.type)}. ` +
+                `Expected one of: ${[...VALID_CHANGELOG_TYPES].join(", ")}`
+        );
+        process.exit(1);
+    }
+
+    const allowedKeys = new Set(["summary", "type"]);
+    for (const key of Object.keys(obj)) {
+        if (!allowedKeys.has(key)) {
+            console.error(
+                `Error in ${filename}, entry ${index + 1}: Unknown field "${key}". ` +
+                    `Only "summary" and "type" are allowed.`
+            );
+            process.exit(1);
+        }
     }
 }
 
@@ -71,6 +117,11 @@ function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
         if (!Array.isArray(entries)) {
             console.error(`Error: Invalid format in ${file}. Expected an array of changelog entries.`);
             process.exit(1);
+        }
+
+        // Validate each entry against the changelog schema
+        for (let i = 0; i < entries.length; i++) {
+            validateChangelogEntry(entries[i], file, i);
         }
 
         changes.push({ filename: file, entries });
