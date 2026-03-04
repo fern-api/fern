@@ -1500,6 +1500,63 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_unknown_field</a>(...) -> ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedExhaustive
+
+client = SeedExhaustive(
+    token="<token>",
+)
+
+client.endpoints.object.get_and_return_with_unknown_field(
+    unknown={"$ref": "https://example.com/schema"},
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.<a href="src/seed/endpoints/object/client.py">get_and_return_with_datetime_like_string</a>(...) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

@@ -149,9 +149,7 @@ def test_endpoints_object_get_and_return_with_unknown_field() -> None:
     test_id = "endpoints.object.get_and_return_with_unknown_field.0"
     client = get_client(test_id)
     client.endpoints.object.get_and_return_with_unknown_field(
-        unknown={
-            "$ref": "https://example.com/schema",
-        }
+        unknown={"$ref": "https://example.com/schema"},
     )
     verify_request_count(test_id, "POST", "/object/get-and-return-with-unknown-field", None, 1)
 
