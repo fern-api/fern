@@ -978,17 +978,23 @@ function visitFrontmatterImages(
             // realtime validation, this also assumes there can be other stuff in the object, but we only care about the valid keys
             if (typeof value === "object") {
                 if (value.type === "fileId") {
+                    const mapped = mapImage(value.value);
+                    // Strip the "file:" prefix if present, since frontmatter FileIdOrUrl
+                    // stores raw fileIds (the "file:" prefix is only for inline markdown images)
+                    const fileId = stripFilePrefix(mapped);
                     data[key] = {
                         type: "fileId",
-                        value: CjsFdrSdk.FileId(mapImage(value.value) ?? value.value)
+                        value: CjsFdrSdk.FileId(fileId ?? value.value)
                     };
                 }
             } else if (typeof value === "string") {
                 const mappedImage = mapImage(value);
-                data[key] = mappedImage
+                // Strip the "file:" prefix if present for the same reason as above
+                const fileId = stripFilePrefix(mappedImage);
+                data[key] = fileId
                     ? {
                           type: "fileId",
-                          value: CjsFdrSdk.FileId(mappedImage)
+                          value: CjsFdrSdk.FileId(fileId)
                       }
                     : {
                           type: "url",
@@ -998,6 +1004,13 @@ function visitFrontmatterImages(
             // else do nothing
         }
     }
+}
+
+function stripFilePrefix(value: string | undefined): string | undefined {
+    if (value == null) {
+        return undefined;
+    }
+    return value.startsWith("file:") ? value.slice(5) : value;
 }
 
 const LogoOverrideFrontmatterSchema = z.union([
@@ -1013,10 +1026,12 @@ export function convertImageToFileIdOrUrl(
     mapImage: (image: string | undefined) => string | undefined
 ): DocsV1Write.FileIdOrUrl {
     const mappedImage = mapImage(value);
-    return mappedImage
+    // Strip the "file:" prefix if present, since FileIdOrUrl stores raw fileIds
+    const fileId = stripFilePrefix(mappedImage);
+    return fileId
         ? {
               type: "fileId",
-              value: CjsFdrSdk.FileId(mappedImage)
+              value: CjsFdrSdk.FileId(fileId)
           }
         : {
               type: "url",
