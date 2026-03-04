@@ -125,6 +125,12 @@ export class ReactQueryGenerator {
         // The root barrel is always included
         exportPaths.unshift("react-query");
 
+        // Generate unit test files for the React Query layer
+        const testFiles = this.generateTestFiles(serviceGroups);
+        for (const { path: testPath, content: testContent } of testFiles) {
+            this.rootDirectory.createSourceFile(`/${testPath}`, testContent, { overwrite: true });
+        }
+
         return { reactQueryExportPaths: exportPaths };
     }
 
@@ -953,6 +959,1109 @@ export class ReactQueryGenerator {
         }
         parts.push(responseProperty.property.name.name.camelCase.unsafeName);
         return parts.join("?.");
+    }
+
+    /**
+     * Generates unit test files for the React Query layer.
+     * Tests are generated from the same endpoint metadata used to generate the React Query code,
+     * so they naturally stay in sync with the generated API surface.
+     */
+    private generateTestFiles(serviceGroups: ServiceGroup[]): Array<{ path: string; content: string }> {
+        const testFiles: Array<{ path: string; content: string }> = [];
+
+        // Classify endpoints into categories for targeted test generation
+        interface ClassifiedEndpoint {
+            endpointSafeName: string;
+            endpointUnsafeName: string;
+            servicePath: ServicePathPart[];
+            serviceDirPath: string;
+            importPath: string;
+            keySegments: string[];
+            paramType: "no-param" | "single-param" | "multi-param";
+            pathParamNames: string[];
+            hasRequestBody: boolean;
+            hasPagination: boolean;
+            paginationType: string | null;
+        }
+
+        const queryEndpoints: ClassifiedEndpoint[] = [];
+        const mutationEndpoints: ClassifiedEndpoint[] = [];
+
+        for (const group of serviceGroups) {
+            const serviceDirPath = this.getServiceDirPath(group.servicePath);
+            // Import path from tests/unit/react-query/*.test.ts to src/react-query/{serviceDirPath}/index.js
+            const importPath = `../../../${this.relativePackagePath}/react-query/${serviceDirPath}/index.js`;
+
+            for (const { endpoint } of group.endpoints) {
+                const endpointSafeName = endpoint.name.camelCase.safeName;
+                const endpointUnsafeName = endpoint.name.camelCase.unsafeName;
+                const isGetMethod = endpoint.method === "GET" || endpoint.method === "HEAD";
+                const hasRequestParams = endpoint.sdkRequest != null || endpoint.allPathParameters.length > 0;
+                const pathParamsAreInlined =
+                    this.inlinePathParameters &&
+                    endpoint.sdkRequest?.shape.type === "wrapper" &&
+                    (endpoint.sdkRequest.shape.onlyPathParameters || endpoint.sdkRequest.shape.includePathParameters);
+                const hasPositionalPathParams = endpoint.allPathParameters.length > 0 && !pathParamsAreInlined;
+                const pathParamNames = endpoint.allPathParameters.map((p) => p.name.camelCase.safeName);
+                const hasRequestBody = endpoint.sdkRequest != null;
+
+                let paramType: "no-param" | "single-param" | "multi-param";
+                if (!hasRequestParams) {
+                    paramType = "no-param";
+                } else if (hasPositionalPathParams) {
+                    paramType = "multi-param";
+                } else {
+                    paramType = "single-param";
+                }
+
+                const keySegments = [
+                    this.rootClientName,
+                    ...group.servicePath.map((s) => s.unsafeName),
+                    endpointUnsafeName
+                ];
+
+                const classified: ClassifiedEndpoint = {
+                    endpointSafeName,
+                    endpointUnsafeName,
+                    servicePath: group.servicePath,
+                    serviceDirPath,
+                    importPath,
+                    keySegments,
+                    paramType,
+                    pathParamNames,
+                    hasRequestBody,
+                    hasPagination: endpoint.pagination != null,
+                    paginationType: endpoint.pagination?.type ?? null
+                };
+
+                if (isGetMethod) {
+                    queryEndpoints.push(classified);
+                } else {
+                    mutationEndpoints.push(classified);
+                }
+            }
+        }
+
+        // Generate query-keys.test.ts
+        testFiles.push({
+            path: "tests/unit/react-query/query-keys.test.ts",
+            content: this.generateQueryKeysTestFile(queryEndpoints)
+        });
+
+        // Generate options-factories.test.ts
+        testFiles.push({
+            path: "tests/unit/react-query/options-factories.test.ts",
+            content: this.generateOptionsFactoriesTestFile(queryEndpoints, mutationEndpoints)
+        });
+
+        // Generate hooks.test.ts
+        testFiles.push({
+            path: "tests/unit/react-query/hooks.test.ts",
+            content: this.generateHooksTestFile(queryEndpoints, mutationEndpoints, serviceGroups)
+        });
+
+        // Generate context.test.ts
+        testFiles.push({
+            path: "tests/unit/react-query/context.test.ts",
+            content: this.generateContextTestFile()
+        });
+
+        // Generate invalidation.test.ts
+        testFiles.push({
+            path: "tests/unit/react-query/invalidation.test.ts",
+            content: this.generateInvalidationTestFile(queryEndpoints)
+        });
+
+        return testFiles;
+    }
+
+    /**
+     * Generates a test file for query key functions.
+     * Tests key structure, uniqueness, and requestOptions exclusion.
+     */
+    private generateQueryKeysTestFile(queryEndpoints: Array<{
+        endpointSafeName: string;
+        endpointUnsafeName: string;
+        servicePath: ServicePathPart[];
+        importPath: string;
+        keySegments: string[];
+        paramType: "no-param" | "single-param" | "multi-param";
+        pathParamNames: string[];
+        hasRequestBody: boolean;
+        hasPagination: boolean;
+    }>): string {
+        const lines: string[] = [];
+        lines.push(`// This file was auto-generated by Fern from our API Definition.`);
+        lines.push(`import { describe, expect, it } from "vitest";`);
+        lines.push(``);
+
+        // Group imports by importPath
+        const importsByPath = new Map<string, string[]>();
+        for (const ep of queryEndpoints) {
+            const fnName = `${ep.endpointSafeName}QueryKey`;
+            let imports = importsByPath.get(ep.importPath);
+            if (imports == null) {
+                imports = [];
+                importsByPath.set(ep.importPath, imports);
+            }
+            imports.push(fnName);
+        }
+        for (const [importPath, imports] of importsByPath) {
+            lines.push(`import { ${imports.join(", ")} } from "${importPath}";`);
+        }
+        lines.push(``);
+
+        // Pick representative endpoints for each category
+        const noParamEp = queryEndpoints.find((e) => e.paramType === "no-param");
+        const singleParamEp = queryEndpoints.find((e) => e.paramType === "single-param" && !e.hasPagination);
+        const multiParamEp = queryEndpoints.find((e) => e.paramType === "multi-param");
+        const paginationEp = queryEndpoints.find((e) => e.hasPagination);
+
+        lines.push(`describe("Query Key Functions", () => {`);
+
+        if (noParamEp != null) {
+            const fnName = `${noParamEp.endpointSafeName}QueryKey`;
+            const expectedKey = JSON.stringify(noParamEp.keySegments);
+            lines.push(`    describe("no-param queries", () => {`);
+            lines.push(`        it("should return a key with service path segments only", () => {`);
+            lines.push(`            const key = ${fnName}();`);
+            lines.push(`            expect(key).toEqual(${expectedKey});`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should return a readonly tuple", () => {`);
+            lines.push(`            const key = ${fnName}();`);
+            lines.push(`            expect(Array.isArray(key)).toBe(true);`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should return the same key on repeated calls (stable)", () => {`);
+            lines.push(`            const key1 = ${fnName}();`);
+            lines.push(`            const key2 = ${fnName}();`);
+            lines.push(`            expect(key1).toEqual(key2);`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (singleParamEp != null) {
+            const fnName = `${singleParamEp.endpointSafeName}QueryKey`;
+            const expectedKeyPrefix = JSON.stringify(singleParamEp.keySegments);
+            lines.push(`    describe("single-param queries", () => {`);
+            lines.push(`        it("should include the request parameter in the key", () => {`);
+            lines.push(`            const request = { test: "value" };`);
+            lines.push(`            const key = ${fnName}(request as any);`);
+            lines.push(`            expect(key).toEqual([...${expectedKeyPrefix}, request]);`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should produce different keys for different request params", () => {`);
+            lines.push(`            const key1 = ${fnName}({ a: 1 } as any);`);
+            lines.push(`            const key2 = ${fnName}({ a: 2 } as any);`);
+            lines.push(`            expect(key1).not.toEqual(key2);`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (multiParamEp != null) {
+            const fnName = `${multiParamEp.endpointSafeName}QueryKey`;
+            const expectedKeyPrefix = JSON.stringify(multiParamEp.keySegments);
+            lines.push(`    describe("multi-param queries", () => {`);
+            lines.push(`        it("should include path param and request in the key", () => {`);
+            // Build call args: path params + optional request body
+            const callArgs: string[] = multiParamEp.pathParamNames.map(() => `"test-path"`);
+            if (multiParamEp.hasRequestBody) {
+                callArgs.push(`{ test: "value" } as any`);
+            }
+            lines.push(`            const key = ${fnName}(${callArgs.join(", ")});`);
+            const expectedArgs: string[] = multiParamEp.pathParamNames.map(() => `"test-path"`);
+            if (multiParamEp.hasRequestBody) {
+                expectedArgs.push(`{ test: "value" }`);
+            }
+            lines.push(`            expect(key).toEqual([...${expectedKeyPrefix}, ${expectedArgs.join(", ")}]);`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should produce different keys for different path params", () => {`);
+            const callArgs1: string[] = [`"path-a"`];
+            const callArgs2: string[] = [`"path-b"`];
+            for (let i = 1; i < multiParamEp.pathParamNames.length; i++) {
+                callArgs1.push(`"same"`);
+                callArgs2.push(`"same"`);
+            }
+            if (multiParamEp.hasRequestBody) {
+                callArgs1.push(`{} as any`);
+                callArgs2.push(`{} as any`);
+            }
+            lines.push(`            const key1 = ${fnName}(${callArgs1.join(", ")});`);
+            lines.push(`            const key2 = ${fnName}(${callArgs2.join(", ")});`);
+            lines.push(`            expect(key1).not.toEqual(key2);`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (paginationEp != null) {
+            const fnName = `${paginationEp.endpointSafeName}QueryKey`;
+            const expectedKeyPrefix = JSON.stringify(paginationEp.keySegments);
+            lines.push(`    describe("pagination queries", () => {`);
+            lines.push(`        it("should include request in the key", () => {`);
+            lines.push(`            const key = ${fnName}({} as any);`);
+            lines.push(`            expect(key).toEqual([...${expectedKeyPrefix}, {}]);`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        // Key uniqueness across services
+        if (queryEndpoints.length >= 2) {
+            const ep1 = queryEndpoints[0]!;
+            const ep2 = queryEndpoints.find((e) => e.importPath !== ep1.importPath) ?? queryEndpoints[1]!;
+            lines.push(`    describe("key uniqueness across services", () => {`);
+            lines.push(`        it("should always start with the root client name", () => {`);
+            for (const ep of queryEndpoints.slice(0, 3)) {
+                const fnName = `${ep.endpointSafeName}QueryKey`;
+                const callArg = ep.paramType === "no-param" ? `` : ep.paramType === "single-param" ? `{} as any` : `"x"${ep.hasRequestBody ? ", {} as any" : ""}`;
+                lines.push(`            expect(${fnName}(${callArg})[0]).toBe("${this.rootClientName}");`);
+            }
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        // requestOptions exclusion
+        if (singleParamEp != null) {
+            const fnName = `${singleParamEp.endpointSafeName}QueryKey`;
+            lines.push(`    describe("requestOptions exclusion", () => {`);
+            lines.push(`        it("should not include requestOptions in query keys (only request params)", () => {`);
+            lines.push(`            const key = ${fnName}({ test: "value" } as any);`);
+            lines.push(`            // Query key functions don't accept requestOptions at all,`);
+            lines.push(`            // which prevents cache pollution by design.`);
+            lines.push(`            expect(key).toHaveLength(${singleParamEp.keySegments.length + 1});`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        lines.push(`});`);
+        lines.push(``);
+        return lines.join("\n");
+    }
+
+    /**
+     * Generates a test file for options factory functions.
+     * Tests structure, queryKey consistency, and requestOptions passthrough.
+     */
+    private generateOptionsFactoriesTestFile(
+        queryEndpoints: Array<{
+            endpointSafeName: string;
+            importPath: string;
+            keySegments: string[];
+            paramType: "no-param" | "single-param" | "multi-param";
+            pathParamNames: string[];
+            hasRequestBody: boolean;
+            hasPagination: boolean;
+            paginationType: string | null;
+        }>,
+        mutationEndpoints: Array<{
+            endpointSafeName: string;
+            importPath: string;
+            paramType: "no-param" | "single-param" | "multi-param";
+        }>
+    ): string {
+        const lines: string[] = [];
+        lines.push(`// This file was auto-generated by Fern from our API Definition.`);
+        lines.push(`import { describe, expect, it, vi } from "vitest";`);
+        lines.push(``);
+
+        // Collect all imports
+        const importsByPath = new Map<string, string[]>();
+        const addImport = (path: string, name: string) => {
+            let imports = importsByPath.get(path);
+            if (imports == null) {
+                imports = [];
+                importsByPath.set(path, imports);
+            }
+            if (!imports.includes(name)) {
+                imports.push(name);
+            }
+        };
+
+        for (const ep of queryEndpoints) {
+            addImport(ep.importPath, `${ep.endpointSafeName}Options`);
+            if (ep.hasPagination) {
+                addImport(ep.importPath, `${ep.endpointSafeName}InfiniteOptions`);
+            }
+        }
+        for (const ep of mutationEndpoints) {
+            addImport(ep.importPath, `${ep.endpointSafeName}MutationOptions`);
+        }
+
+        for (const [importPath, imports] of importsByPath) {
+            lines.push(`import { ${imports.join(", ")} } from "${importPath}";`);
+        }
+        lines.push(``);
+
+        // Mock client helper
+        lines.push(`function createMockClient(): any {`);
+        lines.push(`    const handler: ProxyHandler<any> = {`);
+        lines.push(`        get(_target, prop) {`);
+        lines.push(`            if (typeof prop === "string") {`);
+        lines.push(`                return new Proxy(vi.fn().mockResolvedValue({ mocked: true }), handler);`);
+        lines.push(`            }`);
+        lines.push(`            return undefined;`);
+        lines.push(`        },`);
+        lines.push(`        apply(target, _thisArg, args) {`);
+        lines.push(`            return target(...args);`);
+        lines.push(`        },`);
+        lines.push(`    };`);
+        lines.push(`    return new Proxy({}, handler);`);
+        lines.push(`}`);
+        lines.push(``);
+
+        // Query Options tests
+        lines.push(`describe("Query Options Factories", () => {`);
+        lines.push(`    describe("structure", () => {`);
+
+        const noParamQuery = queryEndpoints.find((e) => e.paramType === "no-param");
+        const singleParamQuery = queryEndpoints.find((e) => e.paramType === "single-param" && !e.hasPagination);
+        const multiParamQuery = queryEndpoints.find((e) => e.paramType === "multi-param");
+
+        if (noParamQuery != null) {
+            lines.push(`        it("should return an object with queryKey and queryFn for no-param queries", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${noParamQuery.endpointSafeName}Options(client);`);
+            lines.push(`            expect(options).toHaveProperty("queryKey");`);
+            lines.push(`            expect(options).toHaveProperty("queryFn");`);
+            lines.push(`            expect(typeof options.queryFn).toBe("function");`);
+            lines.push(`            expect(Array.isArray(options.queryKey)).toBe(true);`);
+            lines.push(`        });`);
+            lines.push(``);
+        }
+
+        if (singleParamQuery != null) {
+            lines.push(`        it("should return an object with queryKey and queryFn for single-param queries", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${singleParamQuery.endpointSafeName}Options(client, {} as any);`);
+            lines.push(`            expect(options).toHaveProperty("queryKey");`);
+            lines.push(`            expect(options).toHaveProperty("queryFn");`);
+            lines.push(`            expect(typeof options.queryFn).toBe("function");`);
+            lines.push(`        });`);
+            lines.push(``);
+        }
+
+        if (multiParamQuery != null) {
+            const callArgs = ["client", ...multiParamQuery.pathParamNames.map(() => `"path"`)];
+            if (multiParamQuery.hasRequestBody) {
+                callArgs.push(`{} as any`);
+            }
+            lines.push(`        it("should return an object with queryKey and queryFn for multi-param queries", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${multiParamQuery.endpointSafeName}Options(${callArgs.join(", ")});`);
+            lines.push(`            expect(options).toHaveProperty("queryKey");`);
+            lines.push(`            expect(options).toHaveProperty("queryFn");`);
+            lines.push(`            expect(typeof options.queryFn).toBe("function");`);
+            lines.push(`        });`);
+            lines.push(``);
+        }
+
+        lines.push(`    });`);
+        lines.push(``);
+
+        // queryKey consistency
+        lines.push(`    describe("queryKey consistency", () => {`);
+        if (noParamQuery != null) {
+            const expectedKey = JSON.stringify(noParamQuery.keySegments);
+            lines.push(`        it("should produce the correct queryKey for no-param", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${noParamQuery.endpointSafeName}Options(client);`);
+            lines.push(`            expect(options.queryKey).toEqual(${expectedKey});`);
+            lines.push(`        });`);
+            lines.push(``);
+        }
+        if (singleParamQuery != null) {
+            lines.push(`        it("should include request in queryKey for single-param", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const request = { test: "value" };`);
+            lines.push(`            const options = ${singleParamQuery.endpointSafeName}Options(client, request as any);`);
+            lines.push(`            expect(options.queryKey).toContain(request);`);
+            lines.push(`        });`);
+            lines.push(``);
+        }
+        lines.push(`    });`);
+        lines.push(``);
+
+        // requestOptions passthrough
+        lines.push(`    describe("requestOptions passthrough", () => {`);
+        if (noParamQuery != null) {
+            lines.push(`        it("should accept requestOptions for no-param query without affecting queryKey", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const opts1 = ${noParamQuery.endpointSafeName}Options(client);`);
+            lines.push(`            const opts2 = ${noParamQuery.endpointSafeName}Options(client, { timeout: 5000 } as any);`);
+            lines.push(`            expect(opts1.queryKey).toEqual(opts2.queryKey);`);
+            lines.push(`        });`);
+            lines.push(``);
+        }
+        if (singleParamQuery != null) {
+            lines.push(`        it("should accept requestOptions for single-param query without affecting queryKey", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const request = { test: "value" };`);
+            lines.push(`            const opts1 = ${singleParamQuery.endpointSafeName}Options(client, request as any);`);
+            lines.push(`            const opts2 = ${singleParamQuery.endpointSafeName}Options(client, request as any, { timeout: 5000 } as any);`);
+            lines.push(`            expect(opts1.queryKey).toEqual(opts2.queryKey);`);
+            lines.push(`        });`);
+            lines.push(``);
+        }
+        lines.push(`    });`);
+        lines.push(`});`);
+        lines.push(``);
+
+        // Mutation Options tests
+        lines.push(`describe("Mutation Options Factories", () => {`);
+        const noParamMutation = mutationEndpoints.find((e) => e.paramType === "no-param");
+        const singleParamMutation = mutationEndpoints.find((e) => e.paramType === "single-param");
+        const multiParamMutation = mutationEndpoints.find((e) => e.paramType === "multi-param");
+
+        if (singleParamMutation != null) {
+            lines.push(`    describe("single-param mutation", () => {`);
+            lines.push(`        it("should return an object with mutationFn", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${singleParamMutation.endpointSafeName}MutationOptions(client);`);
+            lines.push(`            expect(options).toHaveProperty("mutationFn");`);
+            lines.push(`            expect(typeof options.mutationFn).toBe("function");`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should accept requestOptions", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${singleParamMutation.endpointSafeName}MutationOptions(client, { timeout: 5000 } as any);`);
+            lines.push(`            expect(options).toHaveProperty("mutationFn");`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (multiParamMutation != null) {
+            lines.push(`    describe("multi-param mutation (tuple)", () => {`);
+            lines.push(`        it("should return an object with mutationFn that accepts a tuple", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${multiParamMutation.endpointSafeName}MutationOptions(client);`);
+            lines.push(`            expect(options).toHaveProperty("mutationFn");`);
+            lines.push(`            expect(typeof options.mutationFn).toBe("function");`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (noParamMutation != null) {
+            lines.push(`    describe("no-param mutation", () => {`);
+            lines.push(`        it("should return an object with mutationFn that takes no arguments", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${noParamMutation.endpointSafeName}MutationOptions(client);`);
+            lines.push(`            expect(options).toHaveProperty("mutationFn");`);
+            lines.push(`            expect(typeof options.mutationFn).toBe("function");`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should accept requestOptions", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${noParamMutation.endpointSafeName}MutationOptions(client, { timeout: 3000 } as any);`);
+            lines.push(`            expect(options).toHaveProperty("mutationFn");`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        lines.push(`});`);
+        lines.push(``);
+
+        // Infinite Query Options tests
+        const paginationEps = queryEndpoints.filter((e) => e.hasPagination);
+        if (paginationEps.length > 0) {
+            const ep = paginationEps[0]!;
+            lines.push(`describe("Infinite Query Options Factories", () => {`);
+            lines.push(`    describe("structure", () => {`);
+            lines.push(`        it("should return queryKey, queryFn, initialPageParam, and getNextPageParam", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const options = ${ep.endpointSafeName}InfiniteOptions(client, {} as any);`);
+            lines.push(`            expect(options).toHaveProperty("queryKey");`);
+            lines.push(`            expect(options).toHaveProperty("queryFn");`);
+            lines.push(`            expect(options).toHaveProperty("initialPageParam");`);
+            lines.push(`            expect(options).toHaveProperty("getNextPageParam");`);
+            lines.push(`            expect(typeof options.queryFn).toBe("function");`);
+            lines.push(`            expect(typeof options.getNextPageParam).toBe("function");`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+
+            if (ep.paginationType === "cursor") {
+                lines.push(`    describe("getNextPageParam", () => {`);
+                lines.push(`        it("should extract cursor from lastPage response", () => {`);
+                lines.push(`            const client = createMockClient();`);
+                lines.push(`            const options = ${ep.endpointSafeName}InfiniteOptions(client, {} as any);`);
+                lines.push(`            const nextCursor = options.getNextPageParam(`);
+                lines.push(`                { data: [{ id: "1" }], response: { next: "cursor-abc" } } as any,`);
+                lines.push(`                [],`);
+                lines.push(`                undefined,`);
+                lines.push(`            );`);
+                lines.push(`            expect(nextCursor).toBe("cursor-abc");`);
+                lines.push(`        });`);
+                lines.push(``);
+                lines.push(`        it("should return undefined when there is no next page", () => {`);
+                lines.push(`            const client = createMockClient();`);
+                lines.push(`            const options = ${ep.endpointSafeName}InfiniteOptions(client, {} as any);`);
+                lines.push(`            const nextCursor = options.getNextPageParam(`);
+                lines.push(`                { data: [], response: { next: undefined } } as any,`);
+                lines.push(`                [],`);
+                lines.push(`                undefined,`);
+                lines.push(`            );`);
+                lines.push(`            expect(nextCursor).toBeUndefined();`);
+                lines.push(`        });`);
+                lines.push(`    });`);
+                lines.push(``);
+            }
+
+            // Regular + infinite share same queryKey
+            lines.push(`    describe("regular query options for paginated endpoint", () => {`);
+            lines.push(`        it("should share the same queryKey as infinite options", () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const request = {} as any;`);
+            lines.push(`            const regularOptions = ${ep.endpointSafeName}Options(client, request);`);
+            lines.push(`            const infiniteOptions = ${ep.endpointSafeName}InfiniteOptions(client, request);`);
+            lines.push(`            expect(regularOptions.queryKey).toEqual(infiniteOptions.queryKey);`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+
+            lines.push(`});`);
+            lines.push(``);
+        }
+
+        return lines.join("\n");
+    }
+
+    /**
+     * Generates a test file for React hooks.
+     * Tests hook integration with TanStack Query and ClientProvider context.
+     */
+    private generateHooksTestFile(
+        queryEndpoints: Array<{
+            endpointSafeName: string;
+            endpointUnsafeName: string;
+            servicePath: ServicePathPart[];
+            importPath: string;
+            paramType: "no-param" | "single-param" | "multi-param";
+            pathParamNames: string[];
+            hasRequestBody: boolean;
+        }>,
+        mutationEndpoints: Array<{
+            endpointSafeName: string;
+            endpointUnsafeName: string;
+            servicePath: ServicePathPart[];
+            importPath: string;
+            paramType: "no-param" | "single-param" | "multi-param";
+            pathParamNames: string[];
+            hasRequestBody: boolean;
+        }>,
+        serviceGroups: ServiceGroup[]
+    ): string {
+        const lines: string[] = [];
+        lines.push(`// @vitest-environment happy-dom`);
+        lines.push(`// This file was auto-generated by Fern from our API Definition.`);
+        lines.push(`import { QueryClient, QueryClientProvider } from "@tanstack/react-query";`);
+        lines.push(`import { renderHook, waitFor } from "@testing-library/react";`);
+        lines.push(`import { createElement } from "react";`);
+        lines.push(`import type { ReactNode } from "react";`);
+        lines.push(`import { describe, expect, it, vi } from "vitest";`);
+        lines.push(``);
+        lines.push(`import { ClientProvider } from "../../../${this.relativePackagePath}/react-query/context.js";`);
+        lines.push(``);
+
+        // Collect imports
+        const importsByPath = new Map<string, string[]>();
+        const addImport = (path: string, name: string) => {
+            let imports = importsByPath.get(path);
+            if (imports == null) {
+                imports = [];
+                importsByPath.set(path, imports);
+            }
+            if (!imports.includes(name)) {
+                imports.push(name);
+            }
+        };
+
+        // Pick representative endpoints
+        const noParamQuery = queryEndpoints.find((e) => e.paramType === "no-param");
+        const singleParamQuery = queryEndpoints.find((e) => e.paramType === "single-param");
+        const multiParamQuery = queryEndpoints.find((e) => e.paramType === "multi-param");
+        const noParamMutation = mutationEndpoints.find((e) => e.paramType === "no-param");
+        const singleParamMutation = mutationEndpoints.find((e) => e.paramType === "single-param");
+        const multiParamMutation = mutationEndpoints.find((e) => e.paramType === "multi-param");
+
+        if (noParamQuery != null) {
+            const hookName = `use${noParamQuery.endpointSafeName.charAt(0).toUpperCase() + noParamQuery.endpointSafeName.slice(1)}`;
+            addImport(noParamQuery.importPath, hookName);
+        }
+        if (singleParamQuery != null) {
+            const hookName = `use${singleParamQuery.endpointSafeName.charAt(0).toUpperCase() + singleParamQuery.endpointSafeName.slice(1)}`;
+            addImport(singleParamQuery.importPath, hookName);
+        }
+        if (multiParamQuery != null) {
+            const hookName = `use${multiParamQuery.endpointSafeName.charAt(0).toUpperCase() + multiParamQuery.endpointSafeName.slice(1)}`;
+            addImport(multiParamQuery.importPath, hookName);
+        }
+        if (noParamMutation != null) {
+            const hookName = `use${noParamMutation.endpointSafeName.charAt(0).toUpperCase() + noParamMutation.endpointSafeName.slice(1)}Mutation`;
+            addImport(noParamMutation.importPath, hookName);
+        }
+        if (singleParamMutation != null) {
+            const hookName = `use${singleParamMutation.endpointSafeName.charAt(0).toUpperCase() + singleParamMutation.endpointSafeName.slice(1)}Mutation`;
+            addImport(singleParamMutation.importPath, hookName);
+        }
+        if (multiParamMutation != null) {
+            const hookName = `use${multiParamMutation.endpointSafeName.charAt(0).toUpperCase() + multiParamMutation.endpointSafeName.slice(1)}Mutation`;
+            addImport(multiParamMutation.importPath, hookName);
+        }
+
+        for (const [importPath, imports] of importsByPath) {
+            lines.push(`import { ${imports.join(", ")} } from "${importPath}";`);
+        }
+        lines.push(``);
+
+        // Mock client helper — build from service groups
+        lines.push(`function createMockClient(): any {`);
+        lines.push(`    return {`);
+        // Build mock client structure from service groups
+        const buildMockLevel = (groups: ServiceGroup[], depth: number): void => {
+            const indent = "        ".repeat(depth + 1);
+            // Group by first path segment at this depth
+            const bySegment = new Map<string, ServiceGroup[]>();
+            const leafGroups: ServiceGroup[] = [];
+            for (const g of groups) {
+                if (g.servicePath.length <= depth) {
+                    leafGroups.push(g);
+                } else {
+                    const seg = g.servicePath[depth]!.unsafeName;
+                    let list = bySegment.get(seg);
+                    if (list == null) {
+                        list = [];
+                        bySegment.set(seg, list);
+                    }
+                    list.push(g);
+                }
+            }
+            // Write leaf endpoints
+            for (const g of leafGroups) {
+                for (const { endpoint } of g.endpoints) {
+                    lines.push(`${indent}${endpoint.name.camelCase.unsafeName}: vi.fn().mockResolvedValue("mock-result"),`);
+                }
+            }
+            // Write child namespaces
+            for (const [seg, childGroups] of bySegment) {
+                lines.push(`${indent}${seg}: {`);
+                buildMockLevel(childGroups, depth + 1);
+                lines.push(`${indent}},`);
+            }
+        };
+        buildMockLevel(serviceGroups, 0);
+        lines.push(`    };`);
+        lines.push(`}`);
+        lines.push(``);
+
+        // Wrapper helper
+        lines.push(`function createWrapper(client: any) {`);
+        lines.push(`    const queryClient = new QueryClient({`);
+        lines.push(`        defaultOptions: {`);
+        lines.push(`            queries: { retry: false },`);
+        lines.push(`            mutations: { retry: false },`);
+        lines.push(`        },`);
+        lines.push(`    });`);
+        lines.push(`    return function Wrapper({ children }: { children: ReactNode }) {`);
+        lines.push(`        return createElement(`);
+        lines.push(`            QueryClientProvider,`);
+        lines.push(`            { client: queryClient },`);
+        lines.push(`            createElement(ClientProvider, { client }, children),`);
+        lines.push(`        );`);
+        lines.push(`    };`);
+        lines.push(`}`);
+        lines.push(``);
+
+        // Query hook tests
+        lines.push(`describe("Query Hooks", () => {`);
+        if (noParamQuery != null) {
+            const hookName = `use${noParamQuery.endpointSafeName.charAt(0).toUpperCase() + noParamQuery.endpointSafeName.slice(1)}`;
+            const clientPath = noParamQuery.servicePath.length > 0
+                ? `client.${noParamQuery.servicePath.map((p) => p.unsafeName).join(".")}`
+                : "client";
+            lines.push(`    describe("${hookName} (no-param query)", () => {`);
+            lines.push(`        it("should fetch data using the client from context", async () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const wrapper = createWrapper(client);`);
+            lines.push(`            const { result } = renderHook(() => ${hookName}(), { wrapper });`);
+            lines.push(`            await waitFor(() => expect(result.current.isSuccess).toBe(true));`);
+            lines.push(`            expect(${clientPath}.${noParamQuery.endpointUnsafeName}).toHaveBeenCalled();`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should accept TanStack Query option overrides", async () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const wrapper = createWrapper(client);`);
+            lines.push(`            const { result } = renderHook(`);
+            lines.push(`                () => ${hookName}(undefined, { enabled: false }),`);
+            lines.push(`                { wrapper },`);
+            lines.push(`            );`);
+            lines.push(`            expect(result.current.isFetching).toBe(false);`);
+            lines.push(`            expect(${clientPath}.${noParamQuery.endpointUnsafeName}).not.toHaveBeenCalled();`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (singleParamQuery != null) {
+            const hookName = `use${singleParamQuery.endpointSafeName.charAt(0).toUpperCase() + singleParamQuery.endpointSafeName.slice(1)}`;
+            const clientPath = singleParamQuery.servicePath.length > 0
+                ? `client.${singleParamQuery.servicePath.map((p) => p.unsafeName).join(".")}`
+                : "client";
+            lines.push(`    describe("${hookName} (single-param query)", () => {`);
+            lines.push(`        it("should pass request to the client method", async () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const wrapper = createWrapper(client);`);
+            lines.push(`            const request = {} as any;`);
+            lines.push(`            const { result } = renderHook(() => ${hookName}(request), { wrapper });`);
+            lines.push(`            await waitFor(() => expect(result.current.isSuccess).toBe(true));`);
+            lines.push(`            expect(${clientPath}.${singleParamQuery.endpointUnsafeName}).toHaveBeenCalledWith(request, undefined);`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (multiParamQuery != null) {
+            const hookName = `use${multiParamQuery.endpointSafeName.charAt(0).toUpperCase() + multiParamQuery.endpointSafeName.slice(1)}`;
+            const clientPath = multiParamQuery.servicePath.length > 0
+                ? `client.${multiParamQuery.servicePath.map((p) => p.unsafeName).join(".")}`
+                : "client";
+            const hookArgs: string[] = multiParamQuery.pathParamNames.map(() => `"test-path"`);
+            if (multiParamQuery.hasRequestBody) {
+                hookArgs.push(`{} as any`);
+            }
+            const expectedCallArgs: string[] = multiParamQuery.pathParamNames.map(() => `"test-path"`);
+            if (multiParamQuery.hasRequestBody) {
+                expectedCallArgs.push(`{}`);
+            }
+            expectedCallArgs.push(`undefined`);
+            lines.push(`    describe("${hookName} (multi-param query)", () => {`);
+            lines.push(`        it("should pass path param and request to the client method", async () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const wrapper = createWrapper(client);`);
+            lines.push(`            const { result } = renderHook(`);
+            lines.push(`                () => ${hookName}(${hookArgs.join(", ")}),`);
+            lines.push(`                { wrapper },`);
+            lines.push(`            );`);
+            lines.push(`            await waitFor(() => expect(result.current.isSuccess).toBe(true));`);
+            lines.push(`            expect(${clientPath}.${multiParamQuery.endpointUnsafeName}).toHaveBeenCalledWith(`);
+            lines.push(`                ${expectedCallArgs.join(", ")},`);
+            lines.push(`            );`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+        lines.push(`});`);
+        lines.push(``);
+
+        // Mutation hook tests
+        lines.push(`describe("Mutation Hooks", () => {`);
+        if (noParamMutation != null) {
+            const hookName = `use${noParamMutation.endpointSafeName.charAt(0).toUpperCase() + noParamMutation.endpointSafeName.slice(1)}Mutation`;
+            const clientPath = noParamMutation.servicePath.length > 0
+                ? `client.${noParamMutation.servicePath.map((p) => p.unsafeName).join(".")}`
+                : "client";
+            lines.push(`    describe("${hookName} (no-param mutation)", () => {`);
+            lines.push(`        it("should call the client method on mutate()", async () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const wrapper = createWrapper(client);`);
+            lines.push(`            const { result } = renderHook(() => ${hookName}(), { wrapper });`);
+            lines.push(`            result.current.mutate();`);
+            lines.push(`            await waitFor(() => expect(result.current.isSuccess).toBe(true));`);
+            lines.push(`            expect(${clientPath}.${noParamMutation.endpointUnsafeName}).toHaveBeenCalled();`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (singleParamMutation != null) {
+            const hookName = `use${singleParamMutation.endpointSafeName.charAt(0).toUpperCase() + singleParamMutation.endpointSafeName.slice(1)}Mutation`;
+            const clientPath = singleParamMutation.servicePath.length > 0
+                ? `client.${singleParamMutation.servicePath.map((p) => p.unsafeName).join(".")}`
+                : "client";
+            lines.push(`    describe("${hookName} (single-param mutation)", () => {`);
+            lines.push(`        it("should pass the variable directly (not as tuple)", async () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const wrapper = createWrapper(client);`);
+            lines.push(`            const { result } = renderHook(() => ${hookName}(), { wrapper });`);
+            lines.push(`            result.current.mutate("test-value" as any);`);
+            lines.push(`            await waitFor(() => expect(result.current.isSuccess).toBe(true));`);
+            lines.push(`            expect(${clientPath}.${singleParamMutation.endpointUnsafeName}).toHaveBeenCalledWith("test-value", undefined);`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (multiParamMutation != null) {
+            const hookName = `use${multiParamMutation.endpointSafeName.charAt(0).toUpperCase() + multiParamMutation.endpointSafeName.slice(1)}Mutation`;
+            const clientPath = multiParamMutation.servicePath.length > 0
+                ? `client.${multiParamMutation.servicePath.map((p) => p.unsafeName).join(".")}`
+                : "client";
+            lines.push(`    describe("${hookName} (multi-param mutation)", () => {`);
+            lines.push(`        it("should pass tuple args to the client method", async () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const wrapper = createWrapper(client);`);
+            lines.push(`            const { result } = renderHook(() => ${hookName}(), { wrapper });`);
+            lines.push(`            result.current.mutate(["path", "body"] as any);`);
+            lines.push(`            await waitFor(() => expect(result.current.isSuccess).toBe(true));`);
+            lines.push(`            expect(${clientPath}.${multiParamMutation.endpointUnsafeName}).toHaveBeenCalledWith("path", "body");`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        // Mutation option overrides
+        if (noParamMutation != null) {
+            const hookName = `use${noParamMutation.endpointSafeName.charAt(0).toUpperCase() + noParamMutation.endpointSafeName.slice(1)}Mutation`;
+            lines.push(`    describe("mutation option overrides", () => {`);
+            lines.push(`        it("should accept onSuccess callback", async () => {`);
+            lines.push(`            const client = createMockClient();`);
+            lines.push(`            const wrapper = createWrapper(client);`);
+            lines.push(`            const onSuccess = vi.fn();`);
+            lines.push(`            const { result } = renderHook(`);
+            lines.push(`                () => ${hookName}(undefined, { onSuccess }),`);
+            lines.push(`                { wrapper },`);
+            lines.push(`            );`);
+            lines.push(`            result.current.mutate();`);
+            lines.push(`            await waitFor(() => expect(result.current.isSuccess).toBe(true));`);
+            lines.push(`            expect(onSuccess).toHaveBeenCalled();`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        lines.push(`});`);
+        lines.push(``);
+        return lines.join("\n");
+    }
+
+    /**
+     * Generates a test file for the React Context/Provider pattern.
+     * Tests that useClient() throws outside provider and returns client inside.
+     */
+    private generateContextTestFile(): string {
+        const lines: string[] = [];
+        lines.push(`// @vitest-environment happy-dom`);
+        lines.push(`// This file was auto-generated by Fern from our API Definition.`);
+        lines.push(`import { renderHook } from "@testing-library/react";`);
+        lines.push(`import { createElement } from "react";`);
+        lines.push(`import type { ReactNode } from "react";`);
+        lines.push(`import { describe, expect, it } from "vitest";`);
+        lines.push(``);
+        lines.push(`import { ClientProvider, useClient } from "../../../${this.relativePackagePath}/react-query/context.js";`);
+        lines.push(``);
+        lines.push(`describe("Context/Provider", () => {`);
+        lines.push(`    describe("useClient", () => {`);
+        lines.push(`        it("should throw when used outside ClientProvider", () => {`);
+        lines.push(`            expect(() => {`);
+        lines.push(`                renderHook(() => useClient());`);
+        lines.push(`            }).toThrow("useClient must be used within a <ClientProvider>");`);
+        lines.push(`        });`);
+        lines.push(``);
+        lines.push(`        it("should throw with a helpful error message mentioning ClientProvider", () => {`);
+        lines.push(`            expect(() => {`);
+        lines.push(`                renderHook(() => useClient());`);
+        lines.push(`            }).toThrow(/Wrap your component tree with <ClientProvider client=\\{\\.\\.\\.\\.?}>/);`);
+        lines.push(`        });`);
+        lines.push(``);
+        lines.push(`        it("should return the client when used inside ClientProvider", () => {`);
+        lines.push(`            const client = {} as any;`);
+        lines.push(`            const wrapper = ({ children }: { children: ReactNode }) =>`);
+        lines.push(`                createElement(ClientProvider, { client }, children);`);
+        lines.push(`            const { result } = renderHook(() => useClient(), { wrapper });`);
+        lines.push(`            expect(result.current).toBe(client);`);
+        lines.push(`        });`);
+        lines.push(``);
+        lines.push(`        it("should return the same client instance on re-renders", () => {`);
+        lines.push(`            const client = {} as any;`);
+        lines.push(`            const wrapper = ({ children }: { children: ReactNode }) =>`);
+        lines.push(`                createElement(ClientProvider, { client }, children);`);
+        lines.push(`            const { result, rerender } = renderHook(() => useClient(), { wrapper });`);
+        lines.push(`            const firstResult = result.current;`);
+        lines.push(`            rerender();`);
+        lines.push(`            expect(result.current).toBe(firstResult);`);
+        lines.push(`        });`);
+        lines.push(`    });`);
+        lines.push(``);
+        lines.push(`    describe("ClientProvider", () => {`);
+        lines.push(`        it("should make client available to nested hooks", () => {`);
+        lines.push(`            const client = {} as any;`);
+        lines.push(`            const InnerWrapper = ({ children }: { children: ReactNode }) =>`);
+        lines.push(`                createElement("div", null, children);`);
+        lines.push(`            const wrapper = ({ children }: { children: ReactNode }) =>`);
+        lines.push(`                createElement(`);
+        lines.push(`                    ClientProvider,`);
+        lines.push(`                    { client },`);
+        lines.push(`                    createElement(InnerWrapper, null, children),`);
+        lines.push(`                );`);
+        lines.push(`            const { result } = renderHook(() => useClient(), { wrapper });`);
+        lines.push(`            expect(result.current).toBe(client);`);
+        lines.push(`        });`);
+        lines.push(``);
+        lines.push(`        it("should allow overriding with a nested ClientProvider", () => {`);
+        lines.push(`            const outerClient = { outer: true } as any;`);
+        lines.push(`            const innerClient = { inner: true } as any;`);
+        lines.push(`            const wrapper = ({ children }: { children: ReactNode }) =>`);
+        lines.push(`                createElement(`);
+        lines.push(`                    ClientProvider,`);
+        lines.push(`                    { client: outerClient },`);
+        lines.push(`                    createElement(ClientProvider, { client: innerClient }, children),`);
+        lines.push(`                );`);
+        lines.push(`            const { result } = renderHook(() => useClient(), { wrapper });`);
+        lines.push(`            expect(result.current).toBe(innerClient);`);
+        lines.push(`            expect(result.current).not.toBe(outerClient);`);
+        lines.push(`        });`);
+        lines.push(`    });`);
+        lines.push(`});`);
+        lines.push(``);
+        return lines.join("\n");
+    }
+
+    /**
+     * Generates a test file for cache invalidation helpers.
+     * Tests that invalidation functions call QueryClient.invalidateQueries with correct keys.
+     */
+    private generateInvalidationTestFile(queryEndpoints: Array<{
+        endpointSafeName: string;
+        importPath: string;
+        keySegments: string[];
+        paramType: "no-param" | "single-param" | "multi-param";
+        pathParamNames: string[];
+        hasRequestBody: boolean;
+    }>): string {
+        const lines: string[] = [];
+        lines.push(`// This file was auto-generated by Fern from our API Definition.`);
+        lines.push(`import { QueryClient } from "@tanstack/react-query";`);
+        lines.push(`import { describe, expect, it, vi } from "vitest";`);
+        lines.push(``);
+
+        // Collect imports
+        const importsByPath = new Map<string, string[]>();
+        const addImport = (path: string, name: string) => {
+            let imports = importsByPath.get(path);
+            if (imports == null) {
+                imports = [];
+                importsByPath.set(path, imports);
+            }
+            if (!imports.includes(name)) {
+                imports.push(name);
+            }
+        };
+
+        const noParamEp = queryEndpoints.find((e) => e.paramType === "no-param");
+        const singleParamEp = queryEndpoints.find((e) => e.paramType === "single-param");
+        const multiParamEp = queryEndpoints.find((e) => e.paramType === "multi-param");
+
+        if (noParamEp != null) {
+            const cap = noParamEp.endpointSafeName.charAt(0).toUpperCase() + noParamEp.endpointSafeName.slice(1);
+            addImport(noParamEp.importPath, `invalidate${cap}`);
+        }
+        if (singleParamEp != null) {
+            const cap = singleParamEp.endpointSafeName.charAt(0).toUpperCase() + singleParamEp.endpointSafeName.slice(1);
+            addImport(singleParamEp.importPath, `invalidate${cap}`);
+            addImport(singleParamEp.importPath, `invalidateAll${cap}`);
+        }
+        if (multiParamEp != null) {
+            const cap = multiParamEp.endpointSafeName.charAt(0).toUpperCase() + multiParamEp.endpointSafeName.slice(1);
+            addImport(multiParamEp.importPath, `invalidate${cap}`);
+            addImport(multiParamEp.importPath, `invalidateAll${cap}`);
+        }
+
+        for (const [importPath, imports] of importsByPath) {
+            lines.push(`import { ${imports.join(", ")} } from "${importPath}";`);
+        }
+        lines.push(``);
+
+        lines.push(`describe("Cache Invalidation Helpers", () => {`);
+
+        if (noParamEp != null) {
+            const cap = noParamEp.endpointSafeName.charAt(0).toUpperCase() + noParamEp.endpointSafeName.slice(1);
+            const expectedKey = JSON.stringify(noParamEp.keySegments);
+            lines.push(`    describe("no-param endpoint invalidation", () => {`);
+            lines.push(`        it("should call queryClient.invalidateQueries with the correct key", async () => {`);
+            lines.push(`            const queryClient = new QueryClient();`);
+            lines.push(`            const spy = vi.spyOn(queryClient, "invalidateQueries").mockResolvedValue();`);
+            lines.push(`            await invalidate${cap}(queryClient);`);
+            lines.push(`            expect(spy).toHaveBeenCalledWith({ queryKey: ${expectedKey} });`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (singleParamEp != null) {
+            const cap = singleParamEp.endpointSafeName.charAt(0).toUpperCase() + singleParamEp.endpointSafeName.slice(1);
+            const prefixKey = JSON.stringify(singleParamEp.keySegments);
+            lines.push(`    describe("single-param endpoint invalidation", () => {`);
+            lines.push(`        it("should invalidate specific cached entry by param", async () => {`);
+            lines.push(`            const queryClient = new QueryClient();`);
+            lines.push(`            const spy = vi.spyOn(queryClient, "invalidateQueries").mockResolvedValue();`);
+            lines.push(`            await invalidate${cap}(queryClient, "test-param" as any);`);
+            lines.push(`            expect(spy).toHaveBeenCalledWith({ queryKey: [...${prefixKey}, "test-param"] });`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should invalidate all cached entries with invalidateAll", async () => {`);
+            lines.push(`            const queryClient = new QueryClient();`);
+            lines.push(`            const spy = vi.spyOn(queryClient, "invalidateQueries").mockResolvedValue();`);
+            lines.push(`            await invalidateAll${cap}(queryClient);`);
+            lines.push(`            expect(spy).toHaveBeenCalledWith({ queryKey: ${prefixKey} });`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("invalidateAll key should be a prefix of the specific key", async () => {`);
+            lines.push(`            const queryClient = new QueryClient();`);
+            lines.push(`            const specificSpy = vi.spyOn(queryClient, "invalidateQueries").mockResolvedValue();`);
+            lines.push(`            await invalidate${cap}(queryClient, "test" as any);`);
+            lines.push(`            const specificKey = specificSpy.mock.calls[0]![0].queryKey as string[];`);
+            lines.push(`            specificSpy.mockClear();`);
+            lines.push(`            await invalidateAll${cap}(queryClient);`);
+            lines.push(`            const allKey = specificSpy.mock.calls[0]![0].queryKey as string[];`);
+            lines.push(`            expect(specificKey.slice(0, allKey.length)).toEqual(allKey);`);
+            lines.push(`            expect(specificKey.length).toBeGreaterThan(allKey.length);`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        if (multiParamEp != null) {
+            const cap = multiParamEp.endpointSafeName.charAt(0).toUpperCase() + multiParamEp.endpointSafeName.slice(1);
+            const prefixKey = JSON.stringify(multiParamEp.keySegments);
+            // Build call args
+            const invCallArgs: string[] = ["queryClient", ...multiParamEp.pathParamNames.map(() => `"test-path"`)];
+            if (multiParamEp.hasRequestBody) {
+                invCallArgs.push(`{} as any`);
+            }
+            lines.push(`    describe("multi-param endpoint invalidation", () => {`);
+            lines.push(`        it("should invalidate specific cached entry by all params", async () => {`);
+            lines.push(`            const queryClient = new QueryClient();`);
+            lines.push(`            const spy = vi.spyOn(queryClient, "invalidateQueries").mockResolvedValue();`);
+            lines.push(`            await invalidate${cap}(${invCallArgs.join(", ")});`);
+            // Build expected key
+            const expectedKeyArgs: string[] = multiParamEp.pathParamNames.map(() => `"test-path"`);
+            if (multiParamEp.hasRequestBody) {
+                expectedKeyArgs.push(`{}`);
+            }
+            lines.push(`            expect(spy).toHaveBeenCalledWith({ queryKey: [...${prefixKey}, ${expectedKeyArgs.join(", ")}] });`);
+            lines.push(`        });`);
+            lines.push(``);
+            lines.push(`        it("should invalidate all cached entries for multi-param endpoint", async () => {`);
+            lines.push(`            const queryClient = new QueryClient();`);
+            lines.push(`            const spy = vi.spyOn(queryClient, "invalidateQueries").mockResolvedValue();`);
+            lines.push(`            await invalidateAll${cap}(queryClient);`);
+            lines.push(`            expect(spy).toHaveBeenCalledWith({ queryKey: ${prefixKey} });`);
+            lines.push(`        });`);
+            lines.push(`    });`);
+            lines.push(``);
+        }
+
+        lines.push(`});`);
+        lines.push(``);
+        return lines.join("\n");
     }
 
     private generateBarrelFiles(serviceGroups: ServiceGroup[]): Array<{ path: string; content: string }> {
