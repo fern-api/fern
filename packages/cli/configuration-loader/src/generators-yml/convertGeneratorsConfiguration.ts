@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
 import { TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -936,9 +936,15 @@ async function getGithubLicense({
         AbsoluteFilePath.of(path.dirname(absolutePathToGeneratorsConfiguration)),
         RelativeFilePath.of(githubLicense.custom)
     );
-    const licenseContent = await readFile(absolutePathToLicense);
+    if (await doesPathExist(absolutePathToLicense)) {
+        const licenseContent = await readFile(absolutePathToLicense);
+        return FernFiddle.GithubLicense.custom({
+            contents: licenseContent.toString()
+        });
+    }
+    // If the custom value is not a valid file path, treat it as literal license content
     return FernFiddle.GithubLicense.custom({
-        contents: licenseContent.toString()
+        contents: githubLicense.custom
     });
 }
 
