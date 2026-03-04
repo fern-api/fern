@@ -12,7 +12,7 @@ import type { Target } from "../config/Target.js";
 /** The unified npm package containing all generator migrations. */
 const MIGRATION_PACKAGE_NAME = "@fern-api/generator-migrations";
 
-export namespace LegacyGeneratorMigrator {
+export namespace GeneratorMigrator {
     export interface Config {
         /** Logger for migration feedback and debug output. */
         logger: Logger;
@@ -38,11 +38,11 @@ export namespace LegacyGeneratorMigrator {
  * example, a 2.0.0 migration might set config keys to preserve backwards
  * compatibility.
  */
-export class LegacyGeneratorMigrator {
+export class GeneratorMigrator {
     private readonly logger: Logger;
     private readonly cachePath: AbsoluteFilePath;
 
-    constructor(config: LegacyGeneratorMigrator.Config) {
+    constructor(config: GeneratorMigrator.Config) {
         this.logger = config.logger;
         this.cachePath = config.cachePath;
     }
@@ -64,7 +64,7 @@ export class LegacyGeneratorMigrator {
         editor: FernYmlEditor;
         from: string;
         to: string;
-    }): Promise<LegacyGeneratorMigrator.MigrationInfo | undefined> {
+    }): Promise<GeneratorMigrator.MigrationInfo | undefined> {
         const invocationSchema = this.toGeneratorInvocationSchema(target);
 
         const result = await this.loadAndRunMigrations({
@@ -85,10 +85,6 @@ export class LegacyGeneratorMigrator {
             appliedVersions: result.appliedVersions
         };
     }
-
-    // ---------------------------------------------------------------------------
-    // Target ↔ GeneratorInvocationSchema mapping
-    // ---------------------------------------------------------------------------
 
     /**
      * Maps an SDK target to the legacy GeneratorInvocationSchema that the
@@ -124,10 +120,6 @@ export class LegacyGeneratorMigrator {
             editor.deleteTargetConfig(target.name);
         }
     }
-
-    // ---------------------------------------------------------------------------
-    // Migration loading, filtering, and execution
-    // ---------------------------------------------------------------------------
 
     /**
      * Downloads the migration package from npm, filters applicable migrations

@@ -9,6 +9,12 @@ import type * as GeneratorsYml from "../../../index.js";
 export interface GeneratorApiSettingsSchema {
     auth?: GeneratorsYml.fernDefinition.ApiAuthSchema;
     "auth-schemes"?: Record<string, GeneratorsYml.fernDefinition.AuthSchemeDeclarationSchema>;
+    /**
+     * Override or extend the global headers for this generator.
+     * When provided, these headers are merged with the top-level api.headers configuration,
+     * with per-generator headers taking precedence for same-key headers.
+     */
+    headers?: Record<string, GeneratorsYml.fernDefinition.HttpHeaderSchema>;
     settings?: GeneratorsYml.ApiConfigurationV2SettingsSchema;
     /**
      * Override the specs configuration for this generator.

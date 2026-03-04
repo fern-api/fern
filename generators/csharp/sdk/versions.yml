@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.6
+  changelogEntry:
+    - summary: |
+        Refactor `HeaderValue` to use a single `Func<ValueTask<string>>` resolver
+        instead of string-based type discrimination with unchecked casts. The old
+        static factory methods (`FromString`, `FromFunc`, `FromValueTaskFunc`,
+        `FromTaskFunc`) are retained (without deprecation) for backwards compatibility.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 62
+
 - version: 2.23.5
   changelogEntry:
     - summary: |
