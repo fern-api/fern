@@ -7009,18 +7009,33 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
+      '@fern-api/fdr-sdk':
+        specifier: 0.145.12-b50d999d1
+        version: 0.145.12-b50d999d1(typescript@5.9.3)
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../ir-sdk
       '@fern-api/openapi-ir':
         specifier: workspace:*
         version: link:../../api-importers/openapi/openapi-ir
       '@fern-api/openapi-ir-parser':
         specifier: workspace:*
         version: link:../../api-importers/openapi/openapi-ir-parser
+      '@fern-api/openapi-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openapi-to-ir
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../commons/path-utils
+      '@fern-api/register':
+        specifier: workspace:*
+        version: link:../../register
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
+      '@fern-api/v3-importer-commons':
+        specifier: workspace:*
+        version: link:../../api-importers/v3-importer-commons
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3

@@ -35,10 +35,15 @@
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fdr-sdk": "catalog:",
+    "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
     "@fern-api/openapi-ir-parser": "workspace:*",
+    "@fern-api/openapi-to-ir": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
+    "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "@fern-api/v3-importer-commons": "workspace:*",
     "openapi-types": "^12.1.3"
   },
   "devDependencies": {
