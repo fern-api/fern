@@ -1,0 +1,60 @@
+name: Release Software
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # Auto-updated by scripts/release-setup.ts — do not edit manually
+      - "packages/cli/cli/versions.yml"
+      - "generators/python/sdk/versions.yml"
+      - "generators/go/sdk/versions.yml"
+  workflow_dispatch:
+
+# Prevent concurrent release runs to avoid git conflicts
+concurrency:
+  group: release-software
+  cancel-in-progress: false
+
+# ACTIONS_PAT must belong to a user with bypass access for the main branch
+# protection rule, scoped only to allow changelog/versions file commits.
+permissions:
+  contents: write
+
+jobs:
+  release-software:
+    if: github.repository == 'fern-api/fern'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.ACTIONS_PAT }}
+          ref: main
+          fetch-depth: 0
+
+      - name: Skip if triggered by own release commit
+        id: check-author
+        run: |
+          COMMIT_AUTHOR_EMAIL=$(git log -1 --format='%ae')
+          echo "Last commit author email: $COMMIT_AUTHOR_EMAIL"
+          if [[ "$COMMIT_AUTHOR_EMAIL" == "github-actions[bot]@users.noreply.github.com" ]]; then
+            echo "Triggered by automated release commit — skipping to avoid loop."
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure git
+        if: steps.check-author.outputs.skip != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install
+        if: steps.check-author.outputs.skip != 'true'
+        uses: ./.github/actions/install
+
+      - name: Run releases for all configured software
+        if: steps.check-author.outputs.skip != 'true'
+        run: node scripts/release-all.js

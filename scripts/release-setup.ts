@@ -1,13 +1,14 @@
 #!/usr/bin/env tsx
 // biome-ignore-all lint/suspicious/noConsole: CLI script requires console output for user feedback
 import { execSync } from "child_process";
-import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
 import { dirname, join, relative } from "path";
 import * as readline from "readline";
 import {
     getChangelogFolder,
     getSoftwareDirectory,
     getUnreleasedDir,
+    loadReleaseConfig,
     type SoftwareConfig,
     setSoftwareConfig
 } from "./release-config.js";
@@ -108,6 +109,36 @@ function createChangelogStructure(config: SoftwareConfig): void {
     console.log("   ✅ Changelog structure created");
 }
 
+function updateReleasesWorkflowPaths(): void {
+    const workflowPath = join(__dirname, "..", ".github/workflows/release-software.yml");
+
+    if (!existsSync(workflowPath)) {
+        console.log("   ⚠️  release-software.yml not found, skipping workflow update");
+        return;
+    }
+
+    const config = loadReleaseConfig();
+    const pathLines = Object.values(config.software)
+        .map((s) => `      - "${s.versionsFile}"`)
+        .join("\n");
+
+    const content = readFileSync(workflowPath, "utf-8");
+
+    // Replace everything between the sync comment and the next non-path line
+    const updated = content.replace(
+        /( {6}# Auto-updated by scripts\/release-setup\.ts — do not edit manually\n)(?: {6}- "[^"]*"\n)*/,
+        `$1${pathLines}\n`
+    );
+
+    if (updated === content) {
+        console.log("   ⚠️  Could not find paths marker in release-software.yml — update manually");
+        return;
+    }
+
+    writeFileSync(workflowPath, updated);
+    console.log("   ✅ Updated .github/workflows/release-software.yml paths");
+}
+
 function createBranch(softwareName: string): string {
     console.log("\n🌿 Creating git branch...");
 
@@ -137,6 +168,7 @@ function commitAndPushChanges(softwareName: string, config: SoftwareConfig, bran
 
     try {
         execSync("git add release-config.json", { stdio: "inherit" });
+        execSync("git add .github/workflows/release-software.yml", { stdio: "inherit" });
         execSync(`git add ${getChangelogFolder(config)}`, { stdio: "inherit" });
 
         execSync(`git commit -m "chore: setup release configuration for ${softwareName}"`, {
@@ -213,6 +245,7 @@ export async function setupSoftware(softwareName: string, createPr = false): Pro
     console.log("\n💾 Saving configuration...");
     setSoftwareConfig(softwareName, config);
     console.log("   ✅ Configuration saved to release-config.json");
+    updateReleasesWorkflowPaths();
 
     // Create changelog structure
     createChangelogStructure(config);

@@ -1,4 +1,23 @@
 {
   "$schema": "./release-config.schema.json",
-  "software": {}
+  "software": {
+    "cli": {
+      "name": "Fern CLI",
+      "versionsFile": "packages/cli/cli/versions.yml",
+      "changelogFolder": "packages/cli/cli/changes",
+      "softwareDirectory": "packages/cli"
+    },
+    "python": {
+      "name": "Python SDK Generator",
+      "versionsFile": "generators/python/sdk/versions.yml",
+      "changelogFolder": "generators/python/sdk/changes",
+      "softwareDirectory": "generators/python"
+    },
+    "go": {
+      "name": "Go SDK Generator",
+      "versionsFile": "generators/go/sdk/versions.yml",
+      "changelogFolder": "generators/go/sdk/changes",
+      "softwareDirectory": "generators/go"
+    }
+  }
 }
