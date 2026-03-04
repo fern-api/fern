@@ -40,10 +40,10 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class UrlsClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -53,7 +53,7 @@ class UrlsClient {
      */
     withMixedCase(requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: "/urls/MixedCase",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -69,7 +69,7 @@ class UrlsClient {
      */
     noEndingSlash(requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: "/urls/no-ending-slash",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -85,7 +85,7 @@ class UrlsClient {
      */
     withEndingSlash(requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: "/urls/with-ending-slash/",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -101,7 +101,7 @@ class UrlsClient {
      */
     withUnderscores(requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: "/urls/with_underscores",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,

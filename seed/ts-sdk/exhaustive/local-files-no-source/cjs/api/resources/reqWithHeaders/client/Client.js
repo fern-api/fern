@@ -41,10 +41,10 @@ const core = __importStar(require("../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../errors/index.js"));
 class ReqWithHeadersClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * @param {SeedExhaustive.ReqWithHeaders} request
@@ -63,7 +63,7 @@ class ReqWithHeadersClient {
             "X-TEST-SERVICE-HEADER": xTestServiceHeader,
             "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
         });
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/test-headers/custom-header",
             body: _body,

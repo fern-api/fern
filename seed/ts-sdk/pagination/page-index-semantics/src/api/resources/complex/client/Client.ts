@@ -15,17 +15,19 @@ export declare namespace ComplexClient {
 
 export class ComplexClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ComplexClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ComplexClient.Options, client?: core.HttpClient) {
+    constructor(options: ComplexClient.Options);
+    constructor(options: ComplexClient.Options, requestFn: core.RequestFn);
+    constructor(options: ComplexClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedPaginationError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedPaginationError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -56,7 +58,7 @@ export class ComplexClient {
                 request: SeedPagination.SearchRequest,
             ): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => {
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??

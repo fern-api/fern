@@ -157,6 +157,14 @@ export interface Fetcher {
         _getReferenceTo: () => ts.Expression;
     };
 
+    readonly RequestFn: {
+        _getReferenceToType: () => ts.TypeNode;
+    };
+
+    readonly createRequestFn: {
+        _getReferenceTo: () => ts.Expression;
+    };
+
     readonly EndpointConfig: {
         _getReferenceToType: () => ts.TypeNode;
     };
@@ -643,6 +651,17 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
     public readonly HttpClient = {
         _getReferenceToType: this.withExportedName("HttpClient", (HttpClient) => () => HttpClient.getTypeNode()),
         _getReferenceTo: this.withExportedName("HttpClient", (HttpClient) => () => HttpClient.getExpression())
+    };
+
+    public readonly RequestFn = {
+        _getReferenceToType: this.withExportedName("RequestFn", (RequestFn) => () => RequestFn.getTypeNode())
+    };
+
+    public readonly createRequestFn = {
+        _getReferenceTo: this.withExportedName(
+            "createRequestFn",
+            (createRequestFn) => () => createRequestFn.getExpression()
+        )
     };
 
     public readonly EndpointConfig = {

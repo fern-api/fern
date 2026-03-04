@@ -16,17 +16,17 @@ export declare namespace SeedAnyAuthClient {
 
 export class SeedAnyAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedAnyAuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _auth: AuthClient | undefined;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedAnyAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedAnyAuthError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedAnyAuthError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get auth(): AuthClient {
@@ -34,6 +34,6 @@ export class SeedAnyAuthClient {
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options, this._client));
+        return (this._user ??= new UserClient(this._options, this._requestFn));
     }
 }

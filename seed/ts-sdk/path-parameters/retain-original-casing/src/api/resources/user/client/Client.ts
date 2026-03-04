@@ -15,17 +15,19 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options, client?: core.HttpClient) {
+    constructor(options: UserClient.Options);
+    constructor(options: UserClient.Options, requestFn: core.RequestFn);
+    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedPathParametersError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedPathParametersError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -43,7 +45,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { user_id: userId } = request;
         const _headers = {};
-        return this._client.request<SeedPathParameters.User>({
+        return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -67,7 +69,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const _headers = {};
-        return this._client.request<SeedPathParameters.User>({
+        return this._requestFn<SeedPathParameters.User>({
             method: "POST",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
             body: request,
@@ -98,7 +100,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { user_id: userId, body: _body } = request;
         const _headers = {};
-        return this._client.request<SeedPathParameters.User>({
+        return this._requestFn<SeedPathParameters.User>({
             method: "PATCH",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
             body: _body,
@@ -129,7 +131,7 @@ export class UserClient {
             limit,
         };
         const _headers = {};
-        return this._client.request<SeedPathParameters.User[]>({
+        return this._requestFn<SeedPathParameters.User[]>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -156,7 +158,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { user_id: userId, version } = request;
         const _headers = {};
-        return this._client.request<SeedPathParameters.User>({
+        return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
             queryParameters: requestOptions?.queryParams,
@@ -184,7 +186,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { user_id: userId, version, thought } = request;
         const _headers = {};
-        return this._client.request<SeedPathParameters.User>({
+        return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
             queryParameters: requestOptions?.queryParams,

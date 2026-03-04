@@ -17,13 +17,15 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UserClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options, client?: core.HttpClient) {
+    constructor(options: UserClient.Options);
+    constructor(options: UserClient.Options, requestFn: core.RequestFn);
+    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
 
 
                         this._options = normalizeClientOptionsWithAuth(options);
-                        this._client = client ?? new core.HttpClient(this._options, (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError);
+                        this._requestFn = requestFn ?? core.createRequestFn({ ...this._options, createStatusCodeError: (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError: handleNonStatusCodeError });
                     
     }
 
@@ -36,7 +38,7 @@ export class UserClient {
      */
     public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedSimpleApi.User> {
         const _headers = {};
-        return this._client.request<SeedSimpleApi.User>({
+        return this._requestFn<SeedSimpleApi.User>({
             method: "GET",
             path: `/users/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,

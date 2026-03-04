@@ -19,7 +19,7 @@ export declare namespace SeedEnumClient {
 
 export class SeedEnumClient {
     protected readonly _options: NormalizedClientOptions<SeedEnumClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _headers: HeadersClient | undefined;
     protected _inlinedRequest: InlinedRequestClient | undefined;
     protected _multipartForm: MultipartFormClient | undefined;
@@ -28,30 +28,30 @@ export class SeedEnumClient {
 
     constructor(options: SeedEnumClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedEnumError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedEnumError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get headers(): HeadersClient {
-        return (this._headers ??= new HeadersClient(this._options, this._client));
+        return (this._headers ??= new HeadersClient(this._options, this._requestFn));
     }
 
     public get inlinedRequest(): InlinedRequestClient {
-        return (this._inlinedRequest ??= new InlinedRequestClient(this._options, this._client));
+        return (this._inlinedRequest ??= new InlinedRequestClient(this._options, this._requestFn));
     }
 
     public get multipartForm(): MultipartFormClient {
-        return (this._multipartForm ??= new MultipartFormClient(this._options, this._client));
+        return (this._multipartForm ??= new MultipartFormClient(this._options, this._requestFn));
     }
 
     public get pathParam(): PathParamClient {
-        return (this._pathParam ??= new PathParamClient(this._options, this._client));
+        return (this._pathParam ??= new PathParamClient(this._options, this._requestFn));
     }
 
     public get queryParam(): QueryParamClient {
-        return (this._queryParam ??= new QueryParamClient(this._options, this._client));
+        return (this._queryParam ??= new QueryParamClient(this._options, this._requestFn));
     }
 }

@@ -93,9 +93,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
-    public static readonly CLIENT_PRIVATE_MEMBER = "_client";
+    public static readonly REQUEST_FN_PRIVATE_MEMBER = "_requestFn";
     private static readonly OPTIONS_PARAMETER_NAME = "options";
-    private static readonly CLIENT_PARAMETER_NAME = "client";
+    private static readonly REQUEST_FN_PARAMETER_NAME = "requestFn";
     public static readonly METADATA_FOR_TOKEN_SUPPLIER_VAR = "_metadata";
     public static readonly AUTH_PROVIDER_FIELD_NAME = "authProvider";
     public static readonly LOGGING_FIELD_NAME = "logging";
@@ -595,13 +595,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public instantiate({
         referenceToClient,
         referenceToOptions,
-        referenceToHttpClient
+        referenceToRequestFn
     }: {
         referenceToClient: ts.Expression;
         referenceToOptions: ts.Expression;
-        referenceToHttpClient?: ts.Expression;
+        referenceToRequestFn?: ts.Expression;
     }): ts.Expression {
-        const args = referenceToHttpClient ? [referenceToOptions, referenceToHttpClient] : [referenceToOptions];
+        const args = referenceToRequestFn ? [referenceToOptions, referenceToRequestFn] : [referenceToOptions];
         return ts.factory.createNewExpression(referenceToClient, undefined, args);
     }
 
@@ -699,11 +699,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             isReadonly: true
         });
 
-        // Add _client: HttpClient property
+        // Add _requestFn: RequestFn property
         serviceClass.properties.push({
             kind: StructureKind.Property,
-            name: GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER,
-            type: getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceToType()),
+            name: GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER,
+            type: getTextOfTsNode(context.coreUtilities.fetcher.RequestFn._getReferenceToType()),
             scope: Scope.Protected,
             isReadonly: true
         });
@@ -717,9 +717,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             )
         );
 
-        const httpClientParamType = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceToType());
+        const requestFnParamType = getTextOfTsNode(context.coreUtilities.fetcher.RequestFn._getReferenceToType());
 
-        // Build constructor: auth vs no-auth determines normalization, root vs non-root determines parameters and HttpClient wiring
+        // Build constructor: auth vs no-auth determines normalization, root vs non-root determines parameters and RequestFn wiring
         const hasAuth = this.authProvider != null && this.anyEndpointWithAuth;
         const optionsStatement = hasAuth
             ? this.getCtorOptionsStatementsWithAuth(context)
@@ -732,27 +732,44 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         };
 
         if (this.isRoot) {
-            // Root client: constructor(options) - creates HttpClient internally
+            // Root client: constructor(options) - creates RequestFn internally
             const statements = code`
                 ${optionsStatement}
-                this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${this.getNewHttpClientExpression(context)};
+                this.${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER} = ${this.getCreateRequestFnExpression(context)};
             `;
             serviceClass.ctors.push({
                 parameters: [optionsParam],
                 statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
             });
         } else {
-            // Non-root client: constructor(options, client?) - receives HttpClient or creates one
+            // Non-root client: two constructor overloads.
+            // Overload 1 (public): constructor(options: Options) — for standalone use
+            // Overload 2 (internal): constructor(options: Options, requestFn: RequestFn) — for parent injection
+            // Implementation: constructor(options: Options, requestFn?: RequestFn)
             const statements = code`
                 ${optionsStatement}
-                this.${GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME} ?? ${this.getNewHttpClientExpression(context)};
+                this.${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.REQUEST_FN_PARAMETER_NAME} ?? ${this.getCreateRequestFnExpression(context)};
             `;
             serviceClass.ctors.push({
+                overloads: [
+                    {
+                        parameters: [optionsParam]
+                    },
+                    {
+                        parameters: [
+                            optionsParam,
+                            {
+                                name: GeneratedSdkClientClassImpl.REQUEST_FN_PARAMETER_NAME,
+                                type: requestFnParamType
+                            }
+                        ]
+                    }
+                ],
                 parameters: [
                     optionsParam,
                     {
-                        name: GeneratedSdkClientClassImpl.CLIENT_PARAMETER_NAME,
-                        type: httpClientParamType,
+                        name: GeneratedSdkClientClassImpl.REQUEST_FN_PARAMETER_NAME,
+                        type: requestFnParamType,
                         hasQuestionToken: true
                     }
                 ],
@@ -776,7 +793,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
             // Determine which code generation pattern to use:
             // 1. GeneratedDefaultEndpointImplementation (non-paginated, non-non-throwing):
-            //    Single public method using this._client.request<T>(config)
+            //    Single public method using this._requestFn<T>(config)
             // 2. Everything else (streaming, file-download, paginated, non-throwing):
             //    Dual public/private pattern or single async method
             const isDefaultEndpoint = endpoint instanceof GeneratedDefaultEndpointImplementation;
@@ -785,7 +802,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const useClientRequest = isDefaultEndpoint && !isPaginated && !isNonThrowing;
 
             if (useClientRequest) {
-                // Single public method that returns this._client.request<T>(config) directly
+                // Single public method that returns this._requestFn<T>(config) directly
                 const clientRequestStatements = (
                     endpoint as GeneratedDefaultEndpointImplementation
                 ).getClientRequestStatements(context);
@@ -938,14 +955,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     /**
-     * Returns the expression `new HttpClient(options, errorFactory, errorHandler)`.
-     * Used by root clients (assigned to this._client) and non-root clients (as fallback).
+     * Returns the expression `createRequestFn({ ...options, createStatusCodeError, handleNonStatusCodeError })`.
+     * Used by root clients (assigned to this._requestFn) and non-root clients (as fallback).
      *
-     * For single-URL environments with a default, passes `defaultBaseUrl` so HttpClient
+     * For single-URL environments with a default, passes `defaultBaseUrl` so the request function
      * can fall back to the default environment URL when the user doesn't provide one.
      */
-    private getNewHttpClientExpression(context: SdkContext): Code {
-        const httpClientRef = getTextOfTsNode(context.coreUtilities.fetcher.HttpClient._getReferenceTo());
+    private getCreateRequestFnExpression(context: SdkContext): Code {
+        const createRequestFnRef = getTextOfTsNode(context.coreUtilities.fetcher.createRequestFn._getReferenceTo());
         const statusCodeErrorFactory = this.getStatusCodeErrorFactoryRef(context);
         const nonStatusCodeErrorHandler = this.getNonStatusCodeErrorHandlerRef(context);
 
@@ -954,7 +971,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const optionsArg =
             defaultBaseUrl != null ? `{ ...${optionsRef}, defaultBaseUrl: "${defaultBaseUrl}" }` : optionsRef;
 
-        return code`new ${httpClientRef}(${optionsArg}, ${statusCodeErrorFactory}, ${nonStatusCodeErrorHandler})`;
+        return code`${createRequestFnRef}({ ...${optionsArg}, createStatusCodeError: ${statusCodeErrorFactory}, handleNonStatusCodeError: ${nonStatusCodeErrorHandler} })`;
     }
 
     /**
@@ -1015,12 +1032,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     /**
-     * Returns a reference to `this._client` for use by sub-client instantiation.
+     * Returns a reference to `this._requestFn` for use by sub-client instantiation.
      */
-    public getReferenceToClient(): ts.Expression {
+    public getReferenceToRequestFn(): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createThis(),
-            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER)
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER)
         );
     }
 
@@ -1290,10 +1307,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getReferenceToFetcher(): ts.Expression {
-        // ALL endpoints route through this._client.fetch() so that every HTTP call
-        // goes through HttpClient. Custom fetcher is passed to HttpClient at construction time.
+        // ALL endpoints route through this._requestFn.fetch() so that every HTTP call
+        // goes through the request function. Custom fetcher is passed at construction time.
         return ts.factory.createPropertyAccessExpression(
-            this.getReferenceToClient(),
+            this.getReferenceToRequestFn(),
             ts.factory.createIdentifier("fetch")
         );
     }
@@ -1362,8 +1379,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     /**
      * Returns true if the given subpackage hosts an OAuth token or refresh endpoint.
-     * Sub-clients for these subpackages must NOT receive the parent's HttpClient,
-     * because the parent's HttpClient has an OAuthAuthProvider that would try to
+     * Sub-clients for these subpackages must NOT receive the parent's RequestFn,
+     * because the parent's RequestFn has an OAuthAuthProvider that would try to
      * authenticate the token request itself — creating a circular dependency.
      */
     public isOAuthTokenEndpointSubpackage(subpackageId: FernIr.SubpackageId): boolean {

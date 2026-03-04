@@ -40,10 +40,10 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class PrimitiveClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * @param {string} request
@@ -54,7 +54,7 @@ class PrimitiveClient {
      */
     getAndReturnString(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/string",
             body: request,
@@ -74,7 +74,7 @@ class PrimitiveClient {
      */
     getAndReturnInt(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/integer",
             body: request,
@@ -94,7 +94,7 @@ class PrimitiveClient {
      */
     getAndReturnLong(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/long",
             body: request,
@@ -114,7 +114,7 @@ class PrimitiveClient {
      */
     getAndReturnDouble(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/double",
             body: request,
@@ -134,7 +134,7 @@ class PrimitiveClient {
      */
     getAndReturnBool(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/boolean",
             body: request,
@@ -154,7 +154,7 @@ class PrimitiveClient {
      */
     getAndReturnDatetime(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/datetime",
             body: request,
@@ -174,7 +174,7 @@ class PrimitiveClient {
      */
     getAndReturnDate(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/date",
             body: request,
@@ -194,7 +194,7 @@ class PrimitiveClient {
      */
     getAndReturnUuid(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/uuid",
             body: request,
@@ -214,7 +214,7 @@ class PrimitiveClient {
      */
     getAndReturnBase64(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/primitive/base64",
             body: request,

@@ -19,7 +19,7 @@ export declare namespace SeedExhaustiveClient {
 
 export class SeedExhaustiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedExhaustiveClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _endpoints: EndpointsClient | undefined;
     protected _inlinedRequests: InlinedRequestsClient | undefined;
     protected _noAuth: NoAuthClient | undefined;
@@ -28,30 +28,30 @@ export class SeedExhaustiveClient {
 
     constructor(options: SeedExhaustiveClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedExhaustiveError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get endpoints(): EndpointsClient {
-        return (this._endpoints ??= new EndpointsClient(this._options, this._client));
+        return (this._endpoints ??= new EndpointsClient(this._options, this._requestFn));
     }
 
     public get inlinedRequests(): InlinedRequestsClient {
-        return (this._inlinedRequests ??= new InlinedRequestsClient(this._options, this._client));
+        return (this._inlinedRequests ??= new InlinedRequestsClient(this._options, this._requestFn));
     }
 
     public get noAuth(): NoAuthClient {
-        return (this._noAuth ??= new NoAuthClient(this._options, this._client));
+        return (this._noAuth ??= new NoAuthClient(this._options, this._requestFn));
     }
 
     public get noReqBody(): NoReqBodyClient {
-        return (this._noReqBody ??= new NoReqBodyClient(this._options, this._client));
+        return (this._noReqBody ??= new NoReqBodyClient(this._options, this._requestFn));
     }
 
     public get reqWithHeaders(): ReqWithHeadersClient {
-        return (this._reqWithHeaders ??= new ReqWithHeadersClient(this._options, this._client));
+        return (this._reqWithHeaders ??= new ReqWithHeadersClient(this._options, this._requestFn));
     }
 }

@@ -17,29 +17,29 @@ export declare namespace SeedPaginationClient {
 
 export class SeedPaginationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedPaginationClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _complex: ComplexClient | undefined;
     protected _inlineUsers: InlineUsersClient | undefined;
     protected _users: UsersClient | undefined;
 
     constructor(options: SeedPaginationClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedPaginationError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedPaginationError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get complex(): ComplexClient {
-        return (this._complex ??= new ComplexClient(this._options, this._client));
+        return (this._complex ??= new ComplexClient(this._options, this._requestFn));
     }
 
     public get inlineUsers(): InlineUsersClient {
-        return (this._inlineUsers ??= new InlineUsersClient(this._options, this._client));
+        return (this._inlineUsers ??= new InlineUsersClient(this._options, this._requestFn));
     }
 
     public get users(): UsersClient {
-        return (this._users ??= new UsersClient(this._options, this._client));
+        return (this._users ??= new UsersClient(this._options, this._requestFn));
     }
 }

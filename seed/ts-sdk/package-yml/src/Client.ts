@@ -16,20 +16,20 @@ export declare namespace SeedPackageYmlClient {
 
 export class SeedPackageYmlClient {
     protected readonly _options: NormalizedClientOptions<SeedPackageYmlClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedPackageYmlClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedPackageYmlError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedPackageYmlError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._client));
+        return (this._service ??= new ServiceClient(this._options, this._requestFn));
     }
 
     /**
@@ -47,7 +47,7 @@ export class SeedPackageYmlClient {
         requestOptions?: SeedPackageYmlClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: `/${core.url.encodePathParam(this._options.id)}/`,
             body: request,

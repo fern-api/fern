@@ -15,17 +15,19 @@ export declare namespace NullableOptionalClient {
 
 export class NullableOptionalClient {
     protected readonly _options: NormalizedClientOptions<NullableOptionalClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NullableOptionalClient.Options, client?: core.HttpClient) {
+    constructor(options: NullableOptionalClient.Options);
+    constructor(options: NullableOptionalClient.Options, requestFn: core.RequestFn);
+    constructor(options: NullableOptionalClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedNullableOptionalError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedNullableOptionalError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -42,7 +44,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.UserResponse>({
+        return this._requestFn<SeedNullableOptional.UserResponse>({
             method: "GET",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -78,7 +80,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.UserResponse>({
+        return this._requestFn<SeedNullableOptional.UserResponse>({
             method: "POST",
             path: "/api/users",
             body: request,
@@ -119,7 +121,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.UserResponse> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.UserResponse>({
+        return this._requestFn<SeedNullableOptional.UserResponse>({
             method: "PATCH",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             body: request,
@@ -157,7 +159,7 @@ export class NullableOptionalClient {
             sortBy,
         };
         const _headers = {};
-        return this._client.request<SeedNullableOptional.UserResponse[]>({
+        return this._requestFn<SeedNullableOptional.UserResponse[]>({
             method: "GET",
             path: "/api/users",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -192,7 +194,7 @@ export class NullableOptionalClient {
             isActive,
         };
         const _headers = {};
-        return this._client.request<SeedNullableOptional.UserResponse[]>({
+        return this._requestFn<SeedNullableOptional.UserResponse[]>({
             method: "GET",
             path: "/api/users/search",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -306,7 +308,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.ComplexProfile>({
+        return this._requestFn<SeedNullableOptional.ComplexProfile>({
             method: "POST",
             path: "/api/profiles/complex",
             body: request,
@@ -332,7 +334,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.ComplexProfile>({
+        return this._requestFn<SeedNullableOptional.ComplexProfile>({
             method: "GET",
             path: `/api/profiles/complex/${core.url.encodePathParam(profileId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -385,7 +387,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.ComplexProfile> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.ComplexProfile>({
+        return this._requestFn<SeedNullableOptional.ComplexProfile>({
             method: "PATCH",
             path: `/api/profiles/complex/${core.url.encodePathParam(profileId)}`,
             body: request,
@@ -461,7 +463,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.DeserializationTestResponse> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.DeserializationTestResponse>({
+        return this._requestFn<SeedNullableOptional.DeserializationTestResponse>({
             method: "POST",
             path: "/api/test/deserialization",
             body: request,
@@ -497,7 +499,7 @@ export class NullableOptionalClient {
             secondaryRole: secondaryRole !== undefined ? secondaryRole : undefined,
         };
         const _headers = {};
-        return this._client.request<SeedNullableOptional.UserResponse[]>({
+        return this._requestFn<SeedNullableOptional.UserResponse[]>({
             method: "GET",
             path: "/api/users/filter",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -520,7 +522,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.NotificationMethod | null> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.NotificationMethod | null>({
+        return this._requestFn<SeedNullableOptional.NotificationMethod | null>({
             method: "GET",
             path: `/api/users/${core.url.encodePathParam(userId)}/notifications`,
             queryParameters: requestOptions?.queryParams,
@@ -549,7 +551,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string[]> {
         const _headers = {};
-        return this._client.request<string[]>({
+        return this._requestFn<string[]>({
             method: "PUT",
             path: `/api/users/${core.url.encodePathParam(userId)}/tags`,
             body: request,
@@ -581,7 +583,7 @@ export class NullableOptionalClient {
         requestOptions?: NullableOptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullableOptional.SearchResult[] | null> {
         const _headers = {};
-        return this._client.request<SeedNullableOptional.SearchResult[] | null>({
+        return this._requestFn<SeedNullableOptional.SearchResult[] | null>({
             method: "POST",
             path: "/api/search",
             body: request,

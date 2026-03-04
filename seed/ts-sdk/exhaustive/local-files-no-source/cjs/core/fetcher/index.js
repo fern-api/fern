@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Supplier = exports.unknownRawResponse = exports.toRawResponse = exports.abortRawResponse = exports.HttpResponsePromise = exports.HttpClient = exports.getHeader = exports.fetcher = exports.EndpointSupplier = void 0;
+exports.Supplier = exports.unknownRawResponse = exports.toRawResponse = exports.abortRawResponse = exports.HttpResponsePromise = exports.HttpClient = exports.createRequestFn = exports.getHeader = exports.fetcher = exports.EndpointSupplier = void 0;
 var EndpointSupplier_js_1 = require("./EndpointSupplier.js");
 Object.defineProperty(exports, "EndpointSupplier", { enumerable: true, get: function () { return EndpointSupplier_js_1.EndpointSupplier; } });
 var Fetcher_js_1 = require("./Fetcher.js");
@@ -8,6 +8,7 @@ Object.defineProperty(exports, "fetcher", { enumerable: true, get: function () {
 var getHeader_js_1 = require("./getHeader.js");
 Object.defineProperty(exports, "getHeader", { enumerable: true, get: function () { return getHeader_js_1.getHeader; } });
 var HttpClient_js_1 = require("./HttpClient.js");
+Object.defineProperty(exports, "createRequestFn", { enumerable: true, get: function () { return HttpClient_js_1.createRequestFn; } });
 Object.defineProperty(exports, "HttpClient", { enumerable: true, get: function () { return HttpClient_js_1.HttpClient; } });
 var HttpResponsePromise_js_1 = require("./HttpResponsePromise.js");
 Object.defineProperty(exports, "HttpResponsePromise", { enumerable: true, get: function () { return HttpResponsePromise_js_1.HttpResponsePromise; } });

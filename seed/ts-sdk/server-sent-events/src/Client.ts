@@ -15,19 +15,19 @@ export declare namespace SeedServerSentEventsClient {
 
 export class SeedServerSentEventsClient {
     protected readonly _options: NormalizedClientOptions<SeedServerSentEventsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _completions: CompletionsClient | undefined;
 
     constructor(options: SeedServerSentEventsClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedServerSentEventsError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedServerSentEventsError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get completions(): CompletionsClient {
-        return (this._completions ??= new CompletionsClient(this._options, this._client));
+        return (this._completions ??= new CompletionsClient(this._options, this._requestFn));
     }
 }

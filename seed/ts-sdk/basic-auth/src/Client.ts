@@ -15,19 +15,19 @@ export declare namespace SeedBasicAuthClient {
 
 export class SeedBasicAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedBasicAuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _basicAuth: BasicAuthClient | undefined;
 
     constructor(options: SeedBasicAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedBasicAuthError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedBasicAuthError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get basicAuth(): BasicAuthClient {
-        return (this._basicAuth ??= new BasicAuthClient(this._options, this._client));
+        return (this._basicAuth ??= new BasicAuthClient(this._options, this._requestFn));
     }
 }

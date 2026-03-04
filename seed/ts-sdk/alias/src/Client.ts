@@ -15,15 +15,15 @@ export declare namespace SeedAliasClient {
 
 export class SeedAliasClient {
     protected readonly _options: NormalizedClientOptions<SeedAliasClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedAliasClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedAliasError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedAliasError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -38,7 +38,7 @@ export class SeedAliasClient {
         requestOptions?: SeedAliasClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: `/${core.url.encodePathParam(typeId)}`,
             queryParameters: requestOptions?.queryParams,

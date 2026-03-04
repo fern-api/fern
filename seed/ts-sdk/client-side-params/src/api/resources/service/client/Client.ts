@@ -16,17 +16,19 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options, client?: core.HttpClient) {
+    constructor(options: ServiceClient.Options);
+    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
+    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedClientSideParamsError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedClientSideParamsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -61,7 +63,7 @@ export class ServiceClient {
             search,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.Resource[]>({
+        return this._requestFn<SeedClientSideParams.Resource[]>({
             method: "GET",
             path: "/api/resources",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -94,7 +96,7 @@ export class ServiceClient {
             format,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.Resource>({
+        return this._requestFn<SeedClientSideParams.Resource>({
             method: "GET",
             path: `/api/resources/${core.url.encodePathParam(resourceId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -131,7 +133,7 @@ export class ServiceClient {
             offset,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.SearchResponse>({
+        return this._requestFn<SeedClientSideParams.SearchResponse>({
             method: "POST",
             path: "/api/resources/search",
             body: _body,
@@ -186,7 +188,7 @@ export class ServiceClient {
             fields,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.PaginatedUserResponse>({
+        return this._requestFn<SeedClientSideParams.PaginatedUserResponse>({
             method: "GET",
             path: "/api/users",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -219,7 +221,7 @@ export class ServiceClient {
             include_fields: includeFields,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.User>({
+        return this._requestFn<SeedClientSideParams.User>({
             method: "GET",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -260,7 +262,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
         const _headers = {};
-        return this._client.request<SeedClientSideParams.User>({
+        return this._requestFn<SeedClientSideParams.User>({
             method: "POST",
             path: "/api/users",
             body: request,
@@ -306,7 +308,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
         const _headers = {};
-        return this._client.request<SeedClientSideParams.User>({
+        return this._requestFn<SeedClientSideParams.User>({
             method: "PATCH",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             body: request,
@@ -329,7 +331,7 @@ export class ServiceClient {
      */
     public deleteUser(userId: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "DELETE",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -362,7 +364,7 @@ export class ServiceClient {
             fields,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.Connection[]>({
+        return this._requestFn<SeedClientSideParams.Connection[]>({
             method: "GET",
             path: "/api/connections",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -393,7 +395,7 @@ export class ServiceClient {
             fields,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.Connection>({
+        return this._requestFn<SeedClientSideParams.Connection>({
             method: "GET",
             path: `/api/connections/${core.url.encodePathParam(connectionId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -445,7 +447,7 @@ export class ServiceClient {
             app_type: appType != null ? toJson(appType) : undefined,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.PaginatedClientResponse>({
+        return this._requestFn<SeedClientSideParams.PaginatedClientResponse>({
             method: "GET",
             path: "/api/clients",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -478,7 +480,7 @@ export class ServiceClient {
             include_fields: includeFields,
         };
         const _headers = {};
-        return this._client.request<SeedClientSideParams.Client>({
+        return this._requestFn<SeedClientSideParams.Client>({
             method: "GET",
             path: `/api/clients/${core.url.encodePathParam(clientId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },

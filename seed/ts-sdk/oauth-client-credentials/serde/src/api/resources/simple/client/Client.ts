@@ -14,17 +14,19 @@ export declare namespace SimpleClient {
 
 export class SimpleClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SimpleClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SimpleClient.Options, client?: core.HttpClient) {
+    constructor(options: SimpleClient.Options);
+    constructor(options: SimpleClient.Options, requestFn: core.RequestFn);
+    constructor(options: SimpleClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedOauthClientCredentialsError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -35,7 +37,7 @@ export class SimpleClient {
      */
     public getSomething(requestOptions?: SimpleClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: "/get-something",
             queryParameters: requestOptions?.queryParams,

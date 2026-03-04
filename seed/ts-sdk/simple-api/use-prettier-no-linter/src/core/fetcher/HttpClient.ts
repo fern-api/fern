@@ -102,11 +102,66 @@ export interface HttpClientOptions {
 }
 
 /**
- * A composable HTTP client that encapsulates all shared HTTP mechanics:
+ * A callable request function that encapsulates all shared HTTP mechanics:
  * URL resolution, auth, header merging, timeout/retry, error handling.
  *
- * Created once at the top-level client and injected into all sub-clients.
+ * Created once at the top-level client via `createRequestFn` and injected into all sub-clients.
  * Sub-clients become thin wrappers that only describe what's unique per endpoint.
+ *
+ * The primary interface is the call signature: `requestFn<T>(config)` returns `HttpResponsePromise<T>`.
+ * The `.fetch()` method provides low-level access for endpoints that need the raw `APIResponse`
+ * (e.g. non-throwing mode, custom pagination).
+ */
+export interface RequestFn {
+    /** Make an HTTP request. Returns HttpResponsePromise for both `await` and `.withRawResponse()` usage. */
+    <T>(config: EndpointConfig | (() => Promise<EndpointConfig>)): HttpResponsePromise<T>;
+    /** Low-level fetch returning the raw APIResponse. Used by non-throwing and custom pagination endpoints. */
+    fetch<R = unknown>(
+        args: Fetcher.Args,
+        options?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: Record<string, unknown> },
+    ): Promise<APIResponse<R, Fetcher.Error>>;
+}
+
+/**
+ * Options for creating a RequestFn via `createRequestFn`.
+ * Extends HttpClientOptions with the SDK-specific error factories.
+ */
+export interface CreateRequestFnOptions extends HttpClientOptions {
+    /** Factory to create the SDK-specific generic error for status-code errors. */
+    createStatusCodeError: (args: { statusCode: number; body: unknown; rawResponse: RawResponse }) => Error;
+    /** Handler for non-status-code errors (timeout, network, unknown, etc.) */
+    handleNonStatusCodeError: (error: Fetcher.Error, rawResponse: RawResponse, method: string, path: string) => never;
+}
+
+/**
+ * Creates a RequestFn that closes over the provided options.
+ * The returned function is the primary API for making HTTP requests in generated SDKs.
+ *
+ * @example
+ * ```typescript
+ * const requestFn = createRequestFn({ ...normalizedOptions, createStatusCodeError, handleNonStatusCodeError });
+ * // Use as a function:
+ * requestFn<User>({ method: "GET", path: "/users/123", requestOptions });
+ * // Low-level fetch:
+ * requestFn.fetch<User>({ url: "...", method: "GET", headers: {} });
+ * ```
+ */
+export function createRequestFn(options: CreateRequestFnOptions): RequestFn {
+    const client = new HttpClient(options, options.createStatusCodeError, options.handleNonStatusCodeError);
+    function requestFn<T>(config: EndpointConfig | (() => Promise<EndpointConfig>)): HttpResponsePromise<T> {
+        return client.request<T>(config);
+    }
+    requestFn.fetch = function <R = unknown>(
+        args: Fetcher.Args,
+        opts?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: Record<string, unknown> },
+    ): Promise<APIResponse<R, Fetcher.Error>> {
+        return client.fetch<R>(args, opts);
+    };
+    return requestFn;
+}
+
+/**
+ * Internal HTTP client class. Not exported publicly — use `createRequestFn` instead.
  *
  * @param options - Normalized client options (baseUrl, auth, headers, etc.)
  * @param createStatusCodeError - Factory to create the SDK-specific generic error for status-code errors.

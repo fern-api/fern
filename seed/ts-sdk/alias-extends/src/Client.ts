@@ -15,15 +15,15 @@ export declare namespace SeedAliasExtendsClient {
 
 export class SeedAliasExtendsClient {
     protected readonly _options: NormalizedClientOptions<SeedAliasExtendsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedAliasExtendsClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedAliasExtendsError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedAliasExtendsError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -41,7 +41,7 @@ export class SeedAliasExtendsClient {
         requestOptions?: SeedAliasExtendsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "/extends/extended-inline-request-body",
             body: request,

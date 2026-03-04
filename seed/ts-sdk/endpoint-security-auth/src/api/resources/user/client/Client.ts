@@ -15,17 +15,19 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UserClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options, client?: core.HttpClient) {
+    constructor(options: UserClient.Options);
+    constructor(options: UserClient.Options, requestFn: core.RequestFn);
+    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedEndpointSecurityAuthError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedEndpointSecurityAuthError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -39,7 +41,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ Bearer: [] }] };
         const _headers = {};
-        return this._client.request<SeedEndpointSecurityAuth.User[]>({
+        return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
@@ -60,7 +62,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ ApiKey: [] }] };
         const _headers = {};
-        return this._client.request<SeedEndpointSecurityAuth.User[]>({
+        return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
@@ -81,7 +83,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["read-only"] }] };
         const _headers = {};
-        return this._client.request<SeedEndpointSecurityAuth.User[]>({
+        return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
@@ -102,7 +104,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ Basic: [] }] };
         const _headers = {};
-        return this._client.request<SeedEndpointSecurityAuth.User[]>({
+        return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
@@ -123,7 +125,7 @@ export class UserClient {
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ InferredAuth: [] }] };
         const _headers = {};
-        return this._client.request<SeedEndpointSecurityAuth.User[]>({
+        return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
@@ -146,7 +148,7 @@ export class UserClient {
             security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: ["read-only"] }, { Basic: [] }, { InferredAuth: [] }],
         };
         const _headers = {};
-        return this._client.request<SeedEndpointSecurityAuth.User[]>({
+        return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
@@ -169,7 +171,7 @@ export class UserClient {
             security: [{ Bearer: [], ApiKey: [], OAuth: ["read-only"], Basic: [], InferredAuth: [] }],
         };
         const _headers = {};
-        return this._client.request<SeedEndpointSecurityAuth.User[]>({
+        return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,

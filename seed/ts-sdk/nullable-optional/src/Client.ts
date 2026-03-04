@@ -15,19 +15,19 @@ export declare namespace SeedNullableOptionalClient {
 
 export class SeedNullableOptionalClient {
     protected readonly _options: NormalizedClientOptions<SeedNullableOptionalClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _nullableOptional: NullableOptionalClient | undefined;
 
     constructor(options: SeedNullableOptionalClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedNullableOptionalError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedNullableOptionalError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get nullableOptional(): NullableOptionalClient {
-        return (this._nullableOptional ??= new NullableOptionalClient(this._options, this._client));
+        return (this._nullableOptional ??= new NullableOptionalClient(this._options, this._requestFn));
     }
 }

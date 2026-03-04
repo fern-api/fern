@@ -16,13 +16,19 @@ export declare namespace QueryClient {
 
 export class QueryClient {
     protected readonly _options: NormalizedClientOptions<QueryClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: QueryClient.Options, client?: core.HttpClient) {
+    constructor(options: QueryClient.Options);
+    constructor(options: QueryClient.Options, requestFn: core.RequestFn);
+    constructor(options: QueryClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedLiteralError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedLiteralError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -72,7 +78,7 @@ export class QueryClient {
             "X-API-Version": requestOptions?.version ?? "02-02-2024",
             "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
         });
-        return this._client.request<SeedLiteral.SendResponse>({
+        return this._requestFn<SeedLiteral.SendResponse>({
             method: "POST",
             path: "query",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },

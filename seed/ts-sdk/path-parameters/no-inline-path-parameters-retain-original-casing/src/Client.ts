@@ -16,24 +16,24 @@ export declare namespace SeedPathParametersClient {
 
 export class SeedPathParametersClient {
     protected readonly _options: NormalizedClientOptions<SeedPathParametersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _organizations: OrganizationsClient | undefined;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedPathParametersClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedPathParametersError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedPathParametersError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get organizations(): OrganizationsClient {
-        return (this._organizations ??= new OrganizationsClient(this._options, this._client));
+        return (this._organizations ??= new OrganizationsClient(this._options, this._requestFn));
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options, this._client));
+        return (this._user ??= new UserClient(this._options, this._requestFn));
     }
 }

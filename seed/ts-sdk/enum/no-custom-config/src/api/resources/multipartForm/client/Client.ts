@@ -16,13 +16,19 @@ export declare namespace MultipartFormClient {
 
 export class MultipartFormClient {
     protected readonly _options: NormalizedClientOptions<MultipartFormClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: MultipartFormClient.Options, client?: core.HttpClient) {
+    constructor(options: MultipartFormClient.Options);
+    constructor(options: MultipartFormClient.Options, requestFn: core.RequestFn);
+    constructor(options: MultipartFormClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedEnumError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedEnumError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -33,7 +39,7 @@ export class MultipartFormClient {
         request: SeedEnum.MultipartFormRequest,
         requestOptions?: MultipartFormClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _body = await core.newFormData();
             _body.append("color", request.color);
             if (request.maybeColor != null) {

@@ -13,7 +13,7 @@ export declare namespace SeedExhaustiveClient {
 }
 export declare class SeedExhaustiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedExhaustiveClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _endpoints: EndpointsClient | undefined;
     protected _inlinedRequests: InlinedRequestsClient | undefined;
     protected _noAuth: NoAuthClient | undefined;

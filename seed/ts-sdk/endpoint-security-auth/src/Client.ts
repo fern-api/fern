@@ -16,17 +16,17 @@ export declare namespace SeedEndpointSecurityAuthClient {
 
 export class SeedEndpointSecurityAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedEndpointSecurityAuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _auth: AuthClient | undefined;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedEndpointSecurityAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedEndpointSecurityAuthError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedEndpointSecurityAuthError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get auth(): AuthClient {
@@ -34,6 +34,6 @@ export class SeedEndpointSecurityAuthClient {
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options, this._client));
+        return (this._user ??= new UserClient(this._options, this._requestFn));
     }
 }

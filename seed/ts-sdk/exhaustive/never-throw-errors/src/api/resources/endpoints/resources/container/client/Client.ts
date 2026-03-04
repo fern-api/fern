@@ -13,20 +13,22 @@ export declare namespace ContainerClient {
 
 export class ContainerClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContainerClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ContainerClient.Options, client?: core.HttpClient) {
+    constructor(options: ContainerClient.Options);
+    constructor(options: ContainerClient.Options, requestFn: core.RequestFn);
+    constructor(options: ContainerClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                     new Error(`HTTP ${args.statusCode} error`)) as any,
-                ((e: unknown) => {
+                handleNonStatusCodeError: ((e: unknown) => {
                     throw e;
                 }) as any,
-            );
+            });
     }
 
     /**
@@ -54,7 +56,7 @@ export class ContainerClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -134,7 +136,7 @@ export class ContainerClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -204,7 +206,7 @@ export class ContainerClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -282,7 +284,7 @@ export class ContainerClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -354,7 +356,7 @@ export class ContainerClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -434,7 +436,7 @@ export class ContainerClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -514,7 +516,7 @@ export class ContainerClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -594,7 +596,7 @@ export class ContainerClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??

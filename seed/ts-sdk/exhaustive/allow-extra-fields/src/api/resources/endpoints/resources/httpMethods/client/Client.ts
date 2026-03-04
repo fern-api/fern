@@ -15,17 +15,19 @@ export declare namespace HttpMethodsClient {
 
 export class HttpMethodsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<HttpMethodsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: HttpMethodsClient.Options, client?: core.HttpClient) {
+    constructor(options: HttpMethodsClient.Options);
+    constructor(options: HttpMethodsClient.Options, requestFn: core.RequestFn);
+    constructor(options: HttpMethodsClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -37,7 +39,7 @@ export class HttpMethodsClient {
      */
     public testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
@@ -62,7 +64,7 @@ export class HttpMethodsClient {
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _headers = {};
-        return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
+        return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "POST",
             path: "/http-methods",
             body: request,
@@ -92,7 +94,7 @@ export class HttpMethodsClient {
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _headers = {};
-        return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
+        return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "PUT",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             body: request,
@@ -136,7 +138,7 @@ export class HttpMethodsClient {
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _headers = {};
-        return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
+        return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "PATCH",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             body: request,
@@ -162,7 +164,7 @@ export class HttpMethodsClient {
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "DELETE",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,

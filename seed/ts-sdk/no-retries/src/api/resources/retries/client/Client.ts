@@ -15,13 +15,19 @@ export declare namespace RetriesClient {
 
 export class RetriesClient {
     protected readonly _options: NormalizedClientOptions<RetriesClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: RetriesClient.Options, client?: core.HttpClient) {
+    constructor(options: RetriesClient.Options);
+    constructor(options: RetriesClient.Options, requestFn: core.RequestFn);
+    constructor(options: RetriesClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedNoRetriesError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedNoRetriesError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -32,7 +38,7 @@ export class RetriesClient {
      */
     public getUsers(requestOptions?: RetriesClient.RequestOptions): core.HttpResponsePromise<SeedNoRetries.User[]> {
         const _headers = {};
-        return this._client.request<SeedNoRetries.User[]>({
+        return this._requestFn<SeedNoRetries.User[]>({
             method: "GET",
             path: "/users",
             queryParameters: requestOptions?.queryParams,

@@ -16,13 +16,19 @@ export declare namespace PathParamClient {
 
 export class PathParamClient {
     protected readonly _options: NormalizedClientOptions<PathParamClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PathParamClient.Options, client?: core.HttpClient) {
+    constructor(options: PathParamClient.Options);
+    constructor(options: PathParamClient.Options, requestFn: core.RequestFn);
+    constructor(options: PathParamClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedEnumError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedEnumError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -39,7 +45,7 @@ export class PathParamClient {
         requestOptions?: PathParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `path/${core.url.encodePathParam(serializers.Operand.jsonOrThrow(operand, { omitUndefined: true }))}/${core.url.encodePathParam(serializers.ColorOrOperand.jsonOrThrow(operandOrColor, { omitUndefined: true }))}`,
             queryParameters: requestOptions?.queryParams,

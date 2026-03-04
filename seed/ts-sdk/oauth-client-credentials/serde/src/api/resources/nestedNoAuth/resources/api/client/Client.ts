@@ -14,17 +14,19 @@ export declare namespace ApiClient {
 
 export class ApiClient {
     protected readonly _options: NormalizedClientOptions<ApiClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ApiClient.Options, client?: core.HttpClient) {
+    constructor(options: ApiClient.Options);
+    constructor(options: ApiClient.Options, requestFn: core.RequestFn);
+    constructor(options: ApiClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedOauthClientCredentialsError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -35,7 +37,7 @@ export class ApiClient {
      */
     public getSomething(requestOptions?: ApiClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: "/nested-no-auth/get-something",
             queryParameters: requestOptions?.queryParams,

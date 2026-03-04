@@ -50,10 +50,10 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class ParamsClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * GET with path param
@@ -66,7 +66,7 @@ class ParamsClient {
      */
     getWithPath(param, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -88,7 +88,7 @@ class ParamsClient {
     getWithInlinePath(request, requestOptions) {
         const { param } = request;
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -115,7 +115,7 @@ class ParamsClient {
             number: number_,
         };
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: "/params",
             queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
@@ -142,7 +142,7 @@ class ParamsClient {
             number: number_,
         };
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: "/params",
             queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
@@ -168,7 +168,7 @@ class ParamsClient {
             query,
         };
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
@@ -194,7 +194,7 @@ class ParamsClient {
             query,
         };
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
@@ -214,7 +214,7 @@ class ParamsClient {
      */
     modifyWithPath(param, request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             body: request,
@@ -240,7 +240,7 @@ class ParamsClient {
     modifyWithInlinePath(request, requestOptions) {
         const { param, body: _body } = request;
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             body: _body,
@@ -263,7 +263,7 @@ class ParamsClient {
      *     await client.endpoints.params.uploadWithPath(createReadStream("path/to/file"), "upload-path")
      */
     uploadWithPath(uploadable, param, requestOptions) {
-        return this._client.request(() => __awaiter(this, void 0, void 0, function* () {
+        return this._requestFn(() => __awaiter(this, void 0, void 0, function* () {
             const _binaryUploadRequest = yield core.file.toBinaryUploadRequest(uploadable);
             const _headers = (0, headers_js_1.mergeOnlyDefinedHeaders)(Object.assign({}, _binaryUploadRequest.headers));
             return {

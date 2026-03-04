@@ -17,17 +17,19 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options, client?: core.HttpClient) {
+    constructor(options: ServiceClient.Options);
+    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
+    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedFileUploadError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedFileUploadError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -38,7 +40,7 @@ export class ServiceClient {
         request: SeedFileUpload.MyRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _body = await core.newFormData();
             if (request.maybe_string != null) {
                 _body.append("maybe_string", request.maybe_string);
@@ -115,7 +117,7 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _body = await core.newFormData();
             await _body.appendFile("file", request.file);
             const _maybeEncodedRequest = await _body.getRequest();
@@ -141,7 +143,7 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileWithQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _queryParams: Record<string, unknown> = {
                 maybeString: request.maybeString,
                 integer: request.integer,
@@ -174,7 +176,7 @@ export class ServiceClient {
         request: SeedFileUpload.JustFileWithOptionalQueryParamsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _queryParams: Record<string, unknown> = {
                 maybeString: request.maybeString,
                 maybeInteger: request.maybeInteger,
@@ -204,7 +206,7 @@ export class ServiceClient {
         request: SeedFileUpload.WithContentTypeRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _body = await core.newFormData();
             await _body.appendFile("file", request.file);
             _body.append("foo", request.foo);
@@ -235,7 +237,7 @@ export class ServiceClient {
         request: SeedFileUpload.WithFormEncodingRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _body = await core.newFormData();
             await _body.appendFile("file", request.file);
             for (const [key, value] of Object.entries(core.encodeAsFormParameter({ foo: request.foo }))) {
@@ -267,7 +269,7 @@ export class ServiceClient {
         request: SeedFileUpload.MyOtherRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _body = await core.newFormData();
             if (request.maybe_string != null) {
                 for (const [key, value] of Object.entries(
@@ -378,7 +380,7 @@ export class ServiceClient {
         request: SeedFileUpload.OptionalArgsRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return this._client.request<string>(async () => {
+        return this._requestFn<string>(async () => {
             const _body = await core.newFormData();
             if (request.image_file != null) {
                 await _body.appendFile("image_file", request.image_file);
@@ -409,7 +411,7 @@ export class ServiceClient {
         request: SeedFileUpload.InlineTypeRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return this._client.request<string>(async () => {
+        return this._requestFn<string>(async () => {
             const _body = await core.newFormData();
             await _body.appendFile("file", request.file);
             _body.append("request", toJson(request.request));
@@ -436,7 +438,7 @@ export class ServiceClient {
         request: SeedFileUpload.WithJsonPropertyRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return this._client.request<string>(async () => {
+        return this._requestFn<string>(async () => {
             const _body = await core.newFormData();
             await _body.appendFile("file", request.file);
             if (request.json != null) {
@@ -465,7 +467,7 @@ export class ServiceClient {
      */
     public simple(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "/snippet",
             queryParameters: requestOptions?.queryParams,
@@ -482,7 +484,7 @@ export class ServiceClient {
         request: SeedFileUpload.LiteralEnumRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return this._client.request<string>(async () => {
+        return this._requestFn<string>(async () => {
             const _body = await core.newFormData();
             await _body.appendFile("file", request.file);
             if (request.model_type != null) {

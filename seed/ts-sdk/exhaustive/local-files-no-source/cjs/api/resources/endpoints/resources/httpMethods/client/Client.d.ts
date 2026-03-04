@@ -9,8 +9,9 @@ export declare namespace HttpMethodsClient {
 }
 export declare class HttpMethodsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<HttpMethodsClient.Options>;
-    protected readonly _client: core.HttpClient;
-    constructor(options: HttpMethodsClient.Options, client?: core.HttpClient);
+    protected readonly _requestFn: core.RequestFn;
+    constructor(options: HttpMethodsClient.Options);
+    constructor(options: HttpMethodsClient.Options, requestFn: core.RequestFn);
     /**
      * @param {string} id
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.

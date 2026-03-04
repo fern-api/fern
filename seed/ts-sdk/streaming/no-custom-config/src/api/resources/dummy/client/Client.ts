@@ -15,13 +15,19 @@ export declare namespace DummyClient {
 
 export class DummyClient {
     protected readonly _options: NormalizedClientOptions<DummyClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: DummyClient.Options, client?: core.HttpClient) {
+    constructor(options: DummyClient.Options);
+    constructor(options: DummyClient.Options, requestFn: core.RequestFn);
+    constructor(options: DummyClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedStreamingError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedStreamingError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public generateStream(
@@ -36,7 +42,7 @@ export class DummyClient {
         requestOptions?: DummyClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
         const _headers = {};
-        const _response = await this._client.fetch<ReadableStream>(
+        const _response = await this._requestFn.fetch<ReadableStream>(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -100,7 +106,7 @@ export class DummyClient {
         requestOptions?: DummyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
         const _headers = {};
-        return this._client.request<SeedStreaming.StreamResponse>({
+        return this._requestFn<SeedStreaming.StreamResponse>({
             method: "POST",
             path: "generate",
             body: { ...request, stream: false },

@@ -16,17 +16,19 @@ export declare namespace InlinedRequestsClient {
 
 export class InlinedRequestsClient {
     protected readonly _options: NormalizedClientOptions<InlinedRequestsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: InlinedRequestsClient.Options, client?: core.HttpClient) {
+    constructor(options: InlinedRequestsClient.Options);
+    constructor(options: InlinedRequestsClient.Options, requestFn: core.RequestFn);
+    constructor(options: InlinedRequestsClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -65,7 +67,7 @@ export class InlinedRequestsClient {
         requestOptions?: InlinedRequestsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _headers = {};
-        return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
+        return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "POST",
             path: "/req-bodies/object",
             body: serializers.PostWithObjectBody.jsonOrThrow(request, {

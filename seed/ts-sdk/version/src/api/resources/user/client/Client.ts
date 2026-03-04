@@ -16,13 +16,19 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options, client?: core.HttpClient) {
+    constructor(options: UserClient.Options);
+    constructor(options: UserClient.Options, requestFn: core.RequestFn);
+    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedVersionError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedVersionError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -37,7 +43,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedVersion.User> {
         const _headers = mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion });
-        return this._client.request<SeedVersion.User>({
+        return this._requestFn<SeedVersion.User>({
             method: "GET",
             path: `/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,

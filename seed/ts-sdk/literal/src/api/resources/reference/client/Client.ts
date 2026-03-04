@@ -16,13 +16,19 @@ export declare namespace ReferenceClient {
 
 export class ReferenceClient {
     protected readonly _options: NormalizedClientOptions<ReferenceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ReferenceClient.Options, client?: core.HttpClient) {
+    constructor(options: ReferenceClient.Options);
+    constructor(options: ReferenceClient.Options, requestFn: core.RequestFn);
+    constructor(options: ReferenceClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedLiteralError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedLiteralError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -52,7 +58,7 @@ export class ReferenceClient {
             "X-API-Version": requestOptions?.version ?? "02-02-2024",
             "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
         });
-        return this._client.request<SeedLiteral.SendResponse>({
+        return this._requestFn<SeedLiteral.SendResponse>({
             method: "POST",
             path: "reference",
             body: request,

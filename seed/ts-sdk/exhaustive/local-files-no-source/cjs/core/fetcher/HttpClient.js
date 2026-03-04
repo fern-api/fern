@@ -10,17 +10,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpClient = void 0;
+exports.createRequestFn = createRequestFn;
 const headers_js_1 = require("../headers.js");
 const join_js_1 = require("../url/join.js");
 const Fetcher_js_1 = require("./Fetcher.js");
 const HttpResponsePromise_js_1 = require("./HttpResponsePromise.js");
 const Supplier_js_1 = require("./Supplier.js");
 /**
- * A composable HTTP client that encapsulates all shared HTTP mechanics:
- * URL resolution, auth, header merging, timeout/retry, error handling.
+ * Creates a RequestFn that closes over the provided options.
+ * The returned function is the primary API for making HTTP requests in generated SDKs.
  *
- * Created once at the top-level client and injected into all sub-clients.
- * Sub-clients become thin wrappers that only describe what's unique per endpoint.
+ * @example
+ * ```typescript
+ * const requestFn = createRequestFn({ ...normalizedOptions, createStatusCodeError, handleNonStatusCodeError });
+ * // Use as a function:
+ * requestFn<User>({ method: "GET", path: "/users/123", requestOptions });
+ * // Low-level fetch:
+ * requestFn.fetch<User>({ url: "...", method: "GET", headers: {} });
+ * ```
+ */
+function createRequestFn(options) {
+    const client = new HttpClient(options, options.createStatusCodeError, options.handleNonStatusCodeError);
+    function requestFn(config) {
+        return client.request(config);
+    }
+    requestFn.fetch = (args, opts) => client.fetch(args, opts);
+    return requestFn;
+}
+/**
+ * Internal HTTP client class. Not exported publicly — use `createRequestFn` instead.
  *
  * @param options - Normalized client options (baseUrl, auth, headers, etc.)
  * @param createStatusCodeError - Factory to create the SDK-specific generic error for status-code errors.

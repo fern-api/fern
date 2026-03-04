@@ -13,20 +13,22 @@ export declare namespace ObjectClient {
 
 export class ObjectClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ObjectClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ObjectClient.Options, client?: core.HttpClient) {
+    constructor(options: ObjectClient.Options);
+    constructor(options: ObjectClient.Options, requestFn: core.RequestFn);
+    constructor(options: ObjectClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                     new Error(`HTTP ${args.statusCode} error`)) as any,
-                ((e: unknown) => {
+                handleNonStatusCodeError: ((e: unknown) => {
                     throw e;
                 }) as any,
-            );
+            });
     }
 
     /**
@@ -76,7 +78,7 @@ export class ObjectClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -154,7 +156,7 @@ export class ObjectClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -236,7 +238,7 @@ export class ObjectClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -333,7 +335,7 @@ export class ObjectClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -435,7 +437,7 @@ export class ObjectClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -553,7 +555,7 @@ export class ObjectClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -635,7 +637,7 @@ export class ObjectClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -718,7 +720,7 @@ export class ObjectClient {
         >
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??

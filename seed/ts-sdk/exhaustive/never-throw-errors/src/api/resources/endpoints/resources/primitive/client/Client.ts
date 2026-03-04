@@ -13,20 +13,22 @@ export declare namespace PrimitiveClient {
 
 export class PrimitiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PrimitiveClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PrimitiveClient.Options, client?: core.HttpClient) {
+    constructor(options: PrimitiveClient.Options);
+    constructor(options: PrimitiveClient.Options, requestFn: core.RequestFn);
+    constructor(options: PrimitiveClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                     new Error(`HTTP ${args.statusCode} error`)) as any,
-                ((e: unknown) => {
+                handleNonStatusCodeError: ((e: unknown) => {
                     throw e;
                 }) as any,
-            );
+            });
     }
 
     /**
@@ -50,7 +52,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnString.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -116,7 +118,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnInt.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -182,7 +184,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnLong.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -248,7 +250,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -314,7 +316,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.primitive.getAndReturnBool.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -382,7 +384,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -448,7 +450,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDate.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -514,7 +516,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -580,7 +582,7 @@ export class PrimitiveClient {
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error>>
     > {
         const _headers = {};
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??

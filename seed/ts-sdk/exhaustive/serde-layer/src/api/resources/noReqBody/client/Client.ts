@@ -16,17 +16,19 @@ export declare namespace NoReqBodyClient {
 
 export class NoReqBodyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NoReqBodyClient.Options, client?: core.HttpClient) {
+    constructor(options: NoReqBodyClient.Options);
+    constructor(options: NoReqBodyClient.Options, requestFn: core.RequestFn);
+    constructor(options: NoReqBodyClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -39,7 +41,7 @@ export class NoReqBodyClient {
         requestOptions?: NoReqBodyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _headers = {};
-        return this._client.request<SeedExhaustive.types.ObjectWithOptionalField>({
+        return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "GET",
             path: "/no-req-body",
             queryParameters: requestOptions?.queryParams,
@@ -64,7 +66,7 @@ export class NoReqBodyClient {
      */
     public postWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "/no-req-body",
             queryParameters: requestOptions?.queryParams,

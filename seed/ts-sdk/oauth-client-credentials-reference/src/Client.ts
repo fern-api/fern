@@ -16,17 +16,17 @@ export declare namespace SeedOauthClientCredentialsReferenceClient {
 
 export class SeedOauthClientCredentialsReferenceClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedOauthClientCredentialsReferenceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _auth: AuthClient | undefined;
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedOauthClientCredentialsReferenceClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedOauthClientCredentialsReferenceError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsReferenceError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get auth(): AuthClient {
@@ -34,6 +34,6 @@ export class SeedOauthClientCredentialsReferenceClient {
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options, this._client));
+        return (this._simple ??= new SimpleClient(this._options, this._requestFn));
     }
 }

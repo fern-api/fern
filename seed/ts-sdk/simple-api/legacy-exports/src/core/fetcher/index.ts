@@ -5,7 +5,15 @@ export { EndpointSupplier } from "./EndpointSupplier";
 export type { Fetcher, FetchFunction } from "./Fetcher";
 export { fetcher } from "./Fetcher";
 export { getHeader } from "./getHeader";
-export { type EndpointConfig, HttpClient, type HttpClientOptions, type RequestOptions } from "./HttpClient";
+export {
+    type CreateRequestFnOptions,
+    createRequestFn,
+    type EndpointConfig,
+    HttpClient,
+    type HttpClientOptions,
+    type RequestFn,
+    type RequestOptions,
+} from "./HttpClient";
 export { HttpResponsePromise } from "./HttpResponsePromise";
 export type { RawResponse, WithRawResponse } from "./RawResponse";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";

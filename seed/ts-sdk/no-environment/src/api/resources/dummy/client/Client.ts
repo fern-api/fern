@@ -14,17 +14,19 @@ export declare namespace DummyClient {
 
 export class DummyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<DummyClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: DummyClient.Options, client?: core.HttpClient) {
+    constructor(options: DummyClient.Options);
+    constructor(options: DummyClient.Options, requestFn: core.RequestFn);
+    constructor(options: DummyClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedNoEnvironmentError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedNoEnvironmentError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -35,7 +37,7 @@ export class DummyClient {
      */
     public getDummy(requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: "dummy",
             queryParameters: requestOptions?.queryParams,

@@ -13,10 +13,10 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class PaginationClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * List items with cursor pagination
@@ -40,7 +40,7 @@ export class PaginationClient {
                     limit,
                 };
                 const _headers = {};
-                const _response = yield this._client.fetch({
+                const _response = yield this._requestFn.fetch({
                     url: core.url.join((_a = (yield core.Supplier.get(this._options.baseUrl))) !== null && _a !== void 0 ? _a : (yield core.Supplier.get(this._options.environment)), "/pagination"),
                     method: "GET",
                     headers: _headers,

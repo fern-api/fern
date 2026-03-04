@@ -15,19 +15,19 @@ export declare namespace SeedStreamingClient {
 
 export class SeedStreamingClient {
     protected readonly _options: NormalizedClientOptions<SeedStreamingClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _dummy: DummyClient | undefined;
 
     constructor(options: SeedStreamingClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedStreamingError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedStreamingError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get dummy(): DummyClient {
-        return (this._dummy ??= new DummyClient(this._options, this._client));
+        return (this._dummy ??= new DummyClient(this._options, this._requestFn));
     }
 }

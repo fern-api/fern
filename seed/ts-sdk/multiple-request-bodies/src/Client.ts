@@ -16,15 +16,15 @@ export declare namespace SeedApiClient {
 
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedApiClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            { ...this._options, defaultBaseUrl: "https://api.example.com/v1" },
-            (args) => new errors.SeedApiError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...{ ...this._options, defaultBaseUrl: "https://api.example.com/v1" },
+            createStatusCodeError: (args) => new errors.SeedApiError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -39,7 +39,7 @@ export class SeedApiClient {
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.UploadDocumentResponse> {
         const _headers = {};
-        return this._client.request<SeedApi.UploadDocumentResponse>({
+        return this._requestFn<SeedApi.UploadDocumentResponse>({
             method: "POST",
             path: "documents/upload",
             body: request,
@@ -59,7 +59,7 @@ export class SeedApiClient {
         uploadable: core.file.Uploadable,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.UploadDocumentResponse> {
-        return this._client.request<SeedApi.UploadDocumentResponse>(async () => {
+        return this._requestFn<SeedApi.UploadDocumentResponse>(async () => {
             const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
             const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
             return {

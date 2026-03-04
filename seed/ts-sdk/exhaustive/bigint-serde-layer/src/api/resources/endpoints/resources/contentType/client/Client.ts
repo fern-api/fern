@@ -16,17 +16,19 @@ export declare namespace ContentTypeClient {
 
 export class ContentTypeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContentTypeClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ContentTypeClient.Options, client?: core.HttpClient) {
+    constructor(options: ContentTypeClient.Options);
+    constructor(options: ContentTypeClient.Options, requestFn: core.RequestFn);
+    constructor(options: ContentTypeClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -57,7 +59,7 @@ export class ContentTypeClient {
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "/foo/bar",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
@@ -100,7 +102,7 @@ export class ContentTypeClient {
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "/foo/baz",
             body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {

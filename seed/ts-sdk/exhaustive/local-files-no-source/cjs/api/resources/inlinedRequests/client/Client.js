@@ -41,10 +41,10 @@ const handleNonStatusCodeError_js_1 = require("../../../../errors/handleNonStatu
 const errors = __importStar(require("../../../../errors/index.js"));
 const SeedExhaustive = __importStar(require("../../../index.js"));
 class InlinedRequestsClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * POST with custom object in request body, response is an object
@@ -79,7 +79,7 @@ class InlinedRequestsClient {
      */
     postWithObjectBodyandResponse(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/req-bodies/object",
             body: request,

@@ -15,17 +15,19 @@ export declare namespace CompletionsClient {
 
 export class CompletionsClient {
     protected readonly _options: NormalizedClientOptions<CompletionsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: CompletionsClient.Options, client?: core.HttpClient) {
+    constructor(options: CompletionsClient.Options);
+    constructor(options: CompletionsClient.Options, requestFn: core.RequestFn);
+    constructor(options: CompletionsClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedServerSentEventsError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedServerSentEventsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public stream(
@@ -40,7 +42,7 @@ export class CompletionsClient {
         requestOptions?: CompletionsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
         const _headers = {};
-        const _response = await this._client.fetch<ReadableStream>(
+        const _response = await this._requestFn.fetch<ReadableStream>(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -102,7 +104,7 @@ export class CompletionsClient {
         requestOptions?: CompletionsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
         const _headers = {};
-        const _response = await this._client.fetch<ReadableStream>(
+        const _response = await this._requestFn.fetch<ReadableStream>(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??

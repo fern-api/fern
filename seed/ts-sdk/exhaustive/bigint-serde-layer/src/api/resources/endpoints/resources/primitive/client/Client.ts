@@ -15,17 +15,19 @@ export declare namespace PrimitiveClient {
 
 export class PrimitiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PrimitiveClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PrimitiveClient.Options, client?: core.HttpClient) {
+    constructor(options: PrimitiveClient.Options);
+    constructor(options: PrimitiveClient.Options, requestFn: core.RequestFn);
+    constructor(options: PrimitiveClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -40,7 +42,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "/primitive/string",
             body: serializers.endpoints.primitive.getAndReturnString.Request.jsonOrThrow(request, {
@@ -75,7 +77,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
         const _headers = {};
-        return this._client.request<number>({
+        return this._requestFn<number>({
             method: "POST",
             path: "/primitive/integer",
             body: serializers.endpoints.primitive.getAndReturnInt.Request.jsonOrThrow(request, {
@@ -110,7 +112,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<bigint> {
         const _headers = {};
-        return this._client.request<bigint>({
+        return this._requestFn<bigint>({
             method: "POST",
             path: "/primitive/long",
             body: serializers.endpoints.primitive.getAndReturnLong.Request.jsonOrThrow(request, {
@@ -145,7 +147,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
         const _headers = {};
-        return this._client.request<number>({
+        return this._requestFn<number>({
             method: "POST",
             path: "/primitive/double",
             body: serializers.endpoints.primitive.getAndReturnDouble.Request.jsonOrThrow(request, {
@@ -180,7 +182,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "POST",
             path: "/primitive/boolean",
             body: serializers.endpoints.primitive.getAndReturnBool.Request.jsonOrThrow(request, {
@@ -215,7 +217,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<Date> {
         const _headers = {};
-        return this._client.request<Date>({
+        return this._requestFn<Date>({
             method: "POST",
             path: "/primitive/datetime",
             body: serializers.endpoints.primitive.getAndReturnDatetime.Request.jsonOrThrow(request, {
@@ -250,7 +252,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "/primitive/date",
             body: serializers.endpoints.primitive.getAndReturnDate.Request.jsonOrThrow(request, {
@@ -285,7 +287,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "/primitive/uuid",
             body: serializers.endpoints.primitive.getAndReturnUuid.Request.jsonOrThrow(request, {
@@ -320,7 +322,7 @@ export class PrimitiveClient {
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "/primitive/base64",
             body: serializers.endpoints.primitive.getAndReturnBase64.Request.jsonOrThrow(request, {

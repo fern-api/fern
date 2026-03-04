@@ -17,17 +17,19 @@ export declare namespace ParamsClient {
 
 export class ParamsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ParamsClient.Options, client?: core.HttpClient) {
+    constructor(options: ParamsClient.Options);
+    constructor(options: ParamsClient.Options, requestFn: core.RequestFn);
+    constructor(options: ParamsClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -41,7 +43,7 @@ export class ParamsClient {
      */
     public getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions?.queryParams,
@@ -75,7 +77,7 @@ export class ParamsClient {
     ): core.HttpResponsePromise<string> {
         const { param } = request;
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions?.queryParams,
@@ -114,7 +116,7 @@ export class ParamsClient {
             number: number_,
         };
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: "/params",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -145,7 +147,7 @@ export class ParamsClient {
             number: number_,
         };
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: "/params",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -176,7 +178,7 @@ export class ParamsClient {
             query,
         };
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -206,7 +208,7 @@ export class ParamsClient {
             query,
         };
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -231,7 +233,7 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             body: serializers.endpoints.params.modifyWithPath.Request.jsonOrThrow(request, {
@@ -272,7 +274,7 @@ export class ParamsClient {
     ): core.HttpResponsePromise<string> {
         const { param, body: _body } = request;
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             body: serializers.endpoints.params.modifyWithInlinePath.Request.jsonOrThrow(_body, {
@@ -311,7 +313,7 @@ export class ParamsClient {
         param: string,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
-        return this._client.request<SeedExhaustive.types.ObjectWithRequiredField>(async () => {
+        return this._requestFn<SeedExhaustive.types.ObjectWithRequiredField>(async () => {
             const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
             const _headers = mergeOnlyDefinedHeaders({ ..._binaryUploadRequest.headers });
             return {

@@ -15,17 +15,19 @@ export declare namespace UsersClient {
 
 export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UsersClient.Options, client?: core.HttpClient) {
+    constructor(options: UsersClient.Options);
+    constructor(options: UsersClient.Options, requestFn: core.RequestFn);
+    constructor(options: UsersClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedPaginationUriPathError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedPaginationUriPathError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -38,7 +40,7 @@ export class UsersClient {
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPaginationUriPath.ListUsersUriPaginationResponse> {
         const _headers = {};
-        return this._client.request<SeedPaginationUriPath.ListUsersUriPaginationResponse>({
+        return this._requestFn<SeedPaginationUriPath.ListUsersUriPaginationResponse>({
             method: "GET",
             path: "/users/uri",
             queryParameters: requestOptions?.queryParams,
@@ -57,7 +59,7 @@ export class UsersClient {
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPaginationUriPath.ListUsersPathPaginationResponse> {
         const _headers = {};
-        return this._client.request<SeedPaginationUriPath.ListUsersPathPaginationResponse>({
+        return this._requestFn<SeedPaginationUriPath.ListUsersPathPaginationResponse>({
             method: "GET",
             path: "/users/path",
             queryParameters: requestOptions?.queryParams,

@@ -9,8 +9,9 @@ export declare namespace UnionClient {
 }
 export declare class UnionClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UnionClient.Options>;
-    protected readonly _client: core.HttpClient;
-    constructor(options: UnionClient.Options, client?: core.HttpClient);
+    protected readonly _requestFn: core.RequestFn;
+    constructor(options: UnionClient.Options);
+    constructor(options: UnionClient.Options, requestFn: core.RequestFn);
     /**
      * @param {SeedExhaustive.types.Animal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.

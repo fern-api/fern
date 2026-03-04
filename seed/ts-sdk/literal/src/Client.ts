@@ -19,7 +19,7 @@ export declare namespace SeedLiteralClient {
 
 export class SeedLiteralClient {
     protected readonly _options: NormalizedClientOptions<SeedLiteralClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _headers: HeadersClient | undefined;
     protected _inlined: InlinedClient | undefined;
     protected _path: PathClient | undefined;
@@ -28,30 +28,30 @@ export class SeedLiteralClient {
 
     constructor(options: SeedLiteralClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedLiteralError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedLiteralError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get headers(): HeadersClient {
-        return (this._headers ??= new HeadersClient(this._options, this._client));
+        return (this._headers ??= new HeadersClient(this._options, this._requestFn));
     }
 
     public get inlined(): InlinedClient {
-        return (this._inlined ??= new InlinedClient(this._options, this._client));
+        return (this._inlined ??= new InlinedClient(this._options, this._requestFn));
     }
 
     public get path(): PathClient {
-        return (this._path ??= new PathClient(this._options, this._client));
+        return (this._path ??= new PathClient(this._options, this._requestFn));
     }
 
     public get query(): QueryClient {
-        return (this._query ??= new QueryClient(this._options, this._client));
+        return (this._query ??= new QueryClient(this._options, this._requestFn));
     }
 
     public get reference(): ReferenceClient {
-        return (this._reference ??= new ReferenceClient(this._options, this._client));
+        return (this._reference ??= new ReferenceClient(this._options, this._requestFn));
     }
 }

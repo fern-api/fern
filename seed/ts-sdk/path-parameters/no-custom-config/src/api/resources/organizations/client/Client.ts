@@ -15,17 +15,19 @@ export declare namespace OrganizationsClient {
 
 export class OrganizationsClient {
     protected readonly _options: NormalizedClientOptions<OrganizationsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: OrganizationsClient.Options, client?: core.HttpClient) {
+    constructor(options: OrganizationsClient.Options);
+    constructor(options: OrganizationsClient.Options, requestFn: core.RequestFn);
+    constructor(options: OrganizationsClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedPathParametersError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedPathParametersError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -40,7 +42,7 @@ export class OrganizationsClient {
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization> {
         const _headers = {};
-        return this._client.request<SeedPathParameters.Organization>({
+        return this._requestFn<SeedPathParameters.Organization>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
             queryParameters: requestOptions?.queryParams,
@@ -65,7 +67,7 @@ export class OrganizationsClient {
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { organization_id: organizationId, user_id: userId } = request;
         const _headers = {};
-        return this._client.request<SeedPathParameters.User>({
+        return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -94,7 +96,7 @@ export class OrganizationsClient {
             limit,
         };
         const _headers = {};
-        return this._client.request<SeedPathParameters.Organization[]>({
+        return this._requestFn<SeedPathParameters.Organization[]>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },

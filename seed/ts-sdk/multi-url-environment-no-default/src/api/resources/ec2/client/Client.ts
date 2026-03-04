@@ -15,17 +15,19 @@ export declare namespace Ec2Client {
 
 export class Ec2Client {
     protected readonly _options: NormalizedClientOptionsWithAuth<Ec2Client.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: Ec2Client.Options, client?: core.HttpClient) {
+    constructor(options: Ec2Client.Options);
+    constructor(options: Ec2Client.Options, requestFn: core.RequestFn);
+    constructor(options: Ec2Client.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedMultiUrlEnvironmentNoDefaultError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedMultiUrlEnvironmentNoDefaultError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -41,7 +43,7 @@ export class Ec2Client {
         request: SeedMultiUrlEnvironmentNoDefault.BootInstanceRequest,
         requestOptions?: Ec2Client.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return this._client.request<void>(async () => {
+        return this._requestFn<void>(async () => {
             const _headers = {};
             return {
                 method: "POST",

@@ -15,19 +15,19 @@ export declare namespace SeedSingleUrlEnvironmentDefaultClient {
 
 export class SeedSingleUrlEnvironmentDefaultClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedSingleUrlEnvironmentDefaultClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _dummy: DummyClient | undefined;
 
     constructor(options: SeedSingleUrlEnvironmentDefaultClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            { ...this._options, defaultBaseUrl: "https://production.com/api" },
-            (args) => new errors.SeedSingleUrlEnvironmentDefaultError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...{ ...this._options, defaultBaseUrl: "https://production.com/api" },
+            createStatusCodeError: (args) => new errors.SeedSingleUrlEnvironmentDefaultError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get dummy(): DummyClient {
-        return (this._dummy ??= new DummyClient(this._options, this._client));
+        return (this._dummy ??= new DummyClient(this._options, this._requestFn));
     }
 }

@@ -4,10 +4,10 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class PutClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
@@ -21,7 +21,7 @@ export class PutClient {
     add(request, requestOptions) {
         const { id } = request;
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "PUT",
             path: `${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,

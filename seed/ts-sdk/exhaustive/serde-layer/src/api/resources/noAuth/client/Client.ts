@@ -16,17 +16,19 @@ export declare namespace NoAuthClient {
 
 export class NoAuthClient {
     protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NoAuthClient.Options, client?: core.HttpClient) {
+    constructor(options: NoAuthClient.Options);
+    constructor(options: NoAuthClient.Options, requestFn: core.RequestFn);
+    constructor(options: NoAuthClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -47,7 +49,7 @@ export class NoAuthClient {
         requestOptions?: NoAuthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "POST",
             path: "/no-auth",
             body: request,

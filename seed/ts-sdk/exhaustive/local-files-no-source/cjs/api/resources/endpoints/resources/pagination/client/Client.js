@@ -49,10 +49,10 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class PaginationClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * List items with cursor pagination
@@ -76,7 +76,7 @@ class PaginationClient {
                     limit,
                 };
                 const _headers = {};
-                const _response = yield this._client.fetch({
+                const _response = yield this._requestFn.fetch({
                     url: core.url.join((_a = (yield core.Supplier.get(this._options.baseUrl))) !== null && _a !== void 0 ? _a : (yield core.Supplier.get(this._options.environment)), "/pagination"),
                     method: "GET",
                     headers: _headers,

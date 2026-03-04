@@ -14,17 +14,19 @@ export declare namespace UrlsClient {
 
 export class UrlsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UrlsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UrlsClient.Options, client?: core.HttpClient) {
+    constructor(options: UrlsClient.Options);
+    constructor(options: UrlsClient.Options, requestFn: core.RequestFn);
+    constructor(options: UrlsClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -35,7 +37,7 @@ export class UrlsClient {
      */
     public withMixedCase(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: "/urls/MixedCase",
             queryParameters: requestOptions?.queryParams,
@@ -52,7 +54,7 @@ export class UrlsClient {
      */
     public noEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: "/urls/no-ending-slash",
             queryParameters: requestOptions?.queryParams,
@@ -69,7 +71,7 @@ export class UrlsClient {
      */
     public withEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: "/urls/with-ending-slash/",
             queryParameters: requestOptions?.queryParams,
@@ -86,7 +88,7 @@ export class UrlsClient {
      */
     public withUnderscores(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: "/urls/with_underscores",
             queryParameters: requestOptions?.queryParams,

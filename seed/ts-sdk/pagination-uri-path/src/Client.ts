@@ -15,19 +15,19 @@ export declare namespace SeedPaginationUriPathClient {
 
 export class SeedPaginationUriPathClient {
     protected readonly _options: NormalizedClientOptions<SeedPaginationUriPathClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _users: UsersClient | undefined;
 
     constructor(options: SeedPaginationUriPathClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedPaginationUriPathError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedPaginationUriPathError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get users(): UsersClient {
-        return (this._users ??= new UsersClient(this._options, this._client));
+        return (this._users ??= new UsersClient(this._options, this._requestFn));
     }
 }

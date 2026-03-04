@@ -15,17 +15,19 @@ export declare namespace OptionalClient {
 
 export class OptionalClient {
     protected readonly _options: NormalizedClientOptions<OptionalClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: OptionalClient.Options, client?: core.HttpClient) {
+    constructor(options: OptionalClient.Options);
+    constructor(options: OptionalClient.Options, requestFn: core.RequestFn);
+    constructor(options: OptionalClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedObjectsWithImportsError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedObjectsWithImportsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -44,7 +46,7 @@ export class OptionalClient {
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "send-optional-body",
             body: request,
@@ -70,7 +72,7 @@ export class OptionalClient {
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "send-optional-typed-body",
             body: request,
@@ -103,7 +105,7 @@ export class OptionalClient {
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedObjectsWithImports.DeployResponse> {
         const _headers = {};
-        return this._client.request<SeedObjectsWithImports.DeployResponse>({
+        return this._requestFn<SeedObjectsWithImports.DeployResponse>({
             method: "POST",
             path: `deploy/${core.url.encodePathParam(actionId)}/versions/${core.url.encodePathParam(id)}`,
             body: request,

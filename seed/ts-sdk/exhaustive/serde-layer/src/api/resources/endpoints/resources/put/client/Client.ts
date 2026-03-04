@@ -16,17 +16,19 @@ export declare namespace PutClient {
 
 export class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PutClient.Options, client?: core.HttpClient) {
+    constructor(options: PutClient.Options);
+    constructor(options: PutClient.Options, requestFn: core.RequestFn);
+    constructor(options: PutClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -44,7 +46,7 @@ export class PutClient {
     ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
         const { id } = request;
         const _headers = {};
-        return this._client.request<SeedExhaustive.endpoints.PutResponse>({
+        return this._requestFn<SeedExhaustive.endpoints.PutResponse>({
             method: "PUT",
             path: `${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,

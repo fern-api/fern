@@ -15,13 +15,19 @@ export declare namespace BasicAuthClient {
 
 export class BasicAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<BasicAuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: BasicAuthClient.Options, client?: core.HttpClient) {
+    constructor(options: BasicAuthClient.Options);
+    constructor(options: BasicAuthClient.Options, requestFn: core.RequestFn);
+    constructor(options: BasicAuthClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedBasicAuthError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedBasicAuthError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -36,7 +42,7 @@ export class BasicAuthClient {
      */
     public getWithBasicAuth(requestOptions?: BasicAuthClient.RequestOptions): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "GET",
             path: "basic-auth",
             queryParameters: requestOptions?.queryParams,
@@ -74,7 +80,7 @@ export class BasicAuthClient {
         requestOptions?: BasicAuthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "POST",
             path: "basic-auth",
             body: request,

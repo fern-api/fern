@@ -5,10 +5,10 @@ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCode
 import * as errors from "../../../../errors/index.mjs";
 import * as SeedExhaustive from "../../../index.mjs";
 export class NoAuthClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * POST request with no auth
@@ -25,7 +25,7 @@ export class NoAuthClient {
      */
     postWithNoAuth(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/no-auth",
             body: request,

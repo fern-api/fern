@@ -15,17 +15,19 @@ export declare namespace InlineUsersClient {
 
 export class InlineUsersClient {
     protected readonly _options: NormalizedClientOptions<InlineUsersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: InlineUsersClient.Options, client?: core.HttpClient) {
+    constructor(options: InlineUsersClient.Options);
+    constructor(options: InlineUsersClient.Options, requestFn: core.RequestFn);
+    constructor(options: InlineUsersClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedPaginationError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedPaginationError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -61,7 +63,7 @@ export class InlineUsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -144,7 +146,7 @@ export class InlineUsersClient {
                     cursor,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -221,7 +223,7 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -313,7 +315,7 @@ export class InlineUsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -399,7 +401,7 @@ export class InlineUsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -477,7 +479,7 @@ export class InlineUsersClient {
                 request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -564,7 +566,7 @@ export class InlineUsersClient {
                     order: order != null ? order : undefined,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -648,7 +650,7 @@ export class InlineUsersClient {
                     order: order != null ? order : undefined,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -729,7 +731,7 @@ export class InlineUsersClient {
                     cursor,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -808,7 +810,7 @@ export class InlineUsersClient {
                     cursor,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -882,7 +884,7 @@ export class InlineUsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -954,7 +956,7 @@ export class InlineUsersClient {
                     offset,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??

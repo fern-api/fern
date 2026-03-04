@@ -9,8 +9,9 @@ export declare namespace ReqWithHeadersClient {
 }
 export declare class ReqWithHeadersClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ReqWithHeadersClient.Options>;
-    protected readonly _client: core.HttpClient;
-    constructor(options: ReqWithHeadersClient.Options, client?: core.HttpClient);
+    protected readonly _requestFn: core.RequestFn;
+    constructor(options: ReqWithHeadersClient.Options);
+    constructor(options: ReqWithHeadersClient.Options, requestFn: core.RequestFn);
     /**
      * @param {SeedExhaustive.ReqWithHeaders} request
      * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.

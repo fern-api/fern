@@ -730,7 +730,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     /**
      * Generates the body statements for a single (non-async) public method
-     * that uses this._client.request<T>({config}). Handles ALL endpoint variations:
+     * that uses this._requestFn<T>({config}). Handles ALL endpoint variations:
      * errorHandler, custom timeouts, multi-URL baseUrl, HEAD responses, file upload,
      * bytes request, serde allowMultiple, and duplex.
      *
@@ -965,7 +965,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         const returnType = this.response.getReturnType(context);
 
         if (needsAsync) {
-            // Async config builder: return this._client.request<T>(async () => { ...stmts; return config })
+            // Async config builder: return this._requestFn<T>(async () => { ...stmts; return config })
             const asyncBodyStatements: ts.Statement[] = [
                 ...buildStatements,
                 ts.factory.createReturnStatement(configObject)
@@ -982,11 +982,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
             const clientRequestCall = ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createThis(),
-                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER)
-                    ),
-                    ts.factory.createIdentifier("request")
+                    ts.factory.createThis(),
+                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER)
                 ),
                 [returnType],
                 [asyncBuilderFn]
@@ -994,14 +991,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
             outerStatements.push(ts.factory.createReturnStatement(clientRequestCall));
         } else {
-            // Sync: return this._client.request<T>(config)
+            // Sync: return this._requestFn<T>(config)
             const clientRequestCall = ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createThis(),
-                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.CLIENT_PRIVATE_MEMBER)
-                    ),
-                    ts.factory.createIdentifier("request")
+                    ts.factory.createThis(),
+                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER)
                 ),
                 [returnType],
                 [configObject]

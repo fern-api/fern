@@ -16,17 +16,19 @@ export declare namespace S3Client {
 
 export class S3Client {
     protected readonly _options: NormalizedClientOptionsWithAuth<S3Client.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: S3Client.Options, client?: core.HttpClient) {
+    constructor(options: S3Client.Options);
+    constructor(options: S3Client.Options, requestFn: core.RequestFn);
+    constructor(options: S3Client.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedMultiUrlEnvironmentError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedMultiUrlEnvironmentError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -42,7 +44,7 @@ export class S3Client {
         request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
         requestOptions?: S3Client.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        return this._client.request<string>(async () => {
+        return this._requestFn<string>(async () => {
             const _headers = {};
             return {
                 method: "POST",

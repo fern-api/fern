@@ -16,24 +16,24 @@ export declare namespace SeedMultiUrlEnvironmentNoDefaultClient {
 
 export class SeedMultiUrlEnvironmentNoDefaultClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedMultiUrlEnvironmentNoDefaultClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _ec2: Ec2Client | undefined;
     protected _s3: S3Client | undefined;
 
     constructor(options: SeedMultiUrlEnvironmentNoDefaultClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedMultiUrlEnvironmentNoDefaultError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedMultiUrlEnvironmentNoDefaultError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get ec2(): Ec2Client {
-        return (this._ec2 ??= new Ec2Client(this._options, this._client));
+        return (this._ec2 ??= new Ec2Client(this._options, this._requestFn));
     }
 
     public get s3(): S3Client {
-        return (this._s3 ??= new S3Client(this._options, this._client));
+        return (this._s3 ??= new S3Client(this._options, this._requestFn));
     }
 }

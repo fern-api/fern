@@ -15,19 +15,19 @@ export declare namespace SeedExtraPropertiesClient {
 
 export class SeedExtraPropertiesClient {
     protected readonly _options: NormalizedClientOptions<SeedExtraPropertiesClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedExtraPropertiesClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedExtraPropertiesError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedExtraPropertiesError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options, this._client));
+        return (this._user ??= new UserClient(this._options, this._requestFn));
     }
 }

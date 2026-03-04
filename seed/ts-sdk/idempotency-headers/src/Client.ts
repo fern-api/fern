@@ -15,19 +15,19 @@ export declare namespace SeedIdempotencyHeadersClient {
 
 export class SeedIdempotencyHeadersClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedIdempotencyHeadersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _payment: PaymentClient | undefined;
 
     constructor(options: SeedIdempotencyHeadersClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedIdempotencyHeadersError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedIdempotencyHeadersError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get payment(): PaymentClient {
-        return (this._payment ??= new PaymentClient(this._options, this._client));
+        return (this._payment ??= new PaymentClient(this._options, this._requestFn));
     }
 }

@@ -18,17 +18,19 @@ export declare namespace PaymentClient {
 
 export class PaymentClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PaymentClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PaymentClient.Options, client?: core.HttpClient) {
+    constructor(options: PaymentClient.Options);
+    constructor(options: PaymentClient.Options, requestFn: core.RequestFn);
+    constructor(options: PaymentClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedIdempotencyHeadersError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedIdempotencyHeadersError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -49,7 +51,7 @@ export class PaymentClient {
             "Idempotency-Key": requestOptions?.idempotencyKey,
             "Idempotency-Expiration": requestOptions?.idempotencyExpiration,
         });
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "/payment",
             body: request,
@@ -70,7 +72,7 @@ export class PaymentClient {
      */
     public delete(paymentId: string, requestOptions?: PaymentClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "DELETE",
             path: `/payment/${core.url.encodePathParam(paymentId)}`,
             queryParameters: requestOptions?.queryParams,

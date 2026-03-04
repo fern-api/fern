@@ -3,7 +3,7 @@ import { ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 
 /**
- * Builds the second argument to this._client.fetch() containing per-request headers
+ * Builds the second argument to this._requestFn.fetch() containing per-request headers
  * and endpoint metadata. HttpClient.fetch() uses these for auth + global + per-request
  * header merging.
  */

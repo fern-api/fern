@@ -14,17 +14,19 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options, client?: core.HttpClient) {
+    constructor(options: ServiceClient.Options);
+    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
+    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedApiWideBasePathError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedApiWideBasePathError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -43,7 +45,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/test/${core.url.encodePathParam(this._options.pathParam)}/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(endpointParam)}/${core.url.encodePathParam(resourceParam)}`,
             queryParameters: requestOptions?.queryParams,

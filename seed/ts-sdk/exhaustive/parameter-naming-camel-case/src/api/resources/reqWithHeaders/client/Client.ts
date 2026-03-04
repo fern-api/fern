@@ -16,17 +16,19 @@ export declare namespace ReqWithHeadersClient {
 
 export class ReqWithHeadersClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ReqWithHeadersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ReqWithHeadersClient.Options, client?: core.HttpClient) {
+    constructor(options: ReqWithHeadersClient.Options);
+    constructor(options: ReqWithHeadersClient.Options, requestFn: core.RequestFn);
+    constructor(options: ReqWithHeadersClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -49,7 +51,7 @@ export class ReqWithHeadersClient {
             "X-TEST-SERVICE-HEADER": xTestServiceHeader,
             "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "/test-headers/custom-header",
             body: _body,

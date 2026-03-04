@@ -15,17 +15,19 @@ export declare namespace PaginationClient {
 
 export class PaginationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PaginationClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PaginationClient.Options, client?: core.HttpClient) {
+    constructor(options: PaginationClient.Options);
+    constructor(options: PaginationClient.Options, requestFn: core.RequestFn);
+    constructor(options: PaginationClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -54,7 +56,7 @@ export class PaginationClient {
                     limit,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??

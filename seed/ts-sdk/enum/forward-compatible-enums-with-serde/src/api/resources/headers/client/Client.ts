@@ -18,13 +18,19 @@ export declare namespace HeadersClient {
 
 export class HeadersClient {
     protected readonly _options: NormalizedClientOptions<HeadersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: HeadersClient.Options, client?: core.HttpClient) {
+    constructor(options: HeadersClient.Options);
+    constructor(options: HeadersClient.Options, requestFn: core.RequestFn);
+    constructor(options: HeadersClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedEnumError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedEnumError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -65,7 +71,7 @@ export class HeadersClient {
                       })()
                     : undefined,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "headers",
             queryParameters: requestOptions?.queryParams,

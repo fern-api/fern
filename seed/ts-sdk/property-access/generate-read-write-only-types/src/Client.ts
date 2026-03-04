@@ -15,15 +15,15 @@ export declare namespace SeedPropertyAccessClient {
 
 export class SeedPropertyAccessClient {
     protected readonly _options: NormalizedClientOptions<SeedPropertyAccessClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedPropertyAccessClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedPropertyAccessError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedPropertyAccessError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -45,7 +45,7 @@ export class SeedPropertyAccessClient {
         requestOptions?: SeedPropertyAccessClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPropertyAccess.User.Response> {
         const _headers = {};
-        return this._client.request<SeedPropertyAccess.User.Response>({
+        return this._requestFn<SeedPropertyAccess.User.Response>({
             method: "POST",
             path: "/users",
             body: request,

@@ -17,7 +17,7 @@ export declare namespace EndpointsClient {
 }
 export declare class EndpointsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EndpointsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _container: ContainerClient | undefined;
     protected _contentType: ContentTypeClient | undefined;
     protected _enum: EnumClient | undefined;
@@ -29,7 +29,8 @@ export declare class EndpointsClient {
     protected _put: PutClient | undefined;
     protected _union: UnionClient | undefined;
     protected _urls: UrlsClient | undefined;
-    constructor(options: EndpointsClient.Options, client?: core.HttpClient);
+    constructor(options: EndpointsClient.Options);
+    constructor(options: EndpointsClient.Options, requestFn: core.RequestFn);
     get container(): ContainerClient;
     get contentType(): ContentTypeClient;
     get enum(): EnumClient;

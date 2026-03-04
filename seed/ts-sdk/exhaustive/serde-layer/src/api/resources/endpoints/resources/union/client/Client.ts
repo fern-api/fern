@@ -16,17 +16,19 @@ export declare namespace UnionClient {
 
 export class UnionClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UnionClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UnionClient.Options, client?: core.HttpClient) {
+    constructor(options: UnionClient.Options);
+    constructor(options: UnionClient.Options, requestFn: core.RequestFn);
+    constructor(options: UnionClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedExhaustiveError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -45,7 +47,7 @@ export class UnionClient {
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
         const _headers = {};
-        return this._client.request<SeedExhaustive.types.Animal>({
+        return this._requestFn<SeedExhaustive.types.Animal>({
             method: "POST",
             path: "/union",
             body: serializers.types.Animal.jsonOrThrow(request, {

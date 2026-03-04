@@ -17,13 +17,19 @@ export declare namespace QueryParamClient {
 
 export class QueryParamClient {
     protected readonly _options: NormalizedClientOptions<QueryParamClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: QueryParamClient.Options, client?: core.HttpClient) {
+    constructor(options: QueryParamClient.Options);
+    constructor(options: QueryParamClient.Options, requestFn: core.RequestFn);
+    constructor(options: QueryParamClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedEnumError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedEnumError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -69,7 +75,7 @@ export class QueryParamClient {
                     : undefined,
         };
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "query",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -149,7 +155,7 @@ export class QueryParamClient {
                   : undefined,
         };
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "query-list",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },

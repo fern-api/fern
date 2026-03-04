@@ -15,13 +15,19 @@ export declare namespace NullableClient {
 
 export class NullableClient {
     protected readonly _options: NormalizedClientOptions<NullableClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NullableClient.Options, client?: core.HttpClient) {
+    constructor(options: NullableClient.Options);
+    constructor(options: NullableClient.Options, requestFn: core.RequestFn);
+    constructor(options: NullableClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedNullableError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedNullableError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -50,7 +56,7 @@ export class NullableClient {
             extra,
         };
         const _headers = {};
-        return this._client.request<SeedNullable.User[]>({
+        return this._requestFn<SeedNullable.User[]>({
             method: "GET",
             path: "/users",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -87,7 +93,7 @@ export class NullableClient {
         requestOptions?: NullableClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullable.User> {
         const _headers = {};
-        return this._client.request<SeedNullable.User>({
+        return this._requestFn<SeedNullable.User>({
             method: "POST",
             path: "/users",
             body: request,
@@ -113,7 +119,7 @@ export class NullableClient {
         requestOptions?: NullableClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "DELETE",
             path: "/users",
             body: request,

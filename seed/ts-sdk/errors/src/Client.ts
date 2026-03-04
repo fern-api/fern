@@ -15,19 +15,19 @@ export declare namespace SeedErrorsClient {
 
 export class SeedErrorsClient {
     protected readonly _options: NormalizedClientOptions<SeedErrorsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedErrorsClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedErrorsError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedErrorsError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options, this._client));
+        return (this._simple ??= new SimpleClient(this._options, this._requestFn));
     }
 }

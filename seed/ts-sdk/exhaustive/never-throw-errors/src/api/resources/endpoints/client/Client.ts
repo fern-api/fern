@@ -21,7 +21,7 @@ export declare namespace EndpointsClient {
 
 export class EndpointsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EndpointsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _container: ContainerClient | undefined;
     protected _contentType: ContentTypeClient | undefined;
     protected _enum: EnumClient | undefined;
@@ -34,61 +34,63 @@ export class EndpointsClient {
     protected _union: UnionClient | undefined;
     protected _urls: UrlsClient | undefined;
 
-    constructor(options: EndpointsClient.Options, client?: core.HttpClient) {
+    constructor(options: EndpointsClient.Options);
+    constructor(options: EndpointsClient.Options, requestFn: core.RequestFn);
+    constructor(options: EndpointsClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                     new Error(`HTTP ${args.statusCode} error`)) as any,
-                ((e: unknown) => {
+                handleNonStatusCodeError: ((e: unknown) => {
                     throw e;
                 }) as any,
-            );
+            });
     }
 
     public get container(): ContainerClient {
-        return (this._container ??= new ContainerClient(this._options, this._client));
+        return (this._container ??= new ContainerClient(this._options, this._requestFn));
     }
 
     public get contentType(): ContentTypeClient {
-        return (this._contentType ??= new ContentTypeClient(this._options, this._client));
+        return (this._contentType ??= new ContentTypeClient(this._options, this._requestFn));
     }
 
     public get enum(): EnumClient {
-        return (this._enum ??= new EnumClient(this._options, this._client));
+        return (this._enum ??= new EnumClient(this._options, this._requestFn));
     }
 
     public get httpMethods(): HttpMethodsClient {
-        return (this._httpMethods ??= new HttpMethodsClient(this._options, this._client));
+        return (this._httpMethods ??= new HttpMethodsClient(this._options, this._requestFn));
     }
 
     public get object(): ObjectClient {
-        return (this._object ??= new ObjectClient(this._options, this._client));
+        return (this._object ??= new ObjectClient(this._options, this._requestFn));
     }
 
     public get pagination(): PaginationClient {
-        return (this._pagination ??= new PaginationClient(this._options, this._client));
+        return (this._pagination ??= new PaginationClient(this._options, this._requestFn));
     }
 
     public get params(): ParamsClient {
-        return (this._params ??= new ParamsClient(this._options, this._client));
+        return (this._params ??= new ParamsClient(this._options, this._requestFn));
     }
 
     public get primitive(): PrimitiveClient {
-        return (this._primitive ??= new PrimitiveClient(this._options, this._client));
+        return (this._primitive ??= new PrimitiveClient(this._options, this._requestFn));
     }
 
     public get put(): PutClient {
-        return (this._put ??= new PutClient(this._options, this._client));
+        return (this._put ??= new PutClient(this._options, this._requestFn));
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(this._options, this._client));
+        return (this._union ??= new UnionClient(this._options, this._requestFn));
     }
 
     public get urls(): UrlsClient {
-        return (this._urls ??= new UrlsClient(this._options, this._client));
+        return (this._urls ??= new UrlsClient(this._options, this._requestFn));
     }
 }

@@ -47,27 +47,27 @@ const errors = __importStar(require("./errors/index.js"));
 class SeedExhaustiveClient {
     constructor(options) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client = new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn = core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     get endpoints() {
         var _a;
-        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new Client_js_1.EndpointsClient(this._options, this._client)));
+        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new Client_js_1.EndpointsClient(this._options, this._requestFn)));
     }
     get inlinedRequests() {
         var _a;
-        return ((_a = this._inlinedRequests) !== null && _a !== void 0 ? _a : (this._inlinedRequests = new Client_js_2.InlinedRequestsClient(this._options, this._client)));
+        return ((_a = this._inlinedRequests) !== null && _a !== void 0 ? _a : (this._inlinedRequests = new Client_js_2.InlinedRequestsClient(this._options, this._requestFn)));
     }
     get noAuth() {
         var _a;
-        return ((_a = this._noAuth) !== null && _a !== void 0 ? _a : (this._noAuth = new Client_js_3.NoAuthClient(this._options, this._client)));
+        return ((_a = this._noAuth) !== null && _a !== void 0 ? _a : (this._noAuth = new Client_js_3.NoAuthClient(this._options, this._requestFn)));
     }
     get noReqBody() {
         var _a;
-        return ((_a = this._noReqBody) !== null && _a !== void 0 ? _a : (this._noReqBody = new Client_js_4.NoReqBodyClient(this._options, this._client)));
+        return ((_a = this._noReqBody) !== null && _a !== void 0 ? _a : (this._noReqBody = new Client_js_4.NoReqBodyClient(this._options, this._requestFn)));
     }
     get reqWithHeaders() {
         var _a;
-        return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new Client_js_5.ReqWithHeadersClient(this._options, this._client)));
+        return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new Client_js_5.ReqWithHeadersClient(this._options, this._requestFn)));
     }
 }
 exports.SeedExhaustiveClient = SeedExhaustiveClient;

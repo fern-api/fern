@@ -15,17 +15,19 @@ export declare namespace PropertyBasedErrorClient {
 
 export class PropertyBasedErrorClient {
     protected readonly _options: NormalizedClientOptions<PropertyBasedErrorClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PropertyBasedErrorClient.Options, client?: core.HttpClient) {
+    constructor(options: PropertyBasedErrorClient.Options);
+    constructor(options: PropertyBasedErrorClient.Options, requestFn: core.RequestFn);
+    constructor(options: PropertyBasedErrorClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedErrorPropertyError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedErrorPropertyError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -40,7 +42,7 @@ export class PropertyBasedErrorClient {
      */
     public throwError(requestOptions?: PropertyBasedErrorClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "GET",
             path: "property-based-error",
             queryParameters: requestOptions?.queryParams,

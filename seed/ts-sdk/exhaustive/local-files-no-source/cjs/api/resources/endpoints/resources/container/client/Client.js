@@ -40,10 +40,10 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class ContainerClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * @param {string[]} request
@@ -54,7 +54,7 @@ class ContainerClient {
      */
     getAndReturnListOfPrimitives(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/container/list-of-primitives",
             body: request,
@@ -78,7 +78,7 @@ class ContainerClient {
      */
     getAndReturnListOfObjects(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/container/list-of-objects",
             body: request,
@@ -98,7 +98,7 @@ class ContainerClient {
      */
     getAndReturnSetOfPrimitives(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/container/set-of-primitives",
             body: request,
@@ -120,7 +120,7 @@ class ContainerClient {
      */
     getAndReturnSetOfObjects(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/container/set-of-objects",
             body: request,
@@ -142,7 +142,7 @@ class ContainerClient {
      */
     getAndReturnMapPrimToPrim(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/container/map-prim-to-prim",
             body: request,
@@ -166,7 +166,7 @@ class ContainerClient {
      */
     getAndReturnMapOfPrimToObject(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/container/map-prim-to-object",
             body: request,
@@ -188,7 +188,7 @@ class ContainerClient {
      */
     getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/container/map-prim-to-union",
             body: request,
@@ -210,7 +210,7 @@ class ContainerClient {
      */
     getAndReturnOptional(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/container/opt-objects",
             body: request,

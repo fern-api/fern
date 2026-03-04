@@ -15,17 +15,19 @@ export declare namespace UsersClient {
 
 export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UsersClient.Options, client?: core.HttpClient) {
+    constructor(options: UsersClient.Options);
+    constructor(options: UsersClient.Options, requestFn: core.RequestFn);
+    constructor(options: UsersClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedPaginationError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedPaginationError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -62,7 +64,7 @@ export class UsersClient {
             logging: this._options.logging,
         };
         const _sendRequest = async (request: core.Fetcher.Args) => {
-            const _response = await this._client.fetch<SeedPagination.UsernameCursor>(request, {
+            const _response = await this._requestFn.fetch<SeedPagination.UsernameCursor>(request, {
                 requestHeaders: requestOptions?.headers,
             });
             if (_response.ok) {

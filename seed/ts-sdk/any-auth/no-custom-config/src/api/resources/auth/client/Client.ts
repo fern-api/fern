@@ -15,13 +15,19 @@ export declare namespace AuthClient {
 
 export class AuthClient {
     protected readonly _options: NormalizedClientOptions<AuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: AuthClient.Options, client?: core.HttpClient) {
+    constructor(options: AuthClient.Options);
+    constructor(options: AuthClient.Options, requestFn: core.RequestFn);
+    constructor(options: AuthClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedAnyAuthError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedAnyAuthError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -39,7 +45,7 @@ export class AuthClient {
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedAnyAuth.TokenResponse> {
         const _headers = {};
-        return this._client.request<SeedAnyAuth.TokenResponse>({
+        return this._requestFn<SeedAnyAuth.TokenResponse>({
             method: "POST",
             path: "/token",
             body: { ...request, audience: "https://api.example.com", grant_type: "client_credentials" },

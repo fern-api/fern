@@ -40,10 +40,10 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class HttpMethodsClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError_js_1.handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * @param {string} id
@@ -54,7 +54,7 @@ class HttpMethodsClient {
      */
     testGet(id, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "GET",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
@@ -75,7 +75,7 @@ class HttpMethodsClient {
      */
     testPost(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/http-methods",
             body: request,
@@ -100,7 +100,7 @@ class HttpMethodsClient {
      */
     testPut(id, request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "PUT",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             body: request,
@@ -139,7 +139,7 @@ class HttpMethodsClient {
      */
     testPatch(id, request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "PATCH",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             body: request,
@@ -161,7 +161,7 @@ class HttpMethodsClient {
      */
     testDelete(id, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "DELETE",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,

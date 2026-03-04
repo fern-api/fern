@@ -8,8 +8,9 @@ export declare namespace PrimitiveClient {
 }
 export declare class PrimitiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PrimitiveClient.Options>;
-    protected readonly _client: core.HttpClient;
-    constructor(options: PrimitiveClient.Options, client?: core.HttpClient);
+    protected readonly _requestFn: core.RequestFn;
+    constructor(options: PrimitiveClient.Options);
+    constructor(options: PrimitiveClient.Options, requestFn: core.RequestFn);
     /**
      * @param {string} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.

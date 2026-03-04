@@ -15,17 +15,19 @@ export declare namespace UsersClient {
 
 export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UsersClient.Options, client?: core.HttpClient) {
+    constructor(options: UsersClient.Options);
+    constructor(options: UsersClient.Options, requestFn: core.RequestFn);
+    constructor(options: UsersClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedPaginationError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedPaginationError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -56,7 +58,7 @@ export class UsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -131,7 +133,7 @@ export class UsersClient {
                     cursor,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -200,7 +202,7 @@ export class UsersClient {
                 request: SeedPagination.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -279,7 +281,7 @@ export class UsersClient {
                 request: SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersTopLevelCursorPaginationResponse>> => {
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -365,7 +367,7 @@ export class UsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -443,7 +445,7 @@ export class UsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -513,7 +515,7 @@ export class UsersClient {
                 request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -592,7 +594,7 @@ export class UsersClient {
                     order: order != null ? order : undefined,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -668,7 +670,7 @@ export class UsersClient {
                     order: order != null ? order : undefined,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -741,7 +743,7 @@ export class UsersClient {
                     cursor,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -812,7 +814,7 @@ export class UsersClient {
                     cursor,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -883,7 +885,7 @@ export class UsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -955,7 +957,7 @@ export class UsersClient {
                     starting_after: startingAfter,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -1027,7 +1029,7 @@ export class UsersClient {
                     offset,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??
@@ -1099,7 +1101,7 @@ export class UsersClient {
                     page,
                 };
                 const _headers = {};
-                const _response = await this._client.fetch(
+                const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
                             (await core.Supplier.get(this._options.baseUrl)) ??

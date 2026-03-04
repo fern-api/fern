@@ -15,17 +15,19 @@ export declare namespace UserClient {
 
 export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options, client?: core.HttpClient) {
+    constructor(options: UserClient.Options);
+    constructor(options: UserClient.Options, requestFn: core.RequestFn);
+    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedMultiLineDocsError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedMultiLineDocsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -41,7 +43,7 @@ export class UserClient {
      */
     public getUser(userId: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: `users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -68,7 +70,7 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMultiLineDocs.User> {
         const _headers = {};
-        return this._client.request<SeedMultiLineDocs.User>({
+        return this._requestFn<SeedMultiLineDocs.User>({
             method: "POST",
             path: "users",
             body: request,

@@ -15,19 +15,19 @@ export declare namespace SeedContentTypesClient {
 
 export class SeedContentTypesClient {
     protected readonly _options: NormalizedClientOptions<SeedContentTypesClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedContentTypesClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedContentTypesError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedContentTypesError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._client));
+        return (this._service ??= new ServiceClient(this._options, this._requestFn));
     }
 }

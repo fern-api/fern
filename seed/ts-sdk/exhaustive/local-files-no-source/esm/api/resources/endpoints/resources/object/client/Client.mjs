@@ -4,10 +4,10 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class ObjectClient {
-    constructor(options, client) {
+    constructor(options, requestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client !== null && client !== void 0 ? client : new core.HttpClient(this._options, (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
@@ -34,7 +34,7 @@ export class ObjectClient {
      */
     getAndReturnWithOptionalField(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-optional-field",
             body: request,
@@ -56,7 +56,7 @@ export class ObjectClient {
      */
     getAndReturnWithRequiredField(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-required-field",
             body: request,
@@ -82,7 +82,7 @@ export class ObjectClient {
      */
     getAndReturnWithMapOfMap(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-map-of-map",
             body: request,
@@ -121,7 +121,7 @@ export class ObjectClient {
      */
     getAndReturnNestedWithOptionalField(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-nested-with-optional-field",
             body: request,
@@ -161,7 +161,7 @@ export class ObjectClient {
      */
     getAndReturnNestedWithRequiredField(string, request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
             body: request,
@@ -219,7 +219,7 @@ export class ObjectClient {
      */
     getAndReturnNestedWithRequiredFieldAsList(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-nested-with-required-field-list",
             body: request,
@@ -243,7 +243,7 @@ export class ObjectClient {
      */
     getAndReturnWithUnknownField(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-unknown-field",
             body: request,
@@ -270,7 +270,7 @@ export class ObjectClient {
      */
     getAndReturnWithDatetimeLikeString(request, requestOptions) {
         const _headers = {};
-        return this._client.request({
+        return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-datetime-like-string",
             body: request,

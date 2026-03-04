@@ -15,19 +15,19 @@ export declare namespace SeedNoEnvironmentClient {
 
 export class SeedNoEnvironmentClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedNoEnvironmentClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _dummy: DummyClient | undefined;
 
     constructor(options: SeedNoEnvironmentClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedNoEnvironmentError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedNoEnvironmentError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get dummy(): DummyClient {
-        return (this._dummy ??= new DummyClient(this._options, this._client));
+        return (this._dummy ??= new DummyClient(this._options, this._requestFn));
     }
 }

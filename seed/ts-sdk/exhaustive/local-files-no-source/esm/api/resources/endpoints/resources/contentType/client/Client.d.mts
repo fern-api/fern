@@ -9,8 +9,9 @@ export declare namespace ContentTypeClient {
 }
 export declare class ContentTypeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContentTypeClient.Options>;
-    protected readonly _client: core.HttpClient;
-    constructor(options: ContentTypeClient.Options, client?: core.HttpClient);
+    protected readonly _requestFn: core.RequestFn;
+    constructor(options: ContentTypeClient.Options);
+    constructor(options: ContentTypeClient.Options, requestFn: core.RequestFn);
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.

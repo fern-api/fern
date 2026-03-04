@@ -16,15 +16,15 @@ export declare namespace SeedApiClient {
 
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedApiError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedApiError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -54,7 +54,7 @@ export class SeedApiClient {
             required_nullable_baz: requiredNullableBaz,
         };
         const _headers = {};
-        return this._client.request<SeedApi.Foo>({
+        return this._requestFn<SeedApi.Foo>({
             method: "GET",
             path: "foo",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -83,7 +83,7 @@ export class SeedApiClient {
     ): core.HttpResponsePromise<SeedApi.Foo> {
         const { "X-Idempotency-Key": xIdempotencyKey, ..._body } = request;
         const _headers = mergeOnlyDefinedHeaders({ "X-Idempotency-Key": xIdempotencyKey });
-        return this._client.request<SeedApi.Foo>({
+        return this._requestFn<SeedApi.Foo>({
             method: "PATCH",
             path: `foo/${core.url.encodePathParam(id)}`,
             body: _body,

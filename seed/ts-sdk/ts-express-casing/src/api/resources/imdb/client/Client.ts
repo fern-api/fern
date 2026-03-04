@@ -15,13 +15,19 @@ export declare namespace ImdbClient {
 
 export class ImdbClient {
     protected readonly _options: NormalizedClientOptions<ImdbClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ImdbClient.Options, client?: core.HttpClient) {
+    constructor(options: ImdbClient.Options);
+    constructor(options: ImdbClient.Options, requestFn: core.RequestFn);
+    constructor(options: ImdbClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedApiError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedApiError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -42,7 +48,7 @@ export class ImdbClient {
         requestOptions?: ImdbClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.MovieId> {
         const _headers = {};
-        return this._client.request<SeedApi.MovieId>({
+        return this._requestFn<SeedApi.MovieId>({
             method: "POST",
             path: "/movies/create-movie",
             body: request,
@@ -68,7 +74,7 @@ export class ImdbClient {
         requestOptions?: ImdbClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Movie> {
         const _headers = {};
-        return this._client.request<SeedApi.Movie>({
+        return this._requestFn<SeedApi.Movie>({
             method: "GET",
             path: `/movies/${core.url.encodePathParam(movie_id)}`,
             queryParameters: requestOptions?.queryParams,

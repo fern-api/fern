@@ -14,15 +14,15 @@ export declare namespace SeedLicenseClient {
 
 export class SeedLicenseClient {
     protected readonly _options: NormalizedClientOptions<SeedLicenseClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedLicenseClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedLicenseError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedLicenseError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -33,7 +33,7 @@ export class SeedLicenseClient {
      */
     public get(requestOptions?: SeedLicenseClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: "/",
             queryParameters: requestOptions?.queryParams,

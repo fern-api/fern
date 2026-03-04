@@ -13,21 +13,23 @@ export declare namespace InlineUsersClient {
 
 export class InlineUsersClient {
     protected readonly _options: NormalizedClientOptions<InlineUsersClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _inlineUsers: InlineUsersClient_ | undefined;
 
-    constructor(options: InlineUsersClient.Options, client?: core.HttpClient) {
+    constructor(options: InlineUsersClient.Options);
+    constructor(options: InlineUsersClient.Options, requestFn: core.RequestFn);
+    constructor(options: InlineUsersClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedPaginationError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedPaginationError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public get inlineUsers(): InlineUsersClient_ {
-        return (this._inlineUsers ??= new InlineUsersClient_(this._options, this._client));
+        return (this._inlineUsers ??= new InlineUsersClient_(this._options, this._requestFn));
     }
 }
