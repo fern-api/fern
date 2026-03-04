@@ -225,7 +225,7 @@ function updateVersionsFile(
     const newVersionEntry: VersionEntry = {
         version: newVersion,
         changelogEntry,
-        createdAt: new Date().toISOString().split("T")[0],
+        createdAt: new Date().toISOString().split("T")[0] ?? "",
         irVersion
     };
 
