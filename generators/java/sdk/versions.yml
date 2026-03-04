@@ -2,12 +2,12 @@
 - version: 3.41.1
   changelogEntry:
     - summary: |
-        Fix compilation error for objects with more than 252 properties. The JVM
-        limits constructors to 255 parameter slots, so types like CMS-1500 claim
-        forms that exceed this limit caused `too many parameters` javac errors.
-        When the property count exceeds the threshold, the generated constructor
-        now accepts the Builder as a single parameter and copies fields from it,
-        keeping the public API (builder pattern) unchanged.
+        Fix compilation error for objects with many properties that exceed the
+        JVM 255-parameter-slot limit. Types like CMS-1500 claim forms caused
+        `too many parameters` javac errors. The generator now computes precise
+        JVM slot counts (`long`/`double` consume two slots, all other types one)
+        and, when the threshold is exceeded, generates a constructor that accepts
+        the Builder as a single parameter, keeping the public API unchanged.
       type: fix
   createdAt: "2026-03-04"
   irVersion: 65

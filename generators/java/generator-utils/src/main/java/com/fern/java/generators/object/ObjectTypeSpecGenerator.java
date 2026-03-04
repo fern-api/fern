@@ -14,6 +14,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,11 @@ import javax.lang.model.element.Modifier;
 public final class ObjectTypeSpecGenerator {
 
     /**
-     * The JVM limits constructors to 255 parameter slots, where {@code this} occupies one slot. We use a conservative
-     * threshold to leave room for {@code long}/{@code double} parameters (which consume two slots each) and the
-     * additional-properties parameter.
+     * The JVM limits constructors to 255 parameter slots, where {@code this} occupies one slot and each parameter
+     * consumes one slot (two for {@code long} and {@code double}). We reserve one slot for {@code this}, leaving 254
+     * usable slots.
      */
-    private static final int MAX_CONSTRUCTOR_PARAMS = 252;
+    private static final int MAX_CONSTRUCTOR_PARAM_SLOTS = 254;
 
     private final ClassName objectClassName;
     private final ClassName generatedObjectMapperClassName;
@@ -70,11 +71,15 @@ public final class ObjectTypeSpecGenerator {
         this.publicConstructorsEnabled = publicConstructorsEnabled;
         this.supportAdditionalProperties = supportAdditionalProperties;
         this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
-        long fieldCount = allEnrichedProperties.stream()
+        long paramSlots = allEnrichedProperties.stream()
                 .filter(p -> p.fieldSpec().isPresent())
-                .count();
-        long paramCount = fieldCount + (supportAdditionalProperties ? 1 : 0);
-        this.useBuilderConstructor = paramCount > MAX_CONSTRUCTOR_PARAMS;
+                .mapToLong(p -> jvmSlots(p.fieldSpec().get().type))
+                .sum();
+        if (supportAdditionalProperties) {
+            // Map<String, Object> is a reference type, takes one slot
+            paramSlots += 1;
+        }
+        this.useBuilderConstructor = paramSlots > MAX_CONSTRUCTOR_PARAM_SLOTS;
     }
 
     public TypeSpec generate() {
@@ -185,7 +190,7 @@ public final class ObjectTypeSpecGenerator {
     private MethodSpec generateBuilderBasedConstructor() {
         ClassName builderClassName = objectClassName.nestedClass("Builder");
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PRIVATE)
+                .addModifiers(publicConstructorsEnabled ? Modifier.PUBLIC : Modifier.PRIVATE)
                 .addParameter(builderClassName, "builder");
         allEnrichedProperties.stream()
                 .map(EnrichedObjectProperty::fieldSpec)
@@ -255,6 +260,17 @@ public final class ObjectTypeSpecGenerator {
                         .map(EnrichedObjectProperty::fieldSpec)
                         .flatMap(Optional::stream)
                         .collect(Collectors.toList()));
+    }
+
+    /**
+     * Returns the number of JVM parameter slots consumed by a given type. {@code long} and {@code double} occupy two
+     * slots; all other types occupy one.
+     */
+    private static long jvmSlots(TypeName typeName) {
+        if (typeName.equals(TypeName.LONG) || typeName.equals(TypeName.DOUBLE)) {
+            return 2;
+        }
+        return 1;
     }
 
     private Optional<ObjectBuilder> generateBuilder() {
