@@ -175,6 +175,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .useNullableAnnotation(customConfig.useNullableAnnotation())
                 .collapseOptionalNullable(customConfig.collapseOptionalNullable())
                 .gradleCentralDependencyManagement(customConfig.gradleCentralDependencyManagement())
+                .customInterceptors(customConfig.customInterceptors())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
