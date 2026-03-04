@@ -10,6 +10,26 @@
       type: fix
   createdAt: "2026-03-04"
   irVersion: 65
+        
+- version: 4.3.1
+  changelogEntry:
+    - summary: |
+        Fix `fern add` resolving outdated generator versions when FDR returns a
+        version older than the hardcoded fallback. This could happen when the dev
+        CLI (version 0.0.0) queries FDR, which returns an old version incompatible
+        with CLI v4. The resolved version is now guaranteed to be at least as new
+        as the hardcoded fallback version shipped with the CLI.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.0
+  changelogEntry:
+    - summary: |
+        Adds beta support for dynamically generating `og:images`.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
 
 - version: 4.2.2
   changelogEntry:
@@ -77,7 +97,7 @@
 - version: 4.0.0
   changelogEntry:
     - summary: |
-        Deprecate IR versions <= 52. Cuts down on binary size, build time, and migrations.
+        Deprecate IR versions `<= 52`. Cuts down on binary size, build time, and migrations.
 
         **Breaking changes**: To upgrade to this version of the CLI, generators now have
         minimal versions they need to be upgraded to with `fern generator upgrade --include-major`:

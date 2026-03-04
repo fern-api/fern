@@ -1,5 +1,6 @@
 import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
+import semver from "semver";
 
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations.js";
 import {
@@ -43,17 +44,26 @@ export async function addGenerator({
             ) {
                 context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`);
             }
+            const latestVersion = await getLatestGeneratorVersion({
+                cliVersion,
+                generatorName: normalizedGeneratorName,
+                context,
+                channel: undefined
+            });
+
+            // Use the latest version from FDR if it's newer than the hardcoded fallback,
+            // otherwise use the hardcoded version. This ensures we never add a generator
+            // version that's older than what the current CLI is known to support (e.g.
+            // when the dev CLI version 0.0.0 causes FDR to return an outdated version).
+            const version =
+                latestVersion != null && semver.valid(latestVersion) && semver.gt(latestVersion, invocation.version)
+                    ? latestVersion
+                    : invocation.version;
+
             group.generators.push({
                 name: shorthandGeneratorName,
                 ...invocation,
-                // Fall back to the hardcoded version if a "latest" does not yet exist
-                version:
-                    (await getLatestGeneratorVersion({
-                        cliVersion,
-                        generatorName: normalizedGeneratorName,
-                        context,
-                        channel: undefined
-                    })) ?? invocation.version
+                version
             });
         }
     });
