@@ -869,6 +869,106 @@ export function renderSingleMethod(
 }
 
 // ---------------------------------------------------------------------------
+// Constructor overload sorting
+// ---------------------------------------------------------------------------
+
+/**
+ * Check if a constructor is a move constructor (takes T&& as first core param).
+ */
+function isMoveConstructor(func: CppFunctionIr): boolean {
+    const hasAlloc = lastParamIsAllocator(func);
+    const coreParams = hasAlloc ? func.parameters.slice(0, -1) : func.parameters;
+    if (coreParams.length !== 1) {
+        return false;
+    }
+    const ft = coreParams[0]?.typeInfo?.display ?? "";
+    return ft.includes("&&") && !ft.includes("const");
+}
+
+/**
+ * Check if a constructor is a cross-type copy constructor.
+ * This means it takes a const ref to a variant of the class with different
+ * template parameters (OtherT, OtherAlloc), or from a related type
+ * (std::vector, vector_base).
+ */
+function isCrossTypeCopyConstructor(func: CppFunctionIr): boolean {
+    const hasAlloc = lastParamIsAllocator(func);
+    const coreParams = hasAlloc ? func.parameters.slice(0, -1) : func.parameters;
+    if (coreParams.length !== 1) {
+        return false;
+    }
+    const ft = coreParams[0]?.typeInfo?.display ?? "";
+    // Must be a const ref (not rvalue ref)
+    if (!ft.includes("const") || !ft.includes("&") || ft.includes("&&")) {
+        return false;
+    }
+    // Must reference a cross-type variant
+    return ft.includes("OtherT") || ft.includes("OtherAlloc") ||
+        ft.includes("std::vector") || ft.includes("vector_base");
+}
+
+/**
+ * Reorder constructor overloads so that cross-type copies come before moves.
+ *
+ * The IR often places constructors in this order:
+ *   ..., same-type copy, move, move+alloc, cross-type copy, ...
+ * Golden pages expect:
+ *   ..., same-type copy, cross-type copy, move, move+alloc, ...
+ *
+ * This function does a targeted swap: it finds consecutive move constructors
+ * followed by consecutive cross-type copies, and swaps those two groups.
+ * Everything else stays in IR order.
+ *
+ * Mutates the array in place.
+ */
+function sortConstructorOverloads(funcs: CppFunctionIr[]): void {
+    // Find the first move constructor
+    let moveStart = -1;
+    for (let i = 0; i < funcs.length; i++) {
+        if (isMoveConstructor(funcs[i]!)) {
+            moveStart = i;
+            break;
+        }
+    }
+    if (moveStart < 0) {
+        return; // No move constructors, nothing to reorder
+    }
+
+    // Find the end of the move group (consecutive move constructors, including
+    // move+allocator variants which have 2 params but first is &&)
+    let moveEnd = moveStart;
+    for (let i = moveStart; i < funcs.length; i++) {
+        const f = funcs[i]!;
+        const ft = f.parameters[0]?.typeInfo?.display ?? "";
+        if (ft.includes("&&") && !ft.includes("const")) {
+            moveEnd = i + 1;
+        } else {
+            break;
+        }
+    }
+
+    // Check if cross-type copies immediately follow the move group
+    let crossCopyStart = moveEnd;
+    let crossCopyEnd = moveEnd;
+    for (let i = moveEnd; i < funcs.length; i++) {
+        if (isCrossTypeCopyConstructor(funcs[i]!)) {
+            crossCopyEnd = i + 1;
+        } else {
+            break;
+        }
+    }
+
+    // Only swap if we found cross-type copies immediately after moves
+    if (crossCopyEnd > crossCopyStart) {
+        const moves = funcs.splice(moveStart, moveEnd - moveStart);
+        // After splice, the cross-type copies have shifted to moveStart
+        // Insert the moves after the cross-type copies
+        const crossCopyCount = crossCopyEnd - crossCopyStart;
+        funcs.splice(moveStart + crossCopyCount, 0, ...moves);
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Overloaded method rendering (with Tabs)
 // ---------------------------------------------------------------------------
 
@@ -923,6 +1023,13 @@ export function renderOverloadedMethod(
 
     const titleGenerator = options.generateTabTitle ??
         (options.isConstructor ? generateConstructorTabTitle : generateMethodTabTitle);
+
+    // Sort constructor overloads so cross-type copies come before moves.
+    // The IR often has: same-type copy, move, cross-type copy — but golden pages
+    // expect: same-type copy, cross-type copy, move.
+    if (options.isConstructor) {
+        sortConstructorOverloads(nonDeletedFuncs);
+    }
 
     // Detect const/non-const pairs for Mutable/Const tab titles.
     // When overloads differ only in const qualification, use "Mutable" and "Const" titles.

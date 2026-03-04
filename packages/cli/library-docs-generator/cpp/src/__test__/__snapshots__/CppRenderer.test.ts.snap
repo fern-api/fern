@@ -3027,49 +3027,6 @@ The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
-<Tab title="Move">
-
-Move constructor moves from another \`device_vector\`.
-
-<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
-\`\`\`cpp showLineNumbers={false}
-thrust::device_vector<T, Alloc>::device_vector(
-    device_vector &&v
-)
-\`\`\`
-</CodeBlock>
-
-**Parameters**
-
-<ParamField path="v" type="device_vector &&">
-The \`device_vector\` to move.
-</ParamField>
-
-</Tab>
-<Tab title="Move with allocator">
-
-Move constructor moves from another \`device_vector\`.
-
-<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
-\`\`\`cpp showLineNumbers={false}
-thrust::device_vector<T, Alloc>::device_vector(
-    device_vector &&v,
-    const Alloc &alloc
-)
-\`\`\`
-</CodeBlock>
-
-**Parameters**
-
-<ParamField path="v" type="device_vector &&">
-The \`device_vector\` to move.
-</ParamField>
-
-<ParamField path="alloc" type="const Alloc &">
-The allocator to use by this \`device_vector\`.
-</ParamField>
-
-</Tab>
 <Tab title="From other device_vector type">
 
 <Badge intent="note" minimal>explicit</Badge>
@@ -3129,6 +3086,49 @@ thrust::device_vector<T, Alloc>::device_vector(
 
 <ParamField path="v" type="const detail::vector_base< OtherT, OtherAlloc > &">
 The \`vector_base\` to copy.
+</ParamField>
+
+</Tab>
+<Tab title="Move">
+
+Move constructor moves from another \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    device_vector &&v
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="device_vector &&">
+The \`device_vector\` to move.
+</ParamField>
+
+</Tab>
+<Tab title="Move with allocator">
+
+Move constructor moves from another \`device_vector\`.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+thrust::device_vector<T, Alloc>::device_vector(
+    device_vector &&v,
+    const Alloc &alloc
+)
+\`\`\`
+</CodeBlock>
+
+**Parameters**
+
+<ParamField path="v" type="device_vector &&">
+The \`device_vector\` to move.
+</ParamField>
+
+<ParamField path="alloc" type="const Alloc &">
+The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
