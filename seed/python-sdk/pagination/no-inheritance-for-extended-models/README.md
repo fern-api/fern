@@ -36,29 +36,23 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPagination
-from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.complex_.search(
+
+client.complex_.search(
     index="index",
-    pagination=StartingAfterPaging(
-        per_page=1,
-        starting_after="starting_after",
-    ),
-    query=SingleFilterSearchRequest(
-        field="field",
-        operator="=",
-        value="value",
-    ),
+    pagination={
+        "per_page": 1,
+        "starting_after": "starting_after"
+    },
+    query={
+        "field": "field",
+        "operator": "=",
+        "value": "value"
+    },
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 ```
 
 ## Async Client
@@ -69,33 +63,25 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedPagination
-from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = AsyncSeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
 
 
 async def main() -> None:
-    response = await client.complex_.search(
+    await client.complex_.search(
         index="index",
-        pagination=StartingAfterPaging(
-            per_page=1,
-            starting_after="starting_after",
-        ),
-        query=SingleFilterSearchRequest(
-            field="field",
-            operator="=",
-            value="value",
-        ),
+        pagination={
+            "per_page": 1,
+            "starting_after": "starting_after"
+        },
+        query={
+            "field": "field",
+            "operator": "=",
+            "value": "value"
+        },
     )
-    async for item in response:
-        yield item
-
-    # alternatively, you can paginate page-by-page
-    async for page in response.iter_pages():
-        yield page
 
 
 asyncio.run(main())
@@ -121,35 +107,11 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-from seed import SeedPagination
-from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
-
-client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.complex_.search(
-    index="index",
-    pagination=StartingAfterPaging(
-        per_page=1,
-        starting_after="starting_after",
-    ),
-    query=SingleFilterSearchRequest(
-        field="field",
-        operator="=",
-        value="value",
-    ),
-)
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
-```
-
-```python
-# You can also iterate through pages and access the typed response per page
 pager = client.complex_.search(...)
+for item in pager:
+    print(item)
+
+# You can also iterate through pages and access the typed response per page
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:
@@ -166,17 +128,11 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedPagination
 
-client = SeedPagination(
-    ...,
-)
-pager = client.complex_.search(...)
-print(pager.response)  # access the typed response for the first page
-for item in pager:
-    print(item)  # access the underlying object(s)
-for page in pager.iter_pages():
-    print(page.response)  # access the typed response for each page
-    for item in page:
-        print(item)  # access the underlying object(s)
+client = SeedPagination(...)
+response = client.complex_.with_raw_response.search(...)
+print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
+print(response.data)  # access the underlying object
 ```
 
 ### Retries
@@ -204,14 +160,9 @@ client.complex_.search(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedPagination
 
-client = SeedPagination(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedPagination(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.complex_.search(..., request_options={

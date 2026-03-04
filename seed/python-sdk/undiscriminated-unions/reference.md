@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -&gt; AsyncHttpResponse[MyUnion]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -> MyUnion</code></summary>
 <dl>
 <dd>
 
@@ -15,9 +15,8 @@
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUndiscriminatedUnions()
+
 client.union.get(
     request="string",
 )
@@ -56,7 +55,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get_metadata</a>() -&gt; AsyncHttpResponse[Metadata]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get_metadata</a>() -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -71,9 +70,8 @@ client.union.get(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUndiscriminatedUnions()
+
 client.union.get_metadata()
 
 ```
@@ -102,7 +100,7 @@ client.union.get_metadata()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update_metadata</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">update_metadata</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -117,11 +115,12 @@ client.union.get_metadata()
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUndiscriminatedUnions()
+
 client.union.update_metadata(
-    request={"string": {"key": "value"}},
+    request={
+        "string": {"key": "value"}
+    },
 )
 
 ```
@@ -158,7 +157,7 @@ client.union.update_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">call</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">call</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -173,11 +172,12 @@ client.union.update_metadata(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUndiscriminatedUnions()
+
 client.union.call(
-    union={"string": {"key": "value"}},
+    union={
+        "string": {"key": "value"}
+    },
 )
 
 ```
@@ -194,7 +194,7 @@ client.union.call(
 <dl>
 <dd>
 
-**union:** `typing.Optional[MetadataUnion]` 
+**request:** `Request` 
     
 </dd>
 </dl>
@@ -214,7 +214,7 @@ client.union.call(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicate_types_union</a>(...) -&gt; AsyncHttpResponse[UnionWithDuplicateTypes]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicate_types_union</a>(...) -> UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -229,9 +229,8 @@ client.union.call(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUndiscriminatedUnions()
+
 client.union.duplicate_types_union(
     request="string",
 )
@@ -270,7 +269,7 @@ client.union.duplicate_types_union(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_unions</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_unions</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -285,9 +284,8 @@ client.union.duplicate_types_union(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUndiscriminatedUnions()
+
 client.union.nested_unions(
     request="string",
 )
@@ -326,7 +324,7 @@ client.union.nested_unions(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -340,16 +338,14 @@ client.union.nested_unions(
 
 ```python
 from seed import SeedUndiscriminatedUnions
-from seed.union import TokenizeCard
 
-client = SeedUndiscriminatedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUndiscriminatedUnions()
+
 client.union.test_camel_case_properties(
-    payment_method=TokenizeCard(
-        method="card",
-        card_number="1234567890123456",
-    ),
+    payment_method={
+        "method": "card",
+        "card_number": "1234567890123456"
+    },
 )
 
 ```

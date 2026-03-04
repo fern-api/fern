@@ -36,9 +36,8 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedCrossPackageTypeNames
 
-client = SeedCrossPackageTypeNames(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedCrossPackageTypeNames()
+
 client.foo.find(
     optional_string="optionalString",
     public_property="publicProperty",
@@ -55,9 +54,7 @@ import asyncio
 
 from seed import AsyncSeedCrossPackageTypeNames
 
-client = AsyncSeedCrossPackageTypeNames(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedCrossPackageTypeNames()
 
 
 async def main() -> None:
@@ -96,9 +93,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedCrossPackageTypeNames
 
-client = SeedCrossPackageTypeNames(
-    ...,
-)
+client = SeedCrossPackageTypeNames(...)
 response = client.foo.with_raw_response.find(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -130,14 +125,9 @@ client.foo.find(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedCrossPackageTypeNames
 
-client = SeedCrossPackageTypeNames(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedCrossPackageTypeNames(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.foo.find(..., request_options={

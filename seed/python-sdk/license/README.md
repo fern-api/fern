@@ -36,9 +36,8 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedLicense
 
-client = SeedLicense(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedLicense()
+
 client.get()
 ```
 
@@ -51,9 +50,7 @@ import asyncio
 
 from seed import AsyncSeedLicense
 
-client = AsyncSeedLicense(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedLicense()
 
 
 async def main() -> None:
@@ -88,9 +85,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedLicense
 
-client = SeedLicense(
-    ...,
-)
+client = SeedLicense(...)
 response = client.with_raw_response.get()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -122,14 +117,9 @@ client.get(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedLicense
 
-client = SeedLicense(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedLicense(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.get(request_options={

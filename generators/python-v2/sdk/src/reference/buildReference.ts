@@ -85,8 +85,7 @@ function getEndpointReference({
     const returnTypeStr = getReturnTypeString({ endpoint });
 
     // Use prerendered snippet if available, otherwise fallback to abbreviated form
-    let snippet =
-        endpointSnippets[endpoint.id] ?? `${accessPath}.${methodName}(${parameters.length > 0 ? "..." : ""})`;
+    let snippet = endpointSnippets[endpoint.id] ?? `${accessPath}.${methodName}(${parameters.length > 0 ? "..." : ""})`;
 
     // Fix the snippet's method path if it doesn't match the expected access path
     snippet = fixSnippetMethodPath({ snippet, accessPath, methodName });
@@ -137,16 +136,27 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
             name: pathParam.name.snakeCase.unsafeName,
             type: getTypeString(pathParam.valueType),
             description: pathParam.docs,
-            required: true
+            required: !isTypeOptional(pathParam.valueType)
         });
     });
 
     endpoint.queryParameters.forEach((queryParam) => {
+        const isOptional = isTypeOptional(queryParam.valueType);
+        let type: string;
+        if (queryParam.allowMultiple) {
+            const baseType = isOptional
+                ? unwrapOptionalType(queryParam.valueType)
+                : getTypeString(queryParam.valueType);
+            const unionType = `typing.Union[${baseType}, typing.Sequence[${baseType}]]`;
+            type = isOptional ? wrapOptional(unionType) : unionType;
+        } else {
+            type = getTypeString(queryParam.valueType);
+        }
         parameters.push({
             name: queryParam.name.name.snakeCase.unsafeName,
-            type: getTypeString(queryParam.valueType),
+            type,
             description: queryParam.docs,
-            required: !queryParam.allowMultiple
+            required: !isOptional
         });
     });
 
@@ -155,17 +165,28 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
             name: header.name.name.snakeCase.unsafeName,
             type: getTypeString(header.valueType),
             description: header.docs,
-            required: true
+            required: !isTypeOptional(header.valueType)
         });
     });
 
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
+        // Include properties from extended types
+        if (endpoint.requestBody.extendedProperties != null) {
+            endpoint.requestBody.extendedProperties.forEach((property) => {
+                parameters.push({
+                    name: property.name.name.snakeCase.unsafeName,
+                    type: getTypeString(property.valueType),
+                    description: property.docs,
+                    required: !isTypeOptional(property.valueType)
+                });
+            });
+        }
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
                 name: property.name.name.snakeCase.unsafeName,
                 type: getTypeString(property.valueType),
                 description: property.docs,
-                required: true
+                required: !isTypeOptional(property.valueType)
             });
         });
     } else if (endpoint.requestBody != null && endpoint.requestBody.type === "reference") {
@@ -173,9 +194,51 @@ function getEndpointParameters({ endpoint }: { endpoint: FernIr.HttpEndpoint }):
             name: "request",
             type: getTypeString(endpoint.requestBody.requestBodyType),
             description: endpoint.requestBody.docs,
-            required: true
+            required: !isTypeOptional(endpoint.requestBody.requestBodyType)
+        });
+    } else if (endpoint.requestBody != null && endpoint.requestBody.type === "fileUpload") {
+        endpoint.requestBody.properties.forEach((property) => {
+            if (property.type === "file") {
+                const fileProperty = property.value;
+                const isOptional = fileProperty.type === "file" ? fileProperty.isOptional : fileProperty.isOptional;
+                const fileType = fileProperty.type === "fileArray" ? "typing.List[core.File]" : "core.File";
+                const type = isOptional ? `typing.Optional[${fileType}]` : fileType;
+                parameters.push({
+                    name: fileProperty.key.name.snakeCase.unsafeName,
+                    type,
+                    description: fileProperty.docs,
+                    required: !isOptional
+                });
+            } else if (property.type === "bodyProperty") {
+                parameters.push({
+                    name: property.name.name.snakeCase.unsafeName,
+                    type: getTypeString(property.valueType),
+                    description: property.docs,
+                    required: !isTypeOptional(property.valueType)
+                });
+            }
+        });
+    } else if (endpoint.requestBody != null && endpoint.requestBody.type === "bytes") {
+        parameters.push({
+            name: "request",
+            type: endpoint.requestBody.isOptional
+                ? "typing.Optional[typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]]"
+                : "typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]",
+            description: endpoint.requestBody.docs,
+            required: !endpoint.requestBody.isOptional
         });
     }
+
+    // Sort parameters: required first, then optional (matching v1 behavior)
+    parameters.sort((a, b) => {
+        if (a.required && !b.required) {
+            return -1;
+        }
+        if (!a.required && b.required) {
+            return 1;
+        }
+        return 0;
+    });
 
     return parameters;
 }
@@ -220,7 +283,9 @@ function getTypeString(typeReference: FernIr.TypeReference): string {
                 case "map":
                     return `typing.Dict[${getTypeString(typeReference.container.keyType)}, ${getTypeString(typeReference.container.valueType)}]`;
                 case "optional":
-                    return `typing.Optional[${getTypeString(typeReference.container.optional)}]`;
+                    return wrapOptional(getTypeString(typeReference.container.optional));
+                case "nullable":
+                    return wrapOptional(getTypeString(typeReference.container.nullable));
                 case "literal":
                     return "typing.Literal";
                 default:
@@ -286,6 +351,32 @@ function isRootServiceId({
 
 function getSectionTitle({ service }: { service: FernIr.HttpService }): string {
     return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+}
+
+function isTypeOptional(typeReference: FernIr.TypeReference): boolean {
+    if (typeReference.type === "container") {
+        return typeReference.container.type === "optional" || typeReference.container.type === "nullable";
+    }
+    return false;
+}
+
+function unwrapOptionalType(typeReference: FernIr.TypeReference): string {
+    if (typeReference.type === "container") {
+        if (typeReference.container.type === "optional") {
+            return getTypeString(typeReference.container.optional);
+        }
+        if (typeReference.container.type === "nullable") {
+            return getTypeString(typeReference.container.nullable);
+        }
+    }
+    return getTypeString(typeReference);
+}
+
+function wrapOptional(typeStr: string): string {
+    if (typeStr.startsWith("typing.Optional[")) {
+        return typeStr;
+    }
+    return `typing.Optional[${typeStr}]`;
 }
 
 function fixSnippetMethodPath({

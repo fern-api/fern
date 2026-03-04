@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">create</a>(...) -&gt; AsyncHttpResponse[Type]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">create</a>(...) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -14,9 +14,8 @@
 ```python
 from seed import SeedValidation
 
-client = SeedValidation(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedValidation()
+
 client.create(
     decimal=2.2,
     even=100,
@@ -82,7 +81,7 @@ client.create(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get</a>(...) -&gt; AsyncHttpResponse[Type]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get</a>(...) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -97,9 +96,8 @@ client.create(
 ```python
 from seed import SeedValidation
 
-client = SeedValidation(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedValidation()
+
 client.get(
     decimal=2.2,
     even=100,

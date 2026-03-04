@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14,9 +14,8 @@
 ```python
 from seed import SeedAlias
 
-client = SeedAlias(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedAlias()
+
 client.get(
     type_id="typeId",
 )

@@ -38,15 +38,10 @@ Instantiate and use the client with the following:
 from seed import SeedPaginationUriPath
 
 client = SeedPaginationUriPath(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_uri_pagination()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.users.list_with_uri_pagination()
 ```
 
 ## Async Client
@@ -59,19 +54,12 @@ import asyncio
 from seed import AsyncSeedPaginationUriPath
 
 client = AsyncSeedPaginationUriPath(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
 
 
 async def main() -> None:
-    response = await client.users.list_with_uri_pagination()
-    async for item in response:
-        yield item
-
-    # alternatively, you can paginate page-by-page
-    async for page in response.iter_pages():
-        yield page
+    await client.users.list_with_uri_pagination()
 
 
 asyncio.run(main())
@@ -86,7 +74,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.users.list_with_uri_pagination(...)
+    client.users.list_with_uri_pagination()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -97,23 +85,11 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-from seed import SeedPaginationUriPath
+pager = client.users.list_with_uri_pagination()
+for item in pager:
+    print(item)
 
-client = SeedPaginationUriPath(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.users.list_with_uri_pagination()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
-```
-
-```python
 # You can also iterate through pages and access the typed response per page
-pager = client.users.list_with_uri_pagination(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:
@@ -130,17 +106,11 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedPaginationUriPath
 
-client = SeedPaginationUriPath(
-    ...,
-)
-pager = client.users.list_with_uri_pagination(...)
-print(pager.response)  # access the typed response for the first page
-for item in pager:
-    print(item)  # access the underlying object(s)
-for page in pager.iter_pages():
-    print(page.response)  # access the typed response for each page
-    for item in page:
-        print(item)  # access the underlying object(s)
+client = SeedPaginationUriPath(...)
+response = client.users.with_raw_response.list_with_uri_pagination()
+print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
+print(response.data)  # access the underlying object
 ```
 
 ### Retries
@@ -158,7 +128,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_uri_pagination(..., request_options={
+client.users.list_with_uri_pagination(request_options={
     "max_retries": 1
 })
 ```
@@ -168,17 +138,12 @@ client.users.list_with_uri_pagination(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedPaginationUriPath
 
-client = SeedPaginationUriPath(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedPaginationUriPath(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.users.list_with_uri_pagination(..., request_options={
+client.users.list_with_uri_pagination(request_options={
     "timeout_in_seconds": 1
 })
 ```

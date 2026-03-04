@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -&gt; AsyncHttpResponse[typing.List[Resource]]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -> typing.List[Resource]</code></summary>
 <dl>
 <dd>
 
@@ -30,9 +30,9 @@ List resources with pagination
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.list_resources(
     page=1,
     per_page=1,
@@ -125,7 +125,7 @@ client.service.list_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -&gt; AsyncHttpResponse[Resource]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -155,9 +155,9 @@ Get a single resource
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.get_resource(
     resource_id="resourceId",
     include_metadata=True,
@@ -214,7 +214,7 @@ client.service.get_resource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">search_resources</a>(...) -&gt; AsyncHttpResponse[SearchResponse]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">search_resources</a>(...) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -244,14 +244,16 @@ Search resources with complex parameters
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.search_resources(
     limit=1,
     offset=1,
     query="query",
-    filters={"filters": {"key": "value"}},
+    filters={
+        "filters": {"key": "value"}
+    },
 )
 
 ```
@@ -312,7 +314,7 @@ client.service.search_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_users</a>(...) -&gt; AsyncHttpResponse[PaginatedUserResponse]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_users</a>(...) -> PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -342,9 +344,9 @@ List or search for users
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.list_users(
     page=1,
     per_page=1,
@@ -446,7 +448,7 @@ client.service.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_user_by_id</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_user_by_id</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -476,9 +478,9 @@ Get a user by ID
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.get_user_by_id(
     user_id="userId",
     fields="fields",
@@ -535,7 +537,7 @@ client.service.get_user_by_id(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -565,9 +567,9 @@ Create a new user
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.create_user(
     email="email",
     email_verified=True,
@@ -575,8 +577,12 @@ client.service.create_user(
     password="password",
     phone_number="phone_number",
     phone_verified=True,
-    user_metadata={"user_metadata": {"key": "value"}},
-    app_metadata={"app_metadata": {"key": "value"}},
+    user_metadata={
+        "user_metadata": {"key": "value"}
+    },
+    app_metadata={
+        "app_metadata": {"key": "value"}
+    },
     connection="connection",
 )
 
@@ -594,71 +600,7 @@ client.service.create_user(
 <dl>
 <dd>
 
-**email:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**connection:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_number:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**app_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+**request:** `CreateUserRequest` 
     
 </dd>
 </dl>
@@ -678,7 +620,7 @@ client.service.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">update_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">update_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -708,9 +650,9 @@ Update a user
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.update_user(
     user_id="userId",
     email="email",
@@ -718,8 +660,12 @@ client.service.update_user(
     username="username",
     phone_number="phone_number",
     phone_verified=True,
-    user_metadata={"user_metadata": {"key": "value"}},
-    app_metadata={"app_metadata": {"key": "value"}},
+    user_metadata={
+        "user_metadata": {"key": "value"}
+    },
+    app_metadata={
+        "app_metadata": {"key": "value"}
+    },
     password="password",
     blocked=True,
 )
@@ -746,71 +692,7 @@ client.service.update_user(
 <dl>
 <dd>
 
-**email:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_number:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**phone_verified:** `typing.Optional[bool]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**user_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**app_metadata:** `typing.Optional[typing.Dict[str, typing.Any]]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**blocked:** `typing.Optional[bool]` 
+**request:** `UpdateUserRequest` 
     
 </dd>
 </dl>
@@ -830,7 +712,7 @@ client.service.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">delete_user</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">delete_user</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -860,9 +742,9 @@ Delete a user
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.delete_user(
     user_id="userId",
 )
@@ -901,7 +783,7 @@ client.service.delete_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_connections</a>(...) -&gt; AsyncHttpResponse[typing.List[Connection]]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_connections</a>(...) -> typing.List[Connection]</code></summary>
 <dl>
 <dd>
 
@@ -931,9 +813,9 @@ List all connections
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.list_connections(
     strategy="strategy",
     name="name",
@@ -990,7 +872,7 @@ client.service.list_connections(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_connection</a>(...) -&gt; AsyncHttpResponse[Connection]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_connection</a>(...) -> Connection</code></summary>
 <dl>
 <dd>
 
@@ -1020,9 +902,9 @@ Get a connection by ID
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.get_connection(
     connection_id="connectionId",
     fields="fields",
@@ -1070,7 +952,7 @@ client.service.get_connection(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_clients</a>(...) -&gt; AsyncHttpResponse[PaginatedClientResponse]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">list_clients</a>(...) -> PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -1100,9 +982,9 @@ List all clients/applications
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.list_clients(
     fields="fields",
     include_fields=True,
@@ -1111,7 +993,10 @@ client.service.list_clients(
     include_totals=True,
     is_global=True,
     is_first_party=True,
-    app_type=["app_type", "app_type"],
+    app_type=[
+        "app_type",
+        "app_type"
+    ],
 )
 
 ```
@@ -1184,7 +1069,7 @@ client.service.list_clients(
 <dl>
 <dd>
 
-**app_type:** `typing.Optional[typing.Sequence[str]]` — Filter by application type (spa, native, regular_web, non_interactive)
+**app_type:** `typing.Optional[typing.List[str]]` — Filter by application type (spa, native, regular_web, non_interactive)
     
 </dd>
 </dl>
@@ -1204,7 +1089,7 @@ client.service.list_clients(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_client</a>(...) -&gt; AsyncHttpResponse[Client]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_client</a>(...) -> Client</code></summary>
 <dl>
 <dd>
 
@@ -1234,9 +1119,9 @@ Get a client by ID
 from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.service.get_client(
     client_id="clientId",
     fields="fields",

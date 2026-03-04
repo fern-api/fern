@@ -36,9 +36,8 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedNurseryApi
 
-client = SeedNurseryApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedNurseryApi()
+
 client.package.test(
     for_="for",
 )
@@ -53,9 +52,7 @@ import asyncio
 
 from seed import AsyncSeedNurseryApi
 
-client = AsyncSeedNurseryApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedNurseryApi()
 
 
 async def main() -> None:
@@ -76,7 +73,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.package.test()
+    client.package.test(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -92,10 +89,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedNurseryApi
 
-client = SeedNurseryApi(
-    ...,
-)
-response = client.package.with_raw_response.test()
+client = SeedNurseryApi(...)
+response = client.package.with_raw_response.test(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -116,7 +111,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.package.test(request_options={
+client.package.test(..., request_options={
     "max_retries": 1
 })
 ```
@@ -126,17 +121,12 @@ client.package.test(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedNurseryApi
 
-client = SeedNurseryApi(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedNurseryApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.package.test(request_options={
+client.package.test(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

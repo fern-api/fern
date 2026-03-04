@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_foo</a>(...) -&gt; AsyncHttpResponse[Foo]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_foo</a>(...) -> Foo</code></summary>
 <dl>
 <dd>
 
@@ -14,9 +14,8 @@
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.get_foo(
     required_baz="required_baz",
     required_nullable_baz="required_nullable_baz",
@@ -80,7 +79,7 @@ client.get_foo(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">update_foo</a>(...) -&gt; AsyncHttpResponse[Foo]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">update_foo</a>(...) -> Foo</code></summary>
 <dl>
 <dd>
 
@@ -95,9 +94,8 @@ client.get_foo(
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.update_foo(
     id="id",
     x_idempotency_key="X-Idempotency-Key",

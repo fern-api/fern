@@ -30,7 +30,9 @@ def test_endpoints_object_get_and_return_with_required_field() -> None:
     """Test getAndReturnWithRequiredField endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_with_required_field.0"
     client = get_client(test_id)
-    client.endpoints.object.get_and_return_with_required_field(string="string")
+    client.endpoints.object.get_and_return_with_required_field(
+        string="string",
+    )
     verify_request_count(test_id, "POST", "/object/get-and-return-with-required-field", None, 1)
 
 
@@ -38,7 +40,9 @@ def test_endpoints_object_get_and_return_with_map_of_map() -> None:
     """Test getAndReturnWithMapOfMap endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_with_map_of_map.0"
     client = get_client(test_id)
-    client.endpoints.object.get_and_return_with_map_of_map(map_={"map": {"map": "map"}})
+    client.endpoints.object.get_and_return_with_map_of_map(
+        map_={"map": {"map": "map"}},
+    )
     verify_request_count(test_id, "POST", "/object/get-and-return-with-map-of-map", None, 1)
 
 
@@ -135,7 +139,7 @@ def test_endpoints_object_get_and_return_nested_with_required_field_as_list() ->
                     "bigint": "1000000",
                 },
             },
-        ]
+        ],
     )
     verify_request_count(test_id, "POST", "/object/get-and-return-nested-with-required-field-list", None, 1)
 
@@ -145,6 +149,7 @@ def test_endpoints_object_get_and_return_with_datetime_like_string() -> None:
     test_id = "endpoints.object.get_and_return_with_datetime_like_string.0"
     client = get_client(test_id)
     client.endpoints.object.get_and_return_with_datetime_like_string(
-        datetime_like_string="2023-08-31T14:15:22Z", actual_datetime=datetime.fromisoformat("2023-08-31T14:15:22+00:00")
+        datetime_like_string="2023-08-31T14:15:22Z",
+        actual_datetime=datetime.fromisoformat("2023-08-31T14:15:22+00:00"),
     )
     verify_request_count(test_id, "POST", "/object/get-and-return-with-datetime-like-string", None, 1)

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get</a>()</code></summary>
 <dl>
 <dd>
 
@@ -14,9 +14,8 @@
 ```python
 from seed import SeedLicense
 
-client = SeedLicense(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedLicense()
+
 client.get()
 
 ```

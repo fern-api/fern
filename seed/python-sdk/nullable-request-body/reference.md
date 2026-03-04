@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.test_group.<a href="src/seed/test_group/client.py">test_method_name</a>(...) -&gt; AsyncHttpResponse[typing.Any]</code></summary>
+<details><summary><code>client.test_group.<a href="src/seed/test_group/client.py">test_method_name</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 
@@ -27,14 +27,13 @@ Post a nullable request body
 <dd>
 
 ```python
-from seed import PlainObject, SeedApi
+from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.test_group.test_method_name(
     path_param="path_param",
-    request=PlainObject(),
+    request={},
 )
 
 ```

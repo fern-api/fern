@@ -38,8 +38,10 @@ Instantiate and use the client with the following:
 from seed import SeedOauthClientCredentialsDefault
 
 client = SeedOauthClientCredentialsDefault(
-    base_url="YOUR_BASE_URL",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
 )
+
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
@@ -56,7 +58,8 @@ import asyncio
 from seed import AsyncSeedOauthClientCredentialsDefault
 
 client = AsyncSeedOauthClientCredentialsDefault(
-    base_url="YOUR_BASE_URL",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
 )
 
 
@@ -94,14 +97,15 @@ from seed import SeedOauthClientCredentialsDefault
 
 # Option 1: Direct bearer token (bypass OAuth flow)
 client = SeedOauthClientCredentialsDefault(
-    ..., token="my-pre-generated-bearer-token"
+    ...,
+    token="my-pre-generated-bearer-token",
 )
-
-from seed import SeedOauthClientCredentialsDefault
 
 # Option 2: OAuth client credentials flow (automatic token management)
 client = SeedOauthClientCredentialsDefault(
-    ..., client_id="your-client-id", client_secret="your-client-secret"
+    ...,
+    client_id="your-client-id",
+    client_secret="your-client-secret",
 )
 ```
 
@@ -115,9 +119,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedOauthClientCredentialsDefault
 
-client = SeedOauthClientCredentialsDefault(
-    ...,
-)
+client = SeedOauthClientCredentialsDefault(...)
 response = client.auth.with_raw_response.get_token(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -149,14 +151,9 @@ client.auth.get_token(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedOauthClientCredentialsDefault
 
-client = SeedOauthClientCredentialsDefault(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedOauthClientCredentialsDefault(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.auth.get_token(..., request_options={

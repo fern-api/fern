@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -12,22 +12,21 @@
 <dd>
 
 ```python
-from seed import SeedPropertyAccess, UserProfile, UserProfileVerification
+from seed import SeedPropertyAccess
 
-client = SeedPropertyAccess(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedPropertyAccess()
+
 client.create_user(
     id="id",
     email="email",
     password="password",
-    profile=UserProfile(
-        name="name",
-        verification=UserProfileVerification(
-            verified="verified",
-        ),
-        ssn="ssn",
-    ),
+    profile={
+        "name": "name",
+        "verification": {
+            "verified": "verified"
+        },
+        "ssn": "ssn"
+    },
 )
 
 ```
@@ -44,31 +43,7 @@ client.create_user(
 <dl>
 <dd>
 
-**id:** `str` — The unique identifier for the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**email:** `str` — The email address of the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `str` — The password for the user.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**profile:** `UserProfile` — User profile object
+**request:** `User` 
     
 </dd>
 </dl>

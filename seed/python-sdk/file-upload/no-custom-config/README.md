@@ -36,10 +36,11 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedFileUpload
 
-client = SeedFileUpload(
-    base_url="https://yourhost.com/path/to/api",
+client = SeedFileUpload()
+
+client.service.just_file(
+    file="example_file",
 )
-client.service.just_file()
 ```
 
 ## Async Client
@@ -51,13 +52,13 @@ import asyncio
 
 from seed import AsyncSeedFileUpload
 
-client = AsyncSeedFileUpload(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedFileUpload()
 
 
 async def main() -> None:
-    await client.service.just_file()
+    await client.service.just_file(
+        file="example_file",
+    )
 
 
 asyncio.run(main())
@@ -88,9 +89,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedFileUpload
 
-client = SeedFileUpload(
-    ...,
-)
+client = SeedFileUpload(...)
 response = client.service.with_raw_response.just_file(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -122,14 +121,9 @@ client.service.just_file(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedFileUpload
 
-client = SeedFileUpload(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedFileUpload(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.service.just_file(..., request_options={

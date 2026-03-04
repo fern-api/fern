@@ -36,9 +36,8 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedPythonBackslashEscape
 
-client = SeedPythonBackslashEscape(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedPythonBackslashEscape()
+
 client.user.get(
     id="id",
     domain="domain",
@@ -54,9 +53,7 @@ import asyncio
 
 from seed import AsyncSeedPythonBackslashEscape
 
-client = AsyncSeedPythonBackslashEscape(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedPythonBackslashEscape()
 
 
 async def main() -> None:
@@ -78,7 +75,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.user.get()
+    client.user.get(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -94,10 +91,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedPythonBackslashEscape
 
-client = SeedPythonBackslashEscape(
-    ...,
-)
-response = client.user.with_raw_response.get()
+client = SeedPythonBackslashEscape(...)
+response = client.user.with_raw_response.get(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -118,7 +113,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.user.get(request_options={
+client.user.get(..., request_options={
     "max_retries": 1
 })
 ```
@@ -128,17 +123,12 @@ client.user.get(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedPythonBackslashEscape
 
-client = SeedPythonBackslashEscape(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedPythonBackslashEscape(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.user.get(request_options={
+client.user.get(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

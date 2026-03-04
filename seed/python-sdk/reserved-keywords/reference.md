@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>client.package.<a href="src/seed/package/client.py">test</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.package.<a href="src/seed/package/client.py">test</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -15,9 +15,8 @@
 ```python
 from seed import SeedNurseryApi
 
-client = SeedNurseryApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedNurseryApi()
+
 client.package.test(
     for_="for",
 )
@@ -36,7 +35,7 @@ client.package.test(
 <dl>
 <dd>
 
-**for_:** `str` 
+**for:** `str` 
     
 </dd>
 </dl>

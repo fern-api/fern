@@ -148,12 +148,28 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         templateRenderer: (endpoint: EndpointWithFilepath) => string,
         predicate: (endpoint: EndpointWithFilepath) => boolean = () => true
     ): string[] {
-        return this.getEndpointsForFeature(featureId).filter(predicate).map(templateRenderer);
+        let endpoints = this.getEndpointsForFeature(featureId).filter(predicate);
+        if (endpoints.length === 0) {
+            // No configured/default endpoints match the predicate; find the first matching endpoint
+            const matchingEndpoint = Object.values(this.endpointsById).find(predicate);
+            if (matchingEndpoint != null) {
+                endpoints = [matchingEndpoint];
+            }
+        }
+        return endpoints.map(templateRenderer);
     }
 
     private renderAsyncClientSnippet(endpoint: EndpointWithFilepath): string {
-        const constructorArgs = this.getClientConstructorArgs();
         const syncSnippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
+
+        // Extract parts from sync snippet for consistency, with template fallbacks
+        const constructorArgs =
+            syncSnippet != null
+                ? (this.extractConstructorArgsFromSyncSnippet(syncSnippet) ?? this.getClientConstructorArgs())
+                : this.getClientConstructorArgs();
+
+        const extraImports = syncSnippet != null ? this.extractExtraImportsFromSyncSnippet(syncSnippet) : [];
+
         const methodCallBlock = syncSnippet != null ? this.extractMethodCallFromSyncSnippet(syncSnippet) : undefined;
 
         let asyncBody: string;
@@ -177,14 +193,25 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             asyncBody = `    await ${methodCall}(${hasParams ? "..." : ""})`;
         }
 
+        // Build imports block
+        const imports = ["import asyncio"];
+        for (const imp of extraImports) {
+            imports.push(imp);
+        }
+        imports.push("");
+        imports.push(`from ${this.packageName} import ${this.asyncClientClassName}`);
+        const importsBlock = imports.join("\n");
+
+        // Build constructor block
+        const constructorBlock =
+            constructorArgs !== ""
+                ? `client = ${this.asyncClientClassName}(\n${constructorArgs}\n)`
+                : `client = ${this.asyncClientClassName}()`;
+
         return this.writeCode(
-            `import asyncio
+            `${importsBlock}
 
-from ${this.packageName} import ${this.asyncClientClassName}
-
-client = ${this.asyncClientClassName}(
-${constructorArgs}
-)
+${constructorBlock}
 
 
 async def main() -> None:
@@ -203,6 +230,49 @@ asyncio.run(main())`
         return match[1].trimEnd();
     }
 
+    private extractConstructorArgsFromSyncSnippet(syncSnippet: string): string | undefined {
+        const lines = syncSnippet.split("\n");
+        const clientLineIdx = lines.findIndex((line) => line.startsWith("client = "));
+        if (clientLineIdx === -1) {
+            return undefined;
+        }
+        const clientLine = lines[clientLineIdx] ?? "";
+        // No-args case: client = SeedFoo()
+        if (clientLine.endsWith("()")) {
+            return "";
+        }
+
+        // Multi-line constructor: collect args until closing paren
+        const argLines: string[] = [];
+        for (let i = clientLineIdx + 1; i < lines.length; i++) {
+            const line = lines[i];
+            if (line === ")") {
+                break;
+            }
+            if (line != null) {
+                argLines.push(line);
+            }
+        }
+        return argLines.join("\n");
+    }
+
+    private extractExtraImportsFromSyncSnippet(syncSnippet: string): string[] {
+        const lines = syncSnippet.split("\n");
+        const clientLineIdx = lines.findIndex((line) => line.startsWith("client = "));
+        if (clientLineIdx === -1) {
+            return [];
+        }
+        const packageImportPrefix = `from ${this.packageName} import`;
+        return lines
+            .slice(0, clientLineIdx)
+            .filter(
+                (line) =>
+                    line.trim() !== "" &&
+                    !line.startsWith(packageImportPrefix) &&
+                    (line.startsWith("from ") || line.startsWith("import "))
+            );
+    }
+
     private getClientConstructorArgs(): string {
         const args: string[] = [];
 
@@ -210,11 +280,17 @@ asyncio.run(main())`
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "bearer":
-                    args.push(`    ${scheme.token.snakeCase.unsafeName}="YOUR_${scheme.token.screamingSnakeCase.unsafeName}",`);
+                    args.push(
+                        `    ${scheme.token.snakeCase.unsafeName}="YOUR_${scheme.token.screamingSnakeCase.unsafeName}",`
+                    );
                     break;
                 case "basic":
-                    args.push(`    ${scheme.username.snakeCase.unsafeName}="YOUR_${scheme.username.screamingSnakeCase.unsafeName}",`);
-                    args.push(`    ${scheme.password.snakeCase.unsafeName}="YOUR_${scheme.password.screamingSnakeCase.unsafeName}",`);
+                    args.push(
+                        `    ${scheme.username.snakeCase.unsafeName}="YOUR_${scheme.username.screamingSnakeCase.unsafeName}",`
+                    );
+                    args.push(
+                        `    ${scheme.password.snakeCase.unsafeName}="YOUR_${scheme.password.screamingSnakeCase.unsafeName}",`
+                    );
                     break;
                 case "header": {
                     const headerName = scheme.name.name.snakeCase.unsafeName;
@@ -450,13 +526,13 @@ client = ${this.clientClassName}(
     }
 
     private getEndpointAccessPath(endpoint: EndpointWithFilepath): string {
-        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => part.snakeCase.unsafeName);
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         const methodName = endpoint.endpoint.name.snakeCase.unsafeName;
         return clientAccessParts.length > 0 ? `${clientAccessParts.join(".")}.${methodName}` : methodName;
     }
 
     private getRawResponseMethodCall(endpoint: EndpointWithFilepath): string {
-        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => part.snakeCase.unsafeName);
+        const clientAccessParts = endpoint.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         const methodName = endpoint.endpoint.name.snakeCase.unsafeName;
         if (clientAccessParts.length > 0) {
             return `client.${clientAccessParts.join(".")}.with_raw_response.${methodName}`;

@@ -1,6 +1,6 @@
 # Reference
 ## BasicAuth
-<details><summary><code>client.basic_auth.<a href="src/seed/basic_auth/client.py">get_with_basic_auth</a>() -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.basic_auth.<a href="src/seed/basic_auth/client.py">get_with_basic_auth</a>() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -30,10 +30,10 @@ GET request with basic auth scheme
 from seed import SeedBasicAuthEnvironmentVariables
 
 client = SeedBasicAuthEnvironmentVariables(
-    username="YOUR_USERNAME",
-    access_token="YOUR_ACCESS_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    username="<username>",
+    access_token="<password>",
 )
+
 client.basic_auth.get_with_basic_auth()
 
 ```
@@ -62,7 +62,7 @@ client.basic_auth.get_with_basic_auth()
 </dl>
 </details>
 
-<details><summary><code>client.basic_auth.<a href="src/seed/basic_auth/client.py">post_with_basic_auth</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.basic_auth.<a href="src/seed/basic_auth/client.py">post_with_basic_auth</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -92,10 +92,10 @@ POST request with basic auth scheme
 from seed import SeedBasicAuthEnvironmentVariables
 
 client = SeedBasicAuthEnvironmentVariables(
-    username="YOUR_USERNAME",
-    access_token="YOUR_ACCESS_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    username="<username>",
+    access_token="<password>",
 )
+
 client.basic_auth.post_with_basic_auth(
     request={"key": "value"},
 )

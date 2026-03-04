@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate_stream</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamResponse]]]</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -15,14 +15,11 @@
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.dummy.generate_stream(
+client = SeedStreaming()
+
+client.dummy.generate_stream(
     num_events=1,
 )
-for chunk in response.data:
-    yield chunk
 
 ```
 </dd>
@@ -34,6 +31,14 @@ for chunk in response.data:
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**stream:** `typing.Literal` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -58,7 +63,7 @@ for chunk in response.data:
 </dl>
 </details>
 
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...) -&gt; AsyncHttpResponse[StreamResponse]</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...) -> StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -73,9 +78,8 @@ for chunk in response.data:
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedStreaming()
+
 client.dummy.generate(
     num_events=5,
 )
@@ -90,6 +94,14 @@ client.dummy.generate(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**stream:** `typing.Literal` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

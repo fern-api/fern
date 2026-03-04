@@ -36,9 +36,8 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedUnions
 
-client = SeedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedUnions()
+
 client.bigunion.get(
     id="id",
 )
@@ -53,9 +52,7 @@ import asyncio
 
 from seed import AsyncSeedUnions
 
-client = AsyncSeedUnions(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedUnions()
 
 
 async def main() -> None:
@@ -92,9 +89,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedUnions
 
-client = SeedUnions(
-    ...,
-)
+client = SeedUnions(...)
 response = client.bigunion.with_raw_response.get(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -126,14 +121,9 @@ client.bigunion.get(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedUnions
 
-client = SeedUnions(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedUnions(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.bigunion.get(..., request_options={

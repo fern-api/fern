@@ -36,11 +36,13 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedRequestParameters()
+
 client.user.create_username(
-    tags=["tags", "tags"],
+    tags=[
+        "tags",
+        "tags"
+    ],
     username="username",
     password="password",
     name="test",
@@ -56,14 +58,15 @@ import asyncio
 
 from seed import AsyncSeedRequestParameters
 
-client = AsyncSeedRequestParameters(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedRequestParameters()
 
 
 async def main() -> None:
     await client.user.create_username(
-        tags=["tags", "tags"],
+        tags=[
+            "tags",
+            "tags"
+        ],
         username="username",
         password="password",
         name="test",
@@ -98,9 +101,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters(
-    ...,
-)
+client = SeedRequestParameters(...)
 response = client.user.with_raw_response.create_username(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -132,14 +133,9 @@ client.user.create_username(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedRequestParameters(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.user.create_username(..., request_options={

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">extended_inline_request_body</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">extended_inline_request_body</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,11 @@
 ```python
 from seed import SeedAliasExtends
 
-client = SeedAliasExtends(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedAliasExtends()
+
 client.extended_inline_request_body(
-    child="child",
     parent="parent",
+    child="child",
 )
 
 ```
@@ -36,7 +35,7 @@ client.extended_inline_request_body(
 <dl>
 <dd>
 
-**child:** `str` 
+**parent:** `str` 
     
 </dd>
 </dl>
@@ -44,7 +43,7 @@ client.extended_inline_request_body(
 <dl>
 <dd>
 
-**parent:** `str` 
+**child:** `str` 
     
 </dd>
 </dl>

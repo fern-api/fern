@@ -34,32 +34,25 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import (
-    BondSingleLeg,
-    Isin,
-    Quantity,
-    SeedPythonPositionalSingleProperty,
-    TakerParty,
-    Trader,
-)
+from seed import SeedPythonPositionalSingleProperty
 
-client = SeedPythonPositionalSingleProperty(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedPythonPositionalSingleProperty()
+
 client.create(
-    instrument=BondSingleLeg(
-        identifier=Isin(
-            isin="US0378331005",
-        ),
-        quantity=Quantity(
-            quantity=10000.0,
-        ),
-    ),
-    taker=TakerParty(
-        trader=Trader(
-            uuid_=1234567,
-        ),
-    ),
+    instrument={
+        "identifier": {
+            "isin": "US0378331005"
+        },
+        "quantity": {
+            "quantity": 10000,
+            "type": "QUANTITY"
+        }
+    },
+    taker={
+        "trader": {
+            "uuid_": 1234567
+        }
+    },
 )
 ```
 
@@ -70,35 +63,27 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import (
-    AsyncSeedPythonPositionalSingleProperty,
-    BondSingleLeg,
-    Isin,
-    Quantity,
-    TakerParty,
-    Trader,
-)
+from seed import AsyncSeedPythonPositionalSingleProperty
 
-client = AsyncSeedPythonPositionalSingleProperty(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedPythonPositionalSingleProperty()
 
 
 async def main() -> None:
     await client.create(
-        instrument=BondSingleLeg(
-            identifier=Isin(
-                isin="US0378331005",
-            ),
-            quantity=Quantity(
-                quantity=10000.0,
-            ),
-        ),
-        taker=TakerParty(
-            trader=Trader(
-                uuid_=1234567,
-            ),
-        ),
+        instrument={
+            "identifier": {
+                "isin": "US0378331005"
+            },
+            "quantity": {
+                "quantity": 10000,
+                "type": "QUANTITY"
+            }
+        },
+        taker={
+            "trader": {
+                "uuid_": 1234567
+            }
+        },
     )
 
 
@@ -114,7 +99,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.create()
+    client.create(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -130,10 +115,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedPythonPositionalSingleProperty
 
-client = SeedPythonPositionalSingleProperty(
-    ...,
-)
-response = client.with_raw_response.create()
+client = SeedPythonPositionalSingleProperty(...)
+response = client.with_raw_response.create(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -154,7 +137,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.create(request_options={
+client.create(..., request_options={
     "max_retries": 1
 })
 ```
@@ -164,17 +147,12 @@ client.create(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedPythonPositionalSingleProperty
 
-client = SeedPythonPositionalSingleProperty(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedPythonPositionalSingleProperty(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.create(request_options={
+client.create(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

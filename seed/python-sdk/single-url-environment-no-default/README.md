@@ -35,12 +35,11 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedSingleUrlEnvironmentNoDefault
-from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
 client = SeedSingleUrlEnvironmentNoDefault(
-    token="YOUR_TOKEN",
-    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+    token="<token>",
 )
+
 client.dummy.get_dummy()
 ```
 
@@ -52,11 +51,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedSingleUrlEnvironmentNoDefault
-from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
 client = AsyncSeedSingleUrlEnvironmentNoDefault(
-    token="YOUR_TOKEN",
-    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
+    token="<token>",
 )
 
 
@@ -92,9 +89,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedSingleUrlEnvironmentNoDefault
 
-client = SeedSingleUrlEnvironmentNoDefault(
-    ...,
-)
+client = SeedSingleUrlEnvironmentNoDefault(...)
 response = client.dummy.with_raw_response.get_dummy()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -126,14 +121,9 @@ client.dummy.get_dummy(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedSingleUrlEnvironmentNoDefault
 
-client = SeedSingleUrlEnvironmentNoDefault(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedSingleUrlEnvironmentNoDefault(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.dummy.get_dummy(request_options={

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">upload</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">upload</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -15,9 +15,8 @@
 ```python
 from seed import SeedBytesUpload
 
-client = SeedBytesUpload(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedBytesUpload()
+
 client.service.upload()
 
 ```

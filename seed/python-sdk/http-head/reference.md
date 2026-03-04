@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">head</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">head</a>()</code></summary>
 <dl>
 <dd>
 
@@ -15,9 +15,8 @@
 ```python
 from seed import SeedHttpHead
 
-client = SeedHttpHead(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedHttpHead()
+
 client.user.head()
 
 ```
@@ -46,7 +45,7 @@ client.user.head()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...) -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -61,9 +60,8 @@ client.user.head()
 ```python
 from seed import SeedHttpHead
 
-client = SeedHttpHead(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedHttpHead()
+
 client.user.list(
     limit=1,
 )

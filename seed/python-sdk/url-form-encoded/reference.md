@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">submit_form_data</a>(...) -&gt; AsyncHttpResponse[PostSubmitResponse]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">submit_form_data</a>(...) -> PostSubmitResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,9 +14,8 @@
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.submit_form_data(
     username="johndoe",
     email="john@example.com",

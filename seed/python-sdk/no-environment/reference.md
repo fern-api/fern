@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">get_dummy</a>() -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">get_dummy</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -16,9 +16,9 @@
 from seed import SeedNoEnvironment
 
 client = SeedNoEnvironment(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
+
 client.dummy.get_dummy()
 
 ```

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">foo</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">foo</a>()</code></summary>
 <dl>
 <dd>
 
@@ -14,9 +14,8 @@
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.foo()
 
 ```
@@ -46,7 +45,7 @@ client.foo()
 </details>
 
 ## A B
-<details><summary><code>client.a.b.<a href="src/seed/a/b/client.py">foo</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.a.b.<a href="src/seed/a/b/client.py">foo</a>()</code></summary>
 <dl>
 <dd>
 
@@ -61,9 +60,8 @@ client.foo()
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.a.b.foo()
 
 ```
@@ -93,7 +91,7 @@ client.a.b.foo()
 </details>
 
 ## A C
-<details><summary><code>client.a.c.<a href="src/seed/a/c/client.py">foo</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.a.c.<a href="src/seed/a/c/client.py">foo</a>()</code></summary>
 <dl>
 <dd>
 
@@ -108,9 +106,8 @@ client.a.b.foo()
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.a.c.foo()
 
 ```
@@ -140,7 +137,7 @@ client.a.c.foo()
 </details>
 
 ## Folder
-<details><summary><code>client.folder.<a href="src/seed/folder/client.py">foo</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.folder.<a href="src/seed/folder/client.py">foo</a>()</code></summary>
 <dl>
 <dd>
 
@@ -155,9 +152,8 @@ client.a.c.foo()
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.folder.foo()
 
 ```
@@ -187,7 +183,7 @@ client.folder.foo()
 </details>
 
 ## Folder Service
-<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">endpoint</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">endpoint</a>()</code></summary>
 <dl>
 <dd>
 
@@ -202,9 +198,8 @@ client.folder.foo()
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.folder.service.endpoint()
 
 ```
@@ -233,7 +228,7 @@ client.folder.service.endpoint()
 </dl>
 </details>
 
-<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">unknown_request</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.folder.service.<a href="src/seed/folder/service/client.py">unknown_request</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -248,9 +243,8 @@ client.folder.service.endpoint()
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedApi()
+
 client.folder.service.unknown_request(
     request={"key": "value"},
 )

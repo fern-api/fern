@@ -35,24 +35,22 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedNullableOptional
-from seed.nullable_optional import Address
 
-client = SeedNullableOptional(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedNullableOptional()
+
 client.nullable_optional.create_user(
     username="username",
     email="email",
     phone="phone",
-    address=Address(
-        street="street",
-        city="city",
-        state="state",
-        zip_code="zipCode",
-        country="country",
-        building_id="buildingId",
-        tenant_id="tenantId",
-    ),
+    address={
+        "street": "street",
+        "city": "city",
+        "state": "state",
+        "zip_code": "zipCode",
+        "country": "country",
+        "building_id": "buildingId",
+        "tenant_id": "tenantId"
+    },
 )
 ```
 
@@ -64,11 +62,8 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedNullableOptional
-from seed.nullable_optional import Address
 
-client = AsyncSeedNullableOptional(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedNullableOptional()
 
 
 async def main() -> None:
@@ -76,15 +71,15 @@ async def main() -> None:
         username="username",
         email="email",
         phone="phone",
-        address=Address(
-            street="street",
-            city="city",
-            state="state",
-            zip_code="zipCode",
-            country="country",
-            building_id="buildingId",
-            tenant_id="tenantId",
-        ),
+        address={
+            "street": "street",
+            "city": "city",
+            "state": "state",
+            "zip_code": "zipCode",
+            "country": "country",
+            "building_id": "buildingId",
+            "tenant_id": "tenantId"
+        },
     )
 
 
@@ -116,9 +111,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional(
-    ...,
-)
+client = SeedNullableOptional(...)
 response = client.nullable_optional.with_raw_response.create_user(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -150,14 +143,9 @@ client.nullable_optional.create_user(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedNullableOptional(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.nullable_optional.create_user(..., request_options={

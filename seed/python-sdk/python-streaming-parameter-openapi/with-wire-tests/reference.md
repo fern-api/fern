@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">chat_stream</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[ChatStreamEvent]]]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">chat_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -14,14 +14,11 @@
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.chat_stream(
+client = SeedApi()
+
+client.chat_stream(
     prompt="prompt",
 )
-for chunk in response.data:
-    yield chunk
 
 ```
 </dd>
@@ -38,6 +35,14 @@ for chunk in response.data:
 <dd>
 
 **prompt:** `str` — The user's message
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `typing.Literal` 
     
 </dd>
 </dl>
@@ -57,7 +62,7 @@ for chunk in response.data:
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">chat</a>(...) -&gt; AsyncHttpResponse[ChatResponse]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">chat</a>(...) -> ChatResponse</code></summary>
 <dl>
 <dd>
 
@@ -72,10 +77,9 @@ for chunk in response.data:
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
-client.chat(
+client = SeedApi()
+
+client.chat_stream(
     prompt="Hello",
 )
 
@@ -94,6 +98,14 @@ client.chat(
 <dd>
 
 **prompt:** `str` — The user's message
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `typing.Literal` 
     
 </dd>
 </dl>

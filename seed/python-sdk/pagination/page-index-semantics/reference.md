@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.complex_.<a href="src/seed/complex_/client.py">search</a>(...) -&gt; AsyncPager[Conversation, PaginatedConversationResponse]</code></summary>
+<details><summary><code>client.complex_.<a href="src/seed/complex_/client.py">search</a>(...) -> PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,29 +14,23 @@
 
 ```python
 from seed import SeedPagination
-from seed.complex_ import SingleFilterSearchRequest, StartingAfterPaging
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.complex_.search(
+
+client.complex_.search(
     index="index",
-    pagination=StartingAfterPaging(
-        per_page=1,
-        starting_after="starting_after",
-    ),
-    query=SingleFilterSearchRequest(
-        field="field",
-        operator="=",
-        value="value",
-    ),
+    pagination={
+        "per_page": 1,
+        "starting_after": "starting_after"
+    },
+    query={
+        "field": "field",
+        "operator": "=",
+        "value": "value"
+    },
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -60,15 +54,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**query:** `SearchRequestQuery` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pagination:** `typing.Optional[StartingAfterPaging]` 
+**request:** `SearchRequest` 
     
 </dd>
 </dl>
@@ -89,7 +75,7 @@ for page in response.iter_pages():
 </details>
 
 ## InlineUsers InlineUsers
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_cursor_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -105,20 +91,15 @@ for page in response.iter_pages():
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_cursor_pagination(
+
+client.inline_users.inline_users.list_with_cursor_pagination(
     page=1,
     per_page=1,
     order="asc",
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -181,7 +162,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -&gt; AsyncPager[User, ListUsersMixedTypePaginationResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -197,19 +178,12 @@ the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = (
-    client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(
-        cursor="cursor",
-    )
+
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(
+    cursor="cursor",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -245,7 +219,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_cursor_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -259,22 +233,12 @@ for page in response.iter_pages():
 
 ```python
 from seed import SeedPagination
-from seed.inline_users.inline_users import WithCursor
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_body_cursor_pagination(
-    pagination=WithCursor(
-        cursor="cursor",
-    ),
-)
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
 
 ```
 </dd>
@@ -313,7 +277,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -329,20 +293,15 @@ in order to fetch the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_offset_pagination(
+
+client.inline_users.inline_users.list_with_cursor_pagination(
     page=1,
     per_page=1,
     order="asc",
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -405,7 +364,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_double_offset_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_double_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -421,20 +380,15 @@ the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_double_offset_pagination(
+
+client.inline_users.inline_users.list_with_cursor_pagination(
     page=1.1,
     per_page=1.1,
     order="asc",
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -497,7 +451,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_offset_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -511,22 +465,12 @@ the next page of results.
 
 ```python
 from seed import SeedPagination
-from seed.inline_users.inline_users import WithPage
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_body_offset_pagination(
-    pagination=WithPage(
-        page=1,
-    ),
-)
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
 
 ```
 </dd>
@@ -565,7 +509,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_step_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_step_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -581,19 +525,14 @@ in order to fetch the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_offset_step_pagination(
+
+client.inline_users.inline_users.list_with_offset_step_pagination(
     page=1,
     limit=1,
     order="asc",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -649,7 +588,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination_has_next_page</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination_has_next_page</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -665,21 +604,14 @@ paginated endpoint.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = (
-    client.inline_users.inline_users.list_with_offset_pagination_has_next_page(
-        page=1,
-        limit=1,
-        order="asc",
-    )
+
+client.inline_users.inline_users.list_with_offset_step_pagination(
+    page=1,
+    limit=1,
+    order="asc",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -735,7 +667,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results</a>(...) -&gt; AsyncPager[User, ListUsersExtendedResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results</a>(...) -> ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -748,24 +680,16 @@ paginated endpoint.
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedPagination
+from uuid import UUID
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_extended_results(
-    cursor=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
+
+client.inline_users.inline_users.list_with_extended_results(
+    cursor=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -801,7 +725,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results_and_optional_data</a>(...) -&gt; AsyncPager[User, ListUsersExtendedOptionalListResponse]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results_and_optional_data</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -814,24 +738,16 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedPagination
+from uuid import UUID
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_extended_results_and_optional_data(
-    cursor=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
+
+client.inline_users.inline_users.list_with_extended_results(
+    cursor=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -867,7 +783,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_usernames</a>(...) -&gt; AsyncPager[str, UsernameCursor]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_usernames</a>(...) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -883,17 +799,12 @@ for page in response.iter_pages():
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_usernames(
+
+client.inline_users.inline_users.list_with_cursor_pagination(
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -932,7 +843,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_global_config</a>(...) -&gt; AsyncPager[str, UsernameContainer]</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_global_config</a>(...) -> UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -948,17 +859,12 @@ the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.inline_users.inline_users.list_with_global_config(
+
+client.inline_users.inline_users.list_with_global_config(
     offset=1,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -995,7 +901,7 @@ for page in response.iter_pages():
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_cursor_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1011,20 +917,15 @@ for page in response.iter_pages():
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_cursor_pagination(
+
+client.users.list_with_cursor_pagination(
     page=1,
     per_page=1,
     order="asc",
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1087,7 +988,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -&gt; AsyncPager[User, ListUsersMixedTypePaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1103,17 +1004,12 @@ the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_mixed_type_cursor_pagination(
+
+client.users.list_with_mixed_type_cursor_pagination(
     cursor="cursor",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1149,7 +1045,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_cursor_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1163,22 +1059,12 @@ for page in response.iter_pages():
 
 ```python
 from seed import SeedPagination
-from seed.users import WithCursor
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_body_cursor_pagination(
-    pagination=WithCursor(
-        cursor="cursor",
-    ),
-)
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.users.list_with_mixed_type_cursor_pagination()
 
 ```
 </dd>
@@ -1217,7 +1103,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_top_level_body_cursor_pagination</a>(...) -&gt; AsyncPager[User, ListUsersTopLevelCursorPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_top_level_body_cursor_pagination</a>(...) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1249,18 +1135,13 @@ when getNextPage() is called with a different cursor value.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_top_level_body_cursor_pagination(
+
+client.users.list_with_top_level_body_cursor_pagination(
     cursor="initial_cursor",
     filter="active",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1307,7 +1188,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1323,20 +1204,15 @@ the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_offset_pagination(
+
+client.users.list_with_cursor_pagination(
     page=1,
     per_page=1,
     order="asc",
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1399,7 +1275,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_double_offset_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_double_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1415,20 +1291,15 @@ the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_double_offset_pagination(
+
+client.users.list_with_cursor_pagination(
     page=1.1,
     per_page=1.1,
     order="asc",
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1491,7 +1362,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_offset_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1505,22 +1376,12 @@ the next page of results.
 
 ```python
 from seed import SeedPagination
-from seed.users import WithPage
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_body_offset_pagination(
-    pagination=WithPage(
-        page=1,
-    ),
-)
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.users.list_with_mixed_type_cursor_pagination()
 
 ```
 </dd>
@@ -1559,7 +1420,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_step_pagination</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_step_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1575,19 +1436,14 @@ in order to fetch the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_offset_step_pagination(
+
+client.users.list_with_offset_step_pagination(
     page=1,
     limit=1,
     order="asc",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1643,7 +1499,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination_has_next_page</a>(...) -&gt; AsyncPager[User, ListUsersPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination_has_next_page</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1659,19 +1515,14 @@ paginated endpoint.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_offset_pagination_has_next_page(
+
+client.users.list_with_offset_step_pagination(
     page=1,
     limit=1,
     order="asc",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1727,7 +1578,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results</a>(...) -&gt; AsyncPager[User, ListUsersExtendedResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results</a>(...) -> ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1740,24 +1591,16 @@ paginated endpoint.
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedPagination
+from uuid import UUID
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_extended_results(
-    cursor=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
+
+client.users.list_with_extended_results(
+    cursor=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1793,7 +1636,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results_and_optional_data</a>(...) -&gt; AsyncPager[User, ListUsersExtendedOptionalListResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results_and_optional_data</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1806,24 +1649,16 @@ for page in response.iter_pages():
 <dd>
 
 ```python
-import uuid
-
 from seed import SeedPagination
+from uuid import UUID
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_extended_results_and_optional_data(
-    cursor=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
+
+client.users.list_with_extended_results(
+    cursor=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1859,7 +1694,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames</a>(...) -&gt; AsyncPager[str, UsernameCursor]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames</a>(...) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1875,17 +1710,12 @@ for page in response.iter_pages():
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_usernames(
+
+client.users.list_with_cursor_pagination(
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1924,7 +1754,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_with_optional_response</a>(...) -&gt; AsyncPager[str, typing.Optional[UsernameCursor]]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_with_optional_response</a>(...) -> typing.Optional[UsernameCursor]</code></summary>
 <dl>
 <dd>
 
@@ -1940,17 +1770,12 @@ the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_usernames_with_optional_response(
+
+client.users.list_with_cursor_pagination(
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1989,7 +1814,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_global_config</a>(...) -&gt; AsyncPager[str, UsernameContainer]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_global_config</a>(...) -> UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -2005,17 +1830,12 @@ the next page of results.
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_global_config(
+
+client.users.list_with_global_config(
     offset=1,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -2051,7 +1871,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_optional_data</a>(...) -&gt; AsyncPager[User, ListUsersOptionalDataPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_optional_data</a>(...) -> ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -2067,17 +1887,12 @@ for page in response.iter_pages():
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_optional_data(
+
+client.users.list_with_optional_data(
     page=1,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>

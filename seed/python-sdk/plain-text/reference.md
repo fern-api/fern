@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_text</a>() -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">get_text</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -15,9 +15,8 @@
 ```python
 from seed import SeedPlainText
 
-client = SeedPlainText(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedPlainText()
+
 client.service.get_text()
 
 ```

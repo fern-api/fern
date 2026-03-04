@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -14,12 +14,11 @@
 
 ```python
 from seed import SeedSimpleApi
-from seed.environment import SeedSimpleApiEnvironment
 
 client = SeedSimpleApi(
-    token="YOUR_TOKEN",
-    environment=SeedSimpleApiEnvironment.PRODUCTION,
+    token="<token>",
 )
+
 client.user.get(
     id="id",
 )

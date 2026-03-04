@@ -36,12 +36,11 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedAliasExtends
 
-client = SeedAliasExtends(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedAliasExtends()
+
 client.extended_inline_request_body(
-    child="child",
     parent="parent",
+    child="child",
 )
 ```
 
@@ -54,15 +53,13 @@ import asyncio
 
 from seed import AsyncSeedAliasExtends
 
-client = AsyncSeedAliasExtends(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedAliasExtends()
 
 
 async def main() -> None:
     await client.extended_inline_request_body(
-        child="child",
         parent="parent",
+        child="child",
     )
 
 
@@ -78,7 +75,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.extended_inline_request_body()
+    client.extended_inline_request_body(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -94,10 +91,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedAliasExtends
 
-client = SeedAliasExtends(
-    ...,
-)
-response = client.with_raw_response.extended_inline_request_body()
+client = SeedAliasExtends(...)
+response = client.with_raw_response.extended_inline_request_body(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -118,7 +113,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.extended_inline_request_body(request_options={
+client.extended_inline_request_body(..., request_options={
     "max_retries": 1
 })
 ```
@@ -128,17 +123,12 @@ client.extended_inline_request_body(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedAliasExtends
 
-client = SeedAliasExtends(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedAliasExtends(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.extended_inline_request_body(request_options={
+client.extended_inline_request_body(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

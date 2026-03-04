@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -31,9 +31,8 @@ Other backslash examples: FOO\_BAR, path\to\file, C:\Users\name
 ```python
 from seed import SeedPythonBackslashEscape
 
-client = SeedPythonBackslashEscape(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedPythonBackslashEscape()
+
 client.user.get(
     id="id",
     domain="domain",

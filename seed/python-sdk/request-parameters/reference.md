@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -15,11 +15,13 @@
 ```python
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedRequestParameters()
+
 client.user.create_username(
-    tags=["tags", "tags"],
+    tags=[
+        "tags",
+        "tags"
+    ],
     username="username",
     password="password",
     name="test",
@@ -39,7 +41,7 @@ client.user.create_username(
 <dl>
 <dd>
 
-**tags:** `typing.Sequence[str]` 
+**tags:** `typing.List[str]` 
     
 </dd>
 </dl>
@@ -83,7 +85,7 @@ client.user.create_username(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_with_referenced_type</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_with_referenced_type</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -98,11 +100,13 @@ client.user.create_username(
 ```python
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedRequestParameters()
+
 client.user.create_username_with_referenced_type(
-    tags=["tags", "tags"],
+    tags=[
+        "tags",
+        "tags"
+    ],
     username="username",
     password="password",
     name="test",
@@ -122,7 +126,7 @@ client.user.create_username_with_referenced_type(
 <dl>
 <dd>
 
-**tags:** `typing.Sequence[str]` 
+**tags:** `typing.List[str]` 
     
 </dd>
 </dl>
@@ -130,23 +134,7 @@ client.user.create_username_with_referenced_type(
 <dl>
 <dd>
 
-**username:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**password:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `str` 
+**request:** `CreateUsernameBody` 
     
 </dd>
 </dl>
@@ -166,7 +154,7 @@ client.user.create_username_with_referenced_type(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_optional</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_optional</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -180,13 +168,11 @@ client.user.create_username_with_referenced_type(
 
 ```python
 from seed import SeedRequestParameters
-from seed.user import CreateUsernameBodyOptionalProperties
 
-client = SeedRequestParameters(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedRequestParameters()
+
 client.user.create_username_optional(
-    request=CreateUsernameBodyOptionalProperties(),
+    request={},
 )
 
 ```
@@ -223,7 +209,7 @@ client.user.create_username_optional(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_username</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_username</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -236,64 +222,77 @@ client.user.create_username_optional(
 <dd>
 
 ```python
-import datetime
-import uuid
-
 from seed import SeedRequestParameters
-from seed.user import NestedUser, User
+from uuid import UUID
+from datetime import date, datetime
 
-client = SeedRequestParameters(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedRequestParameters()
+
 client.user.get_username(
     limit=1,
-    id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    date=datetime.date.fromisoformat(
-        "2023-01-15",
-    ),
-    deadline=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
+    id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    date=date.fromisoformat("2023-01-15"),
+    deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     bytes="SGVsbG8gd29ybGQh",
-    user=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
+    user={
+        "name": "name",
+        "tags": [
+            "tags",
+            "tags"
+        ]
+    },
     user_list=[
-        User(
-            name="name",
-            tags=["tags", "tags"],
-        ),
-        User(
-            name="name",
-            tags=["tags", "tags"],
-        ),
+        {
+            "name": "name",
+            "tags": [
+                "tags",
+                "tags"
+            ]
+        },
+        {
+            "name": "name",
+            "tags": [
+                "tags",
+                "tags"
+            ]
+        }
     ],
-    optional_deadline=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    key_value={"keyValue": "keyValue"},
+    optional_deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    key_value={
+        "keyValue": "keyValue"
+    },
     optional_string="optionalString",
-    nested_user=NestedUser(
-        name="name",
-        user=User(
-            name="name",
-            tags=["tags", "tags"],
-        ),
-    ),
-    optional_user=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    exclude_user=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    filter="filter",
+    nested_user={
+        "name": "name",
+        "user": {
+            "name": "name",
+            "tags": [
+                "tags",
+                "tags"
+            ]
+        }
+    },
+    optional_user={
+        "name": "name",
+        "tags": [
+            "tags",
+            "tags"
+        ]
+    },
+    exclude_user=[
+        {
+            "name": "name",
+            "tags": [
+                "tags",
+                "tags"
+            ]
+        }
+    ],
+    filter=[
+        "filter"
+    ],
     long_param=1000000,
-    big_int_param=1000000,
+    big_int_param="1000000",
 )
 
 ```
@@ -326,7 +325,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**date:** `dt.date` 
+**date:** `datetime.date` 
     
 </dd>
 </dl>
@@ -334,7 +333,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**deadline:** `dt.datetime` 
+**deadline:** `datetime.datetime` 
     
 </dd>
 </dl>
@@ -358,7 +357,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**user_list:** `typing.Sequence[User]` 
+**user_list:** `typing.List[User]` 
     
 </dd>
 </dl>
@@ -414,7 +413,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**optional_deadline:** `typing.Optional[dt.datetime]` 
+**optional_deadline:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>

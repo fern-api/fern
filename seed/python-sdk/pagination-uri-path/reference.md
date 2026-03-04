@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_uri_pagination</a>() -&gt; AsyncPager[User, ListUsersUriPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_uri_pagination</a>() -> ListUsersUriPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,15 +16,10 @@
 from seed import SeedPaginationUriPath
 
 client = SeedPaginationUriPath(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_uri_pagination()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.users.list_with_uri_pagination()
 
 ```
 </dd>
@@ -52,7 +47,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_path_pagination</a>() -&gt; AsyncPager[User, ListUsersPathPaginationResponse]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_path_pagination</a>() -> ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -68,15 +63,10 @@ for page in response.iter_pages():
 from seed import SeedPaginationUriPath
 
 client = SeedPaginationUriPath(
-    token="YOUR_TOKEN",
-    base_url="https://yourhost.com/path/to/api",
+    token="<token>",
 )
-response = client.users.list_with_path_pagination()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.users.list_with_path_pagination()
 
 ```
 </dd>

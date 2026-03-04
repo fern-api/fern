@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">create</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">create</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -12,32 +12,25 @@
 <dd>
 
 ```python
-from seed import (
-    BondSingleLeg,
-    Isin,
-    Quantity,
-    SeedPythonPositionalSingleProperty,
-    TakerParty,
-    Trader,
-)
+from seed import SeedPythonPositionalSingleProperty
 
-client = SeedPythonPositionalSingleProperty(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = SeedPythonPositionalSingleProperty()
+
 client.create(
-    instrument=BondSingleLeg(
-        identifier=Isin(
-            isin="US0378331005",
-        ),
-        quantity=Quantity(
-            quantity=10000.0,
-        ),
-    ),
-    taker=TakerParty(
-        trader=Trader(
-            uuid_=1234567,
-        ),
-    ),
+    instrument={
+        "identifier": {
+            "isin": "US0378331005"
+        },
+        "quantity": {
+            "quantity": 10000,
+            "type": "QUANTITY"
+        }
+    },
+    taker={
+        "trader": {
+            "uuid_": 1234567
+        }
+    },
 )
 
 ```

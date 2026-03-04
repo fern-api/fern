@@ -37,10 +37,11 @@ Instantiate and use the client with the following:
 from seed import SeedInferredAuthImplicit
 
 client = SeedInferredAuthImplicit(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
 )
+
 client.auth.get_token_with_client_credentials(
     client_id="client_id",
     client_secret="client_secret",
@@ -58,9 +59,9 @@ import asyncio
 from seed import AsyncSeedInferredAuthImplicit
 
 client = AsyncSeedInferredAuthImplicit(
-    base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
 )
 
 
@@ -100,9 +101,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedInferredAuthImplicit
 
-client = SeedInferredAuthImplicit(
-    ...,
-)
+client = SeedInferredAuthImplicit(...)
 response = client.auth.with_raw_response.get_token_with_client_credentials(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -134,14 +133,9 @@ client.auth.get_token_with_client_credentials(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedInferredAuthImplicit
 
-client = SeedInferredAuthImplicit(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedInferredAuthImplicit(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.auth.get_token_with_client_credentials(..., request_options={

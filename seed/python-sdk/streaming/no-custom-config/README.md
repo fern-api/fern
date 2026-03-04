@@ -37,14 +37,11 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.dummy.generate_stream(
+client = SeedStreaming()
+
+client.dummy.generate_stream(
     num_events=1,
 )
-for chunk in response.data:
-    yield chunk
 ```
 
 ## Async Client
@@ -56,17 +53,13 @@ import asyncio
 
 from seed import AsyncSeedStreaming
 
-client = AsyncSeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
+client = AsyncSeedStreaming()
 
 
 async def main() -> None:
-    response = await client.dummy.generate_stream(
+    await client.dummy.generate_stream(
         num_events=1,
     )
-    async for chunk in response.data:
-        yield chunk
 
 
 asyncio.run(main())
@@ -94,14 +87,11 @@ The SDK supports streaming responses, as well, the response will be a generator 
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming(
-    base_url="https://yourhost.com/path/to/api",
-)
-response = client.dummy.generate_stream(
+client = SeedStreaming()
+
+client.dummy.generate_stream(
     num_events=1,
 )
-for chunk in response.data:
-    yield chunk
 ```
 
 ## Advanced
@@ -114,15 +104,11 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming(
-    ...,
-)
-with client.dummy.with_raw_response.generate_stream(...) as response:
-    print(
-        response.headers
-    )  # access the response headersprint(response.status_code)  # access the response status code
-    for chunk in response.data:
-        print(chunk)  # access the underlying object(s)
+client = SeedStreaming(...)
+response = client.dummy.with_raw_response.generate_stream(...)
+print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
+print(response.data)  # access the underlying object
 ```
 
 ### Retries
@@ -150,14 +136,9 @@ client.dummy.generate_stream(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedStreaming
 
-client = SeedStreaming(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedStreaming(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.dummy.generate_stream(..., request_options={

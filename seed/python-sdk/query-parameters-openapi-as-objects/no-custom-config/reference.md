@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">search</a>(...) -&gt; AsyncHttpResponse[SearchResponse]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">search</a>(...) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -12,62 +12,87 @@
 <dd>
 
 ```python
-import datetime
+from seed import SeedApi
+from datetime import date, datetime
 
-from seed import NestedUser, SeedApi, User
+client = SeedApi()
 
-client = SeedApi(
-    base_url="https://yourhost.com/path/to/api",
-)
 client.search(
     limit=1,
     id="id",
-    date=datetime.date.fromisoformat(
-        "2023-01-15",
-    ),
-    deadline=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
+    date=date.fromisoformat("2023-01-15"),
+    deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     bytes="bytes",
-    user=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    user_list=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    optional_deadline=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    key_value={"keyValue": "keyValue"},
+    user={
+        "name": "name",
+        "tags": [
+            "tags",
+            "tags"
+        ]
+    },
+    user_list=[
+        {
+            "name": "name",
+            "tags": [
+                "tags",
+                "tags"
+            ]
+        }
+    ],
+    optional_deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    key_value={
+        "keyValue": "keyValue"
+    },
     optional_string="optionalString",
-    nested_user=NestedUser(
-        name="name",
-        user=User(
-            name="name",
-            tags=["tags", "tags"],
-        ),
-    ),
-    optional_user=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    exclude_user=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    filter="filter",
-    tags="tags",
-    optional_tags="optionalTags",
-    neighbor=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    neighbor_required=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
+    nested_user={
+        "name": "name",
+        "user": {
+            "name": "name",
+            "tags": [
+                "tags",
+                "tags"
+            ]
+        }
+    },
+    optional_user={
+        "name": "name",
+        "tags": [
+            "tags",
+            "tags"
+        ]
+    },
+    exclude_user=[
+        {
+            "name": "name",
+            "tags": [
+                "tags",
+                "tags"
+            ]
+        }
+    ],
+    filter=[
+        "filter"
+    ],
+    tags=[
+        "tags"
+    ],
+    optional_tags=[
+        "optionalTags"
+    ],
+    neighbor={
+        "name": "name",
+        "tags": [
+            "tags",
+            "tags"
+        ]
+    },
+    neighbor_required={
+        "name": "name",
+        "tags": [
+            "tags",
+            "tags"
+        ]
+    },
 )
 
 ```
@@ -100,7 +125,7 @@ client.search(
 <dl>
 <dd>
 
-**date:** `dt.date` 
+**date:** `datetime.date` 
     
 </dd>
 </dl>
@@ -108,7 +133,7 @@ client.search(
 <dl>
 <dd>
 
-**deadline:** `dt.datetime` 
+**deadline:** `datetime.datetime` 
     
 </dd>
 </dl>
@@ -148,7 +173,7 @@ client.search(
 <dl>
 <dd>
 
-**optional_deadline:** `typing.Optional[dt.datetime]` 
+**optional_deadline:** `typing.Optional[datetime.datetime]` 
     
 </dd>
 </dl>
