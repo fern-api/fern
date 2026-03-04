@@ -39,8 +39,9 @@ function main() {
     const errors = [];
 
     for (const [, softwareConfig] of Object.entries(config.software)) {
-        const softwareDir =
-            softwareConfig.softwareDirectory || softwareConfig.versionsFile.split("/").slice(0, -1).join("/");
+        const path = require("path");
+        const softwareDir = softwareConfig.softwareDirectory ||
+            (softwareConfig.versionsFile.includes("/") ? path.dirname(softwareConfig.versionsFile) : ".");
         const changelogFolder = softwareConfig.changelogFolder || softwareDir + "/changes";
         const unreleasedDir = changelogFolder + "/unreleased";
 
