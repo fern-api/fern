@@ -2,14 +2,14 @@
 
 import type * as SeedServerSentEvents from "../../../index.js";
 
-export type StreamEvent = SeedServerSentEvents.StreamEvent.Completion | SeedServerSentEvents.StreamEvent.Error;
+export type StreamEvent = SeedServerSentEvents.StreamEvent.Completion | SeedServerSentEvents.StreamEvent.Error_;
 
 export namespace StreamEvent {
     export interface Completion extends SeedServerSentEvents.CompletionEvent {
         event: "completion";
     }
 
-    export interface Error extends SeedServerSentEvents.ErrorEvent {
+    export interface Error_ extends SeedServerSentEvents.ErrorEvent {
         event: "error";
     }
 }
