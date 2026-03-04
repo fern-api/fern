@@ -22,9 +22,9 @@ export const UnionWithOptionalTime: core.serialization.Schema<
     });
 
 export declare namespace UnionWithOptionalTime {
-    export type Raw = UnionWithOptionalTime.Date | UnionWithOptionalTime.Datetime;
+    export type Raw = UnionWithOptionalTime.Date_ | UnionWithOptionalTime.Datetime;
 
-    export interface Date {
+    export interface Date_ {
         type: "date";
         value?: string | null;
     }
