@@ -859,14 +859,13 @@ export async function runAppPreviewServer({
     // Function to stop the current Next.js server and all its child processes
     const stopNextJsServer = (): Promise<void> => {
         return new Promise((resolve) => {
-            if (serverProcess == null || serverProcess.killed) {
+            if (serverProcess == null) {
                 resolve();
                 return;
             }
 
             const proc = serverProcess;
             const pid = proc.pid;
-            context.logger.debug(`Killing server process tree with PID: ${pid}`);
 
             let resolved = false;
             const done = () => {
@@ -876,10 +875,18 @@ export async function runAppPreviewServer({
                 }
             };
 
-            // Resolve when the process actually exits
+            // Attach exit listener BEFORE the killed check to avoid
+            // a race where the process exits between the check and listener
             proc.on("exit", () => {
                 done();
             });
+
+            if (proc.killed) {
+                done();
+                return;
+            }
+
+            context.logger.debug(`Killing server process tree with PID: ${pid}`);
 
             // Kill the entire process group (server + any child workers)
             if (pid != null) {
