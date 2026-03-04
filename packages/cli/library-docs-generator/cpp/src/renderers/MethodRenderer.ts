@@ -178,6 +178,14 @@ function generateConstructorTabTitle(func: CppFunctionIr, index: number): string
 }
 
 /**
+ * Check whether a type string refers to an OtherProperties / _OtherProperties
+ * cross-type constructor parameter (e.g. `flat_hash_map<OtherProperties>`).
+ */
+function isOtherPropertiesType(typeStr: string): boolean {
+    return typeStr.includes("OtherProperties") || typeStr.includes("_OtherProperties");
+}
+
+/**
  * Derive a base constructor tab title from the core (non-allocator) parameters.
  * Returns undefined if no known pattern matches.
  */
@@ -203,11 +211,17 @@ function constructorBaseTitleFromParams(
     if (coreParams.length === 1) {
         // Move constructor: T&& (non-const rvalue ref)
         if (firstType.includes("&&") && !firstType.includes("const")) {
+            if (isOtherPropertiesType(firstType)) {
+                return "From matching properties (move)";
+            }
             return "Move";
         }
         // Copy constructor: const T& (same type)
         if (firstType.includes("const") && firstType.includes("&") && !firstType.includes("&&")) {
             // Check if it's a cross-type copy (different template params)
+            if (isOtherPropertiesType(firstType)) {
+                return "From matching properties (copy)";
+            }
             if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
                 firstType.includes("Other")) {
                 // Determine source type for "From X type" titles
@@ -270,10 +284,22 @@ function constructorBaseTitleFromParams(
             return "Sized (no-init)";
         }
 
-        // Iterator range: two iterator params
+        // Iterator range: two iterator params (detect by type or param names)
         if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
-            allTypes.includes("ForwardIterator") || allTypes.includes("InputIt")) {
+            allTypes.includes("ForwardIterator") || allTypes.includes("InputIt") ||
+            allTypes.includes("_Iter") ||
+            coreParams.some(p => p.name === "__first" || p.name === "__last" ||
+                p.name === "first" || p.name === "last")) {
             return "From iterator range";
+        }
+
+        // Range constructor: detect _Range type or __range param name
+        if (coreParams.some(p => {
+            const type = p.typeInfo?.display ?? "";
+            return p.name === "__range" || p.name === "range" ||
+                type.includes("_Range") || type.includes("Range &&");
+        })) {
+            return "From range";
         }
 
         // initializer_list in any param
@@ -283,16 +309,39 @@ function constructorBaseTitleFromParams(
 
         // Move with allocator: T&& + allocator (already handled by hasAlloc suffix)
         if (firstType.includes("&&") && !firstType.includes("const")) {
+            if (isOtherPropertiesType(firstType)) {
+                return "From matching properties (move)";
+            }
             return "Move";
         }
 
         // Copy from other type with allocator
         if (firstType.includes("const") && firstType.includes("&")) {
+            if (isOtherPropertiesType(firstType)) {
+                return "From matching properties (copy)";
+            }
             if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
                 firstType.includes("Other")) {
                 return detectSourceType(firstType);
             }
             return "Copy";
+        }
+
+        // Empty constructor: only infrastructure params (stream_ref, resource, env)
+        // with no data payload (no size, no iterators, no range, no init_list)
+        const hasStreamRef = coreParams.some(p => (p.typeInfo?.display ?? "").includes("stream_ref"));
+        const hasDataPayload = coreParams.some(p => {
+            const type = p.typeInfo?.display ?? "";
+            const name = p.name ?? "";
+            return type.includes("size_type") || type.includes("size_t") ||
+                type.includes("no_init_t") || type.includes("default_init_t") ||
+                type.includes("initializer_list") || type.includes("_Iter") ||
+                type.includes("_Range") || type.includes("Iterator") ||
+                name === "__first" || name === "__last" || name === "__range" ||
+                name === "n" || name === "count";
+        });
+        if (hasStreamRef && !hasDataPayload) {
+            return "Empty";
         }
     }
 
@@ -411,6 +460,65 @@ function hasRangeParam(func: CppFunctionIr): boolean {
 }
 
 /**
+ * Generate tab titles for common C++ container methods (resize, insert, erase, assign)
+ * based on parameter types and counts.
+ */
+function generateContainerMethodTabTitle(func: CppFunctionIr): string | undefined {
+    const name = func.name;
+    const params = func.parameters;
+    const allTypes = params.map(p => p.typeInfo?.display ?? "").join(", ");
+    const allNames = params.map(p => p.name ?? "").join(", ");
+
+    if (name === "resize") {
+        if (params.some(p => (p.typeInfo?.display ?? "").includes("default_init_t"))) {
+            return "Default-initialized";
+        }
+        if (params.some(p => (p.typeInfo?.display ?? "").includes("no_init_t"))) {
+            return "No-init";
+        }
+        if (params.length === 1) {
+            return "Value-initialized";
+        }
+    }
+
+    if (name === "insert") {
+        if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
+            allTypes.includes("ForwardIterator") || allTypes.includes("InputIt")) {
+            return "Range";
+        }
+        if (params.some(p => p.name === "n" || p.name === "count") &&
+            params.some(p => p.name === "x" || p.name === "value" || p.name === "val")) {
+            return "Fill";
+        }
+        if (params.length <= 2) {
+            return "Single element";
+        }
+    }
+
+    if (name === "erase") {
+        if (params.length >= 2 &&
+            (allNames.includes("first") || params.length === 2)) {
+            return "Range";
+        }
+        if (params.length === 1) {
+            return "Single element";
+        }
+    }
+
+    if (name === "assign") {
+        if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
+            allTypes.includes("ForwardIterator") || allTypes.includes("InputIt")) {
+            return "Range";
+        }
+        if (params.some(p => p.name === "n" || p.name === "count")) {
+            return "Fill";
+        }
+    }
+
+    return undefined;
+}
+
+/**
  * Generate a semantic tab title for a method overload based on its
  * parameters and template parameters relative to others in the group.
  *
@@ -494,6 +602,12 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
     });
     if (hasSimpleInput) {
         return isWarpLevel ? "Full warp" : "Single item";
+    }
+
+    // Container method heuristics (resize, insert, erase, assign)
+    const containerTitle = generateContainerMethodTabTitle(func);
+    if (containerTitle) {
+        return containerTitle;
     }
 
     // Const/Mutable differentiation: for method overload pairs, non-const is "Mutable"

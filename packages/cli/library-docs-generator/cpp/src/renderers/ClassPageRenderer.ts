@@ -95,12 +95,30 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         const verbatimContent = findVerbatimRstBlock(docstring.description);
 
         if (verbatimContent) {
+            // Render non-verbatim description blocks first (e.g., normal paragraphs)
+            const nonVerbatimBlocks = docstring.description.filter(
+                b => b.type !== "verbatim"
+            );
+            if (nonVerbatimBlocks.length > 0) {
+                const desc = renderDescriptionBlocks(nonVerbatimBlocks);
+                if (desc) {
+                    lines.push(desc);
+                    lines.push("");
+                }
+            }
             // Parse the verbatim block to extract structured content
             parsedVerbatim = convertVerbatimRst(verbatimContent);
             // Render the overview content from the parsed verbatim
+            // Strip bare version annotations (e.g., "*Added in v2.2.0.*") that are
+            // class-level library version markers, not meaningful overview content.
             if (parsedVerbatim?.overviewContent) {
-                lines.push(parsedVerbatim.overviewContent);
-                lines.push("");
+                const overview = parsedVerbatim.overviewContent
+                    .replace(/^\*Added in v[\d.]+\.\*$/gm, "")
+                    .trim();
+                if (overview) {
+                    lines.push(overview);
+                    lines.push("");
+                }
             }
         } else if (docstring.description.length > 0) {
             // No verbatim blocks -- render description blocks normally

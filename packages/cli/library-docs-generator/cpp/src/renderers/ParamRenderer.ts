@@ -19,6 +19,7 @@ import type {
     CppTypeInfo
 } from "../../../src/types/CppLibraryDocsIr.js";
 import { renderSegmentsTrimmed } from "./DescriptionRenderer.js";
+import { normalizeAngleBracketSpacing } from "./SignatureRenderer.js";
 
 // ---------------------------------------------------------------------------
 // Description trailing period and capitalization
@@ -45,6 +46,11 @@ function capitalizeDescription(desc: string): string {
     // Skip past them and capitalize the first alphabetic char in the text that follows.
     const boldPrefixMatch = desc.match(/^(\*\*\[[^\]]+\]\*\*\s*)/);
     const startOffset = boldPrefixMatch ? boldPrefixMatch[1]!.length : 0;
+
+    // Do not capitalize if the first non-prefix character starts a markdown link [...]
+    if (desc[startOffset] === "[") {
+        return desc;
+    }
 
     // Find the first alphabetic character starting from the offset
     for (let i = startOffset; i < desc.length; i++) {
@@ -347,7 +353,7 @@ export function renderMethodParams(
 
         // BUG 25: Append arraySuffix to the type display when present
         // e.g., typeInfo.display="T(&)" + arraySuffix="[ITEMS_PER_THREAD]" -> "T(&)[ITEMS_PER_THREAD]"
-        let typeDisplay = param.typeInfo?.display ?? "";
+        let typeDisplay = normalizeAngleBracketSpacing(param.typeInfo?.display ?? "");
         if (param.arraySuffix) {
             typeDisplay = typeDisplay + param.arraySuffix;
         }

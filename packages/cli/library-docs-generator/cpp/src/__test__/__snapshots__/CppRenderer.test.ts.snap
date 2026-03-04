@@ -55,7 +55,7 @@ The thread block length in threads along the X dimension
 </ParamField>
 
 <ParamField path="Algorithm" type="BlockReduceAlgorithm" default="BLOCK_REDUCE_WARP_REDUCTIONS">
-**[optional]** [Cub::BlockReduceAlgorithm](/library/api/cub::BlockReduceAlgorithm) enumerator specifying the underlying algorithm to use (default: [cub::BLOCK_REDUCE_WARP_REDUCTIONS](/library/api/cub::BLOCK_REDUCE_WARP_REDUCTIONS))
+**[optional]** [cub::BlockReduceAlgorithm](/library/api/cub::BlockReduceAlgorithm) enumerator specifying the underlying algorithm to use (default: [cub::BLOCK_REDUCE_WARP_REDUCTIONS](/library/api/cub::BLOCK_REDUCE_WARP_REDUCTIONS))
 </ParamField>
 
 <ParamField path="BlockDimY" type="int" default="1">
@@ -604,7 +604,7 @@ The thread block length in threads along the X dimension
 </ParamField>
 
 <ParamField path="Algorithm" type="BlockScanAlgorithm" default="BLOCK_SCAN_RAKING">
-**[optional]** [Cub::BlockScanAlgorithm](/library/api/cub::BlockScanAlgorithm) enumerator specifying the underlying algorithm to use (default: [cub::BLOCK_SCAN_RAKING](/library/api/cub::BLOCK_SCAN_RAKING))
+**[optional]** [cub::BlockScanAlgorithm](/library/api/cub::BlockScanAlgorithm) enumerator specifying the underlying algorithm to use (default: [cub::BLOCK_SCAN_RAKING](/library/api/cub::BLOCK_SCAN_RAKING))
 </ParamField>
 
 <ParamField path="BlockDimY" type="int" default="1">
@@ -2775,7 +2775,7 @@ description: "A dynamically-sized container for device memory with automatic mem
 
 A \`device_vector\` is a container that supports random access to elements, constant time removal of elements at the end, and linear time insertion and removal of elements at the beginning or in the middle.
 
-*Added in v2.2.0.*
+The number of elements in a \`device_vector\` may vary dynamically; memory management is automatic. The memory associated with a \`device_vector\` resides in the memory accessible to devices.
 
 \`\`\`cpp showLineNumbers={false}
 #include <thrust/device_vector.h>
@@ -3044,7 +3044,7 @@ thrust::device_vector<T, Alloc>::device_vector(
 
 **Parameters**
 
-<ParamField path="v" type="const device_vector< OtherT, OtherAlloc > &">
+<ParamField path="v" type="const device_vector<OtherT, OtherAlloc> &">
 The \`device_vector\` to copy.
 </ParamField>
 
@@ -3064,7 +3064,7 @@ thrust::device_vector<T, Alloc>::device_vector(
 
 **Parameters**
 
-<ParamField path="v" type="const std::vector< OtherT, OtherAlloc > &">
+<ParamField path="v" type="const std::vector<OtherT, OtherAlloc> &">
 The \`std::vector\` to copy.
 </ParamField>
 
@@ -3084,7 +3084,7 @@ thrust::device_vector<T, Alloc>::device_vector(
 
 **Parameters**
 
-<ParamField path="v" type="const detail::vector_base< OtherT, OtherAlloc > &">
+<ParamField path="v" type="const detail::vector_base<OtherT, OtherAlloc> &">
 The \`vector_base\` to copy.
 </ParamField>
 
@@ -3146,7 +3146,7 @@ thrust::device_vector<T, Alloc>::device_vector(
 
 **Parameters**
 
-<ParamField path="il" type="::cuda::std::initializer_list< T >">
+<ParamField path="il" type="::cuda::std::initializer_list<T>">
 The intializer_list.
 </ParamField>
 
@@ -3166,7 +3166,7 @@ thrust::device_vector<T, Alloc>::device_vector(
 
 **Parameters**
 
-<ParamField path="il" type="::cuda::std::initializer_list< T >">
+<ParamField path="il" type="::cuda::std::initializer_list<T>">
 The intializer_list.
 </ParamField>
 
@@ -3304,7 +3304,7 @@ device_vector & thrust::device_vector<T, Alloc>::operator=(
 
 **Parameters**
 
-<ParamField path="v" type="const device_vector< OtherT, OtherAlloc > &">
+<ParamField path="v" type="const device_vector<OtherT, OtherAlloc> &">
 The \`device_vector\` to copy.
 </ParamField>
 
@@ -3324,7 +3324,7 @@ device_vector & thrust::device_vector<T, Alloc>::operator=(
 
 **Parameters**
 
-<ParamField path="v" type="const std::vector< OtherT, OtherAlloc > &">
+<ParamField path="v" type="const std::vector<OtherT, OtherAlloc> &">
 The \`std::vector\` to copy.
 </ParamField>
 
@@ -3344,7 +3344,7 @@ device_vector & thrust::device_vector<T, Alloc>::operator=(
 
 **Parameters**
 
-<ParamField path="v" type="const detail::vector_base< OtherT, OtherAlloc > &">
+<ParamField path="v" type="const detail::vector_base<OtherT, OtherAlloc> &">
 The \`vector_base\` to copy.
 </ParamField>
 
@@ -3363,7 +3363,7 @@ device_vector & thrust::device_vector<T, Alloc>::operator=(
 
 **Parameters**
 
-<ParamField path="il" type="::cuda::std::initializer_list< T >">
+<ParamField path="il" type="::cuda::std::initializer_list<T>">
 The intializer_list.
 </ParamField>
 
@@ -3403,7 +3403,7 @@ Data with which new elements should be populated.
 **Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Default-initialized">
 
 Resizes this vector to the specified number of elements, performing default-initialization instead of value-initialization.
 
@@ -3425,7 +3425,7 @@ Number of elements this vector should contain.
 **Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="No-init">
 
 Resizes this vector_base to the specified number of elements, without initializing elements.
 
@@ -3910,7 +3910,7 @@ The vector with which to swap.
 ### erase
 
 <Tabs>
-<Tab title="Removes the element at position pos">
+<Tab title="Single element">
 
 This method removes the element at position pos.
 
@@ -3931,7 +3931,7 @@ The position of the element of interest.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Range">
 
 This method removes the range of elements [first,last) from this vector.
 
@@ -3962,7 +3962,7 @@ The end of the range of elements to remove.
 ### insert
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Single element">
 
 This method inserts a single copy of a given exemplar value at the specified position in this vector.
 
@@ -3988,7 +3988,7 @@ The exemplar element to copy & insert.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Fill">
 
 This method inserts a copy of an exemplar value to a range at the specified position in this vector.
 
@@ -4017,7 +4017,7 @@ The value to replicate and insert.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="Range">
 
 This method inserts a copy of an input range at the specified position in this vector.
 
@@ -4058,7 +4058,7 @@ The end of the range to copy.
 ### assign
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Fill">
 
 This version of \`assign\` replicates a given exemplar \`n\` times into this vector.
 
@@ -4082,7 +4082,7 @@ The exemplar element to replicate.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Range">
 
 This version of \`assign\` makes this vector a copy of a given input range.
 
@@ -4216,7 +4216,7 @@ The other buffer. After move construction, the other buffer can only be assigned
 </ParamField>
 
 </Tab>
-<Tab title="From other buffer type">
+<Tab title="From matching properties (copy)">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -4233,12 +4233,12 @@ cuda::buffer<_Tp, _Properties>::buffer(
 
 **Parameters**
 
-<ParamField path="__other" type="const buffer< _Tp, _OtherProperties... > &">
+<ParamField path="__other" type="const buffer<_Tp, _OtherProperties...> &">
 The other buffer.
 </ParamField>
 
 </Tab>
-<Tab title="Move">
+<Tab title="From matching properties (move)">
 
 <Badge intent="note" minimal>noexcept</Badge>
 
@@ -4255,12 +4255,12 @@ cuda::buffer<_Tp, _Properties>::buffer(
 
 **Parameters**
 
-<ParamField path="__other" type="buffer< _Tp, _OtherProperties... > &&">
+<ParamField path="__other" type="buffer<_Tp, _OtherProperties...> &&">
 The other buffer. After move construction, the other buffer can only be assigned to or destroyed.
 </ParamField>
 
 </Tab>
-<Tab title="Constructs an empty buffer using an environment">
+<Tab title="Empty">
 
 Constructs an empty buffer using an environment.
 
@@ -4320,7 +4320,7 @@ The environment used to query the memory resource.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 7">
+<Tab title="From iterator range">
 
 Constructs a buffer using a memory resource and copy-constructs all elements from the forward range \`[__first, __last)\`.
 
@@ -4378,7 +4378,7 @@ If \`__ilist.size() == 0\` then no memory is allocated
 
 **Parameters**
 
-<ParamField path="__ilist" type="::cuda::std::initializer_list< _Tp >">
+<ParamField path="__ilist" type="::cuda::std::initializer_list<_Tp>">
 The initializer_list being copied into the buffer.
 </ParamField>
 
@@ -4387,7 +4387,7 @@ The environment used to query the memory resource.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 9">
+<Tab title="From range">
 
 Constructs a buffer using a memory resource and an input range.
 
