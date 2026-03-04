@@ -1,6 +1,6 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { getLatestTag as getLatestTagFromGithub } from "@fern-api/github";
+import { getLatestRelease as getLatestReleaseFromGithub } from "@fern-api/github";
 import type { FernFiddle } from "@fern-fern/fiddle-sdk";
 import latestVersion from "latest-version";
 import semver from "semver";
@@ -79,7 +79,7 @@ const DEFAULT_CRATES_API_URL = "https://crates.io/api/v1/crates";
  * - Ruby: RubyGems.org
  * - Go: Go Module Proxy
  * - Rust: Crates.io
- * - PHP/Swift: GitHub tags fallback only
+ * - PHP/Swift: GitHub releases fallback only
  *
  * @param packageName - The name of the package (e.g., "@anduril-industries/lattice-sdk")
  * @param generatorInvocation - The generator configuration containing language and output mode
@@ -245,8 +245,8 @@ function getRegistryInfoFromPublishOutputMode(publishOutputMode: FernFiddle.Publ
 }
 
 /**
- * Gets the existing version of a package from registries or GitHub tags.
- * Tries package registries first, then falls back to GitHub tags.
+ * Gets the existing version of a package from registries or GitHub releases.
+ * Tries package registries first, then falls back to GitHub releases.
  *
  * Registry URL and token from the output mode are used as the primary source.
  * Environment variables (NPM_TOKEN, GITHUB_TOKEN) are used as fallbacks.
@@ -297,7 +297,7 @@ async function getExistingVersion({
         case "php":
         case "swift":
             // PHP and Swift do not have standard public registry APIs for version lookup.
-            // They rely on the GitHub tags fallback below.
+            // They rely on the GitHub releases fallback below.
             break;
     }
 
@@ -305,9 +305,9 @@ async function getExistingVersion({
         return version;
     }
 
-    // Step 2: Fall back to GitHub tags
+    // Step 2: Fall back to GitHub releases
     if (githubRepository != null) {
-        version = await getLatestTag(githubRepository);
+        version = await getLatestRelease(githubRepository);
     }
 
     return version;
@@ -765,18 +765,18 @@ export async function getLatestVersionFromCrates(
 }
 
 /**
- * Fetches the latest tag from a GitHub repository.
+ * Fetches the latest release tag from a GitHub repository.
  *
  * Delegates to the shared @fern-api/github utility, which supports
  * GITHUB_TOKEN environment variable for authenticated access to private repositories.
  *
  * @param githubRepository - Repository in "owner/repo" format
- * @returns The latest tag name, or undefined if no tags exist
+ * @returns The latest release tag name, or undefined if no releases exist
  */
 /** @internal Exported for testing */
-export async function getLatestTag(githubRepository: string): Promise<string | undefined> {
+export async function getLatestRelease(githubRepository: string): Promise<string | undefined> {
     try {
-        return await getLatestTagFromGithub(githubRepository);
+        return await getLatestReleaseFromGithub(githubRepository);
     } catch (error) {
         // Repository doesn't exist or API error
         return undefined;

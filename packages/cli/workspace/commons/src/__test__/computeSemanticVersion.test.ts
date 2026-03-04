@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { RegistryInfo } from "../computeSemanticVersion.js";
 import {
-    getLatestTag,
+    getLatestRelease,
     getLatestVersionFromCrates,
     getLatestVersionFromGoProxy,
     getLatestVersionFromMaven,
@@ -386,7 +386,7 @@ describe("getLatestVersionFromCrates", () => {
     });
 });
 
-describe("getLatestTag", () => {
+describe("getLatestRelease", () => {
     beforeEach(() => {
         delete process.env.GITHUB_TOKEN;
     });
@@ -397,7 +397,7 @@ describe("getLatestTag", () => {
     });
 
     it("returns undefined for invalid repository format", async () => {
-        const version = await getLatestTag("invalid-no-slash");
+        const version = await getLatestRelease("invalid-no-slash");
         expect(version).toBeUndefined();
     });
 });
@@ -823,9 +823,9 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
     );
 
     it(
-        "GitHub tags: fetches latest tag from a well-known public repo",
+        "GitHub releases: fetches latest release from a well-known public repo",
         async () => {
-            const tag = await getLatestTag("lodash/lodash");
+            const tag = await getLatestRelease("lodash/lodash");
             expect(tag).toBeDefined();
             expect(typeof tag).toBe("string");
         },
@@ -833,9 +833,9 @@ describe.skipIf(!INTEGRATION)("registry integration tests", () => {
     );
 
     it(
-        "GitHub tags: returns undefined for nonexistent repo",
+        "GitHub releases: returns undefined for nonexistent repo",
         async () => {
-            const tag = await getLatestTag("zzz-nonexistent-org-fern/zzz-nonexistent-repo-12345");
+            const tag = await getLatestRelease("zzz-nonexistent-org-fern/zzz-nonexistent-repo-12345");
             expect(tag).toBeUndefined();
         },
         TIMEOUT
