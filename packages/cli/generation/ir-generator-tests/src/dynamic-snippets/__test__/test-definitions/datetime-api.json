@@ -1,0 +1,383 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_:Error": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Error",
+                    "camelCase": {
+                        "unsafeName": "error",
+                        "safeName": "error"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "error",
+                        "safeName": "error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ERROR",
+                        "safeName": "ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Error",
+                        "safeName": "Error"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "code",
+                            "camelCase": {
+                                "unsafeName": "code",
+                                "safeName": "code"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "code",
+                                "safeName": "code"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CODE",
+                                "safeName": "CODE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Code",
+                                "safeName": "Code"
+                            }
+                        },
+                        "wireValue": "code"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE",
+                                "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Message",
+                                "safeName": "Message"
+                            }
+                        },
+                        "wireValue": "message"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:DatetimeAlias": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "DatetimeAlias",
+                    "camelCase": {
+                        "unsafeName": "datetimeAlias",
+                        "safeName": "datetimeAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "datetime_alias",
+                        "safeName": "datetime_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DATETIME_ALIAS",
+                        "safeName": "DATETIME_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "DatetimeAlias",
+                        "safeName": "DatetimeAlias"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "DATE_TIME"
+            }
+        },
+        "type_:ObjectWithDatetimeAlias": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ObjectWithDatetimeAlias",
+                    "camelCase": {
+                        "unsafeName": "objectWithDatetimeAlias",
+                        "safeName": "objectWithDatetimeAlias"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "object_with_datetime_alias",
+                        "safeName": "object_with_datetime_alias"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OBJECT_WITH_DATETIME_ALIAS",
+                        "safeName": "OBJECT_WITH_DATETIME_ALIAS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ObjectWithDatetimeAlias",
+                        "safeName": "ObjectWithDatetimeAlias"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "dateTime",
+                            "camelCase": {
+                                "unsafeName": "dateTime",
+                                "safeName": "dateTime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "date_time",
+                                "safeName": "date_time"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATE_TIME",
+                                "safeName": "DATE_TIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DateTime",
+                                "safeName": "DateTime"
+                            }
+                        },
+                        "wireValue": "dateTime"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "DATE_TIME"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "datetimeAlias",
+                            "camelCase": {
+                                "unsafeName": "datetimeAlias",
+                                "safeName": "datetimeAlias"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "datetime_alias",
+                                "safeName": "datetime_alias"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATETIME_ALIAS",
+                                "safeName": "DATETIME_ALIAS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "DatetimeAlias",
+                                "safeName": "DatetimeAlias"
+                            }
+                        },
+                        "wireValue": "datetimeAlias"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:DatetimeAlias"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "optionalDatetime",
+                            "camelCase": {
+                                "unsafeName": "optionalDatetime",
+                                "safeName": "optionalDatetime"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "optional_datetime",
+                                "safeName": "optional_datetime"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OPTIONAL_DATETIME",
+                                "safeName": "OPTIONAL_DATETIME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OptionalDatetime",
+                                "safeName": "OptionalDatetime"
+                            }
+                        },
+                        "wireValue": "optionalDatetime"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "optionalDatetimeAlias",
+                            "camelCase": {
+                                "unsafeName": "optionalDatetimeAlias",
+                                "safeName": "optionalDatetimeAlias"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "optional_datetime_alias",
+                                "safeName": "optional_datetime_alias"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OPTIONAL_DATETIME_ALIAS",
+                                "safeName": "OPTIONAL_DATETIME_ALIAS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "OptionalDatetimeAlias",
+                                "safeName": "OptionalDatetimeAlias"
+                            }
+                        },
+                        "wireValue": "optionalDatetimeAlias"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:DatetimeAlias"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_endpoints.getAndReturnWithDatetimeAliasWithDocs": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getAndReturnWithDatetimeAliasWithDocs",
+                    "camelCase": {
+                        "unsafeName": "getAndReturnWithDatetimeAliasWithDocs",
+                        "safeName": "getAndReturnWithDatetimeAliasWithDocs"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_and_return_with_datetime_alias_with_docs",
+                        "safeName": "get_and_return_with_datetime_alias_with_docs"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_AND_RETURN_WITH_DATETIME_ALIAS_WITH_DOCS",
+                        "safeName": "GET_AND_RETURN_WITH_DATETIME_ALIAS_WITH_DOCS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetAndReturnWithDatetimeAliasWithDocs",
+                        "safeName": "GetAndReturnWithDatetimeAliasWithDocs"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "endpoints",
+                        "camelCase": {
+                            "unsafeName": "endpoints",
+                            "safeName": "endpoints"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "endpoints",
+                            "safeName": "endpoints"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ENDPOINTS",
+                            "safeName": "ENDPOINTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Endpoints",
+                            "safeName": "Endpoints"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/get-and-return-with-datetime-alias-with-docs"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:ObjectWithDatetimeAlias"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}
