@@ -1,7 +1,5 @@
-import type { AuthProvider } from "../auth/AuthProvider.js";
 import type { LogConfig, Logger } from "../logging/logger.js";
 import type { APIResponse } from "./APIResponse.js";
-import type { EndpointMetadata } from "./EndpointMetadata.js";
 import type { Fetcher, FetchFunction } from "./Fetcher.js";
 import { HttpResponsePromise } from "./HttpResponsePromise.js";
 import type { RawResponse } from "./RawResponse.js";
@@ -57,7 +55,7 @@ export interface EndpointConfig {
     /** Whether to include credentials on cross-origin requests */
     withCredentials?: boolean;
     /** Endpoint metadata for auth provider routing */
-    endpointMetadata?: EndpointMetadata;
+    endpointMetadata?: Record<string, unknown>;
     /** Custom response transform (e.g. for deserialization or HEAD responses) */
     transformResponse?: (body: unknown, rawResponse: RawResponse) => unknown;
     /**
@@ -80,9 +78,15 @@ export interface EndpointConfig {
  */
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
-    environment?: Supplier<string>;
-    authProvider?: AuthProvider;
-    headers?: Record<string, string | Supplier<string | null | undefined> | null | undefined>;
+    environment?: Supplier<unknown>;
+    authProvider?: {
+        getAuthRequest(arg?: {
+            endpointMetadata?: Record<string, unknown>;
+        }): Promise<{
+            headers: Record<string, string>;
+        }>;
+    };
+    headers?: Record<string, unknown>;
     timeoutInSeconds?: number;
     maxRetries?: number;
     fetch?: typeof fetch;
@@ -126,7 +130,7 @@ export declare class HttpClient {
      */
     fetch<R = unknown>(args: Fetcher.Args, options?: {
         requestHeaders?: Record<string, unknown>;
-        endpointMetadata?: EndpointMetadata;
+        endpointMetadata?: Record<string, unknown>;
     }): Promise<APIResponse<R, Fetcher.Error>>;
     /**
      * Make an HTTP request. Returns HttpResponsePromise so callers get both

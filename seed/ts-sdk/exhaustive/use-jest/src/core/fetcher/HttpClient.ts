@@ -1,9 +1,7 @@
-import type { AuthProvider } from "../auth/AuthProvider.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../headers.js";
 import type { LogConfig, Logger } from "../logging/logger.js";
 import { join } from "../url/join.js";
 import type { APIResponse } from "./APIResponse.js";
-import type { EndpointMetadata } from "./EndpointMetadata.js";
 import type { Fetcher, FetchFunction } from "./Fetcher.js";
 import { fetcherImpl } from "./Fetcher.js";
 import { HttpResponsePromise } from "./HttpResponsePromise.js";
@@ -62,7 +60,7 @@ export interface EndpointConfig {
     /** Whether to include credentials on cross-origin requests */
     withCredentials?: boolean;
     /** Endpoint metadata for auth provider routing */
-    endpointMetadata?: EndpointMetadata;
+    endpointMetadata?: Record<string, unknown>;
     /** Custom response transform (e.g. for deserialization or HEAD responses) */
     transformResponse?: (body: unknown, rawResponse: RawResponse) => unknown;
     /**
@@ -86,9 +84,13 @@ export interface EndpointConfig {
  */
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
-    environment?: Supplier<string>;
-    authProvider?: AuthProvider;
-    headers?: Record<string, string | Supplier<string | null | undefined> | null | undefined>;
+    environment?: Supplier<unknown>;
+    authProvider?: {
+        getAuthRequest(arg?: {
+            endpointMetadata?: Record<string, unknown>;
+        }): Promise<{ headers: Record<string, string> }>;
+    };
+    headers?: Record<string, unknown>;
     timeoutInSeconds?: number;
     maxRetries?: number;
     fetch?: typeof fetch;
@@ -154,7 +156,7 @@ export class HttpClient {
      */
     public async fetch<R = unknown>(
         args: Fetcher.Args,
-        options?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: EndpointMetadata },
+        options?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: Record<string, unknown> },
     ): Promise<APIResponse<R, Fetcher.Error>> {
         // Merge headers: auth → global → endpoint-specific (args.headers) → per-request
         const authHeaders: Record<string, string> = this._options.authProvider

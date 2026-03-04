@@ -84,13 +84,13 @@ export interface EndpointConfig {
  */
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
-    environment?: Supplier<string>;
+    environment?: Supplier<unknown>;
     authProvider?: {
         getAuthRequest(arg?: {
             endpointMetadata?: Record<string, unknown>;
         }): Promise<{ headers: Record<string, string> }>;
     };
-    headers?: Record<string, string | Supplier<string | null | undefined> | null | undefined>;
+    headers?: Record<string, unknown>;
     timeoutInSeconds?: number;
     maxRetries?: number;
     fetch?: typeof fetch;
