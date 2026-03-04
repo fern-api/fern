@@ -449,12 +449,15 @@ export class PersistedTypescriptProject {
         await git(["add", "."]);
         await git([
             "-c",
-            "user.name='fern'",
+            "user.name=fern",
             "-c",
-            "user.email='hey@buildwithfern.com'",
+            "user.email=hey@buildwithfern.com",
+            "-c",
+            "commit.gpgsign=false",
             "commit",
+            "--no-verify",
             "-m",
-            '"Initial commit"'
+            "Initial commit"
         ]);
         await git(["clean", "-fdx"]);
 

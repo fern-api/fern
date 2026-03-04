@@ -38,8 +38,7 @@ export class ReplayStep extends BaseStep {
                 flow: "first-generation",
                 patchesDetected: 0,
                 patchesApplied: 0,
-                patchesWithConflicts: 0,
-                conflicts: []
+                patchesWithConflicts: 0
             };
         }
 
@@ -58,23 +57,12 @@ export class ReplayStep extends BaseStep {
             patchesRepointed: report.patchesRepointed,
             patchesContentRebased: report.patchesContentRebased,
             patchesKeptAsUserOwned: report.patchesKeptAsUserOwned,
-            conflicts: report.conflicts.map((fileResult) => ({
-                filePath: fileResult.file,
-                conflicts:
-                    fileResult.conflicts?.map((conflict) => ({
-                        startLine: conflict.startLine,
-                        endLine: conflict.endLine,
-                        ours: conflict.ours,
-                        theirs: conflict.theirs
-                    })) ?? []
-            })),
-            conflictDetails: report.conflictDetails?.map((detail) => ({
-                patchId: detail.patchId,
-                patchMessage: detail.patchMessage,
-                reason: detail.reason,
-                files: detail.files.map((f) => ({
+            unresolvedPatches: report.unresolvedPatches?.map((info) => ({
+                patchId: info.patchId,
+                patchMessage: info.patchMessage,
+                files: info.files,
+                conflictDetails: info.conflictDetails.map((f) => ({
                     file: f.file,
-                    status: f.status,
                     conflictReason: f.conflictReason
                 }))
             })),

@@ -11,6 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{RealtimeNoAuthClient, RealtimeClient, WebsocketBearerAuthClient};
-pub use types::{*};
-
+pub use resources::{RealtimeClient, RealtimeNoAuthClient, WebsocketBearerAuthClient};
+pub use types::*;

@@ -147,6 +147,8 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     wireValue: discriminant
                 });
 
+                // Extract raw schema name for display (not namespaced)
+                const rawSchemaName = reference.match(/\/schemas\/([^/]+)/)?.[1] ?? typeId;
                 unionTypes.push({
                     docs: undefined,
                     discriminantValue: nameAndWireValue,
@@ -154,7 +156,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
                     displayName: discriminant,
                     shape: SingleUnionTypeProperties.samePropertiesAsObject({
                         typeId,
-                        name: this.context.casingsGenerator.generateName(typeId),
+                        name: this.context.casingsGenerator.generateName(rawSchemaName),
                         fernFilepath: {
                             allParts: [],
                             packagePath: [],
@@ -327,10 +329,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
                         type: this.context.createNamedTypeReference(schemaId, displayName),
                         docs: subSchema.description
                     });
+                    const namespacedSchemaId = this.context.getNamespacedSchemaId(schemaId);
                     inlinedTypes = {
                         ...inlinedTypes,
                         ...convertedSchema.inlinedTypes,
-                        [schemaId]: convertedSchema.convertedSchema
+                        [namespacedSchemaId]: convertedSchema.convertedSchema
                     };
                 }
                 convertedSchema.convertedSchema.typeDeclaration.referencedTypes.forEach((referencedType) => {

@@ -2,6 +2,25 @@
 
 - changelogEntry:
     - summary: |
+        Clean PRs with local conflict resolution. Replay PRs are now always
+        linear from HEAD with clean code (no conflict markers committed).
+        When customizations conflict with new generated code, the PR body
+        includes instructions to run locally.
+      type: feat
+  createdAt: "2026-03-02"
+  version: 0.6.11
+
+- changelogEntry:
+    - summary: |
+        Disable commit signing and skip hooks for the internal git commit in
+        replay-init to avoid triggering prompts (e.g. Touch ID on macOS,
+        1Password SSH agent).
+      type: fix
+  createdAt: "2026-02-28"
+  version: 0.6.10
+
+- changelogEntry:
+    - summary: |
         Remove redundant conflict resolution comment from Replay PRs. The per-file
         guidance was duplicating information already present in the PR description.
       type: fix

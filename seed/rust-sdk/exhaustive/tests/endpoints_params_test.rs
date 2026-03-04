@@ -6,7 +6,7 @@ mod wire_test_utils;
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_params_get_with_path_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -32,7 +32,7 @@ async fn test_endpoints_params_get_with_path_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_params_get_with_inline_path_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -58,7 +58,7 @@ async fn test_endpoints_params_get_with_inline_path_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_params_get_with_query_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -98,7 +98,7 @@ async fn test_endpoints_params_get_with_query_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_params_get_with_allow_multiple_query_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -138,7 +138,7 @@ async fn test_endpoints_params_get_with_allow_multiple_query_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_params_get_with_path_and_query_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -175,7 +175,7 @@ async fn test_endpoints_params_get_with_path_and_query_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_params_get_with_inline_path_and_query_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -212,7 +212,7 @@ async fn test_endpoints_params_get_with_inline_path_and_query_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_params_modify_with_path_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -238,7 +238,7 @@ async fn test_endpoints_params_modify_with_path_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_params_modify_with_inline_path_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),

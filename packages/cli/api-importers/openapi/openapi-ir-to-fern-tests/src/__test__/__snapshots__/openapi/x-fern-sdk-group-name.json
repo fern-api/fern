@@ -37,6 +37,30 @@
       openapi: ../openapi.yml
 ",
     },
+    "_internal.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "Pet": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  Pet:
+    properties:
+      name: optional<string>
+    source:
+      openapi: ../openapi.yml
+",
+    },
     "auth/user.yml": {
       "absoluteFilepath": "/DUMMY_PATH",
       "contents": {
@@ -171,6 +195,72 @@ types:
       associatedPersons: optional<list<root.Person>>
     source:
       openapi: ../openapi.yml
+",
+    },
+    "v1/_internal/pets.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "internal": "../../_internal.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "list": {
+              "auth": undefined,
+              "docs": "This endpoint uses underscore-prefixed group name",
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      {
+                        "name": "name",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/v1/_internal/pets",
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "list<internal.Pet>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  internal: ../../_internal.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /v1/_internal/pets
+      method: GET
+      docs: This endpoint uses underscore-prefixed group name
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Success
+        type: list<internal.Pet>
+        status-code: 200
+      examples:
+        - response:
+            body:
+              - name: name
+  source:
+    openapi: ../openapi.yml
 ",
     },
   },

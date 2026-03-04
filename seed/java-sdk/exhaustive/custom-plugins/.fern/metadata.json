@@ -1,0 +1,13 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "inline-path-parameters": true,
+    "custom-plugins": [
+      "com.github.johnrengelman.shadow:8.1.1",
+      "org.jetbrains.kotlin.jvm:2.1.0"
+    ]
+  },
+  "sdkVersion": "0.0.1"
+}

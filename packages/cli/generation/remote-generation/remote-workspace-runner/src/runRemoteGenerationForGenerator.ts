@@ -1,4 +1,4 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import { checkVersionDoesNotAlreadyExist, computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
@@ -79,6 +79,24 @@ export async function runRemoteGenerationForGenerator({
     });
 
     const resolvedVersion = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
+    // Fail fast if the target version already exists on the package registry.
+    // Only check when the user explicitly provided a version (not auto-computed).
+    if (version != null) {
+        if (isPreview) {
+            interactiveTaskContext.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${version} may already exist on the package registry.`
+            );
+        } else {
+            await checkVersionDoesNotAlreadyExist({
+                version,
+                packageName,
+                generatorInvocation,
+                context: interactiveTaskContext
+            });
+        }
+    }
 
     const ir = generateIntermediateRepresentation({
         workspace,

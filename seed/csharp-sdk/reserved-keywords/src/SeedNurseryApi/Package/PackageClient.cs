@@ -4,7 +4,7 @@ namespace SeedNurseryApi;
 
 public partial class PackageClient : IPackageClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PackageClient(RawClient client)
     {
@@ -34,7 +34,6 @@ public partial class PackageClient : IPackageClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     QueryString = _queryString,
@@ -49,7 +48,9 @@ public partial class PackageClient : IPackageClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedNurseryApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

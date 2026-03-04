@@ -3,7 +3,6 @@ import { Octokit } from "@octokit/rest";
 import { access, writeFile } from "fs/promises";
 import { join } from "path";
 import { createReplayBranch } from "../github/createReplayBranch";
-import type { ExistingPullRequest } from "../github/findExistingUpdatablePR";
 import { findExistingUpdatablePR } from "../github/findExistingUpdatablePR";
 import { parseCommitMessageForPR } from "../github/parseCommitMessage";
 import type { PipelineLogger } from "../PipelineLogger";
@@ -86,8 +85,6 @@ export class GithubStep extends BaseStep {
             | {
                   previousGenerationSha: string;
                   currentGenerationSha: string;
-                  hasConflicts: boolean;
-                  baseBranchHead?: string;
               }
             | undefined,
         replayResult: ReplayStepResult | undefined
@@ -178,19 +175,9 @@ export class GithubStep extends BaseStep {
             }
         }
 
-        // Runs after push so head SHA is available on remote
-        if (!this.config.previewMode) {
-            const headSha = await repository.getHeadSha();
-            await this.postReplayConflictStatus(octokit, owner, repo, headSha, replayConflictInfo, replayResult);
-
-            if (isUpdatingExistingPR && existingPR != null) {
-                await this.togglePrDraftState(octokit, existingPR, replayConflictInfo);
-            }
-        }
-
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
         const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
-        const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch });
+        const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
         const enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
 
         if (isUpdatingExistingPR && existingPR != null) {
@@ -215,7 +202,6 @@ export class GithubStep extends BaseStep {
         } else {
             const head = `${owner}:${prBranch}`;
 
-            const hasConflicts = replayConflictInfo?.hasConflicts === true;
             try {
                 const { data: pullRequest } = await octokit.pulls.create({
                     owner,
@@ -223,8 +209,7 @@ export class GithubStep extends BaseStep {
                     title: prTitle,
                     body: enrichedBody,
                     head,
-                    base: baseBranch,
-                    draft: hasConflicts
+                    base: baseBranch
                 });
 
                 this.logger.info(`Created pull request: ${pullRequest.html_url}`);
@@ -238,23 +223,6 @@ export class GithubStep extends BaseStep {
                     throw error;
                 }
             }
-        }
-
-        if (
-            !this.config.previewMode &&
-            result.prNumber != null &&
-            replayConflictInfo?.hasConflicts === true &&
-            replayResult != null
-        ) {
-            await this.postWebEditorFallbackComment(
-                octokit,
-                owner,
-                repo,
-                result.prNumber,
-                prBranch,
-                baseBranch,
-                replayResult
-            );
         }
 
         return result;
@@ -312,273 +280,19 @@ export class GithubStep extends BaseStep {
         | {
               previousGenerationSha: string;
               currentGenerationSha: string;
-              hasConflicts: boolean;
-              baseBranchHead?: string;
           }
         | undefined {
         if (replayResult == null) {
             return undefined;
         }
-        const hasConflicts = (replayResult.patchesWithConflicts ?? 0) > 0;
         const previousGenerationSha = replayResult.previousGenerationSha;
         const currentGenerationSha = replayResult.currentGenerationSha;
         if (previousGenerationSha != null && currentGenerationSha != null) {
             return {
                 previousGenerationSha,
-                currentGenerationSha,
-                hasConflicts,
-                baseBranchHead: replayResult.baseBranchHead
+                currentGenerationSha
             };
         }
         return undefined;
     }
-
-    private async togglePrDraftState(
-        octokit: Octokit,
-        existingPR: ExistingPullRequest,
-        replayConflictInfo:
-            | {
-                  previousGenerationSha: string;
-                  currentGenerationSha: string;
-                  hasConflicts: boolean;
-                  baseBranchHead?: string;
-              }
-            | undefined
-    ): Promise<void> {
-        const hasConflicts = replayConflictInfo?.hasConflicts === true;
-
-        if (hasConflicts && !existingPR.isDraft) {
-            await this.convertPrToDraft(octokit, existingPR.nodeId, existingPR.number);
-        } else if (!hasConflicts && existingPR.isDraft) {
-            await this.markPrReady(octokit, existingPR.nodeId, existingPR.number);
-        }
-    }
-
-    private async convertPrToDraft(octokit: Octokit, nodeId: string, prNumber: number): Promise<void> {
-        try {
-            await octokit.graphql(
-                `mutation($id: ID!) {
-                    convertPullRequestToDraft(input: {pullRequestId: $id}) {
-                        pullRequest { isDraft }
-                    }
-                }`,
-                { id: nodeId }
-            );
-            this.logger.info(`Converted PR #${prNumber} to draft due to replay conflicts`);
-        } catch (error) {
-            this.logger.debug(
-                `Could not convert PR to draft: ${error instanceof Error ? error.message : String(error)}`
-            );
-        }
-    }
-
-    private async markPrReady(octokit: Octokit, nodeId: string, prNumber: number): Promise<void> {
-        try {
-            await octokit.graphql(
-                `mutation($id: ID!) {
-                    markPullRequestReadyForReview(input: {pullRequestId: $id}) {
-                        pullRequest { isDraft }
-                    }
-                }`,
-                { id: nodeId }
-            );
-            this.logger.info(`Marked PR #${prNumber} as ready (conflicts resolved)`);
-        } catch (error) {
-            this.logger.debug(`Could not mark PR as ready: ${error instanceof Error ? error.message : String(error)}`);
-        }
-    }
-
-    private async postReplayConflictStatus(
-        octokit: Octokit,
-        owner: string,
-        repo: string,
-        sha: string,
-        replayConflictInfo:
-            | {
-                  previousGenerationSha: string;
-                  currentGenerationSha: string;
-                  hasConflicts: boolean;
-                  baseBranchHead?: string;
-              }
-            | undefined,
-        replayResult: ReplayStepResult | undefined
-    ): Promise<void> {
-        if (replayResult == null || !replayResult.executed) {
-            return;
-        }
-
-        const hasConflicts = replayConflictInfo?.hasConflicts === true;
-        const conflictFileCount = (replayResult.conflictDetails ?? []).reduce(
-            (sum, detail) => sum + detail.files.length,
-            0
-        );
-        const sanitizedName = this.config.generatorName?.replace(/\//g, "--");
-        const context =
-            sanitizedName != null ? `fern / sdk customizations / ${sanitizedName}` : "fern / sdk customizations";
-
-        try {
-            await octokit.repos.createCommitStatus({
-                owner,
-                repo,
-                sha,
-                state: hasConflicts ? "failure" : "success",
-                context,
-                description: hasConflicts
-                    ? `${conflictFileCount} file(s) need manual conflict resolution — see PR description`
-                    : "All customizations applied"
-            });
-            this.logger.debug(`Posted ${hasConflicts ? "failing" : "passing"} commit status (${context})`);
-        } catch (error) {
-            this.logger.debug(
-                `Could not post commit status: ${error instanceof Error ? error.message : String(error)}`
-            );
-        }
-    }
-
-    private async postWebEditorFallbackComment(
-        octokit: Octokit,
-        owner: string,
-        repo: string,
-        prNumber: number,
-        branchName: string,
-        baseBranch: string,
-        replayResult: ReplayStepResult
-    ): Promise<void> {
-        try {
-            const webEditorLikelyDisabled = await this.isWebEditorLikelyDisabled(
-                octokit,
-                owner,
-                repo,
-                prNumber,
-                replayResult
-            );
-
-            if (!webEditorLikelyDisabled) {
-                this.logger.debug(`PR #${prNumber}: web conflict editor appears usable, skipping fallback comment`);
-                return;
-            }
-
-            const comment = buildWebEditorFallbackComment(branchName, baseBranch);
-            await octokit.issues.createComment({
-                owner,
-                repo,
-                issue_number: prNumber,
-                body: comment
-            });
-            this.logger.info(`Posted web-editor fallback comment on PR #${prNumber}`);
-        } catch (error) {
-            this.logger.debug(
-                `Could not post web-editor fallback comment: ${error instanceof Error ? error.message : String(error)}`
-            );
-        }
-    }
-
-    private async isWebEditorLikelyDisabled(
-        octokit: Octokit,
-        owner: string,
-        repo: string,
-        prNumber: number,
-        replayResult: ReplayStepResult
-    ): Promise<boolean> {
-        const conflictDetails = replayResult.conflictDetails ?? [];
-        const allConflictFiles = conflictDetails.flatMap((d) => d.files);
-        const totalConflictFiles = allConflictFiles.length;
-
-        const hasFileDeletionConflict = allConflictFiles.some((f) => {
-            const status = (f.status ?? "").toLowerCase();
-            const reason = (f.conflictReason ?? "").toLowerCase();
-            return status === "skipped" || reason.includes("delete") || reason.includes("removed");
-        });
-
-        if (hasFileDeletionConflict) {
-            this.logger.debug(`PR #${prNumber}: detected file deletion conflict, web editor likely disabled`);
-            return true;
-        }
-
-        if (totalConflictFiles >= WEB_EDITOR_FILE_THRESHOLD) {
-            this.logger.debug(
-                `PR #${prNumber}: ${totalConflictFiles} conflicting files exceeds threshold (${WEB_EDITOR_FILE_THRESHOLD}), web editor likely disabled`
-            );
-            return true;
-        }
-
-        const totalHunks = (replayResult.conflicts ?? []).reduce(
-            (sum, fileConflict) => sum + fileConflict.conflicts.length,
-            0
-        );
-        if (totalHunks >= WEB_EDITOR_HUNK_THRESHOLD) {
-            this.logger.debug(
-                `PR #${prNumber}: ${totalHunks} conflict hunks exceeds threshold (${WEB_EDITOR_HUNK_THRESHOLD}), web editor likely disabled`
-            );
-            return true;
-        }
-
-        const mergeableState = await this.pollMergeableState(octokit, owner, repo, prNumber);
-        if (mergeableState.mergeable === null) {
-            this.logger.debug(`PR #${prNumber}: mergeable state still null after polling, web editor likely disabled`);
-            return true;
-        }
-
-        return false;
-    }
-
-    private async pollMergeableState(
-        octokit: Octokit,
-        owner: string,
-        repo: string,
-        prNumber: number
-    ): Promise<{ mergeable: boolean | null; mergeableState: string }> {
-        for (let attempt = 0; attempt < MERGEABLE_POLL_MAX_ATTEMPTS; attempt++) {
-            const { data: pr } = await octokit.pulls.get({
-                owner,
-                repo,
-                pull_number: prNumber
-            });
-
-            if (pr.mergeable != null) {
-                return {
-                    mergeable: pr.mergeable,
-                    mergeableState: pr.mergeable_state
-                };
-            }
-
-            if (attempt < MERGEABLE_POLL_MAX_ATTEMPTS - 1) {
-                await sleep(MERGEABLE_POLL_DELAY_MS);
-            }
-        }
-
-        return { mergeable: null, mergeableState: "unknown" };
-    }
-}
-
-const WEB_EDITOR_FILE_THRESHOLD = 20;
-const WEB_EDITOR_HUNK_THRESHOLD = 50;
-const MERGEABLE_POLL_MAX_ATTEMPTS = 3;
-const MERGEABLE_POLL_DELAY_MS = 1500;
-
-function buildWebEditorFallbackComment(branchName: string, baseBranch: string): string {
-    const lines = [
-        `> **Note:** These conflicts may be too complex for GitHub's web editor. To resolve locally:`,
-        `>`,
-        `> 1. Check out this branch:`,
-        `>    \`\`\`sh`,
-        `>    git fetch origin && git checkout ${branchName}`,
-        `>    \`\`\``,
-        `> 2. Merge the base branch:`,
-        `>    \`\`\`sh`,
-        `>    git merge origin/${baseBranch}`,
-        `>    \`\`\``,
-        `> 3. Resolve conflicts in your editor (VS Code, IntelliJ, etc. have built-in merge tools)`,
-        `> 4. Commit and push:`,
-        `>    \`\`\`sh`,
-        `>    git add -A && git commit -m "resolve conflicts" && git push`,
-        `>    \`\`\``,
-        `>`,
-        `> **Label guide:** In your editor's merge view, "current" = new generated code, "incoming" = your customization.`
-    ];
-    return lines.join("\n");
-}
-
-function sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
 }

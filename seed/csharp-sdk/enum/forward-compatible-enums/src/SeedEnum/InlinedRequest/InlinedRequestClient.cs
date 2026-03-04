@@ -4,7 +4,7 @@ namespace SeedEnum;
 
 public partial class InlinedRequestClient : IInlinedRequestClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal InlinedRequestClient(RawClient client)
     {
@@ -32,7 +32,6 @@ public partial class InlinedRequestClient : IInlinedRequestClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "inlined",
                     Body = request,
@@ -47,7 +46,9 @@ public partial class InlinedRequestClient : IInlinedRequestClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedEnumApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

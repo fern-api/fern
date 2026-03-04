@@ -5,7 +5,7 @@
 //! - **Empty**
 //! - **Realtime**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod empty;
 pub mod realtime;
@@ -17,10 +17,8 @@ impl WebsocketClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            
         })
     }
-
 }
 
 pub use empty::EmptyClient;

@@ -5,4 +5,5 @@ export * from "./ObjectWithDatetimeLikeString.mjs";
 export * from "./ObjectWithMapOfMap.mjs";
 export * from "./ObjectWithOptionalField.mjs";
 export * from "./ObjectWithRequiredField.mjs";
+export * from "./ObjectWithUnknownField.mjs";
 export * from "./OptionalAlias.mjs";

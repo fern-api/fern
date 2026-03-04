@@ -52,8 +52,6 @@ export interface GithubStepConfig {
     replayConflictInfo?: {
         previousGenerationSha: string;
         currentGenerationSha: string;
-        hasConflicts: boolean;
-        baseBranchHead?: string;
     };
 }
 
@@ -80,28 +78,16 @@ export interface ReplayStepResult extends StepResult {
     previousGenerationSha?: string;
     currentGenerationSha?: string;
     baseBranchHead?: string;
-    conflicts?: ConflictInfo[];
-    conflictDetails?: Array<{
+    unresolvedPatches?: Array<{
         patchId: string;
         patchMessage: string;
-        reason?: string;
-        files: Array<{
+        files: string[];
+        conflictDetails: Array<{
             file: string;
-            status: string;
             conflictReason?: string;
         }>;
     }>;
     warnings?: string[];
-}
-
-export interface ConflictInfo {
-    filePath: string;
-    conflicts: Array<{
-        startLine: number;
-        endLine: number;
-        ours: string[];
-        theirs: string[];
-    }>;
 }
 
 export interface FernignoreStepResult extends StepResult {

@@ -3138,6 +3138,145 @@
             "extends": null,
             "additionalProperties": false
         },
+        "type_types/object:ObjectWithUnknownField": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ObjectWithUnknownField",
+                    "camelCase": {
+                        "unsafeName": "objectWithUnknownField",
+                        "safeName": "objectWithUnknownField"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "object_with_unknown_field",
+                        "safeName": "object_with_unknown_field"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OBJECT_WITH_UNKNOWN_FIELD",
+                        "safeName": "OBJECT_WITH_UNKNOWN_FIELD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ObjectWithUnknownField",
+                        "safeName": "ObjectWithUnknownField"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        },
+                        {
+                            "originalName": "object",
+                            "camelCase": {
+                                "unsafeName": "object",
+                                "safeName": "object"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object",
+                                "safeName": "object"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT",
+                                "safeName": "OBJECT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Object",
+                                "safeName": "Object"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "object",
+                        "camelCase": {
+                            "unsafeName": "object",
+                            "safeName": "object"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "object",
+                            "safeName": "object"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OBJECT",
+                            "safeName": "OBJECT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Object",
+                            "safeName": "Object"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "unknown",
+                            "camelCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "unknown",
+                                "safeName": "unknown"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNKNOWN",
+                                "safeName": "UNKNOWN"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Unknown",
+                                "safeName": "Unknown"
+                            }
+                        },
+                        "wireValue": "unknown"
+                    },
+                    "typeReference": {
+                        "type": "unknown"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
         "type_types/union:Animal": {
             "type": "discriminatedUnion",
             "declaration": {
@@ -7178,6 +7317,152 @@
                             "type": "named",
                             "value": "type_types/object:NestedObjectWithRequiredField"
                         }
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_endpoints/object.getAndReturnWithUnknownField": {
+            "auth": {
+                "type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getAndReturnWithUnknownField",
+                    "camelCase": {
+                        "unsafeName": "getAndReturnWithUnknownField",
+                        "safeName": "getAndReturnWithUnknownField"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_and_return_with_unknown_field",
+                        "safeName": "get_and_return_with_unknown_field"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_AND_RETURN_WITH_UNKNOWN_FIELD",
+                        "safeName": "GET_AND_RETURN_WITH_UNKNOWN_FIELD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetAndReturnWithUnknownField",
+                        "safeName": "GetAndReturnWithUnknownField"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        },
+                        {
+                            "originalName": "object",
+                            "camelCase": {
+                                "unsafeName": "object",
+                                "safeName": "object"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object",
+                                "safeName": "object"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT",
+                                "safeName": "OBJECT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Object",
+                                "safeName": "Object"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "endpoints",
+                            "camelCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "endpoints",
+                                "safeName": "endpoints"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ENDPOINTS",
+                                "safeName": "ENDPOINTS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Endpoints",
+                                "safeName": "Endpoints"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "object",
+                        "camelCase": {
+                            "unsafeName": "object",
+                            "safeName": "object"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "object",
+                            "safeName": "object"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "OBJECT",
+                            "safeName": "OBJECT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Object",
+                            "safeName": "Object"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/object/get-and-return-with-unknown-field"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_types/object:ObjectWithUnknownField"
                     }
                 }
             },

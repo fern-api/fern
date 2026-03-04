@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
-import type { Sourced } from "@fern-api/source";
+import { type Sourced, SourceLocation } from "@fern-api/source";
 import { z } from "zod";
 import { ReferenceResolver } from "./ReferenceResolver.js";
 import { ValidationIssue } from "./ValidationIssue.js";
@@ -68,6 +68,12 @@ export class YamlConfigLoader {
         resolveReferences?: boolean;
     }): Promise<YamlConfigLoader.Result<z.infer<S>>> {
         const document = await this.parseDocument(absoluteFilePath);
+
+        const yamlErrors = this.getYamlErrors(document);
+        if (yamlErrors.length > 0) {
+            return { success: false, issues: yamlErrors };
+        }
+
         const resolved = await this.resolveReferences({ document, resolveReferences });
         if (!resolved.success) {
             return {
@@ -138,6 +144,25 @@ export class YamlConfigLoader {
             };
         }
         return resolveResult;
+    }
+
+    private getYamlErrors(document: YamlDocument): ValidationIssue[] {
+        if (document.errors.length === 0) {
+            return [];
+        }
+        return document.errors.map((error) => {
+            const line = error.linePos?.[0]?.line ?? 1;
+            const col = error.linePos?.[0]?.col ?? 1;
+            return new ValidationIssue({
+                message: error.message,
+                location: new SourceLocation({
+                    absoluteFilePath: document.absoluteFilePath,
+                    relativeFilePath: document.relativeFilePath,
+                    line,
+                    column: col
+                })
+            });
+        });
     }
 
     private formatZodIssue(issue: z.core.$ZodIssue): string {

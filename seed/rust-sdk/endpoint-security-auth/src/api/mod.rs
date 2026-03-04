@@ -11,6 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{AuthClient, UserClient, EndpointSecurityAuthClient};
-pub use types::{*};
-
+pub use resources::{AuthClient, EndpointSecurityAuthClient, UserClient};
+pub use types::*;

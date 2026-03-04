@@ -7,11 +7,11 @@
 //! - **Nested**
 //! - **Simple**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod auth;
-pub mod nested_no_auth;
 pub mod nested;
+pub mod nested_no_auth;
 pub mod simple;
 pub struct InferredAuthExplicitClient {
     pub config: ClientConfig,
@@ -28,13 +28,12 @@ impl InferredAuthExplicitClient {
             auth: AuthClient::new(config.clone())?,
             nested_no_auth: NestedNoAuthClient::new(config.clone())?,
             nested: NestedClient::new(config.clone())?,
-            simple: SimpleClient::new(config.clone())?
+            simple: SimpleClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use auth::AuthClient;
-pub use nested_no_auth::NestedNoAuthClient;
 pub use nested::NestedClient;
+pub use nested_no_auth::NestedNoAuthClient;
 pub use simple::SimpleClient;

@@ -1,6 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
-import { isNullish, SourceLocation } from "@fern-api/source";
 import { ValidationIssue } from "@fern-api/yaml-loader";
 import type { AiConfig } from "../ai/config/AiConfig.js";
 import type { ApiDefinition } from "../api/config/ApiDefinition.js";
@@ -29,15 +28,14 @@ export namespace WorkspaceLoader {
 }
 
 /**
- * Loads and validates a complete Fern workspace from fern.yml.
+ * Loads a complete Fern workspace from fern.yml.
  *
- * The WorkspaceLoader consolidates:
- *  - API definition conversion
- *  - SDK configuration conversion
- *  - Docs configuration conversion
+ * Converts API definitions, SDK configuration, and docs configuration
+ * from the raw schema into typed domain objects. Relative paths are
+ * resolved to absolute paths based on the fern.yml location.
  *
- * All relative paths in the configuration are resolved to absolute paths
- * based on the fern.yml location, and validated for existence.
+ * SDK-level validation (API references, groups, version checks) is
+ * performed separately by SdkChecker.
  */
 export class WorkspaceLoader {
     private readonly cwd: AbsoluteFilePath;
@@ -72,27 +70,17 @@ export class WorkspaceLoader {
             };
         }
 
-        const workspace: Workspace = {
-            absoluteFilePath: fernYml.absoluteFilePath,
-            ai,
-            apis,
-            org: fernYml.data.org,
-            cliVersion,
-            docs,
-            sdks
-        };
-
-        await this.validateWorkspace({ fernYml, workspace });
-        if (this.issues.length > 0) {
-            return {
-                success: false,
-                issues: this.issues
-            };
-        }
-
         return {
             success: true,
-            workspace
+            workspace: {
+                absoluteFilePath: fernYml.absoluteFilePath,
+                ai,
+                apis,
+                org: fernYml.data.org,
+                cliVersion,
+                docs,
+                sdks
+            }
         };
     }
 
@@ -143,80 +131,5 @@ export class WorkspaceLoader {
             return undefined;
         }
         return sdkResult.config;
-    }
-
-    private async validateWorkspace({
-        fernYml,
-        workspace
-    }: {
-        fernYml: FernYmlSchemaLoader.Success;
-        workspace: Workspace;
-    }): Promise<void> {
-        await this.validateSdks({ fernYml, workspace });
-    }
-
-    private async validateSdks({
-        fernYml,
-        workspace
-    }: {
-        fernYml: FernYmlSchemaLoader.Success;
-        workspace: Workspace;
-    }): Promise<void> {
-        if (workspace.sdks != null && Object.keys(workspace.apis).length === 0) {
-            this.issues.push(
-                new ValidationIssue({
-                    message:
-                        "SDKs require at least one API defined in fern.yml; please define an API with the 'api' key",
-                    location: fernYml.sourced.$loc
-                })
-            );
-        }
-        if (Object.keys(workspace.apis).length >= 1) {
-            // If we have one or more APIs, we need to validate that each target references an existing API.
-            for (const target of workspace.sdks?.targets ?? []) {
-                if (!workspace.apis[target.api]) {
-                    this.issues.push(
-                        new ValidationIssue({
-                            message: `API '${target.api}' is not defined`,
-                            location: this.getTargetSourceLocation({ fernYml, targetName: target.name })
-                        })
-                    );
-                }
-            }
-        }
-        const defaultGroup = workspace.sdks?.defaultGroup;
-        if (defaultGroup != null) {
-            // If a default group is specified, at least one target must specify that group.
-            if (!this.defaultGroupExists({ workspace, defaultGroup })) {
-                this.issues.push(
-                    new ValidationIssue({
-                        message: `Default group '${defaultGroup}' is not referenced by any target`,
-                        location: fernYml.sourced.$loc
-                    })
-                );
-            }
-        }
-    }
-
-    private defaultGroupExists({ workspace, defaultGroup }: { workspace: Workspace; defaultGroup: string }): boolean {
-        return workspace.sdks?.targets?.some((target) => target.groups?.includes(defaultGroup)) ?? false;
-    }
-
-    private getTargetSourceLocation({
-        fernYml,
-        targetName
-    }: {
-        fernYml: FernYmlSchemaLoader.Success;
-        targetName: string;
-    }): SourceLocation {
-        const sourcedSdks = fernYml.sourced.sdks;
-        if (isNullish(sourcedSdks)) {
-            return fernYml.sourced.$loc;
-        }
-        const sourcedTargets = sourcedSdks.targets;
-        if (isNullish(sourcedTargets)) {
-            return fernYml.sourced.$loc;
-        }
-        return sourcedTargets[targetName]?.$loc ?? fernYml.sourced.$loc;
     }
 }

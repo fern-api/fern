@@ -17,6 +17,7 @@ from .object import (
     ObjectWithOptionalFieldError,
     ObjectWithRequiredField,
     ObjectWithRequiredFieldError,
+    ObjectWithUnknownField,
     OptionalAlias,
 )
 from .union import Animal, Animal_Cat, Animal_Dog, Cat, Dog, ErrorWithUnionBody, MixedType
@@ -42,6 +43,7 @@ __all__ = [
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",
     "ObjectWithRequiredFieldError",
+    "ObjectWithUnknownField",
     "OptionalAlias",
     "WeatherReport",
     "docs",

@@ -11,6 +11,7 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{AuthClient, NestedNoAuthClient, NestedClient, SimpleClient, InferredAuthImplicitApiKeyClient};
-pub use types::{*};
-
+pub use resources::{
+    AuthClient, InferredAuthImplicitApiKeyClient, NestedClient, NestedNoAuthClient, SimpleClient,
+};
+pub use types::*;
