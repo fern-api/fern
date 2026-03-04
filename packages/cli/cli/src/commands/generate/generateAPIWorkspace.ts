@@ -36,7 +36,7 @@ export async function generateWorkspace({
     fernignorePath,
     dynamicIrOnly,
     noReplay,
-    handleTooManyRequests
+    retryRateLimited
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -57,7 +57,7 @@ export async function generateWorkspace({
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
     noReplay: boolean;
-    handleTooManyRequests: boolean;
+    retryRateLimited: boolean;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -156,7 +156,7 @@ export async function generateWorkspace({
                     fernignorePath,
                     dynamicIrOnly,
                     validateWorkspace: true,
-                    handleTooManyRequests
+                    retryRateLimited
                 });
             }
         })

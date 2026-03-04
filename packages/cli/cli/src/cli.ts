@@ -693,7 +693,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     hidden: true,
                     description: "Run replay after generation (use --no-replay to skip)"
                 })
-                .option("handle-too-many-requests", {
+                .option("retry-rate-limited", {
                     boolean: true,
                     default: false,
                     description:
@@ -760,7 +760,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
-                    handleTooManyRequests: argv["handle-too-many-requests"]
+                    retryRateLimited: argv["retry-rate-limited"]
                 });
             }
             if (argv.docs != null) {
@@ -815,7 +815,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
-                handleTooManyRequests: argv["handle-too-many-requests"]
+                retryRateLimited: argv["retry-rate-limited"]
             });
         }
     );

@@ -16,10 +16,10 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import urlJoin from "url-join";
 
-const TOO_MANY_REQUESTS_INITIAL_RETRY_DELAY_MS = 2_000;
-const TOO_MANY_REQUESTS_MAX_RETRY_DELAY_MS = 120_000;
-const TOO_MANY_REQUESTS_MAX_RETRIES = 5;
-const TOO_MANY_REQUESTS_JITTER_FACTOR = 0.2;
+const RATE_LIMIT_INITIAL_RETRY_DELAY_MS = 2_000;
+const RATE_LIMIT_MAX_RETRY_DELAY_MS = 120_000;
+const RATE_LIMIT_MAX_RETRIES = 3;
+const RATE_LIMIT_JITTER_FACTOR = 0.2;
 
 export async function createAndStartJob({
     projectConfig,
@@ -35,7 +35,7 @@ export async function createAndStartJob({
     irVersionOverride,
     absolutePathToPreview,
     fernignorePath,
-    handleTooManyRequests
+    retryRateLimited
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -50,7 +50,7 @@ export async function createAndStartJob({
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     fernignorePath: string | undefined;
-    handleTooManyRequests: boolean;
+    retryRateLimited: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Read fernignore file contents if path is provided
     let fernignoreContents: string | undefined;
@@ -74,43 +74,52 @@ export async function createAndStartJob({
         whitelabel,
         absolutePathToPreview,
         fernignoreContents,
-        handleTooManyRequests
+        retryRateLimited
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
     return job;
 }
 
 async function createJobWithOptionalRetry(
-    args: Parameters<typeof createJob>[0] & { handleTooManyRequests: boolean }
+    args: Parameters<typeof createJob>[0] & { retryRateLimited: boolean }
 ): Promise<FernFiddle.remoteGen.CreateJobResponse> {
-    const { handleTooManyRequests, ...createJobArgs } = args;
+    const { retryRateLimited, ...createJobArgs } = args;
 
-    if (!handleTooManyRequests) {
+    if (!retryRateLimited) {
         try {
             return await createJob(createJobArgs);
         } catch (error) {
             if (error instanceof TooManyRequestsError) {
                 return args.context.failAndThrow(
-                    "Received 429 Too Many Requests. Re-run with --handle-too-many-requests to automatically retry."
+                    "Received 429 Too Many Requests. Re-run with --retry-rate-limited to automatically retry."
                 );
             }
             throw error;
         }
     }
 
-    for (let attempt = 0; attempt <= TOO_MANY_REQUESTS_MAX_RETRIES; attempt++) {
+    for (let attempt = 0; attempt <= RATE_LIMIT_MAX_RETRIES; attempt++) {
         try {
             return await createJob(createJobArgs);
         } catch (error) {
-            if (error instanceof TooManyRequestsError && attempt < TOO_MANY_REQUESTS_MAX_RETRIES) {
-                const baseDelay = Math.min(
-                    TOO_MANY_REQUESTS_INITIAL_RETRY_DELAY_MS * 2 ** attempt,
-                    TOO_MANY_REQUESTS_MAX_RETRY_DELAY_MS
-                );
-                const jitter = 1 + (Math.random() - 0.5) * TOO_MANY_REQUESTS_JITTER_FACTOR;
-                const delay = Math.round(baseDelay * jitter);
+            if (error instanceof TooManyRequestsError && attempt < RATE_LIMIT_MAX_RETRIES) {
+                const retryAfterSeconds = (error as TooManyRequestsError).retryAfterSeconds;
+                let delay: number;
+                if (retryAfterSeconds != null) {
+                    // Use the server-provided Retry-After value with a small jitter
+                    const jitter = 1 + (Math.random() - 0.5) * RATE_LIMIT_JITTER_FACTOR;
+                    delay = Math.round(retryAfterSeconds * 1000 * jitter);
+                } else {
+                    // Fall back to exponential backoff with jitter
+                    const baseDelay = Math.min(
+                        RATE_LIMIT_INITIAL_RETRY_DELAY_MS * 2 ** attempt,
+                        RATE_LIMIT_MAX_RETRY_DELAY_MS
+                    );
+                    const jitter = 1 + (Math.random() - 0.5) * RATE_LIMIT_JITTER_FACTOR;
+                    delay = Math.round(baseDelay * jitter);
+                }
                 args.context.logger.warn(
-                    `Received 429 Too Many Requests. Retrying in ${(delay / 1000).toFixed(1)}s (attempt ${attempt + 1}/${TOO_MANY_REQUESTS_MAX_RETRIES})...`
+                    `Received 429 Too Many Requests. Retrying in ${(delay / 1000).toFixed(1)}s (attempt ${attempt + 1}/${RATE_LIMIT_MAX_RETRIES})...`
                 );
                 await new Promise((resolve) => setTimeout(resolve, delay));
             } else {
@@ -124,9 +133,12 @@ async function createJobWithOptionalRetry(
 }
 
 class TooManyRequestsError extends Error {
-    constructor() {
+    public readonly retryAfterSeconds: number | undefined;
+
+    constructor(retryAfterSeconds?: number) {
         super("Received 429 Too Many Requests");
         Object.setPrototypeOf(this, TooManyRequestsError.prototype);
+        this.retryAfterSeconds = retryAfterSeconds;
     }
 }
 
@@ -188,7 +200,13 @@ async function createJob({
         // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
         const rawError = createResponse.error as any;
         if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
-            throw new TooManyRequestsError();
+            // Extract Retry-After header value if available in the response
+            const retryAfterHeader = rawError.content.headers?.["retry-after"];
+            const retryAfterSeconds =
+                retryAfterHeader != null && !Number.isNaN(Number(retryAfterHeader))
+                    ? Number(retryAfterHeader)
+                    : undefined;
+            throw new TooManyRequestsError(retryAfterSeconds);
         }
         return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
