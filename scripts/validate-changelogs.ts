@@ -1,47 +1,66 @@
-#!/usr/bin/env node
+#!/usr/bin/env tsx
 // biome-ignore-all lint/suspicious/noConsole: CLI script requires console output for user feedback
+import { execSync } from "child_process";
+import { existsSync, readFileSync } from "fs";
+import { dirname, join } from "path";
 
-const fs = require("fs");
-const path = require("path");
-const { execSync } = require("child_process");
+interface SoftwareConfig {
+    name: string;
+    versionsFile: string;
+    changelogFolder?: string;
+    softwareDirectory?: string;
+}
 
-function main() {
+interface ReleaseConfig {
+    software: Record<string, SoftwareConfig>;
+}
+
+interface ValidationError {
+    software: string;
+    softwareDir: string;
+    unreleasedDir: string;
+    changesCount: number;
+}
+
+function main(): void {
     const baseRef = process.env.BASE_REF;
     if (!baseRef) {
-        console.error("❌ BASE_REF environment variable is required");
+        console.error("\u274c BASE_REF environment variable is required");
         process.exit(1);
     }
 
-    const configPath = path.join(__dirname, "..", "release-config.json");
-    if (!fs.existsSync(configPath)) {
-        console.log("⚠️  release-config.json not found, skipping validation");
+    const configPath = join(__dirname, "..", "release-config.json");
+    if (!existsSync(configPath)) {
+        console.log("\u26a0\ufe0f  release-config.json not found, skipping validation");
         process.exit(0);
     }
 
-    const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+    const config: ReleaseConfig = JSON.parse(readFileSync(configPath, "utf-8"));
 
     const changedFilesOutput = execSync(`git diff --name-only origin/${baseRef}...HEAD`, {
         encoding: "utf-8"
     }).trim();
 
     if (!changedFilesOutput) {
-        console.log("✅ No files changed");
+        console.log("\u2705 No files changed");
         process.exit(0);
     }
 
     const changedFiles = changedFilesOutput.split("\n");
 
-    console.log("📂 Changed files:");
-    changedFiles.forEach((file) => console.log(`   ${file}`));
+    console.log("\ud83d\udcc2 Changed files:");
+    for (const file of changedFiles) {
+        console.log(`   ${file}`);
+    }
     console.log();
 
     let hasErrors = false;
-    const errors = [];
+    const errors: ValidationError[] = [];
 
     for (const [, softwareConfig] of Object.entries(config.software)) {
         const softwareDir =
             softwareConfig.softwareDirectory ||
-            (softwareConfig.versionsFile.includes("/") ? path.dirname(softwareConfig.versionsFile) : ".");
+            (softwareConfig.versionsFile.includes("/") ? dirname(softwareConfig.versionsFile) : ".");
         const changelogFolder = softwareConfig.changelogFolder || softwareDir + "/changes";
         const unreleasedDir = changelogFolder + "/unreleased";
 
@@ -53,8 +72,10 @@ function main() {
             continue;
         }
 
-        console.log(`\n📝 ${softwareConfig.name} changes detected:`);
-        softwareChanges.forEach((file) => console.log(`   - ${file}`));
+        console.log(`\n\ud83d\udcdd ${softwareConfig.name} changes detected:`);
+        for (const file of softwareChanges) {
+            console.log(`   - ${file}`);
+        }
 
         const changelogChanges = changedFiles.filter(
             (file) =>
@@ -73,13 +94,15 @@ function main() {
                 changesCount: softwareChanges.length
             });
         } else {
-            console.log("✅ Changelog entries found:");
-            changelogChanges.forEach((file) => console.log(`   - ${file}`));
+            console.log("\u2705 Changelog entries found:");
+            for (const file of changelogChanges) {
+                console.log(`   - ${file}`);
+            }
         }
     }
 
     if (hasErrors) {
-        console.log("\n❌ Missing changelog entries:\n");
+        console.log("\n\u274c Missing changelog entries:\n");
         for (const error of errors) {
             console.log(`Software: ${error.software}`);
             console.log(`  - ${error.changesCount} file(s) changed in ${error.softwareDir}/`);
@@ -98,7 +121,7 @@ function main() {
         process.exit(1);
     }
 
-    console.log("\n✅ All required changelog entries are present");
+    console.log("\n\u2705 All required changelog entries are present");
 }
 
 main();

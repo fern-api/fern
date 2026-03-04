@@ -57,4 +57,4 @@ jobs:
 
       - name: Run releases for all configured software
         if: steps.check-author.outputs.skip != 'true'
-        run: node scripts/release-all.js
+        run: npx tsx scripts/release-all.ts

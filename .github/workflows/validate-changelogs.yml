@@ -12,7 +12,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Check for changelog entries
         env:
           BASE_REF: ${{ github.base_ref }}
-        run: node scripts/validate-changelogs.js
+        run: npx tsx scripts/validate-changelogs.ts
