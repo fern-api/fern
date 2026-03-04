@@ -197,7 +197,9 @@ class SocketClientGenerator:
                         writer.write_line()
                     writer.write_line("except Exception:")
                     with writer.indent():
-                        writer.write_line(f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")')
+                        writer.write_line(
+                            f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")'
+                        )
                         writer.write_line("continue")
 
         return _get_iterator_method_body
@@ -250,7 +252,9 @@ class SocketClientGenerator:
                             writer.write_line()
                         writer.write_line("except Exception:")
                         with writer.indent():
-                            writer.write_line(f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")')
+                            writer.write_line(
+                                f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")'
+                            )
                             writer.write_line("continue")
                     writer.write(emit_call_start)
                     writer.write_reference(self._context.core_utilities.get_event_type())
@@ -377,7 +381,9 @@ class SocketClientGenerator:
                 writer.write_line()
             writer.write_line("except Exception:")
             with writer.indent():
-                writer.write_line(f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")')
+                writer.write_line(
+                    f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")'
+                )
                 writer.write_line("return json_data  # type: ignore")
 
         return _get_recv_method_body
