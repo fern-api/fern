@@ -2449,7 +2449,7 @@ The value type of the \`counting_iterator\`.
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`__counting_iterator_category&lt; _Start &gt;\`](/library/api/__counting_iterator_category) (public)
+**Inherits from:** \`__counting_iterator_category< _Start >\` (public)
 
 ---
 
@@ -2667,7 +2667,7 @@ Either a [runtime_value](/library/api/thrust::runtime_value) or a [compile_time_
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`thrust::iterator_adaptor&lt; strided_iterator&lt; RandomAccessIterator, StrideHolder &gt;, RandomAccessIterator &gt;\`](/library/api/thrust::iterator_adaptor) (public), [\`StrideHolder\`](/library/api/StrideHolder) (private)
+**Inherits from:** \`thrust::iterator_adaptor< strided_iterator< RandomAccessIterator, StrideHolder >, RandomAccessIterator >\` (public), \`StrideHolder\` (private)
 
 ---
 
@@ -2799,7 +2799,7 @@ universal_vector
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`detail::vector_base&lt; T, thrust::device_allocator&lt; T &gt; &gt;\`](/library/api/detail::vector_base) (public)
+**Inherits from:** \`detail::vector_base< T, thrust::device_allocator< T > >\` (public)
 
 ---
 
@@ -3390,6 +3390,8 @@ void thrust::device_vector<T, Alloc>::resize(
 \`\`\`
 </CodeBlock>
 
+**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
+
 **Parameters**
 
 <ParamField path="new_size" type="size_type">
@@ -3399,8 +3401,6 @@ Number of elements this vector should contain.
 <ParamField path="x" type="const value_type &" default="value_type()">
 Data with which new elements should be populated.
 </ParamField>
-
-**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
 
 </Tab>
 <Tab title="Default-initialized">
@@ -3416,13 +3416,13 @@ void thrust::device_vector<T, Alloc>::resize(
 \`\`\`
 </CodeBlock>
 
+**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
+
 **Parameters**
 
 <ParamField path="new_size" type="size_type">
 Number of elements this vector should contain.
 </ParamField>
-
-**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
 
 </Tab>
 <Tab title="No-init">
@@ -3440,13 +3440,13 @@ void thrust::device_vector<T, Alloc>::resize(
 \`\`\`
 </CodeBlock>
 
+**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
+
 **Parameters**
 
 <ParamField path="new_size" type="size_type">
 Number of elements this vector_base should contain.
 </ParamField>
-
-**Throws:** \`std::length_error\` If n exceeds [max_size()](/library/api/thrust::device_vector::max_size()).
 
 </Tab>
 </Tabs>
@@ -4898,7 +4898,7 @@ The type of memory resources that will be used for allocating bookkeeping memory
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`thrust::mr::memory_resource&lt; Upstream::pointer &gt;\`](/library/api/thrust::mr::memory_resource) (public), [\`thrust::mr::validator2&lt; Upstream, Bookkeeper &gt;\`](/library/api/thrust::mr::validator2) (private)
+**Inherits from:** \`thrust::mr::memory_resource< Upstream::pointer >\` (public), \`thrust::mr::validator2< Upstream, Bookkeeper >\` (private)
 
 This class is marked <Badge intent="note" minimal>final</Badge>.
 
@@ -5012,6 +5012,8 @@ virtual void_ptr thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, Boo
 
 **Returns:** A pointer to void to the newly allocated memory.
 
+**Throws:** \`thrust::bad_alloc\` when no memory with requested size and alignment can be allocated.
+
 **Parameters**
 
 <ParamField path="bytes" type="std::size_t">
@@ -5021,8 +5023,6 @@ Size, in bytes, that is requested from this allocation
 <ParamField path="alignment" type="std::size_t" default="THRUST_MR_DEFAULT_ALIGNMENT">
 Alignment that is requested from this allocation
 </ParamField>
-
-**Throws:** \`thrust::bad_alloc\` when no memory with requested size and alignment can be allocated.
 
 ### do_allocate_impl <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
@@ -5078,6 +5078,8 @@ pointer thrust::mr::memory_resource<Upstream::pointer>::allocate(
 
 **Returns:** A pointer to void to the newly allocated memory.
 
+**Throws:** \`thrust::bad_alloc\` when no memory with requested size and alignment can be allocated.
+
 **Parameters**
 
 <ParamField path="bytes" type="std::size_t">
@@ -5087,8 +5089,6 @@ Size, in bytes, that is requested from this allocation
 <ParamField path="alignment" type="std::size_t" default="THRUST_MR_DEFAULT_ALIGNMENT">
 Alignment that is requested from this allocation
 </ParamField>
-
-**Throws:** \`thrust::bad_alloc\` when no memory with requested size and alignment can be allocated.
 
 ### deallocate <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
 
@@ -5290,7 +5290,7 @@ description: "A tagged pointer type that stores a pointer to an object allocated
 
 Like [\`device_ptr\`](/library/api/thrust::device_ptr), this type ensures type safety when dispatching standard algorithms on ranges resident in memory.
 
-\`pointer\` generalizes [\`device_ptr\`](/library/api/thrust::device_ptr) by relaxing the backend system associated with the \`pointer\`. Instead of the backend system specified by \`THRUST_DEVICE_SYSTEM\`, \`pointer's\` system is given by its second template parameter, \`Tag\`. For the purpose of Thrust dispatch, [\`device_ptr&lt;Element&gt;\`](/library/api/thrust::device_ptr) and [\`pointer&lt;Element,device_system_tag&gt;\`](/library/api/thrust::pointer::pointer%3CElement,device_system_tag%3E) are considered equivalent.
+\`pointer\` generalizes [\`device_ptr\`](/library/api/thrust::device_ptr) by relaxing the backend system associated with the \`pointer\`. Instead of the backend system specified by \`THRUST_DEVICE_SYSTEM\`, \`pointer's\` system is given by its second template parameter, \`Tag\`. For the purpose of Thrust dispatch, [\`device_ptr<Element>\`](/library/api/thrust::device_ptr) and [\`pointer<Element,device_system_tag>\`](/library/api/thrust::pointer::pointer%3CElement,device_system_tag%3E) are considered equivalent.
 
 The raw pointer encapsulated by a \`pointer\` may be obtained through its [\`get\`](/library/api/thrust::pointer::get) member function or the \`raw_pointer_cast\` free function.
 
@@ -5323,13 +5323,13 @@ Allows the client to specify the reference type returned upon derereference. By 
 </ParamField>
 
 <ParamField path="Derived" type="typename">
-Allows the client to specify the name of the derived type when \`pointer\` is used as a base class. This is useful to ensure that arithmetic on values of the derived type return values of the derived type as a result. By default, this type is [\`pointer&lt;Element,Tag,Reference&gt;\`](/library/api/thrust::pointer::pointer%3CElement,Tag,Reference%3E).
+Allows the client to specify the name of the derived type when \`pointer\` is used as a base class. This is useful to ensure that arithmetic on values of the derived type return values of the derived type as a result. By default, this type is [\`pointer<Element,Tag,Reference>\`](/library/api/thrust::pointer::pointer%3CElement,Tag,Reference%3E).
 </ParamField>
 
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`thrust::iterator_adaptor&lt; Derived, Base, Value, System, Traversal, Reference, Difference &gt;\`](/library/api/thrust::iterator_adaptor) (public)
+**Inherits from:** \`thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >\` (public)
 
 ---
 
@@ -5364,7 +5364,7 @@ thrust::pointer<Element, Tag, Reference, Derived>::pointer(
 
 <Badge intent="note" minimal>explicit</Badge>
 
-This constructor allows construction of a [\`pointer&lt;const T, ...&gt;\`](/library/api/thrust::pointer::pointer%3Cconst T, ...%3E) from a \`T*\`.
+This constructor allows construction of a [\`pointer<const T, ...>\`](/library/api/thrust::pointer::pointer%3Cconst T, ...%3E) from a \`T*\`.
 
 <CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5585,7 +5585,7 @@ An owning wrapper for cudaStream_t.
 #include <cuda/stream.h>
 \`\`\`
 
-**Inherits from:** [\`cuda::stream_ref\`](/libcudacxx/api/cuda::stream_ref) (public)
+**Inherits from:** \`cuda::stream_ref\` (public)
 
 ---
 
@@ -5805,13 +5805,13 @@ void cuda::stream::wait(
 \`\`\`
 </CodeBlock>
 
+**Throws:** \`cuda_error\` if inserting the dependency fails
+
 **Parameters**
 
 <ParamField path="__ev" type="event_ref">
 Event that this stream should wait for
 </ParamField>
-
-**Throws:** \`cuda_error\` if inserting the dependency fails
 
 </Tab>
 <Tab title="Const">
@@ -5826,13 +5826,13 @@ void cuda::stream::wait(
 \`\`\`
 </CodeBlock>
 
+**Throws:** \`cuda_error\` if inserting the dependency fails
+
 **Parameters**
 
 <ParamField path="__other" type="stream_ref">
 Stream that this stream should wait for
 </ParamField>
-
-**Throws:** \`cuda_error\` if inserting the dependency fails
 
 </Tab>
 </Tabs>

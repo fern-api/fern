@@ -725,12 +725,13 @@ function generateIncrementTabTitle(func: CppFunctionIr): string {
  * 2. Description (summary + description blocks)
  * 3. Signature CodeBlock
  * 4. Version annotation (italic)
- * 5. Callouts (deprecated, warnings, notes, postconditions, preconditions)
- * 6. Template parameters
- * 7. Parameters
- * 8. Returns
- * 9. Throws
+ * 5. Callouts (deprecated, notes, warnings, postconditions, preconditions)
+ * 6. Returns
+ * 7. Throws
+ * 8. Template parameters
+ * 9. Parameters
  * 10. Examples
+ * 11. See also
  */
 export function renderMethodContent(
     func: CppFunctionIr,
@@ -891,21 +892,7 @@ export function renderMethodContent(
         }
     }
 
-    // 7. Template parameters
-    const tplParams = renderMethodTemplateParams(func, docstring);
-    if (tplParams) {
-        lines.push(tplParams);
-        lines.push("");
-    }
-
-    // 8. Parameters
-    const params = renderMethodParams(func, docstring);
-    if (params) {
-        lines.push(params);
-        lines.push("");
-    }
-
-    // 9. Throws / Raises
+    // 7. Throws / Raises (before template params and params per golden page pattern)
     if (docstring?.raises && docstring.raises.length > 0) {
         for (const r of docstring.raises) {
             const desc = renderSegmentsTrimmed(r.description);
@@ -914,6 +901,20 @@ export function renderMethodContent(
                 lines.push("");
             }
         }
+    }
+
+    // 8. Template parameters
+    const tplParams = renderMethodTemplateParams(func, docstring);
+    if (tplParams) {
+        lines.push(tplParams);
+        lines.push("");
+    }
+
+    // 9. Parameters
+    const params = renderMethodParams(func, docstring);
+    if (params) {
+        lines.push(params);
+        lines.push("");
     }
 
     // 10. Examples: from structured docstring fields + verbatim RST extraction

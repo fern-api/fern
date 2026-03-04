@@ -39,12 +39,9 @@ export function setCurrentPagePath(path: string | undefined): void {
 // ---------------------------------------------------------------------------
 
 /**
- * Escape angle brackets in markdown link text so MDX doesn't parse them as JSX.
- *
- * Even inside backtick-wrapped link text like [`pointer<T>`], MDX may interpret
- * `<T>` as a JSX tag. Replace `<` with `&lt;` and `>` with `&gt;` to prevent this.
+ * Escape angle brackets for bare (non-backtick-wrapped) link text.
  */
-export function escapeLinkTextForMdx(text: string): string {
+function escapeAngleBrackets(text: string): string {
     return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
@@ -175,7 +172,7 @@ export function renderSegment(segment: CppDocSegment): string {
                 }
 
                 const linkPath = buildLinkPath(qualifiedName);
-                return `[\`${escapeLinkTextForMdx(codeText)}\`](${linkPath})${possessiveSuffix}`;
+                return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
             }
             // BUG 20 fix: For member refs, try to decode the refid to get a qualified name.
             // Some member refs point to concepts, classes, or methods that have API pages.
@@ -191,7 +188,7 @@ export function renderSegment(segment: CppDocSegment): string {
                         qualifiedName = decodedPath + "::" + shortName;
                     }
                     const linkPath = buildLinkPath(qualifiedName);
-                    return `[\`${escapeLinkTextForMdx(codeText)}\`](${linkPath})${possessiveSuffix}`;
+                    return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
                 }
             }
             // Fallback: render as inline code
@@ -212,7 +209,7 @@ export function renderSegment(segment: CppDocSegment): string {
                 }
 
                 const linkPath = buildLinkPath(qualifiedName);
-                return `[${escapeLinkTextForMdx(text)}](${linkPath})`;
+                return `[${escapeAngleBrackets(text)}](${linkPath})`;
             }
             // BUG 20 fix: For member refs, also try to resolve as a link
             if (segment.kindref === "member" && segment.refid) {
@@ -224,7 +221,7 @@ export function renderSegment(segment: CppDocSegment): string {
                         qualifiedName = decodedPath + "::" + shortName;
                     }
                     const linkPath = buildLinkPath(qualifiedName);
-                    return `[${escapeLinkTextForMdx(segment.text.trim())}](${linkPath})`;
+                    return `[${escapeAngleBrackets(segment.text.trim())}](${linkPath})`;
                 }
             }
             // For unresolvable member refs, render as plain text
@@ -779,17 +776,17 @@ function convertRstInlineMarkup(line: string): string {
 
     // Convert :cpp:enumerator:`cub::NAME` to [`cub::NAME`](/library/api/cub::NAME)
     result = result.replace(/:cpp:enumerator:`([^`]+)`/g, (_, name: string) => {
-        return `[\`${escapeLinkTextForMdx(name)}\`](${buildLinkPath(name)})`;
+        return `[\`${name}\`](${buildLinkPath(name)})`;
     });
 
     // Convert :cpp:class:`name` to [`name`](/library/api/name)
     result = result.replace(/:cpp:class:`([^`]+)`/g, (_, name: string) => {
-        return `[\`${escapeLinkTextForMdx(name)}\`](${buildLinkPath(name)})`;
+        return `[\`${name}\`](${buildLinkPath(name)})`;
     });
 
     // Convert :cpp:func:`name` to [`name`](/library/api/name)
     result = result.replace(/:cpp:func:`([^`]+)`/g, (_, name: string) => {
-        return `[\`${escapeLinkTextForMdx(name)}\`](${buildLinkPath(name)})`;
+        return `[\`${name}\`](${buildLinkPath(name)})`;
     });
 
     // Convert RST inline code ``code`` to markdown `code`
@@ -1303,7 +1300,7 @@ export function renderTypeInfoForTable(
     // If the type has a resolved path, create a link
     if (typeInfo.resolvedPath) {
         const linkPath = buildLinkPath(typeInfo.resolvedPath);
-        return `[\`${escapeLinkTextForMdx(display)}\`](${linkPath})`;
+        return `[\`${display}\`](${linkPath})`;
     }
 
     return `\`${display}\``;

@@ -17,7 +17,7 @@ import type {
     CppTypeRef,
     CppDocstringIr
 } from "../../../src/types/CppLibraryDocsIr.js";
-import { renderSegmentsTrimmed, renderTypeInfoDisplay, renderTypeInfoForTable, renderDescriptionBlocks, resolveCompoundRef, escapeLinkTextForMdx } from "./DescriptionRenderer.js";
+import { renderSegmentsTrimmed, renderTypeInfoDisplay, renderTypeInfoForTable, renderDescriptionBlocks, resolveCompoundRef } from "./DescriptionRenderer.js";
 import { getVariableBadges, renderBadge } from "./BadgeRenderer.js";
 import { buildLinkPath } from "../context.js";
 import { formatLinksJson } from "./SignatureRenderer.js";
@@ -58,7 +58,7 @@ function renderTypeInfoLinked(typeInfo: CppTypeInfo | undefined): string {
                 // Resolve the compound ref using the full resolution chain
                 const qualifiedName = resolveCompoundRef(part.text, part.refid);
                 const linkPath = buildLinkPath(qualifiedName);
-                result.push(`[\`${escapeLinkTextForMdx(part.text)}\`](${linkPath})`);
+                result.push(`[\`${part.text}\`](${linkPath})`);
             } else {
                 result.push(part.text);
             }
@@ -260,7 +260,7 @@ export function renderInnerClass(innerClass: CppClassIr, ownerPath: string): str
         const baseLinks = innerClass.baseClasses.map(bc => {
             const access = bc.access !== "public" ? ` (${bc.access})` : " (public)";
             if (bc.typeInfo?.resolvedPath) {
-                return `[\`${escapeLinkTextForMdx(bc.name)}\`](${buildLinkPath(bc.typeInfo.resolvedPath)})${access}`;
+                return `[\`${bc.name}\`](${buildLinkPath(bc.typeInfo.resolvedPath)})${access}`;
             }
             return `\`${bc.name}\`${access}`;
         });
