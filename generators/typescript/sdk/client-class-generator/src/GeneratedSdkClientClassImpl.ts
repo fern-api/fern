@@ -125,6 +125,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
     private readonly neverThrowErrors: boolean;
+    private readonly oauthTokenEndpointSubpackageIds: Set<FernIr.SubpackageId>;
 
     constructor({
         isRoot,
@@ -374,6 +375,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
+        }
+
+        // Collect subpackage IDs that host OAuth token endpoints.
+        // These sub-clients must NOT receive the parent's HttpClient to avoid circular
+        // auth resolution (token request → auth provider → needs token → ...).
+        this.oauthTokenEndpointSubpackageIds = new Set<FernIr.SubpackageId>();
+        for (const scheme of intermediateRepresentation.auth.schemes) {
+            if (scheme.type === "oauth" && scheme.configuration.type === "clientCredentials") {
+                const subpackageId = scheme.configuration.tokenEndpoint.endpointReference.subpackageId;
+                if (subpackageId != null) {
+                    this.oauthTokenEndpointSubpackageIds.add(subpackageId);
+                }
+                const refreshSubpackageId = scheme.configuration.refreshEndpoint?.endpointReference.subpackageId;
+                if (refreshSubpackageId != null) {
+                    this.oauthTokenEndpointSubpackageIds.add(refreshSubpackageId);
+                }
+            }
         }
 
         this.generatedWrappedServices = package_.subpackages.reduce<GeneratedWrappedService[]>(
@@ -1340,6 +1358,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public hasAnyEndpointsWithAuth(): boolean {
         return this.anyEndpointWithAuth;
+    }
+
+    /**
+     * Returns true if the given subpackage hosts an OAuth token or refresh endpoint.
+     * Sub-clients for these subpackages must NOT receive the parent's HttpClient,
+     * because the parent's HttpClient has an OAuthAuthProvider that would try to
+     * authenticate the token request itself — creating a circular dependency.
+     */
+    public isOAuthTokenEndpointSubpackage(subpackageId: FernIr.SubpackageId): boolean {
+        return this.oauthTokenEndpointSubpackageIds.has(subpackageId);
     }
 
     public getAuthProviderInstance(): AuthProviderInstance | undefined {

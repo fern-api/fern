@@ -30,7 +30,7 @@ export class SeedOauthClientCredentialsReferenceClient {
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient(this._options, this._client));
+        return (this._auth ??= new AuthClient(this._options));
     }
 
     public get simple(): SimpleClient {

@@ -206,11 +206,17 @@ export type BaseClientOptions = {
         headers,`;
         }
 
+        // When auth schemes exist, normalizeClientOptions must strip any inherited authProvider
+        // from the parent's options to avoid circular auth resolution in OAuth token endpoint
+        // sub-clients (token request → auth provider → needs token → ...).
+        // normalizeClientOptionsWithAuth will re-set authProvider via ??= after calling this.
+        const authProviderReset = this.shouldGenerateAuthCode() ? `\n        authProvider: undefined,` : "";
+
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions = BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptions<T> {${headersSection}    return {
-        ...options,
+        ...options,${authProviderReset}
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
         )},${headersReturn}

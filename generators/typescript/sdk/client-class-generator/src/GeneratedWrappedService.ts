@@ -68,7 +68,11 @@ export class GeneratedWrappedService {
                                 generatedWrappedService.instantiate({
                                     referenceToClient: referenceToWrapped.getExpression(),
                                     referenceToOptions: this.wrapperService.getReferenceToOptions(),
-                                    referenceToHttpClient: this.wrapperService.getReferenceToClient()
+                                    // OAuth token endpoint sub-clients must NOT receive the parent's HttpClient
+                                    // to avoid circular auth resolution (token request → auth → needs token → ...).
+                                    referenceToHttpClient: this.wrapperService.isOAuthTokenEndpointSubpackage(this.wrappedSubpackageId)
+                                        ? undefined
+                                        : this.wrapperService.getReferenceToClient()
                                 })
                             )
                         )

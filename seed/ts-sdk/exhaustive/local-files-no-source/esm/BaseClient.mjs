@@ -8,7 +8,7 @@ export function normalizeClientOptions(options) {
         "X-Fern-Runtime": core.RUNTIME.type,
         "X-Fern-Runtime-Version": core.RUNTIME.version,
     }, options === null || options === void 0 ? void 0 : options.headers);
-    return Object.assign(Object.assign({}, options), { logging: core.logging.createLogger(options === null || options === void 0 ? void 0 : options.logging), headers });
+    return Object.assign(Object.assign({}, options), { authProvider: undefined, logging: core.logging.createLogger(options === null || options === void 0 ? void 0 : options.logging), headers });
 }
 export function normalizeClientOptionsWithAuth(options) {
     var _a;

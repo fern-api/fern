@@ -44,6 +44,7 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
 
     return {
         ...options,
+        authProvider: undefined,
         logging: core.logging.createLogger(options?.logging),
         headers,
     } as NormalizedClientOptions<T>;
