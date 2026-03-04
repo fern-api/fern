@@ -5,7 +5,7 @@ export { EndpointSupplier } from "./EndpointSupplier.mjs";
 export type { Fetcher, FetchFunction } from "./Fetcher.mjs";
 export { fetcher } from "./Fetcher.mjs";
 export { getHeader } from "./getHeader.mjs";
-export { type EndpointConfig, HttpClient, type HttpClientOptions } from "./HttpClient.mjs";
+export { type EndpointConfig, HttpClient, type HttpClientOptions, type RequestOptions } from "./HttpClient.mjs";
 export { HttpResponsePromise } from "./HttpResponsePromise.mjs";
 export type { RawResponse, WithRawResponse } from "./RawResponse.mjs";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";

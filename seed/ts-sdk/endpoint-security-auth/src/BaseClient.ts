@@ -33,18 +33,7 @@ export type BaseClientOptions = {
     ]
 >;
 
-export interface BaseRequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<string, string | core.EndpointSupplier<string | null | undefined> | null | undefined>;
-}
+export interface BaseRequestOptions extends core.RequestOptions {}
 
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;

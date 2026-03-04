@@ -22,19 +22,9 @@ export type BaseClientOptions = {
     logging?: core.logging.LogConfig | core.logging.Logger;
 } & BearerAuthProvider.AuthOptions;
 
-export interface BaseRequestOptions {
-    /** The maximum time to wait for a response in seconds. */
-    timeoutInSeconds?: number;
-    /** The number of times to retry the request. Defaults to 2. */
-    maxRetries?: number;
-    /** A hook to abort the request. */
-    abortSignal?: AbortSignal;
+export interface BaseRequestOptions extends core.RequestOptions {
     /** Override the X-API-Version header */
     version?: "1.0.0";
-    /** Additional query string parameters to include in the request. */
-    queryParams?: Record<string, unknown>;
-    /** Additional headers to include in the request. */
-    headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
 
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {

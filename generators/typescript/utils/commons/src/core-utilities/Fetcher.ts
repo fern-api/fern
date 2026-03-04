@@ -160,6 +160,10 @@ export interface Fetcher {
     readonly EndpointConfig: {
         _getReferenceToType: () => ts.TypeNode;
     };
+
+    readonly RequestOptions: {
+        _getReferenceToType: () => ts.TypeNode;
+    };
 }
 
 export declare namespace Fetcher {
@@ -645,6 +649,13 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         _getReferenceToType: this.withExportedName(
             "EndpointConfig",
             (EndpointConfig) => () => EndpointConfig.getTypeNode()
+        )
+    };
+
+    public readonly RequestOptions = {
+        _getReferenceToType: this.withExportedName(
+            "RequestOptions",
+            (RequestOptions) => () => RequestOptions.getTypeNode()
         )
     };
 }

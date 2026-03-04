@@ -1,12 +1,33 @@
+import type { AuthProvider } from "../auth/AuthProvider.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../headers.js";
 import type { LogConfig, Logger } from "../logging/logger.js";
 import { join } from "../url/join.js";
 import type { APIResponse } from "./APIResponse.js";
+import type { EndpointMetadata } from "./EndpointMetadata.js";
 import type { Fetcher, FetchFunction } from "./Fetcher.js";
 import { fetcherImpl } from "./Fetcher.js";
 import { HttpResponsePromise } from "./HttpResponsePromise.js";
 import type { RawResponse, WithRawResponse } from "./RawResponse.js";
 import { Supplier } from "./Supplier.js";
+
+/**
+ * Per-request options that callers pass to individual endpoint methods.
+ *
+ * Generated `BaseRequestOptions` extends this with SDK-specific headers
+ * (e.g. per-header overrides, version headers, idempotency keys).
+ */
+export interface RequestOptions {
+    /** The maximum time to wait for a response in seconds. */
+    timeoutInSeconds?: number;
+    /** The number of times to retry the request. Defaults to 2. */
+    maxRetries?: number;
+    /** A hook to abort the request. */
+    abortSignal?: AbortSignal;
+    /** Additional headers to include in the request. */
+    headers?: Record<string, string | Supplier<string | null | undefined> | null | undefined>;
+    /** Additional query string parameters to include in the request. */
+    queryParams?: Record<string, unknown>;
+}
 
 /**
  * Configuration for a single endpoint request.
@@ -17,28 +38,22 @@ export interface EndpointConfig {
     path: string;
     /** HTTP method */
     method: string;
-    /** Request body. When set without explicit requestType, defaults to JSON. */
+    /** Request body */
     body?: unknown;
     /** Query parameters specific to this endpoint (merged with requestOptions.queryParams) */
     queryParameters?: Record<string, unknown>;
     /** Endpoint-specific headers (e.g. custom headers from the API definition) */
     headers?: Record<string, unknown>;
-    /** Override content type (default: "application/json" when body is present) */
+    /** Override content type */
     contentType?: string;
-    /** Override request serialization (default: "json" when body is present) */
-    requestType?: "json" | "file" | "bytes" | "form";
-    /** Response type for streaming/SSE/other non-JSON responses */
-    responseType?: "streaming" | "sse" | "blob" | "text" | "arrayBuffer" | "binary-response";
+    /** Request serialization type */
+    requestType?: Fetcher.Args["requestType"];
+    /** Response type for non-JSON responses */
+    responseType?: Fetcher.Args["responseType"];
     /** Duplex mode for streaming uploads */
     duplex?: "half";
     /** Per-request overrides from the caller */
-    requestOptions?: {
-        timeoutInSeconds?: number;
-        maxRetries?: number;
-        abortSignal?: AbortSignal;
-        headers?: Record<string, unknown>;
-        queryParams?: Record<string, unknown>;
-    };
+    requestOptions?: RequestOptions;
     /**
      * Custom error handler for status-code errors. Called with the status code, body, and raw response.
      * Return an Error to throw it, or undefined to fall through to the generic SDK error.
@@ -46,9 +61,9 @@ export interface EndpointConfig {
     errorHandler?: (statusCode: number, body: unknown, rawResponse: RawResponse) => Error | undefined;
     /** Whether to include credentials on cross-origin requests */
     withCredentials?: boolean;
-    /** Endpoint metadata for supplier resolution */
-    endpointMetadata?: Record<string, unknown>;
-    /** Custom response transform (e.g. for deserialization or HEAD responses). Called with the raw response body and raw response on success. */
+    /** Endpoint metadata for auth provider routing */
+    endpointMetadata?: EndpointMetadata;
+    /** Custom response transform (e.g. for deserialization or HEAD responses) */
     transformResponse?: (body: unknown, rawResponse: RawResponse) => unknown;
     /**
      * Override the default timeout for this endpoint (in seconds).
@@ -65,25 +80,22 @@ export interface EndpointConfig {
 
 /**
  * Options for constructing an HttpClient.
- * These mirror the NormalizedClientOptions shape so the HttpClient can be
- * constructed with `this._options` directly from the generated client.
+ *
+ * Structurally compatible with the generated `NormalizedClientOptions` —
+ * the generated client passes its normalized options directly to this constructor.
  */
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
-    environment?: Supplier<unknown>;
-    authProvider?: {
-        getAuthRequest(arg?: {
-            endpointMetadata?: Record<string, unknown>;
-        }): Promise<{ headers: Record<string, string> }>;
-    };
-    headers?: Record<string, unknown>;
+    environment?: Supplier<string>;
+    authProvider?: AuthProvider;
+    headers?: Record<string, string | Supplier<string | null | undefined> | null | undefined>;
     timeoutInSeconds?: number;
     maxRetries?: number;
     fetch?: typeof fetch;
     logging?: LogConfig | Logger;
-    /** Custom fetcher function. When provided, HttpClient.fetch() uses this instead of the default fetcherImpl. */
+    /** Custom fetcher function. When provided, HttpClient uses this instead of the default fetcherImpl. */
     fetcher?: FetchFunction;
-    /** Default base URL to use when neither baseUrl nor environment is provided. Set from the SDK's default environment. */
+    /** Default base URL from the SDK's default environment. Fallback when neither baseUrl nor environment is provided. */
     defaultBaseUrl?: string;
 }
 
@@ -142,7 +154,7 @@ export class HttpClient {
      */
     public async fetch<R = unknown>(
         args: Fetcher.Args,
-        options?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: Record<string, unknown> },
+        options?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: EndpointMetadata },
     ): Promise<APIResponse<R, Fetcher.Error>> {
         // Merge headers: auth → global → endpoint-specific (args.headers) → per-request
         const authHeaders: Record<string, string> = this._options.authProvider

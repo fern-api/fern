@@ -342,29 +342,11 @@ export class BaseClientContextImpl implements BaseClientContext {
     public generateBaseRequestOptionsInterface(
         context: SdkContext
     ): SetRequired<InterfaceDeclarationStructure, "properties"> {
-        const supplier = context.coreUtilities.fetcher.SupplierOrEndpointSupplier;
         const requestOptions: SetRequired<InterfaceDeclarationStructure, "properties"> = {
             kind: StructureKind.Interface,
             name: REQUEST_OPTIONS_INTERFACE_NAME,
+            extends: [getTextOfTsNode(context.coreUtilities.fetcher.RequestOptions._getReferenceToType())],
             properties: [
-                {
-                    name: TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME,
-                    type: "number",
-                    hasQuestionToken: true,
-                    docs: ["The maximum time to wait for a response in seconds."]
-                },
-                {
-                    name: MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME,
-                    type: "number",
-                    hasQuestionToken: true,
-                    docs: ["The number of times to retry the request. Defaults to 2."]
-                },
-                {
-                    name: ABORT_SIGNAL_PROPERTY_NAME,
-                    type: "AbortSignal",
-                    hasQuestionToken: true,
-                    docs: ["A hook to abort the request."]
-                },
                 ...this.intermediateRepresentation.headers.map((header) => {
                     return {
                         name: getPropertyKey(this.getOptionKeyForHeader(header)),
@@ -372,19 +354,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                         hasQuestionToken: true,
                         docs: [`Override the ${header.name.wireValue} header`]
                     };
-                }),
-                {
-                    name: endpointUtils.REQUEST_OPTIONS_ADDITIONAL_QUERY_PARAMETERS_PROPERTY_NAME,
-                    type: "Record<string, unknown>",
-                    hasQuestionToken: true,
-                    docs: ["Additional query string parameters to include in the request."]
-                },
-                {
-                    name: "headers",
-                    type: `Record<string, string | ${getTextOfTsNode(supplier._getReferenceToType(ts.factory.createTypeReferenceNode("string | null | undefined")))} | null | undefined>`,
-                    hasQuestionToken: true,
-                    docs: ["Additional headers to include in the request."]
-                }
+                })
             ],
             isExported: true
         };
