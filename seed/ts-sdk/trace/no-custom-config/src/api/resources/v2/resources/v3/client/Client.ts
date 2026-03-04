@@ -13,21 +13,23 @@ export declare namespace V3Client {
 
 export class V3Client {
     protected readonly _options: NormalizedClientOptions<V3Client.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _problem: ProblemClient | undefined;
 
-    constructor(options: V3Client.Options = {}, client?: core.HttpClient) {
+    constructor(options: V3Client.Options = {});
+    constructor(options: V3Client.Options = {}, requestFn: core.RequestFn);
+    constructor(options: V3Client.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(this._options, this._client));
+        return (this._problem ??= new ProblemClient(this._options, this._requestFn));
     }
 }

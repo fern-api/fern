@@ -20,7 +20,7 @@ export declare namespace SeedTraceClient {
 
 export class SeedTraceClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedTraceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _v2: V2Client | undefined;
     protected _admin: AdminClient | undefined;
     protected _homepage: HomepageClient | undefined;
@@ -32,45 +32,45 @@ export class SeedTraceClient {
 
     constructor(options: SeedTraceClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-            ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+        this._requestFn = core.createRequestFn({
+            ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+            createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                 new Error(`HTTP ${args.statusCode} error`)) as any,
-            ((e: unknown) => {
+            handleNonStatusCodeError: ((e: unknown) => {
                 throw e;
             }) as any,
-        );
+        });
     }
 
     public get v2(): V2Client {
-        return (this._v2 ??= new V2Client(this._options, this._client));
+        return (this._v2 ??= new V2Client(this._options, this._requestFn));
     }
 
     public get admin(): AdminClient {
-        return (this._admin ??= new AdminClient(this._options, this._client));
+        return (this._admin ??= new AdminClient(this._options, this._requestFn));
     }
 
     public get homepage(): HomepageClient {
-        return (this._homepage ??= new HomepageClient(this._options, this._client));
+        return (this._homepage ??= new HomepageClient(this._options, this._requestFn));
     }
 
     public get migration(): MigrationClient {
-        return (this._migration ??= new MigrationClient(this._options, this._client));
+        return (this._migration ??= new MigrationClient(this._options, this._requestFn));
     }
 
     public get playlist(): PlaylistClient {
-        return (this._playlist ??= new PlaylistClient(this._options, this._client));
+        return (this._playlist ??= new PlaylistClient(this._options, this._requestFn));
     }
 
     public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(this._options, this._client));
+        return (this._problem ??= new ProblemClient(this._options, this._requestFn));
     }
 
     public get submission(): SubmissionClient {
-        return (this._submission ??= new SubmissionClient(this._options, this._client));
+        return (this._submission ??= new SubmissionClient(this._options, this._requestFn));
     }
 
     public get sysprop(): SyspropClient {
-        return (this._sysprop ??= new SyspropClient(this._options, this._client));
+        return (this._sysprop ??= new SyspropClient(this._options, this._requestFn));
     }
 }

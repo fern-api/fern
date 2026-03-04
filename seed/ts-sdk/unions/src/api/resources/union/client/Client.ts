@@ -15,13 +15,19 @@ export declare namespace UnionClient {
 
 export class UnionClient {
     protected readonly _options: NormalizedClientOptions<UnionClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UnionClient.Options, client?: core.HttpClient) {
+    constructor(options: UnionClient.Options);
+    constructor(options: UnionClient.Options, requestFn: core.RequestFn);
+    constructor(options: UnionClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedUnionsError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedUnionsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -33,7 +39,7 @@ export class UnionClient {
      */
     public get(id: string, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedUnions.Shape> {
         const _headers = {};
-        return this._client.request<SeedUnions.Shape>({
+        return this._requestFn<SeedUnions.Shape>({
             method: "GET",
             path: `/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
@@ -59,7 +65,7 @@ export class UnionClient {
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "PATCH",
             path: "",
             body: request,

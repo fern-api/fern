@@ -15,19 +15,19 @@ export declare namespace SeedApiClient {
 
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _fileUploadExample: FileUploadExampleClient | undefined;
 
     constructor(options: SeedApiClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedApiError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedApiError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get fileUploadExample(): FileUploadExampleClient {
-        return (this._fileUploadExample ??= new FileUploadExampleClient(this._options, this._client));
+        return (this._fileUploadExample ??= new FileUploadExampleClient(this._options, this._requestFn));
     }
 }

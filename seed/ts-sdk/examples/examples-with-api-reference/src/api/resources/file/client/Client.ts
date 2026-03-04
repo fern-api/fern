@@ -14,22 +14,28 @@ export declare namespace FileClient {
 
 export class FileClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<FileClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _notification: NotificationClient | undefined;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: FileClient.Options, client?: core.HttpClient) {
+    constructor(options: FileClient.Options);
+    constructor(options: FileClient.Options, requestFn: core.RequestFn);
+    constructor(options: FileClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedExamplesError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExamplesError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public get notification(): NotificationClient {
-        return (this._notification ??= new NotificationClient(this._options, this._client));
+        return (this._notification ??= new NotificationClient(this._options, this._requestFn));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._client));
+        return (this._service ??= new ServiceClient(this._options, this._requestFn));
     }
 }

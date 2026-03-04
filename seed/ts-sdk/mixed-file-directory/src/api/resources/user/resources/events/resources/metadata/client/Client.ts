@@ -15,17 +15,19 @@ export declare namespace MetadataClient {
 
 export class MetadataClient {
     protected readonly _options: NormalizedClientOptions<MetadataClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: MetadataClient.Options, client?: core.HttpClient) {
+    constructor(options: MetadataClient.Options);
+    constructor(options: MetadataClient.Options, requestFn: core.RequestFn);
+    constructor(options: MetadataClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedMixedFileDirectoryError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedMixedFileDirectoryError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -48,7 +50,7 @@ export class MetadataClient {
             id,
         };
         const _headers = {};
-        return this._client.request<SeedMixedFileDirectory.user.events.Metadata>({
+        return this._requestFn<SeedMixedFileDirectory.user.events.Metadata>({
             method: "GET",
             path: "/users/events/metadata/",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },

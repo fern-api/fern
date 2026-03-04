@@ -15,17 +15,19 @@ export declare namespace UnknownClient {
 
 export class UnknownClient {
     protected readonly _options: NormalizedClientOptions<UnknownClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UnknownClient.Options, client?: core.HttpClient) {
+    constructor(options: UnknownClient.Options);
+    constructor(options: UnknownClient.Options, requestFn: core.RequestFn);
+    constructor(options: UnknownClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedUnknownAsAnyError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedUnknownAsAnyError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -39,7 +41,7 @@ export class UnknownClient {
      */
     public post(request?: any, requestOptions?: UnknownClient.RequestOptions): core.HttpResponsePromise<any[]> {
         const _headers = {};
-        return this._client.request<any[]>({
+        return this._requestFn<any[]>({
             method: "POST",
             path: "",
             body: request,
@@ -67,7 +69,7 @@ export class UnknownClient {
         requestOptions?: UnknownClient.RequestOptions,
     ): core.HttpResponsePromise<any[]> {
         const _headers = {};
-        return this._client.request<any[]>({
+        return this._requestFn<any[]>({
             method: "POST",
             path: "/with-object",
             body: request,

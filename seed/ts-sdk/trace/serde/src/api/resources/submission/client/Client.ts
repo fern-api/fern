@@ -20,17 +20,19 @@ export declare namespace SubmissionClient {
  */
 export class SubmissionClient {
     protected readonly _options: NormalizedClientOptions<SubmissionClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SubmissionClient.Options = {}, client?: core.HttpClient) {
+    constructor(options: SubmissionClient.Options = {});
+    constructor(options: SubmissionClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: SubmissionClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -49,7 +51,7 @@ export class SubmissionClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.ExecutionSessionResponse>({
+        return this._requestFn<SeedTrace.ExecutionSessionResponse>({
             method: "POST",
             path: `/sessions/create-session/${core.url.encodePathParam(serializers.Language.jsonOrThrow(language, { omitUndefined: true }))}`,
             queryParameters: requestOptions?.queryParams,
@@ -82,7 +84,7 @@ export class SubmissionClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.ExecutionSessionResponse | undefined>({
+        return this._requestFn<SeedTrace.ExecutionSessionResponse | undefined>({
             method: "GET",
             path: `/sessions/${core.url.encodePathParam(sessionId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -115,7 +117,7 @@ export class SubmissionClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "DELETE",
             path: `/sessions/stop/${core.url.encodePathParam(sessionId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -136,7 +138,7 @@ export class SubmissionClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.GetExecutionSessionStateResponse>({
+        return this._requestFn<SeedTrace.GetExecutionSessionStateResponse>({
             method: "GET",
             path: "/sessions/execution-sessions-state",
             queryParameters: requestOptions?.queryParams,

@@ -14,22 +14,28 @@ export declare namespace AClient {
 
 export class AClient {
     protected readonly _options: NormalizedClientOptions<AClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _b: BClient | undefined;
     protected _c: CClient | undefined;
 
-    constructor(options: AClient.Options, client?: core.HttpClient) {
+    constructor(options: AClient.Options);
+    constructor(options: AClient.Options, requestFn: core.RequestFn);
+    constructor(options: AClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedApiError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedApiError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public get b(): BClient {
-        return (this._b ??= new BClient(this._options, this._client));
+        return (this._b ??= new BClient(this._options, this._requestFn));
     }
 
     public get c(): CClient {
-        return (this._c ??= new CClient(this._options, this._client));
+        return (this._c ??= new CClient(this._options, this._requestFn));
     }
 }

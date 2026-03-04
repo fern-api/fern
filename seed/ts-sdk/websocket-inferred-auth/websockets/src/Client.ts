@@ -16,24 +16,24 @@ export declare namespace SeedWebsocketAuthClient {
 
 export class SeedWebsocketAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedWebsocketAuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _auth: AuthClient | undefined;
     protected _realtime: RealtimeClient | undefined;
 
     constructor(options: SeedWebsocketAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedWebsocketAuthError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedWebsocketAuthError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient(this._options, this._client));
+        return (this._auth ??= new AuthClient(this._options, this._requestFn));
     }
 
     public get realtime(): RealtimeClient {
-        return (this._realtime ??= new RealtimeClient(this._options, this._client));
+        return (this._realtime ??= new RealtimeClient(this._options, this._requestFn));
     }
 }

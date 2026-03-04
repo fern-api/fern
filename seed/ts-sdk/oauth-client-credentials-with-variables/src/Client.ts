@@ -19,7 +19,7 @@ export declare namespace SeedOauthClientCredentialsWithVariablesClient {
 
 export class SeedOauthClientCredentialsWithVariablesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedOauthClientCredentialsWithVariablesClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _auth: AuthClient | undefined;
     protected _nestedNoAuth: NestedNoAuthClient | undefined;
     protected _nested: NestedClient | undefined;
@@ -28,11 +28,11 @@ export class SeedOauthClientCredentialsWithVariablesClient {
 
     constructor(options: SeedOauthClientCredentialsWithVariablesClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedOauthClientCredentialsWithVariablesError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsWithVariablesError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get auth(): AuthClient {
@@ -40,18 +40,18 @@ export class SeedOauthClientCredentialsWithVariablesClient {
     }
 
     public get nestedNoAuth(): NestedNoAuthClient {
-        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options, this._client));
+        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options, this._requestFn));
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient(this._options, this._client));
+        return (this._nested ??= new NestedClient(this._options, this._requestFn));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._client));
+        return (this._service ??= new ServiceClient(this._options, this._requestFn));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options, this._client));
+        return (this._simple ??= new SimpleClient(this._options, this._requestFn));
     }
 }

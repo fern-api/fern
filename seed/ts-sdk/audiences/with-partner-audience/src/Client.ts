@@ -15,19 +15,19 @@ export declare namespace SeedAudiencesClient {
 
 export class SeedAudiencesClient {
     protected readonly _options: NormalizedClientOptions<SeedAudiencesClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _folderD: FolderDClient | undefined;
 
     constructor(options: SeedAudiencesClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedAudiencesError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedAudiencesError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get folderD(): FolderDClient {
-        return (this._folderD ??= new FolderDClient(this._options, this._client));
+        return (this._folderD ??= new FolderDClient(this._options, this._requestFn));
     }
 }

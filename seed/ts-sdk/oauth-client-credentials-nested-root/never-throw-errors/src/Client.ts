@@ -16,7 +16,7 @@ export declare namespace SeedOauthClientCredentialsClient {
 
 export class SeedOauthClientCredentialsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedOauthClientCredentialsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _auth: AuthClient | undefined;
     protected _nestedNoAuth: NestedNoAuthClient | undefined;
     protected _nested: NestedClient | undefined;
@@ -24,14 +24,14 @@ export class SeedOauthClientCredentialsClient {
 
     constructor(options: SeedOauthClientCredentialsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                 new Error(`HTTP ${args.statusCode} error`)) as any,
-            ((e: unknown) => {
+            handleNonStatusCodeError: ((e: unknown) => {
                 throw e;
             }) as any,
-        );
+        });
     }
 
     public get auth(): AuthClient {
@@ -39,14 +39,14 @@ export class SeedOauthClientCredentialsClient {
     }
 
     public get nestedNoAuth(): NestedNoAuthClient {
-        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options, this._client));
+        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options, this._requestFn));
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient(this._options, this._client));
+        return (this._nested ??= new NestedClient(this._options, this._requestFn));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options, this._client));
+        return (this._simple ??= new SimpleClient(this._options, this._requestFn));
     }
 }

@@ -16,17 +16,19 @@ export declare namespace SyspropClient {
 
 export class SyspropClient {
     protected readonly _options: NormalizedClientOptions<SyspropClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SyspropClient.Options = {}, client?: core.HttpClient) {
+    constructor(options: SyspropClient.Options = {});
+    constructor(options: SyspropClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: SyspropClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -45,7 +47,7 @@ export class SyspropClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "PUT",
             path: `/sysprop/num-warm-instances/${core.url.encodePathParam(language)}/${core.url.encodePathParam(numWarmInstances)}`,
             queryParameters: requestOptions?.queryParams,
@@ -66,7 +68,7 @@ export class SyspropClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<Partial<Record<SeedTrace.Language, number>>>({
+        return this._requestFn<Partial<Record<SeedTrace.Language, number>>>({
             method: "GET",
             path: "/sysprop/num-warm-instances",
             queryParameters: requestOptions?.queryParams,

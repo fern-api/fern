@@ -15,19 +15,19 @@ export declare namespace SeedUndiscriminatedUnionsClient {
 
 export class SeedUndiscriminatedUnionsClient {
     protected readonly _options: NormalizedClientOptions<SeedUndiscriminatedUnionsClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _union: UnionClient | undefined;
 
     constructor(options: SeedUndiscriminatedUnionsClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedUndiscriminatedUnionsError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedUndiscriminatedUnionsError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(this._options, this._client));
+        return (this._union ??= new UnionClient(this._options, this._requestFn));
     }
 }

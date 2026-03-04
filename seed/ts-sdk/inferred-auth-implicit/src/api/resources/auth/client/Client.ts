@@ -16,17 +16,19 @@ export declare namespace AuthClient {
 
 export class AuthClient {
     protected readonly _options: NormalizedClientOptions<AuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: AuthClient.Options, client?: core.HttpClient) {
+    constructor(options: AuthClient.Options);
+    constructor(options: AuthClient.Options, requestFn: core.RequestFn);
+    constructor(options: AuthClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedInferredAuthImplicitError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedInferredAuthImplicitError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -47,7 +49,7 @@ export class AuthClient {
     ): core.HttpResponsePromise<SeedInferredAuthImplicit.TokenResponse> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
         const _headers = mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey });
-        return this._client.request<SeedInferredAuthImplicit.TokenResponse>({
+        return this._requestFn<SeedInferredAuthImplicit.TokenResponse>({
             method: "POST",
             path: "/token",
             body: { ..._body, audience: "https://api.example.com", grant_type: "client_credentials" },
@@ -78,7 +80,7 @@ export class AuthClient {
     ): core.HttpResponsePromise<SeedInferredAuthImplicit.TokenResponse> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
         const _headers = mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey });
-        return this._client.request<SeedInferredAuthImplicit.TokenResponse>({
+        return this._requestFn<SeedInferredAuthImplicit.TokenResponse>({
             method: "POST",
             path: "/token/refresh",
             body: { ..._body, audience: "https://api.example.com", grant_type: "refresh_token" },

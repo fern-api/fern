@@ -18,7 +18,7 @@ export declare namespace SeedInferredAuthImplicitClient {
 
 export class SeedInferredAuthImplicitClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedInferredAuthImplicitClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _auth: AuthClient | undefined;
     protected _nestedNoAuth: NestedNoAuthClient | undefined;
     protected _nested: NestedClient | undefined;
@@ -26,26 +26,26 @@ export class SeedInferredAuthImplicitClient {
 
     constructor(options: SeedInferredAuthImplicitClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedInferredAuthImplicitError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedInferredAuthImplicitError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient(this._options, this._client));
+        return (this._auth ??= new AuthClient(this._options, this._requestFn));
     }
 
     public get nestedNoAuth(): NestedNoAuthClient {
-        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options, this._client));
+        return (this._nestedNoAuth ??= new NestedNoAuthClient(this._options, this._requestFn));
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient(this._options, this._client));
+        return (this._nested ??= new NestedClient(this._options, this._requestFn));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options, this._client));
+        return (this._simple ??= new SimpleClient(this._options, this._requestFn));
     }
 }

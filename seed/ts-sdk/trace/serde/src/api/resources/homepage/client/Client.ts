@@ -17,17 +17,19 @@ export declare namespace HomepageClient {
 
 export class HomepageClient {
     protected readonly _options: NormalizedClientOptions<HomepageClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: HomepageClient.Options = {}, client?: core.HttpClient) {
+    constructor(options: HomepageClient.Options = {});
+    constructor(options: HomepageClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: HomepageClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -42,7 +44,7 @@ export class HomepageClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.ProblemId[]>({
+        return this._requestFn<SeedTrace.ProblemId[]>({
             method: "GET",
             path: "/homepage-problems",
             queryParameters: requestOptions?.queryParams,
@@ -73,7 +75,7 @@ export class HomepageClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "/homepage-problems",
             body: serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {

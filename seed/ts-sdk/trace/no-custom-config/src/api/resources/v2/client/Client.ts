@@ -17,27 +17,29 @@ export declare namespace V2Client {
 
 export class V2Client {
     protected readonly _options: NormalizedClientOptions<V2Client.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _problem: ProblemClient | undefined;
     protected _v3: V3Client | undefined;
 
-    constructor(options: V2Client.Options = {}, client?: core.HttpClient) {
+    constructor(options: V2Client.Options = {});
+    constructor(options: V2Client.Options = {}, requestFn: core.RequestFn);
+    constructor(options: V2Client.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(this._options, this._client));
+        return (this._problem ??= new ProblemClient(this._options, this._requestFn));
     }
 
     public get v3(): V3Client {
-        return (this._v3 ??= new V3Client(this._options, this._client));
+        return (this._v3 ??= new V3Client(this._options, this._requestFn));
     }
 
     /**
@@ -50,7 +52,7 @@ export class V2Client {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "GET",
             path: "",
             queryParameters: requestOptions?.queryParams,

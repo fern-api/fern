@@ -16,17 +16,19 @@ export declare namespace MigrationClient {
 
 export class MigrationClient {
     protected readonly _options: NormalizedClientOptions<MigrationClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: MigrationClient.Options = {}, client?: core.HttpClient) {
+    constructor(options: MigrationClient.Options = {});
+    constructor(options: MigrationClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: MigrationClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -47,7 +49,7 @@ export class MigrationClient {
             "admin-key-header": adminKeyHeader,
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.Migration[]>({
+        return this._requestFn<SeedTrace.Migration[]>({
             method: "GET",
             path: "/migration-info/all",
             queryParameters: requestOptions?.queryParams,

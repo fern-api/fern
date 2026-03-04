@@ -16,17 +16,19 @@ export declare namespace PlaylistClient {
 
 export class PlaylistClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PlaylistClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PlaylistClient.Options = {}, client?: core.HttpClient) {
+    constructor(options: PlaylistClient.Options = {});
+    constructor(options: PlaylistClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: PlaylistClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -59,7 +61,7 @@ export class PlaylistClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.Playlist>({
+        return this._requestFn<SeedTrace.Playlist>({
             method: "POST",
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/create`,
             body: _body,
@@ -103,7 +105,7 @@ export class PlaylistClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.Playlist[]>({
+        return this._requestFn<SeedTrace.Playlist[]>({
             method: "GET",
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -133,7 +135,7 @@ export class PlaylistClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.Playlist>({
+        return this._requestFn<SeedTrace.Playlist>({
             method: "GET",
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -179,7 +181,7 @@ export class PlaylistClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.Playlist | undefined>({
+        return this._requestFn<SeedTrace.Playlist | undefined>({
             method: "PUT",
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
             body: request,
@@ -219,7 +221,7 @@ export class PlaylistClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "DELETE",
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlist_id)}`,
             queryParameters: requestOptions?.queryParams,

@@ -13,21 +13,23 @@ export declare namespace NestedNoAuthClient {
 
 export class NestedNoAuthClient {
     protected readonly _options: NormalizedClientOptions<NestedNoAuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _api: ApiClient | undefined;
 
-    constructor(options: NestedNoAuthClient.Options, client?: core.HttpClient) {
+    constructor(options: NestedNoAuthClient.Options);
+    constructor(options: NestedNoAuthClient.Options, requestFn: core.RequestFn);
+    constructor(options: NestedNoAuthClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedOauthClientCredentialsEnvironmentVariablesError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsEnvironmentVariablesError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public get api(): ApiClient {
-        return (this._api ??= new ApiClient(this._options, this._client));
+        return (this._api ??= new ApiClient(this._options, this._requestFn));
     }
 }

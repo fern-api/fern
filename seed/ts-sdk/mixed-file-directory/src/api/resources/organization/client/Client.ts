@@ -15,17 +15,19 @@ export declare namespace OrganizationClient {
 
 export class OrganizationClient {
     protected readonly _options: NormalizedClientOptions<OrganizationClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: OrganizationClient.Options, client?: core.HttpClient) {
+    constructor(options: OrganizationClient.Options);
+    constructor(options: OrganizationClient.Options, requestFn: core.RequestFn);
+    constructor(options: OrganizationClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedMixedFileDirectoryError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedMixedFileDirectoryError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -44,7 +46,7 @@ export class OrganizationClient {
         requestOptions?: OrganizationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
         const _headers = {};
-        return this._client.request<SeedMixedFileDirectory.Organization>({
+        return this._requestFn<SeedMixedFileDirectory.Organization>({
             method: "POST",
             path: "/organizations/",
             body: request,

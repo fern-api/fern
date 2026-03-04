@@ -17,18 +17,18 @@ export declare namespace SeedOauthClientCredentialsMandatoryAuthClient {
 
 export class SeedOauthClientCredentialsMandatoryAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedOauthClientCredentialsMandatoryAuthClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _auth: AuthClient | undefined;
     protected _nested: NestedClient | undefined;
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedOauthClientCredentialsMandatoryAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedOauthClientCredentialsMandatoryAuthError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsMandatoryAuthError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get auth(): AuthClient {
@@ -36,10 +36,10 @@ export class SeedOauthClientCredentialsMandatoryAuthClient {
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient(this._options, this._client));
+        return (this._nested ??= new NestedClient(this._options, this._requestFn));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options, this._client));
+        return (this._simple ??= new SimpleClient(this._options, this._requestFn));
     }
 }

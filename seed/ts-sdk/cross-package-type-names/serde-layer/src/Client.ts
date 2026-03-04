@@ -17,29 +17,29 @@ export declare namespace SeedCrossPackageTypeNamesClient {
 
 export class SeedCrossPackageTypeNamesClient {
     protected readonly _options: NormalizedClientOptions<SeedCrossPackageTypeNamesClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _folderA: FolderAClient | undefined;
     protected _folderD: FolderDClient | undefined;
     protected _foo: FooClient | undefined;
 
     constructor(options: SeedCrossPackageTypeNamesClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedCrossPackageTypeNamesError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedCrossPackageTypeNamesError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get folderA(): FolderAClient {
-        return (this._folderA ??= new FolderAClient(this._options, this._client));
+        return (this._folderA ??= new FolderAClient(this._options, this._requestFn));
     }
 
     public get folderD(): FolderDClient {
-        return (this._folderD ??= new FolderDClient(this._options, this._client));
+        return (this._folderD ??= new FolderDClient(this._options, this._requestFn));
     }
 
     public get foo(): FooClient {
-        return (this._foo ??= new FooClient(this._options, this._client));
+        return (this._foo ??= new FooClient(this._options, this._requestFn));
     }
 }

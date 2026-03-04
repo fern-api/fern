@@ -16,13 +16,19 @@ export declare namespace FileUploadExampleClient {
 
 export class FileUploadExampleClient {
     protected readonly _options: NormalizedClientOptions<FileUploadExampleClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: FileUploadExampleClient.Options, client?: core.HttpClient) {
+    constructor(options: FileUploadExampleClient.Options);
+    constructor(options: FileUploadExampleClient.Options, requestFn: core.RequestFn);
+    constructor(options: FileUploadExampleClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedApiError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedApiError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -41,7 +47,7 @@ export class FileUploadExampleClient {
         request: SeedApi.UploadFileRequest,
         requestOptions?: FileUploadExampleClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.FileId> {
-        return this._client.request<SeedApi.FileId>(async () => {
+        return this._requestFn<SeedApi.FileId>(async () => {
             const _body = await core.newFormData();
             _body.append("name", request.name);
             if (request.file != null) {

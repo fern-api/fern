@@ -16,13 +16,19 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ServiceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options, client?: core.HttpClient) {
+    constructor(options: ServiceClient.Options);
+    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
+    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedExamplesError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExamplesError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -46,7 +52,7 @@ export class ServiceClient {
     ): core.HttpResponsePromise<SeedExamples.File_> {
         const { "X-File-API-Version": xFileApiVersion } = request;
         const _headers = mergeOnlyDefinedHeaders({ "X-File-API-Version": xFileApiVersion });
-        return this._client.request<SeedExamples.File_>({
+        return this._requestFn<SeedExamples.File_>({
             method: "GET",
             path: `/file/${core.url.encodePathParam(filename)}`,
             queryParameters: requestOptions?.queryParams,

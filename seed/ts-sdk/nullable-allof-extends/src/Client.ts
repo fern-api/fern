@@ -15,15 +15,15 @@ export declare namespace SeedApiClient {
 
 export class SeedApiClient {
     protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedApiClient.Options = {}) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            { ...this._options, defaultBaseUrl: "https://api.example.com" },
-            (args) => new errors.SeedApiError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...{ ...this._options, defaultBaseUrl: "https://api.example.com" },
+            createStatusCodeError: (args) => new errors.SeedApiError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -36,7 +36,7 @@ export class SeedApiClient {
      */
     public getTest(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<SeedApi.RootObject> {
         const _headers = {};
-        return this._client.request<SeedApi.RootObject>({
+        return this._requestFn<SeedApi.RootObject>({
             method: "GET",
             path: "test",
             queryParameters: requestOptions?.queryParams,
@@ -59,7 +59,7 @@ export class SeedApiClient {
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.RootObject> {
         const _headers = {};
-        return this._client.request<SeedApi.RootObject>({
+        return this._requestFn<SeedApi.RootObject>({
             method: "POST",
             path: "test",
             body: request,

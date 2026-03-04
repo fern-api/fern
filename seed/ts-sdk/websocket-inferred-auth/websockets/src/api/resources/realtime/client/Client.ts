@@ -32,17 +32,19 @@ export declare namespace RealtimeClient {
 
 export class RealtimeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<RealtimeClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: RealtimeClient.Options, client?: core.HttpClient) {
+    constructor(options: RealtimeClient.Options);
+    constructor(options: RealtimeClient.Options, requestFn: core.RequestFn);
+    constructor(options: RealtimeClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                (args) => new errors.SeedWebsocketAuthError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedWebsocketAuthError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {

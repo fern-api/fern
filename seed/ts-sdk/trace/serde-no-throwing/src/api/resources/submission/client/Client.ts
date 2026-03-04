@@ -19,20 +19,22 @@ export declare namespace SubmissionClient {
  */
 export class SubmissionClient {
     protected readonly _options: NormalizedClientOptions<SubmissionClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SubmissionClient.Options = {}, client?: core.HttpClient) {
+    constructor(options: SubmissionClient.Options = {});
+    constructor(options: SubmissionClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: SubmissionClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                     new Error(`HTTP ${args.statusCode} error`)) as any,
-                ((e: unknown) => {
+                handleNonStatusCodeError: ((e: unknown) => {
                     throw e;
                 }) as any,
-            );
+            });
     }
 
     /**
@@ -64,7 +66,7 @@ export class SubmissionClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -145,7 +147,7 @@ export class SubmissionClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -217,7 +219,7 @@ export class SubmissionClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??
@@ -290,7 +292,7 @@ export class SubmissionClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        const _response = await this._client.fetch(
+        const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
                     (await core.Supplier.get(this._options.baseUrl)) ??

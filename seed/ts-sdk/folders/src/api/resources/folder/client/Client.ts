@@ -15,18 +15,24 @@ export declare namespace FolderClient {
 
 export class FolderClient {
     protected readonly _options: NormalizedClientOptions<FolderClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: FolderClient.Options, client?: core.HttpClient) {
+    constructor(options: FolderClient.Options);
+    constructor(options: FolderClient.Options, requestFn: core.RequestFn);
+    constructor(options: FolderClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedApiError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedApiError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._client));
+        return (this._service ??= new ServiceClient(this._options, this._requestFn));
     }
 
     /**
@@ -37,7 +43,7 @@ export class FolderClient {
      */
     public foo(requestOptions?: FolderClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,

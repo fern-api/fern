@@ -13,17 +13,23 @@ export declare namespace NotificationClient {
 
 export class NotificationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NotificationClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: NotificationClient.Options, client?: core.HttpClient) {
+    constructor(options: NotificationClient.Options);
+    constructor(options: NotificationClient.Options, requestFn: core.RequestFn);
+    constructor(options: NotificationClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedExamplesError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExamplesError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._client));
+        return (this._service ??= new ServiceClient(this._options, this._requestFn));
     }
 }

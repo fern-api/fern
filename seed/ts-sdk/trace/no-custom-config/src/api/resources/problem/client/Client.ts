@@ -16,17 +16,19 @@ export declare namespace ProblemClient {
 
 export class ProblemClient {
     protected readonly _options: NormalizedClientOptions<ProblemClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ProblemClient.Options = {}, client?: core.HttpClient) {
+    constructor(options: ProblemClient.Options = {});
+    constructor(options: ProblemClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: ProblemClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -117,7 +119,7 @@ export class ProblemClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.CreateProblemResponse>({
+        return this._requestFn<SeedTrace.CreateProblemResponse>({
             method: "POST",
             path: "/problem-crud/create",
             body: request,
@@ -219,7 +221,7 @@ export class ProblemClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.UpdateProblemResponse>({
+        return this._requestFn<SeedTrace.UpdateProblemResponse>({
             method: "POST",
             path: `/problem-crud/update/${core.url.encodePathParam(problemId)}`,
             body: request,
@@ -247,7 +249,7 @@ export class ProblemClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "DELETE",
             path: `/problem-crud/delete/${core.url.encodePathParam(problemId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -288,7 +290,7 @@ export class ProblemClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<SeedTrace.GetDefaultStarterFilesResponse>({
+        return this._requestFn<SeedTrace.GetDefaultStarterFilesResponse>({
             method: "POST",
             path: "/problem-crud/default-starter-files",
             body: request,

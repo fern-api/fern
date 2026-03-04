@@ -16,24 +16,24 @@ export declare namespace SeedMixedFileDirectoryClient {
 
 export class SeedMixedFileDirectoryClient {
     protected readonly _options: NormalizedClientOptions<SeedMixedFileDirectoryClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _organization: OrganizationClient | undefined;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedMixedFileDirectoryClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedMixedFileDirectoryError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedMixedFileDirectoryError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get organization(): OrganizationClient {
-        return (this._organization ??= new OrganizationClient(this._options, this._client));
+        return (this._organization ??= new OrganizationClient(this._options, this._requestFn));
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options, this._client));
+        return (this._user ??= new UserClient(this._options, this._requestFn));
     }
 }

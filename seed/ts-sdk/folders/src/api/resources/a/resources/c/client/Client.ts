@@ -14,13 +14,19 @@ export declare namespace CClient {
 
 export class CClient {
     protected readonly _options: NormalizedClientOptions<CClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: CClient.Options, client?: core.HttpClient) {
+    constructor(options: CClient.Options);
+    constructor(options: CClient.Options, requestFn: core.RequestFn);
+    constructor(options: CClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedApiError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedApiError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -31,7 +37,7 @@ export class CClient {
      */
     public foo(requestOptions?: CClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,

@@ -14,13 +14,19 @@ export declare namespace BClient {
 
 export class BClient {
     protected readonly _options: NormalizedClientOptions<BClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: BClient.Options, client?: core.HttpClient) {
+    constructor(options: BClient.Options);
+    constructor(options: BClient.Options, requestFn: core.RequestFn);
+    constructor(options: BClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedApiError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedApiError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -31,7 +37,7 @@ export class BClient {
      */
     public foo(requestOptions?: BClient.RequestOptions): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,

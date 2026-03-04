@@ -15,13 +15,19 @@ export declare namespace BigunionClient {
 
 export class BigunionClient {
     protected readonly _options: NormalizedClientOptions<BigunionClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: BigunionClient.Options, client?: core.HttpClient) {
+    constructor(options: BigunionClient.Options);
+    constructor(options: BigunionClient.Options, requestFn: core.RequestFn);
+    constructor(options: BigunionClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedUnionsError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedUnionsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -36,7 +42,7 @@ export class BigunionClient {
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUnions.BigUnion> {
         const _headers = {};
-        return this._client.request<SeedUnions.BigUnion>({
+        return this._requestFn<SeedUnions.BigUnion>({
             method: "GET",
             path: `/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
@@ -63,7 +69,7 @@ export class BigunionClient {
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "PATCH",
             path: "",
             body: request,
@@ -99,7 +105,7 @@ export class BigunionClient {
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, boolean>> {
         const _headers = {};
-        return this._client.request<Record<string, boolean>>({
+        return this._requestFn<Record<string, boolean>>({
             method: "PATCH",
             path: "/many",
             body: request,

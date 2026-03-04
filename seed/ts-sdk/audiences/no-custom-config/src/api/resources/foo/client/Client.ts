@@ -15,13 +15,19 @@ export declare namespace FooClient {
 
 export class FooClient {
     protected readonly _options: NormalizedClientOptions<FooClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: FooClient.Options, client?: core.HttpClient) {
+    constructor(options: FooClient.Options);
+    constructor(options: FooClient.Options, requestFn: core.RequestFn);
+    constructor(options: FooClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedAudiencesError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedAudiencesError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -44,7 +50,7 @@ export class FooClient {
             optionalString,
         };
         const _headers = {};
-        return this._client.request<SeedAudiences.ImportingType>({
+        return this._requestFn<SeedAudiences.ImportingType>({
             method: "POST",
             path: "",
             body: _body,

@@ -15,15 +15,15 @@ export declare namespace SeedValidationClient {
 
 export class SeedValidationClient {
     protected readonly _options: NormalizedClientOptions<SeedValidationClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedValidationClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedValidationError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedValidationError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -43,7 +43,7 @@ export class SeedValidationClient {
         requestOptions?: SeedValidationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedValidation.Type> {
         const _headers = {};
-        return this._client.request<SeedValidation.Type>({
+        return this._requestFn<SeedValidation.Type>({
             method: "POST",
             path: "/create",
             body: request,
@@ -77,7 +77,7 @@ export class SeedValidationClient {
             name,
         };
         const _headers = {};
-        return this._client.request<SeedValidation.Type>({
+        return this._requestFn<SeedValidation.Type>({
             method: "GET",
             path: "",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },

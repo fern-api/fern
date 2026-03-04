@@ -15,13 +15,19 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options, client?: core.HttpClient) {
+    constructor(options: ServiceClient.Options);
+    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
+    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedAudiencesError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedAudiencesError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -44,7 +50,7 @@ export class ServiceClient {
             tags,
         };
         const _headers = {};
-        return this._client.request<SeedAudiences.folderA.Response>({
+        return this._requestFn<SeedAudiences.folderA.Response>({
             method: "GET",
             path: "",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },

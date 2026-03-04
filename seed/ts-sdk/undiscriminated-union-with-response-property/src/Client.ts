@@ -15,15 +15,15 @@ export declare namespace SeedUndiscriminatedUnionWithResponsePropertyClient {
 
 export class SeedUndiscriminatedUnionWithResponsePropertyClient {
     protected readonly _options: NormalizedClientOptions<SeedUndiscriminatedUnionWithResponsePropertyClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
     constructor(options: SeedUndiscriminatedUnionWithResponsePropertyClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedUndiscriminatedUnionWithResponsePropertyError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedUndiscriminatedUnionWithResponsePropertyError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     /**
@@ -36,7 +36,7 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
         requestOptions?: SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnionWithResponseProperty.UnionResponse> {
         const _headers = {};
-        return this._client.request<SeedUndiscriminatedUnionWithResponseProperty.UnionResponse>({
+        return this._requestFn<SeedUndiscriminatedUnionWithResponseProperty.UnionResponse>({
             method: "GET",
             path: "/union",
             queryParameters: requestOptions?.queryParams,
@@ -55,7 +55,7 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
         requestOptions?: SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse> {
         const _headers = {};
-        return this._client.request<SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse>({
+        return this._requestFn<SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse>({
             method: "GET",
             path: "/unions",
             queryParameters: requestOptions?.queryParams,

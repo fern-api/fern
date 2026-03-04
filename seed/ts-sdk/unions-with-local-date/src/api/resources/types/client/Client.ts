@@ -15,13 +15,19 @@ export declare namespace TypesClient {
 
 export class TypesClient {
     protected readonly _options: NormalizedClientOptions<TypesClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: TypesClient.Options, client?: core.HttpClient) {
+    constructor(options: TypesClient.Options);
+    constructor(options: TypesClient.Options, requestFn: core.RequestFn);
+    constructor(options: TypesClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedUnionsError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedUnionsError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -39,7 +45,7 @@ export class TypesClient {
         requestOptions?: TypesClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUnions.UnionWithTime> {
         const _headers = {};
-        return this._client.request<SeedUnions.UnionWithTime>({
+        return this._requestFn<SeedUnions.UnionWithTime>({
             method: "GET",
             path: `/time/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
@@ -69,7 +75,7 @@ export class TypesClient {
         requestOptions?: TypesClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         const _headers = {};
-        return this._client.request<boolean>({
+        return this._requestFn<boolean>({
             method: "PATCH",
             path: "/time",
             body: request,

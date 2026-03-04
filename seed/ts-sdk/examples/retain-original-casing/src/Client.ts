@@ -18,30 +18,30 @@ export declare namespace SeedExamplesClient {
 
 export class SeedExamplesClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SeedExamplesClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _file: FileClient | undefined;
     protected _health: HealthClient | undefined;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedExamplesClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedExamplesError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedExamplesError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get file(): FileClient {
-        return (this._file ??= new FileClient(this._options, this._client));
+        return (this._file ??= new FileClient(this._options, this._requestFn));
     }
 
     public get health(): HealthClient {
-        return (this._health ??= new HealthClient(this._options, this._client));
+        return (this._health ??= new HealthClient(this._options, this._requestFn));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._client));
+        return (this._service ??= new ServiceClient(this._options, this._requestFn));
     }
 
     /**
@@ -53,7 +53,7 @@ export class SeedExamplesClient {
      */
     public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
         const _headers = {};
-        return this._client.request<string>({
+        return this._requestFn<string>({
             method: "POST",
             path: "",
             body: request,
@@ -77,7 +77,7 @@ export class SeedExamplesClient {
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Identifier> {
         const _headers = {};
-        return this._client.request<SeedExamples.Identifier>({
+        return this._requestFn<SeedExamples.Identifier>({
             method: "POST",
             path: "",
             body: request,

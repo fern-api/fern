@@ -16,13 +16,19 @@ export declare namespace ServiceClient {
 
 export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options, client?: core.HttpClient) {
+    constructor(options: ServiceClient.Options);
+    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
+    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(this._options, (args) => new errors.SeedExamplesError(args), handleNonStatusCodeError);
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: (args) => new errors.SeedExamplesError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -37,7 +43,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Movie> {
         const _headers = {};
-        return this._client.request<SeedExamples.Movie>({
+        return this._requestFn<SeedExamples.Movie>({
             method: "GET",
             path: `/movie/${core.url.encodePathParam(movieId)}`,
             queryParameters: requestOptions?.queryParams,
@@ -79,7 +85,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.MovieId> {
         const _headers = {};
-        return this._client.request<SeedExamples.MovieId>({
+        return this._requestFn<SeedExamples.MovieId>({
             method: "POST",
             path: "/movie",
             body: request,
@@ -112,7 +118,7 @@ export class ServiceClient {
             tag,
         };
         const _headers = mergeOnlyDefinedHeaders({ "X-API-Version": xApiVersion });
-        return this._client.request<SeedExamples.Metadata>({
+        return this._requestFn<SeedExamples.Metadata>({
             method: "GET",
             path: "/metadata",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -293,7 +299,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Response> {
         const _headers = {};
-        return this._client.request<SeedExamples.Response>({
+        return this._requestFn<SeedExamples.Response>({
             method: "POST",
             path: "/big-entity",
             body: request,
@@ -322,7 +328,7 @@ export class ServiceClient {
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         const _headers = {};
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: "/refresh-token",
             body: request,

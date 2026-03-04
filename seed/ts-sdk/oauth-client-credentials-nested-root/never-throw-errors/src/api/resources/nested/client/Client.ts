@@ -11,24 +11,26 @@ export declare namespace NestedClient {
 
 export class NestedClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NestedClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _api: ApiClient | undefined;
 
-    constructor(options: NestedClient.Options, client?: core.HttpClient) {
+    constructor(options: NestedClient.Options);
+    constructor(options: NestedClient.Options, requestFn: core.RequestFn);
+    constructor(options: NestedClient.Options, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                this._options,
-                ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...this._options,
+                createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
                     new Error(`HTTP ${args.statusCode} error`)) as any,
-                ((e: unknown) => {
+                handleNonStatusCodeError: ((e: unknown) => {
                     throw e;
                 }) as any,
-            );
+            });
     }
 
     public get api(): ApiClient {
-        return (this._api ??= new ApiClient(this._options, this._client));
+        return (this._api ??= new ApiClient(this._options, this._requestFn));
     }
 }

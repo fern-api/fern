@@ -17,17 +17,19 @@ export declare namespace AdminClient {
 
 export class AdminClient {
     protected readonly _options: NormalizedClientOptions<AdminClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: AdminClient.Options = {}, client?: core.HttpClient) {
+    constructor(options: AdminClient.Options = {});
+    constructor(options: AdminClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: AdminClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
-        this._client =
-            client ??
-            new core.HttpClient(
-                { ...this._options, defaultBaseUrl: "https://api.trace.come" },
-                (args) => new errors.SeedTraceError(args),
-                handleNonStatusCodeError,
-            );
+        this._requestFn =
+            requestFn ??
+            core.createRequestFn({
+                ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
+                createStatusCodeError: (args) => new errors.SeedTraceError(args),
+                handleNonStatusCodeError: handleNonStatusCodeError,
+            });
     }
 
     /**
@@ -48,7 +50,7 @@ export class AdminClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/admin/store-test-submission-status/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             body: serializers.TestSubmissionStatus.jsonOrThrow(request, {
@@ -85,7 +87,7 @@ export class AdminClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/admin/store-test-submission-status-v2/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             body: serializers.TestSubmissionUpdate.jsonOrThrow(request, {
@@ -118,7 +120,7 @@ export class AdminClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/admin/store-workspace-submission-status/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             body: serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, {
@@ -155,7 +157,7 @@ export class AdminClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/admin/store-workspace-submission-status-v2/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             body: serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, {
@@ -275,7 +277,7 @@ export class AdminClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/admin/store-test-trace/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}/testCase/${core.url.encodePathParam(testCaseId)}`,
             body: serializers.StoreTracedTestCaseRequest.jsonOrThrow(request, {
@@ -384,7 +386,7 @@ export class AdminClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/admin/store-test-trace-v2/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}/testCase/${core.url.encodePathParam(serializers.v2.TestCaseId.jsonOrThrow(testCaseId, { omitUndefined: true }))}`,
             body: serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
@@ -499,7 +501,7 @@ export class AdminClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/admin/store-workspace-trace/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             body: serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, {
@@ -606,7 +608,7 @@ export class AdminClient {
         const _headers = mergeOnlyDefinedHeaders({
             "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
         });
-        return this._client.request<void>({
+        return this._requestFn<void>({
             method: "POST",
             path: `/admin/store-workspace-trace-v2/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
             body: serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {

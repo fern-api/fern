@@ -15,19 +15,19 @@ export declare namespace SeedUnknownAsAnyClient {
 
 export class SeedUnknownAsAnyClient {
     protected readonly _options: NormalizedClientOptions<SeedUnknownAsAnyClient.Options>;
-    protected readonly _client: core.HttpClient;
+    protected readonly _requestFn: core.RequestFn;
     protected _unknown: UnknownClient | undefined;
 
     constructor(options: SeedUnknownAsAnyClient.Options) {
         this._options = normalizeClientOptions(options);
-        this._client = new core.HttpClient(
-            this._options,
-            (args) => new errors.SeedUnknownAsAnyError(args),
-            handleNonStatusCodeError,
-        );
+        this._requestFn = core.createRequestFn({
+            ...this._options,
+            createStatusCodeError: (args) => new errors.SeedUnknownAsAnyError(args),
+            handleNonStatusCodeError: handleNonStatusCodeError,
+        });
     }
 
     public get unknown(): UnknownClient {
-        return (this._unknown ??= new UnknownClient(this._options, this._client));
+        return (this._unknown ??= new UnknownClient(this._options, this._requestFn));
     }
 }
