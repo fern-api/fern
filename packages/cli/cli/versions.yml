@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.3.1
+  changelogEntry:
+    - summary: |
+        Fix wire test assertions for discriminated unions with base properties or extends.
+        Previously, auto-generated example generation would crash if any base or extend
+        property example failed to generate, resulting in missing base properties in the
+        test's expected assertion while the mock response correctly included them. Now
+        gracefully skips failed properties instead of throwing. Also fixes recursive union
+        stubs to include leaf-type base and extend properties instead of hardcoding empty
+        arrays.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
 - version: 4.3.0
   changelogEntry:
     - summary: |
