@@ -1970,11 +1970,6 @@ describe("${serviceName}", () => {
                             Object.assign(properties, singleUnionProperties);
                         }
 
-                        // for extra properties
-                        const otherProperties = Object.fromEntries(
-                            Object.entries(jsonExample).filter(([key]) => !Object.keys(properties).includes(key))
-                        );
-                        Object.assign(properties, otherProperties);
                         return code`${literalOf(properties)}`;
                     },
                     undiscriminatedUnion: (value) => {

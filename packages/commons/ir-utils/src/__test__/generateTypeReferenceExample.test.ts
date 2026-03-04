@@ -222,8 +222,16 @@ describe("v1 cycle detection in generateTypeReferenceExample", () => {
                 v2: PrimitiveTypeV2.dateTime({ default: undefined })
             });
 
-        const ActorDecl: TypeDeclaration = makeObjectTypeDeclaration("Actor", ["id", "email"], [stringRef(), stringRef()]);
-        const WorkspaceDecl: TypeDeclaration = makeObjectTypeDeclaration("Workspace", ["id", "slug"], [stringRef(), stringRef()]);
+        const ActorDecl: TypeDeclaration = makeObjectTypeDeclaration(
+            "Actor",
+            ["id", "email"],
+            [stringRef(), stringRef()]
+        );
+        const WorkspaceDecl: TypeDeclaration = makeObjectTypeDeclaration(
+            "Workspace",
+            ["id", "slug"],
+            [stringRef(), stringRef()]
+        );
 
         const makeNameAndWireValue = (name: string) => ({
             wireValue: name,
