@@ -93,7 +93,7 @@ function renderParamField(
  * Check whether a template parameter is an SFINAE / enable_if param
  * that should be filtered out from rendered output.
  */
-function isSfinaeParam(tp: CppTemplateParamIr): boolean {
+export function isSfinaeParam(tp: CppTemplateParamIr): boolean {
     const type = tp.type ?? "";
     return type.includes("enable_if") || type.includes("_EnableIf");
 }

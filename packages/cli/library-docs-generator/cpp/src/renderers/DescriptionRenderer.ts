@@ -194,6 +194,13 @@ export function renderSegment(segment: CppDocSegment): string {
                 const text = segment.text.trim();
                 // Resolve the compound ref using the full resolution chain
                 const qualifiedName = resolveCompoundRef(text, segment.refid);
+
+                // Self-link detection: if the resolved name matches the current page,
+                // render as plain backtick code instead of a link
+                if (currentPagePath && qualifiedName === currentPagePath) {
+                    return `\`${text}\``;
+                }
+
                 const linkPath = buildLinkPath(qualifiedName);
                 return `[${text}](${linkPath})`;
             }
@@ -606,8 +613,81 @@ function convertRstLinesToMarkdown(lines: string[]): string {
         resultLines.pop();
     }
 
+    // Join prose continuation lines into single paragraphs.
+    // In RST, consecutive non-blank lines that are not structural elements
+    // (not lists, not code blocks, not directives) form a single paragraph.
+    const joinedProse: string[] = [];
+    let inCodeBlock = false;
+    for (let j = 0; j < resultLines.length; j++) {
+        const l = resultLines[j]!;
+
+        // Track code block boundaries
+        if (l.startsWith("```")) {
+            inCodeBlock = !inCodeBlock;
+            joinedProse.push(l);
+            continue;
+        }
+
+        // Inside code blocks, preserve lines as-is
+        if (inCodeBlock) {
+            joinedProse.push(l);
+            continue;
+        }
+
+        // Blank lines always preserved (paragraph boundary)
+        if (l.trim() === "") {
+            joinedProse.push(l);
+            continue;
+        }
+
+        // Structural lines are not joinable: list items, headings, HTML/MDX tags, version annotations, code fences
+        const isStructural = isStructuralLine(l);
+        if (isStructural) {
+            joinedProse.push(l);
+            continue;
+        }
+
+        // Check if the previous line is a joinable prose line (non-blank, non-structural)
+        if (joinedProse.length > 0) {
+            const prev = joinedProse[joinedProse.length - 1]!;
+            const prevIsBlank = prev.trim() === "";
+            const prevIsStructural = isStructuralLine(prev);
+
+            if (!prevIsBlank && !prevIsStructural) {
+                // Join with previous line (prose continuation)
+                joinedProse[joinedProse.length - 1] = prev + " " + l.trim();
+                continue;
+            }
+        }
+
+        joinedProse.push(l);
+    }
+
+    // Collapse double spaces in non-code prose lines
+    let inCodeBlock2 = false;
+    for (let j = 0; j < joinedProse.length; j++) {
+        const l = joinedProse[j]!;
+        if (l.startsWith("```")) {
+            inCodeBlock2 = !inCodeBlock2;
+            continue;
+        }
+        if (inCodeBlock2) {
+            continue;
+        }
+        // Collapse multiple spaces to single (but preserve leading indentation)
+        const leadingMatch = l.match(/^(\s*)/);
+        const leading = leadingMatch ? leadingMatch[1]! : "";
+        const rest = l.substring(leading.length);
+        joinedProse[j] = leading + rest.replace(/  +/g, " ");
+    }
+
     // Re-number ordered lists (RST uses #. for auto-numbering)
-    return renumberOrderedLists(resultLines.join("\n"));
+    return renumberOrderedLists(joinedProse.join("\n"));
+}
+
+const STRUCTURAL_LINE_RE = /^(\s*[-*]\s|\s*\d+\.\s|#{1,6}\s|<|>|\*Added in|\*Deprecated|```)/;
+function isStructuralLine(line: string): boolean {
+    return STRUCTURAL_LINE_RE.test(line);
 }
 
 /**
@@ -625,8 +705,8 @@ function convertRstInlineMarkup(line: string): string {
     result = result.replace(/\\ :sup:`([^`]+)`/g, "<sup>$1</sup>");
     result = result.replace(/:sup:`([^`]+)`/g, "<sup>$1</sup>");
 
-    // Convert :ref:`text <target>` to text (drop the reference)
-    result = result.replace(/:ref:`([^<`]+)\s*<[^>]+>`/g, "$1");
+    // Convert :ref:`text <target>` to text (drop the reference, trim trailing spaces)
+    result = result.replace(/:ref:`([^<`]+)\s*<[^>]+>`/g, (_, text: string) => text.trimEnd());
     // Convert :ref:`text` to text
     result = result.replace(/:ref:`([^`]+)`/g, "$1");
 

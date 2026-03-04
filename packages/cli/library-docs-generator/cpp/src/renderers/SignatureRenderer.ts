@@ -17,6 +17,7 @@ import type {
 } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath, getShortName, stripTemplateArgs, type RenderContext } from "../context.js";
 import { isTypeRef, resolveCompoundRef } from "./DescriptionRenderer.js";
+import { isSfinaeParam } from "./ParamRenderer.js";
 
 // ---------------------------------------------------------------------------
 // Angle bracket spacing normalization (BUG 13)
@@ -249,10 +250,12 @@ export function renderSignatureCodeBlock(
 export function formatSignature(func: CppFunctionIr, ownerClass?: CppClassIr): string {
     const parts: string[] = [];
 
-    // Template prefix
+    // Template prefix (suppressed when all params are SFINAE / enable_if)
     if (func.templateParams.length > 0) {
         const templateLine = formatTemplateLine(func);
-        parts.push(templateLine);
+        if (templateLine) {
+            parts.push(templateLine);
+        }
     }
 
     // Build the main signature from the IR's raw signature field
@@ -267,7 +270,15 @@ export function formatSignature(func: CppFunctionIr, ownerClass?: CppClassIr): s
  * Format the template<...> prefix line from template params.
  */
 function formatTemplateLine(func: CppFunctionIr): string {
-    const params = func.templateParams.map(tp => {
+    // Filter out SFINAE / enable_if template params (they are implementation details)
+    const renderableTemplateParams = func.templateParams.filter(tp => !isSfinaeParam(tp));
+
+    // If all template params were SFINAE, suppress the template line entirely
+    if (renderableTemplateParams.length === 0) {
+        return "";
+    }
+
+    const params = renderableTemplateParams.map(tp => {
         if (tp.name) {
             // BUG 16: For variadic params, the name may be separate from the type
             // e.g., type="class...", name="_Properties" -> "class... _Properties"
@@ -287,9 +298,9 @@ function formatTemplateLine(func: CppFunctionIr): string {
         return tp.type;
     });
 
-    // Check if we need multi-line formatting (SFINAE / enable_if patterns)
+    // Check if we need multi-line formatting
     const joined = params.join(", ");
-    if (joined.length > 80 || joined.includes("enable_if")) {
+    if (joined.length > 80) {
         return `template <${params.join(",\n          ")}>`;
     }
 

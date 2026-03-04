@@ -6,8 +6,7 @@ title: cub::BlockReduce
 description: "Collective methods for computing parallel reductions across a CUDA thread block."
 ---
 
-The BlockReduce class provides collective  methods for computing a
-parallel reduction of items partitioned across a CUDA thread block.
+The BlockReduce class provides collective methods for computing a parallel reduction of items partitioned across a CUDA thread block.
 
 ## Performance considerations
 
@@ -22,9 +21,7 @@ parallel reduction of items partitioned across a CUDA thread block.
 
 ## Example
 
-The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in
-a blocked arrangement  across 128 threads where each thread
-owns 4 consecutive items.
+The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in a blocked arrangement across 128 threads where each thread owns 4 consecutive items.
 
 \`\`\`cpp showLineNumbers={false}
 #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
@@ -235,7 +232,7 @@ Binary reduction functor
 
 **Example**
 
-The code snippet below illustrates a max reduction of 512 integer items that are partitioned in a blocked arrangement  across 128 threads where each thread owns 4 consecutive items.
+The code snippet below illustrates a max reduction of 512 integer items that are partitioned in a blocked arrangement across 128 threads where each thread owns 4 consecutive items.
 
 \`\`\`cpp showLineNumbers={false}
 #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
@@ -430,7 +427,7 @@ Calling thread's input segment
 
 **Example**
 
-The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in a blocked arrangement  across 128 threads where each thread owns 4 consecutive items.
+The code snippet below illustrates a sum reduction of 512 integer items that are partitioned in a blocked arrangement across 128 threads where each thread owns 4 consecutive items.
 
 \`\`\`cpp showLineNumbers={false}
 #include <cub/cub.cuh>   // or equivalently <cub/block/block_reduce.cuh>
@@ -542,7 +539,7 @@ _TempStorage & cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::
 | \`RakingCommutativeOnly\` | \`detail::BlockReduceRakingCommutativeOnly< T, BlockDimX, BlockDimY, BlockDimZ >\` | |
 | \`Raking\` | \`detail::BlockReduceRaking< T, BlockDimX, BlockDimY, BlockDimZ >\` | |
 | \`InternalBlockReduce\` | \`::cuda::std::_If< Algorithm==BLOCK_REDUCE_WARP_REDUCTIONS, WarpReductions, ::cuda::std::_If< Algorithm==BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC, WarpReductionsNondeterministic, ::cuda::std::_If< Algorithm==BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY, RakingCommutativeOnly, Raking > > >\` | Internal specialization type. |
-| \`_TempStorage\` | \`typename InternalBlockReduce::TempStorage\` | Shared memory storage layout type for [BlockReduce](/library/api/cub::BlockReduce). |
+| \`_TempStorage\` | \`typename InternalBlockReduce::TempStorage\` | Shared memory storage layout type for \`BlockReduce\`. |
 
 ---
 
@@ -566,7 +563,7 @@ struct cub::BlockReduce::TempStorage
 \`\`\`
 </CodeBlock>
 
-The operations exposed by [BlockReduce](/library/api/cub::BlockReduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+The operations exposed by \`BlockReduce\` require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
 
 **Inherits from:** \`Uninitialized< _TempStorage >\` (public)
 "
@@ -578,8 +575,7 @@ title: cub::BlockScan
 description: "Collective methods for computing parallel prefix sums/scans across a CUDA thread block."
 ---
 
-The BlockScan class provides collective  methods for computing a parallel prefix
-sum/scan of items partitioned across a CUDA thread block.
+The BlockScan class provides collective methods for computing a parallel prefix sum/scan of items partitioned across a CUDA thread block.
 
 ## Performance considerations
 
@@ -749,7 +745,7 @@ Block-wide aggregate reduction of input items
 </Tab>
 <Tab title="With prefix callback">
 
-Computes an exclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes one input element.  Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
+Computes an exclusive block-wide prefix scan using addition (+) as the scan operator. Each thread contributes one input element. Instead of using 0 as the block-wide prefix, the call-back functor \`block_prefix_callback_op\` is invoked by the first warp in the block, and the value returned by *lane*<sub>0</sub> in that warp is used as the "seed" value that logically prefixes the thread block's scan inputs.
 
 <CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -1311,7 +1307,7 @@ Block-wide aggregate reduction of input items
 
 **Example**
 
-The code snippet below illustrates an exclusive prefix max scan of 512 integer items that are partitioned in a blocked arrangement  across 128 threads where each thread owns 4 consecutive items.
+The code snippet below illustrates an exclusive prefix max scan of 512 integer items that are partitioned in a blocked arrangement across 128 threads where each thread owns 4 consecutive items.
 
 \`{ [0,-1,2,-3], [4,-5,6,-7], ..., [508,-509,510,-511] }\`. The corresponding output \`thread_data\` in those threads will be \`{ [INT_MIN,0,0,2], [2,4,4,6], ..., [506,508,508,510] }\`. Furthermore the value \`510\` will be stored in \`block_aggregate\` for all threads.
 
@@ -2252,7 +2248,7 @@ Embed:rst:leading-asterisk
 
 **Example**
 
-The code snippet below illustrates a single thread block that progressively computes an inclusive prefix max scan over multiple "tiles" of input using a prefix functor to maintain a running total between block-wide scans.  Each tile consists of 128 integer items that are partitioned across 128 threads.
+The code snippet below illustrates a single thread block that progressively computes an inclusive prefix max scan over multiple "tiles" of input using a prefix functor to maintain a running total between block-wide scans. Each tile consists of 128 integer items that are partitioned across 128 threads.
 
 The corresponding output for the first segment will be \`0, 0, 2, 2, 4, 4, ..., 510, 510\`. The output for the second segment will be \`512, 512, 514, 514, 516, 516, ..., 1022, 1022\`.
 
@@ -2343,7 +2339,7 @@ _TempStorage & cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Pr
 | \`WarpScans\` | \`detail::BlockScanWarpScans< T, BlockDimX, BlockDimY, BlockDimZ >\` | |
 | \`Raking\` | \`detail::BlockScanRaking< T, BlockDimX, BlockDimY, BlockDimZ,(SAFE_ALGORITHM==BLOCK_SCAN_RAKING_MEMOIZE)>\` | |
 | \`InternalBlockScan\` | \`::cuda::std::_If< SAFE_ALGORITHM==BLOCK_SCAN_WARP_SCANS, WarpScans, Raking >\` | Define the delegate type for the desired algorithm. |
-| \`_TempStorage\` | \`typename InternalBlockScan::TempStorage\` | Shared memory storage layout type for [BlockScan](/library/api/cub::BlockScan). |
+| \`_TempStorage\` | \`typename InternalBlockScan::TempStorage\` | Shared memory storage layout type for \`BlockScan\`. |
 
 ---
 
@@ -2368,7 +2364,7 @@ struct cub::BlockScan::TempStorage
 \`\`\`
 </CodeBlock>
 
-The operations exposed by [BlockScan](/library/api/cub::BlockScan) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+The operations exposed by \`BlockScan\` require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
 
 **Inherits from:** \`Uninitialized< _TempStorage >\` (public)
 "
@@ -2466,8 +2462,7 @@ The value type of the \`counting_iterator\`.
 
 <CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
 \`\`\`cpp showLineNumbers={false}
-template <class _Start2,
-          ::cuda::std::enable_if_t< ::cuda::std::default_initializable< _Start2 >, int >>
+template <class _Start2>
 cuda::counting_iterator<_Start,,>::counting_iterator() noexcept(::cuda::std::is_nothrow_default_constructible_v< _Start2 >)
 \`\`\`
 </CodeBlock>
@@ -2516,8 +2511,7 @@ Returns the value currently stored in the \`counting_iterator\` advanced by a nu
 
 <CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
 \`\`\`cpp showLineNumbers={false}
-template <class _Start2,
-          ::cuda::std::enable_if_t< __advanceable< _Start2 >, int >>
+template <class _Start2>
 _Start2 cuda::counting_iterator<_Start,,>::operator[](
     difference_type __n
 ) const noexcept(::cuda::std::is_nothrow_copy_constructible_v< _Start2 > &&noexcept(::cuda::std::declval< const _Start2 & >()+__n))
@@ -2568,8 +2562,7 @@ Decrements the stored value.
 
 <CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
 \`\`\`cpp showLineNumbers={false}
-template <class _Start2,
-          ::cuda::std::enable_if_t< __decrementable< _Start2 >, int >>
+template <class _Start2>
 counting_iterator & cuda::counting_iterator<_Start,,>::operator--() noexcept(--::cuda::std::declval< _Start2 & >())
 \`\`\`
 </CodeBlock>
@@ -2581,8 +2574,7 @@ Decrements the stored value.
 
 <CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
 \`\`\`cpp showLineNumbers={false}
-template <class _Start2,
-          ::cuda::std::enable_if_t< __decrementable< _Start2 >, int >>
+template <class _Start2>
 counting_iterator cuda::counting_iterator<_Start,,>::operator--(
     int
 ) noexcept(noexcept(--::cuda::std::declval< _Start2 & >()) &&::cuda::std::is_nothrow_copy_constructible_v< _Start >)
@@ -2616,8 +2608,7 @@ Decrements the stored value by a given number of elements.
 
 <CodeBlock links={{"counting_iterator": "/libcudacxx/api/cuda::counting_iterator"}}>
 \`\`\`cpp showLineNumbers={false}
-template <class _Start2,
-          ::cuda::std::enable_if_t< __advanceable< _Start2 >, int >>
+template <class _Start2>
 counting_iterator & cuda::counting_iterator<_Start,,>::operator-=(
     difference_type __n
 ) noexcept(::cuda::std::__integer_like< _Start2 >)
@@ -2698,7 +2689,7 @@ thrust::strided_iterator<RandomAccessIterator, StrideHolder>::strided_iterator()
 
 <Badge intent="note" minimal>inline</Badge>
 
-Creates a [strided_iterator](/library/api/thrust::strided_iterator) from an existing iterator and a stride.
+Creates a \`strided_iterator\` from an existing iterator and a stride.
 
 <CodeBlock links={{"strided_iterator": "/library/api/thrust::strided_iterator"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -2843,7 +2834,7 @@ thrust::device_vector<T, Alloc>::device_vector(
 **Parameters**
 
 <ParamField path="alloc" type="const Alloc &">
-The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
@@ -2932,7 +2923,7 @@ The number of elements to initially create.
 </ParamField>
 
 <ParamField path="alloc" type="const Alloc &">
-The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
@@ -2989,7 +2980,7 @@ An element to copy.
 </ParamField>
 
 <ParamField path="alloc" type="const Alloc &">
-The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
@@ -3032,7 +3023,7 @@ The \`device_vector\` to copy.
 </ParamField>
 
 <ParamField path="alloc" type="const Alloc &">
-The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
@@ -3051,7 +3042,7 @@ thrust::device_vector<T, Alloc>::device_vector(
 **Parameters**
 
 <ParamField path="v" type="device_vector &&">
-The [device_vector](/library/api/thrust::device_vector) to move.
+The \`device_vector\` to move.
 </ParamField>
 
 </Tab>
@@ -3071,11 +3062,11 @@ thrust::device_vector<T, Alloc>::device_vector(
 **Parameters**
 
 <ParamField path="v" type="device_vector &&">
-The [device_vector](/library/api/thrust::device_vector) to move.
+The \`device_vector\` to move.
 </ParamField>
 
 <ParamField path="alloc" type="const Alloc &">
-The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
@@ -3180,7 +3171,7 @@ The intializer_list.
 </ParamField>
 
 <ParamField path="alloc" type="const Alloc &">
-The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
@@ -3235,7 +3226,7 @@ The end of the range.
 </ParamField>
 
 <ParamField path="alloc" type="const Alloc &">
-The allocator to use by this [device_vector](/library/api/thrust::device_vector).
+The allocator to use by this \`device_vector\`.
 </ParamField>
 
 </Tab>
@@ -3294,7 +3285,7 @@ device_vector & thrust::device_vector<T, Alloc>::operator=(
 **Parameters**
 
 <ParamField path="v" type="device_vector &&">
-The [device_vector](/library/api/thrust::device_vector) to move.
+The \`device_vector\` to move.
 </ParamField>
 
 </Tab>
@@ -3900,7 +3891,7 @@ void thrust::device_vector<T, Alloc>::pop_back()
 
 ### swap
 
-This method swaps the contents of this [device_vector](/library/api/thrust::device_vector) with another vector.
+This method swaps the contents of this \`device_vector\` with another vector.
 
 <CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -4156,16 +4147,9 @@ title: "cuda::buffer"
 description: ""
 ---
 
-\`buffer\` is a container that provides resizable typed storage allocated
-from a given memory resource . It handles alignment,
-release and growth of the allocation. The elements are initialized during
-construction, which may require a kernel launch.
+\`buffer\` is a container that provides resizable typed storage allocated from a given memory resource. It handles alignment, release and growth of the allocation. The elements are initialized during construction, which may require a kernel launch.
 
-In addition to being type-safe, \`buffer\` also takes a set of
-properties  to
-ensure that e.g. execution space constraints are checked at compile time.
-However, only stateless properties can be forwarded. To use a stateful
-property, implement get_property(const buffer&, Property) .
+In addition to being type-safe, \`buffer\` also takes a set of properties to ensure that e.g. execution space constraints are checked at compile time. However, only stateless properties can be forwarded. To use a stateful property, implement get_property(const buffer&, Property).
 
 \`\`\`cpp showLineNumbers={false}
 #include <cuda/buffer.h>
@@ -4242,8 +4226,7 @@ Copy-constructs from a buffer with matching properties.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
-template <class... _OtherProperties,
-          ::cuda::std::enable_if_t< __properties_match< _OtherProperties... >, int >>
+template <class... _OtherProperties>
 cuda::buffer<_Tp, _Properties>::buffer(
     const buffer<_Tp, _OtherProperties...> &__other
 )
@@ -4265,8 +4248,7 @@ Move-constructs from a buffer with matching properties.
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
-template <class... _OtherProperties,
-          ::cuda::std::enable_if_t< __properties_match< _OtherProperties... >, int >>
+template <class... _OtherProperties>
 cuda::buffer<_Tp, _Properties>::buffer(
     buffer<_Tp, _OtherProperties...> &&__other
 ) noexcept
@@ -4754,7 +4736,7 @@ bool cuda::buffer<_Tp, _Properties>::empty() const noexcept
 
 ### memory_resource <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>const</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
-Returns a \\c const reference to the any_resource  that holds the memory resource used to allocate the buffer
+Returns a \\c const reference to the any_resource that holds the memory resource used to allocate the buffer
 
 <CodeBlock links={{"buffer": "/libcudacxx/api/cuda::buffer"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5414,8 +5396,7 @@ This constructor allows initialization from another pointer-like object.
 
 <CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
 \`\`\`cpp showLineNumbers={false}
-template <typename OtherPointer,
-          detail::enable_if_pointer_is_convertible_t< OtherPointer, pointer > *>
+template <typename OtherPointer>
 thrust::pointer<Element, Tag, Reference, Derived>::pointer(
     const OtherPointer &other
 )
@@ -6077,8 +6058,7 @@ title: cub::WarpReduce
 description: "Collective methods for computing parallel reductions across a CUDA thread warp."
 ---
 
-The \`WarpReduce\` class provides collective  methods for computing a parallel
-reduction of items partitioned across a CUDA thread warp.
+The \`WarpReduce\` class provides collective methods for computing a parallel reduction of items partitioned across a CUDA thread warp.
 
 ![](../../img/warp_reduce_logo.png)
 
@@ -6094,11 +6074,9 @@ reduction of items partitioned across a CUDA thread warp.
 
 ## Example
 
-The code snippet below illustrates four concurrent warp sum reductions within a block of 128 threads (one per each
-of the 32-thread warps).
+The code snippet below illustrates four concurrent warp sum reductions within a block of 128 threads (one per each of the 32-thread warps).
 
-The corresponding output \`aggregate\` in threads 0, 32, 64, and 96 will be
-\`496\`, \`1520\`, \`2544\`, and \`3568\`, respectively (and is undefined in other threads).
+The corresponding output \`aggregate\` in threads 0, 32, 64, and 96 will be \`496\`, \`1520\`, \`2544\`, and \`3568\`, respectively (and is undefined in other threads).
 
 The code snippet below illustrates a single warp sum reduction within a block of 128 threads.
 
@@ -6229,8 +6207,7 @@ __global__ void ExampleKernel(...)
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
-template <typename InputType,
-          ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
+template <typename InputType>
 T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
     const InputType &input
 )
@@ -6317,8 +6294,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
-template <typename InputType,
-          ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
+template <typename InputType>
 T cub::WarpReduce<T, LogicalWarpThreads>::Max(
     const InputType &input
 )
@@ -6358,8 +6334,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Min(
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
-template <typename InputType,
-          ::cuda::std::enable_if_t< detail::is_fixed_size_random_access_range_v< InputType >, int >>
+template <typename InputType>
 T cub::WarpReduce<T, LogicalWarpThreads>::Min(
     const InputType &input
 )
@@ -6800,7 +6775,7 @@ __global__ void ExampleKernel(...)
 
 | Name | Definition | Description |
 |---|---|---|
-| \`_TempStorage\` | \`typename InternalWarpReduce::TempStorage\` | Shared memory storage layout type for [WarpReduce](/library/api/cub::WarpReduce). |
+| \`_TempStorage\` | \`typename InternalWarpReduce::TempStorage\` | Shared memory storage layout type for \`WarpReduce\`. |
 
 ---
 
@@ -6824,7 +6799,7 @@ struct cub::WarpReduce::TempStorage
 \`\`\`
 </CodeBlock>
 
-The operations exposed by [WarpReduce](/library/api/cub::WarpReduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+The operations exposed by \`WarpReduce\` require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
 
 **Inherits from:** \`Uninitialized< _TempStorage >\` (public)
 "
