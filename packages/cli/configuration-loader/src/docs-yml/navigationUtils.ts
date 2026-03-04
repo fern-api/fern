@@ -77,6 +77,31 @@ export async function getFrontmatterTitle({
     }
 }
 
+/**
+ * Extracts the hidden field from markdown frontmatter.
+ * Returns true if hidden is explicitly set to true, undefined otherwise.
+ */
+export async function getFrontmatterHidden({
+    absolutePath,
+    readFileFn = (path, encoding) => readFile(path, encoding)
+}: {
+    absolutePath: AbsoluteFilePath;
+    readFileFn?: ReadFileFn;
+}): Promise<boolean | undefined> {
+    try {
+        const content = await readFileFn(absolutePath, "utf-8");
+        const { data } = grayMatter(content);
+
+        if (data.hidden === true) {
+            return true;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
 interface NavigationItemWithMeta {
     item: docsYml.DocsNavigationItem;
     title: string;
@@ -104,7 +129,7 @@ export async function buildNavigationForDirectory({
     );
     const subdirectories = contents.filter((item) => item.type === "directory");
 
-    const [pagePositions, pageTitles] = await Promise.all([
+    const [pagePositions, pageTitles, pageHiddenFlags] = await Promise.all([
         Promise.all(
             markdownFiles.map((file) => getFrontmatterPosition({ absolutePath: file.absolutePath, readFileFn }))
         ),
@@ -112,7 +137,10 @@ export async function buildNavigationForDirectory({
             ? Promise.all(
                   markdownFiles.map((file) => getFrontmatterTitle({ absolutePath: file.absolutePath, readFileFn }))
               )
-            : Promise.resolve(markdownFiles.map(() => undefined))
+            : Promise.resolve(markdownFiles.map(() => undefined)),
+        Promise.all(
+            markdownFiles.map((file) => getFrontmatterHidden({ absolutePath: file.absolutePath, readFileFn }))
+        )
     ]);
 
     const pages: docsYml.DocsNavigationItem[] = markdownFiles.map((file, index) => {
@@ -122,7 +150,7 @@ export async function buildNavigationForDirectory({
             absolutePath: file.absolutePath,
             slug: nameToSlug({ name: file.name }),
             icon: undefined,
-            hidden: undefined,
+            hidden: pageHiddenFlags[index],
             noindex: undefined,
             viewers: undefined,
             orphaned: undefined,
@@ -169,6 +197,11 @@ export async function buildNavigationForDirectory({
                     ? await getFrontmatterPosition({ absolutePath: indexPage.absolutePath, readFileFn })
                     : undefined;
 
+            const sectionHidden =
+                indexPage?.type === "page"
+                    ? await getFrontmatterHidden({ absolutePath: indexPage.absolutePath, readFileFn })
+                    : undefined;
+
             return {
                 section: {
                     type: "section" as const,
@@ -179,7 +212,7 @@ export async function buildNavigationForDirectory({
                     collapsed: undefined,
                     collapsible: undefined,
                     collapsedByDefault: undefined,
-                    hidden: undefined,
+                    hidden: sectionHidden,
                     skipUrlSlug: false,
                     overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
                     viewers: undefined,

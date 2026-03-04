@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     buildNavigationForDirectory,
+    getFrontmatterHidden,
     getFrontmatterPosition,
     getFrontmatterTitle,
     nameToSlug,
@@ -1639,5 +1640,147 @@ describe("buildNavigationForDirectory with section position from index file", ()
         expect(result).toHaveLength(2);
         expect(result[0]).toMatchObject({ type: "section", title: "Alpha Section" });
         expect(result[1]).toMatchObject({ type: "section", title: "Zebra Section" });
+    });
+});
+
+describe("getFrontmatterHidden", () => {
+    it("should return true when hidden is true in frontmatter", async () => {
+        const mockReadFile = async () => "---\nhidden: true\n---\n# Content";
+        const result = await getFrontmatterHidden({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBe(true);
+    });
+
+    it("should return undefined when hidden is false in frontmatter", async () => {
+        const mockReadFile = async () => "---\nhidden: false\n---\n# Content";
+        const result = await getFrontmatterHidden({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined when hidden is not present in frontmatter", async () => {
+        const mockReadFile = async () => "---\ntitle: Test\n---\n# Content";
+        const result = await getFrontmatterHidden({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined for non-boolean hidden value", async () => {
+        const mockReadFile = async () => "---\nhidden: 'yes'\n---\n# Content";
+        const result = await getFrontmatterHidden({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+
+    it("should return undefined when file read fails", async () => {
+        const mockReadFile = async () => {
+            throw new Error("File not found");
+        };
+        const result = await getFrontmatterHidden({
+            absolutePath: "/test/file.md" as AbsoluteFilePath,
+            readFileFn: mockReadFile
+        });
+        expect(result).toBeUndefined();
+    });
+});
+
+describe("buildNavigationForDirectory with frontmatter hidden", () => {
+    it("should set hidden from frontmatter on pages in folder navigation", async () => {
+        const mockGetDir = async () => [
+            {
+                type: "file" as const,
+                name: "visible-page.md",
+                absolutePath: "/test/visible-page.md" as AbsoluteFilePath,
+                contents: ""
+            },
+            {
+                type: "file" as const,
+                name: "hidden-page.mdx",
+                absolutePath: "/test/hidden-page.mdx" as AbsoluteFilePath,
+                contents: ""
+            }
+        ];
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/hidden-page.mdx") {
+                return "---\nhidden: true\n---\n# Hidden Content";
+            }
+            return "---\ntitle: Visible\n---\n# Visible Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(2);
+        const hiddenPage = result.find((item) => item.type === "page" && item.slug === "hidden-page");
+        const visiblePage = result.find((item) => item.type === "page" && item.slug === "visible-page");
+        expect(hiddenPage).toBeDefined();
+        expect.assert(hiddenPage?.type === "page");
+        expect(hiddenPage.hidden).toBe(true);
+        expect(visiblePage).toBeDefined();
+        expect.assert(visiblePage?.type === "page");
+        expect(visiblePage.hidden).toBeUndefined();
+    });
+
+    it("should set hidden on section when index page has hidden: true", async () => {
+        let callCount = 0;
+        const mockGetDir = async () => {
+            callCount++;
+            if (callCount === 1) {
+                return [
+                    {
+                        type: "directory" as const,
+                        name: "hidden-section",
+                        absolutePath: "/test/hidden-section" as AbsoluteFilePath,
+                        contents: []
+                    }
+                ];
+            }
+            return [
+                {
+                    type: "file" as const,
+                    name: "index.mdx",
+                    absolutePath: "/test/hidden-section/index.mdx" as AbsoluteFilePath,
+                    contents: ""
+                },
+                {
+                    type: "file" as const,
+                    name: "child-page.md",
+                    absolutePath: "/test/hidden-section/child-page.md" as AbsoluteFilePath,
+                    contents: ""
+                }
+            ];
+        };
+
+        const mockReadFile = async (path: string) => {
+            if (path === "/test/hidden-section/index.mdx") {
+                return "---\nhidden: true\ntitle: Secret Section\n---\n# Hidden Section";
+            }
+            return "---\n---\n# Content";
+        };
+
+        const result = await buildNavigationForDirectory({
+            directoryPath: "/test" as AbsoluteFilePath,
+            getDir: mockGetDir,
+            readFileFn: mockReadFile
+        });
+
+        expect(result).toHaveLength(1);
+        expect(result[0]).toMatchObject({
+            type: "section",
+            title: "Hidden Section",
+            hidden: true
+        });
     });
 });
