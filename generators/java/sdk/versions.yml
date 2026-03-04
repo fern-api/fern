@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.41.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error for objects with more than 252 properties. The JVM
+        limits constructors to 255 parameter slots, so types like CMS-1500 claim
+        forms that exceed this limit caused `too many parameters` javac errors.
+        When the property count exceeds the threshold, the generated constructor
+        now accepts the Builder as a single parameter and copies fields from it,
+        keeping the public API (builder pattern) unchanged.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
 - version: 3.41.0
   changelogEntry:
     - summary: |

@@ -23,6 +23,14 @@ import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 public final class ObjectTypeSpecGenerator {
+
+    /**
+     * The JVM limits constructors to 255 parameter slots, where {@code this} occupies one slot. We use a conservative
+     * threshold to leave room for {@code long}/{@code double} parameters (which consume two slots each) and the
+     * additional-properties parameter.
+     */
+    private static final int MAX_CONSTRUCTOR_PARAMS = 252;
+
     private final ClassName objectClassName;
     private final ClassName generatedObjectMapperClassName;
     private final ClassName nullableClassName;
@@ -34,6 +42,7 @@ public final class ObjectTypeSpecGenerator {
     private final boolean supportAdditionalProperties;
     private final boolean disableRequiredPropertyBuilderChecks;
     private final boolean builderNotNullChecks;
+    private final boolean useBuilderConstructor;
 
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
@@ -61,6 +70,11 @@ public final class ObjectTypeSpecGenerator {
         this.publicConstructorsEnabled = publicConstructorsEnabled;
         this.supportAdditionalProperties = supportAdditionalProperties;
         this.disableRequiredPropertyBuilderChecks = disableRequiredPropertyBuilderChecks;
+        long fieldCount = allEnrichedProperties.stream()
+                .filter(p -> p.fieldSpec().isPresent())
+                .count();
+        long paramCount = fieldCount + (supportAdditionalProperties ? 1 : 0);
+        this.useBuilderConstructor = paramCount > MAX_CONSTRUCTOR_PARAMS;
     }
 
     public TypeSpec generate() {
@@ -123,6 +137,9 @@ public final class ObjectTypeSpecGenerator {
     }
 
     private MethodSpec generateConstructor() {
+        if (useBuilderConstructor) {
+            return generateBuilderBasedConstructor();
+        }
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(publicConstructorsEnabled ? Modifier.PUBLIC : Modifier.PRIVATE);
         allEnrichedProperties.stream()
@@ -157,6 +174,29 @@ public final class ObjectTypeSpecGenerator {
             constructorBuilder.addParameter(parameterSpec);
             constructorBuilder.addStatement(
                     "this.$L = $L", additionalPropertiesFieldName, additionalPropertiesFieldName);
+        }
+        return constructorBuilder.build();
+    }
+
+    /**
+     * Generates a constructor that accepts the Builder as a single parameter, copying each field from the builder
+     * instance. This avoids the JVM 255-parameter-slot limit for objects with a very large number of properties.
+     */
+    private MethodSpec generateBuilderBasedConstructor() {
+        ClassName builderClassName = objectClassName.nestedClass("Builder");
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PRIVATE)
+                .addParameter(builderClassName, "builder");
+        allEnrichedProperties.stream()
+                .map(EnrichedObjectProperty::fieldSpec)
+                .flatMap(Optional::stream)
+                .forEach(fieldSpec -> {
+                    constructorBuilder.addStatement("this.$L = builder.$L", fieldSpec.name, fieldSpec.name);
+                });
+        if (supportAdditionalProperties) {
+            String additionalPropertiesFieldName = getAdditionalPropertiesFieldName();
+            constructorBuilder.addStatement(
+                    "this.$L = builder.$L", additionalPropertiesFieldName, additionalPropertiesFieldName);
         }
         return constructorBuilder.build();
     }
@@ -225,7 +265,8 @@ public final class ObjectTypeSpecGenerator {
                 isSerialized,
                 supportAdditionalProperties,
                 disableRequiredPropertyBuilderChecks,
-                builderNotNullChecks);
+                builderNotNullChecks,
+                useBuilderConstructor);
         return builderGenerator.generate();
     }
 }
