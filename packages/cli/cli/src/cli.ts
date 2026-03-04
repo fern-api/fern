@@ -2111,9 +2111,11 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             }
 
             if (githubRepo == null || token == null) {
-                return cliContext.failAndThrow(
-                    "Missing required github config. Either use --group to read from generators.yml, or provide --github and --token directly."
-                );
+                const hint =
+                    githubRepo != null
+                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
+                        : "Either use --group to read from generators.yml, or provide --github and --token directly.";
+                return cliContext.failAndThrow(`Missing required github config. ${hint}`);
             }
 
             cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);
