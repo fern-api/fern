@@ -210,13 +210,17 @@ export function buildEndpoint({
     if (endpoint.response != null) {
         endpoint.response._visit({
             json: (jsonResponse) => {
-                const responseTypeReference = buildTypeReference({
-                    schema: jsonResponse.schema,
+                let responseSchema = jsonResponse.schema;
+                let responseTypeReference: RawSchemas.TypeReferenceSchema;
+
+                responseTypeReference = buildTypeReference({
+                    schema: responseSchema,
                     context,
                     fileContainingReference: declarationFile,
                     namespace: maybeEndpointNamespace,
                     declarationDepth: 0
                 });
+
                 convertedEndpoint.response = {
                     docs: jsonResponse.description ?? undefined,
                     type: getTypeFromTypeReference(responseTypeReference)
@@ -586,14 +590,8 @@ function getRequest({
         const properties = Object.fromEntries(
             resolvedSchema.properties
                 .filter((property) => {
-                    if (property.readonly == null) {
-                        return true;
-                    }
                     const writeEndpoint = isWriteMethod(endpoint.method);
-                    if (writeEndpoint && property.readonly) {
-                        return false;
-                    }
-                    return true;
+                    return !(writeEndpoint && property.readonly);
                 })
                 .map((property) => {
                     // Use the declaration file from the source allOf schema if the property comes from one,

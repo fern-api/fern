@@ -9,6 +9,112 @@
   "hasEndpointsMarkedInternal": false,
   "endpoints": [
     {
+      "summary": "Get all users",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetUsersRequest",
+      "response": {
+        "description": "Users retrieved successfully",
+        "schema": {
+          "value": {
+            "generatedName": "GetUsersResponseItem",
+            "schema": "User",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "GetUsersResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "id": {
+                      "value": {
+                        "value": "id",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "email": {
+                      "value": {
+                        "value": "email",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "password": {
+                      "value": {
+                        "value": "password",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "createdAt": {
+                      "value": {
+                        "value": "2024-01-15T09:30:00Z",
+                        "type": "datetime"
+                      },
+                      "type": "primitive"
+                    },
+                    "isActive": {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
       "summary": "Create a user",
       "audiences": [],
       "tags": [],

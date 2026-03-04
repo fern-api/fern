@@ -21,6 +21,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+    get:
+      summary: Get all users
+      responses:
+        "200":
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
 
 components:
   schemas:

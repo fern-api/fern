@@ -47,6 +47,38 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "getAllUsers": {
+              "auth": undefined,
+              "display-name": "Get all users",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": [
+                      {
+                        "createdAt": "2024-01-15T09:30:00Z",
+                        "email": "email",
+                        "id": "id",
+                        "isActive": true,
+                        "name": "name",
+                        "password": "password",
+                      },
+                    ],
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/users",
+              "response": {
+                "docs": "Users retrieved successfully",
+                "status-code": 200,
+                "type": "list<User>",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
           },
           "source": {
             "openapi": "../openapi.yml",
@@ -94,6 +126,25 @@
   auth: false
   base-path: ''
   endpoints:
+    getAllUsers:
+      path: /users
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: Get all users
+      response:
+        docs: Users retrieved successfully
+        type: list<User>
+        status-code: 200
+      examples:
+        - response:
+            body:
+              - id: id
+                name: name
+                email: email
+                password: password
+                createdAt: '2024-01-15T09:30:00Z'
+                isActive: true
     createAUser:
       path: /users
       method: POST
