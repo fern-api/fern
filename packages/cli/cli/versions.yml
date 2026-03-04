@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.3.4
+  changelogEntry:
+    - summary: |
+        Support repository-based GitHub configurations in `fern replay init`.
+        Previously, replay init required a self-hosted GitHub config with explicit
+        `uri` and `token` fields. Now it also accepts standard `repository`-based
+        configs (pull-request, push, commit-and-release modes) and reads the token
+        from the `GITHUB_TOKEN` environment variable or the `--token` CLI flag.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.3
+  changelogEntry:
+    - summary: |
+        Skip AI example enhancement when the pruned OpenAPI spec for an endpoint
+        exceeds 40,000 characters, avoiding unnecessary timeouts on large specs.
+        Additionally, downgrade retry-failure log messages from warn to debug level
+        to reduce noise in CLI output.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.2
+  changelogEntry:
+    - summary: |
+        Fix `getLatestTag` to use the GitHub "get latest release" endpoint instead
+        of `listTags`. The `listTags` API sorts by commit date, so backport tags
+        (e.g. v1.0.1 pushed after v2.0.0) could be incorrectly selected as the
+        latest version, causing `semver.inc` to produce a lower version than already
+        exists.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
 - version: 4.3.1
   changelogEntry:
     - summary: |
