@@ -16,7 +16,7 @@ import type {
     CppTypeInfo
 } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath, getShortName, stripTemplateArgs, type RenderContext } from "../context.js";
-import { isTypeRef, decodeDoxygenRefid } from "./DescriptionRenderer.js";
+import { isTypeRef, resolveCompoundRef } from "./DescriptionRenderer.js";
 
 // ---------------------------------------------------------------------------
 // Angle bracket spacing normalization (BUG 13)
@@ -120,18 +120,21 @@ function normalizeDefaultValueSpacing(paramsStr: string): string {
 /**
  * Extract link targets from a type info's parts array.
  * Only compound refs (classes/structs) produce links.
+ *
+ * Inner class resolution is handled by `resolveCompoundRef` via the
+ * module-level `nameToPathMap` populated by `registerClassMembers`.
  */
-function extractLinksFromTypeInfo(typeInfo: CppTypeInfo | undefined): Map<string, string> {
+function extractLinksFromTypeInfo(
+    typeInfo: CppTypeInfo | undefined
+): Map<string, string> {
     const links = new Map<string, string>();
     if (!typeInfo) {
         return links;
     }
     for (const part of typeInfo.parts) {
         if (isTypeRef(part) && part.kindref === "compound") {
-            // Extract the short name for the link key
             const shortName = getShortName(part.text);
-            // Use decoded refid for fully-qualified path, falling back to part.text
-            const qualifiedName = decodeDoxygenRefid(part.refid) ?? part.text;
+            const qualifiedName = resolveCompoundRef(part.text, part.refid);
             links.set(shortName, buildLinkPath(qualifiedName));
         }
     }
@@ -397,7 +400,10 @@ function reformatRawSignature(func: CppFunctionIr, ownerClass?: CppClassIr): str
 
     // One or more parameters: one per line, indented with 4 spaces
     const formattedParams = params.map((p, i) => {
-        const trimmed = p.trim();
+        let trimmed = p.trim();
+        // Insert space before (& or (* when preceded by a non-space character.
+        // e.g., "T(&inputs)" -> "T (&inputs)", "T(*ptr)" -> "T (*ptr)"
+        trimmed = trimmed.replace(/(\S)\(([&*])/g, "$1 ($2");
         const comma = i < params.length - 1 ? "," : "";
         return `    ${trimmed}${comma}`;
     });

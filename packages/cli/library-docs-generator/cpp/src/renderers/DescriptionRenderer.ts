@@ -12,7 +12,7 @@ import type {
     CppTypeInfoPartsItem,
     CppTypeRef
 } from "../../../src/types/CppLibraryDocsIr.js";
-import { buildLinkPath, getShortName } from "../context.js";
+import { buildLinkPath, getShortName, lookupMemberPath } from "../context.js";
 
 // ---------------------------------------------------------------------------
 // BUG 30: Module-level context for current page path
@@ -110,6 +110,26 @@ export function decodeDoxygenRefid(refid: string): string | undefined {
 }
 
 // ---------------------------------------------------------------------------
+// Compound ref resolution
+// ---------------------------------------------------------------------------
+
+/**
+ * Resolve a compound reference to a fully-qualified C++ name.
+ *
+ * Tries (in order):
+ * 1. Registered class member path by full text (e.g., "cub::BlockReduce")
+ * 2. Registered class member path by short name (e.g., "BlockReduce")
+ * 3. Decoded Doxygen refid
+ * 4. Fallback to raw text
+ */
+export function resolveCompoundRef(text: string, refid: string): string {
+    return lookupMemberPath(text)
+        ?? lookupMemberPath(getShortName(text))
+        ?? decodeDoxygenRefid(refid)
+        ?? text;
+}
+
+// ---------------------------------------------------------------------------
 // Inline segment rendering
 // ---------------------------------------------------------------------------
 
@@ -136,8 +156,8 @@ export function renderSegment(segment: CppDocSegment): string {
             // codeRef has code + refid + kindref
             // For compound refs, resolve to a link using the fully-qualified name
             if (segment.kindref === "compound") {
-                // Try to decode the refid to get the fully-qualified name
-                const qualifiedName = decodeDoxygenRefid(segment.refid) ?? codeText;
+                // Resolve the compound ref using the full resolution chain
+                const qualifiedName = resolveCompoundRef(codeText, segment.refid);
 
                 // BUG 30: If the resolved name matches the current page, render as plain code
                 if (currentPagePath && qualifiedName === currentPagePath) {
@@ -171,9 +191,11 @@ export function renderSegment(segment: CppDocSegment): string {
             // ref has text + refid + kindref
             // For compound refs, resolve to a link using the fully-qualified name
             if (segment.kindref === "compound") {
-                const qualifiedName = decodeDoxygenRefid(segment.refid) ?? segment.text.trim();
+                const text = segment.text.trim();
+                // Resolve the compound ref using the full resolution chain
+                const qualifiedName = resolveCompoundRef(text, segment.refid);
                 const linkPath = buildLinkPath(qualifiedName);
-                return `[${segment.text.trim()}](${linkPath})`;
+                return `[${text}](${linkPath})`;
             }
             // BUG 20 fix: For member refs, also try to resolve as a link
             if (segment.kindref === "member" && segment.refid) {

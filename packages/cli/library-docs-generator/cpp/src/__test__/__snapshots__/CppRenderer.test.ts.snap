@@ -96,7 +96,7 @@ cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockReduce()
 
 Collective constructor using the specified memory allocation as temporary storage.
 
-<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce", "TempStorage": "/library/api/cub::_block_reduce::_temp_storage"}}>
+<CodeBlock links={{"BlockReduce": "/library/api/cub::BlockReduce", "TempStorage": "/library/api/cub::BlockReduce::TempStorage"}}>
 \`\`\`cpp showLineNumbers={false}
 cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockReduce(
     TempStorage &temp_storage
@@ -109,7 +109,7 @@ cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockReduce(
 **Parameters**
 
 <ParamField path="temp_storage" type="TempStorage &">
-Reference to memory allocation having layout type [TempStorage](/library/api/cub::_block_reduce::_temp_storage)
+Reference to memory allocation having layout type [TempStorage](/library/api/cub::BlockReduce::TempStorage)
 </ParamField>
 
 </Tab>
@@ -196,7 +196,7 @@ Computes a block-wide reduction for thread<sub>0</sub> using the specified binar
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ReductionOp>
 T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Reduce(
-    T(&inputs)[ITEMS_PER_THREAD],
+    T (&inputs)[ITEMS_PER_THREAD],
     ReductionOp reduction_op
 )
 \`\`\`
@@ -400,7 +400,7 @@ Computes a block-wide reduction for thread<sub>0</sub> using addition (+) as the
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD>
 T cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Sum(
-    T(&inputs)[ITEMS_PER_THREAD]
+    T (&inputs)[ITEMS_PER_THREAD]
 )
 \`\`\`
 </CodeBlock>
@@ -537,12 +537,12 @@ _TempStorage & cub::BlockReduce<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::
 
 | Name | Definition | Description |
 |---|---|---|
-| \`WarpReductions\` | \`detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ >\` |  |
-| \`WarpReductionsNondeterministic\` | \`detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ, false >\` |  |
-| \`RakingCommutativeOnly\` | \`detail::BlockReduceRakingCommutativeOnly< T, BlockDimX, BlockDimY, BlockDimZ >\` |  |
-| \`Raking\` | \`detail::BlockReduceRaking< T, BlockDimX, BlockDimY, BlockDimZ >\` |  |
+| \`WarpReductions\` | \`detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ >\` | |
+| \`WarpReductionsNondeterministic\` | \`detail::BlockReduceWarpReductions< T, BlockDimX, BlockDimY, BlockDimZ, false >\` | |
+| \`RakingCommutativeOnly\` | \`detail::BlockReduceRakingCommutativeOnly< T, BlockDimX, BlockDimY, BlockDimZ >\` | |
+| \`Raking\` | \`detail::BlockReduceRaking< T, BlockDimX, BlockDimY, BlockDimZ >\` | |
 | \`InternalBlockReduce\` | \`::cuda::std::_If< Algorithm==BLOCK_REDUCE_WARP_REDUCTIONS, WarpReductions, ::cuda::std::_If< Algorithm==BLOCK_REDUCE_WARP_REDUCTIONS_NONDETERMINISTIC, WarpReductionsNondeterministic, ::cuda::std::_If< Algorithm==BLOCK_REDUCE_RAKING_COMMUTATIVE_ONLY, RakingCommutativeOnly, Raking > > >\` | Internal specialization type. |
-| \`_TempStorage\` | \`typename InternalBlockReduce::TempStorage\` | Shared memory storage layout type for [BlockReduce](/library/api/cub::_block_reduce). |
+| \`_TempStorage\` | \`typename InternalBlockReduce::TempStorage\` | Shared memory storage layout type for [BlockReduce](/library/api/cub::BlockReduce). |
 
 ---
 
@@ -566,7 +566,7 @@ struct cub::BlockReduce::TempStorage
 \`\`\`
 </CodeBlock>
 
-The operations exposed by [BlockReduce](/library/api/cub::_block_reduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+The operations exposed by [BlockReduce](/library/api/cub::BlockReduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
 
 **Inherits from:** \`Uninitialized< _TempStorage >\` (public)
 "
@@ -646,7 +646,7 @@ cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockScan()
 
 Collective constructor using the specified memory allocation as temporary storage.
 
-<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan", "TempStorage": "/library/api/cub::_block_scan::_temp_storage"}}>
+<CodeBlock links={{"BlockScan": "/library/api/cub::BlockScan", "TempStorage": "/library/api/cub::BlockScan::TempStorage"}}>
 \`\`\`cpp showLineNumbers={false}
 cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockScan(
     TempStorage &temp_storage
@@ -659,7 +659,7 @@ cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::BlockScan(
 **Parameters**
 
 <ParamField path="temp_storage" type="TempStorage &">
-Reference to memory allocation having layout type [TempStorage](/library/api/cub::_block_scan::_temp_storage)
+Reference to memory allocation having layout type [TempStorage](/library/api/cub::BlockScan::TempStorage)
 </ParamField>
 
 </Tab>
@@ -806,8 +806,8 @@ Computes an exclusive block-wide prefix scan using addition (+) as the scan oper
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD]
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD]
 )
 \`\`\`
 </CodeBlock>
@@ -849,8 +849,8 @@ Computes an exclusive block-wide prefix scan using addition (+) as the scan oper
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     T &block_aggregate
 )
 \`\`\`
@@ -897,8 +897,8 @@ Computes an exclusive block-wide prefix scan using addition (+) as the scan oper
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename BlockPrefixCallbackOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveSum(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     BlockPrefixCallbackOp &block_prefix_callback_op
 )
 \`\`\`
@@ -1194,8 +1194,8 @@ Computes an exclusive block-wide prefix scan using the specified binary \`scan_o
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ScanOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     T initial_value,
     ScanOp scan_op
 )
@@ -1253,8 +1253,8 @@ Computes an exclusive block-wide prefix scan using the specified binary \`scan_o
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ScanOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     T initial_value,
     ScanOp scan_op,
     T &block_aggregate
@@ -1349,8 +1349,8 @@ Computes an exclusive block-wide prefix scan using the specified binary \`scan_o
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ScanOp, typename BlockPrefixCallbackOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::ExclusiveScan(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     ScanOp scan_op,
     BlockPrefixCallbackOp &block_prefix_callback_op
 )
@@ -1602,8 +1602,8 @@ Computes an inclusive block-wide prefix scan using addition (+) as the scan oper
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD]
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD]
 )
 \`\`\`
 </CodeBlock>
@@ -1644,8 +1644,8 @@ Computes an inclusive block-wide prefix scan using addition (+) as the scan oper
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     T &block_aggregate
 )
 \`\`\`
@@ -1691,8 +1691,8 @@ Computes an inclusive block-wide prefix scan using addition (+) as the scan oper
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename BlockPrefixCallbackOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveSum(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     BlockPrefixCallbackOp &block_prefix_callback_op
 )
 \`\`\`
@@ -1940,8 +1940,8 @@ Computes an inclusive block-wide prefix scan using the specified binary \`scan_o
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ScanOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     ScanOp scan_op
 )
 \`\`\`
@@ -1992,8 +1992,8 @@ Computes an inclusive block-wide prefix scan using the specified binary \`scan_o
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ScanOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     T initial_value,
     ScanOp scan_op
 )
@@ -2049,8 +2049,8 @@ Computes an inclusive block-wide prefix scan using the specified binary \`scan_o
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ScanOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     ScanOp scan_op,
     T &block_aggregate
 )
@@ -2132,8 +2132,8 @@ Computes an inclusive block-wide prefix scan using the specified binary \`scan_o
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ScanOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     T initial_value,
     ScanOp scan_op,
     T &block_aggregate
@@ -2194,8 +2194,8 @@ Computes an inclusive block-wide prefix scan using the specified binary \`scan_o
 \`\`\`cpp showLineNumbers={false}
 template <int ITEMS_PER_THREAD, typename ScanOp, typename BlockPrefixCallbackOp>
 void cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::InclusiveScan(
-    T(&input)[ITEMS_PER_THREAD],
-    T(&output)[ITEMS_PER_THREAD],
+    T (&input)[ITEMS_PER_THREAD],
+    T (&output)[ITEMS_PER_THREAD],
     ScanOp scan_op,
     BlockPrefixCallbackOp &block_prefix_callback_op
 )
@@ -2340,10 +2340,10 @@ _TempStorage & cub::BlockScan<T, BlockDimX, Algorithm, BlockDimY, BlockDimZ>::Pr
 
 | Name | Definition | Description |
 |---|---|---|
-| \`WarpScans\` | \`detail::BlockScanWarpScans< T, BlockDimX, BlockDimY, BlockDimZ >\` |  |
-| \`Raking\` | \`detail::BlockScanRaking< T, BlockDimX, BlockDimY, BlockDimZ,(SAFE_ALGORITHM==BLOCK_SCAN_RAKING_MEMOIZE)>\` |  |
+| \`WarpScans\` | \`detail::BlockScanWarpScans< T, BlockDimX, BlockDimY, BlockDimZ >\` | |
+| \`Raking\` | \`detail::BlockScanRaking< T, BlockDimX, BlockDimY, BlockDimZ,(SAFE_ALGORITHM==BLOCK_SCAN_RAKING_MEMOIZE)>\` | |
 | \`InternalBlockScan\` | \`::cuda::std::_If< SAFE_ALGORITHM==BLOCK_SCAN_WARP_SCANS, WarpScans, Raking >\` | Define the delegate type for the desired algorithm. |
-| \`_TempStorage\` | \`typename InternalBlockScan::TempStorage\` | Shared memory storage layout type for [BlockScan](/library/api/cub::_block_scan). |
+| \`_TempStorage\` | \`typename InternalBlockScan::TempStorage\` | Shared memory storage layout type for [BlockScan](/library/api/cub::BlockScan). |
 
 ---
 
@@ -2368,7 +2368,7 @@ struct cub::BlockScan::TempStorage
 \`\`\`
 </CodeBlock>
 
-The operations exposed by [BlockScan](/library/api/cub::_block_scan) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+The operations exposed by [BlockScan](/library/api/cub::BlockScan) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
 
 **Inherits from:** \`Uninitialized< _TempStorage >\` (public)
 "
@@ -2768,7 +2768,7 @@ RandomAccessIterator const & thrust::iterator_adaptor<strided_iterator<RandomAcc
 
 | Name | Type | Description |
 |---|---|---|
-| \`has_static_stride\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` |  |
+| \`has_static_stride\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` | |
 "
 `;
 
@@ -5197,12 +5197,12 @@ static pool_options thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, 
 
 | Name | Definition | Description |
 |---|---|---|
-| \`void_ptr\` | \`typename Upstream::pointer\` |  |
-| \`char_ptr\` | \`typename thrust::detail::pointer_traits< void_ptr >::template rebind< char >::other\` |  |
-| \`chunk_vector\` | \`thrust::host_vector< chunk_descriptor, allocator< chunk_descriptor, Bookkeeper > >\` |  |
-| \`oversized_block_vector\` | \`thrust::host_vector< oversized_block_descriptor, allocator< oversized_block_descriptor, Bookkeeper > >\` |  |
-| \`pointer_vector\` | \`thrust::host_vector< void_ptr, allocator< void_ptr, Bookkeeper > >\` |  |
-| \`pool_vector\` | \`thrust::host_vector< pool, allocator< pool, Bookkeeper > >\` |  |
+| \`void_ptr\` | \`typename Upstream::pointer\` | |
+| \`char_ptr\` | \`typename thrust::detail::pointer_traits< void_ptr >::template rebind< char >::other\` | |
+| \`chunk_vector\` | \`thrust::host_vector< chunk_descriptor, allocator< chunk_descriptor, Bookkeeper > >\` | |
+| \`oversized_block_vector\` | \`thrust::host_vector< oversized_block_descriptor, allocator< oversized_block_descriptor, Bookkeeper > >\` | |
+| \`pointer_vector\` | \`thrust::host_vector< void_ptr, allocator< void_ptr, Bookkeeper > >\` | |
+| \`pool_vector\` | \`thrust::host_vector< pool, allocator< pool, Bookkeeper > >\` | |
 | \`pointer\` | \`Upstream::pointer\` | Alias for the template parameter. |
 
 ---
@@ -5211,14 +5211,14 @@ static pool_options thrust::mr::disjoint_unsynchronized_pool_resource<Upstream, 
 
 | Name | Type | Description |
 |---|---|---|
-| \`m_upstream\` | \`Upstream *\` |  |
-| \`m_bookkeeper\` | \`Bookkeeper *\` |  |
-| \`m_options\` | \`pool_options\` |  |
-| \`m_smallest_block_log2\` | \`std::size_t\` |  |
-| \`m_pools\` | \`pool_vector\` |  |
-| \`m_allocated\` | \`chunk_vector\` |  |
-| \`m_cached_oversized\` | \`oversized_block_vector\` |  |
-| \`m_oversized\` | \`oversized_block_vector\` |  |
+| \`m_upstream\` | \`Upstream *\` | |
+| \`m_bookkeeper\` | \`Bookkeeper *\` | |
+| \`m_options\` | \`pool_options\` | |
+| \`m_smallest_block_log2\` | \`std::size_t\` | |
+| \`m_pools\` | \`pool_vector\` | |
+| \`m_allocated\` | \`chunk_vector\` | |
+| \`m_cached_oversized\` | \`oversized_block_vector\` | |
+| \`m_oversized\` | \`oversized_block_vector\` | |
 
 ---
 
@@ -5234,9 +5234,9 @@ struct thrust::mr::disjoint_unsynchronized_pool_resource::chunk_descriptor
 
 | Name | Type | Description |
 |---|---|---|
-| \`size\` | \`std::size_t\` |  |
-| \`pointer\` | \`void_ptr\` |  |
-| \`pool_idx\` | \`std::size_t\` |  |
+| \`size\` | \`std::size_t\` | |
+| \`pointer\` | \`void_ptr\` | |
+| \`pool_idx\` | \`std::size_t\` | |
 
 ### oversized_block_descriptor
 
@@ -5248,9 +5248,9 @@ struct thrust::mr::disjoint_unsynchronized_pool_resource::oversized_block_descri
 
 | Name | Type | Description |
 |---|---|---|
-| \`size\` | \`std::size_t\` |  |
-| \`alignment\` | \`std::size_t\` |  |
-| \`pointer\` | \`void_ptr\` |  |
+| \`size\` | \`std::size_t\` | |
+| \`alignment\` | \`std::size_t\` | |
+| \`pointer\` | \`void_ptr\` | |
 
 ### equal_pointers
 
@@ -5262,7 +5262,7 @@ struct thrust::mr::disjoint_unsynchronized_pool_resource::equal_pointers
 
 | Name | Type | Description |
 |---|---|---|
-| \`p\` | \`void_ptr\` |  |
+| \`p\` | \`void_ptr\` | |
 
 ### matching_alignment
 
@@ -5274,7 +5274,7 @@ struct thrust::mr::disjoint_unsynchronized_pool_resource::matching_alignment
 
 | Name | Type | Description |
 |---|---|---|
-| \`requested\` | \`std::size_t\` |  |
+| \`requested\` | \`std::size_t\` | |
 
 ### pool
 
@@ -5286,8 +5286,8 @@ struct thrust::mr::disjoint_unsynchronized_pool_resource::pool
 
 | Name | Type | Description |
 |---|---|---|
-| \`free_blocks\` | \`pointer_vector\` |  |
-| \`previous_allocated_count\` | \`std::size_t\` |  |
+| \`free_blocks\` | \`pointer_vector\` | |
+| \`previous_allocated_count\` | \`std::size_t\` | |
 "
 `;
 
@@ -5578,8 +5578,8 @@ static derived_type thrust::pointer<Element, Tag, Reference, Derived>::pointer_t
 
 | Name | Definition | Description |
 |---|---|---|
-| \`super_t\` | \`typename detail::pointer_base< Element, Tag, Reference, Derived >::type\` |  |
-| \`derived_type\` | \`typename detail::pointer_base< Element, Tag, Reference, Derived >::derived_type\` |  |
+| \`super_t\` | \`typename detail::pointer_base< Element, Tag, Reference, Derived >::type\` | |
+| \`derived_type\` | \`typename detail::pointer_base< Element, Tag, Reference, Derived >::derived_type\` | |
 | \`raw_pointer\` | \`typename super_t::base_type\` | The type of the raw pointer. |
 | \`base_type\` | \`Base\` | The type of iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor)\`'s\` \`adapts\`. |
 "
@@ -6030,7 +6030,7 @@ static stream cuda::stream::from_native_handle(invalid_stream_t) = delete;
 
 | Name | Type | Description |
 |---|---|---|
-| \`default_priority\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`int\` |  |
+| \`default_priority\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`int\` | |
 "
 `;
 
@@ -6153,7 +6153,7 @@ The reduction input/output element type
 
 Collective constructor using the specified memory allocation as temporary storage. Logical warp and lane identifiers are constructed from \`threadIdx.x\`.
 
-<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce", "TempStorage": "/library/api/cub::_warp_reduce::_temp_storage"}}>
+<CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce", "TempStorage": "/library/api/cub::WarpReduce::TempStorage"}}>
 \`\`\`cpp showLineNumbers={false}
 cub::WarpReduce<T, LogicalWarpThreads>::WarpReduce(
     TempStorage &temp_storage
@@ -6164,7 +6164,7 @@ cub::WarpReduce<T, LogicalWarpThreads>::WarpReduce(
 **Parameters**
 
 <ParamField path="temp_storage" type="TempStorage &">
-Reference to memory allocation having layout type [TempStorage](/library/api/cub::_warp_reduce::_temp_storage)
+Reference to memory allocation having layout type [TempStorage](/library/api/cub::WarpReduce::TempStorage)
 </ParamField>
 
 ---
@@ -6791,7 +6791,7 @@ __global__ void ExampleKernel(...)
 
 | Name | Definition | Description |
 |---|---|---|
-| \`_TempStorage\` | \`typename InternalWarpReduce::TempStorage\` | Shared memory storage layout type for [WarpReduce](/library/api/cub::_warp_reduce). |
+| \`_TempStorage\` | \`typename InternalWarpReduce::TempStorage\` | Shared memory storage layout type for [WarpReduce](/library/api/cub::WarpReduce). |
 
 ---
 
@@ -6799,8 +6799,8 @@ __global__ void ExampleKernel(...)
 
 | Name | Type | Description |
 |---|---|---|
-| \`is_full_warp\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` |  |
-| \`is_power_of_two\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` |  |
+| \`is_full_warp\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` | |
+| \`is_power_of_two\` <Badge intent="note" minimal>static</Badge> <Badge intent="note" minimal>constexpr</Badge> | \`bool\` | |
 | \`temp_storage\` | \`_TempStorage &\` | Shared storage reference. |
 
 ---
@@ -6815,7 +6815,7 @@ struct cub::WarpReduce::TempStorage
 \`\`\`
 </CodeBlock>
 
-The operations exposed by [WarpReduce](/library/api/cub::_warp_reduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
+The operations exposed by [WarpReduce](/library/api/cub::WarpReduce) require a temporary memory allocation of this nested type for thread communication. This opaque storage can be allocated directly using the \`__shared__\` keyword. Alternatively, it can be aliased to externally allocated memory (shared or global) or \`union\`'d with other storage allocation types to facilitate memory reuse.
 
 **Inherits from:** \`Uninitialized< _TempStorage >\` (public)
 "

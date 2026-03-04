@@ -17,7 +17,7 @@ import type {
     CppTypeRef,
     CppDocstringIr
 } from "../../../src/types/CppLibraryDocsIr.js";
-import { renderSegmentsTrimmed, renderTypeInfoDisplay, renderTypeInfoForTable, renderDescriptionBlocks, decodeDoxygenRefid } from "./DescriptionRenderer.js";
+import { renderSegmentsTrimmed, renderTypeInfoDisplay, renderTypeInfoForTable, renderDescriptionBlocks, resolveCompoundRef } from "./DescriptionRenderer.js";
 import { getVariableBadges, renderBadge } from "./BadgeRenderer.js";
 import { buildLinkPath } from "../context.js";
 import { formatLinksJson } from "./SignatureRenderer.js";
@@ -55,8 +55,8 @@ function renderTypeInfoLinked(typeInfo: CppTypeInfo | undefined): string {
         } else {
             // It's a CppTypeRef
             if (part.kindref === "compound" && part.text) {
-                // Use decoded refid for fully-qualified path, falling back to part.text
-                const qualifiedName = decodeDoxygenRefid(part.refid) ?? part.text;
+                // Resolve the compound ref using the full resolution chain
+                const qualifiedName = resolveCompoundRef(part.text, part.refid);
                 const linkPath = buildLinkPath(qualifiedName);
                 result.push(`[\`${part.text}\`](${linkPath})`);
             } else {
@@ -113,7 +113,9 @@ export function renderTypedefTable(typedefs: CppTypedefIr[]): string {
             const description = td.docstring
                 ? escapeTableCell(renderSegmentsTrimmed(td.docstring.summary))
                 : "";
-            lines.push(`| ${name} | ${definition} | ${description} |`);
+            // Trim trailing spaces in empty description cells: "| desc |" or "| |"
+            const descCell = description ? ` ${description} ` : " ";
+            lines.push(`| ${name} | ${definition} |${descCell}|`);
         }
     } else {
         // 2-column table
@@ -170,7 +172,9 @@ export function renderMemberVariableTable(variables: CppVariableIr[], ownerPath:
             ? escapeTableCell(renderSegmentsTrimmed(v.docstring.summary))
             : "";
 
-        lines.push(`| ${name} | ${typeStr} | ${description} |`);
+        // Trim trailing spaces in empty description cells: "| desc |" or "| |"
+        const descCell = description ? ` ${description} ` : " ";
+        lines.push(`| ${name} | ${typeStr} |${descCell}|`);
     }
 
     return lines.join("\n");
@@ -356,7 +360,10 @@ export function renderEnum(enumIr: CppEnumIr): string {
         const desc = val.docstring
             ? escapeTableCell(renderSegmentsTrimmed(val.docstring.summary))
             : "";
-        lines.push(`| ${name} | ${value} | ${desc} |`);
+        // Trim trailing spaces in empty cells
+        const valueCell = value ? ` ${value} ` : " ";
+        const descCell = desc ? ` ${desc} ` : " ";
+        lines.push(`| ${name} |${valueCell}|${descCell}|`);
     }
 
     return lines.join("\n");

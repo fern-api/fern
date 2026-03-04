@@ -25,7 +25,7 @@ import type {
     CppDocBlock
 } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext, CompoundMeta } from "../context.js";
-import { buildLinkPath, getShortName, needsQuoting, stripTemplateArgs } from "../context.js";
+import { buildLinkPath, getShortName, needsQuoting, stripTemplateArgs, registerClassMembers, clearClassMembers } from "../context.js";
 import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso } from "./DescriptionRenderer.js";
 import type { ParsedVerbatim } from "./DescriptionRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
@@ -614,74 +614,79 @@ function renderInnerClassesSection(cls: CppClassIr): string {
 export function renderClassPage(cls: CppClassIr, meta: CompoundMeta): string {
     // BUG 30: Set current page path for self-reference detection in renderSegment
     setCurrentPagePath(cls.path);
+    // Register class members for inner type link resolution
+    registerClassMembers(cls);
 
-    const ctx: RenderContext = { meta };
-    const sections: string[] = [];
+    try {
+        const ctx: RenderContext = { meta };
+        const sections: string[] = [];
 
-    // Frontmatter
-    sections.push(renderFrontmatter(cls, meta));
+        // Frontmatter
+        sections.push(renderFrontmatter(cls, meta));
 
-    // Preamble
-    const preamble = renderPreamble(cls, ctx);
-    if (preamble) {
-        sections.push("");
-        sections.push(preamble);
-    }
-
-    // Body sections
-    const bodySections: string[] = [];
-
-    // Method sections (regular methods grouped by section label)
-    const methodSections = categorizeMethodSections(cls);
-    for (const section of methodSections) {
-        bodySections.push(renderMethodSection(section.label, section.methods, cls, ctx));
-    }
-
-    // Static methods
-    const staticSection = renderStaticMethodsSection(cls, ctx);
-    if (staticSection) {
-        bodySections.push(staticSection);
-    }
-
-    // BUG 28: Friend functions section is intentionally omitted.
-    // Golden pages consistently omit friend functions from class pages.
-    // The data is still available in the IR (cls.friendFunctions) if needed in the future.
-
-    // Types
-    const typesSection = renderTypesSection(cls);
-    if (typesSection) {
-        bodySections.push(typesSection);
-    }
-
-    // Member variables
-    const memberVarsSection = renderMemberVariablesSection(cls);
-    if (memberVarsSection) {
-        bodySections.push(memberVarsSection);
-    }
-
-    // Inner classes
-    const innerClassesSection = renderInnerClassesSection(cls);
-    if (innerClassesSection) {
-        bodySections.push(innerClassesSection);
-    }
-
-    // Join body sections with --- separators
-    if (bodySections.length > 0) {
-        sections.push("");
-        sections.push("---");
-
-        for (let i = 0; i < bodySections.length; i++) {
+        // Preamble
+        const preamble = renderPreamble(cls, ctx);
+        if (preamble) {
             sections.push("");
-            sections.push(bodySections[i]!);
-            if (i < bodySections.length - 1) {
+            sections.push(preamble);
+        }
+
+        // Body sections
+        const bodySections: string[] = [];
+
+        // Method sections (regular methods grouped by section label)
+        const methodSections = categorizeMethodSections(cls);
+        for (const section of methodSections) {
+            bodySections.push(renderMethodSection(section.label, section.methods, cls, ctx));
+        }
+
+        // Static methods
+        const staticSection = renderStaticMethodsSection(cls, ctx);
+        if (staticSection) {
+            bodySections.push(staticSection);
+        }
+
+        // BUG 28: Friend functions section is intentionally omitted.
+        // Golden pages consistently omit friend functions from class pages.
+        // The data is still available in the IR (cls.friendFunctions) if needed in the future.
+
+        // Types
+        const typesSection = renderTypesSection(cls);
+        if (typesSection) {
+            bodySections.push(typesSection);
+        }
+
+        // Member variables
+        const memberVarsSection = renderMemberVariablesSection(cls);
+        if (memberVarsSection) {
+            bodySections.push(memberVarsSection);
+        }
+
+        // Inner classes
+        const innerClassesSection = renderInnerClassesSection(cls);
+        if (innerClassesSection) {
+            bodySections.push(innerClassesSection);
+        }
+
+        // Join body sections with --- separators
+        if (bodySections.length > 0) {
+            sections.push("");
+            sections.push("---");
+
+            for (let i = 0; i < bodySections.length; i++) {
                 sections.push("");
-                sections.push("---");
+                sections.push(bodySections[i]!);
+                if (i < bodySections.length - 1) {
+                    sections.push("");
+                    sections.push("---");
+                }
             }
         }
+
+        return sections.join("\n") + "\n";
+    } finally {
+        // BUG 30: Clear current page path after rendering
+        setCurrentPagePath(undefined);
+        clearClassMembers();
     }
-
-    // BUG 30: Clear current page path after rendering
-    setCurrentPagePath(undefined);
-
-    return sections.join("\n") + "\n";
 }
