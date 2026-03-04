@@ -636,6 +636,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     public abstract List<String> getSubProjects();
 
+    public List<GradlePlugin> getCustomPlugins() {
+        return List.of();
+    }
+
     public List<String> getAdditionalBuildGradleBlocks() {
         return List.of();
     }
@@ -713,6 +717,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             // Generate script to populate that file
             addGeneratedFile(new GeneratedPublishScript());
         }
+
+        // Add custom plugins from configuration
+        buildGradle.addAllPlugins(getCustomPlugins());
+
         if (addTestBlock) {
             buildGradle.addCustomBlocks("test {\n"
                     + "    useJUnitPlatform()\n"

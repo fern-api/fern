@@ -2,18 +2,27 @@
 - version: 3.54.0
   changelogEntry:
     - summary: |
-        Add composition-based HttpClient that deduplicates boilerplate across generated
-        endpoint methods. Simple endpoints (standard JSON GET/POST/PUT/PATCH/DELETE without
-        streaming, pagination, file upload, or custom errors) now generate a single public
-        method with `return this._client.request<T>({config})` instead of the dual
-        public/private async pattern. The HttpClient instance is created once at the root
-        client and injected into all sub-clients via constructor, eliminating redundant
-        options normalization. Complex endpoints (streaming, pagination, file upload) retain
-        the existing dual-method pattern.
+        Replace HttpClient class with functional RequestFn approach. Generated SDKs now use
+        `createRequestFn()` to create a callable request function that closes over shared
+        options (auth, headers, baseUrl, timeout). Sub-clients receive the parent's `_requestFn`
+        via constructor injection with TypeScript overloads hiding the internal parameter.
+        Standard endpoints use `this._requestFn<T>({config})` for clean, single-statement
+        method bodies. Every sub-client can still be instantiated standalone with just Options.
       type: feat
   createdAt: "2026-03-03"
   irVersion: 65
 
+- version: 3.53.4
+  changelogEntry:
+    - summary: |
+        Fix union member interfaces shadowing built-in TypeScript types like `Date` and `Error`.
+        Union variants such as `date` generated `export interface Date` inside the union namespace,
+        which shadowed the global `Date` type and caused compile errors when other variants
+        referenced it. Interface names now use `safeName` (e.g., `Date_`, `Error_`) to avoid
+        collisions with reserved identifiers.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
 - version: 3.53.3
   changelogEntry:
     - summary: |

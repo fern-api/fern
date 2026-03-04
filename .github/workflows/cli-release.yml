@@ -59,7 +59,7 @@ jobs:
 
       - name: Determine if prerelease
         id: check_prerelease
-        if: steps.get_version.outputs.HAS_NEW_VERSION
+        if: steps.get_version.outputs.HAS_NEW_VERSION == 'true'
         run: |
           if [[ "${{ steps.get_version.outputs.VERSION }}" == *"rc"* ]]; then
             echo "IS_PRERELEASE=true" >> $GITHUB_OUTPUT
@@ -70,7 +70,7 @@ jobs:
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
-        if: steps.get_version.outputs.HAS_NEW_VERSION
+        if: steps.get_version.outputs.HAS_NEW_VERSION == 'true'
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.get_version.outputs.VERSION }}
@@ -79,5 +79,5 @@ jobs:
           prerelease: ${{ steps.check_prerelease.outputs.IS_PRERELEASE }}
 
       - name: Display Release URL
-        if: steps.get_version.outputs.HAS_NEW_VERSION
+        if: steps.get_version.outputs.HAS_NEW_VERSION == 'true'
         run: echo "Release created at ${{ steps.create_release.outputs.url }}"

@@ -23,7 +23,7 @@ import type * as SeedUnions from "../../../index";
  */
 export type UnionWithTime =
     | SeedUnions.UnionWithTime.Value
-    | SeedUnions.UnionWithTime.Date
+    | SeedUnions.UnionWithTime.Date_
     | SeedUnions.UnionWithTime.Datetime;
 
 export namespace UnionWithTime {
@@ -32,7 +32,7 @@ export namespace UnionWithTime {
         value: number;
     }
 
-    export interface Date {
+    export interface Date_ {
         type: "date";
         value: string;
     }

@@ -5,7 +5,7 @@ namespace SeedExamples.File_;
 
 public partial class FileClient : IFileClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal FileClient(RawClient client)
     {

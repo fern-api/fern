@@ -1,4 +1,110 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.3.4
+  changelogEntry:
+    - summary: |
+        Support repository-based GitHub configurations in `fern replay init`.
+        Previously, replay init required a self-hosted GitHub config with explicit
+        `uri` and `token` fields. Now it also accepts standard `repository`-based
+        configs (pull-request, push, commit-and-release modes) and reads the token
+        from the `GITHUB_TOKEN` environment variable or the `--token` CLI flag.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.3
+  changelogEntry:
+    - summary: |
+        Skip AI example enhancement when the pruned OpenAPI spec for an endpoint
+        exceeds 40,000 characters, avoiding unnecessary timeouts on large specs.
+        Additionally, downgrade retry-failure log messages from warn to debug level
+        to reduce noise in CLI output.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.2
+  changelogEntry:
+    - summary: |
+        Fix `getLatestTag` to use the GitHub "get latest release" endpoint instead
+        of `listTags`. The `listTags` API sorts by commit date, so backport tags
+        (e.g. v1.0.1 pushed after v2.0.0) could be incorrectly selected as the
+        latest version, causing `semver.inc` to produce a lower version than already
+        exists.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.1
+  changelogEntry:
+    - summary: |
+        Fix `fern add` resolving outdated generator versions when FDR returns a
+        version older than the hardcoded fallback. This could happen when the dev
+        CLI (version 0.0.0) queries FDR, which returns an old version incompatible
+        with CLI v4. The resolved version is now guaranteed to be at least as new
+        as the hardcoded fallback version shipped with the CLI.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.3.0
+  changelogEntry:
+    - summary: |
+        Adds beta support for dynamically generating `og:images`.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.2.2
+  changelogEntry:
+    - summary: |
+        Use registry URLs from output mode configuration as the primary lookup
+        strategy for semantic version checks. Previously, hardcoded public registry
+        URLs and environment variables were the default lookup strategy. Now the CLI
+        extracts the registry URL and auth token from the generator's output mode
+        (publishV2 or githubV2 publishInfo) and uses those as the primary source,
+        falling back to environment variables and then hardcoded defaults only when
+        the output mode does not specify a registry URL.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.2.1
+  changelogEntry:
+    - summary: |
+        Fix REST HTTP clients incorrectly using WebSocket environment URLs in
+        multi-URL environments with both OpenAPI and AsyncAPI servers.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.2.0
+  changelogEntry:
+    - summary: |
+        Adds support for per-generator headers overrides in `generators.yml`, allowing each generator in a group to specify its own headers that are merged with (and take precedence over) the top-level `api.headers` configuration.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 4.1.1
+  changelogEntry:
+    - summary: |
+        Add CLI subcommand for resolving customization conflicts on SDK generation PR branches.
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.1.0
+  changelogEntry:
+    - summary: |
+        Add external `$ref` bundling for AsyncAPI documents. Multi-file AsyncAPI specs
+        that split schemas across separate YAML files (e.g. `$ref: './schemas/types.yml#/MyType'`)
+        are now resolved and inlined before parsing, matching the existing behavior for OpenAPI
+        documents. Previously these external references caused `fern check` and `fern generate`
+        to fail with "Failed to resolve schema reference".
+      type: feat
+  createdAt: "2026-03-02"
+  irVersion: 65
+
 - version: 4.0.1
   changelogEntry:
     - summary: |
@@ -14,7 +120,7 @@
 - version: 4.0.0
   changelogEntry:
     - summary: |
-        Deprecate IR versions <= 52. Cuts down on binary size, build time, and migrations.
+        Deprecate IR versions `<= 52`. Cuts down on binary size, build time, and migrations.
 
         **Breaking changes**: To upgrade to this version of the CLI, generators now have
         minimal versions they need to be upgraded to with `fern generator upgrade --include-major`:

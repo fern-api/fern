@@ -104,6 +104,7 @@ export class JavaTypeMapper {
             uuid: () => java.Type.uuid(),
             base64: () => java.Type.bytes(),
             bigInteger: () => java.Type.string(),
+            dateTimeRfc2822: () => java.Type.dateTime(),
             _other: () => java.Type.object()
         });
     }

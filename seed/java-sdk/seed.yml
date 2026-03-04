@@ -69,6 +69,12 @@ fixtures:
       outputFolder: custom-dependency
     - customConfig:
         inline-path-parameters: true
+        custom-plugins:
+          - "com.github.johnrengelman.shadow:8.1.1"
+          - "org.jetbrains.kotlin.jvm:2.1.0"
+      outputFolder: custom-plugins
+    - customConfig:
+        inline-path-parameters: true
         json-include: non-empty
       outputFolder: json-include-non-empty
     - customConfig:
@@ -100,6 +106,9 @@ fixtures:
     #     inline-path-parameters: true
     #     enable-wire-tests: true
     #   outputFolder: wire-tests
+    - customConfig:
+        custom-interceptors: true
+      outputFolder: custom-interceptors
     - customConfig:
         publish-to: central
       outputFolder: publish-to
@@ -161,6 +170,10 @@ fixtures:
     - outputFolder: java-single-property-endpoint
   java-pagination-deep-cursor-path:
     - outputFolder: java-pagination-deep-cursor-path
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  pagination-uri-path:
     - customConfig:
         enable-wire-tests: true
       outputFolder: wire-tests
@@ -306,6 +319,8 @@ fixtures:
   java-with-property-conflict:
     - outputFolder: default
   java-path-param-key-conflict:
+    - outputFolder: default
+  java-many-properties:
     - outputFolder: default
   java-output-directory:
     # Test with no output-directory config (should use default PROJECT_ROOT)

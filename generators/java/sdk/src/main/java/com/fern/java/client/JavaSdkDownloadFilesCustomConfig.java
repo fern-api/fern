@@ -62,6 +62,12 @@ public interface JavaSdkDownloadFilesCustomConfig extends IDownloadFilesCustomCo
         return false;
     }
 
+    @Value.Default
+    @JsonProperty("custom-interceptors")
+    default Boolean customInterceptors() {
+        return false;
+    }
+
     static ImmutableJavaSdkDownloadFilesCustomConfig.Builder builder() {
         return ImmutableJavaSdkDownloadFilesCustomConfig.builder();
     }

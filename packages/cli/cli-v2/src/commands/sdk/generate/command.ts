@@ -11,11 +11,13 @@ import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
+import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { ValidationError } from "../../../errors/ValidationError.js";
+import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline.js";
@@ -184,16 +186,27 @@ export class GenerateCommand {
             throw new Error("No SDKs configured");
         }
 
+        // Check that the APIs referenced by each target are valid.
         const apisToCheck = [...new Set(targets.map((t) => t.api))];
-        const checker = new ApiChecker({
+        const apiChecker = new ApiChecker({
             context,
             cliVersion: workspace.cliVersion
         });
-
-        const checkResult = await checker.check({
+        const checkResult = await apiChecker.check({
             workspace,
             apiNames: apisToCheck
         });
+
+        // Check that the SDK configurations are valid (when fern.yml exists).
+        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
+        const fernYmlResult = await schemaLoader.load();
+        if (fernYmlResult.type === "success") {
+            const sdkChecker = new SdkChecker({ context });
+            const sdkCheckResult = await sdkChecker.check({ workspace, fernYml: fernYmlResult });
+            if (sdkCheckResult.errorCount > 0) {
+                throw CliError.exit();
+            }
+        }
 
         const validTargets = targets.filter((t) => checkResult.validApis.has(t.api));
         if (validTargets.length === 0) {

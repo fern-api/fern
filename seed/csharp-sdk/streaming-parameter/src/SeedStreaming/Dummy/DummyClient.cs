@@ -4,7 +4,7 @@ namespace SeedStreaming;
 
 public partial class DummyClient : IDummyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal DummyClient(RawClient client)
     {
@@ -58,7 +58,9 @@ public partial class DummyClient : IDummyClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedStreamingApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
