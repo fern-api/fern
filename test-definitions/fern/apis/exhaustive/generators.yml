@@ -22,3 +22,5 @@ groups:
           mode: push
           uri: fern-api/go-sdk-tests
           branch: exhaustive
+          license:
+            custom: Custom License Name
