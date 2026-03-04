@@ -92,12 +92,12 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
 	if err := ctx.Err(); err != nil {
-		defer resp.Body.Close()
+		defer func() { _ = resp.Body.Close() }()
 		return nil, err
 	}
 
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		defer resp.Body.Close()
+		defer func() { _ = resp.Body.Close() }()
 		return nil, decodeError(resp, params.ErrorDecoder)
 	}
 

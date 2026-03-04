@@ -276,8 +276,12 @@ fixtures:
         enableWireTests: true
         omitEmptyRequestWrappers: true
 scripts:
-  - image: fernapi/go-seed:1.0.0
+  - image: fernapi/go-seed:2.0.0
     commands:
+      build:
+        - |
+          printf 'version: "2"\nlinters:\n  exclusions:\n    paths:\n      - dynamic-snippets\n' > .golangci.yml
+          golangci-lint run --timeout=5m --allow-parallel-runners
       test:
         - |
           PROJECT_NAME="wiremock-$(basename $(dirname $(pwd)) | tr -d '.')"
