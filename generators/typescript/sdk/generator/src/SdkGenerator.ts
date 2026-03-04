@@ -717,6 +717,10 @@ export class SdkGenerator {
             extraPeerDependenciesMeta["react"] = { optional: true };
             // @types/react needed for TypeScript compilation of the generated context file
             extraDevDependencies["@types/react"] = ">=18.0.0";
+            // Test dependencies for React Query unit tests
+            extraDevDependencies["@testing-library/react"] = "^16.0.0";
+            extraDevDependencies["react-dom"] = "^18.0.0";
+            extraDevDependencies["happy-dom"] = "^18.0.0";
         }
 
         return this.config.shouldBundle
