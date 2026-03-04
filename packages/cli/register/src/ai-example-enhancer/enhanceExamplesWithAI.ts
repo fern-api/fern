@@ -1086,6 +1086,14 @@ async function processEndpoint(
             [{ path: workItem.example.path, method: workItem.endpoint.method }],
             context
         );
+
+        // Skip AI enhancement if the pruned spec is too large (>40k characters)
+        if (prunedOpenApiSpec != null && prunedOpenApiSpec.length > 40_000) {
+            context.logger.debug(
+                `Skipping AI enhancement for ${workItem.endpoint.method} ${workItem.example.path}: pruned OpenAPI spec is ${prunedOpenApiSpec.length} characters (>40k limit)`
+            );
+            return null;
+        }
     }
 
     // Create single-endpoint request
