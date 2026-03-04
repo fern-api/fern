@@ -20,7 +20,7 @@ export interface FixtureMeta {
     compound_kind: "class" | "concept";
     namespace_path: string[];
     description?: string;
-    golden_page: string;
+    reference_page: string;
     status: string;
 }
 

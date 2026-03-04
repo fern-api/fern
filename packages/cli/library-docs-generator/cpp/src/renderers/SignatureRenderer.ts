@@ -18,9 +18,10 @@ import type {
 import { buildLinkPath, getShortName, stripTemplateArgs, type RenderContext } from "../context.js";
 import { isTypeRef, resolveCompoundRef } from "./DescriptionRenderer.js";
 import { isSfinaeParam } from "./ParamRenderer.js";
+import { formatTemplateParam } from "./shared.js";
 
 // ---------------------------------------------------------------------------
-// Angle bracket spacing normalization (BUG 13)
+// Angle bracket spacing normalization
 // ---------------------------------------------------------------------------
 
 /**
@@ -85,7 +86,7 @@ export function normalizeAngleBracketSpacing(input: string): string {
 }
 
 // ---------------------------------------------------------------------------
-// Default value spacing normalization (BUG 21)
+// Default value spacing normalization
 // ---------------------------------------------------------------------------
 
 /**
@@ -184,10 +185,10 @@ export function buildFunctionLinks(
  * Build the links prop for an inherited method's CodeBlock.
  * Includes both the current class and the declaring (base) class.
  *
- * BUG 12 fix: For base class links, use the short class name (without template
- * args) as the link key, and strip template args from the URL path.
- * Golden pages show e.g., "iterator_adaptor": "/library/api/thrust::iterator_adaptor"
- * not the full templated form.
+ * For base class links, use the short class name (without template args) as
+ * the link key, and strip template args from the URL path. For example,
+ * "iterator_adaptor": "/library/api/thrust::iterator_adaptor" (not the full
+ * templated form).
  */
 export function buildInheritedMethodLinks(
     func: CppFunctionIr,
@@ -202,7 +203,7 @@ export function buildInheritedMethodLinks(
 
     if (isInherited) {
         for (const base of ownerClass.baseClasses) {
-            // BUG 12: Use short base class name (without template args) as key
+            // Use short base class name (without template args) as key
             const baseName = stripTemplateArgs(base.name);
             const shortBaseName = getShortName(baseName);
             if (!links[shortBaseName]) {
@@ -278,25 +279,7 @@ function formatTemplateLine(func: CppFunctionIr): string {
         return "";
     }
 
-    const params = renderableTemplateParams.map(tp => {
-        if (tp.name) {
-            // BUG 16: For variadic params, the name may be separate from the type
-            // e.g., type="class...", name="_Properties" -> "class... _Properties"
-            if (tp.isVariadic) {
-                // Check if the type already contains the name
-                if (tp.type.includes(tp.name)) {
-                    return tp.type;
-                }
-                return `${tp.type} ${tp.name}`;
-            }
-            // Check if the type already contains the name
-            if (tp.type.includes(tp.name)) {
-                return tp.type;
-            }
-            return `${tp.type} ${tp.name}`;
-        }
-        return tp.type;
-    });
+    const params = renderableTemplateParams.map(formatTemplateParam);
 
     // Check if we need multi-line formatting
     const joined = params.join(", ");
@@ -319,10 +302,10 @@ function formatTemplateLine(func: CppFunctionIr): string {
  * class, the base class qualifier in the signature is replaced with the derived class.
  */
 function reformatRawSignature(func: CppFunctionIr, ownerClass?: CppClassIr): string {
-    // BUG 13: Normalize angle bracket spacing in the raw signature
+    // Normalize angle bracket spacing in the raw signature
     let sig = normalizeAngleBracketSpacing(func.signature);
 
-    // BUG 9 fix: If this method is inherited (its path references a base class),
+    // If this method is inherited (its path references a base class),
     // replace the base class qualifier with the derived class qualifier.
     if (ownerClass) {
         const ownerPath = ownerClass.path; // e.g. "cuda::stream"
@@ -342,27 +325,10 @@ function reformatRawSignature(func: CppFunctionIr, ownerClass?: CppClassIr): str
     }
 
     // Find the opening paren for the parameter list.
-    // Special case: operator() -- the first "()" is part of the operator name,
-    // so we need to skip past it to find the actual parameter list.
-    let openParen = sig.indexOf("(");
+    // Special case: operator() -- the first "()" is part of the operator name.
+    const openParen = findParamListOpenParen(sig);
     if (openParen === -1) {
-        // No params (shouldn't happen for functions, but handle gracefully)
         return sig;
-    }
-
-    // Check if this `(` is part of `operator()`
-    const operatorCallIdx = sig.indexOf("operator()");
-    if (operatorCallIdx !== -1 && openParen === operatorCallIdx + "operator".length) {
-        // The first `(` is part of `operator()` -- skip past the `operator()` token
-        // to find the real parameter list opening paren
-        const afterOperatorCall = operatorCallIdx + "operator()".length;
-        const realOpenParen = sig.indexOf("(", afterOperatorCall);
-        if (realOpenParen !== -1) {
-            openParen = realOpenParen;
-        } else {
-            // No actual parameter list found after operator() -- return as-is
-            return sig;
-        }
     }
 
     // Find the matching closing paren
@@ -372,34 +338,18 @@ function reformatRawSignature(func: CppFunctionIr, ownerClass?: CppClassIr): str
     }
 
     const prefix = sig.substring(0, openParen);
-    // BUG 21: Normalize default value spacing in parameters (add spaces around `=`)
+    // Normalize default value spacing in parameters (add spaces around `=`)
     const paramsStr = normalizeDefaultValueSpacing(sig.substring(openParen + 1, closeParen));
 
-    // Detect deleted status from both IR field AND signature string
-    // (the IR's isDeleted field is unreliable -- often false even when signature has =delete)
-    const sigHasDelete = /=\s*delete\s*$/.test(sig);
-    const deleteSuffix = (func.isDeleted || sigHasDelete) ? " = delete" : "";
-
-    // BUG 27 fix: Detect =default in the signature string (no IR field for this)
-    const sigHasDefault = /=\s*default\s*$/.test(sig);
-    const defaultSuffix = sigHasDefault ? " = default" : "";
-
-    // Strip =delete from the working signature to avoid duplication
-    // (we add it back properly via deleteSuffix)
-    if (sigHasDelete) {
-        sig = sig.replace(/\s*=\s*delete\s*$/, "");
-    }
-
-    // BUG 27: Strip =default from the working signature to avoid duplication
-    if (sigHasDefault) {
-        sig = sig.replace(/\s*=\s*default\s*$/, "");
-    }
+    // Detect =delete / =default suffixes and strip them from the working signature
+    const detected = detectDeletedOrDefaulted(sig, func.isDeleted);
+    sig = detected.strippedSig;
 
     // Build the const/noexcept suffix from IR fields (more reliable than parsing)
     const quals = buildQualifierSuffix(func);
 
-    // BUG 27: Combine suffixes (mutually exclusive: a function is either deleted, defaulted, or neither)
-    const specialSuffix = deleteSuffix || defaultSuffix;
+    // Combine suffixes (mutually exclusive: a function is either deleted, defaulted, or neither)
+    const specialSuffix = detected.specialSuffix;
 
     if (!paramsStr.trim()) {
         // No parameters
@@ -424,6 +374,67 @@ function reformatRawSignature(func: CppFunctionIr, ownerClass?: CppClassIr): str
         ...formattedParams,
         `)${quals}${specialSuffix}`
     ].join("\n");
+}
+
+/**
+ * Find the opening paren of the parameter list in a signature string.
+ * Handles the special case of `operator()` where the first `()` is part
+ * of the operator name, not the parameter list.
+ *
+ * Returns -1 if no parameter list paren is found.
+ */
+function findParamListOpenParen(sig: string): number {
+    let openParen = sig.indexOf("(");
+    if (openParen === -1) {
+        return -1;
+    }
+
+    // Check if this `(` is part of `operator()`
+    const operatorCallIdx = sig.indexOf("operator()");
+    if (operatorCallIdx !== -1 && openParen === operatorCallIdx + "operator".length) {
+        // The first `(` is part of `operator()` -- skip past the `operator()` token
+        // to find the real parameter list opening paren
+        const afterOperatorCall = operatorCallIdx + "operator()".length;
+        const realOpenParen = sig.indexOf("(", afterOperatorCall);
+        if (realOpenParen !== -1) {
+            return realOpenParen;
+        }
+        // No actual parameter list found after operator()
+        return -1;
+    }
+
+    return openParen;
+}
+
+/**
+ * Detect `= delete` and `= default` suffixes in a signature string.
+ * Returns the special suffix to append and the signature with those suffixes stripped.
+ *
+ * The IR's isDeleted field is unreliable (often false even when signature has =delete),
+ * so we check both the IR field and the raw signature string.
+ */
+function detectDeletedOrDefaulted(sig: string, isDeletedFromIr: boolean): {
+    specialSuffix: string;
+    strippedSig: string;
+} {
+    const sigHasDelete = /=\s*delete\s*$/.test(sig);
+    const deleteSuffix = (isDeletedFromIr || sigHasDelete) ? " = delete" : "";
+
+    const sigHasDefault = /=\s*default\s*$/.test(sig);
+    const defaultSuffix = sigHasDefault ? " = default" : "";
+
+    let strippedSig = sig;
+    if (sigHasDelete) {
+        strippedSig = strippedSig.replace(/\s*=\s*delete\s*$/, "");
+    }
+    if (sigHasDefault) {
+        strippedSig = strippedSig.replace(/\s*=\s*default\s*$/, "");
+    }
+
+    return {
+        specialSuffix: deleteSuffix || defaultSuffix,
+        strippedSig
+    };
 }
 
 /**
@@ -514,7 +525,7 @@ function splitParams(paramsStr: string): string[] {
 // ---------------------------------------------------------------------------
 
 /**
- * BUG 14: Format a links record as JSON with spaces after colons and commas.
+ * Format a links record as JSON with spaces after colons and commas.
  * Produces `{"key": "/path", "key2": "/path2"}` instead of `{"key":"/path","key2":"/path2"}`.
  */
 export function formatLinksJson(links: Record<string, string>): string {

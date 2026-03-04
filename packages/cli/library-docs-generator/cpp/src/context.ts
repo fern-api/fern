@@ -4,7 +4,7 @@
  * Provides metadata needed to resolve cross-references and format links.
  */
 
-import type { CppClassIr, CppConceptIr } from "../../src/types/CppLibraryDocsIr.js";
+import type { CppClassIr } from "../../src/types/CppLibraryDocsIr.js";
 
 /**
  * Metadata about the compound being rendered, extracted from meta.json.
@@ -64,13 +64,6 @@ export function buildLinkPath(qualifiedName: string): string {
     const path = `${getLinkPrefix(normalized)}${normalized}`;
     // URL-encode angle brackets so MDX doesn't parse them as JSX tags
     return path.replace(/</g, "%3C").replace(/>/g, "%3E");
-}
-
-/**
- * Create a RenderContext from a class IR and meta.
- */
-export function createRenderContext(meta: CompoundMeta): RenderContext {
-    return { meta };
 }
 
 // ---------------------------------------------------------------------------
@@ -143,17 +136,17 @@ export function stripTemplateArgs(name: string): string {
 /**
  * Determine whether a path needs quoting in YAML frontmatter.
  *
- * Quoting rules derived from golden pages:
+ * Quoting rules:
  * - Always quote when the value contains <, >, &, ", or '
- * - BUG 15 fix: Quote `cuda::` prefixed names because YAML parsers may
- *   misinterpret the leading "cuda" before the first colon as a mapping key.
- *   `cub::` and `thrust::` names are NOT quoted per golden pages.
+ * - Quote `cuda::` prefixed names because YAML parsers may misinterpret the
+ *   leading "cuda" before the first colon as a mapping key.
+ *   `cub::` and `thrust::` names do not need quoting.
  */
 export function needsQuoting(value: string): boolean {
     if (/[<>&"']/.test(value)) {
         return true;
     }
-    // BUG 15: cuda:: prefixed names need quoting per golden page convention.
+    // cuda:: prefixed names need quoting to prevent YAML key misinterpretation.
     // cub:: and thrust:: do not need quoting.
     if (value.startsWith("cuda::")) {
         return true;

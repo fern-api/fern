@@ -6,6 +6,7 @@
  */
 
 import type { CppFunctionIr, CppVariableIr } from "../../../src/types/CppLibraryDocsIr.js";
+import { isEffectivelyDeleted } from "./shared.js";
 
 /**
  * Canonical badge ordering.
@@ -80,10 +81,10 @@ export function getFunctionQualifiers(func: CppFunctionIr): string[] {
  * Find qualifiers that are common to all non-deleted overloads.
  * These go on the H3 heading.
  *
- * BUG 29 fix: Deleted overloads (= delete) typically have minimal qualifiers
- * (e.g., not inline) because they are declaration-only. Including them in the
- * common set would incorrectly suppress badges that apply to all real overloads.
- * The golden pages show badges based on the non-deleted overloads only.
+ * Deleted overloads (= delete) typically have minimal qualifiers (e.g., not
+ * inline) because they are declaration-only. Including them in the common set
+ * would incorrectly suppress badges that apply to all real overloads. Badges
+ * are computed from non-deleted overloads only.
  */
 export function getCommonQualifiers(funcs: CppFunctionIr[]): string[] {
     if (funcs.length === 0) {
@@ -93,9 +94,8 @@ export function getCommonQualifiers(funcs: CppFunctionIr[]): string[] {
         return getFunctionQualifiers(funcs[0]!);
     }
 
-    // BUG 29: Filter out deleted overloads for common qualifier computation
-    // Note: We inline the deletion check here to avoid circular dependency with MethodRenderer
-    const nonDeletedFuncs = funcs.filter(f => !f.isDeleted && !/=\s*delete\s*$/.test(f.signature));
+    // Filter out deleted overloads for common qualifier computation
+    const nonDeletedFuncs = funcs.filter(f => !isEffectivelyDeleted(f));
 
     // If all overloads are deleted, fall back to the original set
     const activeFuncs = nonDeletedFuncs.length > 0 ? nonDeletedFuncs : funcs;

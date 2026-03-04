@@ -1,5 +1,5 @@
 /**
- * C++ Renderer Golden Page Convergence Tests
+ * C++ Renderer Reference Page Convergence Tests
  *
  * Each test renders a fixture's input.json through the renderer and
  * compares against expected.mdx via snapshots. The actual rendered
@@ -14,7 +14,7 @@ import { renderCompoundPage } from "../renderers/CompoundPageRenderer.js";
 import type { CppClassIr, CppConceptIr } from "../../../src/types/CppLibraryDocsIr.js";
 import { FIXTURES_DIR, FIXTURES, metaToCompoundMeta, type FixtureMeta } from "./fixture-utils.js";
 
-describe("C++ Renderer Golden Page Convergence", () => {
+describe("C++ Renderer Reference Page Convergence", () => {
     for (const name of FIXTURES) {
         it(`renders ${name}`, () => {
             const dir = path.join(FIXTURES_DIR, name);

@@ -29,6 +29,7 @@ import { renderDescriptionBlocks, renderSegmentsTrimmed, extractVersionAnnotatio
 import type { ParsedMethodVerbatim } from "./DescriptionRenderer.js";
 import { renderMethodTemplateParams, renderMethodParams } from "./ParamRenderer.js";
 import { renderSignatureCodeBlock, renderBareCodeBlock, renderCodeBlock } from "./SignatureRenderer.js";
+import { isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./shared.js";
 import type { RenderContext } from "../context.js";
 import { getShortName, buildLinkPath } from "../context.js";
 
@@ -51,18 +52,6 @@ function escapeNameForHeading(name: string): string {
 // ---------------------------------------------------------------------------
 // Tab title generation
 // ---------------------------------------------------------------------------
-
-/**
- * Check whether a function is deleted, using both the IR field and signature heuristic.
- * The IR's isDeleted field is sometimes false even when the signature contains "=delete".
- */
-export function isEffectivelyDeleted(func: CppFunctionIr): boolean {
-    if (func.isDeleted) {
-        return true;
-    }
-    // Check signature for =delete (the IR field is unreliable for some parsers)
-    return /=\s*delete\s*$/.test(func.signature);
-}
 
 /**
  * Trim a summary string to a short noun phrase suitable for a tab title.
@@ -214,8 +203,6 @@ function constructorBaseTitleFromParams(
     }
 
     const allTypes = coreParams.map(p => p.typeInfo?.display ?? "").join(", ");
-    const firstType = coreParams[0]?.typeInfo?.display ?? "";
-    const firstName = coreParams[0]?.name ?? "";
 
     // TempStorage pattern (any number of params)
     if (allTypes.includes("TempStorage") ||
@@ -223,142 +210,169 @@ function constructorBaseTitleFromParams(
         return "With TempStorage";
     }
 
-    // Single core parameter
+    // Dispatch based on param count
     if (coreParams.length === 1) {
-        // Move constructor: T&& (non-const rvalue ref)
-        if (firstType.includes("&&") && !firstType.includes("const")) {
-            if (isOtherPropertiesType(firstType)) {
-                return "From matching properties (move)";
-            }
-            return "Move";
+        return singleParamConstructorTitle(coreParams);
+    }
+    return multiParamConstructorTitle(coreParams, allTypes);
+}
+
+/**
+ * Derive a constructor tab title from a single core parameter.
+ * Handles: move, copy, nullptr, native handle, size, no_init, initializer_list,
+ * raw pointer, and other pointer patterns.
+ */
+function singleParamConstructorTitle(
+    coreParams: CppFunctionIr["parameters"]
+): string | undefined {
+    const firstType = coreParams[0]?.typeInfo?.display ?? "";
+    const firstName = coreParams[0]?.name ?? "";
+
+    // Move constructor: T&& (non-const rvalue ref)
+    if (firstType.includes("&&") && !firstType.includes("const")) {
+        if (isOtherPropertiesType(firstType)) {
+            return "From matching properties (move)";
         }
-        // Copy constructor: const T& (same type)
-        if (firstType.includes("const") && firstType.includes("&") && !firstType.includes("&&")) {
-            // Check if it's a cross-type copy (different template params)
-            if (isOtherPropertiesType(firstType)) {
-                return "From matching properties (copy)";
-            }
-            if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
-                firstType.includes("Other")) {
-                // Determine source type for "From X type" titles
-                return detectSourceType(firstType);
-            }
-            return "Copy";
+        return "Move";
+    }
+    // Copy constructor: const T& (same type)
+    if (firstType.includes("const") && firstType.includes("&") && !firstType.includes("&&")) {
+        // Check if it's a cross-type copy (different template params)
+        if (isOtherPropertiesType(firstType)) {
+            return "From matching properties (copy)";
         }
-        // From nullptr
-        if (firstType.includes("nullptr_t")) {
-            return "From nullptr";
+        if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
+            firstType.includes("Other")) {
+            // Determine source type for "From X type" titles
+            return detectSourceType(firstType);
         }
-        // From native handle types (cudaStream_t, cudaEvent_t, etc.)
-        if (firstType.includes("cudaStream_t") || firstType.includes("cudaEvent_t")) {
-            return "From native handle";
-        }
-        // size_type param named "n" or "count" -> "From size"
-        if ((firstName === "n" || firstName === "count") &&
-            (firstType.includes("size_type") || firstType.includes("size_t"))) {
-            return "From size";
-        }
-        // no_init_t
-        if (firstType.includes("no_init_t") || firstType.includes("noinit")) {
-            return "No-init";
-        }
-        // initializer_list
-        if (firstType.includes("initializer_list")) {
-            return "From initializer_list";
-        }
-        // Explicit pointer param
-        if (firstType.includes("*") && !firstType.includes("(")) {
-            return "From raw pointer";
-        }
-        // From other pointer type
-        if (firstType.includes("OtherPointer") || firstType.includes("Pointer")) {
-            return "From other pointer";
-        }
+        return "Copy";
+    }
+    // From nullptr
+    if (firstType.includes("nullptr_t")) {
+        return "From nullptr";
+    }
+    // From native handle types (cudaStream_t, cudaEvent_t, etc.)
+    if (firstType.includes("cudaStream_t") || firstType.includes("cudaEvent_t")) {
+        return "From native handle";
+    }
+    // size_type param named "n" or "count" -> "From size"
+    if ((firstName === "n" || firstName === "count") &&
+        (firstType.includes("size_type") || firstType.includes("size_t"))) {
+        return "From size";
+    }
+    // no_init_t
+    if (firstType.includes("no_init_t") || firstType.includes("noinit")) {
+        return "No-init";
+    }
+    // initializer_list
+    if (firstType.includes("initializer_list")) {
+        return "From initializer_list";
+    }
+    // Explicit pointer param
+    if (firstType.includes("*") && !firstType.includes("(")) {
+        return "From raw pointer";
+    }
+    // From other pointer type
+    if (firstType.includes("OtherPointer") || firstType.includes("Pointer")) {
+        return "From other pointer";
     }
 
-    // Multi core parameter patterns
-    if (coreParams.length >= 2) {
-        // size_type + default_init_t -> "From size, default-initialized"
-        if ((firstName === "n" || firstName === "count") &&
-            (firstType.includes("size_type") || firstType.includes("size_t"))) {
-            const secondType = coreParams[1]?.typeInfo?.display ?? "";
-            if (secondType.includes("default_init_t")) {
-                return "From size, default-initialized";
-            }
-            if (secondType.includes("no_init_t")) {
-                return "From size, no-init";
-            }
-            if (secondType.includes("value_type") || coreParams[1]?.name === "value") {
-                return "From size and value";
-            }
-            // Just size param + something else
-            return "From size";
-        }
+    return undefined;
+}
 
-        // Sized with no_init_t (no size_type, just explicit no_init)
-        if (coreParams.some(p => (p.typeInfo?.display ?? "").includes("no_init_t"))) {
-            return "Sized (no-init)";
-        }
+/**
+ * Derive a constructor tab title from multiple core parameters (2+).
+ * Handles: size+init patterns, no_init, iterator range, range, initializer_list,
+ * move/copy with allocator, and empty (infrastructure-only) constructors.
+ */
+function multiParamConstructorTitle(
+    coreParams: CppFunctionIr["parameters"],
+    allTypes: string
+): string | undefined {
+    const firstType = coreParams[0]?.typeInfo?.display ?? "";
+    const firstName = coreParams[0]?.name ?? "";
 
-        // Iterator range: two iterator params (detect by type or param names)
-        if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
-            allTypes.includes("ForwardIterator") || allTypes.includes("InputIt") ||
-            allTypes.includes("_Iter") ||
-            coreParams.some(p => p.name === "__first" || p.name === "__last" ||
-                p.name === "first" || p.name === "last")) {
-            return "From iterator range";
+    // size_type + default_init_t -> "From size, default-initialized"
+    if ((firstName === "n" || firstName === "count") &&
+        (firstType.includes("size_type") || firstType.includes("size_t"))) {
+        const secondType = coreParams[1]?.typeInfo?.display ?? "";
+        if (secondType.includes("default_init_t")) {
+            return "From size, default-initialized";
         }
+        if (secondType.includes("no_init_t")) {
+            return "From size, no-init";
+        }
+        if (secondType.includes("value_type") || coreParams[1]?.name === "value") {
+            return "From size and value";
+        }
+        // Just size param + something else
+        return "From size";
+    }
 
-        // Range constructor: detect _Range type or __range param name
-        if (coreParams.some(p => {
-            const type = p.typeInfo?.display ?? "";
-            return p.name === "__range" || p.name === "range" ||
-                type.includes("_Range") || type.includes("Range &&");
-        })) {
-            return "From range";
-        }
+    // Sized with no_init_t (no size_type, just explicit no_init)
+    if (coreParams.some(p => (p.typeInfo?.display ?? "").includes("no_init_t"))) {
+        return "Sized (no-init)";
+    }
 
-        // initializer_list in any param
-        if (allTypes.includes("initializer_list")) {
-            return "From initializer_list";
-        }
+    // Iterator range: two iterator params (detect by type or param names)
+    if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
+        allTypes.includes("ForwardIterator") || allTypes.includes("InputIt") ||
+        allTypes.includes("_Iter") ||
+        coreParams.some(p => p.name === "__first" || p.name === "__last" ||
+            p.name === "first" || p.name === "last")) {
+        return "From iterator range";
+    }
 
-        // Move with allocator: T&& + allocator (already handled by hasAlloc suffix)
-        if (firstType.includes("&&") && !firstType.includes("const")) {
-            if (isOtherPropertiesType(firstType)) {
-                return "From matching properties (move)";
-            }
-            return "Move";
-        }
+    // Range constructor: detect _Range type or __range param name
+    if (coreParams.some(p => {
+        const type = p.typeInfo?.display ?? "";
+        return p.name === "__range" || p.name === "range" ||
+            type.includes("_Range") || type.includes("Range &&");
+    })) {
+        return "From range";
+    }
 
-        // Copy from other type with allocator
-        if (firstType.includes("const") && firstType.includes("&")) {
-            if (isOtherPropertiesType(firstType)) {
-                return "From matching properties (copy)";
-            }
-            if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
-                firstType.includes("Other")) {
-                return detectSourceType(firstType);
-            }
-            return "Copy";
-        }
+    // initializer_list in any param
+    if (allTypes.includes("initializer_list")) {
+        return "From initializer_list";
+    }
 
-        // Empty constructor: only infrastructure params (stream_ref, resource, env)
-        // with no data payload (no size, no iterators, no range, no init_list)
-        const hasStreamRef = coreParams.some(p => (p.typeInfo?.display ?? "").includes("stream_ref"));
-        const hasDataPayload = coreParams.some(p => {
-            const type = p.typeInfo?.display ?? "";
-            const name = p.name ?? "";
-            return type.includes("size_type") || type.includes("size_t") ||
-                type.includes("no_init_t") || type.includes("default_init_t") ||
-                type.includes("initializer_list") || type.includes("_Iter") ||
-                type.includes("_Range") || type.includes("Iterator") ||
-                name === "__first" || name === "__last" || name === "__range" ||
-                name === "n" || name === "count";
-        });
-        if (hasStreamRef && !hasDataPayload) {
-            return "Empty";
+    // Move with allocator: T&& + allocator (already handled by hasAlloc suffix)
+    if (firstType.includes("&&") && !firstType.includes("const")) {
+        if (isOtherPropertiesType(firstType)) {
+            return "From matching properties (move)";
         }
+        return "Move";
+    }
+
+    // Copy from other type with allocator
+    if (firstType.includes("const") && firstType.includes("&")) {
+        if (isOtherPropertiesType(firstType)) {
+            return "From matching properties (copy)";
+        }
+        if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
+            firstType.includes("Other")) {
+            return detectSourceType(firstType);
+        }
+        return "Copy";
+    }
+
+    // Empty constructor: only infrastructure params (stream_ref, resource, env)
+    // with no data payload (no size, no iterators, no range, no init_list)
+    const hasStreamRef = coreParams.some(p => (p.typeInfo?.display ?? "").includes("stream_ref"));
+    const hasDataPayload = coreParams.some(p => {
+        const type = p.typeInfo?.display ?? "";
+        const name = p.name ?? "";
+        return type.includes("size_type") || type.includes("size_t") ||
+            type.includes("no_init_t") || type.includes("default_init_t") ||
+            type.includes("initializer_list") || type.includes("_Iter") ||
+            type.includes("_Range") || type.includes("Iterator") ||
+            name === "__first" || name === "__last" || name === "__range" ||
+            name === "n" || name === "count";
+    });
+    if (hasStreamRef && !hasDataPayload) {
+        return "Empty";
     }
 
     return undefined;
@@ -538,7 +552,7 @@ function generateContainerMethodTabTitle(func: CppFunctionIr): string | undefine
  * Generate a semantic tab title for a method overload based on its
  * parameters and template parameters relative to others in the group.
  *
- * Title patterns (from golden pages):
+ * Title patterns:
  * - "Full warp" / "Single item" — base overload with single T input
  * - "Multiple items per thread" — has ITEMS_PER_THREAD array params or range type
  * - "Partial warp" / "Partial tile" — has num_valid/valid_items parameter
@@ -776,7 +790,50 @@ export function renderMethodContent(
         }
     }
 
-    // 2. Description
+    // 2. Description (summary + description blocks)
+    renderMethodDescription(func, parsedMethodRst, lines);
+
+    // 3. Signature CodeBlock
+    lines.push(renderSignatureCodeBlock(func, ownerClass, ctx));
+    lines.push("");
+
+    // 4. Version annotation (from sinceVersion field or verbatim RST blocks)
+    if (docstring?.sinceVersion) {
+        lines.push(`*${docstring.sinceVersion}*`);
+        lines.push("");
+    } else if (docstring?.description) {
+        const versionAnnotation = extractVersionAnnotation(docstring.description);
+        if (versionAnnotation) {
+            lines.push(versionAnnotation);
+            lines.push("");
+        }
+    }
+
+    // 5. Callouts (deprecated, notes, warnings, postconditions, preconditions)
+    renderMethodCallouts(docstring, parsedMethodRst, lines);
+
+    // 6-9. Returns, Throws, Template parameters, Parameters
+    renderMethodParamsSection(func, docstring, lines);
+
+    // 10-11. Examples and See also
+    renderMethodExamples(docstring, parsedMethodRst, lines);
+
+    // Trim trailing blank lines
+    trimTrailingBlankLines(lines);
+
+    return lines.join("\n");
+}
+
+/**
+ * Render the description portion of a method: summary text and description blocks.
+ * Appends to the provided lines array.
+ */
+function renderMethodDescription(
+    func: CppFunctionIr,
+    parsedMethodRst: ParsedMethodVerbatim | undefined,
+    lines: string[]
+): void {
+    const docstring = func.docstring;
     const descParts: string[] = [];
     if (docstring) {
         // Summary from structured docstring fields
@@ -802,53 +859,37 @@ export function renderMethodContent(
         lines.push(descParts.join("\n\n"));
         lines.push("");
     }
+}
 
-    // 3. Signature CodeBlock
-    lines.push(renderSignatureCodeBlock(func, ownerClass, ctx));
-    lines.push("");
-
-    // 4. Version annotation (from sinceVersion field or verbatim RST blocks)
-    if (docstring?.sinceVersion) {
-        lines.push(`*${docstring.sinceVersion}*`);
-        lines.push("");
-    } else if (docstring?.description) {
-        // Extract version annotation from verbatim RST blocks in description
-        const versionAnnotation = extractVersionAnnotation(docstring.description);
-        if (versionAnnotation) {
-            lines.push(versionAnnotation);
-            lines.push("");
-        }
-    }
-
-    // 5. Callouts
+/**
+ * Render callout sections for a method: deprecated, notes, warnings,
+ * postconditions, and preconditions.
+ * Appends to the provided lines array.
+ */
+function renderMethodCallouts(
+    docstring: CppDocstringIr | undefined,
+    parsedMethodRst: ParsedMethodVerbatim | undefined,
+    lines: string[]
+): void {
     // Deprecated
     if (docstring?.deprecated) {
         const depText = renderSegmentsTrimmed(docstring.deprecated);
         if (depText) {
-            lines.push(`<Error title="Deprecated">`);
-            lines.push(depText);
-            lines.push(`</Error>`);
-            lines.push("");
+            lines.push(...renderCallout("Error", depText, "Deprecated"));
         }
     }
 
     // Notes: use verbatim RST extraction when available, else structured docstring fields
-    // (Notes render before Warnings per golden page convention)
+    // Notes render before Warnings
     if (parsedMethodRst) {
         if (parsedMethodRst.noteItems.length > 0) {
-            lines.push("<Note>");
-            lines.push(parsedMethodRst.noteItems.join("\n"));
-            lines.push("</Note>");
-            lines.push("");
+            lines.push(...renderCallout("Note", parsedMethodRst.noteItems.join("\n")));
         }
     } else if (docstring?.notes) {
         for (const note of docstring.notes) {
             const text = renderSegmentsTrimmed(note);
             if (text) {
-                lines.push("<Note>");
-                lines.push(text);
-                lines.push("</Note>");
-                lines.push("");
+                lines.push(...renderCallout("Note", text));
             }
         }
     }
@@ -856,19 +897,13 @@ export function renderMethodContent(
     // Warnings: use verbatim RST extraction when available, else structured docstring fields
     if (parsedMethodRst) {
         for (const warningText of parsedMethodRst.warningItems) {
-            lines.push("<Warning>");
-            lines.push(warningText);
-            lines.push("</Warning>");
-            lines.push("");
+            lines.push(...renderCallout("Warning", warningText));
         }
     } else if (docstring?.warnings) {
         for (const warning of docstring.warnings) {
             const text = renderSegmentsTrimmed(warning);
             if (text) {
-                lines.push("<Warning>");
-                lines.push(text);
-                lines.push("</Warning>");
-                lines.push("");
+                lines.push(...renderCallout("Warning", text));
             }
         }
     }
@@ -878,10 +913,7 @@ export function renderMethodContent(
         for (const pc of docstring.postconditions) {
             const text = renderSegmentsTrimmed(pc);
             if (text) {
-                lines.push(`<Info title="Postconditions">`);
-                lines.push(text);
-                lines.push(`</Info>`);
-                lines.push("");
+                lines.push(...renderCallout("Info", text, "Postconditions"));
             }
         }
     }
@@ -891,15 +923,22 @@ export function renderMethodContent(
         for (const pc of docstring.preconditions) {
             const text = renderSegmentsTrimmed(pc);
             if (text) {
-                lines.push(`<Info title="Preconditions">`);
-                lines.push(text);
-                lines.push(`</Info>`);
-                lines.push("");
+                lines.push(...renderCallout("Info", text, "Preconditions"));
             }
         }
     }
+}
 
-    // 6. Returns (before template params and params per golden page pattern)
+/**
+ * Render the returns, throws, template parameters, and parameters sections.
+ * Appends to the provided lines array.
+ */
+function renderMethodParamsSection(
+    func: CppFunctionIr,
+    docstring: CppDocstringIr | undefined,
+    lines: string[]
+): void {
+    // Returns
     if (docstring?.returns) {
         const returnsText = renderSegmentsTrimmed(docstring.returns);
         if (returnsText) {
@@ -908,7 +947,7 @@ export function renderMethodContent(
         }
     }
 
-    // 7. Throws / Raises (before template params and params per golden page pattern)
+    // Throws / Raises
     if (docstring?.raises && docstring.raises.length > 0) {
         for (const r of docstring.raises) {
             const desc = renderSegmentsTrimmed(r.description);
@@ -919,21 +958,31 @@ export function renderMethodContent(
         }
     }
 
-    // 8. Template parameters
+    // Template parameters
     const tplParams = renderMethodTemplateParams(func, docstring);
     if (tplParams) {
         lines.push(tplParams);
         lines.push("");
     }
 
-    // 9. Parameters
+    // Parameters
     const params = renderMethodParams(func, docstring);
     if (params) {
         lines.push(params);
         lines.push("");
     }
+}
 
-    // 10. Examples: from structured docstring fields + verbatim RST extraction
+/**
+ * Render the examples and see-also sections of a method.
+ * Appends to the provided lines array.
+ */
+function renderMethodExamples(
+    docstring: CppDocstringIr | undefined,
+    parsedMethodRst: ParsedMethodVerbatim | undefined,
+    lines: string[]
+): void {
+    // Examples: from structured docstring fields + verbatim RST extraction
     if (docstring?.examples && docstring.examples.length > 0) {
         for (const example of docstring.examples) {
             lines.push("**Example**");
@@ -957,20 +1006,13 @@ export function renderMethodContent(
         lines.push("");
     }
 
-    // 11. See also (multi-line format per golden pages)
+    // See also (multi-line format)
     if (docstring?.seeAlso && docstring.seeAlso.length > 0) {
         const seeAlsoBlock = renderSeeAlso(docstring.seeAlso);
         if (seeAlsoBlock) {
             lines.push(seeAlsoBlock);
         }
     }
-
-    // Trim trailing blank lines
-    while (lines.length > 0 && lines[lines.length - 1] === "") {
-        lines.pop();
-    }
-
-    return lines.join("\n");
 }
 
 // ---------------------------------------------------------------------------
@@ -1043,7 +1085,7 @@ function isCrossTypeCopyConstructor(func: CppFunctionIr): boolean {
  *
  * The IR often places constructors in this order:
  *   ..., same-type copy, move, move+alloc, cross-type copy, ...
- * Golden pages expect:
+ * The expected order is:
  *   ..., same-type copy, cross-type copy, move, move+alloc, ...
  *
  * This function does a targeted swap: it finds consecutive move constructors
@@ -1106,8 +1148,8 @@ function sortConstructorOverloads(funcs: CppFunctionIr[]): void {
 /**
  * Render a group of overloaded methods under a single H3 heading with Tabs.
  *
- * BUG 11 fix: When multiple overloads are deleted, they are combined into
- * a single "Deleted overloads" tab with all signatures in one CodeBlock.
+ * When multiple overloads are deleted, they are combined into a single
+ * "Deleted overloads" tab with all signatures in one CodeBlock.
  */
 export function renderOverloadedMethod(
     funcs: CppFunctionIr[],
@@ -1125,7 +1167,7 @@ export function renderOverloadedMethod(
         return renderSingleMethod(funcs[0]!, ownerClass, ctx);
     }
 
-    // BUG 11: Separate deleted and non-deleted overloads
+    // Separate deleted and non-deleted overloads
     const nonDeletedFuncs: CppFunctionIr[] = [];
     const deletedFuncs: CppFunctionIr[] = [];
     for (const func of funcs) {
@@ -1156,8 +1198,8 @@ export function renderOverloadedMethod(
         (options.isConstructor ? generateConstructorTabTitle : generateMethodTabTitle);
 
     // Sort constructor overloads so cross-type copies come before moves.
-    // The IR often has: same-type copy, move, cross-type copy — but golden pages
-    // expect: same-type copy, cross-type copy, move.
+    // The IR often has: same-type copy, move, cross-type copy — reorder so
+    // cross-type copies come before moves.
     if (options.isConstructor) {
         sortConstructorOverloads(nonDeletedFuncs);
     }
@@ -1200,7 +1242,7 @@ export function renderOverloadedMethod(
         lines.push("</Tab>");
     }
 
-    // BUG 11: Combine deleted overloads into a single "Deleted overloads" tab
+    // Combine deleted overloads into a single "Deleted overloads" tab
     if (deletedFuncs.length > 1) {
         lines.push(`<Tab title="Deleted overloads">`);
         lines.push("");

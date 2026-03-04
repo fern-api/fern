@@ -11,16 +11,13 @@ import type {
     CppClassIr,
     CppTypedefIr,
     CppVariableIr,
-    CppEnumIr,
-    CppTypeInfo,
-    CppTypeInfoPartsItem,
-    CppTypeRef,
-    CppDocstringIr
+    CppEnumIr
 } from "../../../src/types/CppLibraryDocsIr.js";
-import { renderSegmentsTrimmed, renderTypeInfoDisplay, renderTypeInfoForTable, renderDescriptionBlocks, resolveCompoundRef } from "./DescriptionRenderer.js";
+import { renderSegmentsTrimmed, renderTypeInfoDisplay, renderTypeInfoForTable, renderDescriptionBlocks } from "./DescriptionRenderer.js";
 import { getVariableBadges, renderBadge } from "./BadgeRenderer.js";
 import { buildLinkPath } from "../context.js";
 import { formatLinksJson } from "./SignatureRenderer.js";
+import { trimTrailingBlankLines } from "./shared.js";
 
 // ---------------------------------------------------------------------------
 // Markdown table cell escaping
@@ -32,46 +29,6 @@ import { formatLinksJson } from "./SignatureRenderer.js";
  */
 function escapeTableCell(value: string): string {
     return value.replace(/\|/g, "\\|").replace(/\n/g, " ");
-}
-
-// ---------------------------------------------------------------------------
-// Type info rendering for tables
-// ---------------------------------------------------------------------------
-
-/**
- * Extract links from a CppTypeInfo for use in markdown link syntax within tables.
- * Renders the display text with inline links for compound refs.
- */
-function renderTypeInfoLinked(typeInfo: CppTypeInfo | undefined): string {
-    if (!typeInfo) {
-        return "";
-    }
-
-    // Build the display from parts, substituting links for compound refs
-    const result: string[] = [];
-    for (const part of typeInfo.parts) {
-        if (typeof part === "string") {
-            result.push(part);
-        } else {
-            // It's a CppTypeRef
-            if (part.kindref === "compound" && part.text) {
-                // Resolve the compound ref using the full resolution chain
-                const qualifiedName = resolveCompoundRef(part.text, part.refid);
-                const linkPath = buildLinkPath(qualifiedName);
-                result.push(`[\`${part.text}\`](${linkPath})`);
-            } else {
-                result.push(part.text);
-            }
-        }
-    }
-
-    const linked = result.join("");
-    if (linked) {
-        return linked;
-    }
-
-    // Fallback to display
-    return typeInfo.display ? `\`${typeInfo.display}\`` : "";
 }
 
 // ---------------------------------------------------------------------------
@@ -107,7 +64,7 @@ export function renderTypedefTable(typedefs: CppTypedefIr[]): string {
 
         for (const td of typedefs) {
             const name = `\`${td.name}\``;
-            // BUG 22: Wrap definition in backticks (display text only, no inline links)
+            // Wrap definition in backticks (display text only, no inline links)
             const defDisplay = td.typeInfo ? renderTypeInfoDisplay(td.typeInfo) : "";
             const definition = defDisplay ? escapeTableCell(`\`${defDisplay}\``) : "";
             const description = td.docstring
@@ -124,7 +81,7 @@ export function renderTypedefTable(typedefs: CppTypedefIr[]): string {
 
         for (const td of typedefs) {
             const name = `\`${td.name}\``;
-            // BUG 22: Wrap definition in backticks (display text only, no inline links)
+            // Wrap definition in backticks (display text only, no inline links)
             const defDisplay = td.typeInfo ? renderTypeInfoDisplay(td.typeInfo) : "";
             const definition = defDisplay ? escapeTableCell(`\`${defDisplay}\``) : "";
             lines.push(`| ${name} | ${definition} |`);
@@ -268,9 +225,7 @@ export function renderInnerClass(innerClass: CppClassIr, ownerPath: string): str
     }
 
     // Trim trailing blank lines
-    while (lines.length > 0 && lines[lines.length - 1] === "") {
-        lines.pop();
-    }
+    trimTrailingBlankLines(lines);
 
     return lines.join("\n");
 }

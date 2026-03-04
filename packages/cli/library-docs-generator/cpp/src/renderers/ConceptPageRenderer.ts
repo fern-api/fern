@@ -15,13 +15,11 @@
 
 import type {
     CppConceptIr,
-    CppDocSegment,
-    CppTypeInfo,
-    CppTypeInfoPartsItem,
-    CppTypeRef
+    CppDocSegment
 } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext, CompoundMeta } from "../context.js";
-import { buildLinkPath, needsQuoting, getShortName } from "../context.js";
+import { buildLinkPath, getShortName } from "../context.js";
+import { formatTemplateParam, renderFrontmatter } from "./shared.js";
 import { renderDescriptionBlocks, renderSegmentsTrimmed, decodeDoxygenRefid, setCurrentPagePath } from "./DescriptionRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderCodeBlock } from "./SignatureRenderer.js";
@@ -43,23 +41,7 @@ function formatConceptSignature(concept: CppConceptIr): string {
 
     // Template prefix
     if (concept.templateParams.length > 0) {
-        const params = concept.templateParams.map(tp => {
-            if (tp.name) {
-                // BUG 16: For variadic params, the name may be separate from the type
-                // e.g., type="class...", name="_Properties" -> "class... _Properties"
-                if (tp.isVariadic) {
-                    if (tp.type.includes(tp.name)) {
-                        return tp.type;
-                    }
-                    return `${tp.type} ${tp.name}`;
-                }
-                if (tp.type.includes(tp.name)) {
-                    return tp.type;
-                }
-                return `${tp.type} ${tp.name}`;
-            }
-            return tp.type;
-        });
+        const params = concept.templateParams.map(formatTemplateParam);
         parts.push(`template <${params.join(", ")}>`);
     }
 
@@ -77,8 +59,8 @@ function formatConceptSignature(concept: CppConceptIr): string {
  *
  * Sources (in priority order):
  * 1. seeAlso entries (related concepts)
- * 2. BUG 31 fix: Summary segments (codeRef/ref with resolvable refids)
- * 3. BUG 31 fix: Constraint expression text (extract concept/type names)
+ * 2. Summary segments (codeRef/ref with resolvable refids)
+ * 3. Constraint expression text (extract concept/type names)
  */
 function extractConceptLinks(concept: CppConceptIr): Record<string, string> {
     const links: Record<string, string> = {};
@@ -101,12 +83,12 @@ function extractConceptLinks(concept: CppConceptIr): Record<string, string> {
         }
     }
 
-    // BUG 31 fix: Extract links from summary segments (codeRef/ref with resolvable refids)
+    // Extract links from summary segments (codeRef/ref with resolvable refids)
     if (concept.docstring?.summary) {
         extractLinksFromSegments(concept.docstring.summary, links);
     }
 
-    // BUG 31 fix: Extract links from description block segments
+    // Extract links from description block segments
     if (concept.docstring?.description) {
         for (const block of concept.docstring.description) {
             if (block.type === "paragraph") {
@@ -119,7 +101,7 @@ function extractConceptLinks(concept: CppConceptIr): Record<string, string> {
 }
 
 /**
- * BUG 31: Extract links from an array of doc segments.
+ * Extract links from an array of doc segments.
  * Resolves codeRef and ref segments with refids using decodeDoxygenRefid.
  *
  * For member refs where the refid decodes to a namespace (not a full member path),
@@ -168,22 +150,18 @@ function extractLinksFromSegments(
  * Render a full concept page as MDX.
  */
 export function renderConceptPage(concept: CppConceptIr, meta: CompoundMeta): string {
-    // BUG 30: Set current page path for self-reference detection
+    // Set current page path so self-referential links render as plain code
     setCurrentPagePath(concept.path);
 
     const ctx: RenderContext = { meta };
     const sections: string[] = [];
 
     // Frontmatter
-    const title = needsQuoting(concept.path) ? `"${concept.path}"` : concept.path;
     // Description is expected to be provided by the caller (pipeline/Lambda); fallback extracts from docstring summary
     const description = meta.description
         ?? (concept.docstring ? renderSegmentsTrimmed(concept.docstring.summary) : "");
 
-    sections.push("---");
-    sections.push(`title: ${title}`);
-    sections.push(`description: "${description.replace(/"/g, '\\"')}"`);
-    sections.push("---");
+    sections.push(...renderFrontmatter(concept.path, description));
 
     // Badge
     sections.push("");
@@ -241,7 +219,7 @@ export function renderConceptPage(concept: CppConceptIr, meta: CompoundMeta): st
         }
     }
 
-    // BUG 30: Clear current page path after rendering
+    // Clear current page path after rendering
     setCurrentPagePath(undefined);
 
     return sections.join("\n") + "\n";

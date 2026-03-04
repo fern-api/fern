@@ -6,7 +6,7 @@
  */
 
 export type { CompoundMeta, RenderContext } from "./context.js";
-export { buildLinkPath, createRenderContext, getShortName } from "./context.js";
+export { buildLinkPath, getShortName } from "./context.js";
 export { renderClassPage } from "./renderers/ClassPageRenderer.js";
 export type { CppCompoundIr } from "./renderers/CompoundPageRenderer.js";
 export { renderCompoundPage } from "./renderers/CompoundPageRenderer.js";

@@ -22,11 +22,7 @@ import { renderSegmentsTrimmed } from "./DescriptionRenderer.js";
 import { normalizeAngleBracketSpacing } from "./SignatureRenderer.js";
 
 // ---------------------------------------------------------------------------
-// Description trailing period and capitalization
-// ---------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------
-// Description capitalization (BUG 24)
+// Description capitalization
 // ---------------------------------------------------------------------------
 
 /**
@@ -87,7 +83,7 @@ function renderParamField(
     if (description) {
         return `<ParamField ${props.join(" ")}>\n${description}\n</ParamField>`;
     }
-    // Render empty ParamField (no description) per golden page pattern
+    // Render empty ParamField (no description) — self-closing body required by MDX
     return `<ParamField ${props.join(" ")}>\n</ParamField>`;
 }
 
@@ -196,7 +192,7 @@ export function renderClassTemplateParams(
 }
 
 /**
- * BUG 17: Normalize a template param name by stripping trailing `...`.
+ * Normalize a template param name by stripping trailing `...`.
  * The IR's templateParamsDoc may use "_Properties..." while the parsed name
  * from the type string is "_Properties" (without "..."). This function
  * strips the trailing "..." so both sides can be compared.
@@ -225,10 +221,10 @@ function findTemplateParamDescription(
 
     // Check templateParamsDoc first
     for (const p of docstring.templateParamsDoc) {
-        // BUG 17: Normalize both sides to strip trailing "..."
+        // Normalize both sides to strip trailing "..." for variadic param matching
         if (normalizeTemplateParamName(p.name) === normalizedName) {
             const desc = renderSegmentsTrimmed(p.description);
-            // BUG 24: Capitalize the first character of the description
+            // Capitalize the first character of the description
             return desc ? capitalizeDescription(desc) : undefined;
         }
     }
@@ -238,7 +234,7 @@ function findTemplateParamDescription(
         for (const p of docstring.params) {
             if (normalizeTemplateParamName(p.name) === normalizedName) {
                 const desc = renderSegmentsTrimmed(p.description);
-                // BUG 24: Capitalize the first character of the description
+                // Capitalize the first character of the description
                 return desc ? capitalizeDescription(desc) : undefined;
             }
         }
@@ -351,7 +347,7 @@ export function renderMethodParams(
             continue;
         }
 
-        // BUG 25: Append arraySuffix to the type display when present
+        // Append arraySuffix to the type display when present
         // e.g., typeInfo.display="T(&)" + arraySuffix="[ITEMS_PER_THREAD]" -> "T(&)[ITEMS_PER_THREAD]"
         let typeDisplay = normalizeAngleBracketSpacing(param.typeInfo?.display ?? "");
         if (param.arraySuffix) {
@@ -388,7 +384,7 @@ function findParamDescription(
     for (const p of docstring.params) {
         if (p.name === name) {
             const desc = renderSegmentsTrimmed(p.description);
-            // BUG 24: Capitalize the first character of the description
+            // Capitalize the first character of the description
             return desc ? capitalizeDescription(desc) : undefined;
         }
     }

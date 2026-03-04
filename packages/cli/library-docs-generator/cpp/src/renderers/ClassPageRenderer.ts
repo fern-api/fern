@@ -20,13 +20,12 @@
 
 import type {
     CppClassIr,
-    CppFunctionIr,
-    CppDocstringIr,
-    CppDocBlock
+    CppFunctionIr
 } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext, CompoundMeta } from "../context.js";
-import { buildLinkPath, getShortName, needsQuoting, stripTemplateArgs, registerClassMembers, clearClassMembers } from "../context.js";
-import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso, escapeMultilineMdxSpecials } from "./DescriptionRenderer.js";
+import { buildLinkPath, getShortName, stripTemplateArgs, registerClassMembers, clearClassMembers } from "../context.js";
+import { renderFrontmatter as renderFrontmatterLines, trimTrailingBlankLines, renderCallout } from "./shared.js";
+import { renderDescriptionBlocks, renderSegmentsTrimmed, convertVerbatimRst, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso, escapeMultilineMdxSpecials } from "./DescriptionRenderer.js";
 import type { ParsedVerbatim } from "./DescriptionRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock } from "./SignatureRenderer.js";
@@ -52,18 +51,12 @@ import {
 /**
  * Generate YAML frontmatter for a class page.
  */
-function renderFrontmatter(cls: CppClassIr, meta: CompoundMeta): string {
-    const title = needsQuoting(cls.path) ? `"${cls.path}"` : cls.path;
+function renderClassFrontmatter(cls: CppClassIr, meta: CompoundMeta): string {
     // Description is expected to be provided by the caller (pipeline/Lambda); fallback extracts from docstring summary
     const description = meta.description
         ?? (cls.docstring ? renderSegmentsTrimmed(cls.docstring.summary) : "");
 
-    const lines: string[] = [];
-    lines.push("---");
-    lines.push(`title: ${title}`);
-    lines.push(`description: "${description.replace(/"/g, '\\"')}"`);
-    lines.push("---");
-    return lines.join("\n");
+    return renderFrontmatterLines(cls.path, description).join("\n");
 }
 
 // ---------------------------------------------------------------------------
@@ -143,10 +136,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
     if (docstring?.deprecated) {
         const depText = renderSegmentsTrimmed(docstring.deprecated);
         if (depText) {
-            lines.push(`<Error title="Deprecated">`);
-            lines.push(depText);
-            lines.push("</Error>");
-            lines.push("");
+            lines.push(...renderCallout("Error", depText, "Deprecated"));
         }
     }
 
@@ -155,10 +145,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         for (const warning of docstring.warnings) {
             const text = renderSegmentsTrimmed(warning);
             if (text) {
-                lines.push("<Warning>");
-                lines.push(text);
-                lines.push("</Warning>");
-                lines.push("");
+                lines.push(...renderCallout("Warning", text));
             }
         }
     }
@@ -168,15 +155,12 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         for (const note of docstring.notes) {
             const text = renderSegmentsTrimmed(note);
             if (text) {
-                lines.push("<Note>");
-                lines.push(text);
-                lines.push("</Note>");
-                lines.push("");
+                lines.push(...renderCallout("Note", text));
             }
         }
     }
 
-    // 4. See also (class-level) -- multi-line format per golden pages
+    // 4. See also (class-level) -- multi-line format
     if (docstring?.seeAlso && docstring.seeAlso.length > 0) {
         const seeAlsoBlock = renderSeeAlso(docstring.seeAlso);
         if (seeAlsoBlock) {
@@ -247,9 +231,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
     }
 
     // Trim trailing blank lines
-    while (lines.length > 0 && lines[lines.length - 1] === "") {
-        lines.pop();
-    }
+    trimTrailingBlankLines(lines);
 
     return lines.join("\n");
 }
@@ -504,7 +486,7 @@ function renderMethodSection(
             }));
         }
 
-        // BUG 8 fix: No --- separators between methods within the same H2 section.
+        // No --- separators between methods within the same H2 section.
         // The --- separators only appear between H2 sections (handled in renderClassPage).
         if (i < groupEntries.length - 1) {
             lines.push("");
@@ -626,7 +608,7 @@ function renderInnerClassesSection(cls: CppClassIr): string {
  * Render a full class/struct page as MDX.
  */
 export function renderClassPage(cls: CppClassIr, meta: CompoundMeta): string {
-    // BUG 30: Set current page path for self-reference detection in renderSegment
+    // Set current page path so self-referential links render as plain code
     setCurrentPagePath(cls.path);
     // Register class members for inner type link resolution
     registerClassMembers(cls);
@@ -636,7 +618,7 @@ export function renderClassPage(cls: CppClassIr, meta: CompoundMeta): string {
         const sections: string[] = [];
 
         // Frontmatter
-        sections.push(renderFrontmatter(cls, meta));
+        sections.push(renderClassFrontmatter(cls, meta));
 
         // Preamble
         const preamble = renderPreamble(cls, ctx);
@@ -660,8 +642,7 @@ export function renderClassPage(cls: CppClassIr, meta: CompoundMeta): string {
             bodySections.push(staticSection);
         }
 
-        // BUG 28: Friend functions section is intentionally omitted.
-        // Golden pages consistently omit friend functions from class pages.
+        // Friend functions section is intentionally omitted.
         // The data is still available in the IR (cls.friendFunctions) if needed in the future.
 
         // Types
@@ -699,7 +680,7 @@ export function renderClassPage(cls: CppClassIr, meta: CompoundMeta): string {
 
         return sections.join("\n") + "\n";
     } finally {
-        // BUG 30: Clear current page path after rendering
+        // Clear current page path after rendering
         setCurrentPagePath(undefined);
         clearClassMembers();
     }

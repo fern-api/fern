@@ -7,7 +7,6 @@
 import type {
     CppDocBlock,
     CppDocSegment,
-    CppDocstringIr,
     CppTypeInfo,
     CppTypeInfoPartsItem,
     CppTypeRef
@@ -15,7 +14,7 @@ import type {
 import { buildLinkPath, getShortName, lookupMemberPath } from "../context.js";
 
 // ---------------------------------------------------------------------------
-// BUG 30: Module-level context for current page path
+// Module-level context for current page path
 // ---------------------------------------------------------------------------
 
 /**
@@ -43,17 +42,6 @@ export function setCurrentPagePath(path: string | undefined): void {
  */
 function escapeAngleBrackets(text: string): string {
     return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-/**
- * Escape characters that are special in MDX/JSX context.
- *
- * In MDX, bare `<` is treated as a JSX tag opening, `{` as a JSX expression,
- * and `>` can close a tag. These must be escaped with HTML entities when they
- * appear in plain text (not inside code blocks or backtick spans).
- */
-export function escapeMdxText(text: string): string {
-    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\{/g, "&#123;").replace(/\}/g, "&#125;");
 }
 
 /**
@@ -161,7 +149,7 @@ export function renderSegment(segment: CppDocSegment): string {
         case "code":
             return `\`${segment.code}\``;
         case "codeRef": {
-            // BUG 23: Split trailing possessive suffix ('s or ') outside backticks.
+            // Split trailing possessive suffix ('s or ') outside backticks.
             // e.g., "pointer's" -> code="pointer", suffix="'s"
             let codeText = segment.code;
             let possessiveSuffix = "";
@@ -177,7 +165,7 @@ export function renderSegment(segment: CppDocSegment): string {
                 // Resolve the compound ref using the full resolution chain
                 const qualifiedName = resolveCompoundRef(codeText, segment.refid);
 
-                // BUG 30: If the resolved name matches the current page, render as plain code
+                // If the resolved name matches the current page, render as plain code
                 if (currentPagePath && qualifiedName === currentPagePath) {
                     return `\`${codeText}\`${possessiveSuffix}`;
                 }
@@ -185,7 +173,7 @@ export function renderSegment(segment: CppDocSegment): string {
                 const linkPath = buildLinkPath(qualifiedName);
                 return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
             }
-            // BUG 20 fix: For member refs, try to decode the refid to get a qualified name.
+            // For member refs, try to decode the refid to get a qualified name.
             // Some member refs point to concepts, classes, or methods that have API pages.
             // When the refid decodes to a namespace (not a full member path), append the
             // member's code text to form the full qualified name.
@@ -222,7 +210,7 @@ export function renderSegment(segment: CppDocSegment): string {
                 const linkPath = buildLinkPath(qualifiedName);
                 return `[${escapeAngleBrackets(text)}](${linkPath})`;
             }
-            // BUG 20 fix: For member refs, also try to resolve as a link
+            // For member refs, also try to resolve as a link
             if (segment.kindref === "member" && segment.refid) {
                 const decodedPath = decodeDoxygenRefid(segment.refid);
                 if (decodedPath) {
@@ -462,6 +450,45 @@ export function convertVerbatimRst(content: string): ParsedVerbatim {
     });
 
     // Parse into sections based on ++++++ dividers
+    const sections = parseVerbatimSections(lines);
+
+    // Convert each section's lines from RST to Markdown
+    const result: ParsedVerbatim = {
+        overviewContent: "",
+        performanceContent: undefined,
+        exampleDescription: undefined,
+        exampleCode: undefined,
+        exampleLanguage: undefined
+    };
+
+    for (const section of sections) {
+        const md = convertRstLinesToMarkdown(section.lines);
+
+        if (!section.title) {
+            // This is the overview/intro section
+            result.overviewContent = md;
+        } else if (/performance/i.test(section.title)) {
+            result.performanceContent = md;
+        } else if (/example/i.test(section.title) || /snippet/i.test(section.title)) {
+            // Parse example section: description text + code block
+            parseExampleSection(section.lines, result);
+        } else {
+            // Other titled sections (e.g., "Re-using dynamically allocating shared memory")
+            // Other titled sections are not rendered (e.g., dynamic shared memory details)
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Parse raw RST lines into titled sections based on `++++++` dividers.
+ *
+ * RST section headers are identified by a line of `+` characters. The line
+ * immediately preceding the divider (after stripping trailing blanks) is
+ * taken as the section title. Content before the first divider has no title.
+ */
+function parseVerbatimSections(lines: string[]): VerbatimSection[] {
     const sections: VerbatimSection[] = [];
     let currentTitle: string | undefined = undefined;
     let currentLines: string[] = [];
@@ -508,33 +535,7 @@ export function convertVerbatimRst(content: string): ParsedVerbatim {
         });
     }
 
-    // Convert each section's lines from RST to Markdown
-    const result: ParsedVerbatim = {
-        overviewContent: "",
-        performanceContent: undefined,
-        exampleDescription: undefined,
-        exampleCode: undefined,
-        exampleLanguage: undefined
-    };
-
-    for (const section of sections) {
-        const md = convertRstLinesToMarkdown(section.lines);
-
-        if (!section.title) {
-            // This is the overview/intro section
-            result.overviewContent = md;
-        } else if (/performance/i.test(section.title)) {
-            result.performanceContent = md;
-        } else if (/example/i.test(section.title) || /snippet/i.test(section.title)) {
-            // Parse example section: description text + code block
-            parseExampleSection(section.lines, result);
-        } else {
-            // Other titled sections (e.g., "Re-using dynamically allocating shared memory")
-            // Skip these as they are typically not rendered in golden pages
-        }
-    }
-
-    return result;
+    return sections;
 }
 
 interface VerbatimSection {
@@ -631,7 +632,7 @@ function parseExampleSection(lines: string[], result: ParsedVerbatim): void {
 }
 
 /**
- * BUG 19: Join multiline RST inline directives.
+ * Join multiline RST inline directives.
  *
  * RST allows inline directives like `:ref:` to span multiple lines when
  * continuation lines are indented. This function joins those continuations
@@ -674,26 +675,44 @@ function joinMultilineRstDirectives(lines: string[]): string[] {
 
 /**
  * Convert an array of RST-formatted lines to Markdown.
+ *
+ * Pipeline: join multiline directives -> preprocess structural elements ->
+ * convert inline markup + expand macros -> postprocess paragraphs.
  */
 function convertRstLinesToMarkdown(lines: string[]): string {
-    // BUG 19: Pre-process lines to join multiline :ref: directives
-    // RST allows :ref:`text\n   <target>` across lines. Join continuation lines
-    // (lines that are indented and follow a line with an open backtick from :ref:)
+    // 1. Join multiline :ref: directives across continuation lines
     const joinedLines = joinMultilineRstDirectives(lines);
 
+    // 2. Preprocess: skip structural RST elements, handle directives (image,
+    //    code-block, versionadded), convert inline markup, expand macros
+    const preprocessed = preprocessRstLines(joinedLines);
+
+    // 3. Postprocess: join prose continuation lines, collapse spaces,
+    //    handle cross-line double-backtick spans, re-number ordered lists
+    return postprocessParagraphs(preprocessed);
+}
+
+/**
+ * Preprocess RST lines: skip structural elements (labels, section underlines),
+ * handle block directives (image, code-block, versionadded), convert inline
+ * RST markup, expand Doxygen macros, and convert RST numbered lists.
+ *
+ * Returns the processed lines with leading/trailing blank lines trimmed.
+ */
+function preprocessRstLines(joinedLines: string[]): string[] {
     const resultLines: string[] = [];
     let i = 0;
 
     while (i < joinedLines.length) {
         const line = joinedLines[i]!;
 
-        // BUG 19: Skip RST label directives (.. _label-name:)
+        // Skip RST label directives (.. _label-name:)
         if (/^\s*\.\.\s+_[^:]+:\s*$/.test(line)) {
             i++;
             continue;
         }
 
-        // BUG 19: Skip RST section underlines (lines of -, =, ~, ^, +, #)
+        // Skip RST section underlines (lines of -, =, ~, ^, +, #)
         if (/^[-=~^+#]{3,}\s*$/.test(line)) {
             // Also remove the title line that preceded this underline (if it was already added)
             if (resultLines.length > 0 && resultLines[resultLines.length - 1]!.trim() !== "") {
@@ -703,7 +722,7 @@ function convertRstLinesToMarkdown(lines: string[]): string {
             continue;
         }
 
-        // BUG 19: Handle .. image:: directives
+        // Handle .. image:: directives
         const imageMatch = line.match(/^\s*\.\.\s+image::\s*(.+)/);
         if (imageMatch) {
             const imagePath = imageMatch[1]!.trim();
@@ -761,7 +780,7 @@ function convertRstLinesToMarkdown(lines: string[]): string {
         i++;
     }
 
-    // Clean up: remove leading/trailing blank lines
+    // Trim leading/trailing blank lines
     while (resultLines.length > 0 && resultLines[0]!.trim() === "") {
         resultLines.shift();
     }
@@ -769,6 +788,17 @@ function convertRstLinesToMarkdown(lines: string[]): string {
         resultLines.pop();
     }
 
+    return resultLines;
+}
+
+/**
+ * Postprocess preprocessed RST lines into final Markdown:
+ * - Join prose continuation lines into single paragraphs
+ * - Collapse double spaces in prose lines
+ * - Convert remaining cross-line double-backtick code spans
+ * - Re-number ordered lists
+ */
+function postprocessParagraphs(resultLines: string[]): string {
     // Join prose continuation lines into single paragraphs.
     // In RST, consecutive non-blank lines that are not structural elements
     // (not lists, not code blocks, not directives) form a single paragraph.
@@ -859,12 +889,12 @@ function isStructuralLine(line: string): boolean {
 function convertRstInlineMarkup(line: string): string {
     let result = line;
 
-    // BUG 6: Convert RST subscript :sub:`text` to HTML <sub>text</sub>
+    // Convert RST subscript :sub:`text` to HTML <sub>text</sub>
     // Also handle the escaped space before :sub: (RST uses `\ ` to separate from preceding text)
     result = result.replace(/\\ :sub:`([^`]+)`/g, "<sub>$1</sub>");
     result = result.replace(/:sub:`([^`]+)`/g, "<sub>$1</sub>");
 
-    // BUG 6: Convert RST superscript :sup:`text` to HTML <sup>text</sup>
+    // Convert RST superscript :sup:`text` to HTML <sup>text</sup>
     result = result.replace(/\\ :sup:`([^`]+)`/g, "<sup>$1</sup>");
     result = result.replace(/:sup:`([^`]+)`/g, "<sup>$1</sup>");
 
@@ -1013,12 +1043,12 @@ export function extractVersionAnnotation(blocks: CppDocBlock[]): string | undefi
             if (detail) {
                 return `*Added in v${foundVersion}. ${detail}*`;
             }
-            // BUG 26 fix: A bare versionadded directive without continuation text
+            // A bare versionadded directive without continuation text
             // (e.g., just ".. versionadded:: 2.2.0" with no detail like
             // "First appears in CUDA Toolkit 12.3.") is typically a class-level
             // library version marker inherited by all methods, not a method-specific
-            // annotation. The golden pages omit these bare annotations.
-            // Only emit version annotations that have meaningful continuation text.
+            // annotation. Bare annotations are omitted; only those with meaningful
+            // continuation text are emitted.
             return undefined;
         }
     }
@@ -1066,6 +1096,40 @@ function isExplicitWarningBulletItem(text: string): boolean {
 function isSmemReuseContent(text: string): boolean {
     return /`temp_storage`\s+is undefined/i.test(text) ||
            /temp_storage.*is undefined after calling/i.test(text);
+}
+
+/**
+ * Classify an array of bullet item texts into warning and note categories.
+ *
+ * Classification rules:
+ * - Explicit warning items (return value undefined etc.) -> always Warning
+ * - smemreuse content (temp_storage undefined): Warning if no other explicit warning, Note otherwise
+ * - Everything else -> Note
+ */
+function classifyBulletItems(items: string[]): { warningItems: string[]; noteItems: string[] } {
+    const warningItems: string[] = [];
+    const noteItems: string[] = [];
+
+    // Determine if there are any "explicit warning" items (e.g., "return value is undefined")
+    const hasExplicitWarning = items.some(
+        b => !isSmemReuseContent(b) && isExplicitWarningBulletItem(b)
+    );
+
+    for (const itemText of items) {
+        if (isSmemReuseContent(itemText)) {
+            if (hasExplicitWarning) {
+                noteItems.push(itemText);
+            } else {
+                warningItems.push(itemText);
+            }
+        } else if (isExplicitWarningBulletItem(itemText)) {
+            warningItems.push(itemText);
+        } else {
+            noteItems.push(itemText);
+        }
+    }
+
+    return { warningItems, noteItems };
 }
 
 /**
@@ -1169,34 +1233,14 @@ export function parseMethodVerbatimRst(content: string): ParsedMethodVerbatim {
 
     result.descriptionText = descParagraphs.join("\n\n");
 
-    // Combine bullet items and standalone macro paragraphs for classification
+    // Classify bullet items and standalone macro paragraphs into warnings/notes
     const allItems: string[] = [
         ...bulletItems.filter(item => item.trim().length > 0),
         ...standaloneMacroItems
     ];
-
-    // Determine if there are any "explicit warning" items (e.g., "return value is undefined")
-    const hasExplicitWarning = allItems.some(
-        b => !isSmemReuseContent(b) && isExplicitWarningBulletItem(b)
-    );
-
-    // Classify items into warnings and notes:
-    // - Explicit warning items (return value undefined etc.) -> always Warning
-    // - smemreuse content (temp_storage undefined): Warning if no other explicit warning, Note otherwise
-    // - Everything else -> Note
-    for (const itemText of allItems) {
-        if (isSmemReuseContent(itemText)) {
-            if (hasExplicitWarning) {
-                result.noteItems.push(itemText);
-            } else {
-                result.warningItems.push(itemText);
-            }
-        } else if (isExplicitWarningBulletItem(itemText)) {
-            result.warningItems.push(itemText);
-        } else {
-            result.noteItems.push(itemText);
-        }
-    }
+    const classified = classifyBulletItems(allItems);
+    result.warningItems = classified.warningItems;
+    result.noteItems = classified.noteItems;
 
     // Escape MDX-special characters in all text outputs (< > { })
     result.descriptionText = escapeMultilineMdxSpecials(result.descriptionText);
@@ -1274,7 +1318,7 @@ export function renderSeeAlso(seeAlsoItems: CppDocSegment[][]): string {
 /**
  * Render a single doc block to MDX lines.
  */
-export function renderBlock(block: CppDocBlock): string {
+function renderBlock(block: CppDocBlock): string {
     switch (block.type) {
         case "paragraph": {
             const text = renderSegments(block.segments).trim();
