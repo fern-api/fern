@@ -73,7 +73,7 @@
 - version: 4.0.0
   changelogEntry:
     - summary: |
-        Deprecate IR versions <= 52. Cuts down on binary size, build time, and migrations.
+        Deprecate IR versions `<= 52`. Cuts down on binary size, build time, and migrations.
 
         **Breaking changes**: To upgrade to this version of the CLI, generators now have
         minimal versions they need to be upgraded to with `fern generator upgrade --include-major`:
