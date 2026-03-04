@@ -17,6 +17,7 @@ import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
+import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import java.util.Collections;
 import java.util.List;
@@ -105,6 +106,11 @@ public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesC
     @Override
     public List<String> getSubProjects() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public List<GradlePlugin> getCustomPlugins() {
+        return List.of();
     }
 
     @Override

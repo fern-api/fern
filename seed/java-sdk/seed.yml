@@ -69,6 +69,12 @@ fixtures:
       outputFolder: custom-dependency
     - customConfig:
         inline-path-parameters: true
+        custom-plugins:
+          - "com.github.johnrengelman.shadow:8.1.1"
+          - "org.jetbrains.kotlin.jvm:2.1.0"
+      outputFolder: custom-plugins
+    - customConfig:
+        inline-path-parameters: true
         json-include: non-empty
       outputFolder: json-include-non-empty
     - customConfig:
