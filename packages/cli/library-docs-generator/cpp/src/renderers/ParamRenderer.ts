@@ -81,8 +81,21 @@ function renderParamField(
     if (description) {
         return `<ParamField ${props.join(" ")}>\n${description}\n</ParamField>`;
     }
-    // Omit empty ParamField per rendering rules
-    return "";
+    // Render empty ParamField (no description) per golden page pattern
+    return `<ParamField ${props.join(" ")}>\n</ParamField>`;
+}
+
+// ---------------------------------------------------------------------------
+// SFINAE detection
+// ---------------------------------------------------------------------------
+
+/**
+ * Check whether a template parameter is an SFINAE / enable_if param
+ * that should be filtered out from rendered output.
+ */
+function isSfinaeParam(tp: CppTemplateParamIr): boolean {
+    const type = tp.type ?? "";
+    return type.includes("enable_if") || type.includes("_EnableIf");
 }
 
 // ---------------------------------------------------------------------------
@@ -126,13 +139,20 @@ export function renderClassTemplateParams(
         return "";
     }
 
+    // Filter out SFINAE / enable_if template params that should not be rendered
+    const renderableParams = templateParams.filter(tp => !isSfinaeParam(tp));
+
+    if (renderableParams.length === 0) {
+        return "";
+    }
+
     const lines: string[] = [];
     lines.push("<AccordionGroup>");
     lines.push('<Accordion title="Template parameters">');
     lines.push("");
 
-    for (let i = 0; i < templateParams.length; i++) {
-        const tp = templateParams[i]!;
+    for (let i = 0; i < renderableParams.length; i++) {
+        const tp = renderableParams[i]!;
         const { typePart, namePart } = parseTemplateParam(tp);
 
         // Find description from docstring templateParamsDoc or params
@@ -140,10 +160,6 @@ export function renderClassTemplateParams(
 
         // Default value
         const defaultVal = tp.defaultValue?.display;
-
-        // Use description as-is -- the IR description segments already contain
-        // [optional] prefix when appropriate (BLOCKER 8 fix)
-        const descText = description;
 
         // Handle variadic display: "class..." for variadic params
         let displayType = typePart;
@@ -157,10 +173,10 @@ export function renderClassTemplateParams(
             displayName = displayName + "...";
         }
 
-        const field = renderParamField(displayName, displayType, defaultVal, descText || undefined);
+        const field = renderParamField(displayName, displayType, defaultVal, description);
         if (field) {
             lines.push(field);
-            if (i < templateParams.length - 1) {
+            if (i < renderableParams.length - 1) {
                 lines.push("");
             }
         }
@@ -185,10 +201,15 @@ function normalizeTemplateParamName(name: string): string {
 
 /**
  * Find a template parameter's description from docstring.
+ *
+ * When `includeParams` is true (default), also searches the docstring's
+ * `params` array as a fallback — some parsers put template param docs there.
+ * Class-level lookups use this fallback; method-level lookups do not.
  */
 function findTemplateParamDescription(
     name: string,
-    docstring: CppDocstringIr | undefined
+    docstring: CppDocstringIr | undefined,
+    options: { includeParams?: boolean } = { includeParams: true }
 ): string | undefined {
     if (!docstring) {
         return undefined;
@@ -207,11 +228,13 @@ function findTemplateParamDescription(
     }
 
     // Also check params (some parsers put template params there)
-    for (const p of docstring.params) {
-        if (normalizeTemplateParamName(p.name) === normalizedName) {
-            const desc = renderSegmentsTrimmed(p.description);
-            // BUG 24: Capitalize the first character of the description
-            return desc ? capitalizeDescription(desc) : undefined;
+    if (options.includeParams) {
+        for (const p of docstring.params) {
+            if (normalizeTemplateParamName(p.name) === normalizedName) {
+                const desc = renderSegmentsTrimmed(p.description);
+                // BUG 24: Capitalize the first character of the description
+                return desc ? capitalizeDescription(desc) : undefined;
+            }
         }
     }
 
@@ -229,10 +252,24 @@ export function renderMethodTemplateParams(
         return "";
     }
 
-    // Check if any template param has a description (from docstring)
-    const hasAnyDescription = func.templateParams.some(tp => {
+    // Filter out SFINAE / enable_if template params and unnamed params
+    const renderableParams = func.templateParams.filter(tp => {
         const { namePart } = parseTemplateParam(tp);
-        return findMethodTemplateParamDescription(namePart, docstring) != null;
+        // Skip unnamed params or SFINAE enable_if params
+        if (!namePart || namePart === tp.type) {
+            return false;
+        }
+        return !isSfinaeParam(tp);
+    });
+
+    if (renderableParams.length === 0) {
+        return "";
+    }
+
+    // Check if any renderable template param has a description (from docstring)
+    const hasAnyDescription = renderableParams.some(tp => {
+        const { namePart } = parseTemplateParam(tp);
+        return findTemplateParamDescription(namePart, docstring, { includeParams: false }) != null;
     });
 
     if (!hasAnyDescription) {
@@ -243,20 +280,16 @@ export function renderMethodTemplateParams(
     lines.push("**Template parameters**");
     lines.push("");
 
-    for (let i = 0; i < func.templateParams.length; i++) {
-        const tp = func.templateParams[i]!;
+    for (let i = 0; i < renderableParams.length; i++) {
+        const tp = renderableParams[i]!;
         const { typePart, namePart } = parseTemplateParam(tp);
 
-        const description = findMethodTemplateParamDescription(namePart, docstring);
+        const description = findTemplateParamDescription(namePart, docstring, { includeParams: false });
         if (!description) {
             continue;
         }
 
-        // Use description as-is -- the IR description segments already contain
-        // [inferred] prefix when appropriate (BLOCKER 9 fix)
-        const descText = description;
-
-        const field = renderParamField(namePart, typePart, undefined, descText);
+        const field = renderParamField(namePart, typePart, undefined, description);
         if (field) {
             lines.push(field);
             // Add blank line between fields
@@ -270,31 +303,6 @@ export function renderMethodTemplateParams(
     }
 
     return lines.join("\n");
-}
-
-/**
- * Find template param description from function-level docstring.
- */
-function findMethodTemplateParamDescription(
-    name: string,
-    docstring: CppDocstringIr | undefined
-): string | undefined {
-    if (!docstring) {
-        return undefined;
-    }
-
-    const normalizedName = normalizeTemplateParamName(name);
-
-    for (const p of docstring.templateParamsDoc) {
-        // BUG 17: Normalize both sides to strip trailing "..."
-        if (normalizeTemplateParamName(p.name) === normalizedName) {
-            const desc = renderSegmentsTrimmed(p.description);
-            // BUG 24: Capitalize the first character of the description
-            return desc ? capitalizeDescription(desc) : undefined;
-        }
-    }
-
-    return undefined;
 }
 
 // ---------------------------------------------------------------------------
@@ -328,6 +336,10 @@ export function renderMethodParams(
 
     for (let i = 0; i < func.parameters.length; i++) {
         const param = func.parameters[i]!;
+        // Skip unnamed params (e.g., dummy int for postfix operators)
+        if (!param.name || param.name.length === 0) {
+            continue;
+        }
         const description = findParamDescription(param.name, docstring);
         if (!description) {
             continue;

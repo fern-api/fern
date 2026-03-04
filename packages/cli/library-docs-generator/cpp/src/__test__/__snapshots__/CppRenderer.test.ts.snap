@@ -2394,6 +2394,11 @@ concept resource_with = /* see description */;
 <AccordionGroup>
 <Accordion title="Template parameters">
 
+<ParamField path="_Resource" type="class">
+</ParamField>
+
+<ParamField path="_Properties..." type="class...">
+</ParamField>
 
 </Accordion>
 </AccordionGroup>
@@ -2444,7 +2449,6 @@ std::copy(iter, iter + vec.size(), vec.begin());
 <ParamField path="_Start" type="class">
 The value type of the \`counting_iterator\`.
 </ParamField>
-
 
 </Accordion>
 </AccordionGroup>
@@ -2529,7 +2533,7 @@ The amount of elements to advance
 ### operator++ <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
 
 <Tabs>
-<Tab title="Increments the stored value">
+<Tab title="Pre-increment">
 
 Increments the stored value.
 
@@ -2540,7 +2544,7 @@ counting_iterator & cuda::counting_iterator<_Start,,>::operator++() noexcept(++:
 </CodeBlock>
 
 </Tab>
-<Tab title="Increments the stored value">
+<Tab title="Post-increment">
 
 Increments the stored value.
 
@@ -2558,7 +2562,7 @@ auto cuda::counting_iterator<_Start,,>::operator++(
 ### operator-- <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>constexpr</Badge> <Badge intent="note" minimal>noexcept</Badge>
 
 <Tabs>
-<Tab title="Decrements the stored value">
+<Tab title="Pre-decrement">
 
 Decrements the stored value.
 
@@ -2571,7 +2575,7 @@ counting_iterator & cuda::counting_iterator<_Start,,>::operator--() noexcept(--:
 </CodeBlock>
 
 </Tab>
-<Tab title="Decrements the stored value">
+<Tab title="Post-decrement">
 
 Decrements the stored value.
 
@@ -2795,6 +2799,11 @@ universal_vector
 <AccordionGroup>
 <Accordion title="Template parameters">
 
+<ParamField path="T" type="typename">
+</ParamField>
+
+<ParamField path="Alloc" type="typename" default="thrust::device_allocator<T>">
+</ParamField>
 
 </Accordion>
 </AccordionGroup>
@@ -2819,7 +2828,7 @@ thrust::device_vector<T, Alloc>::device_vector()
 </CodeBlock>
 
 </Tab>
-<Tab title="This constructor creates an empty \`device_vector\`">
+<Tab title="With allocator">
 
 This constructor creates an empty \`device_vector\`.
 
@@ -2838,7 +2847,7 @@ The allocator to use by this [device_vector](/library/api/thrust::device_vector)
 </ParamField>
 
 </Tab>
-<Tab title="From native handle">
+<Tab title="From size">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -2859,7 +2868,7 @@ The number of elements to initially create.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 4">
+<Tab title="From size, default-initialized">
 
 This constructor creates a \`device_vector\` with the given size, performing only default-initialization instead of value-initialization.
 
@@ -2879,7 +2888,7 @@ The number of elements to initially create.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 5">
+<Tab title="From size, no-init">
 
 This constructor creates a \`device_vector\` with the given size, without initializing elements.
 
@@ -2901,7 +2910,7 @@ The number of elements to initially create.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 6">
+<Tab title="From size with allocator">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -2927,7 +2936,7 @@ The allocator to use by this [device_vector](/library/api/thrust::device_vector)
 </ParamField>
 
 </Tab>
-<Tab title="Overload 7">
+<Tab title="From size and value">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -2953,7 +2962,7 @@ An element to copy.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 8">
+<Tab title="From size and value with allocator">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -3003,7 +3012,7 @@ The \`device_vector\` to copy.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 10">
+<Tab title="Copy with allocator">
 
 Copy constructor copies from an exemplar \`device_vector\`.
 
@@ -3046,7 +3055,7 @@ The [device_vector](/library/api/thrust::device_vector) to move.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 12">
+<Tab title="Move with allocator">
 
 Move constructor moves from another \`device_vector\`.
 
@@ -3070,7 +3079,7 @@ The allocator to use by this [device_vector](/library/api/thrust::device_vector)
 </ParamField>
 
 </Tab>
-<Tab title="Copy">
+<Tab title="From other device_vector type">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -3092,7 +3101,7 @@ The \`device_vector\` to copy.
 </ParamField>
 
 </Tab>
-<Tab title="Copy">
+<Tab title="From std::vector">
 
 Copy constructor copies from an exemplar \`std::vector\`.
 
@@ -3112,7 +3121,7 @@ The \`std::vector\` to copy.
 </ParamField>
 
 </Tab>
-<Tab title="Copy">
+<Tab title="From vector_base">
 
 Copy construct from a \`vector_base\` whose element type is convertible to \`T\`.
 
@@ -3151,7 +3160,7 @@ The intializer_list.
 </ParamField>
 
 </Tab>
-<Tab title="From initializer_list">
+<Tab title="From initializer_list with allocator">
 
 This constructor builds a \`device_vector\` from an intializer_list.
 
@@ -3200,7 +3209,7 @@ The end of the range.
 </ParamField>
 
 </Tab>
-<Tab title="From iterator range">
+<Tab title="From iterator range with allocator">
 
 This constructor builds a \`device_vector\` from a range.
 
@@ -3251,7 +3260,7 @@ thrust::device_vector<T, Alloc>::~device_vector()
 ### operator= <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Copy assign">
 
 Copy assign operator copies another \`device_vector\` with the same type.
 
@@ -3270,7 +3279,7 @@ The \`device_vector\` to copy.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="Move assign">
 
 Move assign operator moves from another \`device_vector\`.
 
@@ -3289,7 +3298,7 @@ The [device_vector](/library/api/thrust::device_vector) to move.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 3">
+<Tab title="From other device_vector type">
 
 Assign operator copies from an exemplar \`device_vector\` with different type.
 
@@ -3309,7 +3318,7 @@ The \`device_vector\` to copy.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 4">
+<Tab title="From std::vector">
 
 Assign operator copies from an exemplar \`std::vector\`.
 
@@ -3329,7 +3338,7 @@ The \`std::vector\` to copy.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 5">
+<Tab title="From vector_base">
 
 Assign a \`vector_base\` whose element type is convertible to \`T\`.
 
@@ -3349,7 +3358,7 @@ The \`vector_base\` to copy.
 </ParamField>
 
 </Tab>
-<Tab title="Overload 6">
+<Tab title="From initializer_list">
 
 Assign an \`intializer_list\` with a matching element type.
 
@@ -3510,7 +3519,7 @@ void thrust::device_vector<T, Alloc>::shrink_to_fit()
 ### operator[]
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 Subscript access to the data contained in this vector_dev.
 
@@ -3563,7 +3572,7 @@ The index of the element for which data should be accessed.
 ### begin
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 This method returns an iterator pointing to the beginning of this vector.
 
@@ -3608,7 +3617,7 @@ const_iterator thrust::device_vector<T, Alloc>::cbegin() const
 ### rbegin
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 This method returns a reverse_iterator pointing to the beginning of this vector's reversed sequence.
 
@@ -3653,7 +3662,7 @@ const_reverse_iterator thrust::device_vector<T, Alloc>::crbegin() const
 ### end
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 This method returns an iterator pointing to one element past the last of this vector.
 
@@ -3698,7 +3707,7 @@ const_iterator thrust::device_vector<T, Alloc>::cend() const
 ### rend
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 This method returns a reverse_iterator pointing to one element past the last of this vector's reversed sequence.
 
@@ -3743,6 +3752,19 @@ const_reverse_iterator thrust::device_vector<T, Alloc>::crend() const
 ### front
 
 <Tabs>
+<Tab title="Mutable">
+
+This method returns a reference pointing to the first element of this vector.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+reference thrust::device_vector<T, Alloc>::front()
+\`\`\`
+</CodeBlock>
+
+**Returns:** The first element of this vector.
+
+</Tab>
 <Tab title="Const">
 
 <Badge intent="note" minimal>const</Badge>
@@ -3758,24 +3780,24 @@ const_reference thrust::device_vector<T, Alloc>::front() const
 **Returns:** The first element of this vector.
 
 </Tab>
-<Tab title="Overload 2">
-
-This method returns a reference pointing to the first element of this vector.
-
-<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
-\`\`\`cpp showLineNumbers={false}
-reference thrust::device_vector<T, Alloc>::front()
-\`\`\`
-</CodeBlock>
-
-**Returns:** The first element of this vector.
-
-</Tab>
 </Tabs>
 
 ### back
 
 <Tabs>
+<Tab title="Mutable">
+
+This method returns a reference referring to the last element of this vector_dev.
+
+<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
+\`\`\`cpp showLineNumbers={false}
+reference thrust::device_vector<T, Alloc>::back()
+\`\`\`
+</CodeBlock>
+
+**Returns:** The last element of this vector.
+
+</Tab>
 <Tab title="Const">
 
 <Badge intent="note" minimal>const</Badge>
@@ -3791,25 +3813,12 @@ const_reference thrust::device_vector<T, Alloc>::back() const
 **Returns:** The last element of this vector.
 
 </Tab>
-<Tab title="Overload 2">
-
-This method returns a reference referring to the last element of this vector_dev.
-
-<CodeBlock links={{"device_vector": "/library/api/thrust::device_vector"}}>
-\`\`\`cpp showLineNumbers={false}
-reference thrust::device_vector<T, Alloc>::back()
-\`\`\`
-</CodeBlock>
-
-**Returns:** The last element of this vector.
-
-</Tab>
 </Tabs>
 
 ### data
 
 <Tabs>
-<Tab title="Returns a pointer to this vector's first element">
+<Tab title="Mutable">
 
 This method returns a pointer to this vector's first element.
 
@@ -4183,7 +4192,7 @@ The properties the allocated memory satisfies
 ### buffer <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Copy-constructs from a buffer">
+<Tab title="Copy">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -4204,7 +4213,7 @@ The other buffer.
 </ParamField>
 
 </Tab>
-<Tab title="Move-constructs from a buffer">
+<Tab title="Move">
 
 <Badge intent="note" minimal>noexcept</Badge>
 
@@ -4225,7 +4234,7 @@ The other buffer. After move construction, the other buffer can only be assigned
 </ParamField>
 
 </Tab>
-<Tab title="Copy">
+<Tab title="From other buffer type">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -4297,7 +4306,7 @@ The environment providing the needed information
 </ParamField>
 
 </Tab>
-<Tab title="Overload 6">
+<Tab title="Sized (no-init)">
 
 <Badge intent="note" minimal>explicit</Badge>
 
@@ -4460,7 +4469,7 @@ The other buffer. After move assignment, the other buffer can only be assigned t
 ### begin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 Returns an iterator to the first element of the buffer.
 
@@ -4505,7 +4514,7 @@ const_iterator cuda::buffer<_Tp, _Properties>::cbegin() const noexcept
 ### end <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 Returns an iterator to the element following the last element of the buffer.
 
@@ -4550,7 +4559,7 @@ const_iterator cuda::buffer<_Tp, _Properties>::cend() const noexcept
 ### rbegin <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 Returns a reverse iterator to the first element of the reversed buffer.
 
@@ -4595,7 +4604,7 @@ const_reverse_iterator cuda::buffer<_Tp, _Properties>::crbegin() const noexcept
 ### rend <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 Returns a reverse iterator to the element following the last element of the reversed buffer.
 
@@ -4640,7 +4649,7 @@ const_reverse_iterator cuda::buffer<_Tp, _Properties>::crend() const noexcept
 ### data <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 Returns a pointer to the first element of the buffer.
 
@@ -4673,7 +4682,7 @@ const_pointer cuda::buffer<_Tp, _Properties>::data() const noexcept
 ### get_unsynchronized <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="Mutable">
 
 Returns a reference to the \`__n\` 'th element of the async_vector.
 
@@ -5399,7 +5408,7 @@ A raw pointer to copy from, presumed to point to a location in \`Tag's\` memory.
 </ParamField>
 
 </Tab>
-<Tab title="Copy">
+<Tab title="From other pointer">
 
 This constructor allows initialization from another pointer-like object.
 
@@ -5435,7 +5444,7 @@ The \`OtherPointer\` to copy.
 ### operator= <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
-<Tab title="Overload 1">
+<Tab title="From nullptr">
 
 <CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -5446,7 +5455,7 @@ derived_type & thrust::pointer<Element, Tag, Reference, Derived>::operator=(
 </CodeBlock>
 
 </Tab>
-<Tab title="Overload 2">
+<Tab title="From other pointer">
 
 Assignment operator allows assigning from another pointer-like object whose element type is convertible to \`Element\`.
 
@@ -5530,6 +5539,17 @@ Base const  & thrust::iterator_adaptor<Derived, Base, Value, System, Traversal, 
 ### base_reference <Badge intent="note" minimal>inline</Badge>
 
 <Tabs>
+<Tab title="Mutable">
+
+<CodeBlock links={{"pointer": "/library/api/thrust::pointer", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
+\`\`\`cpp showLineNumbers={false}
+Base & thrust::iterator_adaptor<Derived, Base, Value, System, Traversal, Reference, Difference>::base_reference()
+\`\`\`
+</CodeBlock>
+
+**Returns:** A mutable reference to the \`Base\` iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor) adapts.
+
+</Tab>
 <Tab title="Const">
 
 <Badge intent="note" minimal>const</Badge>
@@ -5541,17 +5561,6 @@ Base const  & thrust::iterator_adaptor<Derived, Base, Value, System, Traversal, 
 </CodeBlock>
 
 **Returns:** A \`const\` reference to the \`Base\` iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor) adapts.
-
-</Tab>
-<Tab title="Overload 2">
-
-<CodeBlock links={{"pointer": "/library/api/thrust::pointer", "iterator_adaptor": "/library/api/thrust::iterator_adaptor"}}>
-\`\`\`cpp showLineNumbers={false}
-Base & thrust::iterator_adaptor<Derived, Base, Value, System, Traversal, Reference, Difference>::base_reference()
-\`\`\`
-</CodeBlock>
-
-**Returns:** A mutable reference to the \`Base\` iterator this [\`iterator_adaptor\`](/library/api/thrust::iterator_adaptor) adapts.
 
 </Tab>
 </Tabs>
@@ -5645,7 +5654,7 @@ cuda::stream::stream(
 </Info>
 
 </Tab>
-<Tab title="Move-construct a new \`stream\` object">
+<Tab title="Move">
 
 <Badge intent="note" minimal>noexcept</Badge>
 
@@ -5713,7 +5722,7 @@ If the stream fails to be destroyed, the error is silently ignored.
 ### operator= <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>noexcept</Badge>
 
 <Tabs>
-<Tab title="Move-assign a \`stream\` object">
+<Tab title="Move assign">
 
 Move-assign a \`stream\` object.
 
@@ -5730,7 +5739,7 @@ stream & cuda::stream::operator=(
 </Info>
 
 </Tab>
-<Tab title="Deleted overload">
+<Tab title="Copy assign (deleted)">
 
 <CodeBlock links={{"stream": "/libcudacxx/api/cuda::stream"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6174,7 +6183,7 @@ Reference to memory allocation having layout type [TempStorage](/library/api/cub
 ### Sum <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Single item">
+<Tab title="Full warp">
 
 Computes a warp-wide sum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
 
@@ -6216,7 +6225,7 @@ __global__ void ExampleKernel(...)
 \`\`\`
 
 </Tab>
-<Tab title="Single item">
+<Tab title="Multiple items per thread">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6229,7 +6238,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Sum(
 </CodeBlock>
 
 </Tab>
-<Tab title="Single item">
+<Tab title="Partial warp">
 
 Computes a partially-full warp-wide sum in the calling warp. The output is valid in warp *lane*<sub>0</sub>.
 
@@ -6293,7 +6302,7 @@ __global__ void ExampleKernel(int *d_data, int valid_items)
 ### Max <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Single item">
+<Tab title="Full warp">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6304,7 +6313,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(
 </CodeBlock>
 
 </Tab>
-<Tab title="Single item">
+<Tab title="Multiple items per thread">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6317,7 +6326,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(
 </CodeBlock>
 
 </Tab>
-<Tab title="Single item">
+<Tab title="Partial warp">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6334,7 +6343,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Max(
 ### Min <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Single item">
+<Tab title="Full warp">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6345,7 +6354,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Min(
 </CodeBlock>
 
 </Tab>
-<Tab title="Single item">
+<Tab title="Multiple items per thread">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6358,7 +6367,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Min(
 </CodeBlock>
 
 </Tab>
-<Tab title="Single item">
+<Tab title="Partial warp">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6492,7 +6501,7 @@ __global__ void ExampleKernel(...)
 ### Reduce <Badge intent="note" minimal>inline</Badge> <Badge intent="note" minimal>nodiscard</Badge>
 
 <Tabs>
-<Tab title="Single item">
+<Tab title="Full warp">
 
 Computes a warp-wide reduction in the calling warp using the specified binary reduction functor. The output is valid in warp *lane*<sub>0</sub>.
 
@@ -6557,7 +6566,7 @@ __global__ void ExampleKernel(...)
 \`\`\`
 
 </Tab>
-<Tab title="Single item">
+<Tab title="Multiple items per thread">
 
 <CodeBlock links={{"WarpReduce": "/library/api/cub::WarpReduce"}}>
 \`\`\`cpp showLineNumbers={false}
@@ -6570,7 +6579,7 @@ T cub::WarpReduce<T, LogicalWarpThreads>::Reduce(
 </CodeBlock>
 
 </Tab>
-<Tab title="Single item">
+<Tab title="Partial warp">
 
 Computes a partially-full warp-wide reduction in the calling warp using the specified binary reduction functor. The output is valid in warp *lane*<sub>0</sub>.
 

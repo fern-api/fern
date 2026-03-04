@@ -101,8 +101,31 @@ function findTopLevelBreak(str: string): number {
 }
 
 /**
- * Generate a tab title for a constructor overload.
- * Uses docstring summary if available, falls back to parameter-based heuristics.
+ * Check whether the last parameter looks like an allocator type.
+ * Common patterns: const Alloc&, const Allocator&, or any type whose name
+ * matches a known allocator-like pattern.
+ */
+function lastParamIsAllocator(func: CppFunctionIr): boolean {
+    if (func.parameters.length === 0) {
+        return false;
+    }
+    const lastParam = func.parameters[func.parameters.length - 1]!;
+    const name = lastParam.name ?? "";
+    const type = lastParam.typeInfo?.display ?? "";
+    // Param named "alloc" or "allocator" is a strong signal
+    if (name === "alloc" || name === "allocator") {
+        return true;
+    }
+    // Type containing "Alloc" or "allocator" (e.g., "const Alloc &", "const Allocator &")
+    if (/\bAlloc(ator)?\b/.test(type) && type.includes("const") && type.includes("&")) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Build a base constructor title from the non-allocator parameters, then
+ * append " with allocator" if the last param is an allocator.
  */
 function generateConstructorTabTitle(func: CppFunctionIr, index: number): string {
     // Check for deleted constructor first
@@ -124,8 +147,24 @@ function generateConstructorTabTitle(func: CppFunctionIr, index: number): string
         return "Default";
     }
 
-    // Use summary if it's short enough (check BEFORE parameter heuristics
-    // so descriptive summaries like "Device and priority" take precedence)
+    const hasAlloc = lastParamIsAllocator(func);
+    // "Core" params are all params except the trailing allocator (if present)
+    const coreParams = hasAlloc ? func.parameters.slice(0, -1) : func.parameters;
+    const allocSuffix = hasAlloc ? " with allocator" : "";
+
+    // If the only param is the allocator, this is a "With allocator" constructor
+    if (coreParams.length === 0 && hasAlloc) {
+        return "With allocator";
+    }
+
+    // Parameter-based heuristics on core params
+    const baseTitle = constructorBaseTitleFromParams(func, coreParams);
+    if (baseTitle) {
+        return baseTitle + allocSuffix;
+    }
+
+    // Use summary as fallback (for cases like "Device and priority" where params
+    // don't match any known pattern)
     if (func.docstring?.summary && func.docstring.summary.length > 0) {
         const summary = renderSegmentsTrimmed(func.docstring.summary);
         const title = trimToNounPhrase(summary, 50);
@@ -134,52 +173,106 @@ function generateConstructorTabTitle(func: CppFunctionIr, index: number): string
         }
     }
 
-    // Parameter-based heuristics for single-parameter constructors
-    if (func.parameters.length === 1) {
-        const paramType = func.parameters[0]?.typeInfo?.display ?? "";
+    // Fall back to numbered title
+    return `Overload ${index + 1}`;
+}
 
+/**
+ * Derive a base constructor tab title from the core (non-allocator) parameters.
+ * Returns undefined if no known pattern matches.
+ */
+function constructorBaseTitleFromParams(
+    func: CppFunctionIr,
+    coreParams: CppFunctionIr["parameters"]
+): string | undefined {
+    if (coreParams.length === 0) {
+        return undefined;
+    }
+
+    const allTypes = coreParams.map(p => p.typeInfo?.display ?? "").join(", ");
+    const firstType = coreParams[0]?.typeInfo?.display ?? "";
+    const firstName = coreParams[0]?.name ?? "";
+
+    // TempStorage pattern (any number of params)
+    if (allTypes.includes("TempStorage") ||
+        coreParams.some(p => p.name === "temp_storage")) {
+        return "With TempStorage";
+    }
+
+    // Single core parameter
+    if (coreParams.length === 1) {
         // Move constructor: T&& (non-const rvalue ref)
-        if (paramType.includes("&&") && !paramType.includes("const")) {
+        if (firstType.includes("&&") && !firstType.includes("const")) {
             return "Move";
         }
-        // Copy constructor: const T&
-        if (paramType.includes("const") && paramType.includes("&")) {
+        // Copy constructor: const T& (same type)
+        if (firstType.includes("const") && firstType.includes("&") && !firstType.includes("&&")) {
+            // Check if it's a cross-type copy (different template params)
+            if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
+                firstType.includes("Other")) {
+                // Determine source type for "From X type" titles
+                return detectSourceType(firstType);
+            }
             return "Copy";
         }
         // From nullptr
-        if (paramType.includes("nullptr_t")) {
+        if (firstType.includes("nullptr_t")) {
             return "From nullptr";
         }
-        // From native handle types (cudaStream_t, etc.)
-        if (paramType.includes("cudaStream_t") || paramType.includes("cudaEvent_t") ||
-            (paramType.includes("_t") && !paramType.includes("init_t"))) {
+        // From native handle types (cudaStream_t, cudaEvent_t, etc.)
+        if (firstType.includes("cudaStream_t") || firstType.includes("cudaEvent_t")) {
             return "From native handle";
         }
+        // size_type param named "n" or "count" -> "From size"
+        if ((firstName === "n" || firstName === "count") &&
+            (firstType.includes("size_type") || firstType.includes("size_t"))) {
+            return "From size";
+        }
         // no_init_t
-        if (paramType.includes("no_init_t") || paramType.includes("noinit")) {
+        if (firstType.includes("no_init_t") || firstType.includes("noinit")) {
             return "No-init";
         }
         // initializer_list
-        if (paramType.includes("initializer_list")) {
+        if (firstType.includes("initializer_list")) {
             return "From initializer_list";
+        }
+        // Explicit pointer param
+        if (firstType.includes("*") && !firstType.includes("(")) {
+            return "From raw pointer";
+        }
+        // From other pointer type
+        if (firstType.includes("OtherPointer") || firstType.includes("Pointer")) {
+            return "From other pointer";
         }
     }
 
-    // Multi-parameter heuristics
-    if (func.parameters.length >= 1) {
-        const allTypes = func.parameters.map(p => p.typeInfo?.display ?? "").join(", ");
+    // Multi core parameter patterns
+    if (coreParams.length >= 2) {
+        // size_type + default_init_t -> "From size, default-initialized"
+        if ((firstName === "n" || firstName === "count") &&
+            (firstType.includes("size_type") || firstType.includes("size_t"))) {
+            const secondType = coreParams[1]?.typeInfo?.display ?? "";
+            if (secondType.includes("default_init_t")) {
+                return "From size, default-initialized";
+            }
+            if (secondType.includes("no_init_t")) {
+                return "From size, no-init";
+            }
+            if (secondType.includes("value_type") || coreParams[1]?.name === "value") {
+                return "From size and value";
+            }
+            // Just size param + something else
+            return "From size";
+        }
 
-        // TempStorage pattern: any param named temp_storage or type containing TempStorage
-        if (allTypes.includes("TempStorage") ||
-            func.parameters.some(p => p.name === "temp_storage")) {
-            return "With TempStorage";
+        // Sized with no_init_t (no size_type, just explicit no_init)
+        if (coreParams.some(p => (p.typeInfo?.display ?? "").includes("no_init_t"))) {
+            return "Sized (no-init)";
         }
 
         // Iterator range: two iterator params
-        const hasIteratorPair = func.parameters.length >= 2 &&
-            (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
-             allTypes.includes("ForwardIterator") || allTypes.includes("InputIt"));
-        if (hasIteratorPair) {
+        if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
+            allTypes.includes("ForwardIterator") || allTypes.includes("InputIt")) {
             return "From iterator range";
         }
 
@@ -188,22 +281,55 @@ function generateConstructorTabTitle(func: CppFunctionIr, index: number): string
             return "From initializer_list";
         }
 
-        // Explicit pointer param (OtherElement* or T*)
-        if (func.parameters.length === 1) {
-            const paramType = func.parameters[0]?.typeInfo?.display ?? "";
-            if (paramType.includes("*") && !paramType.includes("(")) {
-                return "From raw pointer";
-            }
+        // Move with allocator: T&& + allocator (already handled by hasAlloc suffix)
+        if (firstType.includes("&&") && !firstType.includes("const")) {
+            return "Move";
         }
 
-        // From other pointer type
-        if (allTypes.includes("OtherPointer") || allTypes.includes("Pointer")) {
-            return "From other pointer";
+        // Copy from other type with allocator
+        if (firstType.includes("const") && firstType.includes("&")) {
+            if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
+                firstType.includes("Other")) {
+                return detectSourceType(firstType);
+            }
+            return "Copy";
         }
     }
 
-    // Fall back to numbered title
-    return `Overload ${index + 1}`;
+    return undefined;
+}
+
+/**
+ * Detect the source type from a parameter type for "From X" tab titles.
+ * E.g., "const std::vector<OtherT, OtherAlloc> &" -> "From std::vector"
+ *        "const device_vector<OtherT, OtherAlloc> &" -> "From other device_vector type"
+ *        "const detail::vector_base<OtherT, OtherAlloc> &" -> "From vector_base"
+ */
+function detectSourceType(paramType: string): string {
+    // Strip const, &, and template args to get the base type
+    const stripped = paramType
+        .replace(/^const\s+/, "")
+        .replace(/\s*&+$/, "")
+        .replace(/<.*>/, "")
+        .trim();
+    if (stripped.includes("std::vector")) {
+        return "From std::vector";
+    }
+    if (stripped.includes("vector_base")) {
+        return "From vector_base";
+    }
+    // Generic "OtherPointer" or "OtherX" patterns -> "From other pointer" / "From other X"
+    const shortName = stripped.split("::").pop() ?? stripped;
+    if (shortName.startsWith("Other")) {
+        // "OtherPointer" -> "pointer", "OtherElement" -> "element"
+        const baseName = shortName.replace(/^Other/, "").toLowerCase();
+        return `From other ${baseName}`;
+    }
+    // For same-family types with different template params (e.g., device_vector<OtherT>)
+    if (shortName) {
+        return `From other ${shortName} type`;
+    }
+    return "Copy";
 }
 
 /**
@@ -270,37 +396,61 @@ function hasInitialValueParam(func: CppFunctionIr): boolean {
 }
 
 /**
+ * Detect whether a function parameter is a range type (used in warp-level APIs
+ * to distinguish "multiple items per thread" from "full warp" single-item overloads).
+ * Range types use enable_if with is_fixed_size_random_access_range_v or similar.
+ */
+function hasRangeParam(func: CppFunctionIr): boolean {
+    // Check template params for range-related enable_if constraints
+    return func.templateParams.some(tp => {
+        const type = tp.type ?? "";
+        return type.includes("random_access_range") ||
+            type.includes("is_range") ||
+            type.includes("InputType");
+    });
+}
+
+/**
  * Generate a semantic tab title for a method overload based on its
  * parameters and template parameters relative to others in the group.
  *
  * Title patterns (from golden pages):
- * - "Single item" — base overload with single T input
- * - "Multiple items per thread" — has ITEMS_PER_THREAD array params
- * - "With aggregate" — single item + block_aggregate param
- * - "With prefix callback" — single item + BlockPrefixCallbackOp template param
- * - "Multiple items with aggregate" — array params + block_aggregate
- * - "Multiple items with prefix callback" — array params + BlockPrefixCallbackOp
- * - "Multiple items with initial value" — array params + initial_value
- * - "Multiple items with initial value and aggregate" — array + initial_value + aggregate
- * - "Partial tile" — has num_valid parameter
+ * - "Full warp" / "Single item" — base overload with single T input
+ * - "Multiple items per thread" — has ITEMS_PER_THREAD array params or range type
+ * - "Partial warp" / "Partial tile" — has num_valid/valid_items parameter
+ * - "With aggregate" — + block_aggregate param
+ * - "With prefix callback" — + BlockPrefixCallbackOp template param
+ * - "Mutable" / "Const" — const/non-const overload pairs
+ * - "Copy assign" / "Move assign" — assignment operators
+ * - "Pre-increment" / "Post-increment" — operator++/-- overloads
+ * - "From X" — assignment from specific types
  */
 function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
-    // Check for deleted
+    // Assignment operators: operator= (handle deleted + non-deleted)
+    if (func.name === "operator=") {
+        return generateAssignmentTabTitle(func, index);
+    }
+
+    // Check for deleted (after operator= which handles its own deleted case)
     if (isEffectivelyDeleted(func)) {
         return `Deleted overload`;
     }
 
+    // Pre/Post increment/decrement: operator++, operator--
+    if (func.name === "operator++" || func.name === "operator--") {
+        return generateIncrementTabTitle(func);
+    }
+
     const isMultiItem = hasArrayParams(func);
+    const isRangeOverload = hasRangeParam(func);
     const hasAggregate = hasAggregateParam(func);
     const hasPrefixCb = hasPrefixCallbackParam(func);
     const isPartialTile = hasPartialTileParam(func);
+    const hasValidItems = func.parameters.some(p => p.name === "valid_items");
     const hasInitVal = hasInitialValueParam(func);
 
     // Build semantic title from detected traits.
-    // For multi-item overloads, initial_value/aggregate/prefix callback are differentiators.
-    // For single-item overloads, only aggregate and prefix callback are differentiators
-    // (initial_value is often shared by all single-item overloads, e.g., ExclusiveScan).
-    if (isMultiItem) {
+    if (isMultiItem || isRangeOverload) {
         const traits: string[] = [];
         if (hasInitVal) {
             traits.push("initial value");
@@ -317,8 +467,11 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
         return "Multiple items per thread";
     }
 
-    if (isPartialTile) {
-        return "Partial tile";
+    // Determine warp vs block level from function path
+    const isWarpLevel = func.path.includes("Warp");
+
+    if (isPartialTile || hasValidItems) {
+        return isWarpLevel ? "Partial warp" : "Partial tile";
     }
 
     if (hasAggregate && hasPrefixCb) {
@@ -331,9 +484,8 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
         return "With aggregate";
     }
 
-    // If this overload has no special distinguishing traits (aggregate, prefix callback, etc.)
-    // it's the "base" single-item overload
-    // Check for single-item pattern: has at least one simple input param that's not an array
+    // For simple single-item overloads (CUB block/warp patterns):
+    // Use "Full warp" for warp-level, "Single item" for block-level
     const hasSimpleInput = func.parameters.some(p => {
         const typeDisplay = p.typeInfo?.display ?? "";
         return (p.name === "input" || p.name === "data") &&
@@ -341,13 +493,17 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
             !(p.arraySuffix && p.arraySuffix.length > 0);
     });
     if (hasSimpleInput) {
-        return "Single item";
+        return isWarpLevel ? "Full warp" : "Single item";
     }
 
-    // Const/Mutable differentiation
+    // Const/Mutable differentiation: for method overload pairs, non-const is "Mutable"
     if (func.isConst) {
         return "Const";
     }
+
+    // For non-const methods that are likely part of a const/non-const pair,
+    // use "Mutable" (this will be overridden in renderOverloadedMethod if needed)
+    // For now, fall through to summary-based title
 
     // Use summary if short enough (with noun phrase extraction)
     if (func.docstring?.summary && func.docstring.summary.length > 0) {
@@ -359,6 +515,87 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
     }
 
     return `Overload ${index + 1}`;
+}
+
+/**
+ * Generate tab titles for assignment operator (operator=) overloads.
+ * Patterns: "Copy assign", "Move assign", "From X type", "From initializer_list"
+ * For deleted overloads: "Copy assign (deleted)", "Move assign (deleted)"
+ */
+function generateAssignmentTabTitle(func: CppFunctionIr, index: number): string {
+    const isDeleted = isEffectivelyDeleted(func);
+    const deletedSuffix = isDeleted ? " (deleted)" : "";
+
+    if (func.parameters.length === 0) {
+        return isDeleted ? "Deleted overload" : `Overload ${index + 1}`;
+    }
+
+    const paramType = func.parameters[0]?.typeInfo?.display ?? "";
+
+    // From nullptr
+    if (paramType.includes("nullptr_t")) {
+        return `From nullptr${deletedSuffix}`;
+    }
+
+    // Move assign: T&& param
+    if (paramType.includes("&&") && !paramType.includes("const")) {
+        return `Move assign${deletedSuffix}`;
+    }
+
+    // From other pointer/type: non-const, non-ref param (like OtherPointer)
+    if (paramType.includes("Other") && !paramType.includes("const") && !paramType.includes("&")) {
+        return `${detectSourceType("const " + paramType + " &")}${deletedSuffix}`;
+    }
+
+    // Copy assign: const T& (same type)
+    if (paramType.includes("const") && paramType.includes("&")) {
+        // Check for cross-type or named-type assignment via detectSourceType
+        if (paramType.includes("OtherT") || paramType.includes("OtherAlloc") ||
+            paramType.includes("Other") || paramType.includes("std::vector") ||
+            paramType.includes("vector_base")) {
+            return detectSourceType(paramType) + deletedSuffix;
+        }
+        return `Copy assign${deletedSuffix}`;
+    }
+
+    // initializer_list
+    if (paramType.includes("initializer_list")) {
+        return `From initializer_list${deletedSuffix}`;
+    }
+
+    if (isDeleted) {
+        return "Deleted overload";
+    }
+
+    // Use summary as fallback
+    if (func.docstring?.summary && func.docstring.summary.length > 0) {
+        const summary = renderSegmentsTrimmed(func.docstring.summary);
+        const title = trimToNounPhrase(summary, 50);
+        if (title) {
+            return title;
+        }
+    }
+
+    return `Overload ${index + 1}`;
+}
+
+/**
+ * Generate tab titles for increment/decrement operators (operator++, operator--).
+ * The C++ convention: no params = prefix (pre-), int param = postfix (post-).
+ */
+function generateIncrementTabTitle(func: CppFunctionIr): string {
+    const isIncrement = func.name === "operator++";
+    const op = isIncrement ? "increment" : "decrement";
+
+    // Postfix: has a dummy int parameter
+    const hasIntParam = func.parameters.some(p =>
+        (p.typeInfo?.display ?? "").trim() === "int"
+    );
+
+    if (hasIntParam) {
+        return `Post-${op}`;
+    }
+    return `Pre-${op}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -687,12 +924,29 @@ export function renderOverloadedMethod(
     const titleGenerator = options.generateTabTitle ??
         (options.isConstructor ? generateConstructorTabTitle : generateMethodTabTitle);
 
+    // Detect const/non-const pairs for Mutable/Const tab titles.
+    // When overloads differ only in const qualification, use "Mutable" and "Const" titles.
+    const isConstMutablePair = !options.isConstructor &&
+        nonDeletedFuncs.length === 2 &&
+        nonDeletedFuncs.some(f => f.isConst) &&
+        nonDeletedFuncs.some(f => !f.isConst);
+
+    // Sort const/mutable pairs so non-const (Mutable) comes first
+    if (isConstMutablePair) {
+        nonDeletedFuncs.sort((a, b) => (a.isConst ? 1 : 0) - (b.isConst ? 1 : 0));
+    }
+
     // Render non-deleted overloads as individual tabs
     for (let i = 0; i < nonDeletedFuncs.length; i++) {
         const func = nonDeletedFuncs[i]!;
         // Use the original index from the full funcs array for title generation
         const originalIndex = funcs.indexOf(func);
-        const tabTitle = titleGenerator(func, originalIndex);
+        let tabTitle: string;
+        if (isConstMutablePair) {
+            tabTitle = func.isConst ? "Const" : "Mutable";
+        } else {
+            tabTitle = titleGenerator(func, originalIndex);
+        }
         const overloadBadges = getOverloadSpecificQualifiers(func, commonQuals);
 
         lines.push(`<Tab title="${tabTitle}">`);
