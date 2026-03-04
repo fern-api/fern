@@ -676,8 +676,52 @@ export abstract class AbstractConverterContext<Spec extends object> {
         return undefined;
     }
 
+    /**
+     * Returns a namespaced schema ID suitable for use as a unique TypeId.
+     * When a namespace is set, prefixes the raw schema ID with `{namespace}:`
+     * to prevent collisions when multiple specs define schemas with the same name.
+     * The method is idempotent: if the ID already starts with the namespace prefix, it is returned as-is.
+     */
+    public getNamespacedSchemaId(schemaId: string): string {
+        if (this.namespace == null) {
+            return schemaId;
+        }
+        const prefix = `${this.namespace}:`;
+        if (schemaId.startsWith(prefix)) {
+            return schemaId;
+        }
+        return `${prefix}${schemaId}`;
+    }
+
+    /**
+     * Strips the namespace prefix from a schema ID if present.
+     * Returns the raw schema name suitable for display name generation.
+     */
+    public getRawSchemaId(schemaId: string): string {
+        if (this.namespace == null) {
+            return schemaId;
+        }
+        const prefix = `${this.namespace}:`;
+        if (schemaId.startsWith(prefix)) {
+            return schemaId.slice(prefix.length);
+        }
+        return schemaId;
+    }
+
     public getTypeIdFromSchemaReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
         const schemaMatch = reference.$ref.match(/\/schemas\/(.+)$/);
+        if (!schemaMatch || !schemaMatch[1]) {
+            return undefined;
+        }
+        return this.getNamespacedSchemaId(schemaMatch[1]);
+    }
+
+    /**
+     * Extracts the raw (non-namespaced) schema name from a $ref.
+     * Use this when you need the display name rather than a unique TypeId.
+     */
+    public getRawSchemaNameFromReference(reference: OpenAPIV3_1.ReferenceObject): string | undefined {
+        const schemaMatch = reference.$ref.match(/\/schemas\/([^/]+)/);
         if (!schemaMatch || !schemaMatch[1]) {
             return undefined;
         }
@@ -692,7 +736,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 file: undefined
             },
             name: this.casingsGenerator.generateName(id),
-            typeId: id,
+            typeId: this.getNamespacedSchemaId(id),
             displayName,
             default: undefined,
             inline: false
@@ -703,15 +747,14 @@ export abstract class AbstractConverterContext<Spec extends object> {
         if (typeReference.type !== "named") {
             return undefined;
         }
-        const typeId = typeReference.typeId;
         return {
-            typeId,
+            typeId: typeReference.typeId,
             fernFilepath: {
                 allParts: [],
                 packagePath: [],
                 file: undefined
             },
-            name: this.casingsGenerator.generateName(typeId),
+            name: typeReference.name,
             displayName: typeReference.displayName
         };
     }
@@ -723,7 +766,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
         id: string;
         inlinedTypes: Record<TypeId, SchemaConverter.ConvertedSchema>;
     }): Record<TypeId, SchemaConverter.ConvertedSchema> {
-        return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== id));
+        const namespacedId = this.getNamespacedSchemaId(id);
+        return Object.fromEntries(Object.entries(inlinedTypes).filter(([key]) => key !== namespacedId));
     }
 
     public static maybeTrimPrefix(value: string, prefix: string): string {

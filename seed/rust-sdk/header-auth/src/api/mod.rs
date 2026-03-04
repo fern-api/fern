@@ -9,5 +9,4 @@
 
 pub mod resources;
 
-pub use resources::{ServiceClient, HeaderTokenClient};
-
+pub use resources::{HeaderTokenClient, ServiceClient};

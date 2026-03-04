@@ -43,6 +43,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +52,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 public final class ClientOptionsGenerator extends AbstractFileGenerator {
@@ -672,6 +674,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .build());
         }
 
+        // Add interceptors list field when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            builder.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(Interceptor.class)),
+                            "interceptors",
+                            Modifier.PRIVATE,
+                            Modifier.FINAL)
+                    .initializer("new $T<>()", ArrayList.class)
+                    .build());
+        }
+
         builder.addFields(variableFields.values())
                 .addFields(apiPathParamFields.values())
                 .addMethod(getEnvironmentBuilder())
@@ -710,6 +723,21 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .addStatement("return this")
                         .build());
+
+        // Add addInterceptor method when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            builder.addMethod(MethodSpec.methodBuilder("addInterceptor")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors are applied to the OkHttpClient when the client is built.\n"
+                                    + "This can be used for custom request signing, logging, or other request/response modifications.\n")
+                    .returns(builderClassName)
+                    .addParameter(Interceptor.class, "interceptor")
+                    .addStatement("this.interceptors.add(interceptor)")
+                    .addStatement("return this")
+                    .build());
+        }
 
         // Only add webSocketFactory method to builder if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -1158,8 +1186,17 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         OKHTTP_CLIENT_FIELD.name + "Builder",
                         clientGeneratorContext.getPoetClassNameFactory().getLoggingInterceptorClassName(),
                         "logger")
-                .addCode("\n")
-                .addStatement("this.$L = $L.build()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name + "Builder")
+                .addCode("\n");
+
+        // Apply custom interceptors when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            builder.beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                    .addStatement("$L.addInterceptor(interceptor)", OKHTTP_CLIENT_FIELD.name + "Builder")
+                    .endControlFlow()
+                    .addCode("\n");
+        }
+
+        builder.addStatement("this.$L = $L.build()", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name + "Builder")
                 .addStatement(
                         "this.$L = $T.of($L.callTimeoutMillis() / 1000)",
                         TIMEOUT_FIELD.name,

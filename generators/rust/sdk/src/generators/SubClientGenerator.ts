@@ -908,9 +908,15 @@ export class SubClientGenerator {
 
         // Handle all three scenarios properly
         if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
-            // MIXED: Request body contains both body + query fields
-            this.addRequestBodyParameter(endpoint, params);
-            // Query params are now included in the request body struct
+            if (this.isBytesEndpoint(endpoint)) {
+                // BYTES + QUERY: bytes body can't hold query fields, add them separately
+                this.addRequestBodyParameter(endpoint, params);
+                this.addIndividualQueryParameters(endpoint, params);
+            } else {
+                // MIXED: Request body contains both body + query fields
+                this.addRequestBodyParameter(endpoint, params);
+                // Query params are now included in the request body struct
+            }
         } else if (endpoint.requestBody) {
             // BODY-ONLY: Traditional request body
             this.addRequestBodyParameter(endpoint, params);
@@ -921,6 +927,18 @@ export class SubClientGenerator {
         // ELSE: No parameters beyond path params
 
         return params;
+    }
+
+    private addIndividualQueryParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
+        for (const queryParam of endpoint.queryParameters) {
+            const paramName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
+            params.push({
+                name: paramName,
+                type: generateRustTypeForTypeReference(queryParam.valueType, this.context),
+                isRef: this.shouldPassByReference(queryParam.valueType),
+                optional: false
+            });
+        }
     }
 
     private addPathParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
@@ -1260,7 +1278,10 @@ export class SubClientGenerator {
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
         const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
 
-        if (endpoint?.requestBody) {
+        if (endpoint && this.isBytesEndpoint(endpoint)) {
+            // BYTES body: query params are individual method parameters
+            return `${fieldName}.clone()`;
+        } else if (endpoint?.requestBody) {
             // MIXED or BODY-ONLY: Query params are in request struct
             return `request.${fieldName}.clone()`;
         } else if (endpoint && endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
@@ -1437,6 +1458,13 @@ export class SubClientGenerator {
             return false;
         }
         return endpoint.requestBody.type === "fileUpload";
+    }
+
+    private isBytesEndpoint(endpoint: FernIr.HttpEndpoint): boolean {
+        if (!endpoint.requestBody) {
+            return false;
+        }
+        return endpoint.requestBody.type === "bytes";
     }
 
     private getReturnType(endpoint: FernIr.HttpEndpoint): rust.Type {

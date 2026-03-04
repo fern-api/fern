@@ -1,11 +1,14 @@
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../api/checker/ApiChecker.js";
+import { FernYmlSchemaLoader } from "../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { CliError } from "../../errors/CliError.js";
+import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
+import { WorkspaceLoader } from "../../workspace/WorkspaceLoader.js";
 import { command } from "../_internal/command.js";
 
 export declare namespace CheckCommand {
@@ -19,36 +22,57 @@ export declare namespace CheckCommand {
 
 export class CheckCommand {
     public async handle(context: Context, args: CheckCommand.Args): Promise<void> {
-        const workspace = await context.loadWorkspaceOrThrow();
+        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
+        const fernYml = await schemaLoader.loadOrThrow();
+
+        context.telemetry.tag({ org: fernYml.data.org });
+
+        const loader = new WorkspaceLoader({ cwd: context.cwd, logger: context.stderr });
+        const workspace = await loader.loadOrThrow({ fernYml });
 
         this.validateArgs(args, workspace);
 
-        const checker = new ApiChecker({
-            context,
-            cliVersion: workspace.cliVersion
-        });
-
-        const checkResult = await checker.check({
-            workspace,
-            apiNames: args.api != null ? [args.api] : undefined,
-            strict: args.strict
-        });
-
-        const hasErrors = checkResult.invalidApis.size > 0;
-        const hasWarnings = checkResult.warningCount > 0;
+        const { totalErrors, totalWarnings } = await this.runChecks({ context, workspace, fernYml });
 
         // Fail if there are errors, or if strict mode and there are warnings.
-        if (hasErrors || (args.strict && hasWarnings)) {
+        if (totalErrors > 0 || (args.strict && totalWarnings > 0)) {
             throw CliError.exit();
         }
 
-        if (hasWarnings) {
-            process.stderr.write(`${Icons.warning} ${chalk.yellow(`Found ${checkResult.warningCount} warnings`)}\n`);
-            process.stderr.write(chalk.dim("  Run 'fern check --strict' to treat warnings as errors\n"));
+        if (totalWarnings > 0) {
+            context.stderr.info(`${Icons.warning} ${chalk.yellow(`Found ${totalWarnings} warnings`)}`);
+            context.stderr.info(chalk.dim("  Run 'fern check --strict' to treat warnings as errors"));
             return;
         }
 
-        process.stderr.write(`${Icons.success} ${chalk.green("All checks passed")}\n`);
+        context.stderr.info(`${Icons.success} ${chalk.green("All checks passed")}`);
+    }
+
+    private async runChecks({
+        context,
+        workspace,
+        fernYml
+    }: {
+        context: Context;
+        workspace: Workspace;
+        fernYml: FernYmlSchemaLoader.Success;
+    }): Promise<{ totalErrors: number; totalWarnings: number }> {
+        const apiChecker = new ApiChecker({
+            context,
+            cliVersion: workspace.cliVersion
+        });
+        const apiCheckResult = await apiChecker.check({
+            workspace
+        });
+
+        const sdkChecker = new SdkChecker({ context });
+        const sdkCheckResult = await sdkChecker.check({ workspace, fernYml });
+
+        return {
+            totalErrors:
+                (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount,
+            totalWarnings: apiCheckResult.warningCount + sdkCheckResult.warningCount
+        };
     }
 
     private validateArgs(args: CheckCommand.Args, workspace: Workspace): void {

@@ -60,7 +60,9 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -86,7 +88,9 @@ public partial class SeedPackageYmlClient : ISeedPackageYmlClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPackageYmlApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

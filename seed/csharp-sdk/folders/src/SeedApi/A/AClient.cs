@@ -6,7 +6,7 @@ namespace SeedApi.A;
 
 public partial class AClient : IAClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal AClient(RawClient client)
     {

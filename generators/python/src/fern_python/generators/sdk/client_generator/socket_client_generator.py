@@ -24,6 +24,7 @@ class ConstructorParameter:
 
 class SocketClientGenerator:
     WEBSOCKET_MEMBER_NAME = "_websocket"
+    _LOGGER_VARIABLE_NAME = "_logger"
 
     def __init__(
         self,
@@ -46,6 +47,22 @@ class SocketClientGenerator:
         async_class_declaration = self._create_class_declaration(is_async=True)
         sync_class_declaration = self._create_class_declaration(is_async=False)
         response_type_declaration = self._create_response_type_declaration()
+        logger_declaration = AST.VariableDeclaration(
+            name=self._LOGGER_VARIABLE_NAME,
+            initializer=AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=AST.ReferenceImport(module=AST.Module.built_in(("logging",))),
+                        qualified_name_excluding_import=("getLogger",),
+                    ),
+                    args=[AST.Expression("__name__")],
+                ),
+            ),
+        )
+        source_file.add_declaration(
+            declaration=logger_declaration,
+            should_export=False,
+        )
         source_file.add_declaration(
             declaration=response_type_declaration,
             should_export=False,
@@ -172,9 +189,18 @@ class SocketClientGenerator:
                     writer.write_line("yield message")
                 writer.write_line("else:")
                 with writer.indent():
-                    writer.write("yield ")
-                    writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-                    writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
+                    writer.write_line("try:")
+                    with writer.indent():
+                        writer.write("yield ")
+                        writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                        writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
+                        writer.write_line()
+                    writer.write_line("except Exception:")
+                    with writer.indent():
+                        writer.write_line(
+                            f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")'
+                        )
+                        writer.write_line("continue")
 
         return _get_iterator_method_body
 
@@ -218,10 +244,18 @@ class SocketClientGenerator:
                     writer.write_line("else:")
                     with writer.indent():
                         writer.write_line("json_data = json.loads(raw_message)")
-                        writer.write("parsed = ")
-                        writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-                        writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
-                        writer.write_line()
+                        writer.write_line("try:")
+                        with writer.indent():
+                            writer.write("parsed = ")
+                            writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                            writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
+                            writer.write_line()
+                        writer.write_line("except Exception:")
+                        with writer.indent():
+                            writer.write_line(
+                                f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")'
+                            )
+                            writer.write_line("continue")
                     writer.write(emit_call_start)
                     writer.write_reference(self._context.core_utilities.get_event_type())
                     writer.write(".MESSAGE, parsed)")
@@ -339,9 +373,18 @@ class SocketClientGenerator:
             with writer.indent():
                 writer.write_line("return data  # type: ignore")
             writer.write_line("json_data = json.loads(data)")
-            writer.write("return ")
-            writer.write_reference(self._context.core_utilities.get_parse_obj_as())
-            writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
+            writer.write_line("try:")
+            with writer.indent():
+                writer.write("return ")
+                writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
+                writer.write_line()
+            writer.write_line("except Exception:")
+            with writer.indent():
+                writer.write_line(
+                    f'{self._LOGGER_VARIABLE_NAME}.warning("Skipping unknown WebSocket message; update your SDK version to support new message types.")'
+                )
+                writer.write_line("return json_data  # type: ignore")
 
         return _get_recv_method_body
 

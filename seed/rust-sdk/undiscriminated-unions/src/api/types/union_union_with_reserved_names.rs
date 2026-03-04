@@ -3,11 +3,11 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum UnionWithReservedNames {
-        Literal0(String),
+    Literal0(String),
 
-        Literal1(String),
+    Literal1(String),
 
-        String(String),
+    String(String),
 }
 
 impl UnionWithReservedNames {
@@ -23,47 +23,45 @@ impl UnionWithReservedNames {
         matches!(self, Self::String(_))
     }
 
-
     pub fn as_literal0(&self) -> Option<&String> {
         match self {
-                    Self::Literal0(value) => Some(value),
-                    _ => None,
-                }
+            Self::Literal0(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_literal0(self) -> Option<String> {
         match self {
-                    Self::Literal0(value) => Some(value),
-                    _ => None,
-                }
+            Self::Literal0(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_literal1(&self) -> Option<&String> {
         match self {
-                    Self::Literal1(value) => Some(value),
-                    _ => None,
-                }
+            Self::Literal1(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_literal1(self) -> Option<String> {
         match self {
-                    Self::Literal1(value) => Some(value),
-                    _ => None,
-                }
+            Self::Literal1(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_string(&self) -> Option<&String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_string(self) -> Option<String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
-
 }

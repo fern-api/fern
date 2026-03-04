@@ -9,21 +9,22 @@ pub struct WithJsonPropertyRequest {
 }
 impl WithJsonPropertyRequest {
     pub fn to_multipart(self) -> reqwest::multipart::Form {
-    let mut form = reqwest::multipart::Form::new();
+        let mut form = reqwest::multipart::Form::new();
 
-    form = form.part(
-        "file",
-        reqwest::multipart::Part::bytes(self.file.clone())
-            .file_name("file")
-            .mime_str("application/octet-stream").unwrap()
-    );
+        form = form.part(
+            "file",
+            reqwest::multipart::Part::bytes(self.file.clone())
+                .file_name("file")
+                .mime_str("application/octet-stream")
+                .unwrap(),
+        );
 
-    if let Some(ref value) = self.json {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("json", json_str);
+        if let Some(ref value) = self.json {
+            if let Ok(json_str) = serde_json::to_string(value) {
+                form = form.text("json", json_str);
+            }
         }
-    }
 
-    form
-}
+        form
+    }
 }

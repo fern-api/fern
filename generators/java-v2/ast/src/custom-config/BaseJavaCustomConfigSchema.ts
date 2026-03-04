@@ -14,6 +14,7 @@ export const BaseJavaCustomConfigSchema = z.object({
 
     // General options.
     "custom-dependencies": z.array(z.string()).optional(),
+    "custom-plugins": z.array(z.string()).optional(),
     "disable-required-property-builder-checks": z.boolean().optional(),
     "enable-forward-compatible-enums": z.boolean().optional(),
     "enable-inline-types": z.boolean().optional(),
@@ -31,6 +32,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "gradle-plugin-management": z.string().optional(),
     "gradle-central-dependency-management": z.boolean().optional(),
     "output-directory": z.enum(["source-root", "project-root"]).optional(),
+    "custom-interceptors": z.boolean().optional(),
 
     // Hidden options (for debugging).
     "enable-gradle-profiling": z.boolean().optional(),

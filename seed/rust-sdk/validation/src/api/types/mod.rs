@@ -1,20 +1,19 @@
-pub mod small_integer;
-pub mod large_integer;
+pub mod create_request;
 pub mod double;
-pub mod word;
+pub mod get_query_request;
+pub mod large_integer;
 pub mod sentence;
 pub mod shape;
+pub mod small_integer;
 pub mod r#type;
-pub mod create_request;
-pub mod get_query_request;
+pub mod word;
 
-pub use small_integer::{SmallInteger};
-pub use large_integer::{LargeInteger};
-pub use double::{Double};
-pub use word::{Word};
-pub use sentence::{Sentence};
-pub use shape::{Shape};
-pub use r#type::{Type};
-pub use create_request::{CreateRequest};
-pub use get_query_request::{GetQueryRequest};
-
+pub use create_request::CreateRequest;
+pub use double::Double;
+pub use get_query_request::GetQueryRequest;
+pub use large_integer::LargeInteger;
+pub use r#type::Type;
+pub use sentence::Sentence;
+pub use shape::Shape;
+pub use small_integer::SmallInteger;
+pub use word::Word;
