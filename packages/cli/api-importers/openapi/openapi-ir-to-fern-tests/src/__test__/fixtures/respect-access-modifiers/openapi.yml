@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info:
+  title: Respect Access Modifiers API
+  description: Tests the convenience flag that enables both respect-readonly-schemas and respect-writeonly-schemas
+  version: 1.0.0
+
+paths:
+  /users:
+    post:
+      summary: Create a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - name
+        - email
+      properties:
+        # System-generated readonly property (should be excluded from request schemas)
+        id:
+          type: string
+          readOnly: true
+
+        # Regular properties (should appear in both request and response)
+        name:
+          type: string
+
+        email:
+          type: string
+          format: email
+
+        # Sensitive writeonly property (should be excluded from response schemas)
+        password:
+          type: string
+          writeOnly: true
+
+        # System-generated timestamps (readonly)
+        createdAt:
+          type: string
+          format: date-time
+          readOnly: true
+
+        # Regular property
+        isActive:
+          type: boolean
+          default: true

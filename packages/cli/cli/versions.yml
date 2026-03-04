@@ -1,4 +1,32 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.4.0
+  changelogEntry:
+    - summary: |
+        Add support for writeonly properties in OpenAPI specifications with two new configuration options:
+
+        - `respect-writeonly-schemas`: Filters writeonly properties from response schemas and creates `${name}Write` variants for request schemas
+        - `respect-access-modifiers`: Convenience flag that enables both `respect-readonly-schemas` and `respect-writeonly-schemas`
+
+        ```yaml
+        # generators.yml
+        api:
+          specs:
+            - openapi: ./openapi.yml
+          settings:
+            # Convenience flag - enables both readonly and writeonly handling
+            respect-access-modifiers: true
+
+            # OR individual flags
+            # respect-readonly-schemas: true
+            # respect-writeonly-schemas: true
+        ```
+
+        This extends the existing readonly property support to symmetrically handle writeonly properties,
+        ensuring sensitive data like passwords are excluded from response types while being available in request types.
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 65
+
 - version: 4.3.4
   changelogEntry:
     - summary: |

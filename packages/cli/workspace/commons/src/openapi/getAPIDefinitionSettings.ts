@@ -40,6 +40,7 @@ const FIELD_MAPPINGS: Partial<MappableFields> = {
     coerceEnumsToLiterals: "coerceEnumsToLiterals",
     objectQueryParameters: "objectQueryParameters",
     respectReadonlySchemas: "respectReadonlySchemas",
+    respectWriteonlySchemas: "respectWriteonlySchemas",
     respectNullableSchemas: "respectNullableSchemas",
     onlyIncludeReferencedSchemas: "onlyIncludeReferencedSchemas",
     inlinePathParameters: "inlinePathParameters",
@@ -96,6 +97,12 @@ export function getAPIDefinitionSettings(settings?: generatorsYml.APIDefinitionS
                     value as unknown as OpenAPISettings[keyof OpenAPISettings]
                 );
             }
+        }
+
+        // Handle convenience flag: if respectAccessModifiers is true, enable both individual flags
+        if (settings.respectAccessModifiers) {
+            mappedSettings.respectReadonlySchemas = true;
+            mappedSettings.respectWriteonlySchemas = true;
         }
     }
 

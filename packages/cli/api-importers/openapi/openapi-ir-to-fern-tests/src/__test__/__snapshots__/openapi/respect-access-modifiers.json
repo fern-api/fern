@@ -1,0 +1,165 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createAUser": {
+              "auth": undefined,
+              "display-name": "Create a user",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "email": "email",
+                    "name": "name",
+                  },
+                  "response": {
+                    "body": {
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "email": "email",
+                      "id": "id",
+                      "isActive": true,
+                      "name": "name",
+                      "password": "password",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/users",
+              "request": {
+                "body": "User",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "User created successfully",
+                "status-code": 201,
+                "type": "User",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "User": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "createdAt": {
+                "access": "read-only",
+                "type": "optional<datetime>",
+              },
+              "email": {
+                "type": "string",
+                "validation": {
+                  "format": "email",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "id": {
+                "access": "read-only",
+                "type": "optional<string>",
+              },
+              "isActive": {
+                "default": true,
+                "type": "optional<boolean>",
+              },
+              "name": "string",
+              "password": {
+                "access": "write-only",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createAUser:
+      path: /users
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Create a user
+      request:
+        body: User
+        content-type: application/json
+      response:
+        docs: User created successfully
+        type: User
+        status-code: 201
+      examples:
+        - request:
+            name: name
+            email: email
+          response:
+            body:
+              id: id
+              name: name
+              email: email
+              password: password
+              createdAt: '2024-01-15T09:30:00Z'
+              isActive: true
+  source:
+    openapi: ../openapi.yml
+types:
+  User:
+    properties:
+      id:
+        type: optional<string>
+        access: read-only
+      name: string
+      email:
+        type: string
+        validation:
+          format: email
+      password:
+        type: optional<string>
+        access: write-only
+      createdAt:
+        type: optional<datetime>
+        access: read-only
+      isActive:
+        type: optional<boolean>
+        default: true
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Respect Access Modifiers API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Respect Access Modifiers API
+",
+  },
+}

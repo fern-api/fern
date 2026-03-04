@@ -429,6 +429,12 @@ types:
       respect-readonly-schemas:
         type: optional<boolean>
         docs: Enables exploring readonly schemas in OpenAPI specifications
+      respect-writeonly-schemas:
+        type: optional<boolean>
+        docs: Enables exploring writeonly schemas in OpenAPI specifications
+      respect-access-modifiers:
+        type: optional<boolean>
+        docs: Convenience flag that sets both respect-readonly-schemas and respect-writeonly-schemas to true
       respect-forward-compatible-enums:
         type: optional<boolean>
         docs: Enables respecting forward compatible enums in OpenAPI specifications. Defaults to false.

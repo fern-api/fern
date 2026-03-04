@@ -145,21 +145,31 @@ export function buildObjectTypeDeclaration({
     declarationDepth: number;
 }): ConvertedTypeDeclaration {
     const isInRequestState = context.isInState(State.Request);
+    const isInResponseState = !isInRequestState;
     const respectReadonlySchemas = context.options.respectReadonlySchemas;
+    const respectWriteonlySchemas = context.options.respectWriteonlySchemas;
     const endpointMethod = context.getEndpointMethod();
     const isWriteMethod = endpointMethod === "POST" || endpointMethod === "PUT" || endpointMethod === "PATCH";
 
     const shouldSkipReadonly = isInRequestState && respectReadonlySchemas && isWriteMethod;
+    const shouldSkipWriteonly = isInResponseState && respectWriteonlySchemas;
 
     let readOnlyPropertyPresent = false;
+    let writeOnlyPropertyPresent = false;
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
     const schemasToInline = new Set<SchemaId>();
     for (const property of schema.properties) {
         if (property.readonly) {
             readOnlyPropertyPresent = true;
         }
+        if (property.writeonly) {
+            writeOnlyPropertyPresent = true;
+        }
 
         if (shouldSkipReadonly && property.readonly) {
+            continue;
+        }
+        if (shouldSkipWriteonly && property.writeonly) {
             continue;
         }
 
@@ -300,8 +310,17 @@ export function buildObjectTypeDeclaration({
     objectTypeDeclaration.inline = getInline(schema, declarationDepth);
 
     const name = schema.nameOverride ?? schema.generatedName;
+    const hasReadonlyAndSkipped = readOnlyPropertyPresent && respectReadonlySchemas && !shouldSkipReadonly;
+    const hasWriteonlyAndSkipped = writeOnlyPropertyPresent && respectWriteonlySchemas && !shouldSkipWriteonly;
+
     const finalName =
-        readOnlyPropertyPresent && context.options.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name;
+        hasReadonlyAndSkipped && hasWriteonlyAndSkipped
+            ? `${name}ReadWrite` // Both readonly and writeonly present
+            : hasReadonlyAndSkipped
+              ? `${name}Read`
+              : hasWriteonlyAndSkipped
+                ? `${name}Write`
+                : name;
 
     // Record the final name mapping for reference resolution
     if (finalName !== name) {

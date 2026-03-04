@@ -29,6 +29,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     coerceEnumsToLiterals: undefined,
     objectQueryParameters: undefined,
     respectReadonlySchemas: undefined,
+    respectWriteonlySchemas: undefined,
+    respectAccessModifiers: undefined,
     respectNullableSchemas: undefined,
     inlinePathParameters: undefined,
     useBytesForBinaryResponse: undefined,

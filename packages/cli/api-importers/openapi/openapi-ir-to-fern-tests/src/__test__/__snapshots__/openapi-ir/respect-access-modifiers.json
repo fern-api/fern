@@ -1,0 +1,282 @@
+{
+  "title": "Respect Access Modifiers API",
+  "description": "Tests the convenience flag that enables both respect-readonly-schemas and respect-writeonly-schemas",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Create a user",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostUsersRequest",
+      "request": {
+        "schema": {
+          "generatedName": "PostUsersRequest",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "User created successfully",
+        "schema": {
+          "generatedName": "PostUsersResponse",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/users",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "email": {
+                "value": {
+                  "value": "email",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "email": {
+                  "value": {
+                    "value": "email",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "password": {
+                  "value": {
+                    "value": "password",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "createdAt": {
+                  "value": {
+                    "value": "2024-01-15T09:30:00Z",
+                    "type": "datetime"
+                  },
+                  "type": "primitive"
+                },
+                "isActive": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "generatedName": "UserId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "userName",
+            "key": "name",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "UserName",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userEmail",
+            "key": "email",
+            "schema": {
+              "schema": {
+                "format": "email",
+                "type": "string"
+              },
+              "generatedName": "UserEmail",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userPassword",
+            "key": "password",
+            "schema": {
+              "generatedName": "UserPassword",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserPassword",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "writeonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "userCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "generatedName": "UserCreatedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "UserCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "userIsActive",
+            "key": "isActive",
+            "schema": {
+              "generatedName": "UserIsActive",
+              "value": {
+                "schema": {
+                  "default": true,
+                  "type": "boolean"
+                },
+                "generatedName": "UserIsActive",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "User",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

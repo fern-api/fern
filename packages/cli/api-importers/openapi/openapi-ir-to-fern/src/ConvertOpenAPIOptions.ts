@@ -25,6 +25,11 @@ export interface ConvertOpenAPIOptions {
     respectReadonlySchemas: boolean;
 
     /**
+     * If true, the converter will respect writeonly properties in OpenAPI schemas.
+     */
+    respectWriteonlySchemas: boolean;
+
+    /**
      * If true, the converter will respect nullable properties in OpenAPI schemas.
      */
     respectNullableSchemas: boolean;
@@ -105,6 +110,7 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     detectGlobalHeaders: true,
     objectQueryParameters: true,
     respectReadonlySchemas: false,
+    respectWriteonlySchemas: false,
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
     inlinePathParameters: true,

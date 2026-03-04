@@ -69,8 +69,8 @@ export class OpenApiIrConverterContext {
     private state: Set<State> = new Set();
 
     /**
-     * Maps original schema IDs to their final names after readonly processing.
-     * Used to resolve schema references correctly when respect-readonly-schemas is enabled.
+     * Maps original schema IDs to their final names after readonly/writeonly processing.
+     * Used to resolve schema references correctly when respect-readonly-schemas or respect-writeonly-schemas is enabled.
      */
     private schemaNameMapping: Map<string, string> = new Map();
 
@@ -307,8 +307,8 @@ export class OpenApiIrConverterContext {
      * Gets the final name for a schema, or the original name if no mapping exists.
      */
     public getSchemaFinalName(schemaId: string): string {
-        // Fast path: if respect-readonly-schemas is disabled, no schema renaming occurs
-        if (!this.options.respectReadonlySchemas) {
+        // Fast path: if neither respect flag is enabled, no schema renaming occurs
+        if (!this.options.respectReadonlySchemas && !this.options.respectWriteonlySchemas) {
             return schemaId;
         }
         return this.schemaNameMapping.get(schemaId) ?? schemaId;
