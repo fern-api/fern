@@ -17,6 +17,11 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import urlJoin from "url-join";
 
+const TOO_MANY_REQUESTS_INITIAL_RETRY_DELAY_MS = 2_000;
+const TOO_MANY_REQUESTS_MAX_RETRY_DELAY_MS = 120_000;
+const TOO_MANY_REQUESTS_MAX_RETRIES = 5;
+const TOO_MANY_REQUESTS_JITTER_FACTOR = 0.2;
+
 export async function createAndStartJob({
     projectConfig,
     workspace,
@@ -30,7 +35,8 @@ export async function createAndStartJob({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
-    fernignorePath
+    fernignorePath,
+    handleTooManyRequests
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -45,6 +51,7 @@ export async function createAndStartJob({
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     fernignorePath: string | undefined;
+    handleTooManyRequests: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Read fernignore file contents if path is provided
     let fernignoreContents: string | undefined;
@@ -56,7 +63,7 @@ export async function createAndStartJob({
         }
     }
 
-    const job = await createJob({
+    const job = await createJobWithOptionalRetry({
         projectConfig,
         workspace,
         organization,
@@ -67,10 +74,61 @@ export async function createAndStartJob({
         token,
         whitelabel,
         absolutePathToPreview,
-        fernignoreContents
+        fernignoreContents,
+        handleTooManyRequests
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
     return job;
+}
+
+async function createJobWithOptionalRetry(
+    args: Parameters<typeof createJob>[0] & { handleTooManyRequests: boolean }
+): Promise<FernFiddle.remoteGen.CreateJobResponse> {
+    const { handleTooManyRequests, ...createJobArgs } = args;
+
+    if (!handleTooManyRequests) {
+        try {
+            return await createJob(createJobArgs);
+        } catch (error) {
+            if (error instanceof TooManyRequestsError) {
+                return args.context.failAndThrow(
+                    "Received 429 Too Many Requests. Re-run with --handle-too-many-requests to automatically retry."
+                );
+            }
+            throw error;
+        }
+    }
+
+    for (let attempt = 0; attempt <= TOO_MANY_REQUESTS_MAX_RETRIES; attempt++) {
+        try {
+            return await createJob(createJobArgs);
+        } catch (error) {
+            if (error instanceof TooManyRequestsError && attempt < TOO_MANY_REQUESTS_MAX_RETRIES) {
+                const baseDelay = Math.min(
+                    TOO_MANY_REQUESTS_INITIAL_RETRY_DELAY_MS * 2 ** attempt,
+                    TOO_MANY_REQUESTS_MAX_RETRY_DELAY_MS
+                );
+                const jitter = 1 + (Math.random() - 0.5) * TOO_MANY_REQUESTS_JITTER_FACTOR;
+                const delay = Math.round(baseDelay * jitter);
+                args.context.logger.warn(
+                    `Received 429 Too Many Requests. Retrying in ${(delay / 1000).toFixed(1)}s (attempt ${attempt + 1}/${TOO_MANY_REQUESTS_MAX_RETRIES})...`
+                );
+                await new Promise((resolve) => setTimeout(resolve, delay));
+            } else {
+                throw error;
+            }
+        }
+    }
+
+    // Unreachable, but TypeScript needs this
+    return args.context.failAndThrow("Exceeded maximum retries for 429 Too Many Requests.");
+}
+
+class TooManyRequestsError extends Error {
+    constructor() {
+        super("Received 429 Too Many Requests");
+        Object.setPrototypeOf(this, TooManyRequestsError.prototype);
+    }
 }
 
 async function createJob({
@@ -125,7 +183,13 @@ async function createJob({
     });
 
     if (!createResponse.ok) {
-        return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
+        // Check for 429 Too Many Requests before processing the error through the visitor.
+        // This allows the retry wrapper to catch and retry on rate limiting.
+        const rawError = createResponse.error as unknown as Fetcher.Error;
+        if (rawError.reason === "status-code" && rawError.statusCode === 429) {
+            throw new TooManyRequestsError();
+        }
+        return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
             },
