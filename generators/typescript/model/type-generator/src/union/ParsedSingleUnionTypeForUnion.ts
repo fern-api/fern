@@ -79,7 +79,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     }
 
     public getTypeName(): string {
-        return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.unsafeName);
+        return sanitizeIdentifier(this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName);
     }
 
     public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
