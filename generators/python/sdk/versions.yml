@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 5.0.7
+  changelogEntry:
+    - summary: |
+        Fix path parameters not being URL encoded. Path parameters containing
+        special characters are now correctly URL-encoded using `urllib.parse.quote`
+        before being embedded into request URLs.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
 - version: 5.0.6
   changelogEntry:
     - summary: |
