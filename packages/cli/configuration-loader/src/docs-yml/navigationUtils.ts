@@ -138,9 +138,7 @@ export async function buildNavigationForDirectory({
                   markdownFiles.map((file) => getFrontmatterTitle({ absolutePath: file.absolutePath, readFileFn }))
               )
             : Promise.resolve(markdownFiles.map(() => undefined)),
-        Promise.all(
-            markdownFiles.map((file) => getFrontmatterHidden({ absolutePath: file.absolutePath, readFileFn }))
-        )
+        Promise.all(markdownFiles.map((file) => getFrontmatterHidden({ absolutePath: file.absolutePath, readFileFn })))
     ]);
 
     const pages: docsYml.DocsNavigationItem[] = markdownFiles.map((file, index) => {
