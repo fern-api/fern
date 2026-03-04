@@ -3,6 +3,7 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
+    ExampleUnionBaseProperty,
     FernIr,
     TypeDeclaration,
     TypeId,
@@ -352,6 +353,63 @@ function generateMinimalNamedExample({
         }
         case "union": {
             const discriminant = typeDeclaration.shape.discriminant;
+
+            // Generate base property examples for the union stub
+            const basePropertyJsonExamples: Record<string, unknown> = {};
+            const baseProperties: ExampleUnionBaseProperty[] = [];
+            for (const baseProperty of typeDeclaration.shape.baseProperties) {
+                if (isLeafTypeReference(baseProperty.valueType, typeDeclarations)) {
+                    const propertyExample = generateTypeReferenceExample({
+                        fieldName: baseProperty.name.wireValue,
+                        typeReference: baseProperty.valueType,
+                        typeDeclarations,
+                        currentDepth: 0,
+                        maxDepth: 3,
+                        skipOptionalProperties: true
+                    });
+                    if (propertyExample.type === "success") {
+                        baseProperties.push({
+                            name: baseProperty.name,
+                            value: propertyExample.example
+                        });
+                        basePropertyJsonExamples[baseProperty.name.wireValue] = propertyExample.jsonExample;
+                    }
+                }
+            }
+
+            // Generate extend property examples for the union stub
+            const extendProperties: ExampleObjectProperty[] = [];
+            for (const extendedTypeRef of typeDeclaration.shape.extends) {
+                const extendedDecl = typeDeclarations[extendedTypeRef.typeId];
+                if (extendedDecl == null || extendedDecl.shape.type !== "object") {
+                    continue;
+                }
+                for (const property of [
+                    ...(extendedDecl.shape.properties ?? []),
+                    ...(extendedDecl.shape.extendedProperties ?? [])
+                ]) {
+                    if (isLeafTypeReference(property.valueType, typeDeclarations)) {
+                        const propertyExample = generateTypeReferenceExample({
+                            fieldName: property.name.wireValue,
+                            typeReference: property.valueType,
+                            typeDeclarations,
+                            currentDepth: 0,
+                            maxDepth: 3,
+                            skipOptionalProperties: true
+                        });
+                        if (propertyExample.type === "success") {
+                            extendProperties.push({
+                                name: property.name,
+                                originalTypeDeclaration: extendedDecl.name,
+                                value: propertyExample.example,
+                                propertyAccess: undefined
+                            });
+                            basePropertyJsonExamples[property.name.wireValue] = propertyExample.jsonExample;
+                        }
+                    }
+                }
+            }
+
             for (const variant of typeDeclaration.shape.types) {
                 const isNoProperties = variant.shape._visit<boolean>({
                     noProperties: () => true,
@@ -360,7 +418,10 @@ function generateMinimalNamedExample({
                     _other: () => false
                 });
                 if (isNoProperties) {
-                    const jsonExample = { [discriminant.wireValue]: variant.discriminantValue.wireValue };
+                    const jsonExample = {
+                        [discriminant.wireValue]: variant.discriminantValue.wireValue,
+                        ...basePropertyJsonExamples
+                    };
                     return {
                         type: "success",
                         example: {
@@ -372,8 +433,8 @@ function generateMinimalNamedExample({
                                         wireDiscriminantValue: variant.discriminantValue,
                                         shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
                                     },
-                                    baseProperties: [],
-                                    extendProperties: []
+                                    baseProperties,
+                                    extendProperties
                                 }),
                                 typeName: typeDeclaration.name
                             })

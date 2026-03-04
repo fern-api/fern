@@ -264,32 +264,32 @@ export function generateTypeDeclarationExample({
                 }
             }
 
-            const baseProperties: ExampleUnionBaseProperty[] = typeDeclaration.shape.baseProperties.map((property) => {
-                const propertyExample = generateTypeReferenceExample({
-                    fieldName: property.name.wireValue,
-                    typeReference: property.valueType,
-                    typeDeclarations,
-                    currentDepth: currentDepth + 1,
-                    maxDepth,
-                    skipOptionalProperties,
-                    visitedTypes
-                });
-                if (propertyExample.type === "failure") {
-                    throw new Error(`Failed to generate example for union base property ${property.name.wireValue}`);
-                }
-                const { example } = propertyExample;
-                return {
-                    name: property.name,
-                    value: example
-                };
-            });
+            const baseProperties: ExampleUnionBaseProperty[] = typeDeclaration.shape.baseProperties
+                .map((property) => {
+                    const propertyExample = generateTypeReferenceExample({
+                        fieldName: property.name.wireValue,
+                        typeReference: property.valueType,
+                        typeDeclarations,
+                        currentDepth: currentDepth + 1,
+                        maxDepth,
+                        skipOptionalProperties,
+                        visitedTypes
+                    });
+                    if (propertyExample.type === "failure") {
+                        return undefined;
+                    }
+                    const { example } = propertyExample;
+                    return {
+                        name: property.name,
+                        value: example
+                    };
+                })
+                .filter((property): property is ExampleUnionBaseProperty => property != null);
             const extendProperties: ExampleObjectProperty[] = typeDeclaration.shape.extends.flatMap(
                 (extendedTypeReference) => {
                     const extendedTypeDeclaration = typeDeclarations[extendedTypeReference.typeId];
                     if (extendedTypeDeclaration == null) {
-                        throw new Error(
-                            `Failed to find extended type declaration with id ${extendedTypeReference.typeId}`
-                        );
+                        return [];
                     }
                     const extendedExample = generateTypeDeclarationExample({
                         fieldName,
@@ -301,14 +301,10 @@ export function generateTypeDeclarationExample({
                         visitedTypes
                     });
                     if (extendedExample == null || extendedExample.type === "failure") {
-                        throw new Error(
-                            `Failed to generate example for extended type declaration ${extendedTypeDeclaration.name.typeId}`
-                        );
+                        return [];
                     }
                     if (extendedExample.example.type !== "object") {
-                        throw new Error(
-                            `Extended type declaration ${extendedTypeDeclaration.name.typeId} is not an object`
-                        );
+                        return [];
                     }
                     return extendedExample.example.properties;
                 }
