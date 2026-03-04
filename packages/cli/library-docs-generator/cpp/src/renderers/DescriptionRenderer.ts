@@ -39,6 +39,16 @@ export function setCurrentPagePath(path: string | undefined): void {
 // ---------------------------------------------------------------------------
 
 /**
+ * Escape angle brackets in markdown link text so MDX doesn't parse them as JSX.
+ *
+ * Even inside backtick-wrapped link text like [`pointer<T>`], MDX may interpret
+ * `<T>` as a JSX tag. Replace `<` with `&lt;` and `>` with `&gt;` to prevent this.
+ */
+export function escapeLinkTextForMdx(text: string): string {
+    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/**
  * Check if a type info parts item is a CppTypeRef (has refid).
  */
 export function isTypeRef(item: CppTypeInfoPartsItem): item is CppTypeRef {
@@ -165,7 +175,7 @@ export function renderSegment(segment: CppDocSegment): string {
                 }
 
                 const linkPath = buildLinkPath(qualifiedName);
-                return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
+                return `[\`${escapeLinkTextForMdx(codeText)}\`](${linkPath})${possessiveSuffix}`;
             }
             // BUG 20 fix: For member refs, try to decode the refid to get a qualified name.
             // Some member refs point to concepts, classes, or methods that have API pages.
@@ -181,7 +191,7 @@ export function renderSegment(segment: CppDocSegment): string {
                         qualifiedName = decodedPath + "::" + shortName;
                     }
                     const linkPath = buildLinkPath(qualifiedName);
-                    return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
+                    return `[\`${escapeLinkTextForMdx(codeText)}\`](${linkPath})${possessiveSuffix}`;
                 }
             }
             // Fallback: render as inline code
@@ -202,7 +212,7 @@ export function renderSegment(segment: CppDocSegment): string {
                 }
 
                 const linkPath = buildLinkPath(qualifiedName);
-                return `[${text}](${linkPath})`;
+                return `[${escapeLinkTextForMdx(text)}](${linkPath})`;
             }
             // BUG 20 fix: For member refs, also try to resolve as a link
             if (segment.kindref === "member" && segment.refid) {
@@ -214,7 +224,7 @@ export function renderSegment(segment: CppDocSegment): string {
                         qualifiedName = decodedPath + "::" + shortName;
                     }
                     const linkPath = buildLinkPath(qualifiedName);
-                    return `[${segment.text.trim()}](${linkPath})`;
+                    return `[${escapeLinkTextForMdx(segment.text.trim())}](${linkPath})`;
                 }
             }
             // For unresolvable member refs, render as plain text
@@ -236,10 +246,67 @@ export function renderSegment(segment: CppDocSegment): string {
 }
 
 /**
+ * Sanitize raw HTML anchor tags in rendered text to valid MDX.
+ *
+ * The IR sometimes contains text segments with raw HTML `<a href="...">text</a>`
+ * from Doxygen source. MDX treats `<a` as JSX, which fails if the HTML is
+ * malformed (missing quotes, broken across segments, etc.).
+ *
+ * This function:
+ * 1. Converts well-formed `<a href="url">text</a>` to `[text](url)` markdown links
+ * 2. Converts broken `<a>` tags where the href was split across segments
+ * 3. Converts Doxygen `\p word` and `\c word` to inline code
+ */
+function sanitizeHtmlAnchorsForMdx(text: string): string {
+    let result = text;
+
+    // Convert well-formed <a href="url">text</a> to [text](url)
+    // Handle both properly-quoted and improperly-quoted href attributes
+    result = result.replace(
+        /<a\s+href\s*=\s*"([^">]*?)(?:"|(?=>))>([\s\S]*?)<\/a>/gi,
+        (_match, url: string, linkText: string) => {
+            const cleanText = linkText.replace(/\s+/g, " ").trim();
+            return `[${cleanText}](${url.trim()})`;
+        }
+    );
+
+    // Handle broken <a> tags where the href contains a markdown link from a
+    // split segment, e.g.: <a\n  href="[text](url)">LinkText
+    // Extract the URL from the markdown link and use it with the display text.
+    result = result.replace(
+        /<a[\s\S]*?href\s*=\s*"\[[\s\S]*?\]\(([\s\S]*?)\)">([\s\S]*?)(?:<\/a>|$)/gi,
+        (_match, url: string, linkText: string) => {
+            const cleanText = linkText.replace(/\s+/g, " ").trim();
+            const cleanUrl = url.trim();
+            if (cleanUrl && cleanText) {
+                return `[${cleanText}](${cleanUrl})`;
+            }
+            return cleanText;
+        }
+    );
+
+    // Remove any remaining broken <a ...> opening tags that weren't matched above.
+    // Match <a followed by attributes up to the next > on the same or subsequent lines.
+    // These would cause MDX JSX parsing errors.
+    result = result.replace(/<a\s[^>]*>/gi, "");
+
+    // Remove orphaned </a> closing tags
+    result = result.replace(/<\/a>/gi, "");
+
+    // Convert Doxygen \p and \c commands to inline code
+    result = result.replace(/\\p\s+(\S+)/g, "`$1`");
+    result = result.replace(/\\c\s+(\S+)/g, "`$1`");
+
+    return result;
+}
+
+/**
  * Render an array of inline segments to a single MDX string.
  */
 export function renderSegments(segments: CppDocSegment[]): string {
-    return segments.map(renderSegment).join("");
+    const raw = segments.map(renderSegment).join("");
+    // Sanitize any raw HTML anchor tags that may have leaked through from the IR
+    return sanitizeHtmlAnchorsForMdx(raw);
 }
 
 /**
@@ -712,17 +779,17 @@ function convertRstInlineMarkup(line: string): string {
 
     // Convert :cpp:enumerator:`cub::NAME` to [`cub::NAME`](/library/api/cub::NAME)
     result = result.replace(/:cpp:enumerator:`([^`]+)`/g, (_, name: string) => {
-        return `[\`${name}\`](${buildLinkPath(name)})`;
+        return `[\`${escapeLinkTextForMdx(name)}\`](${buildLinkPath(name)})`;
     });
 
     // Convert :cpp:class:`name` to [`name`](/library/api/name)
     result = result.replace(/:cpp:class:`([^`]+)`/g, (_, name: string) => {
-        return `[\`${name}\`](${buildLinkPath(name)})`;
+        return `[\`${escapeLinkTextForMdx(name)}\`](${buildLinkPath(name)})`;
     });
 
     // Convert :cpp:func:`name` to [`name`](/library/api/name)
     result = result.replace(/:cpp:func:`([^`]+)`/g, (_, name: string) => {
-        return `[\`${name}\`](${buildLinkPath(name)})`;
+        return `[\`${escapeLinkTextForMdx(name)}\`](${buildLinkPath(name)})`;
     });
 
     // Convert RST inline code ``code`` to markdown `code`
@@ -1236,7 +1303,7 @@ export function renderTypeInfoForTable(
     // If the type has a resolved path, create a link
     if (typeInfo.resolvedPath) {
         const linkPath = buildLinkPath(typeInfo.resolvedPath);
-        return `[\`${display}\`](${linkPath})`;
+        return `[\`${escapeLinkTextForMdx(display)}\`](${linkPath})`;
     }
 
     return `\`${display}\``;

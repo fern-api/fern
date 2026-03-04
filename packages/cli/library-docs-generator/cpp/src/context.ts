@@ -61,7 +61,9 @@ export function buildLinkPath(qualifiedName: string): string {
     // Strip leading :: (global scope qualifier) -- it breaks prefix matching
     // and produces incorrect paths like /library/api/::cuda::stream_ref
     const normalized = qualifiedName.startsWith("::") ? qualifiedName.substring(2) : qualifiedName;
-    return `${getLinkPrefix(normalized)}${normalized}`;
+    const path = `${getLinkPrefix(normalized)}${normalized}`;
+    // URL-encode angle brackets so MDX doesn't parse them as JSX tags
+    return path.replace(/</g, "%3C").replace(/>/g, "%3E");
 }
 
 /**

@@ -2449,7 +2449,7 @@ The value type of the \`counting_iterator\`.
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`__counting_iterator_category< _Start >\`](/library/api/__counting_iterator_category) (public)
+**Inherits from:** [\`__counting_iterator_category&lt; _Start &gt;\`](/library/api/__counting_iterator_category) (public)
 
 ---
 
@@ -2667,7 +2667,7 @@ Either a [runtime_value](/library/api/thrust::runtime_value) or a [compile_time_
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`thrust::iterator_adaptor< strided_iterator< RandomAccessIterator, StrideHolder >, RandomAccessIterator >\`](/library/api/thrust::iterator_adaptor) (public), [\`StrideHolder\`](/library/api/StrideHolder) (private)
+**Inherits from:** [\`thrust::iterator_adaptor&lt; strided_iterator&lt; RandomAccessIterator, StrideHolder &gt;, RandomAccessIterator &gt;\`](/library/api/thrust::iterator_adaptor) (public), [\`StrideHolder\`](/library/api/StrideHolder) (private)
 
 ---
 
@@ -2799,7 +2799,7 @@ universal_vector
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`detail::vector_base< T, thrust::device_allocator< T > >\`](/library/api/detail::vector_base) (public)
+**Inherits from:** [\`detail::vector_base&lt; T, thrust::device_allocator&lt; T &gt; &gt;\`](/library/api/detail::vector_base) (public)
 
 ---
 
@@ -4035,9 +4035,7 @@ void thrust::device_vector<T, Alloc>::insert(
 **Template parameters**
 
 <ParamField path="InputIterator" type="typename">
-Is a model of <a href="https://en.cppreference.com/w/cpp/iterator/input_iterator>Input
-  Iterator</a>, and \\p InputIterator's \\c value_type is a model of <a
-  href="[https://en.cppreference.com/w/cpp/named_req/CopyAssignable](https://en.cppreference.com/w/cpp/named_req/CopyAssignable)">Assignable.
+Is a model of [Input Iterator](https://en.cppreference.com/w/cpp/iterator/input_iterator), and \`InputIterator's\` \`value_type\` is a model of [Assignable.](https://en.cppreference.com/w/cpp/named_req/CopyAssignable)
 </ParamField>
 
 **Parameters**
@@ -4900,7 +4898,7 @@ The type of memory resources that will be used for allocating bookkeeping memory
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`thrust::mr::memory_resource< Upstream::pointer >\`](/library/api/thrust::mr::memory_resource) (public), [\`thrust::mr::validator2< Upstream, Bookkeeper >\`](/library/api/thrust::mr::validator2) (private)
+**Inherits from:** [\`thrust::mr::memory_resource&lt; Upstream::pointer &gt;\`](/library/api/thrust::mr::memory_resource) (public), [\`thrust::mr::validator2&lt; Upstream, Bookkeeper &gt;\`](/library/api/thrust::mr::validator2) (private)
 
 This class is marked <Badge intent="note" minimal>final</Badge>.
 
@@ -5292,7 +5290,7 @@ description: "A tagged pointer type that stores a pointer to an object allocated
 
 Like [\`device_ptr\`](/library/api/thrust::device_ptr), this type ensures type safety when dispatching standard algorithms on ranges resident in memory.
 
-\`pointer\` generalizes [\`device_ptr\`](/library/api/thrust::device_ptr) by relaxing the backend system associated with the \`pointer\`. Instead of the backend system specified by \`THRUST_DEVICE_SYSTEM\`, \`pointer's\` system is given by its second template parameter, \`Tag\`. For the purpose of Thrust dispatch, [\`device_ptr<Element>\`](/library/api/thrust::device_ptr) and [\`pointer<Element,device_system_tag>\`](/library/api/thrust::pointer::pointer<Element,device_system_tag>) are considered equivalent.
+\`pointer\` generalizes [\`device_ptr\`](/library/api/thrust::device_ptr) by relaxing the backend system associated with the \`pointer\`. Instead of the backend system specified by \`THRUST_DEVICE_SYSTEM\`, \`pointer's\` system is given by its second template parameter, \`Tag\`. For the purpose of Thrust dispatch, [\`device_ptr&lt;Element&gt;\`](/library/api/thrust::device_ptr) and [\`pointer&lt;Element,device_system_tag&gt;\`](/library/api/thrust::pointer::pointer%3CElement,device_system_tag%3E) are considered equivalent.
 
 The raw pointer encapsulated by a \`pointer\` may be obtained through its [\`get\`](/library/api/thrust::pointer::get) member function or the \`raw_pointer_cast\` free function.
 
@@ -5325,13 +5323,13 @@ Allows the client to specify the reference type returned upon derereference. By 
 </ParamField>
 
 <ParamField path="Derived" type="typename">
-Allows the client to specify the name of the derived type when \`pointer\` is used as a base class. This is useful to ensure that arithmetic on values of the derived type return values of the derived type as a result. By default, this type is [\`pointer<Element,Tag,Reference>\`](/library/api/thrust::pointer::pointer<Element,Tag,Reference>).
+Allows the client to specify the name of the derived type when \`pointer\` is used as a base class. This is useful to ensure that arithmetic on values of the derived type return values of the derived type as a result. By default, this type is [\`pointer&lt;Element,Tag,Reference&gt;\`](/library/api/thrust::pointer::pointer%3CElement,Tag,Reference%3E).
 </ParamField>
 
 </Accordion>
 </AccordionGroup>
 
-**Inherits from:** [\`thrust::iterator_adaptor< Derived, Base, Value, System, Traversal, Reference, Difference >\`](/library/api/thrust::iterator_adaptor) (public)
+**Inherits from:** [\`thrust::iterator_adaptor&lt; Derived, Base, Value, System, Traversal, Reference, Difference &gt;\`](/library/api/thrust::iterator_adaptor) (public)
 
 ---
 
@@ -5366,7 +5364,7 @@ thrust::pointer<Element, Tag, Reference, Derived>::pointer(
 
 <Badge intent="note" minimal>explicit</Badge>
 
-This constructor allows construction of a [\`pointer<const T, ...>\`](/library/api/thrust::pointer::pointer<const T, ...>) from a \`T*\`.
+This constructor allows construction of a [\`pointer&lt;const T, ...&gt;\`](/library/api/thrust::pointer::pointer%3Cconst T, ...%3E) from a \`T*\`.
 
 <CodeBlock links={{"pointer": "/library/api/thrust::pointer"}}>
 \`\`\`cpp showLineNumbers={false}

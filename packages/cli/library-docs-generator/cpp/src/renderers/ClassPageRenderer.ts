@@ -26,7 +26,7 @@ import type {
 } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext, CompoundMeta } from "../context.js";
 import { buildLinkPath, getShortName, needsQuoting, stripTemplateArgs, registerClassMembers, clearClassMembers } from "../context.js";
-import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso } from "./DescriptionRenderer.js";
+import { renderDescriptionBlocks, renderSegments, renderSegmentsTrimmed, convertVerbatimRst, extractVersionAnnotation, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso, escapeLinkTextForMdx } from "./DescriptionRenderer.js";
 import type { ParsedVerbatim } from "./DescriptionRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock } from "./SignatureRenderer.js";
@@ -213,14 +213,14 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
             const displayText = bc.typeInfo?.display ?? bc.name;
             if (bc.typeInfo?.resolvedPath) {
                 const linkUrl = buildLinkPath(stripTemplateArgs(bc.typeInfo.resolvedPath));
-                return `[\`${displayText}\`](${linkUrl}) ${access}`;
+                return `[\`${escapeLinkTextForMdx(displayText)}\`](${linkUrl}) ${access}`;
             }
             // Try to build a link from the name (strip template args from URL)
             const linkUrl = buildLinkPath(stripTemplateArgs(bc.name));
             if (bc.typeInfo?.display) {
-                return `[\`${bc.typeInfo.display}\`](${linkUrl}) ${access}`;
+                return `[\`${escapeLinkTextForMdx(bc.typeInfo.display)}\`](${linkUrl}) ${access}`;
             }
-            return `[\`${displayText}\`](${linkUrl}) ${access}`;
+            return `[\`${escapeLinkTextForMdx(displayText)}\`](${linkUrl}) ${access}`;
         });
         lines.push(`**Inherits from:** ${baseLinks.join(", ")}`);
         lines.push("");
