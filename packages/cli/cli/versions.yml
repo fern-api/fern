@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.3.5
+  changelogEntry:
+    - summary: |
+        Add `--retry-rate-limited` flag to `fern generate` that automatically retries
+        with exponential backoff when receiving 429 Too Many Requests responses. When a
+        server provides a `Retry-After` header, that value is used; otherwise the CLI
+        falls back to exponential backoff with jitter. Retries up to 3 times.
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 65
+
 - version: 4.3.4
   changelogEntry:
     - summary: |

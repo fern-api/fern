@@ -103,7 +103,7 @@ async function createJobWithOptionalRetry(
             return await createJob(createJobArgs);
         } catch (error) {
             if (error instanceof TooManyRequestsError && attempt < RATE_LIMIT_MAX_RETRIES) {
-                const retryAfterSeconds = (error as TooManyRequestsError).retryAfterSeconds;
+                const retryAfterSeconds = error.retryAfterSeconds;
                 let delay: number;
                 if (retryAfterSeconds != null) {
                     // Use the server-provided Retry-After value with a small jitter
