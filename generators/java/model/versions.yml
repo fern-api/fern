@@ -1,15 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add `custom-plugins` field to shared ICustomConfig interface (not used
-        by model generator, returns empty list).
-      type: chore
-  createdAt: "2026-03-03"
-  irVersion: 65
-  version: 1.8.6
-
-- changelogEntry:
-    - summary: |
         Upgrade IR version to 63.
       type: chore
   createdAt: "2026-01-12"

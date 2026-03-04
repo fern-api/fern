@@ -22,7 +22,6 @@ import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
-import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.fern.java.spring.generators.ApiExceptionGenerator;
 import com.fern.java.spring.generators.ErrorBodyGenerator;
@@ -209,11 +208,6 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
     @Override
     public List<String> getSubProjects() {
         return subprojects;
-    }
-
-    @Override
-    public List<GradlePlugin> getCustomPlugins() {
-        return List.of();
     }
 
     @Override

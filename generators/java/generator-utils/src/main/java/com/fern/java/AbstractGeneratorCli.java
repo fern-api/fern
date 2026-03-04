@@ -636,7 +636,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     public abstract List<String> getSubProjects();
 
-    public abstract List<GradlePlugin> getCustomPlugins();
+    public List<GradlePlugin> getCustomPlugins() {
+        return List.of();
+    }
 
     public List<String> getAdditionalBuildGradleBlocks() {
         return List.of();

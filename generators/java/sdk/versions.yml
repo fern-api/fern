@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.41.1
+- version: 3.42.0
   changelogEntry:
     - summary: |
         Add support for custom Gradle plugins via the `custom-plugins` configuration
