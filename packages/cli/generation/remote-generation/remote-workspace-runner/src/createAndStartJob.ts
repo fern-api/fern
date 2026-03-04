@@ -10,7 +10,6 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -185,8 +184,10 @@ async function createJob({
     if (!createResponse.ok) {
         // Check for 429 Too Many Requests before processing the error through the visitor.
         // This allows the retry wrapper to catch and retry on rate limiting.
-        const rawError = createResponse.error as unknown as Fetcher.Error;
-        if (rawError.reason === "status-code" && rawError.statusCode === 429) {
+        // Note: The fiddle SDK wraps the error inside a `.content` property (see convertCreateJobError below).
+        // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+        const rawError = createResponse.error as any;
+        if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
             throw new TooManyRequestsError();
         }
         return convertCreateJobError(rawError)._visit({
