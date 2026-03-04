@@ -63,33 +63,13 @@ func (d *Date) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	// Try multiple layouts: date-only first, then datetime with and
-	// without timezone so that downstream datetime values gracefully
-	// degrade to a date.
-	layouts := []string{
-		dateFormat,
-		time.RFC3339Nano,
-		"2006-01-02T15:04:05.999999999",
+	parsedTime, err := time.Parse(dateFormat, raw)
+	if err != nil {
+		return err
 	}
 
-	for i, layout := range layouts {
-		parsedTime, err := time.Parse(layout, raw)
-		if err == nil {
-			if i == 2 {
-				// No timezone in the layout — assume UTC.
-				parsedTime = parsedTime.UTC()
-			}
-			// Truncate to date (midnight UTC).
-			year, month, day := parsedTime.Date()
-			normalized := time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
-			*d = Date{t: &normalized}
-			return nil
-		}
-	}
-
-	return &json.UnmarshalTypeError{
-		Value: "invalid date format: " + raw,
-	}
+	*d = Date{t: &parsedTime}
+	return nil
 }
 
 // DateTime wraps time.Time and adapts its JSON representation
@@ -138,7 +118,7 @@ func (d *DateTime) MarshalJSON() ([]byte, error) {
 	if d == nil || d.t == nil {
 		return nil, nil
 	}
-	return json.Marshal(d.t.Format(time.RFC3339Nano))
+	return json.Marshal(d.t.Format(time.RFC3339))
 }
 
 func (d *DateTime) UnmarshalJSON(data []byte) error {
@@ -147,27 +127,11 @@ func (d *DateTime) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	// Try RFC3339 (with timezone) first, then common ISO 8601 variants
-	// without a timezone suffix. Fractional seconds are handled by both
-	// the millisecond and nanosecond layouts.
-	layouts := []string{
-		time.RFC3339Nano,
-		"2006-01-02T15:04:05.999999999",
+	parsedTime, err := time.Parse(time.RFC3339, raw)
+	if err != nil {
+		return err
 	}
 
-	for _, layout := range layouts {
-		parsedTime, err := time.Parse(layout, raw)
-		if err == nil {
-			if layout != time.RFC3339Nano {
-				// No timezone in the layout — assume UTC.
-				parsedTime = parsedTime.UTC()
-			}
-			*d = DateTime{t: &parsedTime}
-			return nil
-		}
-	}
-
-	return &json.UnmarshalTypeError{
-		Value: "invalid datetime format: " + raw,
-	}
+	*d = DateTime{t: &parsedTime}
+	return nil
 }
