@@ -46,6 +46,18 @@
   createdAt: "2026-03-05"
   irVersion: 65
 
+- version: 4.4.5
+  changelogEntry:
+    - summary: |
+        Improve error messages when AI analysis fails during AUTO versioning.
+        Error and warning logs now include diff size (in characters and KB),
+        number of files changed, and guidance when the diff exceeds the FAI
+        endpoint's 100,000 character limit. Previously, failures only logged a
+        generic "AI analysis failed, falling back to PATCH" message with no
+        actionable context.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
 - version: 4.4.4
   changelogEntry:
     - summary: |

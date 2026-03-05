@@ -10,7 +10,14 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
+import {
+    AutoVersioningException,
+    AutoVersioningService,
+    AutoVersionResult,
+    countFilesInDiff,
+    DIFF_SIZE_LIMIT,
+    formatSizeKB
+} from "./AutoVersioningService.js";
 import { extractPublicSurface } from "./PublicSurfaceExtractor.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -142,9 +149,15 @@ export class LocalTaskHandler {
             const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
-            this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
+            const rawDiffSizeKB = formatSizeKB(diffContent.length);
+            const cleanedDiffSizeKB = formatSizeKB(cleanedDiff.length);
+            const rawFileCount = countFilesInDiff(diffContent);
+            const cleanedFileCount = countFilesInDiff(cleanedDiff);
+
             this.context.logger.debug(
-                `Cleaned diff size: ${cleanedDiff.length} bytes (language: ${this.generatorLanguage})`
+                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} chars), ${rawFileCount} files changed. ` +
+                    `Cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ${cleanedFileCount} files remaining` +
+                    ` (language: ${this.generatorLanguage})`
             );
 
             // Handle new SDK repository with no previous version
@@ -184,6 +197,16 @@ export class LocalTaskHandler {
                 return null;
             }
 
+            if (surfaceDiff.length > DIFF_SIZE_LIMIT) {
+                this.context.logger.warn(
+                    `Surface diff is too large for AI analysis ` +
+                        `(${surfaceDiff.length.toLocaleString()} chars / ${formatSizeKB(surfaceDiff.length)}KB). ` +
+                        `The AI endpoint limit is 100,000 characters. ` +
+                        `Lock files, test files, and generated docs are already excluded. ` +
+                        `Consider splitting the SDK into smaller packages or reducing the number of endpoints.`
+                );
+            }
+
             // Call AI to analyze the diff
             try {
                 // TODO: Need to get project for BAML client configuration
@@ -209,7 +232,18 @@ export class LocalTaskHandler {
                     commitMessage
                 };
             } catch (aiError) {
-                this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
+                const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
+                this.context.logger.warn(
+                    `AI analysis failed, falling back to PATCH increment. ` +
+                        `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
+                        `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${cleanedFileCount} files remaining. ` +
+                        (cleanedDiff.length > DIFF_SIZE_LIMIT
+                            ? `The diff exceeds the AI endpoint's 100,000 character limit. ` +
+                              `Lock files, test files, and generated docs are already excluded. ` +
+                              `Consider splitting the SDK into smaller packages or reducing the number of endpoints. `
+                            : "") +
+                        `Error: ${errorMessage}`
+                );
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
