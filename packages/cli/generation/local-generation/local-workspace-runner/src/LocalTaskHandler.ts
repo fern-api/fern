@@ -10,7 +10,7 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningCache } from "./AutoVersioningCache.js";
+import { AutoVersioningCache, CachedAnalysis } from "./AutoVersioningCache.js";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -169,62 +169,37 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            // Check cache for a previously computed result with the same cleaned diff
-            const cacheKey = this.autoVersioningCache != null ? this.autoVersioningCache.key(cleanedDiff) : undefined;
-            if (cacheKey != null && this.autoVersioningCache != null) {
-                const cached = this.autoVersioningCache.get(cacheKey);
-                if (cached !== undefined) {
-                    this.context.logger.info(
-                        `[AutoVersioning] Cache hit — reusing result (key: ${cacheKey.slice(0, 8)}…) ` +
-                            `bump=${cached?.version ?? "NO_CHANGE"}`
-                    );
-                    return cached;
-                }
-            }
-
-            // Call AI to analyze the diff
-            let result: AutoVersionResult | null;
+            // Call AI (or reuse cached analysis) to determine version bump
+            let analysis: CachedAnalysis | null;
             try {
-                // TODO: Need to get project for BAML client configuration
-                const clientRegistry = await this.getClientRegistry();
-                const bamlClient = BamlClient.withOptions({ clientRegistry });
-
-                const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
-
-                if (analysis.version_bump === VersionBump.NO_CHANGE) {
-                    this.context.logger.info("AI detected no semantic changes");
-                    result = null;
-                } else {
-                    // Calculate new version
-                    const newVersion = this.incrementVersion(previousVersion, analysis.version_bump);
-
-                    this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
-
-                    const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
-
-                    result = {
-                        version: newVersion,
-                        commitMessage
-                    };
-                }
+                analysis = await this.getAnalysis(cleanedDiff);
             } catch (aiError) {
                 this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
                     : "SDK regeneration\n\n🌿 Generated with Fern";
-                result = {
+                return {
                     version: newVersion,
                     commitMessage: fallbackMessage
                 };
             }
 
-            // Store result in cache for subsequent generators with the same diff
-            if (cacheKey != null && this.autoVersioningCache != null) {
-                this.autoVersioningCache.set(cacheKey, result);
+            // Each generator applies its own previousVersion and branding
+            if (analysis == null) {
+                this.context.logger.info("AI detected no semantic changes");
+                return null;
             }
 
-            return result;
+            const newVersion = this.incrementVersion(previousVersion, analysis.versionBump as VersionBump);
+            this.context.logger.info(`Version bump: ${analysis.versionBump}, new version: ${newVersion}`);
+
+            const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
+
+            return {
+                version: newVersion,
+                commitMessage
+            };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
                 // Fall back to initial version when we can't extract the previous version
@@ -255,6 +230,48 @@ export class LocalTaskHandler {
                 }
             }
         }
+    }
+
+    /**
+     * Returns the raw AI analysis for the given cleaned diff, using the cache
+     * (with Promise coalescing) when available. Each concurrent generator with
+     * the same diff awaits the same in-flight AI call.
+     *
+     * On AI failure the method throws so that each generator can apply its own
+     * fallback logic (e.g. PATCH bump with generator-specific previousVersion).
+     */
+    private async getAnalysis(cleanedDiff: string): Promise<CachedAnalysis | null> {
+        const doAnalysis = async (): Promise<CachedAnalysis | null> => {
+            const clientRegistry = await this.getClientRegistry();
+            const bamlClient = BamlClient.withOptions({ clientRegistry });
+            const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
+
+            if (analysis.version_bump === VersionBump.NO_CHANGE) {
+                return null;
+            }
+            return {
+                versionBump: analysis.version_bump,
+                message: analysis.message
+            };
+        };
+
+        if (this.autoVersioningCache == null) {
+            return doAnalysis();
+        }
+
+        const cacheKey = this.autoVersioningCache.key(cleanedDiff);
+        const { promise, isHit } = this.autoVersioningCache.getOrCompute(cacheKey, doAnalysis);
+
+        if (isHit) {
+            const cached = await promise;
+            this.context.logger.info(
+                `[AutoVersioning] Cache hit — reusing result (key: ${cacheKey.slice(0, 8)}…) ` +
+                    `bump=${cached?.versionBump ?? "NO_CHANGE"}`
+            );
+            return cached;
+        }
+
+        return promise;
     }
 
     /**
