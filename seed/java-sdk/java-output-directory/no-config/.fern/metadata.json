@@ -1,8 +1,9 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "latest",
   "generatorConfig": {
     "package-prefix": "com.test.sdk"
-  }
+  },
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY"
 }

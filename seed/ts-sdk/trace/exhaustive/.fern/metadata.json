@@ -1,14 +1,15 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "useBrandedStringAliases": true,
-        "neverThrowErrors": true,
-        "includeCredentialsOnCrossOriginRequests": true,
-        "includeUtilsOnUnionMembers": true,
-        "includeOtherInUnionTypes": true,
-        "timeoutInSeconds": "infinity"
-    },
-    "sdkVersion": "0.0.1"
+  "cliVersion": "DUMMY",
+  "generatorConfig": {
+    "includeCredentialsOnCrossOriginRequests": true,
+    "includeOtherInUnionTypes": true,
+    "includeUtilsOnUnionMembers": true,
+    "neverThrowErrors": true,
+    "timeoutInSeconds": "infinity",
+    "useBrandedStringAliases": true
+  },
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
 }

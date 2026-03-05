@@ -1,9 +1,10 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-swift-sdk",
-  "generatorVersion": "latest",
   "generatorConfig": {
     "custom-pager-name": "MyPager"
   },
+  "generatorName": "fernapi/fern-swift-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

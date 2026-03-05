@@ -1,10 +1,11 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-csharp-sdk",
-  "generatorVersion": "latest",
   "generatorConfig": {
     "base-api-exception-class-name": "CustomApiException",
     "base-exception-class-name": "CustomException"
   },
+  "generatorName": "fernapi/fern-csharp-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

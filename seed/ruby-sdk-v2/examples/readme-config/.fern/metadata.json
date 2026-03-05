@@ -1,18 +1,19 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-ruby-sdk-v2",
-  "generatorVersion": "latest",
   "generatorConfig": {
     "customReadmeSections": [
       {
-        "title": "Override Section",
-        "content": "Override Content"
+        "content": "Override Content",
+        "title": "Override Section"
       },
       {
-        "title": "Generator Invocation Custom Section",
-        "content": "Generator Invocation Custom Content for {{ packageName }}"
+        "content": "Generator Invocation Custom Content for {{ packageName }}",
+        "title": "Generator Invocation Custom Section"
       }
     ]
   },
+  "generatorName": "fernapi/fern-ruby-sdk-v2",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

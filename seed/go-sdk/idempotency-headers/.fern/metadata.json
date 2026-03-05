@@ -1,14 +1,15 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-go-sdk",
-  "generatorVersion": "latest",
   "generatorConfig": {
     "enableWireTests": false,
-    "packageName": "fern",
+    "includeLegacyClientOptions": true,
     "module": {
       "path": "github.com/idempotency-headers/fern"
     },
-    "includeLegacyClientOptions": true
+    "packageName": "fern"
   },
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

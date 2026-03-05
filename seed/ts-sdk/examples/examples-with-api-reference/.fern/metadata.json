@@ -1,19 +1,20 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "includeApiReference": true,
-        "customReadmeSections": [
-            {
-                "title": "Override Section",
-                "content": "Override Content"
-            },
-            {
-                "title": "Generator Invocation Custom Section",
-                "content": "Generator Invocation Custom Content for {{ packageName }}"
-            }
-        ]
-    },
-    "sdkVersion": "0.0.1"
+  "cliVersion": "DUMMY",
+  "generatorConfig": {
+    "customReadmeSections": [
+      {
+        "content": "Override Content",
+        "title": "Override Section"
+      },
+      {
+        "content": "Generator Invocation Custom Content for {{ packageName }}",
+        "title": "Generator Invocation Custom Section"
+      }
+    ],
+    "includeApiReference": true
+  },
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
 }

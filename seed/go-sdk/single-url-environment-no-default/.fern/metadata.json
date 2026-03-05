@@ -1,9 +1,10 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-go-sdk",
-  "generatorVersion": "latest",
   "generatorConfig": {
     "enableWireTests": false
   },
+  "generatorName": "fernapi/fern-go-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

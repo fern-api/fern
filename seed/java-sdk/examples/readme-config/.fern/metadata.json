@@ -1,18 +1,19 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-java-sdk",
-  "generatorVersion": "latest",
   "generatorConfig": {
     "custom-readme-sections": [
       {
-        "title": "Generator Invocation Custom Section",
-        "content": "Generator Invocation Custom Content for {{ group }}:{{ artifact }}:{{ version }}"
+        "content": "Generator Invocation Custom Content for {{ group }}:{{ artifact }}:{{ version }}",
+        "title": "Generator Invocation Custom Section"
       },
       {
-        "title": "Override Section",
-        "content": "Override Content"
+        "content": "Override Content",
+        "title": "Override Section"
       }
     ]
   },
+  "generatorName": "fernapi/fern-java-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

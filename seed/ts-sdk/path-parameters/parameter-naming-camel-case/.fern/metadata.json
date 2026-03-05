@@ -1,9 +1,10 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "parameterNaming": "camelCase"
-    },
-    "sdkVersion": "0.0.1"
+  "cliVersion": "DUMMY",
+  "generatorConfig": {
+    "parameterNaming": "camelCase"
+  },
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
 }

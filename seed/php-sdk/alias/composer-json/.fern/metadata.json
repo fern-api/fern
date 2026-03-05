@@ -1,11 +1,7 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-php-sdk",
-  "generatorVersion": "latest",
   "generatorConfig": {
     "composerJson": {
-      "name": "fern/empty",
-      "version": "1.0.0",
       "description": "My Empty PHP Library",
       "keywords": [
         "empty"
@@ -14,15 +10,20 @@
         "LGPL-2.1-only",
         "GPL-3.0-or-later"
       ],
+      "name": "fern/empty",
       "scripts": {
+        "analyze": "echo skip",
         "build": [
           "@php -l src",
           "@php -l tests"
         ],
-        "analyze": "echo skip",
         "hello": "echo hello"
-      }
+      },
+      "version": "1.0.0"
     }
   },
+  "generatorName": "fernapi/fern-php-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

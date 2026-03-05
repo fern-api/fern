@@ -1,9 +1,10 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "enableInlineTypes": false
-    },
-    "sdkVersion": "0.0.1"
+  "cliVersion": "DUMMY",
+  "generatorConfig": {
+    "enableInlineTypes": false
+  },
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
+  "sdkVersion": "0.0.1"
 }

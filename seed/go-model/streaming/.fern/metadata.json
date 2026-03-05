@@ -1,12 +1,13 @@
 {
   "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-go-model",
-  "generatorVersion": "latest",
   "generatorConfig": {
-    "packageName": "stream",
     "module": {
       "path": "github.com/fern-api/stream-go"
-    }
+    },
+    "packageName": "stream"
   },
+  "generatorName": "fernapi/fern-go-model",
+  "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v2.0.0"
 }
