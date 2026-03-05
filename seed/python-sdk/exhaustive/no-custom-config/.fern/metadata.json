@@ -3,8 +3,7 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "enable_wire_tests": true,
-    "_test_output_folder": "no-custom-config"
+    "enable_wire_tests": true
   },
   "sdkVersion": "0.0.1"
 }

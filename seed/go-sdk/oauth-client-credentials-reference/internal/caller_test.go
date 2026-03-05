@@ -35,6 +35,7 @@ type InternalTestCase struct {
 
 	// Client-side assertions.
 	wantResponse *InternalTestResponse
+	wantHeaders  http.Header
 	wantError    error
 }
 
