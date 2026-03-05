@@ -15,7 +15,9 @@
 ```python
 from seed import SeedNoRetries
 
-client = SeedNoRetries()
+client = SeedNoRetries(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.retries.get_users()
 

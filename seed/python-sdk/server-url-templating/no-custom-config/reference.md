@@ -13,8 +13,11 @@
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+)
 
 client.get_users()
 
@@ -58,8 +61,11 @@ client.get_users()
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+)
 
 client.get_user(
     user_id="userId",
@@ -113,8 +119,11 @@ client.get_user(
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+)
 
 client.get_token(
     client_id="client_id",

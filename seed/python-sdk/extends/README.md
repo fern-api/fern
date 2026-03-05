@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedExtends
 
-client = SeedExtends()
+client = SeedExtends(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.extended_inline_request_body(
     name="name",
@@ -54,7 +56,9 @@ import asyncio
 
 from seed import AsyncSeedExtends
 
-client = AsyncSeedExtends()
+client = AsyncSeedExtends(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

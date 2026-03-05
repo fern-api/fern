@@ -15,7 +15,9 @@
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming()
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.dummy.generate_stream(
     num_events=1,
@@ -78,7 +80,9 @@ client.dummy.generate_stream(
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming()
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.dummy.generate(
     num_events=5,

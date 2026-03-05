@@ -39,6 +39,7 @@ from seed import SeedPaginationUriPath
 
 client = SeedPaginationUriPath(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_uri_pagination()
@@ -55,6 +56,7 @@ from seed import AsyncSeedPaginationUriPath
 
 client = AsyncSeedPaginationUriPath(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 
@@ -85,11 +87,24 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-pager = client.users.list_with_uri_pagination()
-for item in pager:
-    print(item)
+from seed import SeedPaginationUriPath
 
+client = SeedPaginationUriPath(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.users.list_with_uri_pagination()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+```
+
+```python
 # You can also iterate through pages and access the typed response per page
+pager = client.users.list_with_uri_pagination()
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:

@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedAlias
 
-client = SeedAlias()
+client = SeedAlias(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.get(
     type_id="typeId",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedAlias
 
-client = AsyncSeedAlias()
+client = AsyncSeedAlias(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

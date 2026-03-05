@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedContentTypes
 
-client = SeedContentTypes()
+client = SeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.patch(
     application="application",
@@ -53,7 +55,9 @@ import asyncio
 
 from seed import AsyncSeedContentTypes
 
-client = AsyncSeedContentTypes()
+client = AsyncSeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

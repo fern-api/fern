@@ -37,7 +37,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming()
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.dummy.generate_stream(
     num_events=1,
@@ -53,7 +55,9 @@ import asyncio
 
 from seed import AsyncSeedStreaming
 
-client = AsyncSeedStreaming()
+client = AsyncSeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:
@@ -87,7 +91,9 @@ The SDK supports streaming responses, as well, the response will be a generator 
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming()
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.dummy.generate_stream(
     num_events=1,

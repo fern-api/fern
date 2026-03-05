@@ -15,7 +15,9 @@
 ```python
 from seed import SeedContentTypes
 
-client = SeedContentTypes()
+client = SeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.patch(
     application="application",
@@ -96,7 +98,9 @@ This endpoint demonstrates the distinction between:
 ```python
 from seed import SeedContentTypes
 
-client = SeedContentTypes()
+client = SeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.patch_complex(
     id="id",
@@ -263,7 +267,9 @@ This should trigger the NPE issue when optional fields aren't initialized.
 ```python
 from seed import SeedContentTypes
 
-client = SeedContentTypes()
+client = SeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.named_patch_with_mixed(
     id="id",
@@ -362,7 +368,9 @@ This endpoint should:
 ```python
 from seed import SeedContentTypes
 
-client = SeedContentTypes()
+client = SeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.optional_merge_patch_test(
     required_field="requiredField",
@@ -467,7 +475,9 @@ Regular PATCH endpoint without merge-patch semantics
 ```python
 from seed import SeedContentTypes
 
-client = SeedContentTypes()
+client = SeedContentTypes(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.regular_patch(
     id="id",

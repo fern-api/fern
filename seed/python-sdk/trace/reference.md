@@ -14,9 +14,11 @@
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.test()
@@ -62,10 +64,12 @@ client.v_2.test()
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from uuid import UUID
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.admin.update_test_submission_status(
@@ -131,11 +135,13 @@ client.admin.update_test_submission_status(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from uuid import UUID
 from datetime import datetime
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.admin.send_test_submission_update(
@@ -202,10 +208,12 @@ client.admin.send_test_submission_update(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from uuid import UUID
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.admin.update_workspace_submission_status(
@@ -271,11 +279,13 @@ client.admin.update_workspace_submission_status(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from uuid import UUID
 from datetime import datetime
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.admin.send_workspace_submission_update(
@@ -342,10 +352,12 @@ client.admin.send_workspace_submission_update(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from uuid import UUID
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.admin.store_traced_test_case(
@@ -512,10 +524,12 @@ client.admin.store_traced_test_case(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from uuid import UUID
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.admin.store_traced_test_case_v_2(
@@ -667,10 +681,12 @@ client.admin.store_traced_test_case_v_2(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from uuid import UUID
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.admin.store_traced_workspace(
@@ -827,10 +843,12 @@ client.admin.store_traced_workspace(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from uuid import UUID
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.admin.store_traced_workspace_v_2(
@@ -974,9 +992,11 @@ client.admin.store_traced_workspace_v_2(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.homepage.get_homepage_problems()
@@ -1021,9 +1041,11 @@ client.homepage.get_homepage_problems()
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.homepage.set_homepage_problems(
@@ -1082,9 +1104,11 @@ client.homepage.set_homepage_problems(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.migration.get_attempted_migrations(
@@ -1154,10 +1178,12 @@ Create a new playlist
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 from datetime import datetime
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.playlist.create_playlist(
@@ -1257,9 +1283,11 @@ Returns the user's playlists
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.playlist.get_playlists(
@@ -1380,9 +1408,11 @@ Returns a playlist
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.playlist.get_playlist(
@@ -1460,9 +1490,11 @@ Updates a playlist
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.playlist.update_playlist(
@@ -1555,9 +1587,11 @@ Deletes a playlist
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.playlist.delete_playlist(
@@ -1636,9 +1670,11 @@ Creates a problem
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.problem.create_problem(
@@ -1787,9 +1823,11 @@ Updates a problem
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.problem.update_problem(
@@ -1947,9 +1985,11 @@ Soft deletes a problem
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.problem.delete_problem(
@@ -2018,9 +2058,11 @@ Returns default starter files for problem
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.problem.get_default_starter_files(
@@ -2130,9 +2172,11 @@ Returns sessionId and execution server URL for session. Spins up server.
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.submission.create_execution_session(
@@ -2201,9 +2245,11 @@ Returns execution server URL for session. Returns empty if session isn't registe
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.submission.get_execution_session(
@@ -2272,9 +2318,11 @@ Stops execution session.
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.submission.stop_execution_session(
@@ -2329,9 +2377,11 @@ client.submission.stop_execution_session(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.submission.get_execution_sessions_state()
@@ -2377,9 +2427,11 @@ client.submission.get_execution_sessions_state()
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.sysprop.set_num_warm_instances(
@@ -2443,9 +2495,11 @@ client.sysprop.set_num_warm_instances(
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.sysprop.get_num_warm_instances()
@@ -2505,9 +2559,11 @@ Returns lightweight versions of all problems
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.problem.get_lightweight_problems()
@@ -2566,9 +2622,11 @@ Returns latest versions of all problems
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.problem.get_problems()
@@ -2627,9 +2685,11 @@ Returns latest version of a problem
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.problem.get_latest_problem(
@@ -2698,9 +2758,11 @@ Returns requested version of a problem
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.problem.get_problem_version(
@@ -2779,9 +2841,11 @@ Returns lightweight versions of all problems
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.problem.get_lightweight_problems()
@@ -2840,9 +2904,11 @@ Returns latest versions of all problems
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.problem.get_problems()
@@ -2901,9 +2967,11 @@ Returns latest version of a problem
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.problem.get_latest_problem(
@@ -2972,9 +3040,11 @@ Returns requested version of a problem
 
 ```python
 from seed import SeedTrace
+from seed.environment import SeedTraceEnvironment
 
 client = SeedTrace(
     token="<token>",
+    environment=SeedTraceEnvironment.PROD,
 )
 
 client.v_2.problem.get_problem_version(

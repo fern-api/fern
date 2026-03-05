@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedVersion
 
-client = SeedVersion()
+client = SeedVersion(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.get_user(
     user_id="userId",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedVersion
 
-client = AsyncSeedVersion()
+client = AsyncSeedVersion(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

@@ -175,7 +175,9 @@ client.service.post(...)
 ```python
 from seed import SeedFileUpload
 
-client = SeedFileUpload()
+client = SeedFileUpload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.just_file(
     file="example_file",
@@ -686,7 +688,9 @@ client.service.with_form_encoded_containers(...)
 ```python
 from seed import SeedFileUpload
 
-client = SeedFileUpload()
+client = SeedFileUpload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.optional_args(
     image_file="example_image_file",
@@ -861,7 +865,9 @@ client.service.with_json_property(...)
 ```python
 from seed import SeedFileUpload
 
-client = SeedFileUpload()
+client = SeedFileUpload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.simple()
 

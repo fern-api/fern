@@ -15,7 +15,9 @@
 ```python
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters()
+client = SeedRequestParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.create_username(
     tags=[
@@ -100,7 +102,9 @@ client.user.create_username(
 ```python
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters()
+client = SeedRequestParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.create_username_with_referenced_type(
     tags=[
@@ -169,7 +173,9 @@ client.user.create_username_with_referenced_type(
 ```python
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters()
+client = SeedRequestParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.create_username_optional(
     request={},
@@ -226,7 +232,9 @@ from seed import SeedRequestParameters
 from uuid import UUID
 from datetime import date, datetime
 
-client = SeedRequestParameters()
+client = SeedRequestParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.get_username(
     limit=1,

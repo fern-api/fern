@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedEnum
 
-client = SeedEnum()
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.headers.send(
     operand=">",
@@ -54,7 +56,9 @@ import asyncio
 
 from seed import AsyncSeedEnum
 
-client = AsyncSeedEnum()
+client = AsyncSeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

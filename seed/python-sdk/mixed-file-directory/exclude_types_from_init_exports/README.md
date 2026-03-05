@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedMixedFileDirectory
 
-client = SeedMixedFileDirectory()
+client = SeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.organization.create(
     name="name",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedMixedFileDirectory
 
-client = AsyncSeedMixedFileDirectory()
+client = AsyncSeedMixedFileDirectory(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

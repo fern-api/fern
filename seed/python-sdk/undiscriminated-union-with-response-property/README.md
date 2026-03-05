@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedUndiscriminatedUnionWithResponseProperty
 
-client = SeedUndiscriminatedUnionWithResponseProperty()
+client = SeedUndiscriminatedUnionWithResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.get_union()
 ```
@@ -50,7 +52,9 @@ import asyncio
 
 from seed import AsyncSeedUndiscriminatedUnionWithResponseProperty
 
-client = AsyncSeedUndiscriminatedUnionWithResponseProperty()
+client = AsyncSeedUndiscriminatedUnionWithResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

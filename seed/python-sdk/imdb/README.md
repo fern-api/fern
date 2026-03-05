@@ -38,6 +38,7 @@ from seed import SeedApi
 
 client = SeedApi(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.imdb.create_movie(
@@ -57,6 +58,7 @@ from seed import AsyncSeedApi
 
 client = AsyncSeedApi(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

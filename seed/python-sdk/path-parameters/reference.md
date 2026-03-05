@@ -17,6 +17,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.organizations.get_organization(
@@ -83,6 +84,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.organizations.get_organization_user(
@@ -157,6 +159,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.organizations.search_organizations(
@@ -232,6 +235,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.get_user(
@@ -297,6 +301,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.create_user(
@@ -367,6 +372,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.update_user(
@@ -445,6 +451,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.search_users(
@@ -533,6 +540,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.get_user_metadata(
@@ -621,6 +629,7 @@ from seed import SeedPathParameters
 
 client = SeedPathParameters(
     tenant_id="tenant_id",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.get_user_specifics(

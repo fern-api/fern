@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedPlainText
 
-client = SeedPlainText()
+client = SeedPlainText(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.get_text()
 ```
@@ -50,7 +52,9 @@ import asyncio
 
 from seed import AsyncSeedPlainText
 
-client = AsyncSeedPlainText()
+client = AsyncSeedPlainText(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

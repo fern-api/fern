@@ -25,6 +25,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly packageName: string;
     private readonly clientClassName: string;
     private readonly asyncClientClassName: string;
+    private _paginationSecondSnippets: string[] = [];
 
     constructor({
         context,
@@ -121,6 +122,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate);
         }
 
+        // Append additional pagination snippets (iter_pages pattern) if any were collected
+        const paginationSnippets = snippetsByFeatureId[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID];
+        if (this._paginationSecondSnippets.length > 0 && paginationSnippets != null) {
+            paginationSnippets.push(
+                ...this._paginationSecondSnippets
+            );
+        }
+
         // Always add custom client snippet (not endpoint-specific)
         snippetsByFeatureId[FernGeneratorCli.StructuredFeatureId.CustomClient] = [this.renderCustomClientSnippet()];
 
@@ -168,7 +177,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? (this.extractConstructorArgsFromSyncSnippet(syncSnippet) ?? this.getClientConstructorArgs())
                 : this.getClientConstructorArgs();
 
-        const extraImports = syncSnippet != null ? this.extractExtraImportsFromSyncSnippet(syncSnippet) : [];
+        const extraImports =
+            syncSnippet != null
+                ? this.extractExtraImportsFromSyncSnippet(syncSnippet)
+                : this.getClientConstructorExtraImports();
 
         const methodCallBlock = syncSnippet != null ? this.extractMethodCallFromSyncSnippet(syncSnippet) : undefined;
 
@@ -305,14 +317,26 @@ asyncio.run(main())`
             }
         }
 
-        // Add environment arg
-        if (this.context.ir.environments != null) {
-            // Has environments - don't add explicit base_url
+        // Add environment or base_url
+        const environmentInfo = this.getEnvironmentInfo();
+        if (environmentInfo != null) {
+            args.push(environmentInfo.constructorArg);
         } else {
             args.push(`    base_url="https://yourhost.com/path/to/api",`);
         }
 
         return args.join("\n");
+    }
+
+    /**
+     * Gets extra imports needed for the client constructor (e.g., environment import).
+     */
+    private getClientConstructorExtraImports(): string[] {
+        const environmentInfo = this.getEnvironmentInfo();
+        if (environmentInfo != null) {
+            return [environmentInfo.importLine];
+        }
+        return [];
     }
 
     private renderExceptionHandlingSnippet(endpoint: EndpointWithFilepath): string {
@@ -384,6 +408,42 @@ for chunk in response:
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
+        // Use the prerendered snippet if available (includes full client setup),
+        // and append the pagination iteration boilerplate matching v1 output.
+        const prerenderedSnippet = this.prerenderedSnippetsByEndpointId[endpoint.endpoint.id];
+        if (prerenderedSnippet != null) {
+            const methodCall = this.getMethodCall(endpoint);
+            const hasParams = this.endpointHasParameters(endpoint.endpoint);
+
+            // Extract the method call variable name from the prerendered snippet
+            // v1 format: response = client.foo.bar(...) then iterates with response
+            const varMatch = prerenderedSnippet.match(/^(\w+)\s*=\s*client\./m);
+            const varName = varMatch?.[1] ?? "response";
+
+            // Build the first snippet: prerendered + pagination iteration boilerplate
+            const firstSnippet = `${prerenderedSnippet.trimEnd()}
+for item in ${varName}:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in ${varName}.iter_pages():
+    yield page
+`;
+
+            // Build the second snippet: iter_pages with typed response access
+            const secondSnippet = `# You can also iterate through pages and access the typed response per page
+pager = ${methodCall}(${hasParams ? "..." : ""})
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
+`;
+
+            // Store both snippets; we'll return them via the pagination feature handler
+            this._paginationSecondSnippets.push(secondSnippet);
+            return firstSnippet;
+        }
+
+        // Fallback: template-based snippet
         const methodCall = this.getMethodCall(endpoint);
         const hasParams = this.endpointHasParameters(endpoint.endpoint);
         return this.writeCode(
@@ -498,9 +558,136 @@ client = ${this.clientClassName}(
             if (snippets[endpointSnippet.id.identifierOverride] != null) {
                 continue;
             }
-            snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.syncClient;
+            snippets[endpointSnippet.id.identifierOverride] = this.injectClientSetupIntoSnippet(
+                endpointSnippet.snippet.syncClient
+            );
         }
         return snippets;
+    }
+
+    /**
+     * Post-processes a prerendered snippet to inject base_url or environment setup
+     * into the client constructor, matching v1 output.
+     */
+    private injectClientSetupIntoSnippet(snippet: string): string {
+        const lines = snippet.split("\n");
+        const clientLineIdx = lines.findIndex((line) => line.startsWith("client = "));
+        if (clientLineIdx === -1) {
+            return snippet;
+        }
+
+        const clientLine = lines[clientLineIdx] ?? "";
+
+        // Find the closing paren of the constructor
+        let closingParenIdx = -1;
+        if (clientLine.endsWith("()")) {
+            // No-args constructor: client = SeedFoo()
+            closingParenIdx = clientLineIdx;
+        } else if (clientLine.endsWith("(")) {
+            // Multi-line constructor: find the closing paren
+            for (let i = clientLineIdx + 1; i < lines.length; i++) {
+                if (lines[i] === ")") {
+                    closingParenIdx = i;
+                    break;
+                }
+            }
+        }
+
+        if (closingParenIdx === -1) {
+            return snippet;
+        }
+
+        const environmentInfo = this.getEnvironmentInfo();
+        if (environmentInfo != null) {
+            // Has environments: inject environment import and param
+            const { importLine, constructorArg } = environmentInfo;
+
+            // Insert environment import after the package import
+            const packageImportIdx = lines.findIndex(
+                (line) => line.startsWith(`from ${this.packageName} import`)
+            );
+            if (packageImportIdx !== -1) {
+                lines.splice(packageImportIdx + 1, 0, importLine);
+                // Adjust indices after insertion
+                const adjustedClientLineIdx = clientLineIdx + 1;
+                const adjustedClosingParenIdx = closingParenIdx + 1;
+
+                // Inject environment arg into constructor
+                this.injectConstructorArg(lines, adjustedClientLineIdx, adjustedClosingParenIdx, constructorArg);
+            }
+        } else {
+            // No environments: inject base_url
+            const baseUrlArg = `    base_url="https://yourhost.com/path/to/api",`;
+            this.injectConstructorArg(lines, clientLineIdx, closingParenIdx, baseUrlArg);
+        }
+
+        return lines.join("\n");
+    }
+
+    /**
+     * Injects a constructor argument into the client constructor.
+     */
+    private injectConstructorArg(
+        lines: string[],
+        clientLineIdx: number,
+        closingParenIdx: number,
+        arg: string
+    ): void {
+        const clientLine = lines[clientLineIdx] ?? "";
+
+        if (clientLine.endsWith("()")) {
+            // No-args: convert to multi-line with the arg
+            const className = clientLine.slice("client = ".length, -2);
+            lines[clientLineIdx] = `client = ${className}(`;
+            lines.splice(clientLineIdx + 1, 0, arg, ")");
+        } else {
+            // Multi-line: insert the arg as the last argument before closing paren
+            lines.splice(closingParenIdx, 0, arg);
+        }
+    }
+
+    /**
+     * Gets environment info for snippet injection, or undefined if no environments.
+     */
+    private getEnvironmentInfo(): { importLine: string; constructorArg: string } | undefined {
+        const envConfig = this.context.ir.environments;
+        if (envConfig == null) {
+            return undefined;
+        }
+
+        const envClassName = `${this.clientClassName}Environment`;
+        const importLine = `from ${this.packageName}.environment import ${envClassName}`;
+
+        // Get the default environment or first environment
+        let firstEnvName: string | undefined;
+        if (envConfig.environments.type === "singleBaseUrl") {
+            const defaultEnvId = envConfig.defaultEnvironment;
+            const envs = envConfig.environments.environments;
+            if (defaultEnvId != null) {
+                const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+                firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
+            }
+            if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
+                firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
+            }
+        } else if (envConfig.environments.type === "multipleBaseUrls") {
+            const defaultEnvId = envConfig.defaultEnvironment;
+            const envs = envConfig.environments.environments;
+            if (defaultEnvId != null) {
+                const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+                firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
+            }
+            if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
+                firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
+            }
+        }
+
+        if (firstEnvName == null) {
+            return undefined;
+        }
+
+        const constructorArg = `    environment=${envClassName}.${firstEnvName},`;
+        return { importLine, constructorArg };
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {

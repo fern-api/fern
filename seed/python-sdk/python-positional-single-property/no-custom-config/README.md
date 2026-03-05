@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedPythonPositionalSingleProperty
 
-client = SeedPythonPositionalSingleProperty()
+client = SeedPythonPositionalSingleProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.create(
     instrument={
@@ -65,7 +67,9 @@ import asyncio
 
 from seed import AsyncSeedPythonPositionalSingleProperty
 
-client = AsyncSeedPythonPositionalSingleProperty()
+client = AsyncSeedPythonPositionalSingleProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

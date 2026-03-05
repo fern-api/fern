@@ -14,9 +14,11 @@
 
 ```python
 from seed import SeedMultiUrlEnvironmentNoDefault
+from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
 client = SeedMultiUrlEnvironmentNoDefault(
     token="<token>",
+    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
 )
 
 client.ec_2.boot_instance(
@@ -72,9 +74,11 @@ client.ec_2.boot_instance(
 
 ```python
 from seed import SeedMultiUrlEnvironmentNoDefault
+from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
 client = SeedMultiUrlEnvironmentNoDefault(
     token="<token>",
+    environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
 )
 
 client.s_3.get_presigned_url(

@@ -39,6 +39,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_list_of_primitives(
@@ -61,6 +62,7 @@ from seed.matryoshka.doll.structure import AsyncSeedExhaustive
 
 client = AsyncSeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 
@@ -96,11 +98,27 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-pager = client.endpoints.pagination.list_items(...)
-for item in pager:
-    print(item)
+from seed import SeedExhaustive
 
+client = SeedExhaustive(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.endpoints.pagination.list_items(
+    cursor="cursor",
+    limit=1,
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+```
+
+```python
 # You can also iterate through pages and access the typed response per page
+pager = client.endpoints.pagination.list_items(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:

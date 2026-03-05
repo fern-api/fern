@@ -27,8 +27,11 @@ Returns a RootObject which inherits from a nullable schema.
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.DEFAULT,
+)
 
 client.get_test()
 
@@ -86,8 +89,11 @@ Creates a test object with nullable allOf in request body.
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.DEFAULT,
+)
 
 client.create_test()
 

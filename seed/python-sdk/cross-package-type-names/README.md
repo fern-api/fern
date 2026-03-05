@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedCrossPackageTypeNames
 
-client = SeedCrossPackageTypeNames()
+client = SeedCrossPackageTypeNames(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.foo.find(
     optional_string="optionalString",
@@ -54,7 +56,9 @@ import asyncio
 
 from seed import AsyncSeedCrossPackageTypeNames
 
-client = AsyncSeedCrossPackageTypeNames()
+client = AsyncSeedCrossPackageTypeNames(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

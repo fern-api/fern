@@ -14,7 +14,9 @@
 ```python
 from seed import SeedApi
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.chat_stream(
     prompt="prompt",
@@ -77,7 +79,9 @@ client.chat_stream(
 ```python
 from seed import SeedApi
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.chat_stream(
     prompt="Hello",

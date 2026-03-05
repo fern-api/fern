@@ -38,6 +38,7 @@ from seed import SeedAccept
 
 client = SeedAccept(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.endpoint()
@@ -54,6 +55,7 @@ from seed import AsyncSeedAccept
 
 client = AsyncSeedAccept(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

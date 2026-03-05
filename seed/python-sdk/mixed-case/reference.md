@@ -15,7 +15,9 @@
 ```python
 from seed import SeedMixedCase
 
-client = SeedMixedCase()
+client = SeedMixedCase(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.get_resource(
     resource_id="rsc-xyz",
@@ -71,7 +73,9 @@ client.service.get_resource(
 from seed import SeedMixedCase
 from datetime import date
 
-client = SeedMixedCase()
+client = SeedMixedCase(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.list_resources(
     page_limit=10,

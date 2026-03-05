@@ -38,6 +38,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.search_resources(
@@ -61,6 +62,7 @@ from seed import AsyncSeedClientSideParams
 
 client = AsyncSeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

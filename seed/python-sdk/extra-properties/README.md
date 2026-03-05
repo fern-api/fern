@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedExtraProperties
 
-client = SeedExtraProperties()
+client = SeedExtraProperties(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.create_user(
     name="Alice",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedExtraProperties
 
-client = AsyncSeedExtraProperties()
+client = AsyncSeedExtraProperties(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

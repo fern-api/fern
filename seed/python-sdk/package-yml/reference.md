@@ -16,6 +16,7 @@ from seed import SeedPackageYml
 
 client = SeedPackageYml(
     id="id-ksfd9c1",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.echo(
@@ -84,6 +85,7 @@ from seed import SeedPackageYml
 
 client = SeedPackageYml(
     id="id-a2ijs82",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.nop(

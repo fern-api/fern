@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedMixedCase
 
-client = SeedMixedCase()
+client = SeedMixedCase(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.get_resource(
     resource_id="rsc-xyz",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedMixedCase
 
-client = AsyncSeedMixedCase()
+client = AsyncSeedMixedCase(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

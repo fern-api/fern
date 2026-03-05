@@ -14,7 +14,9 @@
 ```python
 from seed import SeedAliasExtends
 
-client = SeedAliasExtends()
+client = SeedAliasExtends(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.extended_inline_request_body(
     parent="parent",

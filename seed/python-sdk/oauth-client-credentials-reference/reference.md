@@ -18,6 +18,7 @@ from seed import SeedOauthClientCredentialsReference
 client = SeedOauthClientCredentialsReference(
     client_id="<clientId>",
     client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.auth.get_token(
@@ -78,6 +79,7 @@ from seed import SeedOauthClientCredentialsReference
 client = SeedOauthClientCredentialsReference(
     client_id="<clientId>",
     client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.simple.get_something()

@@ -31,6 +31,7 @@ from seed import SeedHeaderToken
 
 client = SeedHeaderToken(
     header_token_auth="<value>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.get_with_bearer_token()

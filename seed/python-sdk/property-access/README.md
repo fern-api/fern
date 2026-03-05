@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedPropertyAccess
 
-client = SeedPropertyAccess()
+client = SeedPropertyAccess(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.create_user(
     id="id",
@@ -61,7 +63,9 @@ import asyncio
 
 from seed import AsyncSeedPropertyAccess
 
-client = AsyncSeedPropertyAccess()
+client = AsyncSeedPropertyAccess(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

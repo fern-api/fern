@@ -14,9 +14,11 @@
 
 ```python
 from seed import SeedSingleUrlEnvironmentNoDefault
+from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
 client = SeedSingleUrlEnvironmentNoDefault(
     token="<token>",
+    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
 )
 
 client.dummy.get_dummy()

@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedLiteral
 
-client = SeedLiteral()
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.headers.send(
     endpoint_version="02-12-2024",
@@ -54,7 +56,9 @@ import asyncio
 
 from seed import AsyncSeedLiteral
 
-client = AsyncSeedLiteral()
+client = AsyncSeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

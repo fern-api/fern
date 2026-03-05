@@ -32,6 +32,7 @@ from seed import SeedBasicAuthEnvironmentVariables
 client = SeedBasicAuthEnvironmentVariables(
     username="<username>",
     access_token="<password>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.basic_auth.get_with_basic_auth()
@@ -94,6 +95,7 @@ from seed import SeedBasicAuthEnvironmentVariables
 client = SeedBasicAuthEnvironmentVariables(
     username="<username>",
     access_token="<password>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.basic_auth.post_with_basic_auth(

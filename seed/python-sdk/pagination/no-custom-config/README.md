@@ -39,6 +39,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.complex_.search(
@@ -66,6 +67,7 @@ from seed import AsyncSeedPagination
 
 client = AsyncSeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 
@@ -107,11 +109,35 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-pager = client.complex_.search(...)
-for item in pager:
-    print(item)
+from seed import SeedPagination
 
+client = SeedPagination(
+    token="<token>",
+    base_url="https://yourhost.com/path/to/api",
+)
+
+client.complex_.search(
+    index="index",
+    pagination={
+        "per_page": 1,
+        "starting_after": "starting_after"
+    },
+    query={
+        "field": "field",
+        "operator": "=",
+        "value": "value"
+    },
+)
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
+```
+
+```python
 # You can also iterate through pages and access the typed response per page
+pager = client.complex_.search(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:

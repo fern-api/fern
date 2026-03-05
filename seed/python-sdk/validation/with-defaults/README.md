@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedValidation
 
-client = SeedValidation()
+client = SeedValidation(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.create(
     decimal=2.2,
@@ -55,7 +57,9 @@ import asyncio
 
 from seed import AsyncSeedValidation
 
-client = AsyncSeedValidation()
+client = AsyncSeedValidation(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

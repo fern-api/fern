@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedHttpHead
 
-client = SeedHttpHead()
+client = SeedHttpHead(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.head()
 ```
@@ -50,7 +52,9 @@ import asyncio
 
 from seed import AsyncSeedHttpHead
 
-client = AsyncSeedHttpHead()
+client = AsyncSeedHttpHead(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

@@ -15,7 +15,9 @@
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions()
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.get(
     request="string",
@@ -70,7 +72,9 @@ client.union.get(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions()
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.get_metadata()
 
@@ -115,7 +119,9 @@ client.union.get_metadata()
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions()
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.update_metadata(
     request={
@@ -172,7 +178,9 @@ client.union.update_metadata(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions()
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.call(
     union={
@@ -229,7 +237,9 @@ client.union.call(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions()
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.duplicate_types_union(
     request="string",
@@ -284,7 +294,9 @@ client.union.duplicate_types_union(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions()
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.nested_unions(
     request="string",
@@ -339,7 +351,9 @@ client.union.nested_unions(
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions()
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.test_camel_case_properties(
     payment_method={

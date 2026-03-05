@@ -15,7 +15,9 @@
 ```python
 from seed import SeedLiteral
 
-client = SeedLiteral()
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.headers.send(
     endpoint_version="02-12-2024",
@@ -89,7 +91,9 @@ client.headers.send(
 ```python
 from seed import SeedLiteral
 
-client = SeedLiteral()
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.inlined.send(
     temperature=10.1,
@@ -207,7 +211,9 @@ client.inlined.send(
 ```python
 from seed import SeedLiteral
 
-client = SeedLiteral()
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.path.send()
 
@@ -261,7 +267,9 @@ client.path.send()
 ```python
 from seed import SeedLiteral
 
-client = SeedLiteral()
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.query.send(
     prompt="You are a helpful assistant",
@@ -389,7 +397,9 @@ client.query.send(
 ```python
 from seed import SeedLiteral
 
-client = SeedLiteral()
+client = SeedLiteral(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.reference.send(
     query="What is the weather today",

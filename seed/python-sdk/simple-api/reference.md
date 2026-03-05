@@ -14,9 +14,11 @@
 
 ```python
 from seed import SeedSimpleApi
+from seed.environment import SeedSimpleApiEnvironment
 
 client = SeedSimpleApi(
     token="<token>",
+    environment=SeedSimpleApiEnvironment.PRODUCTION,
 )
 
 client.user.get(
