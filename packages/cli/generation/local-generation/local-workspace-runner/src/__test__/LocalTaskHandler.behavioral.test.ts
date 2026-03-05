@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
  * Integration tests for Tier 3 behavioral analysis in LocalTaskHandler.
@@ -11,11 +11,7 @@ import { describe, expect, it, vi, beforeEach } from "vitest";
  */
 
 // Use vi.hoisted so mock fns are available in vi.mock factories (which are hoisted)
-const {
-    mockAnalyzeSdkDiff,
-    mockAnalyzeBehavioralChanges,
-    mockWithOptions
-} = vi.hoisted(() => {
+const { mockAnalyzeSdkDiff, mockAnalyzeBehavioralChanges, mockWithOptions } = vi.hoisted(() => {
     const mockAnalyzeSdkDiff = vi.fn();
     const mockAnalyzeBehavioralChanges = vi.fn();
     const mockWithOptions = vi.fn().mockReturnValue({
@@ -100,14 +96,16 @@ vi.mock("fs/promises", async () => {
     const actual = await vi.importActual("fs/promises");
     return {
         ...actual,
-        readFile: vi.fn().mockResolvedValue(
-            'diff --git a/src/client.ts b/src/client.ts\n' +
-            '--- a/src/client.ts\n' +
-            '+++ b/src/client.ts\n' +
-            '-  "version": "1.0.0"\n' +
-            '+  "version": "505.503.4455"\n' +
-            '+  const MAX_RETRIES = 5;\n'
-        ),
+        readFile: vi
+            .fn()
+            .mockResolvedValue(
+                "diff --git a/src/client.ts b/src/client.ts\n" +
+                    "--- a/src/client.ts\n" +
+                    "+++ b/src/client.ts\n" +
+                    '-  "version": "1.0.0"\n' +
+                    '+  "version": "505.503.4455"\n' +
+                    "+  const MAX_RETRIES = 5;\n"
+            ),
         rm: vi.fn().mockResolvedValue(undefined),
         readdir: vi.fn().mockResolvedValue([]),
         cp: vi.fn().mockResolvedValue(undefined),
@@ -158,12 +156,12 @@ vi.mock("semver", () => ({
         inc: (v: string, type: string) => {
             const parts = v.split(".").map(Number);
             if (type === "major") {
-                return `${parts[0]! + 1}.0.0`;
+                return `${(parts[0] ?? 0) + 1}.0.0`;
             }
             if (type === "minor") {
-                return `${parts[0]}.${parts[1]! + 1}.0`;
+                return `${parts[0] ?? 0}.${(parts[1] ?? 0) + 1}.0`;
             }
-            return `${parts[0]}.${parts[1]}.${parts[2]! + 1}`;
+            return `${parts[0] ?? 0}.${parts[1] ?? 0}.${(parts[2] ?? 0) + 1}`;
         }
     }
 }));
@@ -212,6 +210,14 @@ const mockContext = {
     logger: mockLogger
 };
 
+// Helper to call private handleAutoVersioning method
+async function callHandleAutoVersioning(
+    handler: Record<string, unknown>
+): Promise<{ version: string; commitMessage: string } | null> {
+    // biome-ignore lint/suspicious/noExplicitAny: accessing private method for testing
+    return (handler as any).handleAutoVersioning();
+}
+
 describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
     beforeEach(() => {
         vi.clearAllMocks();
@@ -225,10 +231,13 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
     async function createTaskHandler(overrides: Record<string, unknown> = {}) {
         const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
         return new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
             context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
             absolutePathToTmpOutputDirectory: "/tmp/output" as any,
             absolutePathToTmpSnippetJSON: undefined,
             absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
             absolutePathToLocalOutput: "/tmp/local-output" as any,
             absolutePathToLocalSnippetJSON: undefined,
             absolutePathToTmpSnippetTemplatesJSON: undefined,
@@ -247,13 +256,12 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         });
 
         const handler = await createTaskHandler();
-        // Access private method via prototype
-        const result = await (handler as any).handleAutoVersioning();
+        const result = await callHandleAutoVersioning(handler);
 
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
         expect(mockAnalyzeBehavioralChanges).not.toHaveBeenCalled();
         expect(result).not.toBeNull();
-        expect(result!.commitMessage).toContain("feat: add new endpoint for user management");
+        expect(result?.commitMessage).toContain("feat: add new endpoint for user management");
     });
 
     it("calls Tier 3 when Tier 2 returns PATCH", async () => {
@@ -268,7 +276,7 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         });
 
         const handler = await createTaskHandler();
-        await (handler as any).handleAutoVersioning();
+        await callHandleAutoVersioning(handler);
 
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
         expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledOnce();
@@ -286,12 +294,12 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         });
 
         const handler = await createTaskHandler();
-        const result = await (handler as any).handleAutoVersioning();
+        const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();
         // Version should be incremented as MINOR (1.0.0 -> 1.1.0)
-        expect(result!.version).toBe("1.1.0");
-        expect(result!.commitMessage).toContain("feat: increase default retry count from 3 to 5");
+        expect(result?.version).toBe("1.1.0");
+        expect(result?.commitMessage).toContain("feat: increase default retry count from 3 to 5");
     });
 
     it("falls back to PATCH when Tier 3 AI call throws", async () => {
@@ -302,15 +310,13 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         mockAnalyzeBehavioralChanges.mockRejectedValue(new Error("AI service unavailable"));
 
         const handler = await createTaskHandler();
-        const result = await (handler as any).handleAutoVersioning();
+        const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();
         // Version should be incremented as PATCH (1.0.0 -> 1.0.1)
-        expect(result!.version).toBe("1.0.1");
+        expect(result?.version).toBe("1.0.1");
         // Should log the warning
-        expect(mockLogger.warn).toHaveBeenCalledWith(
-            expect.stringContaining("Tier 3 behavioral analysis failed")
-        );
+        expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Tier 3 behavioral analysis failed"));
     });
 
     it("uses Tier 3 commit message when it escalates from PATCH to MINOR", async () => {
@@ -327,12 +333,12 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         });
 
         const handler = await createTaskHandler();
-        const result = await (handler as any).handleAutoVersioning();
+        const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();
         // Should use Tier 3 message (not Tier 2), with Fern branding
-        expect(result!.commitMessage).toContain(tier3Message);
-        expect(result!.commitMessage).toContain("Generated with Fern");
+        expect(result?.commitMessage).toContain(tier3Message);
+        expect(result?.commitMessage).toContain("Generated with Fern");
     });
 
     it("passes generator language to Tier 3", async () => {
@@ -347,12 +353,9 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         });
 
         const handler = await createTaskHandler({ generatorLanguage: "python" });
-        await (handler as any).handleAutoVersioning();
+        await callHandleAutoVersioning(handler);
 
-        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledWith(
-            expect.any(String),
-            "python"
-        );
+        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledWith(expect.any(String), "python");
     });
 
     it("uses 'unknown' when generatorLanguage is undefined", async () => {
@@ -367,12 +370,32 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         });
 
         const handler = await createTaskHandler({ generatorLanguage: undefined });
-        await (handler as any).handleAutoVersioning();
+        await callHandleAutoVersioning(handler);
 
-        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledWith(
-            expect.any(String),
-            "unknown"
-        );
+        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledWith(expect.any(String), "unknown");
+    });
+
+    it("falls back to Tier 2 message when Tier 3 returns MINOR with empty message", async () => {
+        const tier2Message = "chore: internal code cleanup";
+
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: tier2Message
+        });
+        mockAnalyzeBehavioralChanges.mockResolvedValue({
+            version_bump: BehavioralBump.MINOR,
+            behavioral_changes: ["Changed retry behavior"],
+            message: "" // empty message from AI
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        // Should escalate to MINOR
+        expect(result?.version).toBe("1.1.0");
+        // Should fall back to Tier 2 message since Tier 3 message is empty
+        expect(result?.commitMessage).toContain(tier2Message);
     });
 
     it("does not call Tier 3 when Tier 2 returns MAJOR", async () => {
@@ -382,7 +405,7 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         });
 
         const handler = await createTaskHandler();
-        const result = await (handler as any).handleAutoVersioning();
+        const result = await callHandleAutoVersioning(handler);
 
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
         expect(mockAnalyzeBehavioralChanges).not.toHaveBeenCalled();

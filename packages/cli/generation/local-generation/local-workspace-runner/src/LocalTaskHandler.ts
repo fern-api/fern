@@ -196,7 +196,8 @@ export class LocalTaskHandler {
                                 `Tier 3 behavioral analysis escalated to MINOR: ${behavioralAnalysis.behavioral_changes.join(", ")}`
                             );
                             finalBump = VersionBump.MINOR;
-                            finalMessage = behavioralAnalysis.message;
+                            // Use Tier 3 message if available, fall back to Tier 2 message
+                            finalMessage = behavioralAnalysis.message || analysis.message;
                         } else {
                             this.context.logger.info("Tier 3 behavioral analysis confirmed PATCH");
                         }
