@@ -274,11 +274,12 @@ internal partial class RawClient(ClientOptions clientOptions)
         return httpRequest;
     }
 
-    private static string BuildUrl(
+    private string BuildUrl(
         global::SeedOauthClientCredentialsEnvironmentVariables.Core.BaseRequest request
     )
     {
-        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
+        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl ?? Options.BaseUrl;
+
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
         var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";

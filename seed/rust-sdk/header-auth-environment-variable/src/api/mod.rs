@@ -9,5 +9,4 @@
 
 pub mod resources;
 
-pub use resources::{ServiceClient, HeaderTokenEnvironmentVariableClient};
-
+pub use resources::{HeaderTokenEnvironmentVariableClient, ServiceClient};

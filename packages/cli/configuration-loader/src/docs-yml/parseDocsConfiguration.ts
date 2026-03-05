@@ -1613,6 +1613,8 @@ async function convertMetadata(
         "twitter:site": metadata.twitterSite,
         "twitter:url": metadata.twitterUrl,
         "twitter:card": metadata.twitterCard,
+        "og:dynamic": metadata.ogDynamic,
+        "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
         nofollow: undefined,
         noindex: undefined,
         canonicalHost: metadata.canonicalHost

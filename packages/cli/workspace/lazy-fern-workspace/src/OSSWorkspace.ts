@@ -294,12 +294,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
             switch (document.type) {
                 case "openapi": {
+                    const spec = document.value as OpenAPIV3_1.Document;
+                    const namespace =
+                        document.namespace ??
+                        ((spec as Record<string, unknown>)["x-fern-sdk-namespace"] as string | undefined);
                     const converterContext = new OpenAPIConverterContext3_1({
-                        namespace: document.namespace,
+                        namespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
-                        spec: document.value as OpenAPIV3_1.Document,
+                        spec,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
                         authOverrides,
@@ -315,8 +319,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     break;
                 }
                 case "asyncapi": {
+                    const asyncApiNamespace =
+                        document.namespace ??
+                        ((document.value as unknown as Record<string, unknown>)["x-fern-sdk-namespace"] as
+                            | string
+                            | undefined);
                     const converterContext = new AsyncAPIConverterContext({
-                        namespace: document.namespace,
+                        namespace: asyncApiNamespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,

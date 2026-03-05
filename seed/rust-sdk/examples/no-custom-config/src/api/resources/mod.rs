@@ -8,7 +8,7 @@
 //! - **Service**
 //! - **Types**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod commons;
 pub mod file;
@@ -28,10 +28,9 @@ impl ExamplesClient {
             config: config.clone(),
             file: FileClient::new(config.clone())?,
             health: HealthClient::new(config.clone())?,
-            service: ServiceClient4::new(config.clone())?
+            service: ServiceClient4::new(config.clone())?,
         })
     }
-
 }
 
 pub use commons::CommonsClient;

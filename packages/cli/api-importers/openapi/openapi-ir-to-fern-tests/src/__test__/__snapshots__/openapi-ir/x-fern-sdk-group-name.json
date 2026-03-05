@@ -93,6 +93,85 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "audiences": [],
+      "tags": [],
+      "sdkName": {
+        "groupName": [
+          "v1",
+          "_internal",
+          "pets"
+        ],
+        "methodName": "list"
+      },
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ListPetsRequest",
+      "response": {
+        "description": "Success",
+        "schema": {
+          "value": {
+            "generatedName": "ListPetsResponseItem",
+            "schema": "Pet",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "generatedName": "ListPetsResponse",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "description": "This endpoint uses underscore-prefixed group name",
+      "authed": false,
+      "method": "GET",
+      "path": "/v1/_internal/pets",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "properties": {
+                    "name": {
+                      "value": {
+                        "value": "name",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "webhooks": [],
@@ -120,6 +199,41 @@
           "person"
         ],
         "type": "primitive"
+      },
+      "Pet": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "petName",
+            "key": "name",
+            "schema": {
+              "generatedName": "PetName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PetName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Pet",
+        "groupName": [
+          "_internal"
+        ],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
       },
       "User": {
         "allOf": [],

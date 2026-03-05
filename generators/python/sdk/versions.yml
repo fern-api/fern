@@ -1,5 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.61.5
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client generation to respect `pydantic_config.skip_validation: true`.
+        Previously, socket clients always used `parse_obj_as` (full Pydantic validation)
+        regardless of the skip_validation flag. They now correctly use `construct_type`
+        (no validation) when the flag is enabled, matching the behavior of HTTP clients.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.4
+  changelogEntry:
+    - summary: |
+        WebSocket clients now gracefully handle unknown message types instead of crashing.
+        When the server sends a message type not yet in the SDK's union, the client logs a
+        warning and skips the message rather than killing the connection with a validation error.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.61.3
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of `WIREMOCK_PORT`. The conftest plugin
+        now sets `WIREMOCK_URL` after discovering the dynamically assigned port. Falls
+        back to `http://localhost:8080` if the variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.61.2
+  changelogEntry:
+    - summary: |
+        Re-add `@fern-api/generator-cli` to Python SDK Docker image. The CLI was inadvertently
+        removed in 4.60.1 when JS-based generators migrated to using the generator-cli JS API
+        directly. The Python generator still relies on the CLI binary via subprocess for
+        README.md and reference.md generation.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 4.61.1
   changelogEntry:
     - summary: |
@@ -56,7 +99,6 @@
       type: feat
   createdAt: "2026-02-25"
   irVersion: 65
-
 - version: 4.59.4
   changelogEntry:
     - summary: |

@@ -231,9 +231,19 @@ function generateWebhookOperationId({
     method: string;
     sdkMethodName: { methodName: string } | undefined;
 }): string {
-    const base = sdkMethodName?.methodName ?? sanitizePathExpression(path);
+    // Option A: Use the webhook key name directly (clean, human-readable)
+    // with a fallback to method+hash for paths that contain special characters
+    if (sdkMethodName?.methodName != null) {
+        return sdkMethodName.methodName;
+    }
+    const sanitized = sanitizePathExpression(path);
+    if (sanitized === path.toLowerCase()) {
+        // Path is clean (no special characters were removed), use it directly
+        return path;
+    }
+    // Fallback: path had special characters, use sanitized + method + hash for uniqueness
     const hash = createHash("sha256").update(path).digest("hex").slice(0, 8);
-    return toCamelCase(`${base}_${method.toLowerCase()}_${hash}`);
+    return toCamelCase(`${sanitized}_${method.toLowerCase()}_${hash}`);
 }
 
 function sanitizePathExpression(path: string): string {

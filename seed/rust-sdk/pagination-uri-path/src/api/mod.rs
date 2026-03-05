@@ -11,6 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{UsersClient, PaginationUriPathClient};
-pub use types::{*};
-
+pub use resources::{PaginationUriPathClient, UsersClient};
+pub use types::*;

@@ -38,6 +38,10 @@ export interface MetadataConfig {
     twitterUrl?: string;
     /** The Twitter Card type. Options are `summary`, `summary_large_image`, `app`, or `player`. */
     twitterCard?: FernDocsConfig.TwitterCardSetting;
+    /** When true, enables dynamic OG image generation for pages that don't have a custom og:image set. */
+    ogDynamic?: boolean;
+    /** A custom background image for dynamically generated OG images. Can be a URL or a file path. */
+    ogBackgroundImage?: string;
     /**
      * The host of your documentation website. This will be used to set the canonical URL for metadata tags and documents like the sitemap.
      * Defaults to the URL defined in the `instances` configuration.

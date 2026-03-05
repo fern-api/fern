@@ -101,7 +101,10 @@ export async function replayInit(params: ReplayInitParams): Promise<ReplayInitRe
         `user.name=${FERN_BOT_NAME}`,
         "-c",
         `user.email=${FERN_BOT_EMAIL}`,
+        "-c",
+        "commit.gpgsign=false",
         "commit",
+        "--no-verify",
         "-m",
         commitMessage
     ]);

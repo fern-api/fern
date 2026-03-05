@@ -5,7 +5,7 @@ namespace SeedExhaustive.ReqWithHeaders;
 
 public partial class ReqWithHeadersClient : IReqWithHeadersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ReqWithHeadersClient(RawClient client)
     {
@@ -40,7 +40,6 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/test-headers/custom-header",
                     Body = request.Body,
@@ -55,7 +54,9 @@ public partial class ReqWithHeadersClient : IReqWithHeadersClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

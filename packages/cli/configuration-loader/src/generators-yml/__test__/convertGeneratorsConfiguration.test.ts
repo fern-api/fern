@@ -936,7 +936,7 @@ describe("convertGeneratorsConfiguration", () => {
             });
         });
 
-        it("falls back to V2 workspace-level specs when no generator override", async () => {
+        it("returns undefined when workspace is V2 but generator has no api override", async () => {
             const context = createMockTaskContext();
             const workspaceSpecs = [{ openapi: "workspace-spec.yml" }];
             const converted = await convertGeneratorsConfiguration({
@@ -963,9 +963,122 @@ describe("convertGeneratorsConfiguration", () => {
                 context
             });
 
-            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
-                specs: workspaceSpecs
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
+        });
+
+        it("does not inherit auth or auth-schemes from V2 workspace config", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [{ openapi: "workspace-spec.yml" }],
+                        auth: "bearer",
+                        "auth-schemes": { my_scheme: { type: "header", header: "X-Api-Key" } }
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
             });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toBeUndefined();
+        });
+
+        it("generator with specs does not inherit auth from V2 workspace config", async () => {
+            const context = createMockTaskContext();
+            const generatorSpecs = [{ openapi: "generator-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [{ openapi: "workspace-spec.yml" }],
+                        auth: "bearer"
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-name",
+                                    version: "0.0.1",
+                                    api: {
+                                        specs: generatorSpecs
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: generatorSpecs,
+                auth: undefined,
+                "auth-schemes": undefined
+            });
+        });
+
+        it("in same group, only generators with api block get apiOverride", async () => {
+            const context = createMockTaskContext();
+            const generatorSpecs = [{ openapi: "generator-spec.yml" }];
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        specs: [{ openapi: "workspace-spec.yml" }]
+                    },
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "generator-with-override",
+                                    version: "0.0.1",
+                                    api: {
+                                        specs: generatorSpecs
+                                    },
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output1"
+                                    }
+                                },
+                                {
+                                    name: "generator-without-override",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output2"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.apiOverride).toEqual({
+                specs: generatorSpecs,
+                auth: undefined,
+                "auth-schemes": undefined
+            });
+            expect(converted.groups[0]?.generators[1]?.apiOverride).toBeUndefined();
         });
 
         it("generator-level specs take priority over V2 workspace-level specs", async () => {

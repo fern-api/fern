@@ -9,6 +9,45 @@
           "auth": false,
           "base-path": "",
           "endpoints": {
+            "createConversation": {
+              "auth": undefined,
+              "display-name": "Create conversation and upload files",
+              "docs": "Create a new conversation and upload files to it.",
+              "examples": [
+                {
+                  "request": {},
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/conversations",
+              "request": {
+                "body": {
+                  "properties": {
+                    "description": {
+                      "docs": "Description of the conversation.",
+                      "type": "optional<string>",
+                    },
+                    "file": {
+                      "docs": "An optional file to attach.",
+                      "type": "optional<file>",
+                    },
+                    "name": {
+                      "docs": "Name of the conversation.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "content-type": "multipart/form-data",
+                "headers": undefined,
+                "name": "CreateConversationRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
             "upload-file": {
               "auth": undefined,
               "display-name": "Upload a file",
@@ -210,6 +249,29 @@
             data:
               type: optional<UploadWithContentTypeRequestData>
               style: exploded
+        content-type: multipart/form-data
+      examples:
+        - request: {}
+    createConversation:
+      path: /conversations
+      method: POST
+      docs: Create a new conversation and upload files to it.
+      source:
+        openapi: ../openapi.yml
+      display-name: Create conversation and upload files
+      request:
+        name: CreateConversationRequest
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: Name of the conversation.
+            description:
+              type: optional<string>
+              docs: Description of the conversation.
+            file:
+              type: optional<file>
+              docs: An optional file to attach.
         content-type: multipart/form-data
       examples:
         - request: {}

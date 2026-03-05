@@ -6,7 +6,7 @@ mod wire_test_utils;
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_urls_with_mixed_case_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -28,7 +28,7 @@ async fn test_endpoints_urls_with_mixed_case_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_urls_no_ending_slash_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -50,7 +50,7 @@ async fn test_endpoints_urls_no_ending_slash_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_urls_with_ending_slash_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -72,7 +72,7 @@ async fn test_endpoints_urls_with_ending_slash_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_urls_with_underscores_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),

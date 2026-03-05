@@ -52,6 +52,26 @@ export async function loadRawGeneratorsConfiguration({
                 }
             }
 
+            // When the YAML error reason indicates a "bad indentation" or anchor issue and
+            // the offending line contains a value starting with @, it is almost certainly an
+            // unquoted scoped npm package name (e.g. @scope/package).  The @ character is a
+            // reserved YAML anchor symbol, so the parser emits a confusing indentation error
+            // instead of a clear "invalid character" message.
+            if (
+                e.mark != null &&
+                (e.reason === "bad indentation of a mapping entry" ||
+                    e.reason === "unexpected end of the stream within a flow collection")
+            ) {
+                const fileContent = contentsStr.toString();
+                const lines = fileContent.split("\n");
+                const errorLine = e.mark.line >= 0 && e.mark.line < lines.length ? lines[e.mark.line] : undefined;
+                if (errorLine != null && /:\s+@/.test(errorLine)) {
+                    errorMessage +=
+                        '\n\nHint: Values starting with "@" (such as scoped npm packages) must be wrapped in quotes.' +
+                        '\n  Example: package-name: "@scope/package"';
+                }
+            }
+
             context.failAndThrow(errorMessage);
         } else {
             throw e;

@@ -578,6 +578,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             : isRawMultipleBaseUrlsEnvironment(schema)
                               ? Object.values(schema.urls)[0]
                               : (schema["default-url"] ?? schema.url);
+                    if (baseUrl != null) {
+                        context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                    }
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -603,6 +606,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                             : isRawMultipleBaseUrlsEnvironment(schema)
                               ? Object.values(schema.urls)[0]
                               : (schema["default-url"] ?? schema.url);
+                    if (baseUrl != null) {
+                        context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                    }
                     context.builder.addEnvironment({
                         name,
                         schema: {
@@ -661,6 +667,10 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
 
             const hasTemplateData = Object.keys(multiUrlTemplates).length > 0 || Object.keys(multiVariables).length > 0;
 
+            if (topLevelServerUrl != null) {
+                context.setUrlId(topLevelServerUrl, DEFAULT_URL_NAME);
+            }
+
             const multiUrlSchema: RawSchemas.MultipleBaseUrlsEnvironmentSchema = {
                 urls: {
                     ...{ [DEFAULT_URL_NAME]: topLevelServerUrl ?? "" },
@@ -716,6 +726,8 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                         continue; // Skip if no base URL
                     }
 
+                    context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+
                     const envSuffix = baseUrl.match(/[-]([a-z0-9]+)\./i)?.[1]?.toLowerCase() || "production";
 
                     const urls: Record<string, string> = {
@@ -767,6 +779,9 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
                                 : isRawMultipleBaseUrlsEnvironment(schema)
                                   ? Object.values(schema.urls)[0]
                                   : (schema["default-url"] ?? schema.url);
+                        if (baseUrl != null) {
+                            context.setUrlId(baseUrl, DEFAULT_URL_NAME);
+                        }
                         context.builder.addEnvironment({
                             name,
                             schema: {

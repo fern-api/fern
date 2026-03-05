@@ -1,6 +1,8 @@
+import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import {
     AbstractAPIWorkspace,
@@ -29,7 +31,9 @@ export async function runRemoteGenerationForAPIWorkspace({
     absolutePathToPreview,
     mode,
     fernignorePath,
-    dynamicIrOnly
+    dynamicIrOnly,
+    validateWorkspace,
+    retryRateLimited
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -44,6 +48,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     mode: "pull-request" | undefined;
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
+    validateWorkspace?: boolean;
+    retryRateLimited: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -63,6 +69,15 @@ export async function runRemoteGenerationForAPIWorkspace({
                     settings,
                     generatorInvocation.apiOverride?.specs
                 );
+
+                if (validateWorkspace) {
+                    await validateAPIWorkspaceAndLogIssues({
+                        workspace: fernWorkspace,
+                        context,
+                        logWarnings: false,
+                        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                    });
+                }
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
@@ -101,7 +116,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
                     fernignorePath,
-                    dynamicIrOnly
+                    dynamicIrOnly,
+                    retryRateLimited
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

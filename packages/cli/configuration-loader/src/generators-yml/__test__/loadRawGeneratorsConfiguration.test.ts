@@ -42,4 +42,46 @@ describe("loadRawGeneratorsConfiguration", () => {
 
         expect(result).toEqual(validConfig);
     });
+
+    it("shows hint for unquoted scoped npm package names", async () => {
+        const ymlPath = path.join(tmpDir, "generators.yml");
+        const invalidConfig = [
+            "groups:",
+            "  my-group:",
+            "    generators:",
+            "      - name: fernapi/fern-typescript-node-sdk",
+            "        version: 0.0.1",
+            "        output:",
+            "          location: npm",
+            "          package-name: @fixa-dev/server"
+        ].join("\n");
+        await fs.writeFile(ymlPath, invalidConfig);
+
+        const loggedMessages: string[] = [];
+        const contextWithCapture = createMockTaskContext({
+            logger: {
+                disable: () => undefined,
+                enable: () => undefined,
+                log: () => undefined,
+                trace: () => undefined,
+                debug: () => undefined,
+                info: () => undefined,
+                warn: () => undefined,
+                error: (...args: string[]) => {
+                    loggedMessages.push(args.join(" "));
+                }
+            }
+        });
+
+        await expect(
+            loadRawGeneratorsConfiguration({
+                absolutePathToWorkspace: AbsoluteFilePath.of(tmpDir),
+                context: contextWithCapture
+            })
+        ).rejects.toThrow();
+
+        const errorOutput = loggedMessages.join("\n");
+        expect(errorOutput).toContain('Values starting with "@"');
+        expect(errorOutput).toContain("must be wrapped in quotes");
+    });
 });
