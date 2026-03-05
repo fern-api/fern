@@ -112,7 +112,10 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /(?:^|\/)snippet\.json$/i, // Fern-generated snippet metadata
     /(?:^|\/)\.gitignore$/i,
     /(?:^|\/)\.gitattributes$/i,
-    /\.slnx$/i // .NET solution files
+    /\.slnx$/i, // .NET solution files
+
+    // Fern IR snapshot (used for deterministic versioning, not API surface)
+    /(?:^|\/)\.fern\/ir-snapshot\.json$/i
 ];
 
 /**

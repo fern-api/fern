@@ -6,7 +6,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { GeneratorConfig } from "@fern-fern/generator-exec-sdk/serialization";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -26,6 +26,8 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
+
+const IR_SNAPSHOT_RELATIVE_PATH = ".fern/ir-snapshot.json";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -214,6 +216,19 @@ export async function writeFilesToDiskAndRunGenerator({
         runner
     });
 
+    // Step 1: Read previous IR snapshot from the SDK output directory if it exists
+    let previousIr: IntermediateRepresentation | undefined;
+    const snapshotPathInOutput = path.join(absolutePathToLocalOutput, IR_SNAPSHOT_RELATIVE_PATH);
+    try {
+        const snapshotContent = await readFile(snapshotPathInOutput, "utf-8");
+        previousIr = JSON.parse(snapshotContent) as IntermediateRepresentation;
+        context.logger.debug("Read previous IR snapshot from " + snapshotPathInOutput);
+    } catch {
+        context.logger.debug(
+            "No previous IR snapshot found at " + snapshotPathInOutput + " (new repo or first generation)"
+        );
+    }
+
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
@@ -224,9 +239,18 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false
+        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
+        previousIr,
+        currentIr: latest
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
+
+    // Step 3: Write current IR as new snapshot into the tmp output directory
+    // so it gets copied over with the rest of the generated files
+    const snapshotPathInTmp = path.join(absolutePathToTmpOutputDirectory, IR_SNAPSHOT_RELATIVE_PATH);
+    await mkdir(path.dirname(snapshotPathInTmp), { recursive: true });
+    await writeFile(snapshotPathInTmp, JSON.stringify(latest));
+    context.logger.debug("Wrote IR snapshot to " + snapshotPathInTmp);
 
     return {
         ir: latest,

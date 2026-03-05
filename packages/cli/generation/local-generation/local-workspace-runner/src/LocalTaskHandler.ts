@@ -2,6 +2,7 @@ import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
@@ -11,7 +12,8 @@ import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
-import { isAutoVersion } from "./VersionUtils.js";
+import { analyzeIrDiff } from "./IrDiffAnalyzer.js";
+import { isAutoVersion, VersionBump as LocalVersionBump } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -25,6 +27,8 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        previousIr: IntermediateRepresentation | undefined;
+        currentIr: IntermediateRepresentation;
     }
 }
 
@@ -39,6 +43,8 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private previousIr: IntermediateRepresentation | undefined;
+    private currentIr: IntermediateRepresentation;
 
     constructor({
         context,
@@ -50,7 +56,9 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        previousIr,
+        currentIr
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -62,6 +70,8 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.previousIr = previousIr;
+        this.currentIr = currentIr;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -119,6 +129,9 @@ export class LocalTaskHandler {
         try {
             this.context.logger.info("Analyzing SDK changes for automatic semantic versioning");
 
+            // --- Tier 1: Deterministic IR diff analysis ---
+            const tier1Result = this.runTier1IrDiff();
+
             // Generate git diff to file using local git command
             diffFile = await this.generateDiffFile();
             const diffContent = await readFile(diffFile, "utf-8");
@@ -164,6 +177,25 @@ export class LocalTaskHandler {
                 return null;
             }
 
+            // --- Tier 1 short-circuit: if IR diff says MAJOR, return immediately ---
+            if (tier1Result != null && tier1Result.bump === LocalVersionBump.MAJOR) {
+                const reasonsSummary = tier1Result.reasons.map((r) => `- ${r.description}`).join("\n");
+                this.context.logger.info(
+                    `Tier 1 IR diff: MAJOR bump detected, skipping AI analysis.\nReasons:\n${reasonsSummary}`
+                );
+                const newVersion = this.incrementVersion(previousVersion, VersionBump.MAJOR);
+                const commitMessage = this.isWhitelabel
+                    ? `feat: breaking API changes\n\n${reasonsSummary}`
+                    : `feat: breaking API changes\n\n${reasonsSummary}\n\n🌿 Generated with Fern`;
+                return {
+                    version: newVersion,
+                    commitMessage
+                };
+            }
+
+            // Determine AI ceiling from Tier 1 result
+            const maxPossibleBump = tier1Result?.maxPossibleBump;
+
             // Call AI to analyze the diff
             try {
                 // TODO: Need to get project for BAML client configuration
@@ -177,10 +209,21 @@ export class LocalTaskHandler {
                     return null;
                 }
 
-                // Calculate new version
-                const newVersion = this.incrementVersion(previousVersion, analysis.version_bump);
+                // Apply Tier 1 ceiling constraint: AI cannot return higher than maxPossibleBump
+                let effectiveBump = analysis.version_bump;
+                if (maxPossibleBump != null) {
+                    effectiveBump = this.constrainBump(effectiveBump, maxPossibleBump);
+                    if (effectiveBump !== analysis.version_bump) {
+                        this.context.logger.info(
+                            `AI suggested ${analysis.version_bump} but Tier 1 ceiling is ${maxPossibleBump}, using ${effectiveBump}`
+                        );
+                    }
+                }
 
-                this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
+                // Calculate new version
+                const newVersion = this.incrementVersion(previousVersion, effectiveBump);
+
+                this.context.logger.info(`Version bump: ${effectiveBump}, new version: ${newVersion}`);
 
                 const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
 
@@ -229,6 +272,97 @@ export class LocalTaskHandler {
                 }
             }
         }
+    }
+
+    /**
+     * Runs Tier 1 deterministic IR diff analysis.
+     * Returns undefined if no previous IR is available (new repo).
+     */
+    private runTier1IrDiff(): import("./IrDiffAnalyzer.js").IrDiffResult | undefined {
+        if (this.previousIr == null) {
+            this.context.logger.debug("No previous IR snapshot — skipping Tier 1 IR diff analysis");
+            return undefined;
+        }
+
+        try {
+            // Infer language from the generator name or default to typescript
+            const language = this.inferLanguage();
+            this.context.logger.info(`Running Tier 1 IR diff analysis (language: ${language})`);
+
+            const result = analyzeIrDiff(this.previousIr, this.currentIr, language);
+
+            this.context.logger.info(
+                `Tier 1 IR diff result: bump=${result.bump}, maxPossibleBump=${result.maxPossibleBump}, reasons=${result.reasons.length}`
+            );
+            for (const reason of result.reasons) {
+                this.context.logger.debug(`  [${reason.rule}] ${reason.description} → ${reason.bump}`);
+            }
+
+            return result;
+        } catch (error) {
+            this.context.logger.warn(`Tier 1 IR diff analysis failed, proceeding to AI: ${error}`);
+            return undefined;
+        }
+    }
+
+    /**
+     * Infers the SDK language from the generator invocation context.
+     * Defaults to "typescript" if unable to determine.
+     */
+    private inferLanguage(): string {
+        // The output directory often contains a language hint
+        const outputPath = this.absolutePathToLocalOutput.toLowerCase();
+        const languagePatterns: Array<[string, string]> = [
+            ["typescript", "typescript"],
+            ["ts-sdk", "typescript"],
+            ["python", "python"],
+            ["py-sdk", "python"],
+            ["java", "java"],
+            ["go", "go"],
+            ["csharp", "csharp"],
+            ["ruby", "ruby"],
+            ["php", "php"],
+            ["swift", "swift"],
+            ["rust", "rust"]
+        ];
+
+        for (const [pattern, lang] of languagePatterns) {
+            if (outputPath.includes(pattern)) {
+                return lang;
+            }
+        }
+
+        return "typescript";
+    }
+
+    /**
+     * Constrains an AI-suggested bump to not exceed the Tier 1 ceiling.
+     */
+    private constrainBump(aiBump: VersionBump, ceiling: LocalVersionBump): VersionBump {
+        const bumpOrder: Record<string, number> = {
+            NO_CHANGE: 0,
+            PATCH: 1,
+            MINOR: 2,
+            MAJOR: 3
+        };
+
+        const aiLevel = bumpOrder[aiBump] ?? 0;
+        const ceilingLevel = bumpOrder[ceiling] ?? 3;
+
+        if (aiLevel > ceilingLevel) {
+            // Map the ceiling back to the AI VersionBump type
+            switch (ceiling) {
+                case LocalVersionBump.PATCH:
+                    return VersionBump.PATCH;
+                case LocalVersionBump.MINOR:
+                    return VersionBump.MINOR;
+                case LocalVersionBump.MAJOR:
+                    return VersionBump.MAJOR;
+                default:
+                    return VersionBump.PATCH;
+            }
+        }
+        return aiBump;
     }
 
     /**
@@ -514,7 +648,16 @@ export class LocalTaskHandler {
         await this.runGitCommand(["add", "-N", "."], this.absolutePathToLocalOutput);
 
         await this.runGitCommand(
-            ["diff", "HEAD", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
+            [
+                "diff",
+                "HEAD",
+                "--output",
+                diffFile,
+                "--",
+                ".",
+                ":(exclude).fern/metadata.json",
+                ":(exclude).fern/ir-snapshot.json"
+            ],
             this.absolutePathToLocalOutput
         );
 

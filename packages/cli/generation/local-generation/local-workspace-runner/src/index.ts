@@ -8,6 +8,8 @@ export * from "./ExecutionEnvironment.js";
 export { type ExecutionEnvironment } from "./ExecutionEnvironment.js";
 export * from "./GenerationRunner.js";
 export { GenerationRunner } from "./GenerationRunner.js";
+export * from "./IrDiffAnalyzer.js";
+export { analyzeIrDiff } from "./IrDiffAnalyzer.js";
 export * from "./NativeExecutionEnvironment.js";
 export { NativeExecutionEnvironment } from "./NativeExecutionEnvironment.js";
 export {
