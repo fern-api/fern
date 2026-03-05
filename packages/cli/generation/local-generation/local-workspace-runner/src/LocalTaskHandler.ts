@@ -146,12 +146,12 @@ export class LocalTaskHandler {
 
             const rawDiffSizeKB = formatSizeKB(diffContent.length);
             const cleanedDiffSizeKB = formatSizeKB(cleanedDiff.length);
-            const fileCount = countFilesInDiff(diffContent);
+            const rawFileCount = countFilesInDiff(diffContent);
+            const cleanedFileCount = countFilesInDiff(cleanedDiff);
 
             this.context.logger.debug(
-                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} chars), ` +
-                    `cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ` +
-                    `files changed: ${fileCount}`
+                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} chars), ${rawFileCount} files changed. ` +
+                    `Cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ${cleanedFileCount} files remaining`
             );
 
             // Handle new SDK repository with no previous version
@@ -181,10 +181,10 @@ export class LocalTaskHandler {
             if (cleanedDiff.length > DIFF_SIZE_LIMIT) {
                 this.context.logger.warn(
                     `Cleaned diff is too large for AI analysis ` +
-                        `(${cleanedDiff.length.toLocaleString()} chars / ${cleanedDiffSizeKB}KB, ${fileCount} files). ` +
+                        `(${cleanedDiff.length.toLocaleString()} chars / ${cleanedDiffSizeKB}KB, ${cleanedFileCount} files). ` +
                         `The AI endpoint limit is 100,000 characters. ` +
-                        `Consider excluding generated documentation files (e.g. reference.md) and lock files ` +
-                        `(e.g. pnpm-lock.yaml, poetry.lock) from the diff to reduce its size.`
+                        `Lock files, test files, and generated docs are already excluded. ` +
+                        `Consider splitting the SDK into smaller packages or reducing the number of endpoints.`
                 );
             }
 
@@ -217,11 +217,11 @@ export class LocalTaskHandler {
                 this.context.logger.warn(
                     `AI analysis failed, falling back to PATCH increment. ` +
                         `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
-                        `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${fileCount} files changed. ` +
+                        `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${cleanedFileCount} files remaining. ` +
                         (cleanedDiff.length > DIFF_SIZE_LIMIT
                             ? `The diff exceeds the AI endpoint's 100,000 character limit. ` +
-                              `To fix this, reduce the diff size by excluding generated docs (e.g. reference.md) ` +
-                              `and lock files (e.g. pnpm-lock.yaml, poetry.lock). `
+                              `Lock files, test files, and generated docs are already excluded. ` +
+                              `Consider splitting the SDK into smaller packages or reducing the number of endpoints. `
                             : "") +
                         `Error: ${errorMessage}`
                 );
