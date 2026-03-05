@@ -7,9 +7,11 @@ export { fetcher } from "./Fetcher";
 export { getHeader } from "./getHeader";
 export {
     createRequestFn,
+    withRequestFn,
     type CreateRequestFnOptions,
     type EndpointConfig,
     type HttpClientOptions,
+    type OptionsWithRequestFn,
     type RequestFn,
     type RequestOptions,
 } from "./HttpClient";

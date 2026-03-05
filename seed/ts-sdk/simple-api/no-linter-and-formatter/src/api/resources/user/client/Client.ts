@@ -23,7 +23,7 @@ export class UserClient {
 
 
                         this._options = normalizeClientOptionsWithAuth(options);
-                        this._requestFn = (options as unknown as Record<string, unknown>)["_requestFn"] as core.RequestFn ?? core.createRequestFn({ ...this._options, createStatusCodeError: (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError: handleNonStatusCodeError });
+                        this._requestFn = (options as core.OptionsWithRequestFn)._requestFn ?? core.createRequestFn({ ...this._options, createStatusCodeError: (args) => new errors.SeedSimpleApiError(args), handleNonStatusCodeError: handleNonStatusCodeError });
                     
     }
 

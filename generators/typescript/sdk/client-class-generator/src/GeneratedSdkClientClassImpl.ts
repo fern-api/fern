@@ -594,38 +594,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public instantiate({
         referenceToClient,
         referenceToOptions,
-        referenceToRequestFn
+        referenceToRequestFn,
+        context
     }: {
         referenceToClient: ts.Expression;
         referenceToOptions: ts.Expression;
         referenceToRequestFn?: ts.Expression;
+        context: SdkContext;
     }): ts.Expression {
-        // If requestFn is provided, inject it as a hidden property on the options object:
-        //   new SubClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))
-        // Object.assign bypasses strict object literal checking so TypeScript won't reject
-        // _requestFn as an unknown property on the Options type.
+        // If requestFn is provided, inject it via core.withRequestFn():
+        //   new SubClient(core.withRequestFn(this._options, this._requestFn))
         // Otherwise, just pass options:
         //   new SubClient(this._options)
         const optionsArg = referenceToRequestFn
             ? ts.factory.createCallExpression(
-                  ts.factory.createPropertyAccessExpression(
-                      ts.factory.createIdentifier("Object"),
-                      ts.factory.createIdentifier("assign")
-                  ),
+                  context.coreUtilities.fetcher.withRequestFn._getReferenceTo(),
                   undefined,
-                  [
-                      ts.factory.createObjectLiteralExpression([], false),
-                      referenceToOptions,
-                      ts.factory.createObjectLiteralExpression(
-                          [
-                              ts.factory.createPropertyAssignment(
-                                  GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER,
-                                  referenceToRequestFn
-                              )
-                          ],
-                          false
-                      )
-                  ]
+                  [referenceToOptions, referenceToRequestFn]
               )
             : referenceToOptions;
         return ts.factory.createNewExpression(referenceToClient, undefined, [optionsArg]);
@@ -771,13 +756,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         } else {
             // Non-root client: single constructor(options: Options).
-            // The parent injects _requestFn as a hidden property on the options object:
-            //   new SubClient({ ...this._options, _requestFn: this._requestFn })
-            // The constructor extracts it if present, otherwise creates its own.
+            // The parent injects _requestFn via core.withRequestFn():
+            //   new SubClient(core.withRequestFn(this._options, this._requestFn))
+            // The constructor extracts it if present, otherwise creates its own (standalone usage).
             // End users only see constructor(options: Options) — _requestFn is not in the Options type.
+            const optionsWithRequestFnType = getTextOfTsNode(
+                context.coreUtilities.fetcher.OptionsWithRequestFn._getReferenceToType()
+            );
             const statements = code`
                 ${optionsStatement}
-                this.${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER} = (${GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME} as unknown as Record<string, unknown>)["${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER}"] as ${requestFnType} ?? ${this.getCreateRequestFnExpression(context)};
+                this.${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER} = (${GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME} as ${optionsWithRequestFnType}).${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER} ?? ${this.getCreateRequestFnExpression(context)};
             `;
             serviceClass.ctors.push({
                 parameters: [optionsParamForImpl],

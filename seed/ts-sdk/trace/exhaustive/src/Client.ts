@@ -43,42 +43,34 @@ export class SeedTraceClient {
     }
 
     public get v2(): V2Client {
-        return (this._v2 ??= new V2Client(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._v2 ??= new V2Client(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get admin(): AdminClient {
-        return (this._admin ??= new AdminClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._admin ??= new AdminClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get homepage(): HomepageClient {
-        return (this._homepage ??= new HomepageClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._homepage ??= new HomepageClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get migration(): MigrationClient {
-        return (this._migration ??= new MigrationClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._migration ??= new MigrationClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get playlist(): PlaylistClient {
-        return (this._playlist ??= new PlaylistClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._playlist ??= new PlaylistClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._problem ??= new ProblemClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get submission(): SubmissionClient {
-        return (this._submission ??= new SubmissionClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._submission ??= new SubmissionClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get sysprop(): SyspropClient {
-        return (this._sysprop ??= new SyspropClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._sysprop ??= new SyspropClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

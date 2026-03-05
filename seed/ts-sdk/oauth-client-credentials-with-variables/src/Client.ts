@@ -40,20 +40,18 @@ export class SeedOauthClientCredentialsWithVariablesClient {
     }
 
     public get nestedNoAuth(): NestedNoAuthClient {
-        return (this._nestedNoAuth ??= new NestedNoAuthClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._nestedNoAuth ??= new NestedNoAuthClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._nested ??= new NestedClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._service ??= new ServiceClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._simple ??= new SimpleClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

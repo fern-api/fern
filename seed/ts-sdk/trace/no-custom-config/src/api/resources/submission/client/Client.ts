@@ -24,7 +24,7 @@ export class SubmissionClient {
     constructor(options: SubmissionClient.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: (args) => new errors.SeedTraceError(args),

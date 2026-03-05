@@ -21,7 +21,7 @@ export class FolderClient {
     constructor(options: FolderClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiError(args),
@@ -30,7 +30,7 @@ export class FolderClient {
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._service ??= new ServiceClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     /**

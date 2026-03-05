@@ -28,8 +28,6 @@ export class SeedNullableClient {
     }
 
     public get nullable(): NullableClient {
-        return (this._nullable ??= new NullableClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._nullable ??= new NullableClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

@@ -17,7 +17,7 @@ export class NestedClient {
     constructor(options: NestedClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -29,6 +29,6 @@ export class NestedClient {
     }
 
     public get api(): ApiClient {
-        return (this._api ??= new ApiClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._api ??= new ApiClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

@@ -28,8 +28,6 @@ export class SeedBasicAuthClient {
     }
 
     public get basicAuth(): BasicAuthClient {
-        return (this._basicAuth ??= new BasicAuthClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._basicAuth ??= new BasicAuthClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

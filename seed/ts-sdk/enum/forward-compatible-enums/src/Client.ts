@@ -36,30 +36,22 @@ export class SeedEnumClient {
     }
 
     public get headers(): HeadersClient {
-        return (this._headers ??= new HeadersClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._headers ??= new HeadersClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get inlinedRequest(): InlinedRequestClient {
-        return (this._inlinedRequest ??= new InlinedRequestClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._inlinedRequest ??= new InlinedRequestClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get multipartForm(): MultipartFormClient {
-        return (this._multipartForm ??= new MultipartFormClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._multipartForm ??= new MultipartFormClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get pathParam(): PathParamClient {
-        return (this._pathParam ??= new PathParamClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._pathParam ??= new PathParamClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get queryParam(): QueryParamClient {
-        return (this._queryParam ??= new QueryParamClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._queryParam ??= new QueryParamClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

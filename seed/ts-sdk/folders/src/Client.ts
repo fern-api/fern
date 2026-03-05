@@ -30,11 +30,11 @@ export class SeedApiClient {
     }
 
     public get a(): AClient {
-        return (this._a ??= new AClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._a ??= new AClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get folder(): FolderClient {
-        return (this._folder ??= new FolderClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._folder ??= new FolderClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     /**

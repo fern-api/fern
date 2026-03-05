@@ -11,6 +11,7 @@ export interface GeneratedSdkClientClass extends GeneratedFile<SdkContext> {
         referenceToClient: ts.Expression;
         referenceToOptions: ts.Expression;
         referenceToRequestFn?: ts.Expression;
+        context: SdkContext;
     }) => ts.Expression;
     accessFromRootClient(args: { referenceToRootClient: ts.Expression }): ts.Expression;
     instantiateAsRoot(args: { context: SdkContext; npmPackage?: NpmPackage | undefined }): ts.Expression;

@@ -28,8 +28,6 @@ export class SeedServerSentEventsClient {
     }
 
     public get completions(): CompletionsClient {
-        return (this._completions ??= new CompletionsClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._completions ??= new CompletionsClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

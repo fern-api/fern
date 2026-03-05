@@ -17,7 +17,7 @@ export class V3Client {
     constructor(options: V3Client.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -29,6 +29,6 @@ export class V3Client {
     }
 
     public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._problem ??= new ProblemClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

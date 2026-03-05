@@ -37,30 +37,24 @@ export class SeedExhaustiveClient {
     }
 
     public get endpoints(): EndpointsClient {
-        return (this._endpoints ??= new EndpointsClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._endpoints ??= new EndpointsClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get inlinedRequests(): InlinedRequestsClient {
         return (this._inlinedRequests ??= new InlinedRequestsClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+            core.withRequestFn(this._options, this._requestFn),
         ));
     }
 
     public get noAuth(): NoAuthClient {
-        return (this._noAuth ??= new NoAuthClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._noAuth ??= new NoAuthClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get noReqBody(): NoReqBodyClient {
-        return (this._noReqBody ??= new NoReqBodyClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._noReqBody ??= new NoReqBodyClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get reqWithHeaders(): ReqWithHeadersClient {
-        return (this._reqWithHeaders ??= new ReqWithHeadersClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._reqWithHeaders ??= new ReqWithHeadersClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

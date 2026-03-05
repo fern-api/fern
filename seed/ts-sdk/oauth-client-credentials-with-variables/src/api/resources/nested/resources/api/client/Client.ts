@@ -19,7 +19,7 @@ export class ApiClient {
     constructor(options: ApiClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsWithVariablesError(args),

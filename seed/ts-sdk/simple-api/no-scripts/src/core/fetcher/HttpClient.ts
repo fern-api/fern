@@ -137,6 +137,30 @@ export interface CreateRequestFnOptions extends HttpClientOptions {
 }
 
 /**
+ * Options object that may carry a RequestFn injected by a parent client.
+ * Used by sub-client constructors to extract the parent's RequestFn from the options.
+ *
+ * The `_requestFn` property is not part of the public Options type —
+ * it's injected by the parent via `withRequestFn()` and extracted by the sub-client constructor.
+ */
+export interface OptionsWithRequestFn {
+    _requestFn?: RequestFn;
+}
+
+/**
+ * Injects a RequestFn into an options object for passing to a sub-client constructor.
+ *
+ * @example
+ * ```typescript
+ * // Parent client passes its RequestFn to sub-client:
+ * new SubClient(core.withRequestFn(this._options, this._requestFn))
+ * ```
+ */
+export function withRequestFn<T extends object>(options: T, requestFn: RequestFn): T & OptionsWithRequestFn {
+    return { ...options, _requestFn: requestFn };
+}
+
+/**
  * Creates a RequestFn that closes over the provided options.
  * The returned function is the primary API for making HTTP requests in generated SDKs.
  *

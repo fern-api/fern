@@ -10,8 +10,10 @@ export {
     createRequestFn,
     type EndpointConfig,
     type HttpClientOptions,
+    type OptionsWithRequestFn,
     type RequestFn,
     type RequestOptions,
+    withRequestFn,
 } from "./HttpClient.js";
 export { HttpResponsePromise } from "./HttpResponsePromise.js";
 export type { RawResponse, WithRawResponse } from "./RawResponse.js";

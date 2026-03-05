@@ -28,8 +28,6 @@ export class SeedApiClient {
     }
 
     public get testGroup(): TestGroupClient {
-        return (this._testGroup ??= new TestGroupClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._testGroup ??= new TestGroupClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

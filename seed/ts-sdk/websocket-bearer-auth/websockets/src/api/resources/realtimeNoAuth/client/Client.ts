@@ -35,7 +35,7 @@ export class RealtimeNoAuthClient {
     constructor(options: RealtimeNoAuthClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedWebsocketBearerAuthError(args),

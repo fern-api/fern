@@ -32,16 +32,14 @@ export class SeedUnionsClient {
     }
 
     public get bigunion(): BigunionClient {
-        return (this._bigunion ??= new BigunionClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._bigunion ??= new BigunionClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get types(): TypesClient {
-        return (this._types ??= new TypesClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._types ??= new TypesClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._union ??= new UnionClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

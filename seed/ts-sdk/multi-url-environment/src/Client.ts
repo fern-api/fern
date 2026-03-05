@@ -30,10 +30,10 @@ export class SeedMultiUrlEnvironmentClient {
     }
 
     public get ec2(): Ec2Client {
-        return (this._ec2 ??= new Ec2Client(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._ec2 ??= new Ec2Client(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get s3(): S3Client {
-        return (this._s3 ??= new S3Client(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._s3 ??= new S3Client(core.withRequestFn(this._options, this._requestFn)));
     }
 }

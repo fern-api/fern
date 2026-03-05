@@ -29,7 +29,7 @@ export class SeedErrorPropertyClient {
 
     public get propertyBasedError(): PropertyBasedErrorClient {
         return (this._propertyBasedError ??= new PropertyBasedErrorClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+            core.withRequestFn(this._options, this._requestFn),
         ));
     }
 }

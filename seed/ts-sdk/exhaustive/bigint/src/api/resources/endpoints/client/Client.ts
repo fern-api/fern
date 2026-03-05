@@ -39,7 +39,7 @@ export class EndpointsClient {
     constructor(options: EndpointsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -48,56 +48,46 @@ export class EndpointsClient {
     }
 
     public get container(): ContainerClient {
-        return (this._container ??= new ContainerClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._container ??= new ContainerClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get contentType(): ContentTypeClient {
-        return (this._contentType ??= new ContentTypeClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._contentType ??= new ContentTypeClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get enum(): EnumClient {
-        return (this._enum ??= new EnumClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._enum ??= new EnumClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get httpMethods(): HttpMethodsClient {
-        return (this._httpMethods ??= new HttpMethodsClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._httpMethods ??= new HttpMethodsClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get object(): ObjectClient {
-        return (this._object ??= new ObjectClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._object ??= new ObjectClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get pagination(): PaginationClient {
-        return (this._pagination ??= new PaginationClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._pagination ??= new PaginationClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get params(): ParamsClient {
-        return (this._params ??= new ParamsClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._params ??= new ParamsClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get primitive(): PrimitiveClient {
-        return (this._primitive ??= new PrimitiveClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._primitive ??= new PrimitiveClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get put(): PutClient {
-        return (this._put ??= new PutClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._put ??= new PutClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._union ??= new UnionClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get urls(): UrlsClient {
-        return (this._urls ??= new UrlsClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._urls ??= new UrlsClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

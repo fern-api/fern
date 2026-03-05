@@ -9,12 +9,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.withRequestFn = withRequestFn;
 exports.createRequestFn = createRequestFn;
 const headers_js_1 = require("../headers.js");
 const join_js_1 = require("../url/join.js");
 const Fetcher_js_1 = require("./Fetcher.js");
 const HttpResponsePromise_js_1 = require("./HttpResponsePromise.js");
 const Supplier_js_1 = require("./Supplier.js");
+/**
+ * Injects a RequestFn into an options object for passing to a sub-client constructor.
+ *
+ * @example
+ * ```typescript
+ * // Parent client passes its RequestFn to sub-client:
+ * new SubClient(core.withRequestFn(this._options, this._requestFn))
+ * ```
+ */
+function withRequestFn(options, requestFn) {
+    return Object.assign(Object.assign({}, options), { _requestFn: requestFn });
+}
 /**
  * Creates a RequestFn that closes over the provided options.
  * The returned function is the primary API for making HTTP requests in generated SDKs.

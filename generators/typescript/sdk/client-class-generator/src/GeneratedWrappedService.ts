@@ -74,7 +74,8 @@ export class GeneratedWrappedService {
                                         this.wrappedSubpackageId
                                     )
                                         ? undefined
-                                        : this.wrapperService.getReferenceToRequestFn()
+                                        : this.wrapperService.getReferenceToRequestFn(),
+                                    context
                                 })
                             )
                         )

@@ -28,6 +28,6 @@ export class SeedApiClient {
     }
 
     public get imdb(): ImdbClient {
-        return (this._imdb ??= new ImdbClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._imdb ??= new ImdbClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

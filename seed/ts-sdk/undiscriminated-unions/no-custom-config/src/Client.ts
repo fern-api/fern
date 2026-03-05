@@ -28,6 +28,6 @@ export class SeedUndiscriminatedUnionsClient {
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._union ??= new UnionClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

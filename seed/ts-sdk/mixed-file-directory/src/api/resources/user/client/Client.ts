@@ -22,7 +22,7 @@ export class UserClient {
     constructor(options: UserClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedMixedFileDirectoryError(args),
@@ -31,7 +31,7 @@ export class UserClient {
     }
 
     public get events(): EventsClient {
-        return (this._events ??= new EventsClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._events ??= new EventsClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     /**

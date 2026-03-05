@@ -21,7 +21,7 @@ export class FileClient {
     constructor(options: FileClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExamplesError(args),
@@ -30,12 +30,10 @@ export class FileClient {
     }
 
     public get notification(): NotificationClient {
-        return (this._notification ??= new NotificationClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._notification ??= new NotificationClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._service ??= new ServiceClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

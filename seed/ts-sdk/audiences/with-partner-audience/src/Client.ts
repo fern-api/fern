@@ -28,6 +28,6 @@ export class SeedAudiencesClient {
     }
 
     public get folderD(): FolderDClient {
-        return (this._folderD ??= new FolderDClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._folderD ??= new FolderDClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

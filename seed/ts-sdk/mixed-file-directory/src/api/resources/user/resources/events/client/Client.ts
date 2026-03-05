@@ -22,7 +22,7 @@ export class EventsClient {
     constructor(options: EventsClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedMixedFileDirectoryError(args),
@@ -31,9 +31,7 @@ export class EventsClient {
     }
 
     public get metadata(): MetadataClient {
-        return (this._metadata ??= new MetadataClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
-        ));
+        return (this._metadata ??= new MetadataClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     /**

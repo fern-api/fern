@@ -29,7 +29,7 @@ export class SeedApiClient {
 
     public get fileUploadExample(): FileUploadExampleClient {
         return (this._fileUploadExample ??= new FileUploadExampleClient(
-            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+            core.withRequestFn(this._options, this._requestFn),
         ));
     }
 }

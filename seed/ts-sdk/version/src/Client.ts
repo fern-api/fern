@@ -28,6 +28,6 @@ export class SeedVersionClient {
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._user ??= new UserClient(core.withRequestFn(this._options, this._requestFn)));
     }
 }

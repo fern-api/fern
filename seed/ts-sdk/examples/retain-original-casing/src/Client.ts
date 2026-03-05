@@ -33,15 +33,15 @@ export class SeedExamplesClient {
     }
 
     public get file(): FileClient {
-        return (this._file ??= new FileClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._file ??= new FileClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get health(): HealthClient {
-        return (this._health ??= new HealthClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._health ??= new HealthClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
+        return (this._service ??= new ServiceClient(core.withRequestFn(this._options, this._requestFn)));
     }
 
     /**

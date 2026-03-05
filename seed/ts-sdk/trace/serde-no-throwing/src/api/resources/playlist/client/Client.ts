@@ -21,7 +21,7 @@ export class PlaylistClient {
     constructor(options: PlaylistClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
+            (options as core.OptionsWithRequestFn)._requestFn ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
