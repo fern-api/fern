@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.4.4
+  changelogEntry:
+    - summary: |
+        Fix `fern check` false-positives on JSON-formatted Swagger 2.0 specs
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.4.3
   changelogEntry:
     - summary: |
@@ -6,7 +14,6 @@
       type: fix
   createdAt: "2026-03-05"
   irVersion: 65
-
 - version: 4.4.2
   changelogEntry:
     - summary: |
