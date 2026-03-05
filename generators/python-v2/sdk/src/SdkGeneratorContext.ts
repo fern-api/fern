@@ -43,7 +43,8 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
         }
 
         // Fallback: Use organization + package_path logic
-        const orgName = this.config.organization;
+        // Replace hyphens with underscores since hyphens are not valid in Python module names
+        const orgName = this.config.organization.replace(/-/g, "_");
         const packagePath = this.customConfig.package_path;
         if (packagePath) {
             const packagePathDotted = packagePath.replace(/\//g, ".");

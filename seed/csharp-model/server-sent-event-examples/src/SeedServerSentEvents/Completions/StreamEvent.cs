@@ -176,13 +176,24 @@ public record StreamEvent
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'event' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("event");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "completion" => json.Deserialize<SeedServerSentEvents.CompletionEvent?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedServerSentEvents.CompletionEvent"
-                    ),
-                "error" => json.Deserialize<SeedServerSentEvents.ErrorEvent?>(options)
+                "completion" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedServerSentEvents.CompletionEvent?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedServerSentEvents.CompletionEvent"
+                        ),
+                "error" => jsonWithoutDiscriminator.Deserialize<SeedServerSentEvents.ErrorEvent?>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize SeedServerSentEvents.ErrorEvent"
                     ),

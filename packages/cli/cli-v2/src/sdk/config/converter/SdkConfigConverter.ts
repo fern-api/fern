@@ -62,6 +62,7 @@ export class SdkConfigConverter {
         const config: SdkConfig = {
             org: fernYml.data.org,
             defaultGroup: sdks.defaultGroup,
+            defaultGroupLocation: sourced.defaultGroup?.$loc,
             targets: this.convertTargets({
                 targetsConfig: sdks.targets,
                 sourced: sourced.targets
@@ -125,7 +126,7 @@ export class SdkConfigConverter {
             api: this.resolveApi({ api: target.api }),
             sourceLocation: sourced.$loc,
             config: target.config != null ? this.convertConfig(target.config) : undefined,
-            output: target.output,
+            output: schemas.resolveOutputObjectSchema(target.output),
             publish: target.publish,
             groups: target.group ?? [],
             metadata: target.metadata

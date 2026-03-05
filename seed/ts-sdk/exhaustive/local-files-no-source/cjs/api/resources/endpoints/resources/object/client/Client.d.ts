@@ -166,6 +166,19 @@ export declare class ObjectClient {
     getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredFieldAsList;
     /**
+     * @param {SeedExhaustive.types.ObjectWithUnknownField} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithUnknownField({
+     *         unknown: {
+     *             "$ref": "https://example.com/schema"
+     *         }
+     *     })
+     */
+    getAndReturnWithUnknownField(request: SeedExhaustive.types.ObjectWithUnknownField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithUnknownField>;
+    private __getAndReturnWithUnknownField;
+    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".

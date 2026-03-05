@@ -5,7 +5,7 @@ namespace SeedTrace.V2;
 
 public partial interface IV2Client
 {
-    public ProblemClient Problem { get; }
-    public V3Client V3 { get; }
+    public IProblemClient Problem { get; }
+    public IV3Client V3 { get; }
     Task TestAsync(RequestOptions? options = null, CancellationToken cancellationToken = default);
 }

@@ -31,7 +31,7 @@ jobs:
             docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml down
             docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml up -d
             WIREMOCK_PORT=$(docker compose -p "$PROJECT_NAME" -f wiremock/docker-compose.test.yml port wiremock 8080 | cut -d: -f2)
-            echo "WIREMOCK_PORT=$WIREMOCK_PORT" >> $GITHUB_ENV
+            echo "WIREMOCK_URL=http://localhost:$WIREMOCK_PORT" >> $GITHUB_ENV
           fi
 
       - name: Test

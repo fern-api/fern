@@ -62,6 +62,13 @@ export async function collectFilesFromDocsConfig({
         filepaths.add(parsedDocsConfig.metadata["twitter:image"].value);
     }
 
+    if (
+        parsedDocsConfig.metadata?.["og:background-image"] != null &&
+        parsedDocsConfig.metadata["og:background-image"].type === "filepath"
+    ) {
+        filepaths.add(parsedDocsConfig.metadata["og:background-image"].value);
+    }
+
     /* typography */
     if (parsedDocsConfig.typography?.bodyFont != null) {
         parsedDocsConfig.typography.bodyFont.variants.forEach((variant) => {

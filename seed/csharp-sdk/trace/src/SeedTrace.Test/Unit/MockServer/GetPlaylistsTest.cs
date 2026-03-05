@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedTrace;
-using SeedTrace.Core;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
@@ -63,9 +63,6 @@ public class GetPlaylistsTest : BaseMockServerTest
                 MultipleField = ["multipleField"],
             }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Playlist>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

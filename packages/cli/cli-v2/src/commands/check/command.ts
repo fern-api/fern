@@ -4,6 +4,7 @@ import { ApiChecker } from "../../api/checker/ApiChecker.js";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { CliError } from "../../errors/CliError.js";
+import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { command } from "../_internal/command.js";
@@ -23,32 +24,63 @@ export class CheckCommand {
 
         this.validateArgs(args, workspace);
 
-        const checker = new ApiChecker({
-            context,
-            cliVersion: workspace.cliVersion
-        });
-
-        const checkResult = await checker.check({
-            workspace,
-            apiNames: args.api != null ? [args.api] : undefined,
-            strict: args.strict
-        });
-
-        const hasErrors = checkResult.invalidApis.size > 0;
-        const hasWarnings = checkResult.warningCount > 0;
+        const { totalErrors, totalWarnings } = await this.runChecks({ context, workspace });
 
         // Fail if there are errors, or if strict mode and there are warnings.
-        if (hasErrors || (args.strict && hasWarnings)) {
+        if (totalErrors > 0 || (args.strict && totalWarnings > 0)) {
             throw CliError.exit();
         }
 
-        if (hasWarnings) {
-            process.stderr.write(`${Icons.warning} ${chalk.yellow(`Found ${checkResult.warningCount} warnings`)}\n`);
-            process.stderr.write(chalk.dim("  Run 'fern check --strict' to treat warnings as errors\n"));
+        if (totalWarnings > 0) {
+            context.stderr.info(`${Icons.warning} ${chalk.yellow(`Found ${totalWarnings} warnings`)}`);
+            context.stderr.info(chalk.dim("  Run 'fern check --strict' to treat warnings as errors"));
             return;
         }
 
-        process.stderr.write(`${Icons.success} ${chalk.green("All checks passed")}\n`);
+        context.stderr.info(`${Icons.success} ${chalk.green("All checks passed")}`);
+    }
+
+    private async runChecks({
+        context,
+        workspace
+    }: {
+        context: Context;
+        workspace: Workspace;
+    }): Promise<{ totalErrors: number; totalWarnings: number }> {
+        const violations: (ApiChecker.ResolvedViolation | SdkChecker.ResolvedViolation)[] = [];
+
+        const apiChecker = new ApiChecker({
+            context,
+            cliVersion: workspace.cliVersion
+        });
+        const apiCheckResult = await apiChecker.check({ workspace });
+        if (apiCheckResult.violations.length > 0) {
+            violations.push(...apiCheckResult.violations);
+        }
+
+        const sdkChecker = new SdkChecker({ context });
+        const sdkCheckResult = await sdkChecker.check({ workspace });
+        if (sdkCheckResult.violations.length > 0) {
+            violations.push(...sdkCheckResult.violations);
+        }
+
+        if (violations.length > 0) {
+            this.displayViolations(violations);
+        }
+
+        return {
+            totalErrors:
+                (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount,
+            totalWarnings: apiCheckResult.warningCount + sdkCheckResult.warningCount
+        };
+    }
+
+    private displayViolations(
+        violations: Array<{ displayRelativeFilepath: string; line: number; column: number; message: string }>
+    ): void {
+        for (const v of violations) {
+            process.stderr.write(`${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
+        }
     }
 
     private validateArgs(args: CheckCommand.Args, workspace: Workspace): void {

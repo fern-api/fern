@@ -10,14 +10,9 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .union_
-        .get_and_return_union(
-            &Animal::Dog {
-                data: Dog {
-                    name: "name".to_string(),
-                    likes_to_woof: true,
-                },
-            },
+        .primitive
+        .get_and_return_uuid(
+            &Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
             None,
         )
         .await;

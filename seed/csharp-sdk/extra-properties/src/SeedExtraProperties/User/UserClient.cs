@@ -5,7 +5,7 @@ namespace SeedExtraProperties;
 
 public partial class UserClient : IUserClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UserClient(RawClient client)
     {
@@ -28,7 +28,6 @@ public partial class UserClient : IUserClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/user",
                     Body = request,
@@ -40,7 +39,9 @@ public partial class UserClient : IUserClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<User>(responseBody)!;
@@ -66,7 +67,9 @@ public partial class UserClient : IUserClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExtraPropertiesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

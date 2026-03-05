@@ -4,7 +4,7 @@ namespace SeedExhaustive.Endpoints;
 
 public partial class EndpointsClient : IEndpointsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal EndpointsClient(RawClient client)
     {

@@ -46,6 +46,8 @@ describe("SeedApiClient", () => {
                 tags: ["tags", "tags"],
             },
             filter: "filter",
+            tags: "tags",
+            optionalTags: "optionalTags",
             neighbor: {
                 name: "name",
                 tags: ["tags", "tags"],

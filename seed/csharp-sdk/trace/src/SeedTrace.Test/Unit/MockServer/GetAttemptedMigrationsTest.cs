@@ -1,6 +1,6 @@
 using NUnit.Framework;
 using SeedTrace;
-using SeedTrace.Core;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
@@ -41,9 +41,6 @@ public class GetAttemptedMigrationsTest : BaseMockServerTest
         var response = await Client.Migration.GetAttemptedMigrationsAsync(
             new GetAttemptedMigrationsRequest { AdminKeyHeader = "admin-key-header" }
         );
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<Migration>>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

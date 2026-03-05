@@ -38,6 +38,16 @@ features:
     description: |
       Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
 
+  - id: ADDITIONAL_HEADERS
+    advanced: true
+    description: |
+      If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+  - id: ADDITIONAL_QUERY_PARAMETERS
+    advanced: true
+    description: |
+      If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+
   - id: FORWARD_COMPATIBLE_ENUMS
     advanced: true
     description: |

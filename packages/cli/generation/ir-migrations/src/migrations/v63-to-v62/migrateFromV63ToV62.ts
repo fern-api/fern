@@ -15,7 +15,7 @@ export const V63_TO_V62_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_BROWSER_SDK]: "3.43.0",
         [GeneratorName.TYPESCRIPT]: "3.43.0",
         [GeneratorName.TYPESCRIPT_SDK]: "3.43.0",
-        [GeneratorName.TYPESCRIPT_EXPRESS]: "3.43.0",
+        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA]: "3.28.0",
         [GeneratorName.JAVA_MODEL]: "1.8.5",
         [GeneratorName.JAVA_SDK]: "3.28.0",

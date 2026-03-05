@@ -15,8 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    request := true
-    client.Endpoints.Primitive.GetAndReturnBool(
+    request := 1
+    client.Endpoints.Primitive.GetAndReturnInt(
         context.TODO(),
         request,
     )

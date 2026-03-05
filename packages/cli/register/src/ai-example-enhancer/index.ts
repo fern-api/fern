@@ -1,3 +1,4 @@
+export type { OpenAPISourceSpec } from "./enhanceExamplesWithAI.js";
 export { enhanceExamplesWithAI } from "./enhanceExamplesWithAI.js";
 export type { AIExampleEnhancerConfig } from "./types.js";
 export {

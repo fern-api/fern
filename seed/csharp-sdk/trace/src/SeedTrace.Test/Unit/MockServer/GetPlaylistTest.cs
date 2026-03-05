@@ -1,6 +1,5 @@
 using NUnit.Framework;
-using SeedTrace;
-using SeedTrace.Core;
+using SeedTrace.Test_.Utils;
 
 namespace SeedTrace.Test_.Unit.MockServer;
 
@@ -37,9 +36,6 @@ public class GetPlaylistTest : BaseMockServerTest
             );
 
         var response = await Client.Playlist.GetPlaylistAsync(1, "playlistId");
-        Assert.That(
-            response,
-            Is.EqualTo(JsonUtils.Deserialize<Playlist>(mockResponse)).UsingDefaults()
-        );
+        JsonAssert.AreEqual(response, mockResponse);
     }
 }

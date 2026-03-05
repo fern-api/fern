@@ -8,15 +8,33 @@
     },
     "files": [
         "dist",
-        "types"
+        "types",
+        "api/resources/user.d.ts"
     ],
     "exports": {
         ".": {
             "node": "./dist/node/index.js",
-            "import": "./dist/browser/esm/index.js",
-            "require": "./dist/browser/cjs/index.js",
-            "default": "./dist/browser/cjs/index.js",
-            "types": "./types/index.d.ts"
+            "import": {
+                "types": "./types/index.d.ts",
+                "default": "./dist/browser/esm/index.js"
+            },
+            "require": {
+                "types": "./types/index.d.ts",
+                "default": "./dist/browser/cjs/index.js"
+            },
+            "default": "./dist/browser/cjs/index.js"
+        },
+        "./api/resources/user": {
+            "node": "./dist/node/api/resources/user.js",
+            "import": {
+                "types": "./types/api/resources/user/index.d.ts",
+                "default": "./dist/browser/esm/api/resources/user.js"
+            },
+            "require": {
+                "types": "./types/api/resources/user/index.d.ts",
+                "default": "./dist/browser/cjs/api/resources/user.js"
+            },
+            "default": "./dist/browser/cjs/api/resources/user.js"
         },
         "./package.json": "./package.json"
     },
@@ -52,7 +70,8 @@
         "fs": false,
         "os": false,
         "path": false,
-        "stream": false
+        "stream": false,
+        "crypto": false
     },
     "packageManager": "pnpm@10.20.0",
     "engines": {

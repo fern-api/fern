@@ -62,6 +62,16 @@ export function hasTextEventStreamWithItemSchema(media: Record<string, OpenAPIV3
     return false;
 }
 
+/**
+ * Checks if the response content has text/event-stream as the sole content type.
+ * When multiple content types are present (e.g., both application/json and text/event-stream),
+ * we don't infer streaming — the user should use x-fern-streaming to explicitly configure it.
+ */
+export function hasTextEventStream(media: Record<string, OpenAPIV3.MediaTypeObject>): boolean {
+    const contentTypes = Object.keys(media);
+    return contentTypes.length === 1 && contentTypes[0] != null && contentTypes[0].includes("text/event-stream");
+}
+
 export interface ApplicationJsonMediaObject {
     contentType?: string;
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;

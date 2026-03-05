@@ -159,6 +159,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.Headers,
                 AsIsFiles.HeadersBuilder,
                 AsIsFiles.HeaderValue,
+                AsIsFiles.HttpContentExtensions,
                 AsIsFiles.HttpMethodExtensions,
                 AsIsFiles.IIsRetryableContent,
                 AsIsFiles.JsonRequest,
@@ -170,9 +171,7 @@ export class SdkGeneratorContext extends GeneratorContext {
                 AsIsFiles.RawClient,
                 AsIsFiles.RawResponse,
                 AsIsFiles.ResponseHeaders,
-                AsIsFiles.StreamRequest,
-                AsIsFiles.WithRawResponse,
-                AsIsFiles.WithRawResponseTask
+                AsIsFiles.StreamRequest
             ]
         );
 

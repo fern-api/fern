@@ -21,6 +21,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Query Parameter "foo"`,
                 nodePath: ["service", "endpoints", "c"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-conflicting-request-wrapper-properties",
                 severity: "fatal"
             },
             {
@@ -29,6 +30,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Body property: <Request Body> -> (extends) ObjectWithFoo -> foo`,
                 nodePath: ["service", "endpoints", "d"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-conflicting-request-wrapper-properties",
                 severity: "fatal"
             },
             {
@@ -37,6 +39,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Body property: <Request Body> -> bar`,
                 nodePath: ["service", "endpoints", "d"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-conflicting-request-wrapper-properties",
                 severity: "fatal"
             },
             {
@@ -45,6 +48,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Endpoint header "baz"`,
                 nodePath: ["service", "endpoints", "d"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
+                name: "no-conflicting-request-wrapper-properties",
                 severity: "fatal"
             },
             {
@@ -53,6 +57,7 @@ describe("no-conflicting-request-wrapper-properties", () => {
   - Query Parameter "body"`,
                 nodePath: ["service", "endpoints", "c"],
                 relativeFilepath: RelativeFilePath.of("body-property-key.yml"),
+                name: "no-conflicting-request-wrapper-properties",
                 severity: "fatal"
             }
         ]);

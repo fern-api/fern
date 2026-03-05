@@ -1,3 +1,4 @@
+import type { SourceLocation } from "@fern-api/source";
 import type { Target } from "./Target.js";
 
 /**
@@ -8,6 +9,8 @@ export interface SdkConfig {
     org: string;
     /** The default group to generate, if any */
     defaultGroup?: string;
+    /** Source location of the defaultGroup field in fern.yml */
+    defaultGroupLocation?: SourceLocation;
     /** SDK targets to generate */
     targets: Target[];
 }

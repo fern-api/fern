@@ -8,8 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client
-        .no_auth
-        .post_with_no_auth(&serde_json::json!({"key":"value"}), None)
-        .await;
+    client.endpoints.urls.with_underscores(None).await;
 }

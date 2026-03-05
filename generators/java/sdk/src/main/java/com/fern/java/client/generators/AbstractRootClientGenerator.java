@@ -81,6 +81,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import javax.lang.model.element.Modifier;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 public abstract class AbstractRootClientGenerator extends AbstractFileGenerator {
@@ -596,6 +597,47 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
+        // Add interceptors field and addInterceptor method when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            clientBuilder.addField(FieldSpec.builder(
+                            ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(Interceptor.class)),
+                            "interceptors")
+                    .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                    .initializer("new $T<>()", ArrayList.class)
+                    .build());
+
+            clientBuilder.addMethod(MethodSpec.methodBuilder("addInterceptor")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addJavadoc(
+                            "Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors are applied to the OkHttpClient when the client is built.\n"
+                                    + "This can be used for custom request signing, logging, or other request/response modifications.\n")
+                    .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                    .addParameter(Interceptor.class, "interceptor")
+                    .addStatement("this.interceptors.add(interceptor)")
+                    .addStatement(isExtensible ? "return self()" : "return this")
+                    .build());
+        }
+
+        clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(
+                                ClassName.get(Optional.class),
+                                clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName()),
+                        "logging")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("logging")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc(
+                        "Configure logging for the SDK. Silent by default — no log output unless explicitly configured.")
+                .addParameter(clientGeneratorContext.getPoetClassNameFactory().getLogConfigClassName(), "logging")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.logging = $T.of(logging)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
         clientBuilder.addMethod(MethodSpec.methodBuilder("addHeader")
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Add a custom header to be sent with all requests.\n"
@@ -715,10 +757,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             buildClientOptionsMethodBuilder.addStatement("setApiPathParameters(builder)");
         }
 
+        buildClientOptionsMethodBuilder.addStatement("setHttpClient(builder)");
+
+        // Add setInterceptors call when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            buildClientOptionsMethodBuilder.addStatement("setInterceptors(builder)");
+        }
+
         buildClientOptionsMethodBuilder
-                .addStatement("setHttpClient(builder)")
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
+                .addStatement("setLogging(builder)")
                 .beginControlFlow("for ($T.Entry<String, String> header : this.customHeaders.entrySet())", Map.class)
                 .addStatement("builder.addHeader(header.getKey(), header.getValue())")
                 .endControlFlow()
@@ -929,6 +978,35 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .endControlFlow()
                 .build();
         clientBuilder.addMethod(setHttpClientMethod);
+
+        // Add setInterceptors method when custom-interceptors is enabled
+        if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+            MethodSpec setInterceptorsMethod = MethodSpec.methodBuilder("setInterceptors")
+                    .addModifiers(Modifier.PROTECTED)
+                    .addParameter(generatedClientOptions.builderClassName(), "builder")
+                    .addJavadoc("Sets the custom OkHttp interceptors.\n"
+                            + "Override this method to add or modify custom interceptors.\n"
+                            + "\n"
+                            + "@param builder The ClientOptions.Builder to configure")
+                    .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                    .addStatement("builder.addInterceptor(interceptor)")
+                    .endControlFlow()
+                    .build();
+            clientBuilder.addMethod(setInterceptorsMethod);
+        }
+
+        MethodSpec setLoggingMethod = MethodSpec.methodBuilder("setLogging")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Sets the logging configuration for the SDK.\n"
+                        + "Override this method to customize logging behavior.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
+                .beginControlFlow("if (this.logging.isPresent())")
+                .addStatement("builder.logging(this.logging.get())")
+                .endControlFlow()
+                .build();
+        clientBuilder.addMethod(setLoggingMethod);
 
         MethodSpec setAdditionalMethod = MethodSpec.methodBuilder("setAdditional")
                 .addModifiers(Modifier.PROTECTED)

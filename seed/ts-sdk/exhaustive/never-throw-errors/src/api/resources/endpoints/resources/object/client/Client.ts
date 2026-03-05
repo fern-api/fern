@@ -591,6 +591,86 @@ export class ObjectClient {
     }
 
     /**
+     * @param {SeedExhaustive.types.ObjectWithUnknownField} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithUnknownField({
+     *         unknown: {
+     *             "$ref": "https://example.com/schema"
+     *         }
+     *     })
+     */
+    public getAndReturnWithUnknownField(
+        request: SeedExhaustive.types.ObjectWithUnknownField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<
+        core.APIResponse<
+            SeedExhaustive.types.ObjectWithUnknownField,
+            SeedExhaustive.endpoints.object.getAndReturnWithUnknownField.Error
+        >
+    > {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithUnknownField(request, requestOptions));
+    }
+
+    private async __getAndReturnWithUnknownField(
+        request: SeedExhaustive.types.ObjectWithUnknownField,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<
+        core.WithRawResponse<
+            core.APIResponse<
+                SeedExhaustive.types.ObjectWithUnknownField,
+                SeedExhaustive.endpoints.object.getAndReturnWithUnknownField.Error
+            >
+        >
+    > {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-unknown-field",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: {
+                    ok: true,
+                    body: _response.body as SeedExhaustive.types.ObjectWithUnknownField,
+                    headers: _response.headers,
+                    rawResponse: _response.rawResponse,
+                },
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        return {
+            data: {
+                ok: false,
+                error: SeedExhaustive.endpoints.object.getAndReturnWithUnknownField.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse,
+            },
+            rawResponse: _response.rawResponse,
+        };
+    }
+
+    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".

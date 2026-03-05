@@ -250,3 +250,4 @@ client.User.Events.Metadata.GetMetadata(
 </dd>
 </dl>
 </details>
+

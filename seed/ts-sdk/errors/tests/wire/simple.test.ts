@@ -196,27 +196,6 @@ describe("SimpleClient", () => {
         }).rejects.toThrow(SeedErrors.BadRequestError);
     });
 
-    test("foo (6)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { bar: "bar" };
-        const rawResponseBody = { message: "message", code: 1 };
-        server
-            .mockEndpoint()
-            .post("/foo2")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(500)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.simple.foo({
-                bar: "bar",
-            });
-        }).rejects.toThrow(SeedErrors.InternalServerError);
-    });
-
     test("fooWithExamples (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });

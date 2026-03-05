@@ -27,6 +27,7 @@ export interface GeneratorsConfiguration {
     groups: GeneratorGroup[];
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     ai: generatorsYml.AiServicesSchema | undefined;
+    replay: generatorsYml.ReplayConfigSchema | undefined;
 
     rawConfiguration: GeneratorsConfigurationSchema;
     absolutePathToConfiguration: AbsoluteFilePath;
@@ -97,7 +98,7 @@ export interface APIDefinitionSettings {
 export interface APIDefinitionLocation {
     schema: APIDefinitionSchema;
     origin: string | undefined;
-    overrides: string | undefined;
+    overrides: string | string[] | undefined;
     overlays: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
@@ -176,6 +177,7 @@ export interface GeneratorInvocation {
         specs?: ApiConfigurationV2SpecsSchema;
         auth?: RawSchemas.ApiAuthSchema;
         "auth-schemes"?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
+        headers?: Record<string, RawSchemas.HttpHeaderSchema>;
     };
 }
 

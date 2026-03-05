@@ -157,6 +157,13 @@ export class LocalTaskHandler {
 
             this.context.logger.debug(`Previous version detected: ${previousVersion}`);
 
+            if (cleanedDiff.trim().length === 0) {
+                this.context.logger.info(
+                    "No actual changes detected after filtering version-only changes. Cancelling generation."
+                );
+                return null;
+            }
+
             // Call AI to analyze the diff
             try {
                 // TODO: Need to get project for BAML client configuration
@@ -194,12 +201,20 @@ export class LocalTaskHandler {
             }
         } catch (error) {
             if (error instanceof AutoVersioningException) {
-                // When user explicitly requested AUTO versioning, we must fail if we can't extract version
-                this.context.logger.error(`AUTO versioning failed: ${error.message}`);
-                throw new Error(
-                    `Failed to extract previous version for automatic semantic versioning. ` +
-                        `Please ensure your project has a version file in a supported format. Error: ${error.message}`
+                // Fall back to initial version when we can't extract the previous version
+                // (e.g., new SDK repos where all files are additions, or unsupported version formats)
+                this.context.logger.warn(
+                    `AUTO versioning could not extract previous version: ${error.message}. ` +
+                        `Falling back to initial version 0.0.1.`
                 );
+                const initialVersion = this.version?.startsWith("v") ? "v0.0.1" : "0.0.1";
+                const commitMessage = this.isWhitelabel
+                    ? "Initial SDK generation"
+                    : "Initial SDK generation\n\n🌿 Generated with Fern";
+                return {
+                    version: initialVersion,
+                    commitMessage
+                };
             }
 
             this.context.logger.error(`Failed to perform automatic versioning: ${error}`);
@@ -297,15 +312,6 @@ export class LocalTaskHandler {
         // to prevent accidental deletion when README generation fails silently.
         const pathsToPreserve = await this.getPathsToPreserve(fernIgnorePaths);
 
-        const response = await this.runGitCommand(["config", "--list"], this.absolutePathToLocalOutput);
-        if (!response.includes("user.name")) {
-            await this.runGitCommand(["config", "user.name", "fern-api"], this.absolutePathToLocalOutput);
-            await this.runGitCommand(
-                ["config", "user.email", "info@buildwithfern.com"],
-                this.absolutePathToLocalOutput
-            );
-        }
-
         // Stage deletions `git rm -rf .`
         await this.runGitCommand(["rm", "-rf", "."], this.absolutePathToLocalOutput);
 
@@ -337,16 +343,28 @@ export class LocalTaskHandler {
         // Copy files from local output to tmp directory
         await cp(this.absolutePathToLocalOutput, tmpOutputResolutionDir, { recursive: true });
 
-        // In tmp directory initialize a `.git` directory
+        // Initialize a throwaway git repo in the temp directory. This is only used to
+        // leverage git's file-tracking for resolving .fernignore paths. We inline the
+        // user config, disable commit signing, and skip hooks to avoid prompts (e.g.
+        // Touch ID on macOS) and unnecessary overhead.
         await this.runGitCommand(["init"], tmpOutputResolutionDir);
         await this.runGitCommand(["add", "."], tmpOutputResolutionDir);
-
-        const response = await this.runGitCommand(["config", "--list"], tmpOutputResolutionDir);
-        if (!response.includes("user.name")) {
-            await this.runGitCommand(["config", "user.name", "fern-api"], tmpOutputResolutionDir);
-            await this.runGitCommand(["config", "user.email", "info@buildwithfern.com"], tmpOutputResolutionDir);
-        }
-        await this.runGitCommand(["commit", "--allow-empty", "-m", '"init"'], tmpOutputResolutionDir);
+        await this.runGitCommand(
+            [
+                "-c",
+                "user.name=fern",
+                "-c",
+                "user.email=hey@buildwithfern.com",
+                "-c",
+                "commit.gpgsign=false",
+                "commit",
+                "--allow-empty",
+                "--no-verify",
+                "-m",
+                "init"
+            ],
+            tmpOutputResolutionDir
+        );
 
         // Stage deletions `git rm -rf .`
         await this.runGitCommand(["rm", "-rf", "."], tmpOutputResolutionDir);
@@ -482,11 +500,23 @@ export class LocalTaskHandler {
     /**
      * Generates a git diff file for automatic versioning analysis.
      * This compares the current state against HEAD to see what changes have been made.
+     *
+     * Uses `git add -N .` (intent-to-add) before diffing so that newly created files
+     * (e.g. from a namespace rename) appear in the diff. Without this, `git diff HEAD`
+     * silently ignores untracked files, which causes namespace changes to be invisible
+     * when the copy path does not stage files (copyGeneratedFilesNoFernIgnorePreservingGit).
      */
     private async generateDiffFile(): Promise<string> {
         const diffFile = pathJoin(tmpdir(), `git-diff-${Date.now()}.patch`);
 
-        await this.runGitCommand(["diff", "HEAD", "--output", diffFile], this.absolutePathToLocalOutput);
+        // Mark any new untracked files as intent-to-add so they appear in the diff.
+        // This is a no-op for files that are already staged.
+        await this.runGitCommand(["add", "-N", "."], this.absolutePathToLocalOutput);
+
+        await this.runGitCommand(
+            ["diff", "HEAD", "--output", diffFile, "--", ".", ":(exclude).fern/metadata.json"],
+            this.absolutePathToLocalOutput
+        );
 
         this.context.logger.info(`Generated git diff to file: ${diffFile}`);
         return diffFile;

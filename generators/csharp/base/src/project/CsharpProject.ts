@@ -595,6 +595,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    hasBaseUrl: this.context.hasBaseUrl(),
                     namespace,
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,
@@ -615,6 +616,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    hasBaseUrl: this.context.hasBaseUrl(),
                     namespace,
                     additionalProperties: true,
                     context: this.context,
@@ -643,6 +645,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                        hasBaseUrl: this.context.hasBaseUrl(),
                         namespace: this.namespaces.core,
                         additionalProperties: true,
                         context: this.context,
@@ -658,6 +661,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                        hasBaseUrl: this.context.hasBaseUrl(),
                         namespace: this.namespaces.core,
                         additionalProperties: true,
                         context: this.context,
@@ -678,6 +682,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    hasBaseUrl: this.context.hasBaseUrl(),
                     namespace: this.namespaces.testUtils,
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,

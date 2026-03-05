@@ -94,7 +94,8 @@ export async function convertGeneratorsConfiguration({
                       github: rawGeneratorsConfiguration.whitelabel.github
                   }
                 : undefined,
-        ai: rawGeneratorsConfiguration.ai
+        ai: rawGeneratorsConfiguration.ai,
+        replay: rawGeneratorsConfiguration.replay
     };
 }
 
@@ -632,15 +633,31 @@ async function convertGenerator({
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined,
-        apiOverride:
-            generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
-                ? {
-                      specs: generator.api?.specs,
-                      auth: generator.api?.auth,
-                      "auth-schemes": generator.api?.["auth-schemes"]
-                  }
-                : undefined
+        apiOverride: getApiOverride({ generator })
     };
+}
+
+function getApiOverride({
+    generator
+}: {
+    generator: generatorsYml.GeneratorInvocationSchema;
+}): generatorsYml.GeneratorInvocation["apiOverride"] {
+    // Generator-level overrides take priority
+    if (
+        generator.api?.specs != null ||
+        generator.api?.auth != null ||
+        generator.api?.["auth-schemes"] != null ||
+        generator.api?.headers != null
+    ) {
+        return {
+            specs: generator.api?.specs,
+            auth: generator.api?.auth,
+            "auth-schemes": generator.api?.["auth-schemes"],
+            headers: generator.api?.headers
+        };
+    }
+
+    return undefined;
 }
 
 function getPublishMetadata({

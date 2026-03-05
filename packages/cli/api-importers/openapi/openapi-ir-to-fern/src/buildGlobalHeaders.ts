@@ -27,7 +27,7 @@ class HeaderWithCount {
 /* 75% of endpoints must have header present, for it to be considered a global header*/
 const GLOBAL_HEADER_PERCENTAGE_THRESHOLD = 0.75;
 
-const HEADERS_TO_IGNORE = new Set(...["authorization"]);
+const HEADERS_TO_IGNORE = new Set(["authorization"]);
 
 export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     if (context.globalHeaderOverrides != null) {
@@ -45,7 +45,9 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
     );
 
     for (const [headerName, header] of Object.entries(predefinedGlobalHeaders)) {
-        let schema: RawSchemas.HttpHeaderSchema = "optional<string>";
+        const isOptional = header.optional === true;
+        const defaultType = isOptional ? "optional<string>" : "string";
+        let schema: RawSchemas.HttpHeaderSchema = defaultType;
 
         if (header.name == null && header.env == null && typeof header.schema === "string") {
             schema = header.schema;
@@ -68,8 +70,8 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
                                   namespace,
                                   declarationDepth: 0
                               })
-                          ) ?? "optional<string>")
-                        : "optional<string>"
+                          ) ?? defaultType)
+                        : defaultType
             };
         }
         context.builder.addGlobalHeader({

@@ -31,4 +31,3 @@ tokio-test = "0.4"
 [features]
 default = ["multipart"]
 multipart = ["reqwest/multipart"]
-sse = []

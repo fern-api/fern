@@ -5,7 +5,7 @@ namespace SeedBearerTokenEnvironmentVariable;
 
 public partial class ServiceClient : IServiceClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ServiceClient(RawClient client)
     {
@@ -27,7 +27,6 @@ public partial class ServiceClient : IServiceClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "apiKey",
                     Headers = _headers,
@@ -38,7 +37,9 @@ public partial class ServiceClient : IServiceClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -64,7 +65,9 @@ public partial class ServiceClient : IServiceClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedBearerTokenEnvironmentVariableApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

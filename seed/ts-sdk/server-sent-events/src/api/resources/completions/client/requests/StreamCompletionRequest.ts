@@ -3,7 +3,7 @@
 /**
  * @example
  *     {
- *         query: "query"
+ *         query: "foo"
  *     }
  */
 export interface StreamCompletionRequest {
