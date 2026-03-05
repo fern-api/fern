@@ -192,7 +192,7 @@ class SocketClientGenerator:
                     writer.write_line("try:")
                     with writer.indent():
                         writer.write("yield ")
-                        writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                        writer.write_reference(self._context.core_utilities.get_construct_or_parse_ref())
                         writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
                         writer.write_line()
                     writer.write_line("except Exception:")
@@ -247,7 +247,7 @@ class SocketClientGenerator:
                         writer.write_line("try:")
                         with writer.indent():
                             writer.write("parsed = ")
-                            writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                            writer.write_reference(self._context.core_utilities.get_construct_or_parse_ref())
                             writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
                             writer.write_line()
                         writer.write_line("except Exception:")
@@ -376,7 +376,7 @@ class SocketClientGenerator:
             writer.write_line("try:")
             with writer.indent():
                 writer.write("return ")
-                writer.write_reference(self._context.core_utilities.get_parse_obj_as())
+                writer.write_reference(self._context.core_utilities.get_construct_or_parse_ref())
                 writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
                 writer.write_line()
             writer.write_line("except Exception:")

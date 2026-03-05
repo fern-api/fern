@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.61.5
+- version: 4.61.6
   changelogEntry:
     - summary: |
         Eliminate `pydantic.v1` dependency entirely from generated SDKs when running on Pydantic V2.
@@ -8,6 +8,17 @@
         `is_literal_type`, `is_union`, `ModelField`, and `ENCODERS_BY_TYPE` from `pydantic.v1`,
         which emits a `UserWarning` on Python 3.14+. These are now replaced with stdlib/typing_extensions
         equivalents so no `pydantic.v1` code is ever touched at runtime under Pydantic V2.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.5
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client generation to respect `pydantic_config.skip_validation: true`.
+        Previously, socket clients always used `parse_obj_as` (full Pydantic validation)
+        regardless of the skip_validation flag. They now correctly use `construct_type`
+        (no validation) when the flag is enabled, matching the behavior of HTTP clients.
       type: fix
   createdAt: "2026-03-05"
   irVersion: 65

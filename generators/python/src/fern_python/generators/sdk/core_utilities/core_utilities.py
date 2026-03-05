@@ -690,6 +690,9 @@ class CoreUtilities:
             else self.get_universal_base_model()
         )
 
+    def get_construct_or_parse_ref(self) -> AST.Reference:
+        return self.get_construct_type() if self._allow_skipping_validation else self.get_parse_obj_as()
+
     def get_construct_type(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
