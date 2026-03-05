@@ -59,7 +59,7 @@ if IS_PYDANTIC_V2:
         return get_origin(type_) is Literal
 
     def is_union(type_: Optional[Type[Any]]) -> bool:  # type: ignore[misc]
-        return type_ is Union or get_origin(type_) is Union
+        return type_ is Union or get_origin(type_) is Union  # type: ignore[comparison-overlap]
 
     # Re-create the V1 encoder map so we never touch pydantic.v1
     import decimal
