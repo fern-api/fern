@@ -505,13 +505,6 @@ export class AutoVersioningService {
     }
 
     /**
-     * Extracts the previous version from a line containing the magic version.
-     * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
-     *
-     * @param lineWithMagicVersion A line from git diff containing the magic version
-     * @return The inferred previous version if found, or undefined if the version cannot be parsed
-     */
-    /**
      * Extracts the file path from a diff file section.
      * Parses the "diff --git a/path b/path" header line.
      */
@@ -536,6 +529,13 @@ export class AutoVersioningService {
         return EXCLUDED_FILE_PATTERNS.some((pattern) => pattern.test(filePath));
     }
 
+    /**
+     * Extracts the previous version from a line containing the magic version.
+     * Assumes the line format is like: "version = '505.503.4455'" or "version: 505.503.4455"
+     *
+     * @param lineWithMagicVersion A line from git diff containing the magic version
+     * @return The inferred previous version if found, or undefined if the version cannot be parsed
+     */
     private extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string | undefined {
         const prevVersionPattern = /[-].*?([v]?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?)/;
         const matcher = lineWithMagicVersion.match(prevVersionPattern);
