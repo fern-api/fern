@@ -219,12 +219,19 @@ def verify_request_count(
      * characters, hyphens, and underscores, and must start with a letter or number.
      * Computing this at generation time avoids runtime issues with directory names
      * that contain dots or other invalid characters (e.g. `.seed`).
+     *
+     * When running under the seed test runner with multiple fixture variants,
+     * `_test_output_folder` is injected into customConfig to differentiate them.
      */
     private getDockerProjectName(): string {
         const orgName = this.context.config.organization;
         const workspaceName = this.context.config.workspaceName;
-        const raw = `${orgName}-${workspaceName}`.toLowerCase();
-        const sanitized = raw.replace(/[^a-z0-9_-]/g, "").replace(/^[^a-z0-9]+/, "");
+        const outputFolder = this.context.customConfig._test_output_folder;
+
+        const raw = outputFolder
+            ? `${orgName}-${workspaceName}-${outputFolder}-wiremock`
+            : `${orgName}-${workspaceName}-wiremock`;
+        const sanitized = raw.toLowerCase().replace(/[^a-z0-9_-]/g, "").replace(/^[^a-z0-9]+/, "");
         return sanitized || "wiremock-tests";
     }
 

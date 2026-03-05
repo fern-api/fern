@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.61.5
+  changelogEntry:
+    - summary: |
+        Fix Docker Compose project name collisions in wiremock integration tests.
+        When the seed test runner runs multiple variants of the same fixture in parallel,
+        a `_test_output_folder` field is now injected into customConfig so the generator
+        can produce unique project names per variant.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.61.4
   changelogEntry:
     - summary: |

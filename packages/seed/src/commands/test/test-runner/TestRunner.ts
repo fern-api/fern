@@ -166,7 +166,10 @@ export abstract class TestRunner {
                 this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
                     ? {
                           ...this.generator.workspaceConfig.defaultCustomConfig,
-                          ...(configuration?.customConfig as Record<string, unknown>)
+                          ...(configuration?.customConfig as Record<string, unknown>),
+                          ...(configuration?.outputFolder != null
+                              ? { _test_output_folder: configuration.outputFolder }
+                              : {})
                       }
                     : undefined;
             const publishConfig = configuration?.publishConfig;
