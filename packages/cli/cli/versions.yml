@@ -1,4 +1,41 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.4.2
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing on Windows with
+        `Only URLs with a scheme in: file, data, and node are supported
+        by the default ESM loader. Received protocol 'c:'`. The dynamic
+        `import()` of the migration package now uses `pathToFileURL()` to
+        convert absolute filesystem paths to valid `file://` URLs, which
+        is required by the Node.js ESM loader on Windows.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.4.1
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing with `TAR_ENTRY_ERROR` and
+        `ENOENT` on `package.json` when upgrading multiple workspaces.
+        The root cause was concurrent `npm install` calls to the same
+        `--prefix` directory racing on tar extraction. Now the migration
+        package is installed exactly once per CLI process using a
+        deduplicating promise pattern, and an isolated npm cache prevents
+        system-level cache corruption.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.4.0
+  changelogEntry:
+    - summary: |
+        Add `--retry-rate-limited` flag to `fern generate` that automatically retries
+        with exponential backoff and jitter when receiving 429 Too Many Requests responses.
+        Retries up to 3 times (2s, 4s, 8s base delays, capped at 120s).
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 65
+
 - version: 4.3.4
   changelogEntry:
     - summary: |

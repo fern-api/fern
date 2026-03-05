@@ -39,6 +39,7 @@ runs:
         collect-metrics: false
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
+        skip-git-diff-check: true
 
     # Add changes first to simplify git diff checks, no changes will NOT error here
     - name: Check for changes

@@ -4,6 +4,7 @@ import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { ValidationIssue } from "@fern-api/yaml-loader";
+import chalk from "chalk";
 import { readdir } from "fs/promises";
 import inquirer from "inquirer";
 import yaml from "js-yaml";
@@ -11,7 +12,6 @@ import type { Argv } from "yargs";
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
 import { ApiSpecResolver } from "../../../api/resolver/ApiSpecResolver.js";
-import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
@@ -112,7 +112,7 @@ export class GenerateCommand {
         const targets = this.getTargets({
             workspace: workspaceWithOverrides,
             args,
-            groupName: args.group ?? workspaceWithOverrides.sdks?.defaultGroup
+            groupName: args.target != null ? undefined : (args.group ?? workspaceWithOverrides.sdks?.defaultGroup)
         });
 
         this.validateArgs({ workspace: workspaceWithOverrides, args, targets });
@@ -196,13 +196,25 @@ export class GenerateCommand {
             workspace,
             apiNames: apisToCheck
         });
+        if (checkResult.violations.length > 0) {
+            for (const v of checkResult.violations) {
+                process.stderr.write(
+                    `${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`
+                );
+            }
+        }
 
         // Check that the SDK configurations are valid (when fern.yml exists).
-        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
-        const fernYmlResult = await schemaLoader.load();
-        if (fernYmlResult.type === "success") {
+        if (workspace.fernYml != null) {
             const sdkChecker = new SdkChecker({ context });
-            const sdkCheckResult = await sdkChecker.check({ workspace, fernYml: fernYmlResult });
+            const sdkCheckResult = await sdkChecker.check({ workspace });
+            if (sdkCheckResult.violations.length > 0) {
+                for (const v of sdkCheckResult.violations) {
+                    process.stderr.write(
+                        `${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`
+                    );
+                }
+            }
             if (sdkCheckResult.errorCount > 0) {
                 throw CliError.exit();
             }

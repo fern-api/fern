@@ -125,7 +125,8 @@ export class LegacyRemoteGenerationRunner {
                 fernignorePath: args.fernignorePath,
                 absolutePathToPreview,
                 whitelabel: undefined,
-                dynamicIrOnly: false
+                dynamicIrOnly: false,
+                retryRateLimited: false
             });
 
             if (this.isLocalGitCombo(args) && absolutePathToPreview != null) {

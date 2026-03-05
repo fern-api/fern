@@ -5,6 +5,7 @@ import { mkdir, readFile } from "fs/promises";
 import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
+import { pathToFileURL } from "url";
 
 import { Migration, MigrationModule, MigratorResult } from "./types.js";
 
@@ -23,6 +24,72 @@ const MIGRATION_PACKAGE_NAME = "@fern-api/generator-migrations";
  */
 function getMigrationCacheDir(): string {
     return join(homedir(), ".fern", "migration-cache");
+}
+
+/**
+ * Module-level promise that ensures the migration package is installed only once
+ * per CLI process. When multiple workspaces are upgraded concurrently via
+ * Promise.all, they all await this single promise instead of racing on
+ * concurrent npm installs to the same --prefix directory (which causes
+ * TAR_ENTRY_ERROR and missing files).
+ */
+let migrationsInstallPromise: Promise<Record<string, MigrationModule> | undefined> | undefined;
+
+/**
+ * Installs the migration package once and returns the full migrations map.
+ * Uses an isolated npm cache to avoid corruption from the system npm cache.
+ *
+ * Concurrent calls reuse the same in-flight promise, preventing the race
+ * condition where multiple npm installs to the same --prefix directory cause
+ * tar extraction failures.
+ */
+async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string, MigrationModule> | undefined> {
+    if (migrationsInstallPromise != null) {
+        return migrationsInstallPromise.catch((err) => {
+            migrationsInstallPromise = undefined;
+            throw err;
+        });
+    }
+
+    migrationsInstallPromise = (async () => {
+        const cacheDir = getMigrationCacheDir();
+        await mkdir(cacheDir, { recursive: true });
+
+        // Use an isolated npm cache inside the migration cache dir to prevent
+        // corrupt system-level npm cache entries from causing repeated failures.
+        const npmCacheDir = join(cacheDir, ".npm-cache");
+        await loggingExeca(logger, "npm", [
+            "install",
+            `${MIGRATION_PACKAGE_NAME}@latest`,
+            "--prefix",
+            cacheDir,
+            "--cache",
+            npmCacheDir,
+            "--ignore-scripts",
+            "--no-audit",
+            "--no-fund"
+        ]);
+
+        const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
+        const packageJsonPath = join(packageDir, "package.json");
+        const packageJsonContent = await readFile(packageJsonPath, "utf-8");
+        const packageJson = JSON.parse(packageJsonContent) as { main?: string };
+
+        if (packageJson.main == null) {
+            throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+        }
+
+        const packageEntryPoint = join(packageDir, packageJson.main);
+        const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
+        return migrations as Record<string, MigrationModule>;
+    })();
+
+    // Reset the cached promise on failure so the next call can retry.
+    migrationsInstallPromise.catch(() => {
+        migrationsInstallPromise = undefined;
+    });
+
+    return migrationsInstallPromise;
 }
 
 /**
@@ -54,42 +121,16 @@ export async function loadMigrationModule(params: {
     logger: Logger;
 }): Promise<MigrationModule | undefined> {
     const { generatorName, logger } = params;
-    const cacheDir = getMigrationCacheDir();
-    await mkdir(cacheDir, { recursive: true });
 
     try {
-        // Install/update the unified migration package to the cache directory
-        // npm will check if @latest is already installed and skip reinstallation if so
-        // --ignore-scripts: Security - prevent running arbitrary code during install
-        // --no-audit: Skip audit checks for faster installation
-        // --no-fund: Skip funding messages
-        await loggingExeca(logger, "npm", [
-            "install",
-            `${MIGRATION_PACKAGE_NAME}@latest`,
-            "--prefix",
-            cacheDir,
-            "--ignore-scripts",
-            "--no-audit",
-            "--no-fund"
-        ]);
-
-        // Read the package.json to get the entry point from the main field
-        const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
-        const packageJsonPath = join(packageDir, "package.json");
-        const packageJsonContent = await readFile(packageJsonPath, "utf-8");
-        const packageJson = JSON.parse(packageJsonContent) as { main?: string };
-
-        if (packageJson.main == null) {
-            throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+        const migrationsMap = await ensureMigrationsInstalled(logger);
+        if (migrationsMap == null) {
+            return undefined;
         }
-
-        // Resolve the entry point relative to the package directory
-        const packageEntryPoint = join(packageDir, packageJson.main);
-        const { migrations } = await import(packageEntryPoint);
 
         // Look up the migration module directly by generator name
         // Note: generatorName must already be normalized with fernapi/ prefix (done in upgradeGenerator.ts)
-        const module = migrations[generatorName];
+        const module = migrationsMap[generatorName];
 
         if (module == null) {
             // No migrations registered for this generator
