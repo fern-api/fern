@@ -52,14 +52,13 @@ export async function getGeneratorInvocation({
 
     const effectiveFixtureName = outputFolder ? `${fixtureName}_${outputFolder}` : fixtureName;
 
-    // When outputFolder is present for Python, inject a unique package_name into customConfig
-    // so the generator can use it for artifact naming (Docker project names, pyproject.toml, etc.)
-    // Replace hyphens with underscores since hyphens are invalid in Python module names.
+    // When outputFolder is present, inject language-specific package/module names into customConfig
+    // for artifact naming (Docker project names, package manifests, etc.)
     const effectiveConfig =
-        outputFolder != null && language === "python"
+        outputFolder != null && language != null
             ? {
                   ...(customConfig as Record<string, unknown> | undefined),
-                  package_name: `fern_${effectiveFixtureName}`.replace(/-/g, "_")
+                  ...getLanguageSpecificPackageConfig(language, effectiveFixtureName)
               }
             : customConfig;
 
@@ -219,6 +218,51 @@ function getPublishInfo({
             throw new Error("Seed doesn't support publish mode in PHP");
         case "rust":
             throw new Error("Seed doesn't support publish mode in Rust");
+        default:
+            assertNever(language);
+    }
+}
+
+/**
+ * Generate language-specific package/module name configuration for generators
+ * when outputFolder is present, ensuring compatibility with each language's
+ * naming conventions for special characters like _ and -.
+ */
+function getLanguageSpecificPackageConfig(
+    language: generatorsYml.GenerationLanguage,
+    fixtureName: string
+): Record<string, string> {
+    switch (language) {
+        case "python":
+            // Python module names can't have hyphens, need underscores
+            return { package_name: `fern_${fixtureName}`.replace(/-/g, "_") };
+        case "java":
+            // Java typically uses dots for packages, but artifact names can have hyphens
+            return { package_name: `com.fern.${fixtureName}`.replace(/_/g, ".") };
+        case "typescript":
+            // npm packages prefer hyphens, scoped packages are common
+            return { package_name: `@fern/${fixtureName}`.replace(/_/g, "-") };
+        case "go":
+            // Go module paths can have hyphens in the URL part
+            return { module_name: `github.com/fern/${fixtureName}`.replace(/_/g, "-") };
+        case "ruby":
+            // Ruby gems use hyphens, but module names use underscores
+            return {
+                gem_name: `fern-${fixtureName}`.replace(/_/g, "-"),
+                module_name: `Fern${fixtureName}`.replace(/-/g, "")
+            };
+        case "csharp":
+            // C# NuGet packages typically use PascalCase
+            return { package_name: `Fern${fixtureName}`.replace(/[-_]/g, "") };
+        case "rust":
+            // Rust crate names can have hyphens (converted to underscores in code)
+            return { package_name: `fern_${fixtureName}`.replace(/-/g, "_") };
+        case "swift":
+            // Swift packages can have hyphens
+            return { package_name: `Fern${fixtureName}`.replace(/[-_]/g, "") };
+        case "php":
+            // PHP Composer packages typically use hyphens
+            return { package_name: `fern/${fixtureName}`.replace(/_/g, "-") };
         default:
             assertNever(language);
     }
