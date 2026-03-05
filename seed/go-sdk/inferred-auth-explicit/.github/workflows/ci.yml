@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-go@v4
 
       - name: Lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v9
         with:
           version: v2.10.1
   test:
