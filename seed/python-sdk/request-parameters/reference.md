@@ -172,13 +172,14 @@ client.user.create_username_with_referenced_type(
 
 ```python
 from seed import SeedRequestParameters
+from seed.user import CreateUsernameBodyOptionalProperties
 
 client = SeedRequestParameters(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.user.create_username_optional(
-    request={},
+    request=CreateUsernameBodyOptionalProperties(),
 )
 
 ```
@@ -231,6 +232,7 @@ client.user.create_username_optional(
 from seed import SeedRequestParameters
 from uuid import UUID
 from datetime import date, datetime
+from seed.user import User, NestedUser
 
 client = SeedRequestParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -242,59 +244,59 @@ client.user.get_username(
     date=date.fromisoformat("2023-01-15"),
     deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     bytes="SGVsbG8gd29ybGQh",
-    user={
-        "name": "name",
-        "tags": [
+    user=User(
+        name="name",
+        tags=[
             "tags",
             "tags"
-        ]
-    },
+        ],
+    ),
     user_list=[
-        {
-            "name": "name",
-            "tags": [
+        User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        },
-        {
-            "name": "name",
-            "tags": [
+            ],
+        ),
+        User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
+            ],
+        )
     ],
     optional_deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     key_value={
         "keyValue": "keyValue"
     },
     optional_string="optionalString",
-    nested_user={
-        "name": "name",
-        "user": {
-            "name": "name",
-            "tags": [
+    nested_user=NestedUser(
+        name="name",
+        user=User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
-    },
-    optional_user={
-        "name": "name",
-        "tags": [
+            ],
+        ),
+    ),
+    optional_user=User(
+        name="name",
+        tags=[
             "tags",
             "tags"
-        ]
-    },
+        ],
+    ),
     exclude_user=[
-        {
-            "name": "name",
-            "tags": [
+        User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
+            ],
+        )
     ],
     filter=[
         "filter"

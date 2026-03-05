@@ -36,6 +36,7 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedPagination
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
     token="<token>",
@@ -44,15 +45,15 @@ client = SeedPagination(
 
 client.complex_.search(
     index="index",
-    pagination={
-        "per_page": 1,
-        "starting_after": "starting_after"
-    },
-    query={
-        "field": "field",
-        "operator": "=",
-        "value": "value"
-    },
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
 )
 ```
 
@@ -62,6 +63,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 from seed import AsyncSeedPagination
 
@@ -74,15 +76,15 @@ client = AsyncSeedPagination(
 async def main() -> None:
     await client.complex_.search(
         index="index",
-        pagination={
-            "per_page": 1,
-            "starting_after": "starting_after"
-        },
-        query={
-            "field": "field",
-            "operator": "=",
-            "value": "value"
-        },
+        pagination=StartingAfterPaging(
+            per_page=1,
+            starting_after="starting_after",
+        ),
+        query=SingleFilterSearchRequest(
+            field="field",
+            operator="=",
+            value="value",
+        ),
     )
 
 
@@ -110,6 +112,7 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 
 ```python
 from seed import SeedPagination
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
     token="<token>",
@@ -118,15 +121,15 @@ client = SeedPagination(
 
 client.complex_.search(
     index="index",
-    pagination={
-        "per_page": 1,
-        "starting_after": "starting_after"
-    },
-    query={
-        "field": "field",
-        "operator": "=",
-        "value": "value"
-    },
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
 )
 ```
 

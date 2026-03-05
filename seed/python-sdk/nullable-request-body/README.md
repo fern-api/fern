@@ -34,7 +34,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedApi
+from seed import SeedApi, PlainObject
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -42,7 +42,7 @@ client = SeedApi(
 
 client.test_group.test_method_name(
     path_param="path_param",
-    request={},
+    request=PlainObject(),
 )
 ```
 
@@ -63,7 +63,7 @@ client = AsyncSeedApi(
 async def main() -> None:
     await client.test_group.test_method_name(
         path_param="path_param",
-        request={},
+        request=PlainObject(),
     )
 
 

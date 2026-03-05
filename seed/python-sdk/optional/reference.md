@@ -73,15 +73,16 @@ client.optional.send_optional_body(
 
 ```python
 from seed import SeedObjectsWithImports
+from seed.optional import SendOptionalBodyRequest
 
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.optional.send_optional_typed_body(
-    request={
-        "message": "message"
-    },
+    request=SendOptionalBodyRequest(
+        message="message",
+    ),
 )
 
 ```
@@ -147,6 +148,7 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 
 ```python
 from seed import SeedObjectsWithImports
+from seed.optional import DeployParams
 
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
@@ -155,9 +157,9 @@ client = SeedObjectsWithImports(
 client.optional.send_optional_nullable_with_all_optional_properties(
     action_id="actionId",
     id="id",
-    request={
-        "update_draft": True
-    },
+    request=DeployParams(
+        update_draft=True,
+    ),
 )
 
 ```

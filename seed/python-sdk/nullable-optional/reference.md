@@ -99,6 +99,7 @@ Create a new user
 
 ```python
 from seed import SeedNullableOptional
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -108,15 +109,15 @@ client.nullable_optional.create_user(
     username="username",
     email="email",
     phone="phone",
-    address={
-        "street": "street",
-        "city": "city",
-        "state": "state",
-        "zip_code": "zipCode",
-        "country": "country",
-        "building_id": "buildingId",
-        "tenant_id": "tenantId"
-    },
+    address=Address(
+        street="street",
+        city="city",
+        state="state",
+        zip_code="zipCode",
+        country="country",
+        building_id="buildingId",
+        tenant_id="tenantId",
+    ),
 )
 
 ```
@@ -181,6 +182,7 @@ Update a user (partial update)
 
 ```python
 from seed import SeedNullableOptional
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -191,15 +193,15 @@ client.nullable_optional.update_user(
     username="username",
     email="email",
     phone="phone",
-    address={
-        "street": "street",
-        "city": "city",
-        "state": "state",
-        "zip_code": "zipCode",
-        "country": "country",
-        "building_id": "buildingId",
-        "tenant_id": "tenantId"
-    },
+    address=Address(
+        street="street",
+        city="city",
+        state="state",
+        zip_code="zipCode",
+        country="country",
+        building_id="buildingId",
+        tenant_id="tenantId",
+    ),
 )
 
 ```
@@ -469,6 +471,7 @@ Create a complex profile to test nullable enums and unions
 ```python
 from seed import SeedNullableOptional
 from datetime import datetime
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -508,15 +511,15 @@ client.nullable_optional.create_complex_profile(
         "phone": "phone",
         "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "updated_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "address": {
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "zip_code": "zipCode",
-            "country": "country",
-            "building_id": "buildingId",
-            "tenant_id": "tenantId"
-        }
+        "address": Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        )
     },
     optional_search_result={
         "type": "user",
@@ -526,15 +529,15 @@ client.nullable_optional.create_complex_profile(
         "phone": "phone",
         "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "updated_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "address": {
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "zip_code": "zipCode",
-            "country": "country",
-            "building_id": "buildingId",
-            "tenant_id": "tenantId"
-        }
+        "address": Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        )
     },
     nullable_array=[
         "nullableArray",
@@ -553,15 +556,15 @@ client.nullable_optional.create_complex_profile(
         "nullableListOfNullables"
     ],
     nullable_map_of_nullables={
-        "nullableMapOfNullables": {
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "zip_code": "zipCode",
-            "country": "country",
-            "building_id": "buildingId",
-            "tenant_id": "tenantId"
-        }
+        "nullableMapOfNullables": Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        )
     },
     nullable_list_of_unions=[
         {
@@ -716,6 +719,7 @@ Update complex profile to test nullable field updates
 ```python
 from seed import SeedNullableOptional
 from datetime import datetime
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -739,15 +743,15 @@ client.nullable_optional.update_complex_profile(
         "phone": "phone",
         "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "updated_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "address": {
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "zip_code": "zipCode",
-            "country": "country",
-            "building_id": "buildingId",
-            "tenant_id": "tenantId"
-        }
+        "address": Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        )
     },
     nullable_array=[
         "nullableArray",
@@ -858,6 +862,7 @@ Test endpoint for validating null deserialization
 ```python
 from seed import SeedNullableOptional
 from datetime import datetime
+from seed.nullable_optional import Address, Organization
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -884,15 +889,15 @@ client.nullable_optional.test_deserialization(
         "phone": "phone",
         "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "updated_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "address": {
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "zip_code": "zipCode",
-            "country": "country",
-            "building_id": "buildingId",
-            "tenant_id": "tenantId"
-        }
+        "address": Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        )
     },
     nullable_list=[
         "nullableList",
@@ -901,21 +906,21 @@ client.nullable_optional.test_deserialization(
     nullable_map={
         "nullableMap": 1
     },
-    nullable_object={
-        "street": "street",
-        "city": "city",
-        "state": "state",
-        "zip_code": "zipCode",
-        "country": "country",
-        "building_id": "buildingId",
-        "tenant_id": "tenantId"
-    },
-    optional_object={
-        "id": "id",
-        "name": "name",
-        "domain": "domain",
-        "employee_count": 1
-    },
+    nullable_object=Address(
+        street="street",
+        city="city",
+        state="state",
+        zip_code="zipCode",
+        country="country",
+        building_id="buildingId",
+        tenant_id="tenantId",
+    ),
+    optional_object=Organization(
+        id="id",
+        name="name",
+        domain="domain",
+        employee_count=1,
+    ),
 )
 
 ```

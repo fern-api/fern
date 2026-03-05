@@ -34,27 +34,27 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedPythonPositionalSingleProperty
+from seed import SeedPythonPositionalSingleProperty, BondSingleLeg, Isin, Quantity, TakerParty, Trader
 
 client = SeedPythonPositionalSingleProperty(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.create(
-    instrument={
-        "identifier": {
-            "isin": "US0378331005"
-        },
-        "quantity": {
-            "quantity": 10000,
-            "type": "QUANTITY"
-        }
-    },
-    taker={
-        "trader": {
-            "uuid_": 1234567
-        }
-    },
+    instrument=BondSingleLeg(
+        identifier=Isin(
+            isin="US0378331005",
+        ),
+        quantity=Quantity(
+            quantity=10000,
+            type="QUANTITY",
+        ),
+    ),
+    taker=TakerParty(
+        trader=Trader(
+            uuid_=1234567,
+        ),
+    ),
 )
 ```
 
@@ -74,20 +74,20 @@ client = AsyncSeedPythonPositionalSingleProperty(
 
 async def main() -> None:
     await client.create(
-        instrument={
-            "identifier": {
-                "isin": "US0378331005"
-            },
-            "quantity": {
-                "quantity": 10000,
-                "type": "QUANTITY"
-            }
-        },
-        taker={
-            "trader": {
-                "uuid_": 1234567
-            }
-        },
+        instrument=BondSingleLeg(
+            identifier=Isin(
+                isin="US0378331005",
+            ),
+            quantity=Quantity(
+                quantity=10000,
+                type="QUANTITY",
+            ),
+        ),
+        taker=TakerParty(
+            trader=Trader(
+                uuid_=1234567,
+            ),
+        ),
     )
 
 

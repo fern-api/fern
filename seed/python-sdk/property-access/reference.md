@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from seed import SeedPropertyAccess
+from seed import SeedPropertyAccess, UserProfile, UserProfileVerification
 
 client = SeedPropertyAccess(
     base_url="https://yourhost.com/path/to/api",
@@ -22,13 +22,13 @@ client.create_user(
     id="id",
     email="email",
     password="password",
-    profile={
-        "name": "name",
-        "verification": {
-            "verified": "verified"
-        },
-        "ssn": "ssn"
-    },
+    profile=UserProfile(
+        name="name",
+        verification=UserProfileVerification(
+            verified="verified",
+        ),
+        ssn="ssn",
+    ),
 )
 
 ```

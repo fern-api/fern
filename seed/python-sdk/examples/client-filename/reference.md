@@ -613,6 +613,8 @@ client.service.get_metadata(
 ```python
 from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
+from seed.types import Actor, ExtendedMovie, Entity, Migration, Node, Tree, Directory, File, Moment
+from seed.commons.types import Metadata
 from uuid import UUID
 from datetime import date, datetime
 
@@ -622,32 +624,32 @@ client = SeedExhaustive(
 )
 
 client.service.create_big_entity(
-    cast_member={
-        "name": "name",
-        "id": "id"
-    },
-    extended_movie={
-        "cast": [
+    cast_member=Actor(
+        name="name",
+        id="id",
+    ),
+    extended_movie=ExtendedMovie(
+        cast=[
             "cast",
             "cast"
         ],
-        "id": "id",
-        "prequel": "prequel",
-        "title": "title",
-        "from_": "from",
-        "rating": 1.1,
-        "type": "movie",
-        "tag": "tag",
-        "book": "book",
-        "metadata": {
+        id="id",
+        prequel="prequel",
+        title="title",
+        from_="from",
+        rating=1.1,
+        type="movie",
+        tag="tag",
+        book="book",
+        metadata={
             "metadata": {"key": "value"}
         },
-        "revenue": 1000000
-    },
-    entity={
-        "type": "primitive",
-        "name": "name"
-    },
+        revenue=1000000,
+    ),
+    entity=Entity(
+        type="primitive",
+        name="name",
+    ),
     metadata={
         "type": "html",
         "extra": {
@@ -657,13 +659,13 @@ client.service.create_big_entity(
             "tags"
         ]
     },
-    common_metadata={
-        "id": "id",
-        "data": {
+    common_metadata=Metadata(
+        id="id",
+        data={
             "data": "data"
         },
-        "json_string": "jsonString"
-    },
+        json_string="jsonString",
+    ),
     event_info={
         "type": "metadata",
         "id": "id",
@@ -675,10 +677,10 @@ client.service.create_big_entity(
     data={
         "type": "string"
     },
-    migration={
-        "name": "name",
-        "status": "RUNNING"
-    },
+    migration=Migration(
+        name="name",
+        status="RUNNING",
+    ),
     exception={
         "type": "generic",
         "exception_type": "exceptionType",
@@ -688,141 +690,141 @@ client.service.create_big_entity(
     test={
         "type": "and"
     },
-    node={
-        "name": "name",
-        "nodes": [
-            {
-                "name": "name",
-                "nodes": [
-                    {
-                        "name": "name"
-                    },
-                    {
-                        "name": "name"
-                    }
+    node=Node(
+        name="name",
+        nodes=[
+            Node(
+                name="name",
+                nodes=[
+                    Node(
+                        name="name",
+                    ),
+                    Node(
+                        name="name",
+                    )
                 ],
-                "trees": [
-                    {
-                        "nodes": []
-                    },
-                    {
-                        "nodes": []
-                    }
-                ]
-            },
-            {
-                "name": "name",
-                "nodes": [
-                    {
-                        "name": "name"
-                    },
-                    {
-                        "name": "name"
-                    }
+                trees=[
+                    Tree(
+                        nodes=[],
+                    ),
+                    Tree(
+                        nodes=[],
+                    )
                 ],
-                "trees": [
-                    {
-                        "nodes": []
-                    },
-                    {
-                        "nodes": []
-                    }
-                ]
-            }
+            ),
+            Node(
+                name="name",
+                nodes=[
+                    Node(
+                        name="name",
+                    ),
+                    Node(
+                        name="name",
+                    )
+                ],
+                trees=[
+                    Tree(
+                        nodes=[],
+                    ),
+                    Tree(
+                        nodes=[],
+                    )
+                ],
+            )
         ],
-        "trees": [
-            {
-                "nodes": [
-                    {
-                        "name": "name",
-                        "nodes": [],
-                        "trees": []
-                    },
-                    {
-                        "name": "name",
-                        "nodes": [],
-                        "trees": []
-                    }
-                ]
-            },
-            {
-                "nodes": [
-                    {
-                        "name": "name",
-                        "nodes": [],
-                        "trees": []
-                    },
-                    {
-                        "name": "name",
-                        "nodes": [],
-                        "trees": []
-                    }
-                ]
-            }
-        ]
-    },
-    directory={
-        "name": "name",
-        "files": [
-            {
-                "name": "name",
-                "contents": "contents"
-            },
-            {
-                "name": "name",
-                "contents": "contents"
-            }
+        trees=[
+            Tree(
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    )
+                ],
+            ),
+            Tree(
+                nodes=[
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    ),
+                    Node(
+                        name="name",
+                        nodes=[],
+                        trees=[],
+                    )
+                ],
+            )
         ],
-        "directories": [
-            {
-                "name": "name",
-                "files": [
-                    {
-                        "name": "name",
-                        "contents": "contents"
-                    },
-                    {
-                        "name": "name",
-                        "contents": "contents"
-                    }
+    ),
+    directory=Directory(
+        name="name",
+        files=[
+            File(
+                name="name",
+                contents="contents",
+            ),
+            File(
+                name="name",
+                contents="contents",
+            )
+        ],
+        directories=[
+            Directory(
+                name="name",
+                files=[
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                    File(
+                        name="name",
+                        contents="contents",
+                    )
                 ],
-                "directories": [
-                    {
-                        "name": "name"
-                    },
-                    {
-                        "name": "name"
-                    }
-                ]
-            },
-            {
-                "name": "name",
-                "files": [
-                    {
-                        "name": "name",
-                        "contents": "contents"
-                    },
-                    {
-                        "name": "name",
-                        "contents": "contents"
-                    }
+                directories=[
+                    Directory(
+                        name="name",
+                    ),
+                    Directory(
+                        name="name",
+                    )
                 ],
-                "directories": [
-                    {
-                        "name": "name"
-                    },
-                    {
-                        "name": "name"
-                    }
-                ]
-            }
-        ]
-    },
-    moment={
-        "id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        "date": date.fromisoformat("2023-01-15"),
-        "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00")
-    },
+            ),
+            Directory(
+                name="name",
+                files=[
+                    File(
+                        name="name",
+                        contents="contents",
+                    ),
+                    File(
+                        name="name",
+                        contents="contents",
+                    )
+                ],
+                directories=[
+                    Directory(
+                        name="name",
+                    ),
+                    Directory(
+                        name="name",
+                    )
+                ],
+            )
+        ],
+    ),
+    moment=Moment(
+        id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        date=date.fromisoformat("2023-01-15"),
+        datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    ),
 )
 
 ```

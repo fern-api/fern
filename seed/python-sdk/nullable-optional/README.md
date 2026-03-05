@@ -35,6 +35,7 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedNullableOptional
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -44,15 +45,15 @@ client.nullable_optional.create_user(
     username="username",
     email="email",
     phone="phone",
-    address={
-        "street": "street",
-        "city": "city",
-        "state": "state",
-        "zip_code": "zipCode",
-        "country": "country",
-        "building_id": "buildingId",
-        "tenant_id": "tenantId"
-    },
+    address=Address(
+        street="street",
+        city="city",
+        state="state",
+        zip_code="zipCode",
+        country="country",
+        building_id="buildingId",
+        tenant_id="tenantId",
+    ),
 )
 ```
 
@@ -62,6 +63,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from seed.nullable_optional import Address
 
 from seed import AsyncSeedNullableOptional
 
@@ -75,15 +77,15 @@ async def main() -> None:
         username="username",
         email="email",
         phone="phone",
-        address={
-            "street": "street",
-            "city": "city",
-            "state": "state",
-            "zip_code": "zipCode",
-            "country": "country",
-            "building_id": "buildingId",
-            "tenant_id": "tenantId"
-        },
+        address=Address(
+            street="street",
+            city="city",
+            state="state",
+            zip_code="zipCode",
+            country="country",
+            building_id="buildingId",
+            tenant_id="tenantId",
+        ),
     )
 
 

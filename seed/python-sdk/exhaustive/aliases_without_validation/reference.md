@@ -75,6 +75,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 
 ```python
 from seed import SeedExhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="<token>",
@@ -83,12 +84,12 @@ client = SeedExhaustive(
 
 client.endpoints.container.get_and_return_list_of_objects(
     request=[
-        {
-            "string": "string"
-        },
-        {
-            "string": "string"
-        }
+        ObjectWithRequiredField(
+            string="string",
+        ),
+        ObjectWithRequiredField(
+            string="string",
+        )
     ],
 )
 
@@ -200,6 +201,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 
 ```python
 from seed import SeedExhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="<token>",
@@ -208,9 +210,9 @@ client = SeedExhaustive(
 
 client.endpoints.container.get_and_return_set_of_objects(
     request=[
-        {
-            "string": "string"
-        }
+        ObjectWithRequiredField(
+            string="string",
+        )
     ],
 )
 
@@ -322,6 +324,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 
 ```python
 from seed import SeedExhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="<token>",
@@ -330,9 +333,9 @@ client = SeedExhaustive(
 
 client.endpoints.container.get_and_return_map_of_prim_to_object(
     request={
-        "string": {
-            "string": "string"
-        }
+        "string": ObjectWithRequiredField(
+            string="string",
+        )
     },
 )
 
@@ -444,6 +447,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
 
 ```python
 from seed import SeedExhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = SeedExhaustive(
     token="<token>",
@@ -451,9 +455,9 @@ client = SeedExhaustive(
 )
 
 client.endpoints.container.get_and_return_optional(
-    request={
-        "string": "string"
-    },
+    request=ObjectWithRequiredField(
+        string="string",
+    ),
 )
 
 ```
@@ -1252,6 +1256,7 @@ client.endpoints.object.get_and_return_with_map_of_map(
 
 ```python
 from seed import SeedExhaustive
+from seed.types.object import ObjectWithOptionalField
 from datetime import datetime, date
 from uuid import UUID
 
@@ -1262,28 +1267,28 @@ client = SeedExhaustive(
 
 client.endpoints.object.get_and_return_nested_with_optional_field(
     string="string",
-    nested_object={
-        "string": "string",
-        "integer": 1,
-        "long_": 1000000,
-        "double": 1.1,
-        "bool_": True,
-        "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "date": date.fromisoformat("2023-01-15"),
-        "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        "base_64": "SGVsbG8gd29ybGQh",
-        "list_": [
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=date.fromisoformat("2023-01-15"),
+        uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        base_64="SGVsbG8gd29ybGQh",
+        list_=[
             "list",
             "list"
         ],
-        "set_": [
+        set_=[
             "set"
         ],
-        "map_": {
+        map_={
             1: "map"
         },
-        "bigint": "1000000"
-    },
+        bigint="1000000",
+    ),
 )
 
 ```
@@ -1334,6 +1339,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 
 ```python
 from seed import SeedExhaustive
+from seed.types.object import ObjectWithOptionalField
 from datetime import datetime, date
 from uuid import UUID
 
@@ -1345,28 +1351,28 @@ client = SeedExhaustive(
 client.endpoints.object.get_and_return_nested_with_required_field(
     string_="string",
     string="string",
-    nested_object={
-        "string": "string",
-        "integer": 1,
-        "long_": 1000000,
-        "double": 1.1,
-        "bool_": True,
-        "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "date": date.fromisoformat("2023-01-15"),
-        "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        "base_64": "SGVsbG8gd29ybGQh",
-        "list_": [
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=date.fromisoformat("2023-01-15"),
+        uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        base_64="SGVsbG8gd29ybGQh",
+        list_=[
             "list",
             "list"
         ],
-        "set_": [
+        set_=[
             "set"
         ],
-        "map_": {
+        map_={
             1: "map"
         },
-        "bigint": "1000000"
-    },
+        bigint="1000000",
+    ),
 )
 
 ```
@@ -1425,6 +1431,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 
 ```python
 from seed import SeedExhaustive
+from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
 from datetime import datetime, date
 from uuid import UUID
 
@@ -1435,56 +1442,56 @@ client = SeedExhaustive(
 
 client.endpoints.object.get_and_return_nested_with_required_field_as_list(
     request=[
-        {
-            "string": "string",
-            "nested_object": {
-                "string": "string",
-                "integer": 1,
-                "long_": 1000000,
-                "double": 1.1,
-                "bool_": True,
-                "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-                "date": date.fromisoformat("2023-01-15"),
-                "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                "base_64": "SGVsbG8gd29ybGQh",
-                "list_": [
+        NestedObjectWithRequiredField(
+            string="string",
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                date=date.fromisoformat("2023-01-15"),
+                uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=[
                     "list",
                     "list"
                 ],
-                "set_": [
+                set_=[
                     "set"
                 ],
-                "map_": {
+                map_={
                     1: "map"
                 },
-                "bigint": "1000000"
-            }
-        },
-        {
-            "string": "string",
-            "nested_object": {
-                "string": "string",
-                "integer": 1,
-                "long_": 1000000,
-                "double": 1.1,
-                "bool_": True,
-                "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-                "date": date.fromisoformat("2023-01-15"),
-                "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                "base_64": "SGVsbG8gd29ybGQh",
-                "list_": [
+                bigint="1000000",
+            ),
+        ),
+        NestedObjectWithRequiredField(
+            string="string",
+            nested_object=ObjectWithOptionalField(
+                string="string",
+                integer=1,
+                long_=1000000,
+                double=1.1,
+                bool_=True,
+                datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                date=date.fromisoformat("2023-01-15"),
+                uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                base_64="SGVsbG8gd29ybGQh",
+                list_=[
                     "list",
                     "list"
                 ],
-                "set_": [
+                set_=[
                     "set"
                 ],
-                "map_": {
+                map_={
                     1: "map"
                 },
-                "bigint": "1000000"
-            }
-        }
+                bigint="1000000",
+            ),
+        )
     ],
 )
 
@@ -3319,6 +3326,7 @@ POST with custom object in request body, response is an object
 
 ```python
 from seed import SeedExhaustive
+from seed.types.object import ObjectWithOptionalField
 from datetime import datetime, date
 from uuid import UUID
 
@@ -3330,28 +3338,28 @@ client = SeedExhaustive(
 client.inlined_requests.post_with_object_bodyand_response(
     string="string",
     integer=1,
-    nested_object={
-        "string": "string",
-        "integer": 1,
-        "long_": 1000000,
-        "double": 1.1,
-        "bool_": True,
-        "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "date": date.fromisoformat("2023-01-15"),
-        "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        "base_64": "SGVsbG8gd29ybGQh",
-        "list_": [
+    nested_object=ObjectWithOptionalField(
+        string="string",
+        integer=1,
+        long_=1000000,
+        double=1.1,
+        bool_=True,
+        datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=date.fromisoformat("2023-01-15"),
+        uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        base_64="SGVsbG8gd29ybGQh",
+        list_=[
             "list",
             "list"
         ],
-        "set_": [
+        set_=[
             "set"
         ],
-        "map_": {
+        map_={
             1: "map"
         },
-        "bigint": "1000000"
-    },
+        bigint="1000000",
+    ),
 )
 
 ```

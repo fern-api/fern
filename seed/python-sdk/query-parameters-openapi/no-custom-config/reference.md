@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedApi, User, NestedUser
 from datetime import date, datetime
 
 client = SeedApi(
@@ -25,52 +25,52 @@ client.search(
     date=date.fromisoformat("2023-01-15"),
     deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     bytes="bytes",
-    user={
-        "name": "name",
-        "tags": [
+    user=User(
+        name="name",
+        tags=[
             "tags",
             "tags"
-        ]
-    },
+        ],
+    ),
     user_list=[
-        {
-            "name": "name",
-            "tags": [
+        User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
+            ],
+        )
     ],
     optional_deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     key_value={
         "keyValue": "keyValue"
     },
     optional_string="optionalString",
-    nested_user={
-        "name": "name",
-        "user": {
-            "name": "name",
-            "tags": [
+    nested_user=NestedUser(
+        name="name",
+        user=User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
-    },
-    optional_user={
-        "name": "name",
-        "tags": [
+            ],
+        ),
+    ),
+    optional_user=User(
+        name="name",
+        tags=[
             "tags",
             "tags"
-        ]
-    },
+        ],
+    ),
     exclude_user=[
-        {
-            "name": "name",
-            "tags": [
+        User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
+            ],
+        )
     ],
     filter=[
         "filter"
@@ -81,20 +81,20 @@ client.search(
     optional_tags=[
         "optionalTags"
     ],
-    neighbor={
-        "name": "name",
-        "tags": [
+    neighbor=User(
+        name="name",
+        tags=[
             "tags",
             "tags"
-        ]
-    },
-    neighbor_required={
-        "name": "name",
-        "tags": [
+        ],
+    ),
+    neighbor_required=User(
+        name="name",
+        tags=[
             "tags",
             "tags"
-        ]
-    },
+        ],
+    ),
 )
 
 ```

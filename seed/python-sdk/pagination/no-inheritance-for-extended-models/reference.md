@@ -14,6 +14,7 @@
 
 ```python
 from seed import SeedPagination
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
     token="<token>",
@@ -22,15 +23,15 @@ client = SeedPagination(
 
 client.complex_.search(
     index="index",
-    pagination={
-        "per_page": 1,
-        "starting_after": "starting_after"
-    },
-    query={
-        "field": "field",
-        "operator": "=",
-        "value": "value"
-    },
+    pagination=StartingAfterPaging(
+        per_page=1,
+        starting_after="starting_after",
+    ),
+    query=SingleFilterSearchRequest(
+        field="field",
+        operator="=",
+        value="value",
+    ),
 )
 
 ```

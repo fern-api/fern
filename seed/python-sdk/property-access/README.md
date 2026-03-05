@@ -34,7 +34,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedPropertyAccess
+from seed import SeedPropertyAccess, UserProfile, UserProfileVerification
 
 client = SeedPropertyAccess(
     base_url="https://yourhost.com/path/to/api",
@@ -44,13 +44,13 @@ client.create_user(
     id="id",
     email="email",
     password="password",
-    profile={
-        "name": "name",
-        "verification": {
-            "verified": "verified"
-        },
-        "ssn": "ssn"
-    },
+    profile=UserProfile(
+        name="name",
+        verification=UserProfileVerification(
+            verified="verified",
+        ),
+        ssn="ssn",
+    ),
 )
 ```
 
@@ -73,13 +73,13 @@ async def main() -> None:
         id="id",
         email="email",
         password="password",
-        profile={
-            "name": "name",
-            "verification": {
-                "verified": "verified"
-            },
-            "ssn": "ssn"
-        },
+        profile=UserProfile(
+            name="name",
+            verification=UserProfileVerification(
+                verified="verified",
+            ),
+            ssn="ssn",
+        ),
     )
 
 

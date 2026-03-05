@@ -27,7 +27,7 @@ Post a nullable request body
 <dd>
 
 ```python
-from seed import SeedApi
+from seed import SeedApi, PlainObject
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -35,7 +35,7 @@ client = SeedApi(
 
 client.test_group.test_method_name(
     path_param="path_param",
-    request={},
+    request=PlainObject(),
 )
 
 ```

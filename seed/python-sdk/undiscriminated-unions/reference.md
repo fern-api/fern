@@ -350,16 +350,17 @@ client.union.nested_unions(
 
 ```python
 from seed import SeedUndiscriminatedUnions
+from seed.union import TokenizeCard
 
 client = SeedUndiscriminatedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
 
 client.union.test_camel_case_properties(
-    payment_method={
-        "method": "card",
-        "card_number": "1234567890123456"
-    },
+    payment_method=TokenizeCard(
+        method="card",
+        card_number="1234567890123456",
+    ),
 )
 
 ```

@@ -3,6 +3,8 @@ from uuid import UUID
 
 from .conftest import get_client, verify_request_count
 
+from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
+
 
 def test_endpoints_object_get_and_return_with_optional_field() -> None:
     """Test getAndReturnWithOptionalField endpoint with WireMock"""
@@ -52,21 +54,21 @@ def test_endpoints_object_get_and_return_nested_with_optional_field() -> None:
     client = get_client(test_id)
     client.endpoints.object.get_and_return_nested_with_optional_field(
         string="string",
-        nested_object={
-            "string": "string",
-            "integer": 1,
-            "long_": 1000000,
-            "double": 1.1,
-            "bool_": True,
-            "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            "date": date.fromisoformat("2023-01-15"),
-            "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "base_64": "SGVsbG8gd29ybGQh",
-            "list_": ["list", "list"],
-            "set_": ["set"],
-            "map_": {1: "map"},
-            "bigint": "1000000",
-        },
+        nested_object=ObjectWithOptionalField(
+            string="string",
+            integer=1,
+            long_=1000000,
+            double=1.1,
+            bool_=True,
+            datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            date=date.fromisoformat("2023-01-15"),
+            uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            base_64="SGVsbG8gd29ybGQh",
+            list_=["list", "list"],
+            set_=["set"],
+            map_={1: "map"},
+            bigint="1000000",
+        ),
     )
     verify_request_count(test_id, "POST", "/object/get-and-return-nested-with-optional-field", None, 1)
 
@@ -78,21 +80,21 @@ def test_endpoints_object_get_and_return_nested_with_required_field() -> None:
     client.endpoints.object.get_and_return_nested_with_required_field(
         string_="string",
         string="string",
-        nested_object={
-            "string": "string",
-            "integer": 1,
-            "long_": 1000000,
-            "double": 1.1,
-            "bool_": True,
-            "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            "date": date.fromisoformat("2023-01-15"),
-            "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "base_64": "SGVsbG8gd29ybGQh",
-            "list_": ["list", "list"],
-            "set_": ["set"],
-            "map_": {1: "map"},
-            "bigint": "1000000",
-        },
+        nested_object=ObjectWithOptionalField(
+            string="string",
+            integer=1,
+            long_=1000000,
+            double=1.1,
+            bool_=True,
+            datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            date=date.fromisoformat("2023-01-15"),
+            uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            base_64="SGVsbG8gd29ybGQh",
+            list_=["list", "list"],
+            set_=["set"],
+            map_={1: "map"},
+            bigint="1000000",
+        ),
     )
     verify_request_count(test_id, "POST", "/object/get-and-return-nested-with-required-field/string", None, 1)
 
@@ -103,42 +105,42 @@ def test_endpoints_object_get_and_return_nested_with_required_field_as_list() ->
     client = get_client(test_id)
     client.endpoints.object.get_and_return_nested_with_required_field_as_list(
         request=[
-            {
-                "string": "string",
-                "nested_object": {
-                    "string": "string",
-                    "integer": 1,
-                    "long_": 1000000,
-                    "double": 1.1,
-                    "bool_": True,
-                    "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-                    "date": date.fromisoformat("2023-01-15"),
-                    "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                    "base_64": "SGVsbG8gd29ybGQh",
-                    "list_": ["list", "list"],
-                    "set_": ["set"],
-                    "map_": {1: "map"},
-                    "bigint": "1000000",
-                },
-            },
-            {
-                "string": "string",
-                "nested_object": {
-                    "string": "string",
-                    "integer": 1,
-                    "long_": 1000000,
-                    "double": 1.1,
-                    "bool_": True,
-                    "datetime": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-                    "date": date.fromisoformat("2023-01-15"),
-                    "uuid_": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-                    "base_64": "SGVsbG8gd29ybGQh",
-                    "list_": ["list", "list"],
-                    "set_": ["set"],
-                    "map_": {1: "map"},
-                    "bigint": "1000000",
-                },
-            },
+            NestedObjectWithRequiredField(
+                string="string",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=1,
+                    long_=1000000,
+                    double=1.1,
+                    bool_=True,
+                    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                    date=date.fromisoformat("2023-01-15"),
+                    uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                    base_64="SGVsbG8gd29ybGQh",
+                    list_=["list", "list"],
+                    set_=["set"],
+                    map_={1: "map"},
+                    bigint="1000000",
+                ),
+            ),
+            NestedObjectWithRequiredField(
+                string="string",
+                nested_object=ObjectWithOptionalField(
+                    string="string",
+                    integer=1,
+                    long_=1000000,
+                    double=1.1,
+                    bool_=True,
+                    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                    date=date.fromisoformat("2023-01-15"),
+                    uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                    base_64="SGVsbG8gd29ybGQh",
+                    list_=["list", "list"],
+                    set_=["set"],
+                    map_={1: "map"},
+                    bigint="1000000",
+                ),
+            ),
         ],
     )
     verify_request_count(test_id, "POST", "/object/get-and-return-nested-with-required-field-list", None, 1)

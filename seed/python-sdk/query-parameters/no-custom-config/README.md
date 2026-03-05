@@ -37,6 +37,7 @@ Instantiate and use the client with the following:
 from seed import SeedQueryParameters
 from uuid import UUID
 from datetime import date, datetime
+from seed.user import User, NestedUser
 
 client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -48,59 +49,59 @@ client.user.get_username(
     date=date.fromisoformat("2023-01-15"),
     deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     bytes="SGVsbG8gd29ybGQh",
-    user={
-        "name": "name",
-        "tags": [
+    user=User(
+        name="name",
+        tags=[
             "tags",
             "tags"
-        ]
-    },
+        ],
+    ),
     user_list=[
-        {
-            "name": "name",
-            "tags": [
+        User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        },
-        {
-            "name": "name",
-            "tags": [
+            ],
+        ),
+        User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
+            ],
+        )
     ],
     optional_deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     key_value={
         "keyValue": "keyValue"
     },
     optional_string="optionalString",
-    nested_user={
-        "name": "name",
-        "user": {
-            "name": "name",
-            "tags": [
+    nested_user=NestedUser(
+        name="name",
+        user=User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
-    },
-    optional_user={
-        "name": "name",
-        "tags": [
+            ],
+        ),
+    ),
+    optional_user=User(
+        name="name",
+        tags=[
             "tags",
             "tags"
-        ]
-    },
+        ],
+    ),
     exclude_user=[
-        {
-            "name": "name",
-            "tags": [
+        User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        }
+            ],
+        )
     ],
     filter=[
         "filter"
@@ -116,6 +117,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 from uuid import UUID
 from datetime import date, datetime
+from seed.user import User, NestedUser
 
 from seed import AsyncSeedQueryParameters
 
@@ -131,59 +133,59 @@ async def main() -> None:
         date=date.fromisoformat("2023-01-15"),
         deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         bytes="SGVsbG8gd29ybGQh",
-        user={
-            "name": "name",
-            "tags": [
+        user=User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        },
+            ],
+        ),
         user_list=[
-            {
-                "name": "name",
-                "tags": [
+            User(
+                name="name",
+                tags=[
                     "tags",
                     "tags"
-                ]
-            },
-            {
-                "name": "name",
-                "tags": [
+                ],
+            ),
+            User(
+                name="name",
+                tags=[
                     "tags",
                     "tags"
-                ]
-            }
+                ],
+            )
         ],
         optional_deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         key_value={
             "keyValue": "keyValue"
         },
         optional_string="optionalString",
-        nested_user={
-            "name": "name",
-            "user": {
-                "name": "name",
-                "tags": [
+        nested_user=NestedUser(
+            name="name",
+            user=User(
+                name="name",
+                tags=[
                     "tags",
                     "tags"
-                ]
-            }
-        },
-        optional_user={
-            "name": "name",
-            "tags": [
+                ],
+            ),
+        ),
+        optional_user=User(
+            name="name",
+            tags=[
                 "tags",
                 "tags"
-            ]
-        },
+            ],
+        ),
         exclude_user=[
-            {
-                "name": "name",
-                "tags": [
+            User(
+                name="name",
+                tags=[
                     "tags",
                     "tags"
-                ]
-            }
+                ],
+            )
         ],
         filter=[
             "filter"

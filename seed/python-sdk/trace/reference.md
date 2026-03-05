@@ -354,6 +354,7 @@ client.admin.send_workspace_submission_update(
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 from uuid import UUID
+from seed.submission import TestCaseResultWithStdout, TestCaseResult, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
 
 client = SeedTrace(
     token="<token>",
@@ -363,92 +364,92 @@ client = SeedTrace(
 client.admin.store_traced_test_case(
     submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     test_case_id="testCaseId",
-    result={
-        "result": {
-            "expected_result": {
+    result=TestCaseResultWithStdout(
+        result=TestCaseResult(
+            expected_result={
                 "type": "integerValue"
             },
-            "actual_result": {
+            actual_result={
                 "type": "value",
                 "value": {
                     "type": "integerValue"
                 }
             },
-            "passed": True
-        },
-        "stdout": "stdout"
-    },
+            passed=True,
+        ),
+        stdout="stdout",
+    ),
     trace_responses=[
-        {
-            "submission_id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "line_number": 1,
-            "return_value": {
+        TraceResponse(
+            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            return_value={
                 "type": "integerValue"
             },
-            "expression_location": {
-                "start": 1,
-                "offset": 1
-            },
-            "stack": {
-                "num_stack_frames": 1,
-                "top_stack_frame": {
-                    "method_name": "methodName",
-                    "line_number": 1,
-                    "scopes": [
-                        {
-                            "variables": {
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        },
-                        {
-                            "variables": {
+                            },
+                        ),
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        }
-                    ]
-                }
-            },
-            "stdout": "stdout"
-        },
-        {
-            "submission_id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "line_number": 1,
-            "return_value": {
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        ),
+        TraceResponse(
+            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            return_value={
                 "type": "integerValue"
             },
-            "expression_location": {
-                "start": 1,
-                "offset": 1
-            },
-            "stack": {
-                "num_stack_frames": 1,
-                "top_stack_frame": {
-                    "method_name": "methodName",
-                    "line_number": 1,
-                    "scopes": [
-                        {
-                            "variables": {
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        },
-                        {
-                            "variables": {
+                            },
+                        ),
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        }
-                    ]
-                }
-            },
-            "stdout": "stdout"
-        }
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        )
     ],
 )
 
@@ -526,6 +527,7 @@ client.admin.store_traced_test_case(
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 from uuid import UUID
+from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
 
 client = SeedTrace(
     token="<token>",
@@ -536,84 +538,84 @@ client.admin.store_traced_test_case_v_2(
     submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     test_case_id="testCaseId",
     request=[
-        {
-            "submission_id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "line_number": 1,
-            "file": {
-                "filename": "filename",
-                "directory": "directory"
-            },
-            "return_value": {
+        TraceResponseV2(
+            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            file=TracedFile(
+                filename="filename",
+                directory="directory",
+            ),
+            return_value={
                 "type": "integerValue"
             },
-            "expression_location": {
-                "start": 1,
-                "offset": 1
-            },
-            "stack": {
-                "num_stack_frames": 1,
-                "top_stack_frame": {
-                    "method_name": "methodName",
-                    "line_number": 1,
-                    "scopes": [
-                        {
-                            "variables": {
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        },
-                        {
-                            "variables": {
+                            },
+                        ),
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        }
-                    ]
-                }
-            },
-            "stdout": "stdout"
-        },
-        {
-            "submission_id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "line_number": 1,
-            "file": {
-                "filename": "filename",
-                "directory": "directory"
-            },
-            "return_value": {
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        ),
+        TraceResponseV2(
+            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            file=TracedFile(
+                filename="filename",
+                directory="directory",
+            ),
+            return_value={
                 "type": "integerValue"
             },
-            "expression_location": {
-                "start": 1,
-                "offset": 1
-            },
-            "stack": {
-                "num_stack_frames": 1,
-                "top_stack_frame": {
-                    "method_name": "methodName",
-                    "line_number": 1,
-                    "scopes": [
-                        {
-                            "variables": {
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        },
-                        {
-                            "variables": {
+                            },
+                        ),
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        }
-                    ]
-                }
-            },
-            "stdout": "stdout"
-        }
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        )
     ],
 )
 
@@ -683,6 +685,7 @@ client.admin.store_traced_test_case_v_2(
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 from uuid import UUID
+from seed.submission import WorkspaceRunDetails, ExceptionInfo, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
 
 client = SeedTrace(
     token="<token>",
@@ -691,91 +694,91 @@ client = SeedTrace(
 
 client.admin.store_traced_workspace(
     submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    workspace_run_details={
-        "exception_v_2": {
+    workspace_run_details=WorkspaceRunDetails(
+        exception_v_2={
             "type": "generic",
             "exception_type": "exceptionType",
             "exception_message": "exceptionMessage",
             "exception_stacktrace": "exceptionStacktrace"
         },
-        "exception": {
-            "exception_type": "exceptionType",
-            "exception_message": "exceptionMessage",
-            "exception_stacktrace": "exceptionStacktrace"
-        },
-        "stdout": "stdout"
-    },
+        exception=ExceptionInfo(
+            exception_type="exceptionType",
+            exception_message="exceptionMessage",
+            exception_stacktrace="exceptionStacktrace",
+        ),
+        stdout="stdout",
+    ),
     trace_responses=[
-        {
-            "submission_id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "line_number": 1,
-            "return_value": {
+        TraceResponse(
+            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            return_value={
                 "type": "integerValue"
             },
-            "expression_location": {
-                "start": 1,
-                "offset": 1
-            },
-            "stack": {
-                "num_stack_frames": 1,
-                "top_stack_frame": {
-                    "method_name": "methodName",
-                    "line_number": 1,
-                    "scopes": [
-                        {
-                            "variables": {
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        },
-                        {
-                            "variables": {
+                            },
+                        ),
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        }
-                    ]
-                }
-            },
-            "stdout": "stdout"
-        },
-        {
-            "submission_id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "line_number": 1,
-            "return_value": {
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        ),
+        TraceResponse(
+            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            return_value={
                 "type": "integerValue"
             },
-            "expression_location": {
-                "start": 1,
-                "offset": 1
-            },
-            "stack": {
-                "num_stack_frames": 1,
-                "top_stack_frame": {
-                    "method_name": "methodName",
-                    "line_number": 1,
-                    "scopes": [
-                        {
-                            "variables": {
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        },
-                        {
-                            "variables": {
+                            },
+                        ),
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        }
-                    ]
-                }
-            },
-            "stdout": "stdout"
-        }
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        )
     ],
 )
 
@@ -845,6 +848,7 @@ client.admin.store_traced_workspace(
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 from uuid import UUID
+from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
 
 client = SeedTrace(
     token="<token>",
@@ -854,84 +858,84 @@ client = SeedTrace(
 client.admin.store_traced_workspace_v_2(
     submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     request=[
-        {
-            "submission_id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "line_number": 1,
-            "file": {
-                "filename": "filename",
-                "directory": "directory"
-            },
-            "return_value": {
+        TraceResponseV2(
+            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            file=TracedFile(
+                filename="filename",
+                directory="directory",
+            ),
+            return_value={
                 "type": "integerValue"
             },
-            "expression_location": {
-                "start": 1,
-                "offset": 1
-            },
-            "stack": {
-                "num_stack_frames": 1,
-                "top_stack_frame": {
-                    "method_name": "methodName",
-                    "line_number": 1,
-                    "scopes": [
-                        {
-                            "variables": {
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        },
-                        {
-                            "variables": {
+                            },
+                        ),
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        }
-                    ]
-                }
-            },
-            "stdout": "stdout"
-        },
-        {
-            "submission_id": UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "line_number": 1,
-            "file": {
-                "filename": "filename",
-                "directory": "directory"
-            },
-            "return_value": {
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        ),
+        TraceResponseV2(
+            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            line_number=1,
+            file=TracedFile(
+                filename="filename",
+                directory="directory",
+            ),
+            return_value={
                 "type": "integerValue"
             },
-            "expression_location": {
-                "start": 1,
-                "offset": 1
-            },
-            "stack": {
-                "num_stack_frames": 1,
-                "top_stack_frame": {
-                    "method_name": "methodName",
-                    "line_number": 1,
-                    "scopes": [
-                        {
-                            "variables": {
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="methodName",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        },
-                        {
-                            "variables": {
+                            },
+                        ),
+                        Scope(
+                            variables={
                                 "variables": {
                                     "type": "integerValue"
                                 }
-                            }
-                        }
-                    ]
-                }
-            },
-            "stdout": "stdout"
-        }
+                            },
+                        )
+                    ],
+                ),
+            ),
+            stdout="stdout",
+        )
     ],
 )
 
@@ -1491,6 +1495,7 @@ Updates a playlist
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
+from seed.playlist import UpdatePlaylistRequest
 
 client = SeedTrace(
     token="<token>",
@@ -1500,13 +1505,13 @@ client = SeedTrace(
 client.playlist.update_playlist(
     service_param=1,
     playlist_id="playlistId",
-    request={
-        "name": "name",
-        "problems": [
+    request=UpdatePlaylistRequest(
+        name="name",
+        problems=[
             "problems",
             "problems"
-        ]
-    },
+        ],
+    ),
 )
 
 ```
@@ -1671,6 +1676,8 @@ Creates a problem
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
+from seed.problem import ProblemDescription, ProblemFiles, VariableTypeAndName
+from seed.commons import FileInfo, TestCaseWithExpectedResult, TestCase
 
 client = SeedTrace(
     token="<token>",
@@ -1679,84 +1686,84 @@ client = SeedTrace(
 
 client.problem.create_problem(
     problem_name="problemName",
-    problem_description={
-        "boards": [
+    problem_description=ProblemDescription(
+        boards=[
             {
                 "type": "html"
             },
             {
                 "type": "html"
             }
-        ]
-    },
+        ],
+    ),
     files={
-        "JAVA": {
-            "solution_file": {
-                "filename": "filename",
-                "contents": "contents"
-            },
-            "read_only_files": [
-                {
-                    "filename": "filename",
-                    "contents": "contents"
-                },
-                {
-                    "filename": "filename",
-                    "contents": "contents"
-                }
-            ]
-        }
+        "JAVA": ProblemFiles(
+            solution_file=FileInfo(
+                filename="filename",
+                contents="contents",
+            ),
+            read_only_files=[
+                FileInfo(
+                    filename="filename",
+                    contents="contents",
+                ),
+                FileInfo(
+                    filename="filename",
+                    contents="contents",
+                )
+            ],
+        )
     },
     input_params=[
-        {
-            "variable_type": {
+        VariableTypeAndName(
+            variable_type={
                 "type": "integerType"
             },
-            "name": "name"
-        },
-        {
-            "variable_type": {
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type={
                 "type": "integerType"
             },
-            "name": "name"
-        }
+            name="name",
+        )
     ],
     output_type={
         "type": "integerType"
     },
     testcases=[
-        {
-            "test_case": {
-                "id": "id",
-                "params": [
+        TestCaseWithExpectedResult(
+            test_case=TestCase(
+                id="id",
+                params=[
                     {
                         "type": "integerValue"
                     },
                     {
                         "type": "integerValue"
                     }
-                ]
-            },
-            "expected_result": {
+                ],
+            ),
+            expected_result={
                 "type": "integerValue"
-            }
-        },
-        {
-            "test_case": {
-                "id": "id",
-                "params": [
+            },
+        ),
+        TestCaseWithExpectedResult(
+            test_case=TestCase(
+                id="id",
+                params=[
                     {
                         "type": "integerValue"
                     },
                     {
                         "type": "integerValue"
                     }
-                ]
-            },
-            "expected_result": {
+                ],
+            ),
+            expected_result={
                 "type": "integerValue"
-            }
-        }
+            },
+        )
     ],
     method_name="methodName",
 )
@@ -1824,6 +1831,8 @@ Updates a problem
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
+from seed.problem import ProblemDescription, ProblemFiles, VariableTypeAndName
+from seed.commons import FileInfo, TestCaseWithExpectedResult, TestCase
 
 client = SeedTrace(
     token="<token>",
@@ -1833,84 +1842,84 @@ client = SeedTrace(
 client.problem.update_problem(
     problem_id="problemId",
     problem_name="problemName",
-    problem_description={
-        "boards": [
+    problem_description=ProblemDescription(
+        boards=[
             {
                 "type": "html"
             },
             {
                 "type": "html"
             }
-        ]
-    },
+        ],
+    ),
     files={
-        "JAVA": {
-            "solution_file": {
-                "filename": "filename",
-                "contents": "contents"
-            },
-            "read_only_files": [
-                {
-                    "filename": "filename",
-                    "contents": "contents"
-                },
-                {
-                    "filename": "filename",
-                    "contents": "contents"
-                }
-            ]
-        }
+        "JAVA": ProblemFiles(
+            solution_file=FileInfo(
+                filename="filename",
+                contents="contents",
+            ),
+            read_only_files=[
+                FileInfo(
+                    filename="filename",
+                    contents="contents",
+                ),
+                FileInfo(
+                    filename="filename",
+                    contents="contents",
+                )
+            ],
+        )
     },
     input_params=[
-        {
-            "variable_type": {
+        VariableTypeAndName(
+            variable_type={
                 "type": "integerType"
             },
-            "name": "name"
-        },
-        {
-            "variable_type": {
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type={
                 "type": "integerType"
             },
-            "name": "name"
-        }
+            name="name",
+        )
     ],
     output_type={
         "type": "integerType"
     },
     testcases=[
-        {
-            "test_case": {
-                "id": "id",
-                "params": [
+        TestCaseWithExpectedResult(
+            test_case=TestCase(
+                id="id",
+                params=[
                     {
                         "type": "integerValue"
                     },
                     {
                         "type": "integerValue"
                     }
-                ]
-            },
-            "expected_result": {
+                ],
+            ),
+            expected_result={
                 "type": "integerValue"
-            }
-        },
-        {
-            "test_case": {
-                "id": "id",
-                "params": [
+            },
+        ),
+        TestCaseWithExpectedResult(
+            test_case=TestCase(
+                id="id",
+                params=[
                     {
                         "type": "integerValue"
                     },
                     {
                         "type": "integerValue"
                     }
-                ]
-            },
-            "expected_result": {
+                ],
+            ),
+            expected_result={
                 "type": "integerValue"
-            }
-        }
+            },
+        )
     ],
     method_name="methodName",
 )
@@ -2059,6 +2068,7 @@ Returns default starter files for problem
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
+from seed.problem import VariableTypeAndName
 
 client = SeedTrace(
     token="<token>",
@@ -2067,18 +2077,18 @@ client = SeedTrace(
 
 client.problem.get_default_starter_files(
     input_params=[
-        {
-            "variable_type": {
+        VariableTypeAndName(
+            variable_type={
                 "type": "integerType"
             },
-            "name": "name"
-        },
-        {
-            "variable_type": {
+            name="name",
+        ),
+        VariableTypeAndName(
+            variable_type={
                 "type": "integerType"
             },
-            "name": "name"
-        }
+            name="name",
+        )
     ],
     output_type={
         "type": "integerType"
