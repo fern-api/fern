@@ -398,7 +398,6 @@ export class LocalTaskHandler {
         }
     }
 
-
     /**
      * Constrains an AI-suggested bump to not exceed the Tier 1 ceiling.
      */
