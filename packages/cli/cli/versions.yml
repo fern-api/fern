@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.4.3
+  changelogEntry:
+    - summary: |
+        Fix `fern check` failing with thousands of false-positive errors on JSON-formatted
+        Swagger 2.0 specs (e.g. `"swagger": "2.0"`). The docs validation rules
+        `no-non-component-refs`, `no-openapi-v2-in-docs`, and `valid-local-references`
+        only detected YAML-formatted Swagger 2.0 (`swagger: "2.0"`) and missed JSON
+        format, causing all `#/definitions/` references to be incorrectly flagged as
+        invalid non-component references.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.4.2
   changelogEntry:
     - summary: |
