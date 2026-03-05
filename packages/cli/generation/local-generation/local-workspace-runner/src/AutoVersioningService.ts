@@ -284,6 +284,130 @@ export class AutoVersioningService {
     }
 
     /**
+     * Known patterns for API-surface signatures (function/method/class declarations).
+     * Used by truncateDiff to prioritise sections with signature-like changes.
+     */
+    private static readonly SIGNATURE_PATTERNS: RegExp[] = [
+        /^[+-]\s*export\s+/,
+        /^[+-]\s*public\s+/,
+        /^[+-]\s*def\s+/,
+        /^[+-]\s*func\s+[A-Z]/
+    ];
+
+    /**
+     * Truncates a cleaned diff to fit within a byte budget while preserving the
+     * most semantically valuable file sections for AI analysis.
+     *
+     * Ranking algorithm — file sections are sorted from highest to lowest priority:
+     * 1. Deletion sections — files with deleted lines but no added lines (MAJOR signal).
+     * 2. Mixed sections with signature-like changes (export, public, def, func).
+     * 3. Mixed sections — added and deleted lines without signature patterns.
+     * 4. Addition-only sections — new files (likely MINOR).
+     * 5. Context-only sections — no + or - lines (defensive; should already be stripped).
+     *
+     * @param diff The cleaned diff string (output of cleanDiffForAI)
+     * @param maxBytes Maximum allowed byte length for the returned diff
+     * @return The truncated diff string and the number of omitted file sections
+     */
+    public truncateDiff(diff: string, maxBytes: number): { truncated: string; omittedFiles: number } {
+        const lines = diff.split("\n");
+        const fileSections = this.parseFileSections(lines);
+
+        if (fileSections.length === 0) {
+            return { truncated: diff, omittedFiles: 0 };
+        }
+
+        // Classify and rank each file section
+        const ranked = fileSections
+            .map((section) => ({
+                section,
+                priority: this.classifySection(section),
+                text: section.lines.join("\n")
+            }))
+            .sort((a, b) => a.priority - b.priority);
+
+        const includedTexts: string[] = [];
+        let currentBytes = 0;
+        let includedCount = 0;
+
+        for (const entry of ranked) {
+            const sectionBytes = Buffer.byteLength(entry.text, "utf-8");
+            // Always include at least one section even if it exceeds the budget,
+            // so the AI always has something to analyse.
+            if (includedCount > 0 && currentBytes + sectionBytes > maxBytes) {
+                continue;
+            }
+            includedTexts.push(entry.text);
+            currentBytes += sectionBytes;
+            includedCount++;
+        }
+
+        const omittedFiles = fileSections.length - includedCount;
+
+        if (omittedFiles === 0) {
+            return { truncated: diff, omittedFiles: 0 };
+        }
+
+        // Append a trailing note explaining the truncation
+        const note =
+            `\n[Diff truncated: showing ${includedCount} of ${fileSections.length} files. ` +
+            `${omittedFiles} files omitted due to size limit.\n` +
+            ` Omitted files are likely additive (new types, new methods). Breaking changes\n` +
+            ` in the shown files take precedence.]`;
+
+        const truncated = includedTexts.join("\n") + note;
+        return { truncated, omittedFiles };
+    }
+
+    /**
+     * Classifies a file section into a priority bucket for truncation ranking.
+     * Lower number = higher priority (included first).
+     *
+     * 1 = deletion-only, 2 = mixed with signatures, 3 = mixed,
+     * 4 = addition-only, 5 = context-only
+     */
+    private classifySection(section: FileSection): number {
+        let hasAdditions = false;
+        let hasDeletions = false;
+        let hasSignature = false;
+
+        for (const line of section.lines) {
+            const isAddition = line.startsWith("+") && !line.startsWith("+++");
+            const isDeletion = line.startsWith("-") && !line.startsWith("---");
+
+            if (isAddition) {
+                hasAdditions = true;
+            }
+            if (isDeletion) {
+                hasDeletions = true;
+            }
+
+            if (isAddition || isDeletion) {
+                for (const pattern of AutoVersioningService.SIGNATURE_PATTERNS) {
+                    if (pattern.test(line)) {
+                        hasSignature = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (hasDeletions && !hasAdditions) {
+            return 1; // deletion-only
+        }
+        if (hasDeletions && hasAdditions && hasSignature) {
+            return 2; // mixed with signatures
+        }
+        if (hasDeletions && hasAdditions) {
+            return 3; // mixed
+        }
+        if (hasAdditions) {
+            return 4; // addition-only
+        }
+        return 5; // context-only
+    }
+
+    /**
      * Parses a diff into file sections, where each section starts with "diff --git".
      */
     private parseFileSections(lines: string[]): FileSection[] {

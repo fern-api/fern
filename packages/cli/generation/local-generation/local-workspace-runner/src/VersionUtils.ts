@@ -3,6 +3,13 @@ import { AutoVersioningException } from "./AutoVersioningService.js";
 export const AUTO_VERSION = "AUTO";
 export const MAGIC_VERSION = "505.503.4455";
 
+/**
+ * Maximum byte size for a cleaned diff before it is truncated for AI analysis.
+ * Diffs larger than this are intelligently truncated to keep the most
+ * semantically valuable sections (deletions first, then signature changes).
+ */
+export const MAX_AI_DIFF_BYTES = 40_000;
+
 export enum VersionBump {
     MAJOR = "MAJOR",
     MINOR = "MINOR",

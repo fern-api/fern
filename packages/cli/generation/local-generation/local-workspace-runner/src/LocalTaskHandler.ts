@@ -11,7 +11,7 @@ import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
-import { isAutoVersion } from "./VersionUtils.js";
+import { isAutoVersion, MAX_AI_DIFF_BYTES } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -140,6 +140,20 @@ export class LocalTaskHandler {
             this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
             this.context.logger.debug(`Cleaned diff size: ${cleanedDiff.length} bytes`);
 
+            // Truncate diff if it exceeds the AI analysis size limit
+            let diffToAnalyze = cleanedDiff;
+            if (cleanedDiff.length > MAX_AI_DIFF_BYTES) {
+                const { truncated, omittedFiles } = autoVersioningService.truncateDiff(
+                    cleanedDiff,
+                    MAX_AI_DIFF_BYTES
+                );
+                this.context.logger.warn(
+                    `Diff too large for AI analysis (${cleanedDiff.length} bytes). ` +
+                        `Truncated to ${truncated.length} bytes, omitting ${omittedFiles} files.`
+                );
+                diffToAnalyze = truncated;
+            }
+
             // Handle new SDK repository with no previous version
             if (previousVersion == null) {
                 this.context.logger.info(
@@ -170,7 +184,7 @@ export class LocalTaskHandler {
                 const clientRegistry = await this.getClientRegistry();
                 const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-                const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
+                const analysis = await bamlClient.AnalyzeSdkDiff(diffToAnalyze);
 
                 if (analysis.version_bump === VersionBump.NO_CHANGE) {
                     this.context.logger.info("AI detected no semantic changes");
