@@ -6,8 +6,8 @@ import type * as serializers from "../../../index.js";
 import { BytesResponse } from "./BytesResponse.js";
 import { FileDownloadResponse } from "./FileDownloadResponse.js";
 import { JsonResponse } from "./JsonResponse.js";
+import { MultipartResponse } from "./MultipartResponse.js";
 import { StreamingResponse } from "./StreamingResponse.js";
-import { MultipartResponse as MultipartResponseSerializer } from "./MultipartResponse.js";
 import { StreamParameterResponse } from "./StreamParameterResponse.js";
 import { TextResponse } from "./TextResponse.js";
 
@@ -24,7 +24,7 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
                 value: StreamingResponse,
             }),
             streamParameter: StreamParameterResponse,
-            multipart: MultipartResponseSerializer,
+            multipart: MultipartResponse,
         })
         .transform<FernIr.HttpResponseBody>({
             transform: (value) => {
@@ -86,7 +86,7 @@ export declare namespace HttpResponseBody {
         type: "streamParameter";
     }
 
-    export interface Multipart extends MultipartResponseSerializer.Raw {
+    export interface Multipart extends MultipartResponse.Raw {
         type: "multipart";
     }
 }

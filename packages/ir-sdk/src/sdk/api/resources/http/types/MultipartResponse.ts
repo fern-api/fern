@@ -2,6 +2,10 @@
 
 import type * as FernIr from "../../../index.js";
 
+/**
+ * Represents a multipart/mixed response with per-part schema information.
+ * Each part has its own content type and optional schema.
+ */
 export interface MultipartResponse extends FernIr.WithDocs, FernIr.WithV2Examples {
     parts: FernIr.MultipartResponsePart[];
 }

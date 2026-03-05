@@ -2,8 +2,18 @@
 
 import type * as FernIr from "../../../index.js";
 
+/**
+ * Represents an individual part within a multipart/mixed response.
+ */
 export interface MultipartResponsePart extends FernIr.WithDocs {
+    /** Optional identifier or field name for this part. */
     name: string | undefined;
+    /** The MIME type of this part (e.g., "application/json", "audio/mpeg"). */
     contentType: string | undefined;
+    /**
+     * A reference to the Fern IR type for this part.
+     * For JSON parts, this points to the schema type.
+     * For binary parts, this may be absent, indicating raw bytes/file content.
+     */
     bodyType: FernIr.TypeReference | undefined;
 }

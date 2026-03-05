@@ -3,9 +3,9 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { MultipartResponsePart } from "./MultipartResponsePart.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { WithV2Examples } from "../../examples/types/WithV2Examples.js";
+import { MultipartResponsePart } from "./MultipartResponsePart.js";
 
 export const MultipartResponse: core.serialization.ObjectSchema<
     serializers.MultipartResponse.Raw,
