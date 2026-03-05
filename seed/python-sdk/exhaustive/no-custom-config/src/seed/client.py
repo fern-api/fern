@@ -16,7 +16,7 @@ if typing.TYPE_CHECKING:
     from .req_with_headers.client import AsyncReqWithHeadersClient, ReqWithHeadersClient
 
 
-class SeedExhaustive:
+class SeedExhaustiveNoCustomConfig:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -43,9 +43,9 @@ class SeedExhaustive:
 
     Examples
     --------
-    from seed import SeedExhaustive
+    from seed import SeedExhaustiveNoCustomConfig
 
-    client = SeedExhaustive(
+    client = SeedExhaustiveNoCustomConfig(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )
@@ -124,7 +124,7 @@ class SeedExhaustive:
         return self._req_with_headers
 
 
-class AsyncSeedExhaustive:
+class AsyncSeedExhaustiveNoCustomConfig:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -151,9 +151,9 @@ class AsyncSeedExhaustive:
 
     Examples
     --------
-    from seed import AsyncSeedExhaustive
+    from seed import AsyncSeedExhaustiveNoCustomConfig
 
-    client = AsyncSeedExhaustive(
+    client = AsyncSeedExhaustiveNoCustomConfig(
         token="YOUR_TOKEN",
         base_url="https://yourhost.com/path/to/api",
     )

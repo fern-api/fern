@@ -35,9 +35,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedServerSentEvents
+from seed import SeedServerSentEventsWithWireTests
 
-client = SeedServerSentEvents(
+client = SeedServerSentEventsWithWireTests(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.completions.stream(
@@ -54,9 +54,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedServerSentEvents
+from seed import AsyncSeedServerSentEventsWithWireTests
 
-client = AsyncSeedServerSentEvents(
+client = AsyncSeedServerSentEventsWithWireTests(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -92,9 +92,9 @@ except ApiError as e:
 The SDK supports streaming responses, as well, the response will be a generator that you can loop over.
 
 ```python
-from seed import SeedServerSentEvents
+from seed import SeedServerSentEventsWithWireTests
 
-client = SeedServerSentEvents(
+client = SeedServerSentEventsWithWireTests(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.completions.stream(
@@ -112,9 +112,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedServerSentEvents
+from seed import SeedServerSentEventsWithWireTests
 
-client = SeedServerSentEvents(
+client = SeedServerSentEventsWithWireTests(
     ...,
 )
 with client.completions.with_raw_response.stream(...) as response:
@@ -151,9 +151,9 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed import SeedServerSentEvents
+from seed import SeedServerSentEventsWithWireTests
 
-client = SeedServerSentEvents(
+client = SeedServerSentEventsWithWireTests(
     ...,
     timeout=20.0,
 )
@@ -172,9 +172,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedServerSentEvents
+from seed import SeedServerSentEventsWithWireTests
 
-client = SeedServerSentEvents(
+client = SeedServerSentEventsWithWireTests(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

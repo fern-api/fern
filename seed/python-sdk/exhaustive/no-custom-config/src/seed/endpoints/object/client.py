@@ -94,9 +94,9 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -157,9 +157,9 @@ class ObjectClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -187,9 +187,9 @@ class ObjectClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -226,10 +226,10 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
         from seed.types.object import ObjectWithOptionalField
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -292,10 +292,10 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
         from seed.types.object import ObjectWithOptionalField
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -353,13 +353,13 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
         from seed.types.object import (
             NestedObjectWithRequiredField,
             ObjectWithOptionalField,
         )
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -438,9 +438,9 @@ class ObjectClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -482,9 +482,9 @@ class ObjectClient:
         --------
         import datetime
 
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -577,9 +577,9 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -648,9 +648,9 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -688,9 +688,9 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -734,10 +734,10 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
         from seed.types.object import ObjectWithOptionalField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -807,10 +807,10 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
         from seed.types.object import ObjectWithOptionalField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -875,13 +875,13 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
         from seed.types.object import (
             NestedObjectWithRequiredField,
             ObjectWithOptionalField,
         )
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -968,9 +968,9 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -1021,9 +1021,9 @@ class AsyncObjectClient:
         import asyncio
         import datetime
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

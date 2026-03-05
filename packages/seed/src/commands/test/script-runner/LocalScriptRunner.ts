@@ -45,25 +45,6 @@ export class LocalScriptRunner extends ScriptRunner {
             return { type: "success" };
         }
 
-        // Rewrite _PROJECT_NAME in tests/conftest.py to avoid Docker Compose naming collisions
-        // when multiple fixture variants (e.g. exhaustive:no-custom-config, exhaustive:wire-tests-custom-client-name)
-        // run in parallel and share the same base project name.
-        const conftestBackup = await this.rewriteComposeProjectName(outputDir, id, taskContext);
-
-        try {
-            return await this.runScriptsInternal({ taskContext, id, outputDir, skipScripts });
-        } finally {
-            // Restore original conftest.py so committed seed output is unchanged
-            await this.restoreConftestFile(conftestBackup, taskContext);
-        }
-    }
-
-    private async runScriptsInternal({
-        taskContext,
-        id,
-        outputDir,
-        skipScripts
-    }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
         const scripts = this.workspace.workspaceConfig.scripts ?? [];
 
         let buildTimeMs: number | undefined;

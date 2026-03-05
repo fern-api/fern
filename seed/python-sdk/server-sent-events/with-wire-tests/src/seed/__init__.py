@@ -7,12 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import completions
-    from .client import AsyncSeedServerSentEvents, SeedServerSentEvents
+    from .client import AsyncSeedServerSentEventsWithWireTests, SeedServerSentEventsWithWireTests
     from .completions import StreamedCompletion
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedServerSentEvents": ".client",
-    "SeedServerSentEvents": ".client",
+    "AsyncSeedServerSentEventsWithWireTests": ".client",
+    "SeedServerSentEventsWithWireTests": ".client",
     "StreamedCompletion": ".completions",
     "__version__": ".version",
     "completions": ".completions",
@@ -40,4 +40,10 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedServerSentEvents", "SeedServerSentEvents", "StreamedCompletion", "__version__", "completions"]
+__all__ = [
+    "AsyncSeedServerSentEventsWithWireTests",
+    "SeedServerSentEventsWithWireTests",
+    "StreamedCompletion",
+    "__version__",
+    "completions",
+]

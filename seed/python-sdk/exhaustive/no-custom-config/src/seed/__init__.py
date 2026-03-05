@@ -7,14 +7,14 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import endpoints, general_errors, inlined_requests, no_auth, no_req_body, req_with_headers, types
-    from .client import AsyncSeedExhaustive, SeedExhaustive
+    from .client import AsyncSeedExhaustiveNoCustomConfig, SeedExhaustiveNoCustomConfig
     from .general_errors import BadObjectRequestInfo, BadRequestBody
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedExhaustive": ".client",
+    "AsyncSeedExhaustiveNoCustomConfig": ".client",
     "BadObjectRequestInfo": ".general_errors",
     "BadRequestBody": ".general_errors",
-    "SeedExhaustive": ".client",
+    "SeedExhaustiveNoCustomConfig": ".client",
     "__version__": ".version",
     "endpoints": ".endpoints",
     "general_errors": ".general_errors",
@@ -48,10 +48,10 @@ def __dir__():
 
 
 __all__ = [
-    "AsyncSeedExhaustive",
+    "AsyncSeedExhaustiveNoCustomConfig",
     "BadObjectRequestInfo",
     "BadRequestBody",
-    "SeedExhaustive",
+    "SeedExhaustiveNoCustomConfig",
     "__version__",
     "endpoints",
     "general_errors",

@@ -12,7 +12,7 @@ if typing.TYPE_CHECKING:
     from .completions.client import AsyncCompletionsClient, CompletionsClient
 
 
-class SeedServerSentEvents:
+class SeedServerSentEventsWithWireTests:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -38,9 +38,9 @@ class SeedServerSentEvents:
 
     Examples
     --------
-    from seed import SeedServerSentEvents
+    from seed import SeedServerSentEventsWithWireTests
 
-    client = SeedServerSentEvents(
+    client = SeedServerSentEventsWithWireTests(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -80,7 +80,7 @@ class SeedServerSentEvents:
         return self._completions
 
 
-class AsyncSeedServerSentEvents:
+class AsyncSeedServerSentEventsWithWireTests:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -106,9 +106,9 @@ class AsyncSeedServerSentEvents:
 
     Examples
     --------
-    from seed import AsyncSeedServerSentEvents
+    from seed import AsyncSeedServerSentEventsWithWireTests
 
-    client = AsyncSeedServerSentEvents(
+    client = AsyncSeedServerSentEventsWithWireTests(
         base_url="https://yourhost.com/path/to/api",
     )
     """

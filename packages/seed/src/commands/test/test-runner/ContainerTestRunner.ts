@@ -60,6 +60,7 @@ export class ContainerTestRunner extends TestRunner {
         fernWorkspace,
         outputDir,
         fixture,
+        outputFolder,
         taskContext,
         selectAudiences,
         outputVersion,
@@ -111,7 +112,8 @@ export class ContainerTestRunner extends TestRunner {
             keepDocker: keepContainer ?? false,
             dockerImage: this.getContainerImageName(),
             runner: this.runner,
-            ai: undefined
+            ai: undefined,
+            workspaceNameOverride: outputFolder ? `${fixture}-${outputFolder}` : undefined
         });
     }
 

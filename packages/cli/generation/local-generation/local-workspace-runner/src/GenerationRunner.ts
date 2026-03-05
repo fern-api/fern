@@ -25,6 +25,13 @@ export declare namespace GenerationRunner {
         skipUnstableDynamicSnippetTests?: boolean;
         inspect: boolean;
         ai: generatorsYml.AiServicesSchema | undefined;
+        /**
+         * If set, overrides the workspace name derived from the API definition.
+         * Used by the seed test runner to ensure unique names per fixture variant,
+         * which in turn prevents Docker Compose project name collisions in
+         * parallel wiremock tests.
+         */
+        workspaceNameOverride?: string;
     }
 }
 
@@ -44,7 +51,8 @@ export class GenerationRunner {
         outputVersionOverride,
         shouldGenerateDynamicSnippetTests,
         skipUnstableDynamicSnippetTests,
-        inspect
+        inspect,
+        workspaceNameOverride
     }: GenerationRunner.RunArgs): Promise<void> {
         const results = await Promise.all(
             generatorGroup.generators.map(async (generatorInvocation) => {
@@ -68,7 +76,8 @@ export class GenerationRunner {
                                 irVersionOverride,
                                 outputVersionOverride,
                                 absolutePathToFernConfig,
-                                inspect
+                                inspect,
+                                workspaceNameOverride
                             });
 
                             interactiveTaskContext.logger.info(
@@ -112,7 +121,8 @@ export class GenerationRunner {
         irVersionOverride,
         outputVersionOverride,
         absolutePathToFernConfig,
-        inspect
+        inspect,
+        workspaceNameOverride
     }: {
         generatorGroup: generatorsYml.GeneratorGroup;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -123,6 +133,7 @@ export class GenerationRunner {
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
+        workspaceNameOverride?: string;
     }): Promise<{
         ir: IntermediateRepresentation;
         generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -168,6 +179,7 @@ export class GenerationRunner {
             workspace,
             generatorInvocation,
             absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
+            workspaceNameOverride,
             absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalOutput
                 ? AbsoluteFilePath.of(
                       join(generatorInvocation.absolutePathToLocalOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))

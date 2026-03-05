@@ -217,13 +217,18 @@ def verify_request_count(
      *
      * Docker Compose project names must consist only of lowercase alphanumeric
      * characters, hyphens, and underscores, and must start with a letter or number.
-     * Computing this at generation time avoids runtime issues with directory names
-     * that contain dots or other invalid characters (e.g. `.seed`).
+     *
+     * The name is derived from the SDK's own identity (organization + workspace
+     * name from the generator config) with a `-wiremock` suffix. This keeps the
+     * naming natural and tied to the project itself. The caller (e.g. seed test
+     * runner) controls uniqueness by varying the workspace name it sends to each
+     * generator execution.
      */
     private getDockerProjectName(): string {
         const orgName = this.context.config.organization;
         const workspaceName = this.context.config.workspaceName;
-        const raw = `${orgName}-${workspaceName}`.toLowerCase();
+
+        const raw = `${orgName}-${workspaceName}-wiremock`.toLowerCase();
         const sanitized = raw.replace(/[^a-z0-9_-]/g, "").replace(/^[^a-z0-9]+/, "");
         return sanitized || "wiremock-tests";
     }

@@ -43,9 +43,9 @@ class EnumClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import SeedExhaustiveNoCustomConfig
 
-        client = SeedExhaustive(
+        client = SeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -91,9 +91,9 @@ class AsyncEnumClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustiveNoCustomConfig
 
-        client = AsyncSeedExhaustive(
+        client = AsyncSeedExhaustiveNoCustomConfig(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

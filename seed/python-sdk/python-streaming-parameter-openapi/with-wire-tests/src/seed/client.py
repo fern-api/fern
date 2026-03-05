@@ -6,7 +6,10 @@ import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 from .core.request_options import RequestOptions
-from .raw_client import AsyncRawSeedApi, RawSeedApi
+from .raw_client import (
+    AsyncRawSeedPythonStreamingParameterOpenapiWithWireTests,
+    RawSeedPythonStreamingParameterOpenapiWithWireTests,
+)
 from .types.chat_response import ChatResponse
 from .types.chat_stream_event import ChatStreamEvent
 
@@ -14,7 +17,7 @@ from .types.chat_stream_event import ChatStreamEvent
 OMIT = typing.cast(typing.Any, ...)
 
 
-class SeedApi:
+class SeedPythonStreamingParameterOpenapiWithWireTests:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -40,9 +43,9 @@ class SeedApi:
 
     Examples
     --------
-    from seed import SeedApi
+    from seed import SeedPythonStreamingParameterOpenapiWithWireTests
 
-    client = SeedApi(
+    client = SeedPythonStreamingParameterOpenapiWithWireTests(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -71,16 +74,16 @@ class SeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._raw_client = RawSeedApi(client_wrapper=self._client_wrapper)
+        self._raw_client = RawSeedPythonStreamingParameterOpenapiWithWireTests(client_wrapper=self._client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawSeedApi:
+    def with_raw_response(self) -> RawSeedPythonStreamingParameterOpenapiWithWireTests:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawSeedApi
+        RawSeedPythonStreamingParameterOpenapiWithWireTests
         """
         return self._raw_client
 
@@ -103,9 +106,9 @@ class SeedApi:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedPythonStreamingParameterOpenapiWithWireTests
 
-        client = SeedApi(
+        client = SeedPythonStreamingParameterOpenapiWithWireTests(
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.chat_stream(
@@ -134,9 +137,9 @@ class SeedApi:
 
         Examples
         --------
-        from seed import SeedApi
+        from seed import SeedPythonStreamingParameterOpenapiWithWireTests
 
-        client = SeedApi(
+        client = SeedPythonStreamingParameterOpenapiWithWireTests(
             base_url="https://yourhost.com/path/to/api",
         )
         client.chat(
@@ -147,7 +150,7 @@ class SeedApi:
         return _response.data
 
 
-class AsyncSeedApi:
+class AsyncSeedPythonStreamingParameterOpenapiWithWireTests:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -173,9 +176,9 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed import AsyncSeedApi
+    from seed import AsyncSeedPythonStreamingParameterOpenapiWithWireTests
 
-    client = AsyncSeedApi(
+    client = AsyncSeedPythonStreamingParameterOpenapiWithWireTests(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -204,16 +207,16 @@ class AsyncSeedApi:
             timeout=_defaulted_timeout,
             logging=logging,
         )
-        self._raw_client = AsyncRawSeedApi(client_wrapper=self._client_wrapper)
+        self._raw_client = AsyncRawSeedPythonStreamingParameterOpenapiWithWireTests(client_wrapper=self._client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawSeedApi:
+    def with_raw_response(self) -> AsyncRawSeedPythonStreamingParameterOpenapiWithWireTests:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawSeedApi
+        AsyncRawSeedPythonStreamingParameterOpenapiWithWireTests
         """
         return self._raw_client
 
@@ -238,9 +241,9 @@ class AsyncSeedApi:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedPythonStreamingParameterOpenapiWithWireTests
 
-        client = AsyncSeedApi(
+        client = AsyncSeedPythonStreamingParameterOpenapiWithWireTests(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -278,9 +281,9 @@ class AsyncSeedApi:
         --------
         import asyncio
 
-        from seed import AsyncSeedApi
+        from seed import AsyncSeedPythonStreamingParameterOpenapiWithWireTests
 
-        client = AsyncSeedApi(
+        client = AsyncSeedPythonStreamingParameterOpenapiWithWireTests(
             base_url="https://yourhost.com/path/to/api",
         )
 

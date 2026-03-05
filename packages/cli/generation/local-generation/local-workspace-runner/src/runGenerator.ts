@@ -56,6 +56,7 @@ export async function writeFilesToDiskAndRunGenerator({
     workspace,
     generatorInvocation,
     absolutePathToLocalOutput,
+    workspaceNameOverride,
     absolutePathToLocalSnippetJSON,
     absolutePathToLocalSnippetTemplateJSON,
     audiences,
@@ -82,6 +83,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     version: string | undefined;
     absolutePathToLocalOutput: AbsoluteFilePath;
+    workspaceNameOverride?: string;
     absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     audiences: Audiences;
@@ -180,7 +182,7 @@ export async function writeFilesToDiskAndRunGenerator({
     const config = getGeneratorConfig({
         generatorInvocation,
         customConfig: generatorInvocation.config,
-        workspaceName: workspace.definition.rootApiFile.contents.name,
+        workspaceName: workspaceNameOverride ?? workspace.definition.rootApiFile.contents.name,
         outputVersion: outputVersionOverride,
         organization,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,

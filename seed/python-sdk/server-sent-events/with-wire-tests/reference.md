@@ -15,9 +15,9 @@
 <dd>
 
 ```python
-from seed import SeedServerSentEvents
+from seed import SeedServerSentEventsWithWireTests
 
-client = SeedServerSentEvents(
+client = SeedServerSentEventsWithWireTests(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.completions.stream(
@@ -75,9 +75,9 @@ for chunk in response.data:
 <dd>
 
 ```python
-from seed import SeedServerSentEvents
+from seed import SeedServerSentEventsWithWireTests
 
-client = SeedServerSentEvents(
+client = SeedServerSentEventsWithWireTests(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.completions.stream_without_terminator(

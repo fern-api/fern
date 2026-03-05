@@ -7,13 +7,16 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import ChatResponse, ChatStreamEvent
-    from .client import AsyncSeedApi, SeedApi
+    from .client import (
+        AsyncSeedPythonStreamingParameterOpenapiWithWireTests,
+        SeedPythonStreamingParameterOpenapiWithWireTests,
+    )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedApi": ".client",
+    "AsyncSeedPythonStreamingParameterOpenapiWithWireTests": ".client",
     "ChatResponse": ".types",
     "ChatStreamEvent": ".types",
-    "SeedApi": ".client",
+    "SeedPythonStreamingParameterOpenapiWithWireTests": ".client",
     "__version__": ".version",
 }
 
@@ -39,4 +42,10 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedApi", "ChatResponse", "ChatStreamEvent", "SeedApi", "__version__"]
+__all__ = [
+    "AsyncSeedPythonStreamingParameterOpenapiWithWireTests",
+    "ChatResponse",
+    "ChatStreamEvent",
+    "SeedPythonStreamingParameterOpenapiWithWireTests",
+    "__version__",
+]
