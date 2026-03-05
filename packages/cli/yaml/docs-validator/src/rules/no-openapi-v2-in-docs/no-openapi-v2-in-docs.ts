@@ -29,8 +29,9 @@ export const NoOpenApiV2InDocsRule: Rule = {
                                         contents.includes("swagger: '2.0'") ||
                                         contents.includes("swagger: 2.0"));
                                 const isOpenApiV2Json =
-                                    contents.includes('"swagger"') &&
-                                    contents.includes('"2.0"');
+                                    contents.includes('"swagger":') &&
+                                    (contents.includes('"swagger":"2.0"') ||
+                                        contents.includes('"swagger": "2.0"'));
                                 if (isOpenApiV2Yaml || isOpenApiV2Json) {
                                     violations.push({
                                         severity: "error",
