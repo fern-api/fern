@@ -142,14 +142,12 @@ export class LocalTaskHandler {
 
             // Truncate diff if it exceeds the AI analysis size limit
             let diffToAnalyze = cleanedDiff;
-            if (cleanedDiff.length > MAX_AI_DIFF_BYTES) {
-                const { truncated, omittedFiles } = autoVersioningService.truncateDiff(
-                    cleanedDiff,
-                    MAX_AI_DIFF_BYTES
-                );
+            const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+            if (cleanedDiffBytes > MAX_AI_DIFF_BYTES) {
+                const { truncated, omittedFiles } = autoVersioningService.truncateDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
                 this.context.logger.warn(
-                    `Diff too large for AI analysis (${cleanedDiff.length} bytes). ` +
-                        `Truncated to ${truncated.length} bytes, omitting ${omittedFiles} files.`
+                    `Diff too large for AI analysis (${cleanedDiffBytes} bytes). ` +
+                        `Truncated to ${Buffer.byteLength(truncated, "utf-8")} bytes, omitting ${omittedFiles} files.`
                 );
                 diffToAnalyze = truncated;
             }

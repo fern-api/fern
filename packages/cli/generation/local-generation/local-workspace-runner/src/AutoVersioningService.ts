@@ -335,7 +335,7 @@ export class AutoVersioningService {
             // Always include at least one section even if it exceeds the budget,
             // so the AI always has something to analyse.
             if (includedCount > 0 && currentBytes + sectionBytes > maxBytes) {
-                continue;
+                break;
             }
             includedTexts.push(entry.text);
             currentBytes += sectionBytes;
@@ -389,6 +389,11 @@ export class AutoVersioningService {
                         break;
                     }
                 }
+            }
+
+            // Early exit: once we know all three flags, the classification is determined
+            if (hasAdditions && hasDeletions && hasSignature) {
+                break;
             }
         }
 
