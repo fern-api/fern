@@ -231,7 +231,10 @@ def verify_request_count(
         const raw = outputFolder
             ? `${orgName}-${workspaceName}-${outputFolder}-wiremock`
             : `${orgName}-${workspaceName}-wiremock`;
-        const sanitized = raw.toLowerCase().replace(/[^a-z0-9_-]/g, "").replace(/^[^a-z0-9]+/, "");
+        const sanitized = raw
+            .toLowerCase()
+            .replace(/[^a-z0-9_-]/g, "")
+            .replace(/^[^a-z0-9]+/, "");
         return sanitized || "wiremock-tests";
     }
 
