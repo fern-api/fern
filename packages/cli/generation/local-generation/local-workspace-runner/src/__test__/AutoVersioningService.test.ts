@@ -1575,14 +1575,6 @@ describe("AutoVersioningService", () => {
             " describe('API', () => {\n" +
             "+    it('should work', () => {});\n" +
             " });\n" +
-            "diff --git a/tests/integration/client.py b/tests/integration/client.py\n" +
-            "index abc123..def456 100644\n" +
-            "--- a/tests/integration/client.py\n" +
-            "+++ b/tests/integration/client.py\n" +
-            "@@ -1,3 +1,4 @@\n" +
-            " class TestClient:\n" +
-            "+    def test_new_endpoint(self): pass\n" +
-            " \n" +
             "diff --git a/src/client.ts b/src/client.ts\n" +
             "index abc123..def456 100644\n" +
             "--- a/src/client.ts\n" +
@@ -1594,38 +1586,52 @@ describe("AutoVersioningService", () => {
 
         const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
 
-        // Test files should be excluded
+        // Test files matched by extension should be excluded
         expect(cleaned).not.toContain("api.test.ts");
-        expect(cleaned).not.toContain("tests/integration");
         // Source files should be preserved
         expect(cleaned).toContain("client.ts");
         expect(cleaned).toContain("+    newEndpoint() {}");
     });
 
-    it("testCleanDiffForAI_excludesWireTestDirectory", () => {
+    it("testCleanDiffForAI_preservesDomainNamedDirectories", () => {
+        // Directories like tests/, test/, and wire/ should NOT be excluded because
+        // a customer's API domain could use those names (e.g. a QA platform with a
+        // "tests" resource, or a banking API with a "wire" transfer resource)
         const diff =
-            "diff --git a/wire/users/createUser.test.ts b/wire/users/createUser.test.ts\n" +
+            "diff --git a/tests/integration/client.py b/tests/integration/client.py\n" +
             "index abc123..def456 100644\n" +
-            "--- a/wire/users/createUser.test.ts\n" +
-            "+++ b/wire/users/createUser.test.ts\n" +
+            "--- a/tests/integration/client.py\n" +
+            "+++ b/tests/integration/client.py\n" +
             "@@ -1,3 +1,4 @@\n" +
-            " describe('createUser', () => {\n" +
-            "+    it('should create', () => {});\n" +
-            " });\n" +
-            "diff --git a/src/api/users.ts b/src/api/users.ts\n" +
+            " class TestClient:\n" +
+            "+    def test_new_endpoint(self): pass\n" +
+            " \n" +
+            "diff --git a/src/test/client.ts b/src/test/client.ts\n" +
             "index abc123..def456 100644\n" +
-            "--- a/src/api/users.ts\n" +
-            "+++ b/src/api/users.ts\n" +
+            "--- a/src/test/client.ts\n" +
+            "+++ b/src/test/client.ts\n" +
             "@@ -1,3 +1,4 @@\n" +
-            " export class UsersClient {\n" +
-            "+    create() {}\n" +
+            " export class TestClient {\n" +
+            "+    runTest() {}\n" +
+            " }\n" +
+            "diff --git a/wire/transfer/client.ts b/wire/transfer/client.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/wire/transfer/client.ts\n" +
+            "+++ b/wire/transfer/client.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class WireTransferClient {\n" +
+            "+    initiateTransfer() {}\n" +
             " }\n";
 
         const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
 
-        expect(cleaned).not.toContain("wire/");
-        expect(cleaned).toContain("users.ts");
-        expect(cleaned).toContain("+    create() {}");
+        // All three files should be preserved — they're domain source, not test infra
+        expect(cleaned).toContain("tests/integration/client.py");
+        expect(cleaned).toContain("src/test/client.ts");
+        expect(cleaned).toContain("wire/transfer/client.ts");
+        expect(cleaned).toContain("+    def test_new_endpoint(self): pass");
+        expect(cleaned).toContain("+    runTest() {}");
+        expect(cleaned).toContain("+    initiateTransfer() {}");
     });
 
     it("testCleanDiffForAI_excludesSnapshotFiles", () => {
@@ -1693,6 +1699,107 @@ describe("AutoVersioningService", () => {
         expect(cleaned).not.toContain(".editorconfig");
         expect(cleaned).not.toContain(".prettierrc");
         expect(cleaned).not.toContain("biome.json");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_excludesLintingAndDevtoolConfig", () => {
+        const diff =
+            "diff --git a/.eslintrc.json b/.eslintrc.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.eslintrc.json\n" +
+            "+++ b/.eslintrc.json\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " {\n" +
+            '+    "extends": ["plugin:@typescript-eslint/recommended"]\n' +
+            " }\n" +
+            "diff --git a/.rubocop.yml b/.rubocop.yml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.rubocop.yml\n" +
+            "+++ b/.rubocop.yml\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " AllCops:\n" +
+            "+  TargetRubyVersion: 3.0\n" +
+            "diff --git a/phpstan.neon b/phpstan.neon\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/phpstan.neon\n" +
+            "+++ b/phpstan.neon\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " parameters:\n" +
+            "+    level: 8\n" +
+            "diff --git a/rustfmt.toml b/rustfmt.toml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/rustfmt.toml\n" +
+            "+++ b/rustfmt.toml\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " max_width = 100\n" +
+            '+edition = "2021"\n' +
+            "diff --git a/tsconfig.json b/tsconfig.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/tsconfig.json\n" +
+            "+++ b/tsconfig.json\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " {\n" +
+            '+    "strict": true\n' +
+            " }\n" +
+            "diff --git a/vitest.config.mts b/vitest.config.mts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/vitest.config.mts\n" +
+            "+++ b/vitest.config.mts\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " export default {\n" +
+            "+    timeout: 5000\n" +
+            " }\n" +
+            "diff --git a/Makefile b/Makefile\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/Makefile\n" +
+            "+++ b/Makefile\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " build:\n" +
+            "+\tgo build ./...\n" +
+            "diff --git a/Rakefile b/Rakefile\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/Rakefile\n" +
+            "+++ b/Rakefile\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " task :default do\n" +
+            "+  puts 'hello'\n" +
+            " end\n" +
+            "diff --git a/snippet.json b/snippet.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/snippet.json\n" +
+            "+++ b/snippet.json\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " {\n" +
+            '+    "snippet": "new"\n' +
+            " }\n" +
+            "diff --git a/.gitignore b/.gitignore\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.gitignore\n" +
+            "+++ b/.gitignore\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " node_modules/\n" +
+            "+dist/\n" +
+            "diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/CONTRIBUTING.md\n" +
+            "+++ b/CONTRIBUTING.md\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " # Contributing\n" +
+            "+Please read the guidelines.\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain(".eslintrc");
+        expect(cleaned).not.toContain(".rubocop");
+        expect(cleaned).not.toContain("phpstan.neon");
+        expect(cleaned).not.toContain("rustfmt.toml");
+        expect(cleaned).not.toContain("tsconfig.json");
+        expect(cleaned).not.toContain("vitest.config");
+        expect(cleaned).not.toContain("Makefile");
+        expect(cleaned).not.toContain("Rakefile");
+        expect(cleaned).not.toContain("snippet.json");
+        expect(cleaned).not.toContain(".gitignore");
+        expect(cleaned).not.toContain("CONTRIBUTING");
         expect(cleaned.trim()).toBe("");
     });
 
@@ -1851,7 +1958,7 @@ describe("AutoVersioningService", () => {
 
         const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
 
-        // Java test file matched by both *Test.java and test/ directory pattern
+        // Java test file matched by *Test.java naming convention
         expect(cleaned).not.toContain("ClientTest.java");
         // Source file should be preserved
         expect(cleaned).toContain("Client.java");

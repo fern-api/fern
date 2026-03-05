@@ -55,7 +55,9 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /(?:^|\/)composer\.lock$/i,
     /\.lock$/i, // catch-all for any other lockfiles
 
-    // Test files
+    // Test files (by naming convention only — directory patterns like tests/ and
+    // test/ are intentionally omitted because a customer's API domain could use
+    // those names, e.g. a QA platform SDK with a "tests" resource)
     /\.test\.ts$/i,
     /\.test\.js$/i,
     /\.test\.py$/i,
@@ -64,10 +66,7 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /_test\.go$/i,
     /_test\.py$/i,
     /Test\.java$/,
-    /(?:^|\/)tests\//i,
-    /(?:^|\/)__tests__\//i,
-    /(?:^|\/)test\//i,
-    /(?:^|\/)wire\//i, // Fern-generated wire tests
+    /(?:^|\/)__tests__\//i, // __tests__/ is unambiguously a test directory
 
     // Snapshot files
     /(?:^|\/)__snapshots__\//i,
@@ -78,7 +77,38 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /(?:^|\/)\.circleci\//i,
     /(?:^|\/)\.editorconfig$/i,
     /(?:^|\/)\.prettierrc/i,
-    /(?:^|\/)biome\.json$/i
+    /(?:^|\/)biome\.json$/i,
+
+    // Linting / static analysis config
+    /(?:^|\/)\.eslintrc/i,
+    /(?:^|\/)eslint\.config\./i,
+    /(?:^|\/)\.rubocop/i, // Ruby linter
+    /(?:^|\/)phpstan\.neon$/i, // PHP static analysis
+    /(?:^|\/)phpunit\.xml$/i, // PHP test runner config
+    /(?:^|\/)\.pylintrc$/i, // Python linter
+    /(?:^|\/)pylintrc$/i,
+    /(?:^|\/)\.flake8$/i, // Python linter
+    /(?:^|\/)\.mypy\.ini$/i, // Python type checker
+    /(?:^|\/)mypy\.ini$/i,
+    /(?:^|\/)\.swiftlint\.yml$/i, // Swift linter
+    /(?:^|\/)\.scalafmt\.conf$/i, // Scala formatter
+    /(?:^|\/)rustfmt\.toml$/i, // Rust formatter
+    /(?:^|\/)\.stylelintrc/i, // CSS linter
+
+    // Build / devtool config (no API surface)
+    /(?:^|\/)tsconfig.*\.json$/i, // TypeScript compiler config
+    /(?:^|\/)vitest\.config\./i, // Test runner config
+    /(?:^|\/)jest\.config\./i, // Test runner config
+    /(?:^|\/)pnpm-workspace\.yaml$/i, // Workspace config
+    /(?:^|\/)\.npmrc$/i, // npm config
+    /(?:^|\/)\.yarnrc/i, // Yarn config
+    /(?:^|\/)tox\.ini$/i, // Python test runner
+    /(?:^|\/)Makefile$/i, // Build automation
+    /(?:^|\/)Rakefile$/i, // Ruby build tasks
+    /(?:^|\/)contributing(?:\.[^/]*)?$/i, // Contributor docs
+    /(?:^|\/)snippet\.json$/i, // Fern-generated snippet metadata
+    /(?:^|\/)\.gitignore$/i,
+    /(?:^|\/)\.gitattributes$/i
 ];
 
 /**
