@@ -65,9 +65,6 @@ function AnalyzeSdkDiff(
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
     - The previous version is provided for context only. Do not include it
     literally in the commit message summary line.
-    - For 0.x versions: the API is considered pre-stable. MAJOR changes should
-    still bump MAJOR (not MINOR), but note in the message that the API may
-    change further.
 
     Previous version: {{previous_version}}
     SDK language: {{language}}

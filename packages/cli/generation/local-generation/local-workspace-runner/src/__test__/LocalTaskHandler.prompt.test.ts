@@ -36,9 +36,6 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
     it("prompt includes guidance for previous_version context usage", () => {
         // Verify the guideline about not including previous_version literally
         expect(diffAnalyzerBaml).toContain("The previous version is provided for context only. Do not include it");
-
-        // Verify 0.x version guidance
-        expect(diffAnalyzerBaml).toContain("For 0.x versions: the API is considered pre-stable");
     });
 
     it("passes '0.0.0' as previous_version when no previous version exists", () => {
