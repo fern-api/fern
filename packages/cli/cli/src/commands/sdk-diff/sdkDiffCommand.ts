@@ -94,7 +94,17 @@ export async function sdkDiffCommand({
         };
     }
 
-    context.logger.debug(`Generated diff (${gitDiff.length} characters)`);
+    const diffSizeKB = (gitDiff.length / 1024).toFixed(1);
+    const fileCount = (gitDiff.match(/^diff --git /gm) || []).length;
+    context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} bytes), ${fileCount} files changed`);
+
+    const DIFF_SIZE_WARNING_THRESHOLD = 15 * 1024; // 15KB
+    if (gitDiff.length > DIFF_SIZE_WARNING_THRESHOLD) {
+        context.logger.warn(
+            `Diff is very large (${diffSizeKB}KB, ${fileCount} files). ` +
+                `AI analysis may fail or return empty results for diffs exceeding ~15KB.`
+        );
+    }
 
     // Analyze the diff using LLM with the configured client
     context.logger.info("Analyzing diff with LLM...");
@@ -106,8 +116,14 @@ export async function sdkDiffCommand({
         context.logger.debug("Analysis complete");
         return analysis;
     } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
         context.failWithoutThrowing(
-            `Failed to analyze SDK diff: ${error instanceof Error ? error.message : String(error)}`
+            `Failed to analyze SDK diff. ` +
+                `Diff stats: ${diffSizeKB}KB, ${fileCount} files changed. ` +
+                (gitDiff.length > DIFF_SIZE_WARNING_THRESHOLD
+                    ? `The diff likely exceeds the AI endpoint's size limit (~15KB). `
+                    : "") +
+                `Error: ${errorMessage}`
         );
         throw new FernCliError();
     }

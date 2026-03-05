@@ -137,8 +137,15 @@ export class LocalTaskHandler {
             const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
-            this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
-            this.context.logger.debug(`Cleaned diff size: ${cleanedDiff.length} bytes`);
+            const rawDiffSizeKB = (diffContent.length / 1024).toFixed(1);
+            const cleanedDiffSizeKB = (cleanedDiff.length / 1024).toFixed(1);
+            const fileCount = (diffContent.match(/^diff --git /gm) || []).length;
+
+            this.context.logger.debug(
+                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} bytes), ` +
+                    `cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} bytes), ` +
+                    `files changed: ${fileCount}`
+            );
 
             // Handle new SDK repository with no previous version
             if (previousVersion == null) {
@@ -162,6 +169,17 @@ export class LocalTaskHandler {
                     "No actual changes detected after filtering version-only changes. Cancelling generation."
                 );
                 return null;
+            }
+
+            // Warn if the cleaned diff is very large — AI endpoints typically struggle above ~15KB
+            const DIFF_SIZE_WARNING_THRESHOLD = 15 * 1024; // 15KB
+            if (cleanedDiff.length > DIFF_SIZE_WARNING_THRESHOLD) {
+                this.context.logger.warn(
+                    `Cleaned diff is very large (${cleanedDiffSizeKB}KB, ${fileCount} files). ` +
+                        `AI analysis may fail or return empty results for diffs exceeding ~15KB. ` +
+                        `Consider excluding generated documentation files (e.g. reference.md) and lock files ` +
+                        `(e.g. pnpm-lock.yaml, poetry.lock) from the diff to reduce its size.`
+                );
             }
 
             // Call AI to analyze the diff
@@ -189,7 +207,17 @@ export class LocalTaskHandler {
                     commitMessage
                 };
             } catch (aiError) {
-                this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
+                const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
+                this.context.logger.warn(
+                    `AI analysis failed, falling back to PATCH increment. ` +
+                        `Diff stats: ${cleanedDiffSizeKB}KB cleaned (${rawDiffSizeKB}KB raw), ${fileCount} files changed. ` +
+                        (cleanedDiff.length > DIFF_SIZE_WARNING_THRESHOLD
+                            ? `The diff likely exceeds the AI endpoint's size limit (~15KB). ` +
+                              `To fix this, reduce the diff size by excluding generated docs (e.g. reference.md) ` +
+                              `and lock files (e.g. pnpm-lock.yaml, poetry.lock). `
+                            : "") +
+                        `Error: ${errorMessage}`
+                );
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
