@@ -2085,4 +2085,93 @@ describe("AutoVersioningService", () => {
         expect(cleaned).toContain("Client.ts");
         expect(cleaned).toContain("+    newMethod() {}");
     });
+
+    it("testCleanDiffForAI_preservesFilesStartingWithReadmeOrChangelog", () => {
+        // Files whose names merely START with "readme" or "changelog" but are
+        // actual source files should NOT be excluded (only standalone README*/CHANGELOG* files)
+        const diff =
+            "diff --git a/src/readmeGenerator.ts b/src/readmeGenerator.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/readmeGenerator.ts\n" +
+            "+++ b/src/readmeGenerator.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class ReadmeGenerator {\n" +
+            "+    generateReadme() {}\n" +
+            " }\n" +
+            "diff --git a/src/changelog_utils.ts b/src/changelog_utils.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/changelog_utils.ts\n" +
+            "+++ b/src/changelog_utils.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export function formatChangelog() {\n" +
+            "+    return 'formatted';\n" +
+            " }\n" +
+            "diff --git a/src/readmeConfig.ts b/src/readmeConfig.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/readmeConfig.ts\n" +
+            "+++ b/src/readmeConfig.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export const config = {\n" +
+            "+    title: 'My SDK',\n" +
+            " };\n" +
+            "diff --git a/src/changelogEntry.ts b/src/changelogEntry.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/changelogEntry.ts\n" +
+            "+++ b/src/changelogEntry.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export interface ChangelogEntry {\n" +
+            "+    date: string;\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // All these source files should be PRESERVED (not excluded)
+        expect(cleaned).toContain("readmeGenerator.ts");
+        expect(cleaned).toContain("+    generateReadme() {}");
+        expect(cleaned).toContain("changelog_utils.ts");
+        expect(cleaned).toContain("+    return 'formatted';");
+        expect(cleaned).toContain("readmeConfig.ts");
+        expect(cleaned).toContain("+    title: 'My SDK',");
+        expect(cleaned).toContain("changelogEntry.ts");
+        expect(cleaned).toContain("+    date: string;");
+    });
+
+    it("testCleanDiffForAI_excludesReadmeAndChangelogWithVariousExtensions", () => {
+        // Standalone README/CHANGELOG files with different extensions should be excluded
+        const diff =
+            "diff --git a/README b/README\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/README\n" +
+            "+++ b/README\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " My SDK\n" +
+            "+Updated\n" +
+            "diff --git a/CHANGELOG b/CHANGELOG\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/CHANGELOG\n" +
+            "+++ b/CHANGELOG\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " # Changes\n" +
+            "+- new\n" +
+            "diff --git a/README.txt b/README.txt\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/README.txt\n" +
+            "+++ b/README.txt\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " Info\n" +
+            "+More info\n" +
+            "diff --git a/CHANGELOG.rst b/CHANGELOG.rst\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/CHANGELOG.rst\n" +
+            "+++ b/CHANGELOG.rst\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " Changes\n" +
+            "+- fix\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("README");
+        expect(cleaned).not.toContain("CHANGELOG");
+        expect(cleaned.trim()).toBe("");
+    });
 });

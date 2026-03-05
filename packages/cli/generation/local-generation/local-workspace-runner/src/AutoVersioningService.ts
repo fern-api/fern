@@ -41,8 +41,8 @@ interface FileSection {
 const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     // Documentation / generated reference
     /(?:^|\/)reference\.md$/i,
-    /(?:^|\/)changelog/i,
-    /(?:^|\/)readme/i,
+    /(?:^|\/)changelog(?:\.[^/]*)?$/i,
+    /(?:^|\/)readme(?:\.[^/]*)?$/i,
 
     // Lock files (dependency resolution, zero semantic value)
     /(?:^|\/)pnpm-lock\.yaml$/i,
