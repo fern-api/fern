@@ -72,6 +72,7 @@ export class LocalTestRunner extends TestRunner {
                     publishConfig,
                     outputMode,
                     fixtureName: fixture,
+                    outputFolder: args.outputFolder || undefined,
                     irVersion,
                     publishMetadata,
                     readme,

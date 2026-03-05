@@ -170,8 +170,6 @@ class SDKCustomConfig(pydantic.BaseModel):
     def parse_obj(cls, obj: Any) -> "SDKCustomConfig":
         if isinstance(obj, dict):
             obj = obj.copy()
-            # Strip test-only field injected by the seed test runner; not used by the v1 generator.
-            obj.pop("_test_output_folder", None)
             if "custom-pager-name" in obj and "custom_pager_name" not in obj:
                 obj["custom_pager_name"] = obj.pop("custom-pager-name")
             if "offsetSemantics" in obj and "offset_semantics" not in obj:

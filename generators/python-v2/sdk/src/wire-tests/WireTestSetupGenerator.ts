@@ -220,16 +220,16 @@ def verify_request_count(
      * Computing this at generation time avoids runtime issues with directory names
      * that contain dots or other invalid characters (e.g. `.seed`).
      *
-     * When running under the seed test runner with multiple fixture variants,
-     * `_test_output_folder` is injected into customConfig to differentiate them.
+     * When `package_name` is set in customConfig, it is used as the base for the
+     * project name, ensuring uniqueness across fixture variants.
      */
     private getDockerProjectName(): string {
+        const packageName = this.context.customConfig.package_name;
         const orgName = this.context.config.organization;
         const workspaceName = this.context.config.workspaceName;
-        const outputFolder = this.context.customConfig._test_output_folder;
 
-        const raw = outputFolder
-            ? `${orgName}-${workspaceName}-${outputFolder}-wiremock`
+        const raw = packageName
+            ? `${packageName}-wiremock`
             : `${orgName}-${workspaceName}-wiremock`;
         const sanitized = raw
             .toLowerCase()

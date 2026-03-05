@@ -17,6 +17,7 @@ export async function getGeneratorInvocation({
     publishConfig,
     outputMode,
     fixtureName,
+    outputFolder,
     irVersion,
     publishMetadata,
     readme,
@@ -30,6 +31,7 @@ export async function getGeneratorInvocation({
     publishConfig: unknown;
     outputMode: OutputMode;
     fixtureName: string;
+    outputFolder?: string;
     irVersion: string;
     publishMetadata: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
@@ -48,11 +50,24 @@ export async function getGeneratorInvocation({
               }
             : undefined;
 
+    const effectiveFixtureName = outputFolder ? `${fixtureName}_${outputFolder}` : fixtureName;
+
+    // When outputFolder is present for Python, inject a unique package_name into customConfig
+    // so the generator can use it for artifact naming (Docker project names, pyproject.toml, etc.)
+    // Replace hyphens with underscores since hyphens are invalid in Python module names.
+    const effectiveConfig =
+        outputFolder != null && language === "python"
+            ? {
+                  ...(customConfig as Record<string, unknown> | undefined),
+                  package_name: `fern_${effectiveFixtureName}`.replace(/-/g, "_")
+              }
+            : customConfig;
+
     return {
         name: docker.name,
         version: docker.version,
-        config: customConfig,
-        outputMode: await getOutputMode({ outputMode, language, fixtureName, publishConfig }),
+        config: effectiveConfig,
+        outputMode: await getOutputMode({ outputMode, language, fixtureName: effectiveFixtureName, publishConfig }),
         absolutePathToLocalOutput: absolutePathToOutput,
         absolutePathToLocalSnippets: undefined,
         language,

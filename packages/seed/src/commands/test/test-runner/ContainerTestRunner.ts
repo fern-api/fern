@@ -55,27 +55,28 @@ export class ContainerTestRunner extends TestRunner {
         }
     }
 
-    protected async runGenerator({
-        absolutePathToFernDefinition,
-        fernWorkspace,
-        outputDir,
-        fixture,
-        taskContext,
-        selectAudiences,
-        outputVersion,
-        keepContainer,
-        language,
-        customConfig,
-        publishConfig,
-        outputMode,
-        irVersion,
-        publishMetadata,
-        readme,
-        shouldGenerateDynamicSnippetTests,
-        inspect = false,
-        license,
-        smartCasing
-    }: TestRunner.DoRunArgs): Promise<void> {
+    protected async runGenerator(args: TestRunner.DoRunArgs): Promise<void> {
+        const {
+            absolutePathToFernDefinition,
+            fernWorkspace,
+            outputDir,
+            fixture,
+            taskContext,
+            selectAudiences,
+            outputVersion,
+            keepContainer,
+            language,
+            customConfig,
+            publishConfig,
+            outputMode,
+            irVersion,
+            publishMetadata,
+            readme,
+            shouldGenerateDynamicSnippetTests,
+            inspect = false,
+            license,
+            smartCasing
+        } = args;
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
             reviewers: undefined,
@@ -89,6 +90,7 @@ export class ContainerTestRunner extends TestRunner {
                     publishConfig,
                     outputMode,
                     fixtureName: fixture,
+                    outputFolder: args.outputFolder || undefined,
                     irVersion,
                     publishMetadata,
                     readme,
