@@ -1,0 +1,156 @@
+{
+  "info": {
+    "name": "AllOf Duplicate Properties Test",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.example.com",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Create plant order",
+      "request": {
+        "description": "Creates an order for a plant.",
+        "url": {
+          "raw": "{{baseUrl}}/plants/:plantId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "plants",
+            ":plantId"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "key": "plantId",
+              "description": null,
+              "value": "plantId"
+            }
+          ]
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"orderId\": \"orderId\",\n    \"amount\": 1.1,\n    \"currency\": \"currency\",\n    \"plantName\": \"plantName\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Creates an order for a plant.",
+            "url": {
+              "raw": "{{baseUrl}}/plants/:plantId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plants",
+                ":plantId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "plantId",
+                  "description": null,
+                  "value": "plantId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"orderId\": \"orderId\",\n    \"amount\": 1.1,\n    \"currency\": \"currency\",\n    \"plantName\": \"plantName\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "OK",
+          "body": "{\n    \"orderId\": \"orderId\",\n    \"amount\": 1.1,\n    \"currency\": \"currency\",\n    \"dateTime\": \"2024-01-15T09:30:00Z\",\n    \"plantName\": \"plantName\",\n    \"quantity\": 1\n}",
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": "Creates an order for a plant.",
+            "url": {
+              "raw": "{{baseUrl}}/plants/:plantId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "plants",
+                ":plantId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "plantId",
+                  "description": null,
+                  "value": "plantId"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"plantName\": \"plantName\",\n    \"quantity\": 1,\n    \"orderId\": \"orderId\",\n    \"amount\": 1.1,\n    \"currency\": \"currency\",\n    \"dateTime\": \"2024-01-15T09:30:00Z\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": "OK",
+          "body": "{\n    \"plantName\": \"plantName\",\n    \"quantity\": 1,\n    \"orderId\": \"orderId\",\n    \"amount\": 1.1,\n    \"currency\": \"currency\",\n    \"dateTime\": \"2024-01-15T09:30:00Z\"\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}

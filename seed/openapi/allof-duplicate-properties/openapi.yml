@@ -1,0 +1,101 @@
+openapi: 3.0.1
+info:
+  title: AllOf Duplicate Properties Test
+  version: ''
+paths:
+  /plants/{plantId}:
+    post:
+      description: Creates an order for a plant.
+      operationId: createPlantOrder
+      tags:
+        - ''
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: plantId
+          examples:
+            Example1:
+              value: plantId
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlantOrder'
+              examples:
+                Example1:
+                  value:
+                    orderId: orderId
+                    amount: 1.1
+                    currency: currency
+                    dateTime: '2024-01-15T09:30:00Z'
+                    plantName: plantName
+                    quantity: 1
+      summary: Create plant order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlantOrder'
+            examples:
+              Example1:
+                value:
+                  orderId: orderId
+                  amount: 1.1
+                  currency: currency
+                  plantName: plantName
+components:
+  schemas:
+    OrderBase:
+      title: OrderBase
+      type: object
+      description: Base order schema with common order fields.
+      properties:
+        orderId:
+          type: string
+          description: Unique identifier for the order.
+        amount:
+          type: number
+          format: double
+          description: Total amount for the order.
+        currency:
+          type: string
+          description: Currency code (e.g. USD, EUR).
+        dateTime:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the order was placed.
+      required:
+        - orderId
+        - amount
+        - currency
+    PlantOrder:
+      title: PlantOrder
+      type: object
+      description: >-
+        A plant order that extends OrderBase via allOf but also redefines
+        amount, currency, and orderId inline. Each property should appear only
+        once in the generated type.
+      properties:
+        plantName:
+          type: string
+          description: Name of the plant being ordered.
+          example: plantName
+        quantity:
+          type: integer
+          nullable: true
+          description: Number of plants ordered.
+      required:
+        - plantName
+      allOf:
+        - $ref: '#/components/schemas/OrderBase'
+  securitySchemes: {}
+servers:
+  - url: https://api.example.com
+    description: Default

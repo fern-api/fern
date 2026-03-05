@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlantOrder"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.CreatePlantOrderAsync(\n    new CreatePlantOrderRequest\n    {\n        PlantId = \"plantId\",\n        Body = new PlantOrder\n        {\n            OrderId = \"orderId\",\n            Amount = 1.1,\n            Currency = \"currency\",\n            PlantName = \"plantName\",\n        },\n    }\n);\n"
+            }
+        }
+    ]
+}
