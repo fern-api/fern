@@ -216,13 +216,6 @@ export async function writeFilesToDiskAndRunGenerator({
         );
     }
 
-    // Write current IR snapshot into the tmp output directory BEFORE the generator
-    // runs, so the directory is writable (Docker containers may change ownership).
-    const snapshotPathInTmp = path.join(absolutePathToTmpOutputDirectory, IR_SNAPSHOT_RELATIVE_PATH);
-    await mkdir(path.dirname(snapshotPathInTmp), { recursive: true });
-    await writeFile(snapshotPathInTmp, JSON.stringify(latest));
-    context.logger.debug("Wrote IR snapshot to " + snapshotPathInTmp);
-
     await environment.execute({
         generatorName: generatorInvocation.name,
         irPath: absolutePathToIr,
@@ -252,6 +245,14 @@ export async function writeFilesToDiskAndRunGenerator({
         generatorName: generatorInvocation.name
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
+
+    // Write current IR snapshot to the final output directory AFTER copyGeneratedFiles()
+    // so it doesn't appear in the generator's tmp output (which would break e2e test snapshots).
+    // Writing to absolutePathToLocalOutput is safe because it's owned by the Node process.
+    const snapshotPathInFinalOutput = path.join(absolutePathToLocalOutput, IR_SNAPSHOT_RELATIVE_PATH);
+    await mkdir(path.dirname(snapshotPathInFinalOutput), { recursive: true });
+    await writeFile(snapshotPathInFinalOutput, JSON.stringify(latest));
+    context.logger.debug("Wrote IR snapshot to " + snapshotPathInFinalOutput);
 
     return {
         ir: latest,
