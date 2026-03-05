@@ -26,6 +26,42 @@ export interface AutoVersionResult {
     commitMessage: string;
 }
 
+/**
+ * Maximum diff size in characters that the FAI /sdks/analyze-commit-diff endpoint accepts.
+ * Roughly 100KB ≈ 25k–30k tokens for Claude. Diffs exceeding this are rejected with HTTP 413.
+ * This constant is the single source of truth — LocalTaskHandler and sdkDiffCommand both reference it.
+ */
+export const DIFF_SIZE_LIMIT = 100_000;
+
+/**
+ * Counts the number of files changed in a git diff by scanning for "diff --git" headers.
+ * Uses indexOf-based scanning instead of regex to avoid O(n) regex overhead on large diffs.
+ */
+export function countFilesInDiff(diffContent: string): number {
+    const marker = "diff --git ";
+    let count = 0;
+    let pos = 0;
+    while (true) {
+        const idx = diffContent.indexOf(marker, pos);
+        if (idx === -1) {
+            break;
+        }
+        // Only count if the marker is at the start of a line
+        if (idx === 0 || diffContent[idx - 1] === "\n") {
+            count++;
+        }
+        pos = idx + marker.length;
+    }
+    return count;
+}
+
+/**
+ * Formats a character length as a human-readable KB string with one decimal place.
+ */
+export function formatSizeKB(charLength: number): string {
+    return (charLength / 1024).toFixed(1);
+}
+
 interface FileSection {
     lines: string[];
 }
@@ -278,7 +314,7 @@ export class AutoVersioningService {
         }
 
         this.logger.debug(
-            `Cleaned diff: removed ${diffContent.length - result.join("\n").length} bytes containing version changes`
+            `Cleaned diff: removed ${diffContent.length - result.join("\n").length} chars containing version changes`
         );
         return result.join("\n");
     }
