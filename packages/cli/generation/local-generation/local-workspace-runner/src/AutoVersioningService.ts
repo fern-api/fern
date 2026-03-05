@@ -99,7 +99,7 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /(?:^|\/)\.stylelintrc/i, // CSS linter
 
     // Build / devtool config (no API surface)
-    /(?:^|\/)tsconfig.*\.json$/i, // TypeScript compiler config
+    /(?:^|\/)tsconfig[^/]*\.json$/i, // TypeScript compiler config
     /(?:^|\/)vitest\.config\./i, // Test runner config
     /(?:^|\/)jest\.config\./i, // Test runner config
     /(?:^|\/)pnpm-workspace\.yaml$/i, // Workspace config
