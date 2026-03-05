@@ -244,7 +244,6 @@ export function addUpdateCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
                 })
                 .option("yes", {
                     type: "boolean",
-                    alias: "y",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
                 }),
