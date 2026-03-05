@@ -9,6 +9,7 @@ export {
     type Directory,
     type File,
     type FileOrDirectory,
+    type SnapshotFileOrDirectory,
     getDirectoryContents,
     getDirectoryContentsForSnapshot
 } from "./getDirectoryContents.js";
