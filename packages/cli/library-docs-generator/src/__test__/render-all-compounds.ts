@@ -11,12 +11,10 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-
-import type { CppLibraryDocsIr } from "../types/CppLibraryDocsIr.js";
 import { generateCpp } from "../CppDocsGenerator.js";
+import type { CppLibraryDocsIr } from "../types/CppLibraryDocsIr.js";
 
-const CONVERGENCE_DIR =
-    "/Users/paarthgupta/fern/fern-platform/servers/fdr-cpp-library-docs-parser/convergence";
+const CONVERGENCE_DIR = "/Users/paarthgupta/fern/fern-platform/servers/fdr-cpp-library-docs-parser/convergence";
 
 const OUTPUT_BASE = "/Users/paarthgupta/fern/docs-starter/fern/cudapages";
 
@@ -27,9 +25,9 @@ interface CorpusEntry {
 }
 
 const CORPORA: CorpusEntry[] = [
-    { filename: "ir_output_cub_v3.json", slug: "cub", label: "CUB" },
-    { filename: "ir_output_thrust_v3.json", slug: "thrust", label: "Thrust" },
-    { filename: "ir_output_libcudacxx_v3.json", slug: "cuda", label: "libcudacxx" },
+    { filename: "ir_output_cub_v6.json", slug: "cub", label: "CUB" },
+    { filename: "ir_output_thrust_v6.json", slug: "thrust", label: "Thrust" },
+    { filename: "ir_output_libcudacxx_v6.json", slug: "cuda", label: "libcudacxx" }
 ];
 
 interface CorpusResult {
@@ -80,7 +78,12 @@ function main(): void {
                 console.log(`    ${f}`);
             }
 
-            results.push({ label: corpus.label, slug: corpus.slug, pageCount: result.pageCount, files: relFiles.sort() });
+            results.push({
+                label: corpus.label,
+                slug: corpus.slug,
+                pageCount: result.pageCount,
+                files: relFiles.sort()
+            });
             totalPages += result.pageCount;
         } catch (err: unknown) {
             const msg = err instanceof Error ? err.message : String(err);

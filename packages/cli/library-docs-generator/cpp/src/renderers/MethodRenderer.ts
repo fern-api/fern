@@ -14,22 +14,14 @@
  * - Tab title generation from overload characteristics
  */
 
-import type {
-    CppClassIr,
-    CppDocstringIr,
-    CppFunctionIr
-} from "../../../src/types/CppLibraryDocsIr.js";
-import {
-    getCommonQualifiers,
-    getOverloadSpecificQualifiers,
-    renderBadges
-} from "./BadgeRenderer.js";
-import { renderDescriptionBlocks, renderSegmentsTrimmed, renderSeeAlso } from "./DescriptionRenderer.js";
-import { renderMethodTemplateParams, renderMethodParams } from "./ParamRenderer.js";
-import { renderSignatureCodeBlock, renderBareCodeBlock, renderCodeBlock } from "./SignatureRenderer.js";
-import { isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./shared.js";
+import type { CppClassIr, CppDocstringIr, CppFunctionIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext } from "../context.js";
-import { getShortName, buildLinkPath } from "../context.js";
+import { buildLinkPath, getShortName } from "../context.js";
+import { getCommonQualifiers, getOverloadSpecificQualifiers, renderBadges } from "./BadgeRenderer.js";
+import { renderDescriptionBlocks, renderSeeAlso, renderSegmentsTrimmed } from "./DescriptionRenderer.js";
+import { renderMethodParams, renderMethodTemplateParams } from "./ParamRenderer.js";
+import { renderBareCodeBlock, renderCodeBlock, renderSignatureCodeBlock } from "./SignatureRenderer.js";
+import { isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./shared.js";
 
 // ---------------------------------------------------------------------------
 // MDX heading escaping
@@ -200,11 +192,10 @@ function constructorBaseTitleFromParams(
         return undefined;
     }
 
-    const allTypes = coreParams.map(p => p.typeInfo?.display ?? "").join(", ");
+    const allTypes = coreParams.map((p) => p.typeInfo?.display ?? "").join(", ");
 
     // TempStorage pattern (any number of params)
-    if (allTypes.includes("TempStorage") ||
-        coreParams.some(p => p.name === "temp_storage")) {
+    if (allTypes.includes("TempStorage") || coreParams.some((p) => p.name === "temp_storage")) {
         return "With TempStorage";
     }
 
@@ -220,9 +211,7 @@ function constructorBaseTitleFromParams(
  * Handles: move, copy, nullptr, native handle, size, no_init, initializer_list,
  * raw pointer, and other pointer patterns.
  */
-function singleParamConstructorTitle(
-    coreParams: CppFunctionIr["parameters"]
-): string | undefined {
+function singleParamConstructorTitle(coreParams: CppFunctionIr["parameters"]): string | undefined {
     const firstType = coreParams[0]?.typeInfo?.display ?? "";
     const firstName = coreParams[0]?.name ?? "";
 
@@ -239,8 +228,7 @@ function singleParamConstructorTitle(
         if (isOtherPropertiesType(firstType)) {
             return "From matching properties (copy)";
         }
-        if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
-            firstType.includes("Other")) {
+        if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") || firstType.includes("Other")) {
             // Determine source type for "From X type" titles
             return detectSourceType(firstType);
         }
@@ -255,8 +243,10 @@ function singleParamConstructorTitle(
         return "From native handle";
     }
     // size_type param named "n" or "count" -> "From size"
-    if ((firstName === "n" || firstName === "count") &&
-        (firstType.includes("size_type") || firstType.includes("size_t"))) {
+    if (
+        (firstName === "n" || firstName === "count") &&
+        (firstType.includes("size_type") || firstType.includes("size_t"))
+    ) {
         return "From size";
     }
     // no_init_t
@@ -284,16 +274,15 @@ function singleParamConstructorTitle(
  * Handles: size+init patterns, no_init, iterator range, range, initializer_list,
  * move/copy with allocator, and empty (infrastructure-only) constructors.
  */
-function multiParamConstructorTitle(
-    coreParams: CppFunctionIr["parameters"],
-    allTypes: string
-): string | undefined {
+function multiParamConstructorTitle(coreParams: CppFunctionIr["parameters"], allTypes: string): string | undefined {
     const firstType = coreParams[0]?.typeInfo?.display ?? "";
     const firstName = coreParams[0]?.name ?? "";
 
     // size_type + default_init_t -> "From size, default-initialized"
-    if ((firstName === "n" || firstName === "count") &&
-        (firstType.includes("size_type") || firstType.includes("size_t"))) {
+    if (
+        (firstName === "n" || firstName === "count") &&
+        (firstType.includes("size_type") || firstType.includes("size_t"))
+    ) {
         const secondType = coreParams[1]?.typeInfo?.display ?? "";
         if (secondType.includes("default_init_t")) {
             return "From size, default-initialized";
@@ -309,25 +298,29 @@ function multiParamConstructorTitle(
     }
 
     // Sized with no_init_t (no size_type, just explicit no_init)
-    if (coreParams.some(p => (p.typeInfo?.display ?? "").includes("no_init_t"))) {
+    if (coreParams.some((p) => (p.typeInfo?.display ?? "").includes("no_init_t"))) {
         return "Sized (no-init)";
     }
 
     // Iterator range: two iterator params (detect by type or param names)
-    if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
-        allTypes.includes("ForwardIterator") || allTypes.includes("InputIt") ||
+    if (
+        allTypes.includes("InputIterator") ||
+        allTypes.includes("Iterator") ||
+        allTypes.includes("ForwardIterator") ||
+        allTypes.includes("InputIt") ||
         allTypes.includes("_Iter") ||
-        coreParams.some(p => p.name === "__first" || p.name === "__last" ||
-            p.name === "first" || p.name === "last")) {
+        coreParams.some((p) => p.name === "__first" || p.name === "__last" || p.name === "first" || p.name === "last")
+    ) {
         return "From iterator range";
     }
 
     // Range constructor: detect _Range type or __range param name
-    if (coreParams.some(p => {
-        const type = p.typeInfo?.display ?? "";
-        return p.name === "__range" || p.name === "range" ||
-            type.includes("_Range") || type.includes("Range &&");
-    })) {
+    if (
+        coreParams.some((p) => {
+            const type = p.typeInfo?.display ?? "";
+            return p.name === "__range" || p.name === "range" || type.includes("_Range") || type.includes("Range &&");
+        })
+    ) {
         return "From range";
     }
 
@@ -349,8 +342,7 @@ function multiParamConstructorTitle(
         if (isOtherPropertiesType(firstType)) {
             return "From matching properties (copy)";
         }
-        if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") ||
-            firstType.includes("Other")) {
+        if (firstType.includes("OtherT") || firstType.includes("OtherAlloc") || firstType.includes("Other")) {
             return detectSourceType(firstType);
         }
         return "Copy";
@@ -358,16 +350,25 @@ function multiParamConstructorTitle(
 
     // Empty constructor: only infrastructure params (stream_ref, resource, env)
     // with no data payload (no size, no iterators, no range, no init_list)
-    const hasStreamRef = coreParams.some(p => (p.typeInfo?.display ?? "").includes("stream_ref"));
-    const hasDataPayload = coreParams.some(p => {
+    const hasStreamRef = coreParams.some((p) => (p.typeInfo?.display ?? "").includes("stream_ref"));
+    const hasDataPayload = coreParams.some((p) => {
         const type = p.typeInfo?.display ?? "";
         const name = p.name ?? "";
-        return type.includes("size_type") || type.includes("size_t") ||
-            type.includes("no_init_t") || type.includes("default_init_t") ||
-            type.includes("initializer_list") || type.includes("_Iter") ||
-            type.includes("_Range") || type.includes("Iterator") ||
-            name === "__first" || name === "__last" || name === "__range" ||
-            name === "n" || name === "count";
+        return (
+            type.includes("size_type") ||
+            type.includes("size_t") ||
+            type.includes("no_init_t") ||
+            type.includes("default_init_t") ||
+            type.includes("initializer_list") ||
+            type.includes("_Iter") ||
+            type.includes("_Range") ||
+            type.includes("Iterator") ||
+            name === "__first" ||
+            name === "__last" ||
+            name === "__range" ||
+            name === "n" ||
+            name === "count"
+        );
     });
     if (hasStreamRef && !hasDataPayload) {
         return "Empty";
@@ -419,57 +420,59 @@ function detectSourceType(paramType: string): string {
  * 3. Template parameter named ITEMS_PER_THREAD
  */
 function hasArrayParams(func: CppFunctionIr): boolean {
-    return func.parameters.some(p => {
-        // Check arraySuffix field (most reliable)
-        if (p.arraySuffix && p.arraySuffix.includes("ITEMS_PER_THREAD")) {
-            return true;
-        }
-        const typeDisplay = p.typeInfo?.display ?? "";
-        return typeDisplay.includes("[ITEMS_PER_THREAD]") ||
-            /\(\s*&\s*\)\s*\[/.test(typeDisplay);
-    }) || func.templateParams.some(tp => tp.name === "ITEMS_PER_THREAD");
+    return (
+        func.parameters.some((p) => {
+            // Check arraySuffix field (most reliable)
+            if (p.arraySuffix && p.arraySuffix.includes("ITEMS_PER_THREAD")) {
+                return true;
+            }
+            const typeDisplay = p.typeInfo?.display ?? "";
+            return typeDisplay.includes("[ITEMS_PER_THREAD]") || /\(\s*&\s*\)\s*\[/.test(typeDisplay);
+        }) || func.templateParams.some((tp) => tp.name === "ITEMS_PER_THREAD")
+    );
 }
 
 /**
  * Detect whether a function has a block_aggregate output parameter.
  */
 function hasAggregateParam(func: CppFunctionIr): boolean {
-    return func.parameters.some(p => p.name === "block_aggregate");
+    return func.parameters.some((p) => p.name === "block_aggregate");
 }
 
 /**
  * Detect whether a function has a prefix callback template parameter.
  */
 function hasPrefixCallbackParam(func: CppFunctionIr): boolean {
-    return func.templateParams.some(tp => {
-        const name = tp.name ?? "";
-        const type = tp.type ?? "";
-        return name.includes("PrefixCallbackOp") ||
-            name.includes("BlockPrefixCallbackOp") ||
-            type.includes("PrefixCallbackOp") ||
-            type.includes("BlockPrefixCallbackOp");
-    }) || func.parameters.some(p => {
-        const type = p.typeInfo?.display ?? "";
-        return type.includes("PrefixCallbackOp") || type.includes("BlockPrefixCallbackOp");
-    });
+    return (
+        func.templateParams.some((tp) => {
+            const name = tp.name ?? "";
+            const type = tp.type ?? "";
+            return (
+                name.includes("PrefixCallbackOp") ||
+                name.includes("BlockPrefixCallbackOp") ||
+                type.includes("PrefixCallbackOp") ||
+                type.includes("BlockPrefixCallbackOp")
+            );
+        }) ||
+        func.parameters.some((p) => {
+            const type = p.typeInfo?.display ?? "";
+            return type.includes("PrefixCallbackOp") || type.includes("BlockPrefixCallbackOp");
+        })
+    );
 }
 
 /**
  * Detect whether a function has a num_valid / num_items parameter (partial tile).
  */
 function hasPartialTileParam(func: CppFunctionIr): boolean {
-    return func.parameters.some(p =>
-        p.name === "num_valid" || p.name === "num_items"
-    );
+    return func.parameters.some((p) => p.name === "num_valid" || p.name === "num_items");
 }
 
 /**
  * Detect whether a function has an initial_value parameter.
  */
 function hasInitialValueParam(func: CppFunctionIr): boolean {
-    return func.parameters.some(p =>
-        p.name === "initial_value" || p.name === "init_value"
-    );
+    return func.parameters.some((p) => p.name === "initial_value" || p.name === "init_value");
 }
 
 /**
@@ -479,11 +482,9 @@ function hasInitialValueParam(func: CppFunctionIr): boolean {
  */
 function hasRangeParam(func: CppFunctionIr): boolean {
     // Check template params for range-related enable_if constraints
-    return func.templateParams.some(tp => {
+    return func.templateParams.some((tp) => {
         const type = tp.type ?? "";
-        return type.includes("random_access_range") ||
-            type.includes("is_range") ||
-            type.includes("InputType");
+        return type.includes("random_access_range") || type.includes("is_range") || type.includes("InputType");
     });
 }
 
@@ -494,14 +495,14 @@ function hasRangeParam(func: CppFunctionIr): boolean {
 function generateContainerMethodTabTitle(func: CppFunctionIr): string | undefined {
     const name = func.name;
     const params = func.parameters;
-    const allTypes = params.map(p => p.typeInfo?.display ?? "").join(", ");
-    const allNames = params.map(p => p.name ?? "").join(", ");
+    const allTypes = params.map((p) => p.typeInfo?.display ?? "").join(", ");
+    const allNames = params.map((p) => p.name ?? "").join(", ");
 
     if (name === "resize") {
-        if (params.some(p => (p.typeInfo?.display ?? "").includes("default_init_t"))) {
+        if (params.some((p) => (p.typeInfo?.display ?? "").includes("default_init_t"))) {
             return "Default-initialized";
         }
-        if (params.some(p => (p.typeInfo?.display ?? "").includes("no_init_t"))) {
+        if (params.some((p) => (p.typeInfo?.display ?? "").includes("no_init_t"))) {
             return "No-init";
         }
         if (params.length === 1) {
@@ -510,12 +511,18 @@ function generateContainerMethodTabTitle(func: CppFunctionIr): string | undefine
     }
 
     if (name === "insert") {
-        if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
-            allTypes.includes("ForwardIterator") || allTypes.includes("InputIt")) {
+        if (
+            allTypes.includes("InputIterator") ||
+            allTypes.includes("Iterator") ||
+            allTypes.includes("ForwardIterator") ||
+            allTypes.includes("InputIt")
+        ) {
             return "Range";
         }
-        if (params.some(p => p.name === "n" || p.name === "count") &&
-            params.some(p => p.name === "x" || p.name === "value" || p.name === "val")) {
+        if (
+            params.some((p) => p.name === "n" || p.name === "count") &&
+            params.some((p) => p.name === "x" || p.name === "value" || p.name === "val")
+        ) {
             return "Fill";
         }
         if (params.length <= 2) {
@@ -524,8 +531,7 @@ function generateContainerMethodTabTitle(func: CppFunctionIr): string | undefine
     }
 
     if (name === "erase") {
-        if (params.length >= 2 &&
-            (allNames.includes("first") || params.length === 2)) {
+        if (params.length >= 2 && (allNames.includes("first") || params.length === 2)) {
             return "Range";
         }
         if (params.length === 1) {
@@ -534,11 +540,15 @@ function generateContainerMethodTabTitle(func: CppFunctionIr): string | undefine
     }
 
     if (name === "assign") {
-        if (allTypes.includes("InputIterator") || allTypes.includes("Iterator") ||
-            allTypes.includes("ForwardIterator") || allTypes.includes("InputIt")) {
+        if (
+            allTypes.includes("InputIterator") ||
+            allTypes.includes("Iterator") ||
+            allTypes.includes("ForwardIterator") ||
+            allTypes.includes("InputIt")
+        ) {
             return "Range";
         }
-        if (params.some(p => p.name === "n" || p.name === "count")) {
+        if (params.some((p) => p.name === "n" || p.name === "count")) {
             return "Fill";
         }
     }
@@ -582,7 +592,7 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
     const hasAggregate = hasAggregateParam(func);
     const hasPrefixCb = hasPrefixCallbackParam(func);
     const isPartialTile = hasPartialTileParam(func);
-    const hasValidItems = func.parameters.some(p => p.name === "valid_items");
+    const hasValidItems = func.parameters.some((p) => p.name === "valid_items");
     const hasInitVal = hasInitialValueParam(func);
 
     // Build semantic title from detected traits.
@@ -622,11 +632,14 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
 
     // For simple single-item overloads (CUB block/warp patterns):
     // Use "Full warp" for warp-level, "Single item" for block-level
-    const hasSimpleInput = func.parameters.some(p => {
+    const hasSimpleInput = func.parameters.some((p) => {
         const typeDisplay = p.typeInfo?.display ?? "";
-        return (p.name === "input" || p.name === "data") &&
-            !typeDisplay.includes("[") && !typeDisplay.includes("(&)") &&
-            !(p.arraySuffix && p.arraySuffix.length > 0);
+        return (
+            (p.name === "input" || p.name === "data") &&
+            !typeDisplay.includes("[") &&
+            !typeDisplay.includes("(&)") &&
+            !(p.arraySuffix && p.arraySuffix.length > 0)
+        );
     });
     if (hasSimpleInput) {
         return isWarpLevel ? "Full warp" : "Single item";
@@ -692,9 +705,13 @@ function generateAssignmentTabTitle(func: CppFunctionIr, index: number): string 
     // Copy assign: const T& (same type)
     if (paramType.includes("const") && paramType.includes("&")) {
         // Check for cross-type or named-type assignment via detectSourceType
-        if (paramType.includes("OtherT") || paramType.includes("OtherAlloc") ||
-            paramType.includes("Other") || paramType.includes("std::vector") ||
-            paramType.includes("vector_base")) {
+        if (
+            paramType.includes("OtherT") ||
+            paramType.includes("OtherAlloc") ||
+            paramType.includes("Other") ||
+            paramType.includes("std::vector") ||
+            paramType.includes("vector_base")
+        ) {
             return detectSourceType(paramType) + deletedSuffix;
         }
         return `Copy assign${deletedSuffix}`;
@@ -730,14 +747,130 @@ function generateIncrementTabTitle(func: CppFunctionIr): string {
     const op = isIncrement ? "increment" : "decrement";
 
     // Postfix: has a dummy int parameter
-    const hasIntParam = func.parameters.some(p =>
-        (p.typeInfo?.display ?? "").trim() === "int"
-    );
+    const hasIntParam = func.parameters.some((p) => (p.typeInfo?.display ?? "").trim() === "int");
 
     if (hasIntParam) {
         return `Post-${op}`;
     }
     return `Pre-${op}`;
+}
+
+// ---------------------------------------------------------------------------
+// Tab title deduplication
+// ---------------------------------------------------------------------------
+
+/**
+ * Humanize a C++ parameter name for display in tab title suffixes.
+ * Strips leading `d_` prefix (device pointer convention), replaces underscores
+ * with spaces, and trims whitespace.
+ *
+ * Examples: "block_prefix" -> "block prefix", "d_temp_storage" -> "temp storage"
+ */
+function humanizeParamName(name: string): string {
+    return name.replace(/^d_/, "").replace(/_/g, " ").trim();
+}
+
+/**
+ * Post-hoc deduplication of tab titles for method overloads.
+ *
+ * Given an array of { title, func } entries (one per overload), returns an
+ * array of unique title strings with the same length and order.
+ *
+ * Deduplication strategy (applied per group of entries sharing the same title):
+ * 1. Differential named params — find params present in some overloads but not
+ *    all within the duplicate group. Append "(with X and Y)" using humanized
+ *    param names. Only overloads that have the differential params get the
+ *    suffix; if only one overload lacks them, it keeps the base title.
+ * 2. Param count suffix — if differential params still leave duplicates,
+ *    append "(N params)".
+ * 3. Numbered fallback — last resort, append "(1)", "(2)", etc.
+ */
+function deduplicateTabTitles(entries: ReadonlyArray<{ title: string; func: CppFunctionIr }>): string[] {
+    const titles = entries.map((e) => e.title);
+
+    // Collect indices that share the same title
+    const groupsByTitle = new Map<string, number[]>();
+    for (let i = 0; i < titles.length; i++) {
+        const key = titles[i]!;
+        const group = groupsByTitle.get(key);
+        if (group) {
+            group.push(i);
+        } else {
+            groupsByTitle.set(key, [i]);
+        }
+    }
+
+    for (const indices of groupsByTitle.values()) {
+        if (indices.length < 2) {
+            continue;
+        }
+
+        // Step 1: Try differential named params
+        const paramSets = indices.map(
+            (idx) => new Set(entries[idx]!.func.parameters.map((p) => p.name).filter((n) => n !== ""))
+        );
+        // Union of all param names in the group
+        const allNames = new Set<string>();
+        for (const s of paramSets) {
+            for (const n of s) {
+                allNames.add(n);
+            }
+        }
+        // Differential params: names that appear in some but not all overloads
+        const differentialNames = [...allNames].filter(
+            (name) => paramSets.some((s) => s.has(name)) && paramSets.some((s) => !s.has(name))
+        );
+
+        if (differentialNames.length > 0) {
+            for (let j = 0; j < indices.length; j++) {
+                const idx = indices[j]!;
+                const funcParams = paramSets[j]!;
+                const uniqueParams = differentialNames.filter((name) => funcParams.has(name));
+                if (uniqueParams.length > 0) {
+                    const humanized = uniqueParams.map(humanizeParamName).join(" and ");
+                    titles[idx] = `${titles[idx]} (with ${humanized})`;
+                }
+            }
+        }
+
+        // Check if titles are now unique; if not, apply step 2
+        const stillDuplicateGroups = new Map<string, number[]>();
+        for (const idx of indices) {
+            const key = titles[idx]!;
+            const group = stillDuplicateGroups.get(key);
+            if (group) {
+                group.push(idx);
+            } else {
+                stillDuplicateGroups.set(key, [idx]);
+            }
+        }
+
+        for (const dupIndices of stillDuplicateGroups.values()) {
+            if (dupIndices.length < 2) {
+                continue;
+            }
+
+            // Step 2: Param count suffix
+            const countsAreUnique =
+                new Set(dupIndices.map((idx) => entries[idx]!.func.parameters.length)).size === dupIndices.length;
+            if (countsAreUnique) {
+                for (const idx of dupIndices) {
+                    const count = entries[idx]!.func.parameters.length;
+                    titles[idx] = `${titles[idx]} (${count} params)`;
+                }
+                continue;
+            }
+
+            // Step 3: Numbered fallback
+            let counter = 1;
+            for (const idx of dupIndices) {
+                titles[idx] = `${titles[idx]} (${counter})`;
+                counter++;
+            }
+        }
+    }
+
+    return titles;
 }
 
 // ---------------------------------------------------------------------------
@@ -811,10 +944,7 @@ export function renderMethodContent(
  * Render the description portion of a method: summary text and description blocks.
  * Appends to the provided lines array.
  */
-function renderMethodDescription(
-    func: CppFunctionIr,
-    lines: string[]
-): void {
+function renderMethodDescription(func: CppFunctionIr, lines: string[]): void {
     const docstring = func.docstring;
     const descParts: string[] = [];
     if (docstring) {
@@ -844,10 +974,7 @@ function renderMethodDescription(
  * postconditions, and preconditions.
  * Appends to the provided lines array.
  */
-function renderMethodCallouts(
-    docstring: CppDocstringIr | undefined,
-    lines: string[]
-): void {
+function renderMethodCallouts(docstring: CppDocstringIr | undefined, lines: string[]): void {
     // Deprecated
     if (docstring?.deprecated) {
         const depText = renderSegmentsTrimmed(docstring.deprecated);
@@ -901,11 +1028,7 @@ function renderMethodCallouts(
  * Render the returns, throws, template parameters, and parameters sections.
  * Appends to the provided lines array.
  */
-function renderMethodParamsSection(
-    func: CppFunctionIr,
-    docstring: CppDocstringIr | undefined,
-    lines: string[]
-): void {
+function renderMethodParamsSection(func: CppFunctionIr, docstring: CppDocstringIr | undefined, lines: string[]): void {
     // Returns
     if (docstring?.returns) {
         const returnsText = renderSegmentsTrimmed(docstring.returns);
@@ -945,10 +1068,7 @@ function renderMethodParamsSection(
  * Render the examples and see-also sections of a method.
  * Appends to the provided lines array.
  */
-function renderMethodExamples(
-    docstring: CppDocstringIr | undefined,
-    lines: string[]
-): void {
+function renderMethodExamples(docstring: CppDocstringIr | undefined, lines: string[]): void {
     // Examples from structured docstring fields
     if (docstring?.examples && docstring.examples.length > 0) {
         for (const example of docstring.examples) {
@@ -1028,8 +1148,9 @@ function isCrossTypeCopyConstructor(func: CppFunctionIr): boolean {
         return false;
     }
     // Must reference a cross-type variant
-    return ft.includes("OtherT") || ft.includes("OtherAlloc") ||
-        ft.includes("std::vector") || ft.includes("vector_base");
+    return (
+        ft.includes("OtherT") || ft.includes("OtherAlloc") || ft.includes("std::vector") || ft.includes("vector_base")
+    );
 }
 
 /**
@@ -1143,8 +1264,8 @@ export function renderOverloadedMethod(
     lines.push("");
     lines.push("<Tabs>");
 
-    const titleGenerator = options.generateTabTitle ??
-        (options.isConstructor ? generateConstructorTabTitle : generateMethodTabTitle);
+    const titleGenerator =
+        options.generateTabTitle ?? (options.isConstructor ? generateConstructorTabTitle : generateMethodTabTitle);
 
     // Sort constructor overloads so cross-type copies come before moves.
     // The IR often has: same-type copy, move, cross-type copy — reorder so
@@ -1155,27 +1276,29 @@ export function renderOverloadedMethod(
 
     // Detect const/non-const pairs for Mutable/Const tab titles.
     // When overloads differ only in const qualification, use "Mutable" and "Const" titles.
-    const isConstMutablePair = !options.isConstructor &&
+    const isConstMutablePair =
+        !options.isConstructor &&
         nonDeletedFuncs.length === 2 &&
-        nonDeletedFuncs.some(f => f.isConst) &&
-        nonDeletedFuncs.some(f => !f.isConst);
+        nonDeletedFuncs.some((f) => f.isConst) &&
+        nonDeletedFuncs.some((f) => !f.isConst);
 
     // Sort const/mutable pairs so non-const (Mutable) comes first
     if (isConstMutablePair) {
         nonDeletedFuncs.sort((a, b) => (a.isConst ? 1 : 0) - (b.isConst ? 1 : 0));
     }
 
+    // Generate all tab titles first, then deduplicate to eliminate duplicates
+    const rawEntries = nonDeletedFuncs.map((func) => {
+        const originalIndex = funcs.indexOf(func);
+        const title = isConstMutablePair ? (func.isConst ? "Const" : "Mutable") : titleGenerator(func, originalIndex);
+        return { title, func };
+    });
+    const deduplicatedTitles = deduplicateTabTitles(rawEntries);
+
     // Render non-deleted overloads as individual tabs
     for (let i = 0; i < nonDeletedFuncs.length; i++) {
         const func = nonDeletedFuncs[i]!;
-        // Use the original index from the full funcs array for title generation
-        const originalIndex = funcs.indexOf(func);
-        let tabTitle: string;
-        if (isConstMutablePair) {
-            tabTitle = func.isConst ? "Const" : "Mutable";
-        } else {
-            tabTitle = titleGenerator(func, originalIndex);
-        }
+        const tabTitle = deduplicatedTitles[i]!;
         const overloadBadges = getOverloadSpecificQualifiers(func, commonQuals);
 
         lines.push(`<Tab title="${tabTitle}">`);
@@ -1199,11 +1322,9 @@ export function renderOverloadedMethod(
         lines.push("");
 
         // Build combined signature CodeBlock
-        const links = ownerClass
-            ? { [getShortName(ownerClass.path)]: buildLinkPath(ownerClass.path) }
-            : {};
+        const links = ownerClass ? { [getShortName(ownerClass.path)]: buildLinkPath(ownerClass.path) } : {};
         const signatures = deletedFuncs
-            .map(f => {
+            .map((f) => {
                 // Use the raw signature, strip =delete, then add normalized = delete;
                 const rawSig = f.signature.replace(/\s*=\s*delete\s*$/, "").trim();
                 return `${rawSig} = delete;`;
@@ -1246,11 +1367,7 @@ export function renderOverloadedMethod(
  * Render a destructor.
  * Pattern: ### Destructor\n\n### ~ClassName <badges>
  */
-export function renderDestructor(
-    func: CppFunctionIr,
-    ownerClass: CppClassIr,
-    ctx: RenderContext
-): string {
+export function renderDestructor(func: CppFunctionIr, ownerClass: CppClassIr, ctx: RenderContext): string {
     const lines: string[] = [];
     const className = getShortName(ownerClass.path);
     lines.push("### Destructor");
