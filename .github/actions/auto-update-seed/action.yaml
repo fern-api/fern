@@ -37,6 +37,7 @@ runs:
         fixtures-to-run: ${{ inputs.fixtures-to-run }}
         job-index: ${{ strategy.job-index }}
         collect-metrics: false
+        allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
         skip-git-diff-check: true
 
