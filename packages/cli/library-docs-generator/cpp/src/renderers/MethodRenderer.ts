@@ -25,8 +25,7 @@ import {
     getOverloadSpecificQualifiers,
     renderBadges
 } from "./BadgeRenderer.js";
-import { renderDescriptionBlocks, renderSegmentsTrimmed, extractVersionAnnotation, findVerbatimRstBlock, parseMethodVerbatimRst, renderSeeAlso } from "./DescriptionRenderer.js";
-import type { ParsedMethodVerbatim } from "./DescriptionRenderer.js";
+import { renderDescriptionBlocks, renderSegmentsTrimmed, renderSeeAlso } from "./DescriptionRenderer.js";
 import { renderMethodTemplateParams, renderMethodParams } from "./ParamRenderer.js";
 import { renderSignatureCodeBlock, renderBareCodeBlock, renderCodeBlock } from "./SignatureRenderer.js";
 import { isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./shared.js";
@@ -781,42 +780,27 @@ export function renderMethodContent(
         lines.push("");
     }
 
-    // Check if description contains a verbatim RST block for structured extraction
-    let parsedMethodRst: ParsedMethodVerbatim | undefined = undefined;
-    if (docstring?.description) {
-        const verbatimContent = findVerbatimRstBlock(docstring.description);
-        if (verbatimContent) {
-            parsedMethodRst = parseMethodVerbatimRst(verbatimContent);
-        }
-    }
-
     // 2. Description (summary + description blocks)
-    renderMethodDescription(func, parsedMethodRst, lines);
+    renderMethodDescription(func, lines);
 
     // 3. Signature CodeBlock
     lines.push(renderSignatureCodeBlock(func, ownerClass, ctx));
     lines.push("");
 
-    // 4. Version annotation (from sinceVersion field or verbatim RST blocks)
+    // 4. Version annotation
     if (docstring?.sinceVersion) {
         lines.push(`*${docstring.sinceVersion}*`);
         lines.push("");
-    } else if (docstring?.description) {
-        const versionAnnotation = extractVersionAnnotation(docstring.description);
-        if (versionAnnotation) {
-            lines.push(versionAnnotation);
-            lines.push("");
-        }
     }
 
     // 5. Callouts (deprecated, notes, warnings, postconditions, preconditions)
-    renderMethodCallouts(docstring, parsedMethodRst, lines);
+    renderMethodCallouts(docstring, lines);
 
     // 6-9. Returns, Throws, Template parameters, Parameters
     renderMethodParamsSection(func, docstring, lines);
 
     // 10-11. Examples and See also
-    renderMethodExamples(docstring, parsedMethodRst, lines);
+    renderMethodExamples(docstring, lines);
 
     // Trim trailing blank lines
     trimTrailingBlankLines(lines);
@@ -830,7 +814,6 @@ export function renderMethodContent(
  */
 function renderMethodDescription(
     func: CppFunctionIr,
-    parsedMethodRst: ParsedMethodVerbatim | undefined,
     lines: string[]
 ): void {
     const docstring = func.docstring;
@@ -843,12 +826,8 @@ function renderMethodDescription(
                 descParts.push(summary);
             }
         }
-        // Description: use structured RST extraction if available, else flat rendering
-        if (parsedMethodRst) {
-            if (parsedMethodRst.descriptionText) {
-                descParts.push(parsedMethodRst.descriptionText);
-            }
-        } else if (docstring.description.length > 0) {
+        // Description blocks
+        if (docstring.description.length > 0) {
             const desc = renderDescriptionBlocks(docstring.description);
             if (desc) {
                 descParts.push(desc);
@@ -868,7 +847,6 @@ function renderMethodDescription(
  */
 function renderMethodCallouts(
     docstring: CppDocstringIr | undefined,
-    parsedMethodRst: ParsedMethodVerbatim | undefined,
     lines: string[]
 ): void {
     // Deprecated
@@ -879,13 +857,8 @@ function renderMethodCallouts(
         }
     }
 
-    // Notes: use verbatim RST extraction when available, else structured docstring fields
     // Notes render before Warnings
-    if (parsedMethodRst) {
-        if (parsedMethodRst.noteItems.length > 0) {
-            lines.push(...renderCallout("Note", parsedMethodRst.noteItems.join("\n")));
-        }
-    } else if (docstring?.notes) {
+    if (docstring?.notes) {
         for (const note of docstring.notes) {
             const text = renderSegmentsTrimmed(note);
             if (text) {
@@ -894,12 +867,8 @@ function renderMethodCallouts(
         }
     }
 
-    // Warnings: use verbatim RST extraction when available, else structured docstring fields
-    if (parsedMethodRst) {
-        for (const warningText of parsedMethodRst.warningItems) {
-            lines.push(...renderCallout("Warning", warningText));
-        }
-    } else if (docstring?.warnings) {
+    // Warnings
+    if (docstring?.warnings) {
         for (const warning of docstring.warnings) {
             const text = renderSegmentsTrimmed(warning);
             if (text) {
@@ -979,31 +948,17 @@ function renderMethodParamsSection(
  */
 function renderMethodExamples(
     docstring: CppDocstringIr | undefined,
-    parsedMethodRst: ParsedMethodVerbatim | undefined,
     lines: string[]
 ): void {
-    // Examples: from structured docstring fields + verbatim RST extraction
+    // Examples from structured docstring fields
     if (docstring?.examples && docstring.examples.length > 0) {
         for (const example of docstring.examples) {
             lines.push("**Example**");
             lines.push("");
-            // If the example has a description-like introductory text in surrounding docstring,
-            // it would be part of the description blocks already rendered above.
             const lang = example.language || "cpp";
             lines.push(renderBareCodeBlock(example.code, lang));
             lines.push("");
         }
-    } else if (parsedMethodRst?.exampleCode) {
-        // Example extracted from verbatim RST block
-        lines.push("**Example**");
-        lines.push("");
-        if (parsedMethodRst.exampleDescription) {
-            lines.push(parsedMethodRst.exampleDescription);
-            lines.push("");
-        }
-        const lang = parsedMethodRst.exampleLanguage || "cpp";
-        lines.push(renderBareCodeBlock(parsedMethodRst.exampleCode, lang));
-        lines.push("");
     }
 
     // See also (multi-line format)

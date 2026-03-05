@@ -8,7 +8,6 @@
  *    - Include header (bare code block)
  *    - Callouts (deprecated, warnings, notes)
  *    - See also
- *    - Performance considerations (H2, for CUB classes)
  *    - Example (H2, class-level)
  *    - Template parameters (AccordionGroup)
  *    - Inherits from
@@ -25,8 +24,7 @@ import type {
 import type { RenderContext, CompoundMeta } from "../context.js";
 import { buildLinkPath, getShortName, stripTemplateArgs, registerClassMembers, clearClassMembers } from "../context.js";
 import { renderFrontmatter as renderFrontmatterLines, trimTrailingBlankLines, renderCallout } from "./shared.js";
-import { renderDescriptionBlocks, renderSegmentsTrimmed, convertVerbatimRst, setCurrentPagePath, findVerbatimRstBlock, renderSeeAlso, escapeMultilineMdxSpecials } from "./DescriptionRenderer.js";
-import type { ParsedVerbatim } from "./DescriptionRenderer.js";
+import { renderDescriptionBlocks, renderSegmentsTrimmed, setCurrentPagePath, renderSeeAlso } from "./DescriptionRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock } from "./SignatureRenderer.js";
 import { renderBadge } from "./BadgeRenderer.js";
@@ -34,7 +32,6 @@ import {
     renderSingleMethod,
     renderOverloadedMethod,
     renderDestructor,
-    renderMethodContent,
     groupFunctionsByName
 } from "./MethodRenderer.js";
 import {
@@ -71,10 +68,6 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
     const docstring = cls.docstring;
 
     // 1. Summary paragraphs and description blocks
-    // For classes with verbatim RST blocks in description, parse them to extract
-    // overview content, performance considerations, and examples.
-    let parsedVerbatim: ParsedVerbatim | undefined = undefined;
-
     if (docstring) {
         if (docstring.summary.length > 0) {
             const summary = renderSegmentsTrimmed(docstring.summary);
@@ -84,37 +77,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
             }
         }
 
-        // Check for verbatim RST blocks in description
-        const verbatimContent = findVerbatimRstBlock(docstring.description);
-
-        if (verbatimContent) {
-            // Render non-verbatim description blocks first (e.g., normal paragraphs)
-            const nonVerbatimBlocks = docstring.description.filter(
-                b => b.type !== "verbatim"
-            );
-            if (nonVerbatimBlocks.length > 0) {
-                const desc = renderDescriptionBlocks(nonVerbatimBlocks);
-                if (desc) {
-                    lines.push(desc);
-                    lines.push("");
-                }
-            }
-            // Parse the verbatim block to extract structured content
-            parsedVerbatim = convertVerbatimRst(verbatimContent);
-            // Render the overview content from the parsed verbatim
-            // Strip bare version annotations (e.g., "*Added in v2.2.0.*") that are
-            // class-level library version markers, not meaningful overview content.
-            if (parsedVerbatim?.overviewContent) {
-                const overview = parsedVerbatim.overviewContent
-                    .replace(/^\*Added in v[\d.]+\.\*$/gm, "")
-                    .trim();
-                if (overview) {
-                    lines.push(escapeMultilineMdxSpecials(overview));
-                    lines.push("");
-                }
-            }
-        } else if (docstring.description.length > 0) {
-            // No verbatim blocks -- render description blocks normally
+        if (docstring.description.length > 0) {
             const desc = renderDescriptionBlocks(docstring.description);
             if (desc) {
                 lines.push(desc);
@@ -168,15 +131,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
     }
 
-    // 5. Performance considerations (H2 in preamble, from parsed verbatim RST)
-    if (parsedVerbatim?.performanceContent) {
-        lines.push("## Performance considerations");
-        lines.push("");
-        lines.push(escapeMultilineMdxSpecials(parsedVerbatim.performanceContent));
-        lines.push("");
-    }
-
-    // 6. Class-level examples
+    // 5. Class-level examples
     if (docstring?.examples && docstring.examples.length > 0) {
         lines.push("## Example");
         lines.push("");
@@ -185,20 +140,9 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
             lines.push(renderBareCodeBlock(example.code, lang));
             lines.push("");
         }
-    } else if (parsedVerbatim?.exampleCode) {
-        // Example extracted from verbatim RST block
-        lines.push("## Example");
-        lines.push("");
-        if (parsedVerbatim.exampleDescription) {
-            lines.push(escapeMultilineMdxSpecials(parsedVerbatim.exampleDescription));
-            lines.push("");
-        }
-        const lang = parsedVerbatim.exampleLanguage || "cpp";
-        lines.push(renderBareCodeBlock(parsedVerbatim.exampleCode, lang));
-        lines.push("");
     }
 
-    // 7. Template parameters (AccordionGroup)
+    // 6. Template parameters (AccordionGroup)
     if (cls.templateParams.length > 0) {
         const tplParams = renderClassTemplateParams(cls.templateParams, cls.docstring);
         if (tplParams) {
@@ -207,7 +151,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
     }
 
-    // 8. Inherits from
+    // 7. Inherits from
     if (cls.baseClasses.length > 0) {
         const baseLinks = cls.baseClasses.map(bc => {
             const access = `(${bc.access})`;
@@ -224,7 +168,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         lines.push("");
     }
 
-    // 9. Final annotation
+    // 8. Final annotation
     if (cls.isFinal) {
         lines.push(`This class is marked ${renderBadge("final")}.`);
         lines.push("");
