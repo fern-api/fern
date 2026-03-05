@@ -25,7 +25,14 @@ export declare namespace ChannelConverter2_X {
 export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.ChannelV2> {
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, websocketGroup, channel, channelPath, globalHeaders }: ChannelConverter2_X.Args) {
+    constructor({
+        context,
+        breadcrumbs,
+        websocketGroup,
+        channel,
+        channelPath,
+        globalHeaders
+    }: ChannelConverter2_X.Args) {
         super({ context, breadcrumbs, websocketGroup, channel, channelPath, globalHeaders });
     }
 
