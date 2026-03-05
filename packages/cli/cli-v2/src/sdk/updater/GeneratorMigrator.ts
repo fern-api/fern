@@ -212,6 +212,11 @@ export class GeneratorMigrator {
             return migrations as Record<string, MigrationModule>;
         })();
 
+        // Reset the cached promise on failure so subsequent calls can retry.
+        this.migrationsInstallPromise.catch(() => {
+            this.migrationsInstallPromise = undefined;
+        });
+
         return this.migrationsInstallPromise;
     }
 

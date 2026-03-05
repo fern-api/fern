@@ -80,6 +80,11 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
         return migrations as Record<string, MigrationModule>;
     })();
 
+    // Reset the cached promise on failure so subsequent calls can retry.
+    migrationsInstallPromise.catch(() => {
+        migrationsInstallPromise = undefined;
+    });
+
     return migrationsInstallPromise;
 }
 
