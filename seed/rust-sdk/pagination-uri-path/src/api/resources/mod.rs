@@ -4,7 +4,7 @@
 //!
 //! - **Users**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod users;
 pub struct PaginationUriPathClient {
@@ -16,10 +16,9 @@ impl PaginationUriPathClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            users: UsersClient::new(config.clone())?
+            users: UsersClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use users::UsersClient;

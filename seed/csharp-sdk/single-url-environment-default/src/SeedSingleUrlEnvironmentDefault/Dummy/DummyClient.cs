@@ -5,7 +5,7 @@ namespace SeedSingleUrlEnvironmentDefault;
 
 public partial class DummyClient : IDummyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal DummyClient(RawClient client)
     {
@@ -37,7 +37,9 @@ public partial class DummyClient : IDummyClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -63,7 +65,9 @@ public partial class DummyClient : IDummyClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedSingleUrlEnvironmentDefaultApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -4,7 +4,7 @@ namespace SeedOauthClientCredentialsMandatoryAuth;
 
 public partial class SimpleClient : ISimpleClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SimpleClient(RawClient client)
     {
@@ -43,7 +43,9 @@ public partial class SimpleClient : ISimpleClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedOauthClientCredentialsMandatoryAuthApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -4,7 +4,7 @@ groups:
   python-sdk:
     generators:
       - name: fernapi/fern-pydantic-model
-        version: 1.0.0-rc0
+        version: 1.11.2
         output:
           location: local-file-system
           path: ../../../sdks/python

@@ -5,7 +5,7 @@
 //! - **Commons**
 //! - **Simple**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod commons;
 pub mod simple;
@@ -18,10 +18,9 @@ impl ErrorsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            simple: SimpleClient::new(config.clone())?
+            simple: SimpleClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use commons::CommonsClient;

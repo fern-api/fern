@@ -6,7 +6,7 @@ namespace SeedMixedFileDirectory.User_.Events;
 
 public partial class MetadataClient : IMetadataClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal MetadataClient(RawClient client)
     {
@@ -44,7 +44,9 @@ public partial class MetadataClient : IMetadataClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Metadata>(responseBody)!;
@@ -70,7 +72,9 @@ public partial class MetadataClient : IMetadataClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedMixedFileDirectoryApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

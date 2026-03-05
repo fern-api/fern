@@ -5,7 +5,7 @@ namespace SeedPagination;
 
 public partial class UsersClient : IUsersClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal UsersClient(RawClient client)
     {
@@ -59,7 +59,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -87,7 +89,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -140,7 +144,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersMixedTypePaginationResponse>(
@@ -168,7 +174,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -217,7 +225,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -245,7 +255,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -303,7 +315,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersTopLevelCursorPaginationResponse>(
@@ -331,7 +345,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -387,7 +403,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -415,7 +433,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -471,7 +491,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -499,7 +521,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -548,7 +572,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -576,7 +602,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -631,7 +659,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -659,7 +689,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -718,7 +750,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersPaginationResponse>(
@@ -746,7 +780,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -799,7 +835,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersExtendedResponse>(responseBody)!;
@@ -825,7 +863,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -882,7 +922,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersExtendedOptionalListResponse>(
@@ -910,7 +952,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -961,7 +1005,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UsernameCursor>(responseBody)!;
@@ -987,7 +1033,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -1040,7 +1088,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UsernameCursor?>(responseBody)!;
@@ -1066,7 +1116,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -1117,7 +1169,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<UsernameContainer>(responseBody)!;
@@ -1143,7 +1197,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -1196,7 +1252,9 @@ public partial class UsersClient : IUsersClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<ListUsersOptionalDataPaginationResponse>(
@@ -1224,7 +1282,9 @@ public partial class UsersClient : IUsersClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

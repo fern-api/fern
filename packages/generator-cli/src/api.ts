@@ -34,4 +34,9 @@ export {
     type ReplayInitResult,
     replayInit
 } from "./replay/replay-init.js";
+export {
+    type ReplayResolveParams,
+    type ResolveResult,
+    replayResolve
+} from "./replay/replay-resolve.js";
 export { type ReplayRunParams, type ReplayRunResult, replayRun } from "./replay/replay-run.js";

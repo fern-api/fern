@@ -1,6 +1,6 @@
 import { parseRepository } from "../parseRepository.js";
 
-describe("getLatestTag", () => {
+describe("parseRepository", () => {
     it("fern-api/fern", async () => {
         const tests = [
             "fern-api/fern",

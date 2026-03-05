@@ -377,7 +377,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     });
 
                     writer.writeTextStatement(
-                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
                     );
                     writer.writeLine("try");
                     writer.pushScope();
@@ -444,7 +444,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 },
                 text: () => {
                     writer.writeTextStatement(
-                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
                     );
 
                     // Return WithRawResponse<string>
@@ -576,7 +576,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         // Error handling
         writer.pushScope();
         writer.writeTextStatement(
-            `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+            `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
         );
 
         if (
@@ -632,7 +632,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return this.csharp.codeblock((writer) => {
             writer.pushScope();
             writer.writeTextStatement(
-                `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
             );
             if (
                 endpoint.errors.length > 0 &&
@@ -942,7 +942,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                     // Deserialize the response as json
                     writer.writeTextStatement(
-                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
                     );
                     writer.writeLine("try");
                     writer.pushScope();
@@ -1031,7 +1031,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.pushScope();
 
                     writer.writeTextStatement(
-                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync(${this.names.parameters.cancellationToken}).ConfigureAwait(false)`
                     );
 
                     // Wrap in WithRawResponseTask
