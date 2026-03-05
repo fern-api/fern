@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { analyzeIrDiff, IrDiffResult } from "../IrDiffAnalyzer.js";
+import { extractLanguageFromGeneratorName } from "../LocalTaskHandler.js";
 import { VersionBump } from "../VersionUtils.js";
 
 // ---------------------------------------------------------------------------
@@ -2227,6 +2228,76 @@ function testResponseFieldRequiredToOptional(language: string): IrDiffResult {
 
     return analyzeIrDiff(previousIr as never, currentIr as never, language);
 }
+
+// ---------------------------------------------------------------------------
+// extractLanguageFromGeneratorName tests
+// ---------------------------------------------------------------------------
+
+describe("extractLanguageFromGeneratorName", () => {
+    it("extracts typescript from fernapi/fern-typescript-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-typescript-sdk")).toBe("typescript");
+    });
+
+    it("extracts python from fernapi/fern-python-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-python-sdk")).toBe("python");
+    });
+
+    it("extracts java from fernapi/fern-java-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-java-sdk")).toBe("java");
+    });
+
+    it("extracts go from fernapi/fern-go-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-go-sdk")).toBe("go");
+    });
+
+    it("extracts csharp from fernapi/fern-csharp-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-csharp-sdk")).toBe("csharp");
+    });
+
+    it("extracts ruby from fernapi/fern-ruby-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-ruby-sdk")).toBe("ruby");
+    });
+
+    it("extracts php from fernapi/fern-php-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-php-sdk")).toBe("php");
+    });
+
+    it("extracts swift from fernapi/fern-swift-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-swift-sdk")).toBe("swift");
+    });
+
+    it("extracts rust from fernapi/fern-rust-sdk", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-rust-sdk")).toBe("rust");
+    });
+
+    it("extracts java from fernapi/fern-java-model", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-java-model")).toBe("java");
+    });
+
+    it("extracts python from fernapi/fern-pydantic-model", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-pydantic-model")).toBe("python");
+    });
+
+    it("extracts typescript from fernapi/fern-typescript-express", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-typescript-express")).toBe("typescript");
+    });
+
+    it("extracts java from fernapi/fern-java-spring", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-java-spring")).toBe("java");
+    });
+
+    it("extracts python from fernapi/fern-python-fastapi", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-python-fastapi")).toBe("python");
+    });
+
+    it("defaults to typescript for unknown generator names", () => {
+        expect(extractLanguageFromGeneratorName("unknown-generator")).toBe("typescript");
+    });
+
+    it("defaults to typescript for empty string", () => {
+        expect(extractLanguageFromGeneratorName("")).toBe("typescript");
+    });
+});
 
 function testNewEnumValue(language: string): IrDiffResult {
     const previousIr = makeBaseIr({

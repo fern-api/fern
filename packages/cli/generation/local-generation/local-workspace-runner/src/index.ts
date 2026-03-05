@@ -10,6 +10,7 @@ export * from "./GenerationRunner.js";
 export { GenerationRunner } from "./GenerationRunner.js";
 export * from "./IrDiffAnalyzer.js";
 export { analyzeIrDiff } from "./IrDiffAnalyzer.js";
+export { extractLanguageFromGeneratorName } from "./LocalTaskHandler.js";
 export * from "./NativeExecutionEnvironment.js";
 export { NativeExecutionEnvironment } from "./NativeExecutionEnvironment.js";
 export {

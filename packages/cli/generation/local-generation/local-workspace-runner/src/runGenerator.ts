@@ -203,6 +203,26 @@ export async function writeFilesToDiskAndRunGenerator({
     // Extract LICENSE file path for Docker mounting
     const absolutePathToLicenseFile = extractLicenseFilePath(generatorInvocation, absolutePathToFernConfig);
 
+    // Read previous IR snapshot from the SDK output directory if it exists
+    let previousIr: IntermediateRepresentation | undefined;
+    const snapshotPathInOutput = path.join(absolutePathToLocalOutput, IR_SNAPSHOT_RELATIVE_PATH);
+    try {
+        const snapshotContent = await readFile(snapshotPathInOutput, "utf-8");
+        previousIr = JSON.parse(snapshotContent) as IntermediateRepresentation;
+        context.logger.debug("Read previous IR snapshot from " + snapshotPathInOutput);
+    } catch {
+        context.logger.debug(
+            "No previous IR snapshot found at " + snapshotPathInOutput + " (new repo or first generation)"
+        );
+    }
+
+    // Write current IR snapshot into the tmp output directory BEFORE the generator
+    // runs, so the directory is writable (Docker containers may change ownership).
+    const snapshotPathInTmp = path.join(absolutePathToTmpOutputDirectory, IR_SNAPSHOT_RELATIVE_PATH);
+    await mkdir(path.dirname(snapshotPathInTmp), { recursive: true });
+    await writeFile(snapshotPathInTmp, JSON.stringify(latest));
+    context.logger.debug("Wrote IR snapshot to " + snapshotPathInTmp);
+
     await environment.execute({
         generatorName: generatorInvocation.name,
         irPath: absolutePathToIr,
@@ -216,26 +236,6 @@ export async function writeFilesToDiskAndRunGenerator({
         runner
     });
 
-    // Step 1: Read previous IR snapshot from the SDK output directory if it exists
-    let previousIr: IntermediateRepresentation | undefined;
-    const snapshotPathInOutput = path.join(absolutePathToLocalOutput, IR_SNAPSHOT_RELATIVE_PATH);
-    try {
-        const snapshotContent = await readFile(snapshotPathInOutput, "utf-8");
-        previousIr = JSON.parse(snapshotContent) as IntermediateRepresentation;
-        context.logger.debug("Read previous IR snapshot from " + snapshotPathInOutput);
-    } catch {
-        context.logger.debug(
-            "No previous IR snapshot found at " + snapshotPathInOutput + " (new repo or first generation)"
-        );
-    }
-
-    // Step 3: Write current IR as new snapshot into the tmp output directory
-    // BEFORE copyGeneratedFiles() so it gets copied to the SDK output directory
-    const snapshotPathInTmp = path.join(absolutePathToTmpOutputDirectory, IR_SNAPSHOT_RELATIVE_PATH);
-    await mkdir(path.dirname(snapshotPathInTmp), { recursive: true });
-    await writeFile(snapshotPathInTmp, JSON.stringify(latest));
-    context.logger.debug("Wrote IR snapshot to " + snapshotPathInTmp);
-
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
@@ -248,7 +248,8 @@ export async function writeFilesToDiskAndRunGenerator({
         ai,
         isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
         previousIr,
-        currentIr: latest
+        currentIr: latest,
+        generatorName: generatorInvocation.name
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 

@@ -22,6 +22,44 @@ import {
 import { analyzeIrDiff } from "./IrDiffAnalyzer.js";
 import { isAutoVersion, VersionBump as LocalVersionBump } from "./VersionUtils.js";
 
+/**
+ * Extracts the SDK language from a generator name like "fernapi/fern-typescript-sdk".
+ * Falls back to "typescript" if the name doesn't match a known pattern.
+ */
+export function extractLanguageFromGeneratorName(generatorName: string): string {
+    // Generator names follow the pattern: "fernapi/fern-{language}-sdk" or "fernapi/fern-{language}-model"
+    const match = generatorName.match(/fern-(\w+?)(?:-sdk|-model|-server|-spring|-express|-fastapi)?$/i);
+    if (match?.[1] != null) {
+        const raw = match[1].toLowerCase();
+        // Normalize common aliases
+        switch (raw) {
+            case "typescript":
+            case "ts":
+                return "typescript";
+            case "python":
+            case "pydantic":
+                return "python";
+            case "java":
+                return "java";
+            case "go":
+                return "go";
+            case "csharp":
+                return "csharp";
+            case "ruby":
+                return "ruby";
+            case "php":
+                return "php";
+            case "swift":
+                return "swift";
+            case "rust":
+                return "rust";
+            default:
+                return raw;
+        }
+    }
+    return "typescript";
+}
+
 /** Bump ordering for comparison — used in AI fallback logic. */
 const BUMP_ORDER: Record<string, number> = {
     NO_CHANGE: 0,
@@ -44,6 +82,7 @@ export declare namespace LocalTaskHandler {
         isWhitelabel: boolean;
         previousIr: IntermediateRepresentation | undefined;
         currentIr: IntermediateRepresentation;
+        generatorName: string;
     }
 }
 
@@ -60,6 +99,7 @@ export class LocalTaskHandler {
     private isWhitelabel: boolean;
     private previousIr: IntermediateRepresentation | undefined;
     private currentIr: IntermediateRepresentation;
+    private generatorName: string;
 
     constructor({
         context,
@@ -73,7 +113,8 @@ export class LocalTaskHandler {
         ai,
         isWhitelabel,
         previousIr,
-        currentIr
+        currentIr,
+        generatorName
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -87,6 +128,7 @@ export class LocalTaskHandler {
         this.isWhitelabel = isWhitelabel;
         this.previousIr = previousIr;
         this.currentIr = currentIr;
+        this.generatorName = generatorName;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -337,8 +379,7 @@ export class LocalTaskHandler {
         }
 
         try {
-            // Infer language from the generator name or default to typescript
-            const language = this.inferLanguage();
+            const language = extractLanguageFromGeneratorName(this.generatorName);
             this.context.logger.info(`Running Tier 1 IR diff analysis (language: ${language})`);
 
             const result = analyzeIrDiff(this.previousIr, this.currentIr, language);
@@ -357,35 +398,6 @@ export class LocalTaskHandler {
         }
     }
 
-    /**
-     * Infers the SDK language from the generator invocation context.
-     * Defaults to "typescript" if unable to determine.
-     */
-    private inferLanguage(): string {
-        // The output directory often contains a language hint
-        const outputPath = this.absolutePathToLocalOutput.toLowerCase();
-        const languagePatterns: Array<[RegExp, string]> = [
-            [/(?:^|[/-])typescript(?:$|[/-])/, "typescript"],
-            [/(?:^|[/-])ts-sdk(?:$|[/-])/, "typescript"],
-            [/(?:^|[/-])python(?:$|[/-])/, "python"],
-            [/(?:^|[/-])py-sdk(?:$|[/-])/, "python"],
-            [/(?:^|[/-])java(?:$|[/-])/, "java"],
-            [/(?:^|[/-])go(?:$|[/-])/, "go"],
-            [/(?:^|[/-])csharp(?:$|[/-])/, "csharp"],
-            [/(?:^|[/-])ruby(?:$|[/-])/, "ruby"],
-            [/(?:^|[/-])php(?:$|[/-])/, "php"],
-            [/(?:^|[/-])swift(?:$|[/-])/, "swift"],
-            [/(?:^|[/-])rust(?:$|[/-])/, "rust"]
-        ];
-
-        for (const [pattern, lang] of languagePatterns) {
-            if (pattern.test(outputPath)) {
-                return lang;
-            }
-        }
-
-        return "typescript";
-    }
 
     /**
      * Constrains an AI-suggested bump to not exceed the Tier 1 ceiling.
