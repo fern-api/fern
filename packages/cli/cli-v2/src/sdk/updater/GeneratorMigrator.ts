@@ -6,6 +6,7 @@ import type { Migration, MigrationModule, MigratorResult } from "@fern-api/migra
 import { mkdir, readFile } from "fs/promises";
 import { join } from "path";
 import semver from "semver";
+import { pathToFileURL } from "url";
 import type { FernYmlEditor } from "../../config/fern-yml/FernYmlEditor.js";
 import type { Target } from "../config/Target.js";
 
@@ -41,6 +42,14 @@ export namespace GeneratorMigrator {
 export class GeneratorMigrator {
     private readonly logger: Logger;
     private readonly cachePath: AbsoluteFilePath;
+
+    /**
+     * Instance-level promise that ensures the migration package is installed
+     * only once per GeneratorMigrator instance. Subsequent calls to
+     * loadMigrationModule reuse the cached result instead of re-running
+     * npm install.
+     */
+    private migrationsInstallPromise: Promise<Record<string, MigrationModule> | undefined> | undefined;
 
     constructor(config: GeneratorMigrator.Config) {
         this.logger = config.logger;
@@ -155,15 +164,27 @@ export class GeneratorMigrator {
     }
 
     /**
-     * Downloads and loads the migration module for a specific generator.
-     * Installs `@fern-api/generator-migrations@latest` into the cache
-     * directory and imports the module for the given generator name.
+     * Installs the migration package once and returns the full migrations map.
+     * Uses an isolated npm cache to avoid corruption from the system npm cache.
+     *
+     * Subsequent calls reuse the cached result, avoiding redundant npm installs
+     * when migrating multiple generators in the same session.
      */
-    private async loadMigrationModule(generatorName: string): Promise<MigrationModule | undefined> {
-        const cacheDir = this.cachePath as string;
-        await mkdir(cacheDir, { recursive: true });
+    private async ensureMigrationsInstalled(): Promise<Record<string, MigrationModule> | undefined> {
+        if (this.migrationsInstallPromise != null) {
+            return this.migrationsInstallPromise.catch((err) => {
+                this.migrationsInstallPromise = undefined;
+                throw err;
+            });
+        }
 
-        try {
+        this.migrationsInstallPromise = (async () => {
+            const cacheDir = this.cachePath as string;
+            await mkdir(cacheDir, { recursive: true });
+
+            // Use an isolated npm cache inside the migration cache dir to prevent
+            // corrupt system-level npm cache entries from causing repeated failures.
+            const npmCacheDir = join(cacheDir, ".npm-cache");
             await loggingExeca(
                 this.logger,
                 "npm",
@@ -172,6 +193,8 @@ export class GeneratorMigrator {
                     `${MIGRATION_PACKAGE_NAME}@latest`,
                     "--prefix",
                     cacheDir,
+                    "--cache",
+                    npmCacheDir,
                     "--ignore-scripts",
                     "--no-audit",
                     "--no-fund"
@@ -189,9 +212,30 @@ export class GeneratorMigrator {
             }
 
             const packageEntryPoint = join(packageDir, packageJson.main);
-            const { migrations } = await import(packageEntryPoint);
+            const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
+            return migrations as Record<string, MigrationModule>;
+        })();
 
-            const module = migrations[generatorName] as MigrationModule | undefined;
+        // Reset the cached promise on failure so the next call can retry.
+        this.migrationsInstallPromise.catch(() => {
+            this.migrationsInstallPromise = undefined;
+        });
+
+        return this.migrationsInstallPromise;
+    }
+
+    /**
+     * Loads the migration module for a specific generator from the cached
+     * migrations map. The underlying npm install is only performed once.
+     */
+    private async loadMigrationModule(generatorName: string): Promise<MigrationModule | undefined> {
+        try {
+            const migrationsMap = await this.ensureMigrationsInstalled();
+            if (migrationsMap == null) {
+                return undefined;
+            }
+
+            const module = migrationsMap[generatorName] as MigrationModule | undefined;
             if (module == null) {
                 this.logger.debug(`No migrations registered for generator: ${generatorName}.`);
                 return undefined;

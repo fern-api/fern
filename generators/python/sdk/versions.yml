@@ -1,12 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.61.5
+- version: 4.61.6
   changelogEntry:
     - summary: |
         Fix Docker Compose project name collisions in wiremock integration tests.
         When the seed test runner runs multiple variants of the same fixture in parallel,
         a `_test_output_folder` field is now injected into customConfig so the generator
         can produce unique project names per variant.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.5
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client generation to respect `pydantic_config.skip_validation: true`.
+        Previously, socket clients always used `parse_obj_as` (full Pydantic validation)
+        regardless of the skip_validation flag. They now correctly use `construct_type`
+        (no validation) when the flag is enabled, matching the behavior of HTTP clients.
       type: fix
   createdAt: "2026-03-05"
   irVersion: 65
