@@ -32,7 +32,7 @@ export class LegacyGeneratorInvocationAdapter {
             outputMode: await this.buildOutputMode(target),
             absolutePathToLocalOutput: this.context.resolveOutputFilePath(target.output.path),
             smartCasing: target.smartCasing ?? true,
-            readme: target.readme,
+            readme: this.buildReadme(target),
 
             // Legacy options which are no longer supported.
             absolutePathToLocalSnippets: undefined,
@@ -309,6 +309,46 @@ export class LegacyGeneratorInvocationAdapter {
         }
         const contents = await readFile(absolutePath, "utf-8");
         return FernFiddle.GithubLicense.custom({ contents });
+    }
+
+    private buildReadme(target: Target): generatorsYml.ReadmeSchema | undefined {
+        const readme = target.readme;
+        if (readme == null) {
+            return undefined;
+        }
+        const result: generatorsYml.ReadmeSchema = {};
+        if (readme.bannerLink != null) {
+            result.bannerLink = readme.bannerLink;
+        }
+        if (readme.introduction != null) {
+            result.introduction = readme.introduction;
+        }
+        if (readme.apiReferenceLink != null) {
+            result.apiReferenceLink = readme.apiReferenceLink;
+        }
+        if (readme.apiName != null) {
+            result.apiName = readme.apiName;
+        }
+        if (readme.disabledSections != null) {
+            result.disabledSections = readme.disabledSections;
+        }
+        if (readme.defaultEndpoint != null) {
+            result.defaultEndpoint = readme.defaultEndpoint as generatorsYml.ReadmeEndpointSchema;
+        }
+        if (readme.features != null) {
+            result.features = readme.features as Record<string, generatorsYml.ReadmeEndpointSchema[]>;
+        }
+        if (readme.customSections != null) {
+            result.customSections = readme.customSections.map((section) => ({
+                title: section.title,
+                language: (section.language ?? target.lang) as generatorsYml.Language,
+                content: section.content
+            }));
+        }
+        if (readme.exampleStyle != null) {
+            result.exampleStyle = readme.exampleStyle as generatorsYml.ExampleStyle;
+        }
+        return result;
     }
 
     private mapLanguage(lang: string): generatorsYml.GenerationLanguage | undefined {
