@@ -171,12 +171,13 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            // Warn if the cleaned diff is very large — AI endpoints typically struggle above ~15KB
-            const DIFF_SIZE_WARNING_THRESHOLD = 15 * 1024; // 15KB
-            if (cleanedDiff.length > DIFF_SIZE_WARNING_THRESHOLD) {
+            // The FAI /sdks/analyze-commit-diff endpoint rejects diffs exceeding 100,000 characters
+            const DIFF_SIZE_LIMIT = 100_000; // 100K characters — matches FAI endpoint MAX_DIFF_SIZE
+            if (cleanedDiff.length > DIFF_SIZE_LIMIT) {
                 this.context.logger.warn(
-                    `Cleaned diff is very large (${cleanedDiffSizeKB}KB, ${fileCount} files). ` +
-                        `AI analysis may fail or return empty results for diffs exceeding ~15KB. ` +
+                    `Cleaned diff is too large for AI analysis ` +
+                        `(${cleanedDiff.length.toLocaleString()} chars / ${cleanedDiffSizeKB}KB, ${fileCount} files). ` +
+                        `The AI endpoint limit is 100,000 characters. ` +
                         `Consider excluding generated documentation files (e.g. reference.md) and lock files ` +
                         `(e.g. pnpm-lock.yaml, poetry.lock) from the diff to reduce its size.`
                 );
@@ -210,9 +211,10 @@ export class LocalTaskHandler {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
                 this.context.logger.warn(
                     `AI analysis failed, falling back to PATCH increment. ` +
-                        `Diff stats: ${cleanedDiffSizeKB}KB cleaned (${rawDiffSizeKB}KB raw), ${fileCount} files changed. ` +
-                        (cleanedDiff.length > DIFF_SIZE_WARNING_THRESHOLD
-                            ? `The diff likely exceeds the AI endpoint's size limit (~15KB). ` +
+                        `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
+                        `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${fileCount} files changed. ` +
+                        (cleanedDiff.length > DIFF_SIZE_LIMIT
+                            ? `The diff exceeds the AI endpoint's 100,000 character limit. ` +
                               `To fix this, reduce the diff size by excluding generated docs (e.g. reference.md) ` +
                               `and lock files (e.g. pnpm-lock.yaml, poetry.lock). `
                             : "") +

@@ -98,11 +98,13 @@ export async function sdkDiffCommand({
     const fileCount = (gitDiff.match(/^diff --git /gm) || []).length;
     context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} bytes), ${fileCount} files changed`);
 
-    const DIFF_SIZE_WARNING_THRESHOLD = 15 * 1024; // 15KB
-    if (gitDiff.length > DIFF_SIZE_WARNING_THRESHOLD) {
+    // The FAI /sdks/analyze-commit-diff endpoint rejects diffs exceeding 100,000 characters
+    const DIFF_SIZE_LIMIT = 100_000; // 100K characters — matches FAI endpoint MAX_DIFF_SIZE
+    if (gitDiff.length > DIFF_SIZE_LIMIT) {
         context.logger.warn(
-            `Diff is very large (${diffSizeKB}KB, ${fileCount} files). ` +
-                `AI analysis may fail or return empty results for diffs exceeding ~15KB.`
+            `Diff is too large for AI analysis ` +
+                `(${gitDiff.length.toLocaleString()} chars / ${diffSizeKB}KB, ${fileCount} files). ` +
+                `The AI endpoint limit is 100,000 characters.`
         );
     }
 
@@ -119,9 +121,9 @@ export async function sdkDiffCommand({
         const errorMessage = error instanceof Error ? error.message : String(error);
         context.failWithoutThrowing(
             `Failed to analyze SDK diff. ` +
-                `Diff stats: ${diffSizeKB}KB, ${fileCount} files changed. ` +
-                (gitDiff.length > DIFF_SIZE_WARNING_THRESHOLD
-                    ? `The diff likely exceeds the AI endpoint's size limit (~15KB). `
+                `Diff stats: ${gitDiff.length.toLocaleString()} chars, ${diffSizeKB}KB, ${fileCount} files changed. ` +
+                (gitDiff.length > DIFF_SIZE_LIMIT
+                    ? `The diff exceeds the AI endpoint's 100,000 character limit. `
                     : "") +
                 `Error: ${errorMessage}`
         );
