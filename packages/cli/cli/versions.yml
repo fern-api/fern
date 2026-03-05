@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.3.5
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing with `TAR_ENTRY_ERROR` and
+        `ENOENT` on `package.json` when upgrading multiple workspaces.
+        The root cause was concurrent `npm install` calls to the same
+        `--prefix` directory racing on tar extraction. Now the migration
+        package is installed exactly once per CLI process using a
+        deduplicating promise pattern, and an isolated npm cache prevents
+        system-level cache corruption.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.3.4
   changelogEntry:
     - summary: |
