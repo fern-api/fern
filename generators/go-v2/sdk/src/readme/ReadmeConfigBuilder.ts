@@ -70,17 +70,6 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
 
     let sections: FernGeneratorCli.CustomSection[] = [];
 
-    // Add default golangci-lint section.
-    sections.push({
-        name: "Lint",
-        language: FernGeneratorCli.Language.Go,
-        content:
-            "This SDK is fully compatible with [golangci-lint](https://golangci-lint.run/). " +
-            "The generated CI workflow (`.github/workflows/ci.yml`) includes a lint job that runs automatically on push. " +
-            "You can also run it locally:\n\n" +
-            "```sh\ngolangci-lint run\n```"
-    });
-
     for (const section of irCustomSections ?? []) {
         if (section.language === "go" && !customConfigSections?.some((s) => s.title === section.title)) {
             sections.push({
