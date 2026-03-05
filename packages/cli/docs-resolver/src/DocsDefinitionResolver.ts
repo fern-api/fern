@@ -1449,7 +1449,9 @@ export class DocsDefinitionResolver {
         // Extract GraphQL operations and types scoped to the current API section's workspace.
         // This ensures that only GraphQL specs belonging to this specific API definition are included,
         // rather than merging all GraphQL operations from all workspaces into every API section.
-        const graphqlData = await this.extractGraphQLData(openapiWorkspace);
+        // We use item.apiName to filter rather than openapiWorkspace, because openapiWorkspace
+        // can be undefined when the v3 parser fails or is disabled (falling back to v1 parser).
+        const graphqlData = await this.extractGraphQLData(item.apiName);
 
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
@@ -1570,11 +1572,12 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Extract GraphQL operations from a specific workspace, or all workspaces if none is provided.
-     * When a targetWorkspace is specified, only GraphQL specs from that workspace are included,
+     * Extract GraphQL operations from a specific workspace identified by apiName,
+     * or all workspaces if no apiName is provided (single-API setups).
+     * When an apiName is specified, only the matching workspace's GraphQL specs are included,
      * preventing GraphQL operations from leaking into unrelated API reference sections.
      */
-    private async extractGraphQLData(targetWorkspace?: OSSWorkspace): Promise<{
+    private async extractGraphQLData(apiName?: string): Promise<{
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
         namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
@@ -1583,8 +1586,18 @@ export class DocsDefinitionResolver {
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
-        // Scope to the target workspace if provided, otherwise fall back to all workspaces
-        const workspacesToProcess = targetWorkspace ? [targetWorkspace] : this.ossWorkspaces;
+        // Scope to the workspace matching apiName if provided, otherwise fall back to all workspaces.
+        // We filter by apiName (from docs.yml api-name field) rather than by OSSWorkspace reference,
+        // because the OSSWorkspace may not be resolved when the v3 parser fails or is disabled.
+        let workspacesToProcess: OSSWorkspace[];
+        if (apiName != null) {
+            const matched = this.ossWorkspaces.find((ws) => ws.workspaceName === apiName);
+            workspacesToProcess = matched ? [matched] : [];
+        } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
+            workspacesToProcess = [this.ossWorkspaces[0]];
+        } else {
+            workspacesToProcess = this.ossWorkspaces;
+        }
 
         // Process GraphQL specs directly (not relying on workspace pre-processing)
         for (const ossWorkspace of workspacesToProcess) {
