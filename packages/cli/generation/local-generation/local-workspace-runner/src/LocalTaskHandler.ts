@@ -10,6 +10,7 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
+import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -25,6 +26,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        autoVersioningCache?: AutoVersioningCache;
     }
 }
 
@@ -39,6 +41,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private autoVersioningCache: AutoVersioningCache | undefined;
 
     constructor({
         context,
@@ -50,7 +53,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        autoVersioningCache
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -62,6 +66,7 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.autoVersioningCache = autoVersioningCache;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -164,7 +169,21 @@ export class LocalTaskHandler {
                 return null;
             }
 
+            // Check cache for a previously computed result with the same cleaned diff
+            if (this.autoVersioningCache != null) {
+                const cacheKey = this.autoVersioningCache.key(cleanedDiff);
+                const cached = this.autoVersioningCache.get(cacheKey);
+                if (cached !== undefined) {
+                    this.context.logger.info(
+                        `[AutoVersioning] Cache hit — reusing result (key: ${cacheKey.slice(0, 8)}…) ` +
+                            `bump=${cached?.version ?? "NO_CHANGE"}`
+                    );
+                    return cached;
+                }
+            }
+
             // Call AI to analyze the diff
+            let result: AutoVersionResult | null;
             try {
                 // TODO: Need to get project for BAML client configuration
                 const clientRegistry = await this.getClientRegistry();
@@ -174,31 +193,39 @@ export class LocalTaskHandler {
 
                 if (analysis.version_bump === VersionBump.NO_CHANGE) {
                     this.context.logger.info("AI detected no semantic changes");
-                    return null;
+                    result = null;
+                } else {
+                    // Calculate new version
+                    const newVersion = this.incrementVersion(previousVersion, analysis.version_bump);
+
+                    this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
+
+                    const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
+
+                    result = {
+                        version: newVersion,
+                        commitMessage
+                    };
                 }
-
-                // Calculate new version
-                const newVersion = this.incrementVersion(previousVersion, analysis.version_bump);
-
-                this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
-
-                const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
-
-                return {
-                    version: newVersion,
-                    commitMessage
-                };
             } catch (aiError) {
                 this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
                     : "SDK regeneration\n\n🌿 Generated with Fern";
-                return {
+                result = {
                     version: newVersion,
                     commitMessage: fallbackMessage
                 };
             }
+
+            // Store result in cache for subsequent generators with the same diff
+            if (this.autoVersioningCache != null) {
+                const cacheKey = this.autoVersioningCache.key(cleanedDiff);
+                this.autoVersioningCache.set(cacheKey, result);
+            }
+
+            return result;
         } catch (error) {
             if (error instanceof AutoVersioningException) {
                 // Fall back to initial version when we can't extract the previous version
