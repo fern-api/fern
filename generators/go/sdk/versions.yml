@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.27.1
+- version: 1.28.1
   changelogEntry:
     - summary: |
         Resolve datetime aliases in marshal/unmarshal code generation. Fields typed as
@@ -10,6 +10,20 @@
         timezone suffix (e.g. `2024-01-15T09:30:00`), falling back from RFC 3339
         when the timezone is absent.
       type: fix
+  createdAt: "2026-03-04"
+  irVersion: 61
+
+- version: 1.28.0
+  changelogEntry:
+    - summary: |
+        Improve DateTime deserialization to handle multiple timestamp formats instead of
+        only strict RFC3339. The UnmarshalJSON method now tries RFC3339Nano first (which
+        is a superset of RFC3339 and supports fractional seconds), then falls back to
+        ISO 8601 without timezone (assuming UTC), then date-only format, and finally
+        Unix epoch seconds (integer). This matches the flexibility of other Fern SDK
+        generators (Java, Python, TypeScript, C#) and prevents deserialization failures
+        when APIs return timestamps in slightly different ISO 8601 variants.
+      type: feat
   createdAt: "2026-03-04"
   irVersion: 61
 
