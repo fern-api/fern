@@ -3,7 +3,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import type { Migration, MigrationModule, MigratorResult } from "@fern-api/migrations-base";
-import { mkdir, readFile } from "fs/promises";
+import { access, mkdir, readFile, rm } from "fs/promises";
 import { join } from "path";
 import semver from "semver";
 import type { FernYmlEditor } from "../../config/fern-yml/FernYmlEditor.js";
@@ -11,6 +11,18 @@ import type { Target } from "../config/Target.js";
 
 /** The unified npm package containing all generator migrations. */
 const MIGRATION_PACKAGE_NAME = "@fern-api/generator-migrations";
+
+/**
+ * Checks whether a file exists on disk.
+ */
+async function fileExists(filePath: string): Promise<boolean> {
+    try {
+        await access(filePath);
+        return true;
+    } catch {
+        return false;
+    }
+}
 
 export namespace GeneratorMigrator {
     export interface Config {
@@ -158,31 +170,21 @@ export class GeneratorMigrator {
      * Downloads and loads the migration module for a specific generator.
      * Installs `@fern-api/generator-migrations@latest` into the cache
      * directory and imports the module for the given generator name.
+     *
+     * Uses an isolated npm cache and verifies extraction succeeded.
+     * If the first install results in a corrupt extraction (npm
+     * TAR_ENTRY_ERROR -- npm exits 0 but files are missing), the cache
+     * directory is deleted and the install is retried once.
      */
     private async loadMigrationModule(generatorName: string): Promise<MigrationModule | undefined> {
         const cacheDir = this.cachePath as string;
         await mkdir(cacheDir, { recursive: true });
 
         try {
-            await loggingExeca(
-                this.logger,
-                "npm",
-                [
-                    "install",
-                    `${MIGRATION_PACKAGE_NAME}@latest`,
-                    "--prefix",
-                    cacheDir,
-                    "--ignore-scripts",
-                    "--no-audit",
-                    "--no-fund"
-                ],
-                { doNotPipeOutput: true }
-            );
-
             const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
             const packageJsonPath = join(packageDir, "package.json");
-            const packageJsonContent = await readFile(packageJsonPath, "utf-8");
-            const packageJson = JSON.parse(packageJsonContent) as { main?: string };
+
+            const packageJson = await this.installWithRetry({ cacheDir, packageJsonPath });
 
             if (packageJson.main == null) {
                 throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
@@ -212,6 +214,72 @@ export class GeneratorMigrator {
                     `Please check your internet connection and npm configuration, then try again.`
             );
         }
+    }
+
+    /**
+     * Runs `npm install` for the migration package into the given cache
+     * directory with an isolated npm cache to avoid system cache corruption.
+     */
+    private async runNpmInstall(cacheDir: string): Promise<void> {
+        const npmCacheDir = join(cacheDir, ".npm-cache");
+        await loggingExeca(
+            this.logger,
+            "npm",
+            [
+                "install",
+                `${MIGRATION_PACKAGE_NAME}@latest`,
+                "--prefix",
+                cacheDir,
+                "--cache",
+                npmCacheDir,
+                "--ignore-scripts",
+                "--no-audit",
+                "--no-fund"
+            ],
+            { doNotPipeOutput: true }
+        );
+    }
+
+    /**
+     * Installs the migration package and verifies extraction succeeded.
+     * If package.json is missing after install (corrupt tar extraction),
+     * wipes the cache and retries once.
+     */
+    private async installWithRetry(params: {
+        cacheDir: string;
+        packageJsonPath: string;
+    }): Promise<{ main?: string }> {
+        const { cacheDir, packageJsonPath } = params;
+
+        // First attempt
+        await this.runNpmInstall(cacheDir);
+
+        if (await fileExists(packageJsonPath)) {
+            const content = await readFile(packageJsonPath, "utf-8");
+            return JSON.parse(content) as { main?: string };
+        }
+
+        // package.json missing after install -- likely a corrupt tar extraction.
+        // Wipe the entire cache directory (including the isolated npm cache) and retry once.
+        this.logger.warn(
+            `Migration package extraction appears corrupt (package.json missing after install). ` +
+                `Clearing cache and retrying...`
+        );
+        await rm(cacheDir, { recursive: true, force: true });
+        await mkdir(cacheDir, { recursive: true });
+
+        // Second (and final) attempt
+        await this.runNpmInstall(cacheDir);
+
+        if (!(await fileExists(packageJsonPath))) {
+            throw new Error(
+                `${MIGRATION_PACKAGE_NAME} installation failed: package.json is missing after install and retry. ` +
+                    `This may indicate a corrupt npm cache or a problem with the published package.`
+            );
+        }
+
+        const content = await readFile(packageJsonPath, "utf-8");
+        return JSON.parse(content) as { main?: string };
     }
 
     /**
