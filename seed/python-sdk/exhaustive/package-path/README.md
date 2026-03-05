@@ -96,11 +96,21 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-pager = client.endpoints.pagination.list_items(...)
-for item in pager:
-    print(item)
+from seed import SeedExhaustive
 
+client = SeedExhaustive(
+    token="<token>",
+)
+
+client.endpoints.pagination.list_items(
+    cursor="cursor",
+    limit=1,
+)
+```
+
+```python
 # You can also iterate through pages and access the typed response per page
+pager = client.endpoints.pagination.list_items(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:

@@ -107,11 +107,29 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-pager = client.complex_.search(...)
-for item in pager:
-    print(item)
+from seed import SeedPagination
 
+client = SeedPagination(
+    token="<token>",
+)
+
+client.complex_.search(
+    index="index",
+    pagination={
+        "per_page": 1,
+        "starting_after": "starting_after"
+    },
+    query={
+        "field": "field",
+        "operator": "=",
+        "value": "value"
+    },
+)
+```
+
+```python
 # You can also iterate through pages and access the typed response per page
+pager = client.complex_.search(...)
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:
@@ -128,11 +146,17 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedPagination
 
-client = SeedPagination(...)
-response = client.complex_.with_raw_response.search(...)
-print(response.headers)  # access the response headers
-print(response.status_code)  # access the response status code
-print(response.data)  # access the underlying object
+client = SeedPagination(
+    ...,
+)
+pager = client.complex_.search(...)
+print(pager.response)  # access the typed response for the first page
+for item in pager:
+    print(item)  # access the underlying object(s)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)  # access the underlying object(s)
 ```
 
 ### Retries

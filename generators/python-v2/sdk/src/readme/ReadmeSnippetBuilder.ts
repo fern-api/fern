@@ -87,14 +87,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                       }
                   }
                 : undefined),
-            ...(this.hasPaginatedEndpoints()
-                ? {
-                      [ReadmeSnippetBuilder.PAGINATION_FEATURE_ID]: {
-                          renderer: this.renderPaginationSnippet.bind(this),
-                          predicate: (endpoint: EndpointWithFilepath) => endpoint.endpoint.pagination != null
-                      }
-                  }
-                : undefined),
+            // Pagination is handled separately below to produce two code blocks
             ...(this.hasWebsocketChannels()
                 ? {
                       [ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID]: {
@@ -119,6 +112,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         for (const [featureId, { renderer, predicate }] of Object.entries(templatedSnippetsConfig)) {
             snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate);
+        }
+
+        // Pagination snippets are handled separately to produce two code blocks (like v1)
+        if (this.hasPaginatedEndpoints()) {
+            snippetsByFeatureId[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
         }
 
         // Always add custom client snippet (not endpoint-specific)
@@ -383,23 +381,69 @@ for chunk in response:
         );
     }
 
-    private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
-        const methodCall = this.getMethodCall(endpoint);
-        const hasParams = this.endpointHasParameters(endpoint.endpoint);
-        return this.writeCode(
-            `pager = ${methodCall}(${hasParams ? "..." : ""})
-for item in pager:
-    print(item)
+    private buildPaginationSnippets(): string[] {
+        const paginationEndpoint = this.findPaginationEndpoint();
+        if (paginationEndpoint == null) {
+            return [];
+        }
 
-# You can also iterate through pages and access the typed response per page
+        const snippets: string[] = [];
+
+        // First snippet: pre-rendered full snippet (same as usage)
+        const prerenderedSnippet = this.prerenderedSnippetsByEndpointId[paginationEndpoint.endpoint.id];
+        if (prerenderedSnippet != null) {
+            snippets.push(prerenderedSnippet);
+        }
+
+        // Second snippet: abbreviated page iteration pattern
+        const methodCall = this.getMethodCall(paginationEndpoint);
+        const hasParams = this.endpointHasParameters(paginationEndpoint.endpoint);
+        snippets.push(
+            this.writeCode(
+                `# You can also iterate through pages and access the typed response per page
+pager = ${methodCall}(${hasParams ? "..." : ""})
 for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:
         print(item)`
+            )
         );
+
+        return snippets;
+    }
+
+    private findPaginationEndpoint(): EndpointWithFilepath | undefined {
+        const configuredEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.PAGINATION_FEATURE_ID).filter(
+            (ep) => ep.endpoint.pagination != null
+        );
+        if (configuredEndpoints.length > 0) {
+            return configuredEndpoints[0];
+        }
+        return Object.values(this.endpointsById).find((ep) => ep.endpoint.pagination != null);
     }
 
     private renderAccessRawResponseDataSnippet(endpoint: EndpointWithFilepath): string {
+        // For paginated endpoints, show pager response pattern instead of .with_raw_response
+        if (endpoint.endpoint.pagination != null) {
+            const methodCall = this.getMethodCall(endpoint);
+            const hasParams = this.endpointHasParameters(endpoint.endpoint);
+            return this.writeCode(
+                `from ${this.packageName} import ${this.clientClassName}
+
+client = ${this.clientClassName}(
+    ...,
+)
+pager = ${methodCall}(${hasParams ? "..." : ""})
+print(pager.response)  # access the typed response for the first page
+for item in pager:
+    print(item)  # access the underlying object(s)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)  # access the underlying object(s)`
+            );
+        }
+
         const methodCall = this.getMethodCall(endpoint);
         const hasParams = this.endpointHasParameters(endpoint.endpoint);
         return this.writeCode(
