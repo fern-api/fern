@@ -6,6 +6,7 @@ import type { Migration, MigrationModule, MigratorResult } from "@fern-api/migra
 import { mkdir, readFile } from "fs/promises";
 import { join } from "path";
 import semver from "semver";
+import { pathToFileURL } from "url";
 import type { FernYmlEditor } from "../../config/fern-yml/FernYmlEditor.js";
 import type { Target } from "../config/Target.js";
 
@@ -211,7 +212,7 @@ export class GeneratorMigrator {
             }
 
             const packageEntryPoint = join(packageDir, packageJson.main);
-            const { migrations } = await import(packageEntryPoint);
+            const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
             return migrations as Record<string, MigrationModule>;
         })();
 

@@ -5,6 +5,7 @@ import { mkdir, readFile } from "fs/promises";
 import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
+import { pathToFileURL } from "url";
 
 import { Migration, MigrationModule, MigratorResult } from "./types.js";
 
@@ -79,7 +80,7 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
         }
 
         const packageEntryPoint = join(packageDir, packageJson.main);
-        const { migrations } = await import(packageEntryPoint);
+        const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
         return migrations as Record<string, MigrationModule>;
     })();
 
