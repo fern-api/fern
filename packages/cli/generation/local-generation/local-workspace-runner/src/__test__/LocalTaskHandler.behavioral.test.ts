@@ -210,12 +210,9 @@ const mockContext = {
     logger: mockLogger
 };
 
-// Helper to call private handleAutoVersioning method
-async function callHandleAutoVersioning(
-    handler: Record<string, unknown>
-): Promise<{ version: string; commitMessage: string } | null> {
-    // biome-ignore lint/suspicious/noExplicitAny: accessing private method for testing
-    return (handler as any).handleAutoVersioning();
+// biome-ignore lint/suspicious/noExplicitAny: accessing private method for testing
+async function callHandleAutoVersioning(handler: any): Promise<{ version: string; commitMessage: string } | null> {
+    return handler.handleAutoVersioning();
 }
 
 describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
