@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.61.6
+  changelogEntry:
+    - summary: |
+        Fix `parse_sse_obj` to filter the SSE dict down to only the fields declared on the
+        matching variant model before passing it to `parse_obj_as`. For event-level discrimination
+        (where the discriminator like `"event"` lives on the SSE envelope), extra SSE fields such
+        as `id`, `retry`, and `comment` no longer leak into the parsed variant as attributes.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.61.5
   changelogEntry:
     - summary: |
