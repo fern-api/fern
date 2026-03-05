@@ -34,7 +34,7 @@ export { OutputObjectSchema } from "./OutputObjectSchema.js";
 export { OutputSchema } from "./OutputSchema.js";
 export { PublishSchema } from "./PublishSchema.js";
 export { PypiMetadataSchema, PypiPublishSchema } from "./PypiPublishSchema.js";
-export { ReadmeSchema } from "./ReadmeSchema.js";
+export { ExampleStyleSchema, ReadmeCustomSectionSchema, ReadmeEndpointSchema, ReadmeSchema } from "./ReadmeSchema.js";
 export { ReviewersSchema } from "./ReviewersSchema.js";
 export { RubygemsPublishSchema } from "./RubygemsPublishSchema.js";
 export { resolveOutputObjectSchema } from "./resolveOutputObjectSchema.js";

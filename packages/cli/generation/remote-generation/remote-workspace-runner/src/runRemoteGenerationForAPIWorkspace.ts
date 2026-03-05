@@ -32,7 +32,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     mode,
     fernignorePath,
     dynamicIrOnly,
-    validateWorkspace
+    validateWorkspace,
+    retryRateLimited
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -48,6 +49,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
     validateWorkspace?: boolean;
+    retryRateLimited: boolean;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -114,7 +116,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
                     fernignorePath,
-                    dynamicIrOnly
+                    dynamicIrOnly,
+                    retryRateLimited
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

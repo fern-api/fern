@@ -1,7 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { join } from "path";
-import { Writable } from "stream";
 import { describe, expect, it } from "vitest";
 import { ApiChecker } from "../api/checker/ApiChecker.js";
 import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
@@ -26,11 +25,9 @@ describe("ApiChecker", () => {
                 return;
             }
 
-            const { stream, getOutput } = createCaptureStream();
             const checker = new ApiChecker({
                 context: createTestContext({ cwd }),
-                cliVersion: "0.0.0",
-                stream
+                cliVersion: "0.0.0"
             });
 
             const checkResult = await checker.check({
@@ -41,7 +38,7 @@ describe("ApiChecker", () => {
             expect(checkResult.invalidApis.size).toBe(0);
             expect(checkResult.errorCount).toBe(0);
             expect(checkResult.warningCount).toBe(0);
-            expect(getOutput()).toBe("");
+            expect(checkResult.violations).toHaveLength(0);
         });
 
         it("checks only specified APIs when apiNames is provided", async () => {
@@ -55,11 +52,9 @@ describe("ApiChecker", () => {
                 return;
             }
 
-            const { stream } = createCaptureStream();
             const checker = new ApiChecker({
                 context: createTestContext({ cwd }),
-                cliVersion: "0.0.0",
-                stream
+                cliVersion: "0.0.0"
             });
 
             const checkResult = await checker.check({
@@ -75,11 +70,9 @@ describe("ApiChecker", () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
             const workspace = await loadWorkspace("simple-api");
 
-            const { stream } = createCaptureStream();
             const checker = new ApiChecker({
                 context: createTestContext({ cwd }),
-                cliVersion: "0.0.0",
-                stream
+                cliVersion: "0.0.0"
             });
 
             const checkResult = await checker.check({
@@ -95,11 +88,9 @@ describe("ApiChecker", () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
             const workspace = await loadWorkspace("simple-api");
 
-            const { stream, getOutput } = createCaptureStream();
             const checker = new ApiChecker({
                 context: createTestContext({ cwd }),
-                cliVersion: "0.0.0",
-                stream
+                cliVersion: "0.0.0"
             });
 
             const checkResult = await checker.check({
@@ -111,18 +102,16 @@ describe("ApiChecker", () => {
             expect(checkResult.invalidApis.size).toBe(0);
             expect(checkResult.errorCount).toBe(0);
             expect(checkResult.warningCount).toBe(0);
-            expect(getOutput()).toBe("");
+            expect(checkResult.violations).toHaveLength(0);
         });
 
         it("includes elapsed time in result", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
             const workspace = await loadWorkspace("simple-api");
 
-            const { stream } = createCaptureStream();
             const checker = new ApiChecker({
                 context: createTestContext({ cwd }),
-                cliVersion: "0.0.0",
-                stream
+                cliVersion: "0.0.0"
             });
 
             const checkResult = await checker.check({
@@ -133,24 +122,21 @@ describe("ApiChecker", () => {
         });
     });
 
-    describe("stream injection", () => {
-        it("writes output to injected stream", async () => {
+    describe("violations returned in result", () => {
+        it("returns empty violations for valid workspace", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
             const workspace = await loadWorkspace("simple-api");
 
-            const { stream, getOutput } = createCaptureStream();
             const checker = new ApiChecker({
                 context: createTestContext({ cwd }),
-                cliVersion: "0.0.0",
-                stream
+                cliVersion: "0.0.0"
             });
 
-            await checker.check({
+            const checkResult = await checker.check({
                 workspace
             });
 
-            // Valid API produces no output.
-            expect(getOutput()).toBe("");
+            expect(checkResult.violations).toHaveLength(0);
         });
     });
 
@@ -159,11 +145,9 @@ describe("ApiChecker", () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
             const workspace = await loadWorkspace("simple-api");
 
-            const { stream } = createCaptureStream();
             const checker = new ApiChecker({
                 context: createTestContext({ cwd }),
-                cliVersion: "0.0.0",
-                stream
+                cliVersion: "0.0.0"
             });
 
             const checkResult = await checker.check({
@@ -175,21 +159,3 @@ describe("ApiChecker", () => {
         });
     });
 });
-
-/**
- * Creates a writable stream that captures output for testing.
- */
-function createCaptureStream(): { stream: NodeJS.WriteStream; getOutput: () => string } {
-    let output = "";
-    const stream = new Writable({
-        write(chunk, _encoding, callback) {
-            output += chunk.toString();
-            callback();
-        }
-    }) as NodeJS.WriteStream;
-
-    return {
-        stream,
-        getOutput: () => output
-    };
-}
