@@ -8,6 +8,7 @@ import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { command } from "../_internal/command.js";
+import { type JsonOutput, toJsonViolation } from "../_internal/toJsonViolation.js";
 
 export declare namespace CheckCommand {
     export interface Args extends GlobalArgs {
@@ -15,6 +16,8 @@ export declare namespace CheckCommand {
         api?: string;
         /** Treat warnings as errors */
         strict: boolean;
+        /** Output results as JSON to stdout */
+        json: boolean;
     }
 }
 
@@ -24,10 +27,24 @@ export class CheckCommand {
 
         this.validateArgs(args, workspace);
 
-        const { totalErrors, totalWarnings } = await this.runChecks({ context, workspace });
+        const { apiCheckResult, sdkCheckResult } = await this.runChecks({ context, workspace, args });
+
+        const totalErrors =
+            (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount;
+        const totalWarnings = apiCheckResult.warningCount + sdkCheckResult.warningCount;
+        const hasErrors = totalErrors > 0 || (args.strict && totalWarnings > 0);
+
+        if (args.json) {
+            const response = this.buildJsonResponse({ apiCheckResult, sdkCheckResult, hasErrors });
+            context.stdout.info(JSON.stringify(response, null, 2));
+            if (hasErrors) {
+                throw CliError.exit();
+            }
+            return;
+        }
 
         // Fail if there are errors, or if strict mode and there are warnings.
-        if (totalErrors > 0 || (args.strict && totalWarnings > 0)) {
+        if (hasErrors) {
             throw CliError.exit();
         }
 
@@ -42,37 +59,34 @@ export class CheckCommand {
 
     private async runChecks({
         context,
-        workspace
+        workspace,
+        args
     }: {
         context: Context;
         workspace: Workspace;
-    }): Promise<{ totalErrors: number; totalWarnings: number }> {
-        const violations: (ApiChecker.ResolvedViolation | SdkChecker.ResolvedViolation)[] = [];
-
+        args: CheckCommand.Args;
+    }): Promise<{ apiCheckResult: ApiChecker.Result; sdkCheckResult: SdkChecker.Result }> {
         const apiChecker = new ApiChecker({
             context,
             cliVersion: workspace.cliVersion
         });
         const apiCheckResult = await apiChecker.check({ workspace });
-        if (apiCheckResult.violations.length > 0) {
-            violations.push(...apiCheckResult.violations);
-        }
 
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = await sdkChecker.check({ workspace });
-        if (sdkCheckResult.violations.length > 0) {
-            violations.push(...sdkCheckResult.violations);
+
+        if (!args.json) {
+            const violations: (ApiChecker.ResolvedViolation | SdkChecker.ResolvedViolation)[] = [
+                ...apiCheckResult.violations,
+                ...sdkCheckResult.violations
+            ];
+
+            if (violations.length > 0) {
+                this.displayViolations(violations);
+            }
         }
 
-        if (violations.length > 0) {
-            this.displayViolations(violations);
-        }
-
-        return {
-            totalErrors:
-                (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount,
-            totalWarnings: apiCheckResult.warningCount + sdkCheckResult.warningCount
-        };
+        return { apiCheckResult, sdkCheckResult };
     }
 
     private displayViolations(
@@ -81,6 +95,34 @@ export class CheckCommand {
         for (const v of violations) {
             process.stderr.write(`${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
         }
+    }
+
+    private buildJsonResponse({
+        apiCheckResult,
+        sdkCheckResult,
+        hasErrors
+    }: {
+        apiCheckResult: ApiChecker.Result;
+        sdkCheckResult: SdkChecker.Result;
+        hasErrors: boolean;
+    }): JsonOutput.Response {
+        const results: JsonOutput.Results = {};
+
+        const showApiNames = new Set(apiCheckResult.violations.map((v) => v.apiName)).size > 1;
+        if (apiCheckResult.violations.length > 0) {
+            results.apis = apiCheckResult.violations.map((v) =>
+                toJsonViolation(v, showApiNames ? { api: v.apiName } : undefined)
+            );
+        }
+
+        if (sdkCheckResult.violations.length > 0) {
+            results.sdks = sdkCheckResult.violations.map((v) => toJsonViolation(v));
+        }
+
+        return {
+            success: !hasErrors,
+            results
+        };
     }
 
     private validateArgs(args: CheckCommand.Args, workspace: Workspace): void {
@@ -110,6 +152,11 @@ export function addCheckCommand(cli: Argv<GlobalArgs>): void {
                 .option("strict", {
                     type: "boolean",
                     description: "Treat warnings as errors",
+                    default: false
+                })
+                .option("json", {
+                    type: "boolean",
+                    description: "Output results as JSON to stdout",
                     default: false
                 })
     );
