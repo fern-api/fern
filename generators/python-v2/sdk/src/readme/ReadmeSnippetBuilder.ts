@@ -598,9 +598,7 @@ client = ${this.clientClassName}(
         if (environmentInfo != null) {
             const { importLine, constructorArg } = environmentInfo;
 
-            const packageImportIdx = lines.findIndex((line) =>
-                line.startsWith(`from ${this.packageName} import`)
-            );
+            const packageImportIdx = lines.findIndex((line) => line.startsWith(`from ${this.packageName} import`));
             if (packageImportIdx !== -1) {
                 lines.splice(packageImportIdx + 1, 0, importLine);
                 const adjustedClientLineIdx = clientLineIdx + 1;

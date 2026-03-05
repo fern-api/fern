@@ -412,13 +412,7 @@ function fixSnippetMethodPath({
  * Post-processes a prerendered snippet to inject base_url or environment setup
  * into the client constructor, matching v1 output.
  */
-function injectClientSetupIntoSnippet({
-    context,
-    snippet
-}: {
-    context: SdkGeneratorContext;
-    snippet: string;
-}): string {
+function injectClientSetupIntoSnippet({ context, snippet }: { context: SdkGeneratorContext; snippet: string }): string {
     const lines = snippet.split("\n");
     const clientLineIdx = lines.findIndex((line) => line.startsWith("client = "));
     if (clientLineIdx === -1) {
