@@ -11,6 +11,7 @@ import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
+import { extractPublicSurface } from "./PublicSurfaceExtractor.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
@@ -25,6 +26,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        generatorLanguage: string;
     }
 }
 
@@ -39,6 +41,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private generatorLanguage: string;
 
     constructor({
         context,
@@ -50,7 +53,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        generatorLanguage
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -62,6 +66,7 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.generatorLanguage = generatorLanguage;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -138,7 +143,9 @@ export class LocalTaskHandler {
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
             this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
-            this.context.logger.debug(`Cleaned diff size: ${cleanedDiff.length} bytes`);
+            this.context.logger.debug(
+                `Cleaned diff size: ${cleanedDiff.length} bytes (language: ${this.generatorLanguage})`
+            );
 
             // Handle new SDK repository with no previous version
             if (previousVersion == null) {
@@ -164,13 +171,26 @@ export class LocalTaskHandler {
                 return null;
             }
 
+            // Extract public API surface from the cleaned diff (Tier 2)
+            const surfaceDiff = extractPublicSurface(cleanedDiff, this.generatorLanguage);
+            this.context.logger.debug(
+                `Surface diff size: ${surfaceDiff.length} bytes (from ${cleanedDiff.length} bytes cleaned)`
+            );
+
+            if (surfaceDiff.trim().length === 0) {
+                this.context.logger.info(
+                    "No public API surface changes detected after extraction. Skipping AI analysis."
+                );
+                return null;
+            }
+
             // Call AI to analyze the diff
             try {
                 // TODO: Need to get project for BAML client configuration
                 const clientRegistry = await this.getClientRegistry();
                 const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-                const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
+                const analysis = await bamlClient.AnalyzeSdkDiff(surfaceDiff);
 
                 if (analysis.version_bump === VersionBump.NO_CHANGE) {
                     this.context.logger.info("AI detected no semantic changes");

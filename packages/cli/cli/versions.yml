@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.7.0
+  changelogEntry:
+    - summary: |
+        Add Tier 2 public API surface extraction for AUTO versioning. Before
+        sending the cleaned diff to AI for semantic version analysis, the CLI
+        now strips implementation details (method bodies, imports, private
+        members, comments) and keeps only public API signatures. This reduces
+        input from hundreds of KB to ~5-15 KB for most SDK changes, improving
+        AI analysis accuracy and avoiding silent failures on large diffs.
+        Supports language-aware extraction for TypeScript, Python, Java, and
+        Go. Unknown languages fall through unchanged. A 40 KB size gate
+        ensures the surface diff never exceeds the AI context limit.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.6.0
   changelogEntry:
     - summary: |

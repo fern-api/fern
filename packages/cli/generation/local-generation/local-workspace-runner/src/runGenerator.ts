@@ -26,6 +26,7 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
+import { deriveLanguageFromGeneratorName } from "./PublicSurfaceExtractor.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -224,7 +225,8 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false
+        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
+        generatorLanguage: deriveLanguageFromGeneratorName(generatorInvocation.name)
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 
