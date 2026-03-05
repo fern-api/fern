@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { BehavioralBump } from "../../src/baml_client/types.js";
 import type { AnalyzeBehavioralResponse } from "../../src/baml_client/types.js";
+import { BehavioralBump } from "../../src/baml_client/types.js";
 
 /**
  * Tests for the AnalyzeBehavioralChanges BAML function.
@@ -26,9 +26,7 @@ describe("AnalyzeBehavioralChanges", () => {
     it("returns MINOR when diff changes 404 from null-return to throw", () => {
         const response: AnalyzeBehavioralResponse = {
             version_bump: BehavioralBump.MINOR,
-            behavioral_changes: [
-                "HTTP 404 responses now throw a NotFoundError instead of returning null"
-            ],
+            behavioral_changes: ["HTTP 404 responses now throw a NotFoundError instead of returning null"],
             message: "feat: throw NotFoundError on 404 instead of returning null"
         };
 
@@ -41,9 +39,7 @@ describe("AnalyzeBehavioralChanges", () => {
     it("returns MINOR when diff changes date serialization format", () => {
         const response: AnalyzeBehavioralResponse = {
             version_bump: BehavioralBump.MINOR,
-            behavioral_changes: [
-                "Date serialization changed from ISO 8601 to Unix timestamp format"
-            ],
+            behavioral_changes: ["Date serialization changed from ISO 8601 to Unix timestamp format"],
             message: "feat: change date serialization from ISO 8601 to Unix timestamp"
         };
 
