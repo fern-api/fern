@@ -2,8 +2,7 @@
 - version: 4.4.3
   changelogEntry:
     - summary: |
-        Fix `--preview` sending `basepathAware` to `finishDocsRegister`,
-        which caused preview URLs to be written to the basepath route KV store.
+        Preview domains are by default not basepath aware.
       type: fix
   createdAt: "2026-03-05"
   irVersion: 65
