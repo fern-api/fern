@@ -2,7 +2,7 @@
  * Renders template parameter and function parameter sections as ParamField components.
  *
  * Handles:
- * - Class-level template parameters (wrapped in AccordionGroup/Accordion)
+ * - Class-level template parameters (**Template parameters** heading)
  * - Method-level template parameters (**Template parameters** heading)
  * - Method-level parameters (**Parameters** heading)
  * - Default values
@@ -13,8 +13,8 @@ import type {
     CppDocSegment,
     CppDocstringIr,
     CppFunctionIr,
-    CppParameterIr,
     CppParamDoc,
+    CppParameterIr,
     CppTemplateParamIr,
     CppTypeInfo
 } from "../../../src/types/CppLibraryDocsIr.js";
@@ -131,7 +131,7 @@ function parseTemplateParam(tp: CppTemplateParamIr): { typePart: string; namePar
 }
 
 /**
- * Render class-level template parameters wrapped in AccordionGroup/Accordion.
+ * Render class-level template parameters with bold heading (consistent with method-level format).
  */
 export function renderClassTemplateParams(
     templateParams: CppTemplateParamIr[],
@@ -142,15 +142,14 @@ export function renderClassTemplateParams(
     }
 
     // Filter out SFINAE / enable_if template params that should not be rendered
-    const renderableParams = templateParams.filter(tp => !isSfinaeParam(tp));
+    const renderableParams = templateParams.filter((tp) => !isSfinaeParam(tp));
 
     if (renderableParams.length === 0) {
         return "";
     }
 
     const lines: string[] = [];
-    lines.push("<AccordionGroup>");
-    lines.push('<Accordion title="Template parameters">');
+    lines.push("**Template parameters**");
     lines.push("");
 
     for (let i = 0; i < renderableParams.length; i++) {
@@ -184,9 +183,10 @@ export function renderClassTemplateParams(
         }
     }
 
-    lines.push("");
-    lines.push("</Accordion>");
-    lines.push("</AccordionGroup>");
+    // Remove trailing blank line
+    if (lines[lines.length - 1] === "") {
+        lines.pop();
+    }
 
     return lines.join("\n");
 }
@@ -246,16 +246,13 @@ function findTemplateParamDescription(
 /**
  * Render method-level template parameters (**Template parameters** heading).
  */
-export function renderMethodTemplateParams(
-    func: CppFunctionIr,
-    docstring: CppDocstringIr | undefined
-): string {
+export function renderMethodTemplateParams(func: CppFunctionIr, docstring: CppDocstringIr | undefined): string {
     if (func.templateParams.length === 0) {
         return "";
     }
 
     // Filter out SFINAE / enable_if template params and unnamed params
-    const renderableParams = func.templateParams.filter(tp => {
+    const renderableParams = func.templateParams.filter((tp) => {
         const { namePart } = parseTemplateParam(tp);
         // Skip unnamed params or SFINAE enable_if params
         if (!namePart || namePart === tp.type) {
@@ -269,7 +266,7 @@ export function renderMethodTemplateParams(
     }
 
     // Check if any renderable template param has a description (from docstring)
-    const hasAnyDescription = renderableParams.some(tp => {
+    const hasAnyDescription = renderableParams.some((tp) => {
         const { namePart } = parseTemplateParam(tp);
         return findTemplateParamDescription(namePart, docstring, { includeParams: false }) != null;
     });
@@ -314,16 +311,13 @@ export function renderMethodTemplateParams(
 /**
  * Render method-level parameters (**Parameters** heading).
  */
-export function renderMethodParams(
-    func: CppFunctionIr,
-    docstring: CppDocstringIr | undefined
-): string {
+export function renderMethodParams(func: CppFunctionIr, docstring: CppDocstringIr | undefined): string {
     if (func.parameters.length === 0) {
         return "";
     }
 
     // Check if any parameter has a description
-    const paramsWithDesc = func.parameters.filter(p => {
+    const paramsWithDesc = func.parameters.filter((p) => {
         const desc = findParamDescription(p.name, docstring);
         return desc != null;
     });
@@ -373,10 +367,7 @@ export function renderMethodParams(
 /**
  * Find a parameter's description from docstring.
  */
-function findParamDescription(
-    name: string,
-    docstring: CppDocstringIr | undefined
-): string | undefined {
+function findParamDescription(name: string, docstring: CppDocstringIr | undefined): string | undefined {
     if (!docstring) {
         return undefined;
     }

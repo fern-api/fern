@@ -6,23 +6,25 @@
  * 2. Badge: <Badge intent="info">C++20 concept</Badge>
  * 3. Summary paragraphs
  * 4. Concept definition signature (CodeBlock)
- * 5. Template parameters (AccordionGroup)
+ * 5. Template parameters (bold heading + ParamFields)
  * 6. ---
  * 7. ## Description (detailed explanation from docstring description blocks)
  * 8. ---
  * 9. ## Related concepts (table from seeAlso)
  */
 
-import type {
-    CppConceptIr,
-    CppDocSegment
-} from "../../../src/types/CppLibraryDocsIr.js";
-import type { RenderContext, CompoundMeta } from "../context.js";
+import type { CppConceptIr, CppDocSegment } from "../../../src/types/CppLibraryDocsIr.js";
+import type { CompoundMeta, RenderContext } from "../context.js";
 import { buildLinkPath, getShortName } from "../context.js";
-import { formatTemplateParam, renderFrontmatter } from "./shared.js";
-import { renderDescriptionBlocks, renderSegmentsTrimmed, decodeDoxygenRefid, setCurrentPagePath } from "./DescriptionRenderer.js";
+import {
+    decodeDoxygenRefid,
+    renderDescriptionBlocks,
+    renderSegmentsTrimmed,
+    setCurrentPagePath
+} from "./DescriptionRenderer.js";
 import { renderClassTemplateParams } from "./ParamRenderer.js";
 import { renderCodeBlock } from "./SignatureRenderer.js";
+import { formatTemplateParam, renderFrontmatter } from "./shared.js";
 import { renderRelatedConceptsTable } from "./TableRenderer.js";
 
 // ---------------------------------------------------------------------------
@@ -46,9 +48,7 @@ function formatConceptSignature(concept: CppConceptIr): string {
     }
 
     // Concept definition
-    const constraintDisplay = concept.constraintExpression
-        ? concept.constraintExpression
-        : "/* see description */";
+    const constraintDisplay = concept.constraintExpression ? concept.constraintExpression : "/* see description */";
     parts.push(`concept ${concept.name} = ${constraintDisplay};`);
 
     return parts.join("\n");
@@ -107,10 +107,7 @@ function extractConceptLinks(concept: CppConceptIr): Record<string, string> {
  * For member refs where the refid decodes to a namespace (not a full member path),
  * the segment's display text (code or text) is appended to form the full qualified name.
  */
-function extractLinksFromSegments(
-    segments: CppDocSegment[],
-    links: Record<string, string>
-): void {
+function extractLinksFromSegments(segments: CppDocSegment[], links: Record<string, string>): void {
     for (const seg of segments) {
         if (seg.type === "codeRef" && seg.refid) {
             const decodedPath = decodeDoxygenRefid(seg.refid);
@@ -158,8 +155,7 @@ export function renderConceptPage(concept: CppConceptIr, meta: CompoundMeta): st
 
     // Frontmatter
     // Description is expected to be provided by the caller (pipeline/Lambda); fallback extracts from docstring summary
-    const description = meta.description
-        ?? (concept.docstring ? renderSegmentsTrimmed(concept.docstring.summary) : "");
+    const description = meta.description ?? (concept.docstring ? renderSegmentsTrimmed(concept.docstring.summary) : "");
 
     sections.push(...renderFrontmatter(concept.path, description));
 

@@ -9,7 +9,7 @@
  *    - Callouts (deprecated, warnings, notes)
  *    - See also
  *    - Example (H2, class-level)
- *    - Template parameters (AccordionGroup)
+ *    - Template parameters (bold heading + ParamFields)
  *    - Inherits from
  *    - Final/abstract annotation
  * 3. Body sections (each separated by ---)
@@ -145,7 +145,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
     }
 
-    // 7. Template parameters (AccordionGroup)
+    // 7. Template parameters (bold heading + ParamFields)
     if (cls.templateParams.length > 0) {
         const tplParams = renderClassTemplateParams(cls.templateParams, cls.docstring);
         if (tplParams) {
