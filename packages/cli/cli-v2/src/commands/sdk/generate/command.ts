@@ -112,7 +112,7 @@ export class GenerateCommand {
         const targets = this.getTargets({
             workspace: workspaceWithOverrides,
             args,
-            groupName: args.group ?? workspaceWithOverrides.sdks?.defaultGroup
+            groupName: args.target != null ? undefined : (args.group ?? workspaceWithOverrides.sdks?.defaultGroup)
         });
 
         this.validateArgs({ workspace: workspaceWithOverrides, args, targets });
