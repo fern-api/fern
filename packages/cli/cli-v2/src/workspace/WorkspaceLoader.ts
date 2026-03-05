@@ -74,11 +74,12 @@ export class WorkspaceLoader {
             success: true,
             workspace: {
                 absoluteFilePath: fernYml.absoluteFilePath,
+                fernYml,
                 ai,
                 apis,
-                org: fernYml.data.org,
                 cliVersion,
                 docs,
+                org: fernYml.data.org,
                 sdks
             }
         };

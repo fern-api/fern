@@ -1,12 +1,10 @@
 import chalk from "chalk";
 import type { Argv } from "yargs";
-import { FernYmlSchemaLoader } from "../../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../../ui/format.js";
-import { WorkspaceLoader } from "../../../workspace/WorkspaceLoader.js";
 import { command } from "../../_internal/command.js";
 
 export declare namespace CheckCommand {
@@ -18,16 +16,18 @@ export declare namespace CheckCommand {
 
 export class CheckCommand {
     public async handle(context: Context, args: CheckCommand.Args): Promise<void> {
-        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
-        const fernYml = await schemaLoader.loadOrThrow();
-
-        context.telemetry.tag({ org: fernYml.data.org });
-
-        const loader = new WorkspaceLoader({ cwd: context.cwd, logger: context.stderr });
-        const workspace = await loader.loadOrThrow({ fernYml });
+        const workspace = await context.loadWorkspaceOrThrow();
 
         const checker = new SdkChecker({ context });
-        const result = await checker.check({ workspace, fernYml });
+        const result = await checker.check({ workspace });
+
+        if (result.violations.length > 0) {
+            for (const v of result.violations) {
+                process.stderr.write(
+                    `${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`
+                );
+            }
+        }
 
         if (result.errorCount > 0 || (args.strict && result.warningCount > 0)) {
             throw CliError.exit();
