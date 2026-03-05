@@ -17,8 +17,8 @@ export class MigrationClient {
     protected readonly _options: NormalizedClientOptions<MigrationClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: MigrationClient.Options = {});
-    constructor(options: MigrationClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: MigrationClient.Options);
+    constructor(options: MigrationClient.Options, requestFn: core.RequestFn);
     constructor(options: MigrationClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
         this._requestFn =

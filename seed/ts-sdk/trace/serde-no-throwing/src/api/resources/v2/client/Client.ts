@@ -21,8 +21,8 @@ export class V2Client {
     protected _problem: ProblemClient | undefined;
     protected _v3: V3Client | undefined;
 
-    constructor(options: V2Client.Options = {});
-    constructor(options: V2Client.Options = {}, requestFn: core.RequestFn);
+    constructor(options: V2Client.Options);
+    constructor(options: V2Client.Options, requestFn: core.RequestFn);
     constructor(options: V2Client.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
         this._requestFn =

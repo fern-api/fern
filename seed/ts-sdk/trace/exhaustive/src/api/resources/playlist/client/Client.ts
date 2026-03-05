@@ -17,8 +17,8 @@ export class PlaylistClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PlaylistClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PlaylistClient.Options = {});
-    constructor(options: PlaylistClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: PlaylistClient.Options);
+    constructor(options: PlaylistClient.Options, requestFn: core.RequestFn);
     constructor(options: PlaylistClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =

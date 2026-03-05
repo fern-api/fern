@@ -19,8 +19,8 @@ export class HomepageClient {
     protected readonly _options: NormalizedClientOptions<HomepageClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: HomepageClient.Options = {});
-    constructor(options: HomepageClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: HomepageClient.Options);
+    constructor(options: HomepageClient.Options, requestFn: core.RequestFn);
     constructor(options: HomepageClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
         this._requestFn =

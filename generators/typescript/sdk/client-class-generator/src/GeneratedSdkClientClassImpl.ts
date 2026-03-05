@@ -725,10 +725,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ? this.getCtorOptionsStatementsWithAuth(context)
             : this.getCtorOptionsStatements(context);
 
-        const optionsParam = {
+        const hasOptionalOptions = !context.baseClient.anyRequiredBaseClientOptions(context);
+
+        // Overload signatures must NOT have initializers (TS2371).
+        // Only the implementation signature can have `= {}`.
+        const optionsParamForOverload = {
+            name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
+            type: optionsParamType
+        };
+        const optionsParamForImpl = {
             name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
             type: optionsParamType,
-            initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
+            initializer: hasOptionalOptions ? "{}" : undefined
         };
 
         if (this.isRoot) {
@@ -738,7 +746,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 this.${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER} = ${this.getCreateRequestFnExpression(context)};
             `;
             serviceClass.ctors.push({
-                parameters: [optionsParam],
+                parameters: [optionsParamForImpl],
                 statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
             });
         } else {
@@ -753,11 +761,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             serviceClass.ctors.push({
                 overloads: [
                     {
-                        parameters: [optionsParam]
+                        parameters: [optionsParamForOverload]
                     },
                     {
                         parameters: [
-                            optionsParam,
+                            optionsParamForOverload,
                             {
                                 name: GeneratedSdkClientClassImpl.REQUEST_FN_PARAMETER_NAME,
                                 type: requestFnParamType
@@ -766,7 +774,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }
                 ],
                 parameters: [
-                    optionsParam,
+                    optionsParamForImpl,
                     {
                         name: GeneratedSdkClientClassImpl.REQUEST_FN_PARAMETER_NAME,
                         type: requestFnParamType,

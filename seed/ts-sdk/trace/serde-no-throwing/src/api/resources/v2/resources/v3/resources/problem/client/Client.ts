@@ -18,8 +18,8 @@ export class ProblemClient {
     protected readonly _options: NormalizedClientOptions<ProblemClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ProblemClient.Options = {});
-    constructor(options: ProblemClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: ProblemClient.Options);
+    constructor(options: ProblemClient.Options, requestFn: core.RequestFn);
     constructor(options: ProblemClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
         this._requestFn =

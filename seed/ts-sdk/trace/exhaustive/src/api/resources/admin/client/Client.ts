@@ -17,8 +17,8 @@ export class AdminClient {
     protected readonly _options: NormalizedClientOptions<AdminClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: AdminClient.Options = {});
-    constructor(options: AdminClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: AdminClient.Options);
+    constructor(options: AdminClient.Options, requestFn: core.RequestFn);
     constructor(options: AdminClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
         this._requestFn =

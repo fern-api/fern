@@ -22,8 +22,8 @@ export class SubmissionClient {
     protected readonly _options: NormalizedClientOptions<SubmissionClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SubmissionClient.Options = {});
-    constructor(options: SubmissionClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: SubmissionClient.Options);
+    constructor(options: SubmissionClient.Options, requestFn: core.RequestFn);
     constructor(options: SubmissionClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
         this._requestFn =

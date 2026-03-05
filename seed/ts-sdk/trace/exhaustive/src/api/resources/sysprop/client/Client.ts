@@ -17,8 +17,8 @@ export class SyspropClient {
     protected readonly _options: NormalizedClientOptions<SyspropClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SyspropClient.Options = {});
-    constructor(options: SyspropClient.Options = {}, requestFn: core.RequestFn);
+    constructor(options: SyspropClient.Options);
+    constructor(options: SyspropClient.Options, requestFn: core.RequestFn);
     constructor(options: SyspropClient.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
         this._requestFn =

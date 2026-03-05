@@ -14,8 +14,8 @@ export class V3Client {
     protected readonly _requestFn: core.RequestFn;
     protected _problem: ProblemClient | undefined;
 
-    constructor(options: V3Client.Options = {});
-    constructor(options: V3Client.Options = {}, requestFn: core.RequestFn);
+    constructor(options: V3Client.Options);
+    constructor(options: V3Client.Options, requestFn: core.RequestFn);
     constructor(options: V3Client.Options = {}, requestFn?: core.RequestFn) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
