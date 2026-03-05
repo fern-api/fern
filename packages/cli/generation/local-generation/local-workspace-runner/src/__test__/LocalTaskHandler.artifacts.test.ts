@@ -99,20 +99,20 @@ describe("LocalTaskHandler Artifacts", () => {
 
         expect(capturedSendCalls).toHaveLength(3);
 
-        expect(capturedSendCalls[0]!.input.Bucket).toBe("my-artifacts-bucket");
-        expect(capturedSendCalls[0]!.input.Key).toContain("raw-diff.txt");
-        expect(capturedSendCalls[0]!.input.Body).toBe(artifacts.rawDiff);
-        expect(capturedSendCalls[0]!.input.ContentType).toBe("text/plain");
+        expect(capturedSendCalls[0]?.input.Bucket).toBe("my-artifacts-bucket");
+        expect(capturedSendCalls[0]?.input.Key).toContain("raw-diff.txt");
+        expect(capturedSendCalls[0]?.input.Body).toBe(artifacts.rawDiff);
+        expect(capturedSendCalls[0]?.input.ContentType).toBe("text/plain");
 
-        expect(capturedSendCalls[1]!.input.Bucket).toBe("my-artifacts-bucket");
-        expect(capturedSendCalls[1]!.input.Key).toContain("cleaned-diff.txt");
-        expect(capturedSendCalls[1]!.input.Body).toBe(artifacts.cleanedDiff);
-        expect(capturedSendCalls[1]!.input.ContentType).toBe("text/plain");
+        expect(capturedSendCalls[1]?.input.Bucket).toBe("my-artifacts-bucket");
+        expect(capturedSendCalls[1]?.input.Key).toContain("cleaned-diff.txt");
+        expect(capturedSendCalls[1]?.input.Body).toBe(artifacts.cleanedDiff);
+        expect(capturedSendCalls[1]?.input.ContentType).toBe("text/plain");
 
-        expect(capturedSendCalls[2]!.input.Bucket).toBe("my-artifacts-bucket");
-        expect(capturedSendCalls[2]!.input.Key).toContain("llm-result.json");
-        expect(capturedSendCalls[2]!.input.Body).toBe(JSON.stringify(artifacts.llmResult, undefined, 2));
-        expect(capturedSendCalls[2]!.input.ContentType).toBe("application/json");
+        expect(capturedSendCalls[2]?.input.Bucket).toBe("my-artifacts-bucket");
+        expect(capturedSendCalls[2]?.input.Key).toContain("llm-result.json");
+        expect(capturedSendCalls[2]?.input.Body).toBe(JSON.stringify(artifacts.llmResult, undefined, 2));
+        expect(capturedSendCalls[2]?.input.ContentType).toBe("application/json");
 
         expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("[AutoVersioning] Artifacts stored:"));
     });
@@ -138,7 +138,7 @@ describe("LocalTaskHandler Artifacts", () => {
         await handler.uploadAutoVersioningArtifacts(artifacts);
 
         expect(capturedSendCalls).toHaveLength(3);
-        const llmResultBody = capturedSendCalls[2]!.input.Body as string;
+        const llmResultBody = capturedSendCalls[2]?.input.Body as string;
         const parsed = JSON.parse(llmResultBody);
         expect(parsed.success).toBe(false);
         expect(parsed.error).toBe("AI service unavailable");
@@ -216,7 +216,7 @@ describe("LocalTaskHandler Artifacts", () => {
         await handler.uploadAutoVersioningArtifacts(artifacts);
 
         expect(capturedSendCalls).toHaveLength(3);
-        const llmResultBody = capturedSendCalls[2]!.input.Body as string;
+        const llmResultBody = capturedSendCalls[2]?.input.Body as string;
         const parsed = JSON.parse(llmResultBody);
 
         expect(parsed).toHaveProperty("timestamp", "2026-03-05T12:00:00.000Z");
@@ -247,7 +247,7 @@ describe("LocalTaskHandler Artifacts", () => {
         await handler.uploadAutoVersioningArtifacts(artifacts);
 
         expect(capturedSendCalls).toHaveLength(3);
-        const llmResultBody = capturedSendCalls[2]!.input.Body as string;
+        const llmResultBody = capturedSendCalls[2]?.input.Body as string;
         const parsed = JSON.parse(llmResultBody);
 
         expect(parsed).toHaveProperty("timestamp", "2026-03-05T12:00:00.000Z");
@@ -280,7 +280,7 @@ describe("LocalTaskHandler Artifacts", () => {
         expect(capturedSendCalls).toHaveLength(3);
 
         for (let i = 0; i < 3; i++) {
-            const key = capturedSendCalls[i]!.input.Key as string;
+            const key = capturedSendCalls[i]?.input.Key as string;
             expect(key).toMatch(/^fernapi-fern-python-sdk\//);
             expect(key).toMatch(/\/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/);
             expect(key).toMatch(/\/autoversioning\/(raw-diff\.txt|cleaned-diff\.txt|llm-result\.json)$/);
