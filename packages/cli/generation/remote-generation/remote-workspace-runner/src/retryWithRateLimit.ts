@@ -57,9 +57,9 @@ export async function retryWithRateLimit<T>({
                 const retryAfterSeconds = error.retryAfterSeconds;
                 let delay: number;
                 if (retryAfterSeconds != null) {
-                    // Use the server-provided Retry-After value with a small jitter
+                    // Use the server-provided Retry-After value with a small jitter, capped at max
                     const jitter = 1 + (Math.random() - 0.5) * RATE_LIMIT_JITTER_FACTOR;
-                    delay = Math.round(retryAfterSeconds * 1000 * jitter);
+                    delay = Math.min(Math.round(retryAfterSeconds * 1000 * jitter), RATE_LIMIT_MAX_RETRY_DELAY_MS);
                 } else {
                     // Fall back to exponential backoff with jitter
                     const baseDelay = Math.min(

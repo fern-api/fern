@@ -275,7 +275,7 @@ describe("retryWithRateLimit", () => {
         expect(delays).toEqual([1800, 3600, 7200]);
     });
 
-    it("should cap delay at max retry delay", async () => {
+    it("should cap exponential backoff delay at max retry delay", async () => {
         const logger = createMockLogger();
         const delays: number[] = [];
 
@@ -284,7 +284,6 @@ describe("retryWithRateLimit", () => {
         Math.random = () => 0.5;
 
         try {
-            // Use a Retry-After value larger than max delay
             await retryWithRateLimit({
                 fn: async () => {
                     throw new TooManyRequestsError();
@@ -308,6 +307,43 @@ describe("retryWithRateLimit", () => {
         for (const delay of delays) {
             expect(delay).toBeLessThanOrEqual(120000);
         }
+    });
+
+    it("should cap Retry-After delay at max retry delay", async () => {
+        const logger = createMockLogger();
+        const delays: number[] = [];
+
+        // Mock Math.random to return 0.5 (no jitter)
+        const originalRandom = Math.random;
+        Math.random = () => 0.5;
+
+        try {
+            await retryWithRateLimit({
+                fn: async () => {
+                    // Server says wait 600 seconds (10 minutes), should be capped at 120s
+                    throw new TooManyRequestsError(600);
+                },
+                retryRateLimited: true,
+                logger,
+                onRateLimitedWithoutRetry: () => {
+                    throw new Error("should not be called");
+                },
+                delayFn: async (ms: number) => {
+                    delays.push(ms);
+                }
+            }).catch(() => {
+                // expected: exhausted retries
+            });
+        } finally {
+            Math.random = originalRandom;
+        }
+
+        // All delays should be capped at 120000ms even though Retry-After was 600s
+        for (const delay of delays) {
+            expect(delay).toBeLessThanOrEqual(120000);
+        }
+        // Verify we actually hit the cap (600s * 1000 = 600000ms would be uncapped)
+        expect(delays[0]).toBe(120000);
     });
 
     it("should include attempt count in warn messages", async () => {
