@@ -15,6 +15,14 @@ import { AutoVersioningException, AutoVersioningService, AutoVersionResult } fro
 import { analyzeIrDiff } from "./IrDiffAnalyzer.js";
 import { isAutoVersion, VersionBump as LocalVersionBump } from "./VersionUtils.js";
 
+/** Bump ordering for comparison — used in AI fallback logic. */
+const BUMP_ORDER: Record<string, number> = {
+    NO_CHANGE: 0,
+    PATCH: 1,
+    MINOR: 2,
+    MAJOR: 3
+};
+
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
@@ -232,8 +240,17 @@ export class LocalTaskHandler {
                     commitMessage
                 };
             } catch (aiError) {
-                this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
-                const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                this.context.logger.warn(`AI analysis failed, falling back to Tier 1 result or PATCH: ${aiError}`);
+                // Use Tier 1 result as floor when AI fails, instead of unconditionally falling back to PATCH
+                const fallbackBump =
+                    tier1Result != null && BUMP_ORDER[tier1Result.bump] > BUMP_ORDER[VersionBump.PATCH]
+                        ? tier1Result.bump === LocalVersionBump.MAJOR
+                            ? VersionBump.MAJOR
+                            : tier1Result.bump === LocalVersionBump.MINOR
+                              ? VersionBump.MINOR
+                              : VersionBump.PATCH
+                        : VersionBump.PATCH;
+                const newVersion = this.incrementVersion(previousVersion, fallbackBump);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
                     : "SDK regeneration\n\n🌿 Generated with Fern";
@@ -312,22 +329,22 @@ export class LocalTaskHandler {
     private inferLanguage(): string {
         // The output directory often contains a language hint
         const outputPath = this.absolutePathToLocalOutput.toLowerCase();
-        const languagePatterns: Array<[string, string]> = [
-            ["typescript", "typescript"],
-            ["ts-sdk", "typescript"],
-            ["python", "python"],
-            ["py-sdk", "python"],
-            ["java", "java"],
-            ["go", "go"],
-            ["csharp", "csharp"],
-            ["ruby", "ruby"],
-            ["php", "php"],
-            ["swift", "swift"],
-            ["rust", "rust"]
+        const languagePatterns: Array<[RegExp, string]> = [
+            [/(?:^|[/-])typescript(?:$|[/-])/, "typescript"],
+            [/(?:^|[/-])ts-sdk(?:$|[/-])/, "typescript"],
+            [/(?:^|[/-])python(?:$|[/-])/, "python"],
+            [/(?:^|[/-])py-sdk(?:$|[/-])/, "python"],
+            [/(?:^|[/-])java(?:$|[/-])/, "java"],
+            [/(?:^|[/-])go(?:$|[/-])/, "go"],
+            [/(?:^|[/-])csharp(?:$|[/-])/, "csharp"],
+            [/(?:^|[/-])ruby(?:$|[/-])/, "ruby"],
+            [/(?:^|[/-])php(?:$|[/-])/, "php"],
+            [/(?:^|[/-])swift(?:$|[/-])/, "swift"],
+            [/(?:^|[/-])rust(?:$|[/-])/, "rust"]
         ];
 
         for (const [pattern, lang] of languagePatterns) {
-            if (outputPath.includes(pattern)) {
+            if (pattern.test(outputPath)) {
                 return lang;
             }
         }

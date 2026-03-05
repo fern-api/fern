@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { ContainerType, IntermediateRepresentation, TypeReference } from "@fern-api/ir-sdk";
 import { VersionBump } from "./VersionUtils.js";
 
 export interface IrDiffResult {
@@ -65,60 +65,51 @@ function endpointKey(
 
 /**
  * Serializes a TypeReference to a comparable string for detecting type changes.
+ * Uses proper discriminated union narrowing on the IR SDK types.
  */
-function serializeTypeReference(typeRef: { type: string; [key: string]: unknown }): string {
-    if (typeRef.type === "primitive") {
-        const primitive = typeRef.primitive as { v1: string } | string;
-        if (typeof primitive === "object" && primitive !== null && "v1" in primitive) {
-            return `primitive:${primitive.v1}`;
-        }
-        return `primitive:${String(primitive)}`;
+function serializeTypeReference(typeRef: TypeReference): string {
+    switch (typeRef.type) {
+        case "primitive":
+            return `primitive:${typeRef.primitive.v1}`;
+        case "named":
+            return `named:${typeRef.typeId}`;
+        case "container":
+            return serializeContainerType(typeRef.container);
+        case "unknown":
+            return "unknown";
+        default:
+            return `other:${(typeRef as { type: string }).type}`;
     }
-    if (typeRef.type === "named") {
-        const named = typeRef as { typeId: string };
-        return `named:${named.typeId}`;
-    }
-    if (typeRef.type === "container") {
-        const container = typeRef.container as { type: string; [key: string]: unknown };
-        if (container.type === "optional") {
-            const inner = container.optional as { type: string; [key: string]: unknown };
-            return `optional<${serializeTypeReference(inner)}>`;
-        }
-        if (container.type === "nullable") {
-            const inner = container.nullable as { type: string; [key: string]: unknown };
-            return `nullable<${serializeTypeReference(inner)}>`;
-        }
-        if (container.type === "list") {
-            const inner = container.list as { type: string; [key: string]: unknown };
-            return `list<${serializeTypeReference(inner)}>`;
-        }
-        if (container.type === "set") {
-            const inner = container.set as { type: string; [key: string]: unknown };
-            return `set<${serializeTypeReference(inner)}>`;
-        }
-        if (container.type === "map") {
-            const keyType = container.keyType as { type: string; [key: string]: unknown };
-            const valueType = container.valueType as { type: string; [key: string]: unknown };
-            return `map<${serializeTypeReference(keyType)},${serializeTypeReference(valueType)}>`;
-        }
-        if (container.type === "literal") {
+}
+
+/**
+ * Serializes a ContainerType to a comparable string.
+ */
+function serializeContainerType(container: ContainerType): string {
+    switch (container.type) {
+        case "optional":
+            return `optional<${serializeTypeReference(container.optional)}>`;
+        case "nullable":
+            return `nullable<${serializeTypeReference(container.nullable)}>`;
+        case "list":
+            return `list<${serializeTypeReference(container.list)}>`;
+        case "set":
+            return `set<${serializeTypeReference(container.set)}>`;
+        case "map":
+            return `map<${serializeTypeReference(container.keyType)},${serializeTypeReference(container.valueType)}>`;
+        case "literal":
             return `literal:${JSON.stringify(container.literal)}`;
-        }
-        return `container:${container.type}`;
+        default:
+            return `container:${(container as { type: string }).type}`;
     }
-    if (typeRef.type === "unknown") {
-        return "unknown";
-    }
-    return `other:${typeRef.type}`;
 }
 
 /**
  * Checks if a type reference is optional or nullable at the top level.
  */
-function isOptionalOrNullable(typeRef: { type: string; [key: string]: unknown }): boolean {
+function isOptionalOrNullable(typeRef: TypeReference): boolean {
     if (typeRef.type === "container") {
-        const container = typeRef.container as { type: string };
-        return container.type === "optional" || container.type === "nullable";
+        return typeRef.container.type === "optional" || typeRef.container.type === "nullable";
     }
     return false;
 }

@@ -975,10 +975,1175 @@ describe("IrDiffAnalyzer", () => {
         expect(result.bump).toBe(VersionBump.MAJOR);
         expect(result.reasons.some((r) => r.rule === "enum_value_removed")).toBe(true);
     });
+
+    // =========================================================================
+    // MULTI-LANGUAGE COVERAGE — "Always MAJOR" rules
+    // =========================================================================
+
+    describe("endpoint_removed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies removed endpoint as MAJOR for ${lang}`, () => {
+                const result = testEndpointRemoved(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "endpoint_removed")).toBe(true);
+            });
+        }
+    });
+
+    describe("endpoint_path_changed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies endpoint path change as MAJOR for ${lang}`, () => {
+                const result = testEndpointPathChanged(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "endpoint_path_changed")).toBe(true);
+            });
+        }
+    });
+
+    describe("endpoint_method_changed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies endpoint method change as MAJOR for ${lang}`, () => {
+                const result = testEndpointMethodChanged(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "endpoint_method_changed")).toBe(true);
+            });
+        }
+    });
+
+    describe("required_request_field_added across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies new required request field as MAJOR for ${lang}`, () => {
+                const result = testRequiredRequestFieldAdded(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "required_request_field_added")).toBe(true);
+            });
+        }
+    });
+
+    describe("required_request_field_removed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies removed required request field as MAJOR for ${lang}`, () => {
+                const result = testRequiredRequestFieldRemoved(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "required_request_field_removed")).toBe(true);
+            });
+        }
+    });
+
+    describe("response_type_changed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies response type change as MAJOR for ${lang}`, () => {
+                const result = testResponseTypeChanged(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "response_type_changed")).toBe(true);
+            });
+        }
+    });
+
+    describe("auth_scheme_changed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies auth scheme change as MAJOR for ${lang}`, () => {
+                const result = testAuthSchemeChanged(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "auth_scheme_changed")).toBe(true);
+            });
+        }
+    });
+
+    describe("error_removed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies error removal as MAJOR for ${lang}`, () => {
+                const result = testErrorRemoved(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "error_removed")).toBe(true);
+            });
+        }
+    });
+
+    describe("error_renamed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies error rename as MAJOR for ${lang}`, () => {
+                const result = testErrorRenamed(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "error_renamed")).toBe(true);
+            });
+        }
+    });
+
+    describe("enum_value_removed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies enum value removal as MAJOR for ${lang}`, () => {
+                const result = testEnumValueRemoved(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "enum_value_removed")).toBe(true);
+            });
+        }
+    });
+
+    describe("type_removed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies type removal as MAJOR for ${lang}`, () => {
+                const result = testTypeRemoved(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "type_removed")).toBe(true);
+            });
+        }
+    });
+
+    describe("object_property_removed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies object property removal as MAJOR for ${lang}`, () => {
+                const result = testObjectPropertyRemoved(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "object_property_removed")).toBe(true);
+            });
+        }
+    });
+
+    describe("property_type_changed across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies property type change as MAJOR for ${lang}`, () => {
+                const result = testPropertyTypeChanged(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "property_type_changed")).toBe(true);
+            });
+        }
+    });
+
+    // =========================================================================
+    // MULTI-LANGUAGE COVERAGE — "Always MINOR" rules
+    // =========================================================================
+
+    describe("endpoint_added across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies added endpoint as MINOR for ${lang}`, () => {
+                const result = testEndpointAdded(lang);
+                expect(result.bump).toBe(VersionBump.MINOR);
+                expect(result.reasons.some((r) => r.rule === "endpoint_added")).toBe(true);
+            });
+        }
+    });
+
+    describe("optional_request_field_added across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies new optional request field as MINOR for ${lang}`, () => {
+                const result = testOptionalRequestFieldAdded(lang);
+                expect(result.bump).toBe(VersionBump.MINOR);
+                expect(result.reasons.some((r) => r.rule === "optional_request_field_added")).toBe(true);
+            });
+        }
+    });
+
+    describe("required_request_field_made_optional across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies required field made optional as MINOR for ${lang}`, () => {
+                const result = testRequiredRequestFieldMadeOptional(lang);
+                expect(result.bump).toBe(VersionBump.MINOR);
+                expect(result.reasons.some((r) => r.rule === "required_request_field_made_optional")).toBe(true);
+            });
+        }
+    });
+
+    describe("object_property_added across languages", () => {
+        const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+        for (const lang of languages) {
+            it(`classifies new object property as MINOR for ${lang}`, () => {
+                const result = testObjectPropertyAdded(lang);
+                expect(result.bump).toBe(VersionBump.MINOR);
+                expect(result.reasons.some((r) => r.rule === "object_property_added")).toBe(true);
+            });
+        }
+    });
+
+    // =========================================================================
+    // MULTI-LANGUAGE COVERAGE — Language-specific rules
+    // =========================================================================
+
+    describe("property_required_to_optional across all languages", () => {
+        // MAJOR for typed languages
+        for (const lang of ["typescript", "python", "java", "go", "csharp"]) {
+            it(`classifies response field becoming optional as MAJOR for ${lang}`, () => {
+                const result = testResponseFieldRequiredToOptional(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "property_required_to_optional")).toBe(true);
+                // Verify the reason itself carries the correct bump
+                const reason = result.reasons.find((r) => r.rule === "property_required_to_optional");
+                expect(reason?.bump).toBe(VersionBump.MAJOR);
+            });
+        }
+        // MINOR for Ruby
+        it("classifies response field becoming optional as MINOR for ruby", () => {
+            const result = testResponseFieldRequiredToOptional("ruby");
+            expect(result.bump).toBe(VersionBump.MINOR);
+            expect(result.reasons.some((r) => r.rule === "property_required_to_optional")).toBe(true);
+            const reason = result.reasons.find((r) => r.rule === "property_required_to_optional");
+            expect(reason?.bump).toBe(VersionBump.MINOR);
+        });
+    });
+
+    describe("enum_value_added across all languages", () => {
+        // MAJOR for exhaustive switch languages
+        for (const lang of ["typescript", "java"]) {
+            it(`classifies new enum value as MAJOR for ${lang}`, () => {
+                const result = testNewEnumValue(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "enum_value_added")).toBe(true);
+                const reason = result.reasons.find((r) => r.rule === "enum_value_added");
+                expect(reason?.bump).toBe(VersionBump.MAJOR);
+            });
+        }
+        // MINOR for non-exhaustive languages
+        for (const lang of ["python", "go", "csharp", "ruby"]) {
+            it(`classifies new enum value as MINOR for ${lang}`, () => {
+                const result = testNewEnumValue(lang);
+                expect(result.bump).toBe(VersionBump.MINOR);
+                expect(result.reasons.some((r) => r.rule === "enum_value_added")).toBe(true);
+                const reason = result.reasons.find((r) => r.rule === "enum_value_added");
+                expect(reason?.bump).toBe(VersionBump.MINOR);
+            });
+        }
+    });
+
+    // =========================================================================
+    // AGGREGATION TESTS — Multiple changes, verify highest bump wins
+    // =========================================================================
+
+    describe("aggregation across multiple changes", () => {
+        it("aggregates MINOR + MAJOR to MAJOR", () => {
+            // Endpoint removed (MAJOR) + endpoint added (MINOR)
+            const previousIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") }),
+                        makeEndpoint({
+                            id: "ep2",
+                            name: "deletePlant",
+                            method: "DELETE",
+                            fullPath: makePath("/plants/", [{ pathParameter: "plantId", tail: "" }])
+                        })
+                    ])
+                }
+            });
+            const currentIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") }),
+                        makeEndpoint({
+                            id: "ep3",
+                            name: "waterPlant",
+                            method: "POST",
+                            fullPath: makePath("/plants/", [{ pathParameter: "plantId", tail: "/water" }])
+                        })
+                    ])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "typescript");
+            expect(result.bump).toBe(VersionBump.MAJOR);
+            expect(result.reasons.some((r) => r.bump === VersionBump.MAJOR)).toBe(true);
+            expect(result.reasons.some((r) => r.bump === VersionBump.MINOR)).toBe(true);
+        });
+
+        it("aggregates multiple MINOR changes to MINOR (not MAJOR)", () => {
+            // Endpoint added (MINOR) + optional field added (MINOR) + object property added (MINOR)
+            const previousIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({
+                            id: "ep1",
+                            name: "getPlant",
+                            method: "GET",
+                            fullPath: makePath("/plants"),
+                            requestBody: {
+                                type: "inlinedRequestBody" as const,
+                                name: makeName("GetPlantRequest"),
+                                extends: [],
+                                properties: [
+                                    {
+                                        name: makeNameAndWireValue("name"),
+                                        valueType: primitiveType("STRING"),
+                                        docs: undefined,
+                                        availability: undefined,
+                                        v2Examples: undefined,
+                                        propertyAccess: undefined
+                                    }
+                                ],
+                                extendedProperties: undefined,
+                                extraProperties: false,
+                                docs: undefined,
+                                v2Examples: undefined,
+                                contentType: undefined,
+                                _visit: (() => undefined) as never
+                            }
+                        })
+                    ])
+                },
+                types: {
+                    type_1: makeObjectType("Plant", [{ wireValue: "name", valueType: primitiveType("STRING") }])
+                }
+            });
+            const currentIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({
+                            id: "ep1",
+                            name: "getPlant",
+                            method: "GET",
+                            fullPath: makePath("/plants"),
+                            requestBody: {
+                                type: "inlinedRequestBody" as const,
+                                name: makeName("GetPlantRequest"),
+                                extends: [],
+                                properties: [
+                                    {
+                                        name: makeNameAndWireValue("name"),
+                                        valueType: primitiveType("STRING"),
+                                        docs: undefined,
+                                        availability: undefined,
+                                        v2Examples: undefined,
+                                        propertyAccess: undefined
+                                    },
+                                    {
+                                        name: makeNameAndWireValue("description"),
+                                        valueType: optionalType(primitiveType("STRING")),
+                                        docs: undefined,
+                                        availability: undefined,
+                                        v2Examples: undefined,
+                                        propertyAccess: undefined
+                                    }
+                                ],
+                                extendedProperties: undefined,
+                                extraProperties: false,
+                                docs: undefined,
+                                v2Examples: undefined,
+                                contentType: undefined,
+                                _visit: (() => undefined) as never
+                            }
+                        }),
+                        makeEndpoint({ id: "ep2", name: "createPlant", method: "POST", fullPath: makePath("/plants") })
+                    ])
+                },
+                types: {
+                    type_1: makeObjectType("Plant", [
+                        { wireValue: "name", valueType: primitiveType("STRING") },
+                        { wireValue: "genus", valueType: primitiveType("STRING") }
+                    ])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "ruby");
+            expect(result.bump).toBe(VersionBump.MINOR);
+            expect(result.reasons.every((r) => r.bump === VersionBump.MINOR)).toBe(true);
+        });
+
+        it("aggregates enum value added + endpoint removed across typed language", () => {
+            const previousIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") }),
+                        makeEndpoint({
+                            id: "ep2",
+                            name: "deletePlant",
+                            method: "DELETE",
+                            fullPath: makePath("/plants/", [{ pathParameter: "plantId", tail: "" }])
+                        })
+                    ])
+                },
+                types: {
+                    type_1: makeEnumType("PlantType", ["SUCCULENT", "FERN"])
+                }
+            });
+            const currentIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") })
+                    ])
+                },
+                types: {
+                    type_1: makeEnumType("PlantType", ["SUCCULENT", "FERN", "CACTUS"])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "typescript");
+            expect(result.bump).toBe(VersionBump.MAJOR);
+            // Both endpoint_removed (MAJOR) and enum_value_added (MAJOR for TS)
+            expect(result.reasons.some((r) => r.rule === "endpoint_removed")).toBe(true);
+            expect(result.reasons.some((r) => r.rule === "enum_value_added")).toBe(true);
+        });
+
+        it("aggregates enum value added (MINOR in Python) + endpoint added (MINOR) to MINOR", () => {
+            const previousIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") })
+                    ])
+                },
+                types: {
+                    type_1: makeEnumType("PlantType", ["SUCCULENT", "FERN"])
+                }
+            });
+            const currentIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") }),
+                        makeEndpoint({ id: "ep2", name: "createPlant", method: "POST", fullPath: makePath("/plants") })
+                    ])
+                },
+                types: {
+                    type_1: makeEnumType("PlantType", ["SUCCULENT", "FERN", "CACTUS"])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "python");
+            expect(result.bump).toBe(VersionBump.MINOR);
+            expect(result.reasons.some((r) => r.rule === "endpoint_added")).toBe(true);
+            expect(result.reasons.some((r) => r.rule === "enum_value_added")).toBe(true);
+        });
+    });
+
+    // =========================================================================
+    // LANGUAGE CONFLICT SCENARIOS — Same IR diff, different language contexts
+    // =========================================================================
+
+    describe("language conflict scenarios", () => {
+        it("same enum addition is MAJOR for TypeScript but MINOR for Python", () => {
+            const tsResult = testNewEnumValue("typescript");
+            const pyResult = testNewEnumValue("python");
+            expect(tsResult.bump).toBe(VersionBump.MAJOR);
+            expect(pyResult.bump).toBe(VersionBump.MINOR);
+        });
+
+        it("same enum addition is MAJOR for Java but MINOR for Go", () => {
+            const javaResult = testNewEnumValue("java");
+            const goResult = testNewEnumValue("go");
+            expect(javaResult.bump).toBe(VersionBump.MAJOR);
+            expect(goResult.bump).toBe(VersionBump.MINOR);
+        });
+
+        it("same required-to-optional change is MAJOR for Go but MINOR for Ruby", () => {
+            const goResult = testResponseFieldRequiredToOptional("go");
+            const rubyResult = testResponseFieldRequiredToOptional("ruby");
+            expect(goResult.bump).toBe(VersionBump.MAJOR);
+            expect(rubyResult.bump).toBe(VersionBump.MINOR);
+        });
+
+        it("same required-to-optional change is MAJOR for C# but MINOR for Ruby", () => {
+            const csharpResult = testResponseFieldRequiredToOptional("csharp");
+            const rubyResult = testResponseFieldRequiredToOptional("ruby");
+            expect(csharpResult.bump).toBe(VersionBump.MAJOR);
+            expect(rubyResult.bump).toBe(VersionBump.MINOR);
+        });
+
+        it("endpoint removal is MAJOR regardless of language", () => {
+            const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+            for (const lang of languages) {
+                const result = testEndpointRemoved(lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+            }
+        });
+
+        it("endpoint addition is MINOR regardless of language", () => {
+            const languages = ["typescript", "python", "java", "go", "csharp", "ruby"];
+            for (const lang of languages) {
+                const result = testEndpointAdded(lang);
+                expect(result.bump).toBe(VersionBump.MINOR);
+            }
+        });
+    });
+
+    // =========================================================================
+    // EDGE CASES
+    // =========================================================================
+
+    describe("edge cases", () => {
+        it("returns PATCH when no services, types, errors or auth change", () => {
+            const ir = makeBaseIr();
+            const result = analyzeIrDiff(ir as never, ir as never, "typescript");
+            expect(result.bump).toBe(VersionBump.PATCH);
+            expect(result.reasons).toHaveLength(0);
+            expect(result.maxPossibleBump).toBe(VersionBump.PATCH);
+        });
+
+        it("handles empty services in both IRs", () => {
+            const prev = makeBaseIr({ services: {} });
+            const cur = makeBaseIr({ services: {} });
+            const result = analyzeIrDiff(prev as never, cur as never, "typescript");
+            expect(result.bump).toBe(VersionBump.PATCH);
+        });
+
+        it("handles adding a service where none existed", () => {
+            const prev = makeBaseIr({ services: {} });
+            const cur = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") })
+                    ])
+                }
+            });
+            const result = analyzeIrDiff(prev as never, cur as never, "typescript");
+            expect(result.bump).toBe(VersionBump.MINOR);
+            expect(result.reasons.some((r) => r.rule === "endpoint_added")).toBe(true);
+        });
+
+        it("handles removing all services", () => {
+            const prev = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") })
+                    ])
+                }
+            });
+            const cur = makeBaseIr({ services: {} });
+            const result = analyzeIrDiff(prev as never, cur as never, "typescript");
+            expect(result.bump).toBe(VersionBump.MAJOR);
+            expect(result.reasons.some((r) => r.rule === "endpoint_removed")).toBe(true);
+        });
+
+        it("type shape changed (object to enum) is MAJOR for all languages", () => {
+            for (const lang of ["typescript", "python", "java", "go", "csharp", "ruby"]) {
+                const prev = makeBaseIr({
+                    types: {
+                        type_1: makeObjectType("Plant", [{ wireValue: "name", valueType: primitiveType("STRING") }])
+                    }
+                });
+                const cur = makeBaseIr({
+                    types: {
+                        type_1: makeEnumType("Plant", ["SUCCULENT", "FERN"])
+                    }
+                });
+                const result = analyzeIrDiff(prev as never, cur as never, lang);
+                expect(result.bump).toBe(VersionBump.MAJOR);
+                expect(result.reasons.some((r) => r.rule === "type_shape_changed")).toBe(true);
+            }
+        });
+
+        it("maxPossibleBump matches bump for all change types", () => {
+            // MAJOR case
+            const majorResult = testEndpointRemoved("typescript");
+            expect(majorResult.maxPossibleBump).toBe(majorResult.bump);
+            expect(majorResult.maxPossibleBump).toBe(VersionBump.MAJOR);
+
+            // MINOR case
+            const minorResult = testEndpointAdded("typescript");
+            expect(minorResult.maxPossibleBump).toBe(minorResult.bump);
+            expect(minorResult.maxPossibleBump).toBe(VersionBump.MINOR);
+
+            // PATCH case (no changes)
+            const ir = makeBaseIr();
+            const patchResult = analyzeIrDiff(ir as never, ir as never, "typescript");
+            expect(patchResult.maxPossibleBump).toBe(patchResult.bump);
+            expect(patchResult.maxPossibleBump).toBe(VersionBump.PATCH);
+        });
+
+        it("handles unknown language gracefully (falls back to non-exhaustive behavior)", () => {
+            const enumResult = testNewEnumValue("unknown-lang");
+            // Unknown language should not be in ENUM_VALUE_MAJOR_LANGUAGES, so MINOR
+            expect(enumResult.bump).toBe(VersionBump.MINOR);
+
+            const optionalResult = testResponseFieldRequiredToOptional("unknown-lang");
+            // Unknown language should not be in RESPONSE_OPTIONAL_MAJOR_LANGUAGES, so MINOR
+            expect(optionalResult.bump).toBe(VersionBump.MINOR);
+        });
+
+        it("handles multiple enum values added at once", () => {
+            const previousIr = makeBaseIr({
+                types: {
+                    type_1: makeEnumType("PlantType", ["SUCCULENT"])
+                }
+            });
+            const currentIr = makeBaseIr({
+                types: {
+                    type_1: makeEnumType("PlantType", ["SUCCULENT", "FERN", "CACTUS", "MOSS"])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "typescript");
+            expect(result.bump).toBe(VersionBump.MAJOR);
+            // Should have 3 separate enum_value_added reasons
+            const enumReasons = result.reasons.filter((r) => r.rule === "enum_value_added");
+            expect(enumReasons).toHaveLength(3);
+        });
+
+        it("handles multiple endpoints added at once", () => {
+            const previousIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") })
+                    ])
+                }
+            });
+            const currentIr = makeBaseIr({
+                services: {
+                    svc1: makeService("svc1", [
+                        makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") }),
+                        makeEndpoint({ id: "ep2", name: "createPlant", method: "POST", fullPath: makePath("/plants") }),
+                        makeEndpoint({
+                            id: "ep3",
+                            name: "waterPlant",
+                            method: "POST",
+                            fullPath: makePath("/plants/", [{ pathParameter: "plantId", tail: "/water" }])
+                        }),
+                        makeEndpoint({
+                            id: "ep4",
+                            name: "deletePlant",
+                            method: "DELETE",
+                            fullPath: makePath("/plants/", [{ pathParameter: "plantId", tail: "" }])
+                        })
+                    ])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "typescript");
+            expect(result.bump).toBe(VersionBump.MINOR);
+            const addedReasons = result.reasons.filter((r) => r.rule === "endpoint_added");
+            expect(addedReasons).toHaveLength(3);
+        });
+
+        it("multiple errors removed yields multiple MAJOR reasons", () => {
+            const previousIr = makeBaseIr({
+                errors: {
+                    error_1: makeErrorDecl("error_1", "PlantNotFoundError", 404),
+                    error_2: makeErrorDecl("error_2", "UnauthorizedError", 401),
+                    error_3: makeErrorDecl("error_3", "RateLimitError", 429)
+                }
+            });
+            const currentIr = makeBaseIr({ errors: {} });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "typescript");
+            expect(result.bump).toBe(VersionBump.MAJOR);
+            const errorReasons = result.reasons.filter((r) => r.rule === "error_removed");
+            expect(errorReasons).toHaveLength(3);
+        });
+    });
 });
 
 // ---------------------------------------------------------------------------
 // Shared test helpers
+// ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Compact helper factories for expanded tests
+// ---------------------------------------------------------------------------
+
+function makeEnumType(name: string, values: string[]) {
+    return {
+        name: {
+            typeId: `type_${name}`,
+            fernFilepath: { allParts: [], packagePath: [], file: undefined },
+            name: makeName(name),
+            displayName: undefined
+        },
+        shape: {
+            type: "enum" as const,
+            default: undefined,
+            values: values.map((v) => ({ name: makeNameAndWireValue(v), docs: undefined, availability: undefined })),
+            _visit: (() => undefined) as never
+        },
+        autogeneratedExamples: [],
+        userProvidedExamples: [],
+        v2Examples: undefined,
+        referencedTypes: new Set(),
+        encoding: undefined,
+        source: undefined,
+        inline: undefined,
+        availability: undefined,
+        docs: undefined
+    };
+}
+
+function makeObjectType(
+    name: string,
+    properties: Array<{
+        wireValue: string;
+        valueType: ReturnType<typeof primitiveType> | ReturnType<typeof optionalType>;
+    }>
+) {
+    return {
+        name: {
+            typeId: `type_${name}`,
+            fernFilepath: { allParts: [], packagePath: [], file: undefined },
+            name: makeName(name),
+            displayName: undefined
+        },
+        shape: {
+            type: "object" as const,
+            extends: [],
+            properties: properties.map((p) => ({
+                name: makeNameAndWireValue(p.wireValue),
+                valueType: p.valueType,
+                docs: undefined,
+                availability: undefined,
+                propertyAccess: undefined,
+                v2Examples: undefined
+            })),
+            extendedProperties: undefined,
+            extraProperties: false,
+            _visit: (() => undefined) as never
+        },
+        autogeneratedExamples: [],
+        userProvidedExamples: [],
+        v2Examples: undefined,
+        referencedTypes: new Set(),
+        encoding: undefined,
+        source: undefined,
+        inline: undefined,
+        availability: undefined,
+        docs: undefined
+    };
+}
+
+function makeErrorDecl(errorId: string, name: string, statusCode: number) {
+    return {
+        name: {
+            errorId,
+            fernFilepath: { allParts: [], packagePath: [], file: undefined },
+            name: makeName(name)
+        },
+        displayName: undefined,
+        discriminantValue: makeNameAndWireValue(name),
+        type: undefined,
+        statusCode,
+        isWildcardStatusCode: undefined,
+        examples: [],
+        v2Examples: undefined,
+        headers: undefined,
+        docs: undefined
+    };
+}
+
+function makeInlinedRequestBody(
+    name: string,
+    properties: Array<{
+        wireValue: string;
+        valueType: ReturnType<typeof primitiveType> | ReturnType<typeof optionalType>;
+    }>
+) {
+    return {
+        type: "inlinedRequestBody" as const,
+        name: makeName(name),
+        extends: [],
+        properties: properties.map((p) => ({
+            name: makeNameAndWireValue(p.wireValue),
+            valueType: p.valueType,
+            docs: undefined,
+            availability: undefined,
+            v2Examples: undefined,
+            propertyAccess: undefined
+        })),
+        extendedProperties: undefined,
+        extraProperties: false,
+        docs: undefined,
+        v2Examples: undefined,
+        contentType: undefined,
+        _visit: (() => undefined) as never
+    };
+}
+
+function makeJsonResponse(responseBodyType: ReturnType<typeof primitiveType>) {
+    return {
+        statusCode: 200,
+        isWildcardStatusCode: undefined,
+        body: {
+            type: "json" as const,
+            value: {
+                type: "response" as const,
+                responseBodyType,
+                docs: undefined,
+                v2Examples: undefined
+            },
+            _visit: (() => undefined) as never
+        },
+        docs: undefined
+    };
+}
+
+// ---------------------------------------------------------------------------
+// "Always MAJOR" test helpers
+// ---------------------------------------------------------------------------
+
+function testEndpointRemoved(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") }),
+                makeEndpoint({
+                    id: "ep2",
+                    name: "deletePlant",
+                    method: "DELETE",
+                    fullPath: makePath("/plants/", [{ pathParameter: "plantId", tail: "" }])
+                })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testEndpointPathChanged(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/vegetation") })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testEndpointMethodChanged(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({ id: "ep1", name: "updatePlant", method: "PUT", fullPath: makePath("/plants") })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({ id: "ep1", name: "updatePlant", method: "PATCH", fullPath: makePath("/plants") })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testRequiredRequestFieldAdded(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "createPlant",
+                    method: "POST",
+                    fullPath: makePath("/plants"),
+                    requestBody: makeInlinedRequestBody("CreatePlantRequest", [
+                        { wireValue: "name", valueType: primitiveType("STRING") }
+                    ])
+                })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "createPlant",
+                    method: "POST",
+                    fullPath: makePath("/plants"),
+                    requestBody: makeInlinedRequestBody("CreatePlantRequest", [
+                        { wireValue: "name", valueType: primitiveType("STRING") },
+                        { wireValue: "species", valueType: primitiveType("STRING") }
+                    ])
+                })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testRequiredRequestFieldRemoved(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "createPlant",
+                    method: "POST",
+                    fullPath: makePath("/plants"),
+                    requestBody: makeInlinedRequestBody("CreatePlantRequest", [
+                        { wireValue: "name", valueType: primitiveType("STRING") },
+                        { wireValue: "species", valueType: primitiveType("STRING") }
+                    ])
+                })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "createPlant",
+                    method: "POST",
+                    fullPath: makePath("/plants"),
+                    requestBody: makeInlinedRequestBody("CreatePlantRequest", [
+                        { wireValue: "name", valueType: primitiveType("STRING") }
+                    ])
+                })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testResponseTypeChanged(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "getPlant",
+                    method: "GET",
+                    fullPath: makePath("/plants"),
+                    response: makeJsonResponse(primitiveType("STRING"))
+                })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "getPlant",
+                    method: "GET",
+                    fullPath: makePath("/plants"),
+                    response: makeJsonResponse(primitiveType("INTEGER"))
+                })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testAuthSchemeChanged(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        auth: {
+            requirement: "ALL" as never,
+            schemes: [
+                {
+                    type: "bearer" as const,
+                    token: makeNameAndWireValue("token"),
+                    tokenEnvVar: undefined,
+                    docs: undefined,
+                    _visit: (() => undefined) as never
+                }
+            ],
+            docs: undefined
+        } as never
+    });
+    const currentIr = makeBaseIr({
+        auth: {
+            requirement: "ALL" as never,
+            schemes: [
+                {
+                    type: "basic" as const,
+                    username: makeNameAndWireValue("username"),
+                    usernameEnvVar: undefined,
+                    password: makeNameAndWireValue("password"),
+                    passwordEnvVar: undefined,
+                    docs: undefined,
+                    _visit: (() => undefined) as never
+                }
+            ],
+            docs: undefined
+        } as never
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testErrorRemoved(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        errors: { error_1: makeErrorDecl("error_1", "PlantNotFoundError", 404) }
+    });
+    const currentIr = makeBaseIr({ errors: {} });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testErrorRenamed(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        errors: { error_1: makeErrorDecl("error_1", "PlantNotFoundError", 404) }
+    });
+    const currentIr = makeBaseIr({
+        errors: { error_1: makeErrorDecl("error_1", "VegetationNotFoundError", 404) }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testEnumValueRemoved(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        types: { type_1: makeEnumType("PlantType", ["SUCCULENT", "FERN", "CACTUS"]) }
+    });
+    const currentIr = makeBaseIr({
+        types: { type_1: makeEnumType("PlantType", ["SUCCULENT", "FERN"]) }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testTypeRemoved(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        types: { type_1: makeEnumType("PlantType", ["SUCCULENT", "FERN"]) }
+    });
+    const currentIr = makeBaseIr({ types: {} });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testObjectPropertyRemoved(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        types: {
+            type_1: makeObjectType("Plant", [
+                { wireValue: "name", valueType: primitiveType("STRING") },
+                { wireValue: "genus", valueType: primitiveType("STRING") }
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        types: {
+            type_1: makeObjectType("Plant", [{ wireValue: "name", valueType: primitiveType("STRING") }])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testPropertyTypeChanged(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        types: {
+            type_1: makeObjectType("Plant", [{ wireValue: "name", valueType: primitiveType("STRING") }])
+        }
+    });
+    const currentIr = makeBaseIr({
+        types: {
+            type_1: makeObjectType("Plant", [{ wireValue: "name", valueType: primitiveType("INTEGER") }])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+// ---------------------------------------------------------------------------
+// "Always MINOR" test helpers
+// ---------------------------------------------------------------------------
+
+function testEndpointAdded(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({ id: "ep1", name: "getPlant", method: "GET", fullPath: makePath("/plants") }),
+                makeEndpoint({ id: "ep2", name: "createPlant", method: "POST", fullPath: makePath("/plants") })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testOptionalRequestFieldAdded(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "createPlant",
+                    method: "POST",
+                    fullPath: makePath("/plants"),
+                    requestBody: makeInlinedRequestBody("CreatePlantRequest", [
+                        { wireValue: "name", valueType: primitiveType("STRING") }
+                    ])
+                })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "createPlant",
+                    method: "POST",
+                    fullPath: makePath("/plants"),
+                    requestBody: makeInlinedRequestBody("CreatePlantRequest", [
+                        { wireValue: "name", valueType: primitiveType("STRING") },
+                        { wireValue: "description", valueType: optionalType(primitiveType("STRING")) }
+                    ])
+                })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testRequiredRequestFieldMadeOptional(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "createPlant",
+                    method: "POST",
+                    fullPath: makePath("/plants"),
+                    requestBody: makeInlinedRequestBody("CreatePlantRequest", [
+                        { wireValue: "name", valueType: primitiveType("STRING") }
+                    ])
+                })
+            ])
+        }
+    });
+    const currentIr = makeBaseIr({
+        services: {
+            svc1: makeService("svc1", [
+                makeEndpoint({
+                    id: "ep1",
+                    name: "createPlant",
+                    method: "POST",
+                    fullPath: makePath("/plants"),
+                    requestBody: makeInlinedRequestBody("CreatePlantRequest", [
+                        { wireValue: "name", valueType: optionalType(primitiveType("STRING")) }
+                    ])
+                })
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+function testObjectPropertyAdded(language: string): IrDiffResult {
+    const previousIr = makeBaseIr({
+        types: {
+            type_1: makeObjectType("Plant", [{ wireValue: "name", valueType: primitiveType("STRING") }])
+        }
+    });
+    const currentIr = makeBaseIr({
+        types: {
+            type_1: makeObjectType("Plant", [
+                { wireValue: "name", valueType: primitiveType("STRING") },
+                { wireValue: "genus", valueType: primitiveType("STRING") }
+            ])
+        }
+    });
+    return analyzeIrDiff(previousIr as never, currentIr as never, language);
+}
+
+// ---------------------------------------------------------------------------
+// Original shared test helpers
 // ---------------------------------------------------------------------------
 
 function testResponseFieldRequiredToOptional(language: string): IrDiffResult {
