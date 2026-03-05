@@ -96,7 +96,7 @@ export async function sdkDiffCommand({
 
     const diffSizeKB = (gitDiff.length / 1024).toFixed(1);
     const fileCount = (gitDiff.match(/^diff --git /gm) || []).length;
-    context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} chars), ${fileCount} files changed`);
+    context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} bytes), ${fileCount} files changed`);
 
     // The FAI /sdks/analyze-commit-diff endpoint rejects diffs exceeding 100,000 characters
     const DIFF_SIZE_LIMIT = 100_000; // 100K characters — matches FAI endpoint MAX_DIFF_SIZE

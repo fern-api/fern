@@ -142,8 +142,8 @@ export class LocalTaskHandler {
             const fileCount = (diffContent.match(/^diff --git /gm) || []).length;
 
             this.context.logger.debug(
-                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} chars), ` +
-                    `cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ` +
+                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} bytes), ` +
+                    `cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} bytes), ` +
                     `files changed: ${fileCount}`
             );
 
