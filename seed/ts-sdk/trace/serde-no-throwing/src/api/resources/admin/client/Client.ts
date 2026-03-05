@@ -18,12 +18,10 @@ export class AdminClient {
     protected readonly _options: NormalizedClientOptions<AdminClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: AdminClient.Options);
-    constructor(options: AdminClient.Options, requestFn: core.RequestFn);
-    constructor(options: AdminClient.Options = {}, requestFn?: core.RequestFn) {
+    constructor(options: AdminClient.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>

@@ -11,7 +11,6 @@ export declare class NoReqBodyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: NoReqBodyClient.Options);
-    constructor(options: NoReqBodyClient.Options, requestFn: core.RequestFn);
     /**
      * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *

@@ -71,8 +71,8 @@ export function generateHeaders({
         );
     }
 
-    // Generate endpoint-specific headers only. HttpClient handles auth, global, and per-request headers.
-    // Always generate the _headers variable so invokeFetcher() can reference it consistently.
+    // Generate endpoint-specific headers only. createRequestFn handles auth, global, and per-request headers.
+    // Only generate _headers when there are actual endpoint-specific headers to emit.
     if (onlyDefinedHeaders.length > 0) {
         context.importsManager.addImportFromRoot("core/headers", {
             namedImports: ["mergeOnlyDefinedHeaders"]
@@ -91,25 +91,6 @@ export function generateHeaders({
                                 undefined,
                                 [ts.factory.createObjectLiteralExpression(onlyDefinedHeaders)]
                             )
-                        )
-                    ],
-                    ts.NodeFlags.Const
-                )
-            )
-        );
-    } else {
-        // No endpoint-specific headers, but still define _headers as empty object
-        // so that invokeFetcher() and other callers can always reference it.
-        statements.push(
-            ts.factory.createVariableStatement(
-                undefined,
-                ts.factory.createVariableDeclarationList(
-                    [
-                        ts.factory.createVariableDeclaration(
-                            HEADERS_VAR_NAME,
-                            undefined,
-                            undefined,
-                            ts.factory.createObjectLiteralExpression([])
                         )
                     ],
                     ts.NodeFlags.Const

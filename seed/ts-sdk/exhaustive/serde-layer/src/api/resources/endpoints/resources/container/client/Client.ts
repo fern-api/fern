@@ -18,12 +18,10 @@ export class ContainerClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContainerClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ContainerClient.Options);
-    constructor(options: ContainerClient.Options, requestFn: core.RequestFn);
-    constructor(options: ContainerClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ContainerClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -42,7 +40,6 @@ export class ContainerClient {
         request: string[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<string[]> {
-        const _headers = {};
         return this._requestFn<string[]>({
             method: "POST",
             path: "/container/list-of-primitives",
@@ -53,7 +50,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -81,7 +77,6 @@ export class ContainerClient {
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithRequiredField[]>({
             method: "POST",
             path: "/container/list-of-objects",
@@ -92,7 +87,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -116,7 +110,6 @@ export class ContainerClient {
         request: Set<string>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<Set<string>> {
-        const _headers = {};
         return this._requestFn<Set<string>>({
             method: "POST",
             path: "/container/set-of-primitives",
@@ -127,7 +120,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -153,7 +145,6 @@ export class ContainerClient {
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithRequiredField[]>({
             method: "POST",
             path: "/container/set-of-objects",
@@ -164,7 +155,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -190,7 +180,6 @@ export class ContainerClient {
         request: Record<string, string>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, string>> {
-        const _headers = {};
         return this._requestFn<Record<string, string>>({
             method: "POST",
             path: "/container/map-prim-to-prim",
@@ -201,7 +190,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -229,7 +217,6 @@ export class ContainerClient {
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
-        const _headers = {};
         return this._requestFn<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>({
             method: "POST",
             path: "/container/map-prim-to-object",
@@ -240,7 +227,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -266,7 +252,6 @@ export class ContainerClient {
         request: Record<string, SeedExhaustive.types.MixedType>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.MixedType>> {
-        const _headers = {};
         return this._requestFn<Record<string, SeedExhaustive.types.MixedType>>({
             method: "POST",
             path: "/container/map-prim-to-union",
@@ -277,7 +262,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.container.getAndReturnMapOfPrimToUndiscriminatedUnion.Response.parseOrThrow(
                     body,
@@ -306,7 +290,6 @@ export class ContainerClient {
         request?: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithRequiredField | undefined>({
             method: "POST",
             path: "/container/opt-objects",
@@ -317,7 +300,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

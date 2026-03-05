@@ -28,6 +28,8 @@ export class SeedErrorPropertyClient {
     }
 
     public get propertyBasedError(): PropertyBasedErrorClient {
-        return (this._propertyBasedError ??= new PropertyBasedErrorClient(this._options, this._requestFn));
+        return (this._propertyBasedError ??= new PropertyBasedErrorClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 }

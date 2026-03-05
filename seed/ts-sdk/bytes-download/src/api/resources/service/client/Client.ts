@@ -16,12 +16,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedBytesDownloadError(args),
@@ -36,12 +34,10 @@ export class ServiceClient {
      *     await client.service.simple()
      */
     public simple(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "snippet",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -57,7 +53,6 @@ export class ServiceClient {
         id: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.BinaryResponse>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch<core.BinaryResponse>(
             {
                 url: core.url.join(
@@ -66,7 +61,6 @@ export class ServiceClient {
                     `download-content/${core.url.encodePathParam(id)}`,
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 responseType: "binary-response",
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

@@ -11,7 +11,6 @@ export declare class PaginationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PaginationClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: PaginationClient.Options);
-    constructor(options: PaginationClient.Options, requestFn: core.RequestFn);
     /**
      * List items with cursor pagination
      *

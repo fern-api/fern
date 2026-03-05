@@ -17,12 +17,10 @@ export class CompletionsClient {
     protected readonly _options: NormalizedClientOptions<CompletionsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: CompletionsClient.Options);
-    constructor(options: CompletionsClient.Options, requestFn: core.RequestFn);
-    constructor(options: CompletionsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: CompletionsClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedServerSentEventsError(args),
@@ -41,7 +39,6 @@ export class CompletionsClient {
         request: SeedServerSentEvents.StreamCompletionRequest,
         requestOptions?: CompletionsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch<ReadableStream>(
             {
                 url: core.url.join(
@@ -50,7 +47,6 @@ export class CompletionsClient {
                     "stream",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -103,7 +99,6 @@ export class CompletionsClient {
         request: SeedServerSentEvents.StreamCompletionRequestWithoutTerminator,
         requestOptions?: CompletionsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch<ReadableStream>(
             {
                 url: core.url.join(
@@ -112,7 +107,6 @@ export class CompletionsClient {
                     "stream-no-terminator",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

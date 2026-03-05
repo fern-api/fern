@@ -19,12 +19,10 @@ export class QueryParamClient {
     protected readonly _options: NormalizedClientOptions<QueryParamClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: QueryParamClient.Options);
-    constructor(options: QueryParamClient.Options, requestFn: core.RequestFn);
-    constructor(options: QueryParamClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: QueryParamClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedEnumError(args),
@@ -74,12 +72,10 @@ export class QueryParamClient {
                       })()
                     : undefined,
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "query",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -154,12 +150,10 @@ export class QueryParamClient {
                     })()
                   : undefined,
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "query-list",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }

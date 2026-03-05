@@ -16,12 +16,10 @@ export class FolderAClient {
     protected readonly _requestFn: core.RequestFn;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: FolderAClient.Options);
-    constructor(options: FolderAClient.Options, requestFn: core.RequestFn);
-    constructor(options: FolderAClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: FolderAClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedAudiencesError(args),
@@ -30,6 +28,6 @@ export class FolderAClient {
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._requestFn));
+        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

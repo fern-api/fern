@@ -17,12 +17,10 @@ export class AuthClient {
     protected readonly _options: NormalizedClientOptions<AuthClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: AuthClient.Options);
-    constructor(options: AuthClient.Options, requestFn: core.RequestFn);
-    constructor(options: AuthClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: AuthClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsDefaultError(args),
@@ -44,7 +42,6 @@ export class AuthClient {
         request: SeedOauthClientCredentialsDefault.GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedOauthClientCredentialsDefault.TokenResponse> {
-        const _headers = {};
         return this._requestFn<SeedOauthClientCredentialsDefault.TokenResponse>({
             method: "POST",
             path: "/token",
@@ -52,7 +49,6 @@ export class AuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

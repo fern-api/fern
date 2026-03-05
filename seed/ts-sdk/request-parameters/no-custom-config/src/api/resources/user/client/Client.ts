@@ -18,12 +18,10 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options);
-    constructor(options: UserClient.Options, requestFn: core.RequestFn);
-    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UserClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedRequestParametersError(args),
@@ -51,7 +49,6 @@ export class UserClient {
         const _queryParams: Record<string, unknown> = {
             tags: toJson(tags),
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/user/username",
@@ -59,7 +56,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -86,7 +82,6 @@ export class UserClient {
         const _queryParams: Record<string, unknown> = {
             tags: toJson(tags),
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/user/username-referenced",
@@ -94,7 +89,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -110,7 +104,6 @@ export class UserClient {
         request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/user/username-optional",
@@ -118,7 +111,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -210,12 +202,10 @@ export class UserClient {
             longParam,
             bigIntParam,
         };
-        const _headers = {};
         return this._requestFn<SeedRequestParameters.User>({
             method: "GET",
             path: "/user",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }

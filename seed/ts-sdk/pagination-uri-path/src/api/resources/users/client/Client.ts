@@ -17,12 +17,10 @@ export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UsersClient.Options);
-    constructor(options: UsersClient.Options, requestFn: core.RequestFn);
-    constructor(options: UsersClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UsersClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPaginationUriPathError(args),
@@ -39,12 +37,10 @@ export class UsersClient {
     public listWithUriPagination(
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPaginationUriPath.ListUsersUriPaginationResponse> {
-        const _headers = {};
         return this._requestFn<SeedPaginationUriPath.ListUsersUriPaginationResponse>({
             method: "GET",
             path: "/users/uri",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -58,12 +54,10 @@ export class UsersClient {
     public listWithPathPagination(
         requestOptions?: UsersClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPaginationUriPath.ListUsersPathPaginationResponse> {
-        const _headers = {};
         return this._requestFn<SeedPaginationUriPath.ListUsersPathPaginationResponse>({
             method: "GET",
             path: "/users/path",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

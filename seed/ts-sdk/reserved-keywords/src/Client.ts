@@ -28,6 +28,6 @@ export class SeedNurseryApiClient {
     }
 
     public get package(): PackageClient {
-        return (this._package ??= new PackageClient(this._options, this._requestFn));
+        return (this._package ??= new PackageClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

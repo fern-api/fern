@@ -16,12 +16,10 @@ export class NestedClient {
     protected readonly _requestFn: core.RequestFn;
     protected _api: ApiClient | undefined;
 
-    constructor(options: NestedClient.Options);
-    constructor(options: NestedClient.Options, requestFn: core.RequestFn);
-    constructor(options: NestedClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: NestedClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsWithVariablesError(args),
@@ -30,6 +28,6 @@ export class NestedClient {
     }
 
     public get api(): ApiClient {
-        return (this._api ??= new ApiClient(this._options, this._requestFn));
+        return (this._api ??= new ApiClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

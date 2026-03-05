@@ -17,12 +17,10 @@ export class MetadataClient {
     protected readonly _options: NormalizedClientOptions<MetadataClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: MetadataClient.Options);
-    constructor(options: MetadataClient.Options, requestFn: core.RequestFn);
-    constructor(options: MetadataClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: MetadataClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedMixedFileDirectoryError(args),
@@ -49,12 +47,10 @@ export class MetadataClient {
         const _queryParams: Record<string, unknown> = {
             id,
         };
-        const _headers = {};
         return this._requestFn<SeedMixedFileDirectory.user.events.Metadata>({
             method: "GET",
             path: "/users/events/metadata/",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }

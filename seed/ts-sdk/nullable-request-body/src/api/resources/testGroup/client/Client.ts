@@ -17,12 +17,10 @@ export class TestGroupClient {
     protected readonly _options: NormalizedClientOptions<TestGroupClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: TestGroupClient.Options);
-    constructor(options: TestGroupClient.Options, requestFn: core.RequestFn);
-    constructor(options: TestGroupClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: TestGroupClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiError(args),
@@ -58,7 +56,6 @@ export class TestGroupClient {
             query_param_object: queryParamObject,
             query_param_integer: queryParamInteger,
         };
-        const _headers = {};
         return this._requestFn<unknown>({
             method: "POST",
             path: `optional-request-body/${core.url.encodePathParam(pathParam)}`,
@@ -66,13 +63,13 @@ export class TestGroupClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 422:
                         return new SeedApi.UnprocessableEntityError(body as SeedApi.PlainObject, rawResponse);
+                    default:
+                        return new errors.SeedApiError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

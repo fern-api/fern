@@ -17,12 +17,10 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options);
-    constructor(options: UserClient.Options, requestFn: core.RequestFn);
-    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UserClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedMultiLineDocsError(args),
@@ -42,12 +40,10 @@ export class UserClient {
      *     await client.user.getUser("userId")
      */
     public getUser(userId: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: `users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -69,7 +65,6 @@ export class UserClient {
         request: SeedMultiLineDocs.CreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMultiLineDocs.User> {
-        const _headers = {};
         return this._requestFn<SeedMultiLineDocs.User>({
             method: "POST",
             path: "users",
@@ -77,7 +72,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

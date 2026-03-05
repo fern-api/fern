@@ -15,12 +15,10 @@ export class AuthClient {
     protected readonly _options: NormalizedClientOptions<AuthClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: AuthClient.Options);
-    constructor(options: AuthClient.Options, requestFn: core.RequestFn);
-    constructor(options: AuthClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: AuthClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -62,7 +60,6 @@ export class AuthClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -71,7 +68,6 @@ export class AuthClient {
                     "/token",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

@@ -17,12 +17,10 @@ export class OrganizationClient {
     protected readonly _options: NormalizedClientOptions<OrganizationClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: OrganizationClient.Options);
-    constructor(options: OrganizationClient.Options, requestFn: core.RequestFn);
-    constructor(options: OrganizationClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: OrganizationClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedMixedFileDirectoryError(args),
@@ -45,7 +43,6 @@ export class OrganizationClient {
         request: SeedMixedFileDirectory.CreateOrganizationRequest,
         requestOptions?: OrganizationClient.RequestOptions,
     ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
-        const _headers = {};
         return this._requestFn<SeedMixedFileDirectory.Organization>({
             method: "POST",
             path: "/organizations/",
@@ -53,7 +50,6 @@ export class OrganizationClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

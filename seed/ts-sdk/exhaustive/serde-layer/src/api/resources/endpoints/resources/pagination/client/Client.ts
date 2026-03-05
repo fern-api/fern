@@ -18,12 +18,10 @@ export class PaginationClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PaginationClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PaginationClient.Options);
-    constructor(options: PaginationClient.Options, requestFn: core.RequestFn);
-    constructor(options: PaginationClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PaginationClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -56,7 +54,6 @@ export class PaginationClient {
                     cursor,
                     limit,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -65,7 +62,6 @@ export class PaginationClient {
                             "/pagination",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

@@ -36,22 +36,24 @@ export class SeedLiteralClient {
     }
 
     public get headers(): HeadersClient {
-        return (this._headers ??= new HeadersClient(this._options, this._requestFn));
+        return (this._headers ??= new HeadersClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get inlined(): InlinedClient {
-        return (this._inlined ??= new InlinedClient(this._options, this._requestFn));
+        return (this._inlined ??= new InlinedClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get path(): PathClient {
-        return (this._path ??= new PathClient(this._options, this._requestFn));
+        return (this._path ??= new PathClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get query(): QueryClient {
-        return (this._query ??= new QueryClient(this._options, this._requestFn));
+        return (this._query ??= new QueryClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get reference(): ReferenceClient {
-        return (this._reference ??= new ReferenceClient(this._options, this._requestFn));
+        return (this._reference ??= new ReferenceClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 }

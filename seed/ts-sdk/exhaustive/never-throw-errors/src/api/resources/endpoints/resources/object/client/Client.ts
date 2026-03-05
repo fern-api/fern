@@ -15,12 +15,10 @@ export class ObjectClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ObjectClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ObjectClient.Options);
-    constructor(options: ObjectClient.Options, requestFn: core.RequestFn);
-    constructor(options: ObjectClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ObjectClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -77,7 +75,6 @@ export class ObjectClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -86,7 +83,6 @@ export class ObjectClient {
                     "/object/get-and-return-with-optional-field",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -155,7 +151,6 @@ export class ObjectClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -164,7 +159,6 @@ export class ObjectClient {
                     "/object/get-and-return-with-required-field",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -237,7 +231,6 @@ export class ObjectClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -246,7 +239,6 @@ export class ObjectClient {
                     "/object/get-and-return-with-map-of-map",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -334,7 +326,6 @@ export class ObjectClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -343,7 +334,6 @@ export class ObjectClient {
                     "/object/get-and-return-nested-with-optional-field",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -436,7 +426,6 @@ export class ObjectClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -445,7 +434,6 @@ export class ObjectClient {
                     `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -554,7 +542,6 @@ export class ObjectClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -563,7 +550,6 @@ export class ObjectClient {
                     "/object/get-and-return-nested-with-required-field-list",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -636,7 +622,6 @@ export class ObjectClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -645,7 +630,6 @@ export class ObjectClient {
                     "/object/get-and-return-with-unknown-field",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -719,7 +703,6 @@ export class ObjectClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -728,7 +711,6 @@ export class ObjectClient {
                     "/object/get-and-return-with-datetime-like-string",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

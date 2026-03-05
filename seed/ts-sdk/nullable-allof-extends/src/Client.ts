@@ -35,12 +35,10 @@ export class SeedApiClient {
      *     await client.getTest()
      */
     public getTest(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<SeedApi.RootObject> {
-        const _headers = {};
         return this._requestFn<SeedApi.RootObject>({
             method: "GET",
             path: "test",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -58,7 +56,6 @@ export class SeedApiClient {
         request: SeedApi.RootObject,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.RootObject> {
-        const _headers = {};
         return this._requestFn<SeedApi.RootObject>({
             method: "POST",
             path: "test",
@@ -66,7 +63,6 @@ export class SeedApiClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

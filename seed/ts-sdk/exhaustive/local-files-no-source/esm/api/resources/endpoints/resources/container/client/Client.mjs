@@ -4,10 +4,11 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class ContainerClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * @param {string[]} request
@@ -17,7 +18,6 @@ export class ContainerClient {
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
     getAndReturnListOfPrimitives(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/container/list-of-primitives",
@@ -25,7 +25,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -41,7 +40,6 @@ export class ContainerClient {
      *         }])
      */
     getAndReturnListOfObjects(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/container/list-of-objects",
@@ -49,7 +47,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -61,7 +58,6 @@ export class ContainerClient {
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
     getAndReturnSetOfPrimitives(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/container/set-of-primitives",
@@ -69,7 +65,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -83,7 +78,6 @@ export class ContainerClient {
      *         }])
      */
     getAndReturnSetOfObjects(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/container/set-of-objects",
@@ -91,7 +85,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -105,7 +98,6 @@ export class ContainerClient {
      *     })
      */
     getAndReturnMapPrimToPrim(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/container/map-prim-to-prim",
@@ -113,7 +105,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -129,7 +120,6 @@ export class ContainerClient {
      *     })
      */
     getAndReturnMapOfPrimToObject(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/container/map-prim-to-object",
@@ -137,7 +127,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -151,7 +140,6 @@ export class ContainerClient {
      *     })
      */
     getAndReturnMapOfPrimToUndiscriminatedUnion(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/container/map-prim-to-union",
@@ -159,7 +147,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -173,7 +160,6 @@ export class ContainerClient {
      *     })
      */
     getAndReturnOptional(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/container/opt-objects",
@@ -181,7 +167,6 @@ export class ContainerClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

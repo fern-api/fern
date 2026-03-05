@@ -17,12 +17,10 @@ export class ContentTypeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContentTypeClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ContentTypeClient.Options);
-    constructor(options: ContentTypeClient.Options, requestFn: core.RequestFn);
-    constructor(options: ContentTypeClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ContentTypeClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -57,7 +55,6 @@ export class ContentTypeClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/foo/bar",
@@ -65,7 +62,6 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -97,7 +93,6 @@ export class ContentTypeClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/foo/baz",
@@ -105,7 +100,6 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json; charset=utf-8",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

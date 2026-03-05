@@ -16,12 +16,10 @@ export class V3Client {
     protected readonly _requestFn: core.RequestFn;
     protected _problem: ProblemClient | undefined;
 
-    constructor(options: V3Client.Options);
-    constructor(options: V3Client.Options, requestFn: core.RequestFn);
-    constructor(options: V3Client.Options = {}, requestFn?: core.RequestFn) {
+    constructor(options: V3Client.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: (args) => new errors.SeedTraceError(args),
@@ -30,6 +28,6 @@ export class V3Client {
     }
 
     public get problem(): ProblemClient {
-        return (this._problem ??= new ProblemClient(this._options, this._requestFn));
+        return (this._problem ??= new ProblemClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

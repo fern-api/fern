@@ -17,12 +17,10 @@ export class PropertyBasedErrorClient {
     protected readonly _options: NormalizedClientOptions<PropertyBasedErrorClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PropertyBasedErrorClient.Options);
-    constructor(options: PropertyBasedErrorClient.Options, requestFn: core.RequestFn);
-    constructor(options: PropertyBasedErrorClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PropertyBasedErrorClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedErrorPropertyError(args),
@@ -41,21 +39,20 @@ export class PropertyBasedErrorClient {
      *     await client.propertyBasedError.throwError()
      */
     public throwError(requestOptions?: PropertyBasedErrorClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: "property-based-error",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
-            errorHandler: (_statusCode, body, rawResponse) => {
+            errorHandler: (statusCode, body, rawResponse) => {
                 switch ((body as any)?.errorName) {
                     case "PropertyBasedErrorTest":
                         return new SeedErrorProperty.PropertyBasedErrorTest(
                             body as SeedErrorProperty.PropertyBasedErrorTestBody,
                             rawResponse,
                         );
+                    default:
+                        return new errors.SeedErrorPropertyError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

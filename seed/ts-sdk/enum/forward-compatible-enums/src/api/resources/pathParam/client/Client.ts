@@ -17,12 +17,10 @@ export class PathParamClient {
     protected readonly _options: NormalizedClientOptions<PathParamClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PathParamClient.Options);
-    constructor(options: PathParamClient.Options, requestFn: core.RequestFn);
-    constructor(options: PathParamClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PathParamClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedEnumError(args),
@@ -43,12 +41,10 @@ export class PathParamClient {
         operandOrColor: SeedEnum.ColorOrOperand,
         requestOptions?: PathParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: `path/${core.url.encodePathParam(operand)}/${core.url.encodePathParam(operandOrColor)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

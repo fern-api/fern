@@ -28,6 +28,8 @@ export class SeedObjectsWithImportsClient {
     }
 
     public get optional(): OptionalClient {
-        return (this._optional ??= new OptionalClient(this._options, this._requestFn));
+        return (this._optional ??= new OptionalClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 }

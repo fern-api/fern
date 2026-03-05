@@ -28,6 +28,6 @@ export class SeedUnknownAsAnyClient {
     }
 
     public get unknown(): UnknownClient {
-        return (this._unknown ??= new UnknownClient(this._options, this._requestFn));
+        return (this._unknown ??= new UnknownClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

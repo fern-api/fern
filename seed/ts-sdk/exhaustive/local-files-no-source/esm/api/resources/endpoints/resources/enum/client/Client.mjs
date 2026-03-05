@@ -4,10 +4,11 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class EnumClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * @param {SeedExhaustive.types.WeatherReport} request
@@ -17,7 +18,6 @@ export class EnumClient {
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
     getAndReturnEnum(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/enum",
@@ -25,7 +25,6 @@ export class EnumClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

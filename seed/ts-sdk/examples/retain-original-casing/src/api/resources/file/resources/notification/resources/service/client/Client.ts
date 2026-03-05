@@ -20,12 +20,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExamplesError(args),
@@ -44,12 +42,10 @@ export class ServiceClient {
         notificationId: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Exception> {
-        const _headers = {};
         return this._requestFn<SeedExamples.Exception>({
             method: "GET",
             path: `/file/notification/${core.url.encodePathParam(notificationId)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

@@ -17,12 +17,10 @@ export class NoAuthClient {
     protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NoAuthClient.Options);
-    constructor(options: NoAuthClient.Options, requestFn: core.RequestFn);
-    constructor(options: NoAuthClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: NoAuthClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -47,7 +45,6 @@ export class NoAuthClient {
         request?: unknown,
         requestOptions?: NoAuthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "POST",
             path: "/no-auth",
@@ -55,7 +52,6 @@ export class NoAuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 400:
@@ -63,8 +59,9 @@ export class NoAuthClient {
                             body as SeedExhaustive.BadObjectRequestInfo,
                             rawResponse,
                         );
+                    default:
+                        return new errors.SeedExhaustiveError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

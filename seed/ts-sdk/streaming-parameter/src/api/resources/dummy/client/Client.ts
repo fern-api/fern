@@ -17,12 +17,10 @@ export class DummyClient {
     protected readonly _options: NormalizedClientOptions<DummyClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: DummyClient.Options);
-    constructor(options: DummyClient.Options, requestFn: core.RequestFn);
-    constructor(options: DummyClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: DummyClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedStreamingError(args),
@@ -41,7 +39,6 @@ export class DummyClient {
         request: SeedStreaming.GenerateRequest,
         requestOptions?: DummyClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch<ReadableStream>(
             {
                 url: core.url.join(
@@ -50,7 +47,6 @@ export class DummyClient {
                     "generate",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

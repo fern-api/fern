@@ -17,12 +17,10 @@ export class OrganizationsClient {
     protected readonly _options: NormalizedClientOptions<OrganizationsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: OrganizationsClient.Options);
-    constructor(options: OrganizationsClient.Options, requestFn: core.RequestFn);
-    constructor(options: OrganizationsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: OrganizationsClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPathParametersError(args),
@@ -41,12 +39,10 @@ export class OrganizationsClient {
         organization_id: string,
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.Organization> {
-        const _headers = {};
         return this._requestFn<SeedPathParameters.Organization>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -66,12 +62,10 @@ export class OrganizationsClient {
         requestOptions?: OrganizationsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { organization_id: organizationId, user_id: userId } = request;
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -95,12 +89,10 @@ export class OrganizationsClient {
         const _queryParams: Record<string, unknown> = {
             limit,
         };
-        const _headers = {};
         return this._requestFn<SeedPathParameters.Organization[]>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }

@@ -15,12 +15,10 @@ export class ContainerClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContainerClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ContainerClient.Options);
-    constructor(options: ContainerClient.Options, requestFn: core.RequestFn);
-    constructor(options: ContainerClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ContainerClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -55,7 +53,6 @@ export class ContainerClient {
             core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error>
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -64,7 +61,6 @@ export class ContainerClient {
                     "/container/list-of-primitives",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -135,7 +131,6 @@ export class ContainerClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -144,7 +139,6 @@ export class ContainerClient {
                     "/container/list-of-objects",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -205,7 +199,6 @@ export class ContainerClient {
             core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error>
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -214,7 +207,6 @@ export class ContainerClient {
                     "/container/set-of-primitives",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -283,7 +275,6 @@ export class ContainerClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -292,7 +283,6 @@ export class ContainerClient {
                     "/container/set-of-objects",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -355,7 +345,6 @@ export class ContainerClient {
             core.APIResponse<Record<string, string>, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error>
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -364,7 +353,6 @@ export class ContainerClient {
                     "/container/map-prim-to-prim",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -435,7 +423,6 @@ export class ContainerClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -444,7 +431,6 @@ export class ContainerClient {
                     "/container/map-prim-to-object",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -515,7 +501,6 @@ export class ContainerClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -524,7 +509,6 @@ export class ContainerClient {
                     "/container/map-prim-to-union",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -595,7 +579,6 @@ export class ContainerClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -604,7 +587,6 @@ export class ContainerClient {
                     "/container/opt-objects",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

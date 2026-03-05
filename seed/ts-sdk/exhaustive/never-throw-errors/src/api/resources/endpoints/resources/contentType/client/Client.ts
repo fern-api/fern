@@ -15,12 +15,10 @@ export class ContentTypeClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContentTypeClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ContentTypeClient.Options);
-    constructor(options: ContentTypeClient.Options, requestFn: core.RequestFn);
-    constructor(options: ContentTypeClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ContentTypeClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -71,7 +69,6 @@ export class ContentTypeClient {
             core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error>
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -80,7 +77,6 @@ export class ContentTypeClient {
                     "/foo/bar",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json-patch+json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -159,7 +155,6 @@ export class ContentTypeClient {
             core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -168,7 +163,6 @@ export class ContentTypeClient {
                     "/foo/baz",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json-patch+json; charset=utf-8",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

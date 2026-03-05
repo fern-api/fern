@@ -32,14 +32,14 @@ export class SeedAudiencesClient {
     }
 
     public get folderA(): FolderAClient {
-        return (this._folderA ??= new FolderAClient(this._options, this._requestFn));
+        return (this._folderA ??= new FolderAClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get folderD(): FolderDClient {
-        return (this._folderD ??= new FolderDClient(this._options, this._requestFn));
+        return (this._folderD ??= new FolderDClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get foo(): FooClient {
-        return (this._foo ??= new FooClient(this._options, this._requestFn));
+        return (this._foo ??= new FooClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

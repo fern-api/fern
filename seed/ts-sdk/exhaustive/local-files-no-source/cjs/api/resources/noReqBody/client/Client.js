@@ -40,10 +40,11 @@ const core = __importStar(require("../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../errors/index.js"));
 class NoReqBodyClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -52,12 +53,10 @@ class NoReqBodyClient {
      *     await client.noReqBody.getWithNoRequestBody()
      */
     getWithNoRequestBody(requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: "/no-req-body",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -68,12 +67,10 @@ class NoReqBodyClient {
      *     await client.noReqBody.postWithNoRequestBody()
      */
     postWithNoRequestBody(requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/no-req-body",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

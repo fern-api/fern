@@ -17,12 +17,10 @@ export class InlineUsersClient {
     protected readonly _options: NormalizedClientOptions<InlineUsersClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: InlineUsersClient.Options);
-    constructor(options: InlineUsersClient.Options, requestFn: core.RequestFn);
-    constructor(options: InlineUsersClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: InlineUsersClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPaginationError(args),
@@ -62,7 +60,6 @@ export class InlineUsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -71,7 +68,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -145,7 +141,6 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -154,7 +149,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "POST",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -222,7 +216,6 @@ export class InlineUsersClient {
             async (
                 request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -231,7 +224,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "POST",
-                        headers: _headers,
                         contentType: "application/json",
                         queryParameters: requestOptions?.queryParams,
                         requestType: "json",
@@ -314,7 +306,6 @@ export class InlineUsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -323,7 +314,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -400,7 +390,6 @@ export class InlineUsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -409,7 +398,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -478,7 +466,6 @@ export class InlineUsersClient {
             async (
                 request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -487,7 +474,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "POST",
-                        headers: _headers,
                         contentType: "application/json",
                         queryParameters: requestOptions?.queryParams,
                         requestType: "json",
@@ -565,7 +551,6 @@ export class InlineUsersClient {
                     limit,
                     order: order != null ? order : undefined,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -574,7 +559,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -649,7 +633,6 @@ export class InlineUsersClient {
                     limit,
                     order: order != null ? order : undefined,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -658,7 +641,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -730,7 +712,6 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -739,7 +720,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -809,7 +789,6 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -818,7 +797,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -883,7 +861,6 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -892,7 +869,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -955,7 +931,6 @@ export class InlineUsersClient {
                 const _queryParams: Record<string, unknown> = {
                     offset,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -964,7 +939,6 @@ export class InlineUsersClient {
                             "/inline-users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

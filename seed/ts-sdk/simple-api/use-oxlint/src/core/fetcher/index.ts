@@ -6,7 +6,6 @@ export type { Fetcher, FetchFunction } from "./Fetcher.js";
 export { fetcher } from "./Fetcher.js";
 export { getHeader } from "./getHeader.js";
 export {
-    HttpClient,
     createRequestFn,
     type CreateRequestFnOptions,
     type EndpointConfig,

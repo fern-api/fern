@@ -17,12 +17,10 @@ export class PlaylistClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PlaylistClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PlaylistClient.Options);
-    constructor(options: PlaylistClient.Options, requestFn: core.RequestFn);
-    constructor(options: PlaylistClient.Options = {}, requestFn?: core.RequestFn) {
+    constructor(options: PlaylistClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>

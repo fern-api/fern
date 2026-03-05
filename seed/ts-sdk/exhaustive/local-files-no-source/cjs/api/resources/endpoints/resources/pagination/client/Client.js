@@ -49,10 +49,11 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class PaginationClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * List items with cursor pagination
@@ -75,11 +76,9 @@ class PaginationClient {
                     cursor,
                     limit,
                 };
-                const _headers = {};
                 const _response = yield this._requestFn.fetch({
                     url: core.url.join((_a = (yield core.Supplier.get(this._options.baseUrl))) !== null && _a !== void 0 ? _a : (yield core.Supplier.get(this._options.environment)), "/pagination"),
                     method: "GET",
-                    headers: _headers,
                     queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
                     timeoutMs: ((_d = (_b = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _b !== void 0 ? _b : (_c = this._options) === null || _c === void 0 ? void 0 : _c.timeoutInSeconds) !== null && _d !== void 0 ? _d : 60) * 1000,
                     maxRetries: (_e = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _e !== void 0 ? _e : (_f = this._options) === null || _f === void 0 ? void 0 : _f.maxRetries,

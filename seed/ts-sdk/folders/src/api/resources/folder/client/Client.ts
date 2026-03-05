@@ -18,12 +18,10 @@ export class FolderClient {
     protected readonly _requestFn: core.RequestFn;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: FolderClient.Options);
-    constructor(options: FolderClient.Options, requestFn: core.RequestFn);
-    constructor(options: FolderClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: FolderClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiError(args),
@@ -32,7 +30,7 @@ export class FolderClient {
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._requestFn));
+        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     /**
@@ -42,12 +40,10 @@ export class FolderClient {
      *     await client.folder.foo()
      */
     public foo(requestOptions?: FolderClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

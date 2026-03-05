@@ -15,12 +15,10 @@ export class PrimitiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PrimitiveClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PrimitiveClient.Options);
-    constructor(options: PrimitiveClient.Options, requestFn: core.RequestFn);
-    constructor(options: PrimitiveClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PrimitiveClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -51,7 +49,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnString.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -60,7 +57,6 @@ export class PrimitiveClient {
                     "/primitive/string",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -117,7 +113,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnInt.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -126,7 +121,6 @@ export class PrimitiveClient {
                     "/primitive/integer",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -183,7 +177,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnLong.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -192,7 +185,6 @@ export class PrimitiveClient {
                     "/primitive/long",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -249,7 +241,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<number, SeedExhaustive.endpoints.primitive.getAndReturnDouble.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -258,7 +249,6 @@ export class PrimitiveClient {
                     "/primitive/double",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -315,7 +305,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.primitive.getAndReturnBool.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -324,7 +313,6 @@ export class PrimitiveClient {
                     "/primitive/boolean",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -383,7 +371,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDatetime.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -392,7 +379,6 @@ export class PrimitiveClient {
                     "/primitive/datetime",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -449,7 +435,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnDate.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -458,7 +443,6 @@ export class PrimitiveClient {
                     "/primitive/date",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -515,7 +499,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnUuid.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -524,7 +507,6 @@ export class PrimitiveClient {
                     "/primitive/uuid",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -581,7 +563,6 @@ export class PrimitiveClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.primitive.getAndReturnBase64.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -590,7 +571,6 @@ export class PrimitiveClient {
                     "/primitive/base64",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

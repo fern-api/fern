@@ -16,12 +16,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiWideBasePathError(args),
@@ -44,12 +42,10 @@ export class ServiceClient {
         resourceParam: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: `/test/${core.url.encodePathParam(this._options.pathParam)}/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(endpointParam)}/${core.url.encodePathParam(resourceParam)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

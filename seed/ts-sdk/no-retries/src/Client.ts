@@ -28,6 +28,6 @@ export class SeedNoRetriesClient {
     }
 
     public get retries(): RetriesClient {
-        return (this._retries ??= new RetriesClient(this._options, this._requestFn));
+        return (this._retries ??= new RetriesClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

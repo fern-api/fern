@@ -30,11 +30,11 @@ export class SeedApiClient {
     }
 
     public get a(): AClient {
-        return (this._a ??= new AClient(this._options, this._requestFn));
+        return (this._a ??= new AClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get folder(): FolderClient {
-        return (this._folder ??= new FolderClient(this._options, this._requestFn));
+        return (this._folder ??= new FolderClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     /**
@@ -44,12 +44,10 @@ export class SeedApiClient {
      *     await client.foo()
      */
     public foo(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

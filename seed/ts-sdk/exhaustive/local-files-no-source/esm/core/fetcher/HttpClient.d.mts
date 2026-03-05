@@ -49,9 +49,9 @@ export interface EndpointConfig {
     requestOptions?: RequestOptions;
     /**
      * Custom error handler for status-code errors. Called with the status code, body, and raw response.
-     * Return an Error to throw it, or undefined to fall through to the generic SDK error.
+     * Must always return an Error to throw — either a typed endpoint-specific error or the generic SDK error.
      */
-    errorHandler?: (statusCode: number, body: unknown, rawResponse: RawResponse) => Error | undefined;
+    errorHandler?: (statusCode: number, body: unknown, rawResponse: RawResponse) => Error;
     /** Whether to include credentials on cross-origin requests */
     withCredentials?: boolean;
     /** Endpoint metadata for auth provider routing */
@@ -71,10 +71,10 @@ export interface EndpointConfig {
     baseUrl?: string;
 }
 /**
- * Options for constructing an HttpClient.
+ * Shared options for creating a RequestFn.
  *
  * Structurally compatible with the generated `NormalizedClientOptions` —
- * the generated client passes its normalized options directly to this constructor.
+ * the generated client passes its normalized options directly to `createRequestFn`.
  */
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
@@ -134,6 +134,9 @@ export interface CreateRequestFnOptions extends HttpClientOptions {
  * Creates a RequestFn that closes over the provided options.
  * The returned function is the primary API for making HTTP requests in generated SDKs.
  *
+ * All shared HTTP mechanics (URL resolution, auth, header merging, timeout/retry,
+ * error handling) are encapsulated in closures — no class needed.
+ *
  * @example
  * ```typescript
  * const requestFn = createRequestFn({ ...normalizedOptions, createStatusCodeError, handleNonStatusCodeError });
@@ -144,52 +147,3 @@ export interface CreateRequestFnOptions extends HttpClientOptions {
  * ```
  */
 export declare function createRequestFn(options: CreateRequestFnOptions): RequestFn;
-/**
- * Internal HTTP client class. Not exported publicly — use `createRequestFn` instead.
- *
- * @param options - Normalized client options (baseUrl, auth, headers, etc.)
- * @param createStatusCodeError - Factory to create the SDK-specific generic error for status-code errors.
- * @param handleNonStatusCodeError - Handler for non-status-code errors (timeout, network, unknown, etc.)
- */
-export declare class HttpClient {
-    private readonly _options;
-    private readonly _fetcherFn;
-    private readonly _createStatusCodeError;
-    private readonly _handleNonStatusCodeError;
-    constructor(options: HttpClientOptions, createStatusCodeError: (args: {
-        statusCode: number;
-        body: unknown;
-        rawResponse: RawResponse;
-    }) => Error, handleNonStatusCodeError: (error: Fetcher.Error, rawResponse: RawResponse, method: string, path: string) => never);
-    /**
-     * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
-     * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
-     * to handle the response themselves. ALL HTTP calls should go through this method.
-     *
-     * Handles auth + global header merging on top of whatever endpoint-specific headers
-     * are provided in args.headers. Pass requestHeaders for per-request header overrides.
-     *
-     * @param args - Fetcher args (url, method, headers, body, etc.)
-     * @param options - Optional request-level overrides (per-request headers, endpoint metadata for auth)
-     */
-    fetch<R = unknown>(args: Fetcher.Args, options?: {
-        requestHeaders?: Record<string, unknown>;
-        endpointMetadata?: Record<string, unknown>;
-    }): Promise<APIResponse<R, Fetcher.Error>>;
-    /**
-     * Make an HTTP request. Returns HttpResponsePromise so callers get both
-     * `await client.getUser()` and `client.getUser().withRawResponse()` for free.
-     *
-     * Accepts either a static config or an async config builder function.
-     * The async builder is used by endpoints that need async pre-processing
-     * (e.g. file upload form data building) while keeping the public method non-async.
-     */
-    request<T>(config: EndpointConfig | (() => Promise<EndpointConfig>)): HttpResponsePromise<T>;
-    private _execute;
-    /**
-     * Resolves the timeout in milliseconds for a request.
-     * Priority: requestOptions.timeoutInSeconds > client-level > endpoint default > 60s.
-     * "infinity" means no timeout (returns undefined).
-     */
-    private _resolveTimeoutMs;
-}

@@ -17,12 +17,10 @@ export class RetriesClient {
     protected readonly _options: NormalizedClientOptions<RetriesClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: RetriesClient.Options);
-    constructor(options: RetriesClient.Options, requestFn: core.RequestFn);
-    constructor(options: RetriesClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: RetriesClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedNoRetriesError(args),
@@ -37,12 +35,10 @@ export class RetriesClient {
      *     await client.retries.getUsers()
      */
     public getUsers(requestOptions?: RetriesClient.RequestOptions): core.HttpResponsePromise<SeedNoRetries.User[]> {
-        const _headers = {};
         return this._requestFn<SeedNoRetries.User[]>({
             method: "GET",
             path: "/users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

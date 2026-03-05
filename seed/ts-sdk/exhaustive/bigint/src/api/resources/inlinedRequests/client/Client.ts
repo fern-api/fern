@@ -17,12 +17,10 @@ export class InlinedRequestsClient {
     protected readonly _options: NormalizedClientOptions<InlinedRequestsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: InlinedRequestsClient.Options);
-    constructor(options: InlinedRequestsClient.Options, requestFn: core.RequestFn);
-    constructor(options: InlinedRequestsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: InlinedRequestsClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -65,7 +63,6 @@ export class InlinedRequestsClient {
         request: SeedExhaustive.PostWithObjectBody,
         requestOptions?: InlinedRequestsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "POST",
             path: "/req-bodies/object",
@@ -73,7 +70,6 @@ export class InlinedRequestsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 400:
@@ -81,8 +77,9 @@ export class InlinedRequestsClient {
                             body as SeedExhaustive.BadObjectRequestInfo,
                             rawResponse,
                         );
+                    default:
+                        return new errors.SeedExhaustiveError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

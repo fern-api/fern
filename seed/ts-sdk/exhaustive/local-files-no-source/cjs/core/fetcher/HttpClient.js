@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HttpClient = void 0;
 exports.createRequestFn = createRequestFn;
 const headers_js_1 = require("../headers.js");
 const join_js_1 = require("../url/join.js");
@@ -19,6 +18,9 @@ const Supplier_js_1 = require("./Supplier.js");
 /**
  * Creates a RequestFn that closes over the provided options.
  * The returned function is the primary API for making HTTP requests in generated SDKs.
+ *
+ * All shared HTTP mechanics (URL resolution, auth, header merging, timeout/retry,
+ * error handling) are encapsulated in closures — no class needed.
  *
  * @example
  * ```typescript
@@ -30,115 +32,22 @@ const Supplier_js_1 = require("./Supplier.js");
  * ```
  */
 function createRequestFn(options) {
-    const client = new HttpClient(options, options.createStatusCodeError, options.handleNonStatusCodeError);
-    function requestFn(config) {
-        return client.request(config);
-    }
-    requestFn.fetch = (args, opts) => client.fetch(args, opts);
-    return requestFn;
-}
-/**
- * Internal HTTP client class. Not exported publicly — use `createRequestFn` instead.
- *
- * @param options - Normalized client options (baseUrl, auth, headers, etc.)
- * @param createStatusCodeError - Factory to create the SDK-specific generic error for status-code errors.
- * @param handleNonStatusCodeError - Handler for non-status-code errors (timeout, network, unknown, etc.)
- */
-class HttpClient {
-    constructor(options, createStatusCodeError, handleNonStatusCodeError) {
-        var _a;
-        this._options = options;
-        this._fetcherFn = (_a = options.fetcher) !== null && _a !== void 0 ? _a : Fetcher_js_1.fetcherImpl;
-        this._createStatusCodeError = createStatusCodeError;
-        this._handleNonStatusCodeError = handleNonStatusCodeError;
-    }
+    var _a;
+    const fetchFn = (_a = options.fetcher) !== null && _a !== void 0 ? _a : Fetcher_js_1.fetcherImpl;
     /**
-     * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
-     * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
-     * to handle the response themselves. ALL HTTP calls should go through this method.
-     *
-     * Handles auth + global header merging on top of whatever endpoint-specific headers
-     * are provided in args.headers. Pass requestHeaders for per-request header overrides.
-     *
-     * @param args - Fetcher args (url, method, headers, body, etc.)
-     * @param options - Optional request-level overrides (per-request headers, endpoint metadata for auth)
+     * Low-level fetch returning the raw APIResponse.
+     * Handles auth + global header merging on top of endpoint-specific headers.
      */
-    fetch(args, options) {
+    function fetchWithHeaders(args, fetchOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
-            // Merge headers: auth → global → endpoint-specific (args.headers) → per-request
-            const authHeaders = this._options.authProvider
-                ? (yield this._options.authProvider.getAuthRequest({
-                    endpointMetadata: (_a = options === null || options === void 0 ? void 0 : options.endpointMetadata) !== null && _a !== void 0 ? _a : args.endpointMetadata,
+            const authHeaders = options.authProvider
+                ? (yield options.authProvider.getAuthRequest({
+                    endpointMetadata: (_a = fetchOptions === null || fetchOptions === void 0 ? void 0 : fetchOptions.endpointMetadata) !== null && _a !== void 0 ? _a : args.endpointMetadata,
                 })).headers
                 : {};
-            const mergedHeaders = (0, headers_js_1.mergeHeaders)(authHeaders, this._options.headers, args.headers, options === null || options === void 0 ? void 0 : options.requestHeaders);
-            return this._fetcherFn(Object.assign(Object.assign({}, args), { headers: mergedHeaders }));
-        });
-    }
-    /**
-     * Make an HTTP request. Returns HttpResponsePromise so callers get both
-     * `await client.getUser()` and `client.getUser().withRawResponse()` for free.
-     *
-     * Accepts either a static config or an async config builder function.
-     * The async builder is used by endpoints that need async pre-processing
-     * (e.g. file upload form data building) while keeping the public method non-async.
-     */
-    request(config) {
-        if (typeof config === "function") {
-            return HttpResponsePromise_js_1.HttpResponsePromise.fromPromise(config().then((resolved) => this._execute(resolved)));
-        }
-        return HttpResponsePromise_js_1.HttpResponsePromise.fromPromise(this._execute(config));
-    }
-    _execute(config) {
-        return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
-            // 1. Query params: endpoint-specific + per-request
-            const queryParameters = config.queryParameters
-                ? Object.assign(Object.assign({}, config.queryParameters), (_a = config.requestOptions) === null || _a === void 0 ? void 0 : _a.queryParams) : (_b = config.requestOptions) === null || _b === void 0 ? void 0 : _b.queryParams;
-            // 2. Build Fetcher.Args and delegate to fetch() for header merging
-            const endpointHeaders = config.headers != null ? (0, headers_js_1.mergeOnlyDefinedHeaders)(config.headers) : {};
-            const response = yield this.fetch({
-                url: (0, join_js_1.join)((_f = (_e = (_d = (_c = config.baseUrl) !== null && _c !== void 0 ? _c : (yield Supplier_js_1.Supplier.get(this._options.baseUrl))) !== null && _d !== void 0 ? _d : (yield Supplier_js_1.Supplier.get(this._options.environment))) !== null && _e !== void 0 ? _e : this._options.defaultBaseUrl) !== null && _f !== void 0 ? _f : "", config.path),
-                method: config.method,
-                headers: endpointHeaders,
-                contentType: config.contentType,
-                requestType: config.requestType,
-                responseType: config.responseType,
-                queryParameters,
-                body: config.body,
-                duplex: config.duplex,
-                timeoutMs: this._resolveTimeoutMs(config),
-                maxRetries: (_h = (_g = config.requestOptions) === null || _g === void 0 ? void 0 : _g.maxRetries) !== null && _h !== void 0 ? _h : this._options.maxRetries,
-                abortSignal: (_j = config.requestOptions) === null || _j === void 0 ? void 0 : _j.abortSignal,
-                withCredentials: config.withCredentials,
-                fetchFn: this._options.fetch,
-                logging: this._options.logging,
-            }, {
-                requestHeaders: (_k = config.requestOptions) === null || _k === void 0 ? void 0 : _k.headers,
-                endpointMetadata: config.endpointMetadata,
-            });
-            // 3. Success
-            if (response.ok) {
-                const data = config.transformResponse
-                    ? config.transformResponse(response.body, response.rawResponse)
-                    : response.body;
-                return { data, rawResponse: response.rawResponse };
-            }
-            // 4. Status-code errors: check endpoint-specific handler, then fall through to generic
-            if (response.error.reason === "status-code") {
-                const customError = (_l = config.errorHandler) === null || _l === void 0 ? void 0 : _l.call(config, response.error.statusCode, response.error.body, response.rawResponse);
-                if (customError) {
-                    throw customError;
-                }
-                throw this._createStatusCodeError({
-                    statusCode: response.error.statusCode,
-                    body: response.error.body,
-                    rawResponse: response.rawResponse,
-                });
-            }
-            // 5. Non-status-code errors (timeout, network, etc.)
-            return this._handleNonStatusCodeError(response.error, response.rawResponse, config.method, config.path);
+            const mergedHeaders = (0, headers_js_1.mergeHeaders)(authHeaders, options.headers, args.headers, fetchOptions === null || fetchOptions === void 0 ? void 0 : fetchOptions.requestHeaders);
+            return fetchFn(Object.assign(Object.assign({}, args), { headers: mergedHeaders }));
         });
     }
     /**
@@ -146,13 +55,13 @@ class HttpClient {
      * Priority: requestOptions.timeoutInSeconds > client-level > endpoint default > 60s.
      * "infinity" means no timeout (returns undefined).
      */
-    _resolveTimeoutMs(config) {
+    function resolveTimeoutMs(config) {
         var _a;
         const requestTimeout = (_a = config.requestOptions) === null || _a === void 0 ? void 0 : _a.timeoutInSeconds;
         if (requestTimeout != null) {
             return requestTimeout * 1000;
         }
-        const clientTimeout = this._options.timeoutInSeconds;
+        const clientTimeout = options.timeoutInSeconds;
         if (clientTimeout != null) {
             return clientTimeout * 1000;
         }
@@ -165,5 +74,64 @@ class HttpClient {
         }
         return 60 * 1000;
     }
+    /** Execute a single endpoint request and handle the response. */
+    function execute(config) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
+            // 1. Query params: endpoint-specific + per-request
+            const queryParameters = config.queryParameters
+                ? Object.assign(Object.assign({}, config.queryParameters), (_a = config.requestOptions) === null || _a === void 0 ? void 0 : _a.queryParams) : (_b = config.requestOptions) === null || _b === void 0 ? void 0 : _b.queryParams;
+            // 2. Build Fetcher.Args and delegate to fetchWithHeaders for header merging
+            const endpointHeaders = config.headers != null ? (0, headers_js_1.mergeOnlyDefinedHeaders)(config.headers) : {};
+            const response = yield fetchWithHeaders({
+                url: (0, join_js_1.join)((_f = (_e = (_d = (_c = config.baseUrl) !== null && _c !== void 0 ? _c : (yield Supplier_js_1.Supplier.get(options.baseUrl))) !== null && _d !== void 0 ? _d : (yield Supplier_js_1.Supplier.get(options.environment))) !== null && _e !== void 0 ? _e : options.defaultBaseUrl) !== null && _f !== void 0 ? _f : "", config.path),
+                method: config.method,
+                headers: endpointHeaders,
+                contentType: config.contentType,
+                requestType: config.requestType,
+                responseType: config.responseType,
+                queryParameters,
+                body: config.body,
+                duplex: config.duplex,
+                timeoutMs: resolveTimeoutMs(config),
+                maxRetries: (_h = (_g = config.requestOptions) === null || _g === void 0 ? void 0 : _g.maxRetries) !== null && _h !== void 0 ? _h : options.maxRetries,
+                abortSignal: (_j = config.requestOptions) === null || _j === void 0 ? void 0 : _j.abortSignal,
+                withCredentials: config.withCredentials,
+                fetchFn: options.fetch,
+                logging: options.logging,
+            }, {
+                requestHeaders: (_k = config.requestOptions) === null || _k === void 0 ? void 0 : _k.headers,
+                endpointMetadata: config.endpointMetadata,
+            });
+            // 3. Success
+            if (response.ok) {
+                const data = config.transformResponse
+                    ? config.transformResponse(response.body, response.rawResponse)
+                    : response.body;
+                return { data, rawResponse: response.rawResponse };
+            }
+            // 4. Status-code errors: use endpoint-specific handler if provided, otherwise generic
+            if (response.error.reason === "status-code") {
+                if (config.errorHandler) {
+                    throw config.errorHandler(response.error.statusCode, response.error.body, response.rawResponse);
+                }
+                throw options.createStatusCodeError({
+                    statusCode: response.error.statusCode,
+                    body: response.error.body,
+                    rawResponse: response.rawResponse,
+                });
+            }
+            // 5. Non-status-code errors (timeout, network, etc.)
+            return options.handleNonStatusCodeError(response.error, response.rawResponse, config.method, config.path);
+        });
+    }
+    // Build the RequestFn: call signature + .fetch() method
+    function requestFn(config) {
+        if (typeof config === "function") {
+            return HttpResponsePromise_js_1.HttpResponsePromise.fromPromise(config().then((resolved) => execute(resolved)));
+        }
+        return HttpResponsePromise_js_1.HttpResponsePromise.fromPromise(execute(config));
+    }
+    requestFn.fetch = fetchWithHeaders;
+    return requestFn;
 }
-exports.HttpClient = HttpClient;

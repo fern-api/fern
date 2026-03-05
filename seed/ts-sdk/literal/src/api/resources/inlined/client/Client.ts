@@ -18,12 +18,10 @@ export class InlinedClient {
     protected readonly _options: NormalizedClientOptions<InlinedClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: InlinedClient.Options);
-    constructor(options: InlinedClient.Options, requestFn: core.RequestFn);
-    constructor(options: InlinedClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: InlinedClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedLiteralError(args),

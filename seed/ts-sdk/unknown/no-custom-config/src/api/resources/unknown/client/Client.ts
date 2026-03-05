@@ -17,12 +17,10 @@ export class UnknownClient {
     protected readonly _options: NormalizedClientOptions<UnknownClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UnknownClient.Options);
-    constructor(options: UnknownClient.Options, requestFn: core.RequestFn);
-    constructor(options: UnknownClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UnknownClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedUnknownAsAnyError(args),
@@ -40,7 +38,6 @@ export class UnknownClient {
      *     })
      */
     public post(request?: unknown, requestOptions?: UnknownClient.RequestOptions): core.HttpResponsePromise<unknown[]> {
-        const _headers = {};
         return this._requestFn<unknown[]>({
             method: "POST",
             path: "",
@@ -48,7 +45,6 @@ export class UnknownClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -68,7 +64,6 @@ export class UnknownClient {
         request: SeedUnknownAsAny.MyObject,
         requestOptions?: UnknownClient.RequestOptions,
     ): core.HttpResponsePromise<unknown[]> {
-        const _headers = {};
         return this._requestFn<unknown[]>({
             method: "POST",
             path: "/with-object",
@@ -76,7 +71,6 @@ export class UnknownClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

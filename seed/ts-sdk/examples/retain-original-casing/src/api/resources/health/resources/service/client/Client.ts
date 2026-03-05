@@ -16,12 +16,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExamplesError(args),
@@ -42,12 +40,10 @@ export class ServiceClient {
      *     await client.health.service.check("id-3tey93i")
      */
     public check(id: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: `/check/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -61,12 +57,10 @@ export class ServiceClient {
      *     await client.health.service.ping()
      */
     public ping(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "GET",
             path: "/ping",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

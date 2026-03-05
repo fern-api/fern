@@ -18,12 +18,10 @@ export class HttpMethodsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<HttpMethodsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: HttpMethodsClient.Options);
-    constructor(options: HttpMethodsClient.Options, requestFn: core.RequestFn);
-    constructor(options: HttpMethodsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: HttpMethodsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -39,12 +37,10 @@ export class HttpMethodsClient {
      *     await client.endpoints.httpMethods.testGet("id")
      */
     public testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.httpMethods.testGet.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -72,7 +68,6 @@ export class HttpMethodsClient {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "POST",
             path: "/http-methods",
@@ -83,7 +78,6 @@ export class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithOptionalField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -113,7 +107,6 @@ export class HttpMethodsClient {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "PUT",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
@@ -124,7 +117,6 @@ export class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithOptionalField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -168,7 +160,6 @@ export class HttpMethodsClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "PATCH",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
@@ -179,7 +170,6 @@ export class HttpMethodsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithOptionalField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -205,12 +195,10 @@ export class HttpMethodsClient {
         id: string,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "DELETE",
             path: `/http-methods/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.httpMethods.testDelete.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

@@ -17,12 +17,10 @@ export class ImdbClient {
     protected readonly _options: NormalizedClientOptions<ImdbClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ImdbClient.Options);
-    constructor(options: ImdbClient.Options, requestFn: core.RequestFn);
-    constructor(options: ImdbClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ImdbClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiError(args),
@@ -48,7 +46,6 @@ export class ImdbClient {
         request: SeedApi.CreateMovieRequest,
         requestOptions?: ImdbClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.MovieId> {
-        const _headers = {};
         return this._requestFn<SeedApi.MovieId>({
             method: "POST",
             path: "/movies/create-movie",
@@ -56,7 +53,6 @@ export class ImdbClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -76,18 +72,17 @@ export class ImdbClient {
         movieId: SeedApi.MovieId,
         requestOptions?: ImdbClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.Movie> {
-        const _headers = {};
         return this._requestFn<SeedApi.Movie>({
             method: "GET",
             path: `/movies/${core.url.encodePathParam(movieId)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 404:
                         return new SeedApi.MovieDoesNotExistError(body as SeedApi.MovieId, rawResponse);
+                    default:
+                        return new errors.SeedApiError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

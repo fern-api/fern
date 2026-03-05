@@ -15,12 +15,10 @@ export class NoReqBodyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NoReqBodyClient.Options);
-    constructor(options: NoReqBodyClient.Options, requestFn: core.RequestFn);
-    constructor(options: NoReqBodyClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: NoReqBodyClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -58,7 +56,6 @@ export class NoReqBodyClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -67,7 +64,6 @@ export class NoReqBodyClient {
                     "/no-req-body",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -116,7 +112,6 @@ export class NoReqBodyClient {
     private async __postWithNoRequestBody(
         requestOptions?: NoReqBodyClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.noReqBody.postWithNoRequestBody.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -125,7 +120,6 @@ export class NoReqBodyClient {
                     "/no-req-body",
                 ),
                 method: "POST",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

@@ -16,12 +16,10 @@ export class BClient {
     protected readonly _options: NormalizedClientOptions<BClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: BClient.Options);
-    constructor(options: BClient.Options, requestFn: core.RequestFn);
-    constructor(options: BClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: BClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiError(args),
@@ -36,12 +34,10 @@ export class BClient {
      *     await client.a.b.foo()
      */
     public foo(requestOptions?: BClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

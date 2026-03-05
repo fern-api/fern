@@ -5,7 +5,7 @@ export { EndpointSupplier } from "./EndpointSupplier.js";
 export type { Fetcher, FetchFunction } from "./Fetcher.js";
 export { fetcher } from "./Fetcher.js";
 export { getHeader } from "./getHeader.js";
-export { type CreateRequestFnOptions, createRequestFn, type EndpointConfig, HttpClient, type HttpClientOptions, type RequestFn, type RequestOptions, } from "./HttpClient.js";
+export { type CreateRequestFnOptions, createRequestFn, type EndpointConfig, type HttpClientOptions, type RequestFn, type RequestOptions, } from "./HttpClient.js";
 export { HttpResponsePromise } from "./HttpResponsePromise.js";
 export type { RawResponse, WithRawResponse } from "./RawResponse.js";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";

@@ -17,12 +17,10 @@ export class Ec2Client {
     protected readonly _options: NormalizedClientOptionsWithAuth<Ec2Client.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: Ec2Client.Options);
-    constructor(options: Ec2Client.Options, requestFn: core.RequestFn);
-    constructor(options: Ec2Client.Options, requestFn?: core.RequestFn) {
+    constructor(options: Ec2Client.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedMultiUrlEnvironmentNoDefaultError(args),
@@ -44,7 +42,6 @@ export class Ec2Client {
         requestOptions?: Ec2Client.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return this._requestFn<void>(async () => {
-            const _headers = {};
             return {
                 method: "POST",
                 path: "/ec2/boot",
@@ -52,7 +49,6 @@ export class Ec2Client {
                 contentType: "application/json",
                 requestType: "json",
                 queryParameters: requestOptions?.queryParams,
-                headers: _headers,
                 baseUrl:
                     (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)).ec2,

@@ -11,7 +11,6 @@ export declare class ParamsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: ParamsClient.Options);
-    constructor(options: ParamsClient.Options, requestFn: core.RequestFn);
     /**
      * GET with path param
      *

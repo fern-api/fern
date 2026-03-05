@@ -35,12 +35,10 @@ export class SeedApiClient {
      */
     public getUsers(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<SeedApi.User[]> {
         return this._requestFn<SeedApi.User[]>(async () => {
-            const _headers = {};
             return {
                 method: "GET",
                 path: "users",
                 queryParameters: requestOptions?.queryParams,
-                headers: _headers,
                 baseUrl:
                     (await core.Supplier.get(this._options.baseUrl)) ??
                     (
@@ -67,12 +65,10 @@ export class SeedApiClient {
     ): core.HttpResponsePromise<SeedApi.User> {
         return this._requestFn<SeedApi.User>(async () => {
             const { userId } = request;
-            const _headers = {};
             return {
                 method: "GET",
                 path: `users/${core.url.encodePathParam(userId)}`,
                 queryParameters: requestOptions?.queryParams,
-                headers: _headers,
                 baseUrl:
                     (await core.Supplier.get(this._options.baseUrl)) ??
                     (
@@ -99,7 +95,6 @@ export class SeedApiClient {
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.TokenResponse> {
         return this._requestFn<SeedApi.TokenResponse>(async () => {
-            const _headers = {};
             return {
                 method: "POST",
                 path: "auth/token",
@@ -107,7 +102,6 @@ export class SeedApiClient {
                 contentType: "application/json",
                 requestType: "json",
                 queryParameters: requestOptions?.queryParams,
-                headers: _headers,
                 baseUrl:
                     (await core.Supplier.get(this._options.baseUrl)) ??
                     (

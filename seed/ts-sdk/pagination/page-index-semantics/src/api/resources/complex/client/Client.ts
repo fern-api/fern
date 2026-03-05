@@ -17,12 +17,10 @@ export class ComplexClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ComplexClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ComplexClient.Options);
-    constructor(options: ComplexClient.Options, requestFn: core.RequestFn);
-    constructor(options: ComplexClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ComplexClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPaginationError(args),
@@ -57,7 +55,6 @@ export class ComplexClient {
             async (
                 request: SeedPagination.SearchRequest,
             ): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => {
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -66,7 +63,6 @@ export class ComplexClient {
                             `${core.url.encodePathParam(index)}/conversations/search`,
                         ),
                         method: "POST",
-                        headers: _headers,
                         contentType: "application/json",
                         queryParameters: requestOptions?.queryParams,
                         requestType: "json",

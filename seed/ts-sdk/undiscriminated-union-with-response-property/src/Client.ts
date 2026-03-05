@@ -35,12 +35,10 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
     public getUnion(
         requestOptions?: SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnionWithResponseProperty.UnionResponse> {
-        const _headers = {};
         return this._requestFn<SeedUndiscriminatedUnionWithResponseProperty.UnionResponse>({
             method: "GET",
             path: "/union",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -54,12 +52,10 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
     public listUnions(
         requestOptions?: SeedUndiscriminatedUnionWithResponsePropertyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse> {
-        const _headers = {};
         return this._requestFn<SeedUndiscriminatedUnionWithResponseProperty.UnionListResponse>({
             method: "GET",
             path: "/unions",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

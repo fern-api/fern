@@ -16,12 +16,10 @@ export class ReqWithHeadersClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ReqWithHeadersClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ReqWithHeadersClient.Options);
-    constructor(options: ReqWithHeadersClient.Options, requestFn: core.RequestFn);
-    constructor(options: ReqWithHeadersClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ReqWithHeadersClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>

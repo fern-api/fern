@@ -16,12 +16,10 @@ export class ApiClient {
     protected readonly _options: NormalizedClientOptions<ApiClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ApiClient.Options);
-    constructor(options: ApiClient.Options, requestFn: core.RequestFn);
-    constructor(options: ApiClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ApiClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsEnvironmentVariablesError(args),
@@ -36,12 +34,10 @@ export class ApiClient {
      *     await client.nestedNoAuth.api.getSomething()
      */
     public getSomething(requestOptions?: ApiClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: "/nested-no-auth/get-something",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

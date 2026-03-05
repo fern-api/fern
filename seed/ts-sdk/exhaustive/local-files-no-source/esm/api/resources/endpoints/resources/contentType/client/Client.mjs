@@ -4,10 +4,11 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class ContentTypeClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
@@ -33,7 +34,6 @@ export class ContentTypeClient {
      *     })
      */
     postJsonPatchContentType(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/foo/bar",
@@ -41,7 +41,6 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -69,7 +68,6 @@ export class ContentTypeClient {
      *     })
      */
     postJsonPatchContentWithCharsetType(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/foo/baz",
@@ -77,7 +75,6 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json; charset=utf-8",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

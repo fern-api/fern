@@ -15,12 +15,10 @@ export class UrlsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UrlsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UrlsClient.Options);
-    constructor(options: UrlsClient.Options, requestFn: core.RequestFn);
-    constructor(options: UrlsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UrlsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -46,7 +44,6 @@ export class UrlsClient {
     private async __withMixedCase(
         requestOptions?: UrlsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withMixedCase.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -55,7 +52,6 @@ export class UrlsClient {
                     "/urls/MixedCase",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -104,7 +100,6 @@ export class UrlsClient {
     private async __noEndingSlash(
         requestOptions?: UrlsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.noEndingSlash.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -113,7 +108,6 @@ export class UrlsClient {
                     "/urls/no-ending-slash",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -162,7 +156,6 @@ export class UrlsClient {
     private async __withEndingSlash(
         requestOptions?: UrlsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withEndingSlash.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -171,7 +164,6 @@ export class UrlsClient {
                     "/urls/with-ending-slash/",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -220,7 +212,6 @@ export class UrlsClient {
     private async __withUnderscores(
         requestOptions?: UrlsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withUnderscores.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -229,7 +220,6 @@ export class UrlsClient {
                     "/urls/with_underscores",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

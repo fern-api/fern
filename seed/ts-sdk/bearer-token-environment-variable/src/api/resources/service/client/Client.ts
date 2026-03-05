@@ -17,12 +17,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedBearerTokenEnvironmentVariableError(args),

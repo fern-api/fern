@@ -15,12 +15,10 @@ export class ApiClient {
     protected readonly _options: NormalizedClientOptions<ApiClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ApiClient.Options);
-    constructor(options: ApiClient.Options, requestFn: core.RequestFn);
-    constructor(options: ApiClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ApiClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -50,7 +48,6 @@ export class ApiClient {
     ): Promise<
         core.WithRawResponse<core.APIResponse<void, SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error>>
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -59,7 +56,6 @@ export class ApiClient {
                     "/nested-no-auth/get-something",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

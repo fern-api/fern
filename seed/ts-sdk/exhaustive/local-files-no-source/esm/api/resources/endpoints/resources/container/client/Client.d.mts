@@ -11,7 +11,6 @@ export declare class ContainerClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ContainerClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: ContainerClient.Options);
-    constructor(options: ContainerClient.Options, requestFn: core.RequestFn);
     /**
      * @param {string[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.

@@ -16,12 +16,10 @@ export class DummyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<DummyClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: DummyClient.Options);
-    constructor(options: DummyClient.Options, requestFn: core.RequestFn);
-    constructor(options: DummyClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: DummyClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedSingleUrlEnvironmentNoDefaultError(args),
@@ -36,12 +34,10 @@ export class DummyClient {
      *     await client.dummy.getDummy()
      */
     public getDummy(requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: "dummy",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

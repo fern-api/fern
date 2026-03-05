@@ -17,12 +17,10 @@ export class SimpleClient {
     protected readonly _options: NormalizedClientOptions<SimpleClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SimpleClient.Options);
-    constructor(options: SimpleClient.Options, requestFn: core.RequestFn);
-    constructor(options: SimpleClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: SimpleClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedErrorsError(args),
@@ -47,7 +45,6 @@ export class SimpleClient {
         request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        const _headers = {};
         return this._requestFn<SeedErrors.FooResponse>({
             method: "POST",
             path: "foo1",
@@ -55,7 +52,6 @@ export class SimpleClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 404:
@@ -64,8 +60,9 @@ export class SimpleClient {
                         return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
                     case 500:
                         return new SeedErrors.InternalServerError(body as SeedErrors.ErrorBody, rawResponse);
+                    default:
+                        return new errors.SeedErrorsError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });
@@ -90,7 +87,6 @@ export class SimpleClient {
         request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        const _headers = {};
         return this._requestFn<SeedErrors.FooResponse>({
             method: "POST",
             path: "foo2",
@@ -98,7 +94,6 @@ export class SimpleClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 429:
@@ -109,8 +104,9 @@ export class SimpleClient {
                         return new SeedErrors.NotFoundError(body as SeedErrors.ErrorBody, rawResponse);
                     case 400:
                         return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
+                    default:
+                        return new errors.SeedErrorsError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });
@@ -135,7 +131,6 @@ export class SimpleClient {
         request: SeedErrors.FooRequest,
         requestOptions?: SimpleClient.RequestOptions,
     ): core.HttpResponsePromise<SeedErrors.FooResponse> {
-        const _headers = {};
         return this._requestFn<SeedErrors.FooResponse>({
             method: "POST",
             path: "foo3",
@@ -143,7 +138,6 @@ export class SimpleClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 429:
@@ -154,8 +148,9 @@ export class SimpleClient {
                         return new SeedErrors.NotFoundError(body as SeedErrors.ErrorBody, rawResponse);
                     case 400:
                         return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
+                    default:
+                        return new errors.SeedErrorsError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

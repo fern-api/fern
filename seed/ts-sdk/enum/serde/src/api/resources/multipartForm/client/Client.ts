@@ -19,12 +19,10 @@ export class MultipartFormClient {
     protected readonly _options: NormalizedClientOptions<MultipartFormClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: MultipartFormClient.Options);
-    constructor(options: MultipartFormClient.Options, requestFn: core.RequestFn);
-    constructor(options: MultipartFormClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: MultipartFormClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedEnumError(args),

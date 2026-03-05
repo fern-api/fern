@@ -17,12 +17,10 @@ export class BasicAuthClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<BasicAuthClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: BasicAuthClient.Options);
-    constructor(options: BasicAuthClient.Options, requestFn: core.RequestFn);
-    constructor(options: BasicAuthClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: BasicAuthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedBasicAuthEnvironmentVariablesError(args),
@@ -41,12 +39,10 @@ export class BasicAuthClient {
      *     await client.basicAuth.getWithBasicAuth()
      */
     public getWithBasicAuth(requestOptions?: BasicAuthClient.RequestOptions): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "GET",
             path: "basic-auth",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 401:
@@ -54,8 +50,9 @@ export class BasicAuthClient {
                             body as SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody,
                             rawResponse,
                         );
+                    default:
+                        return new errors.SeedBasicAuthEnvironmentVariablesError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });
@@ -79,7 +76,6 @@ export class BasicAuthClient {
         request?: unknown,
         requestOptions?: BasicAuthClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "POST",
             path: "basic-auth",
@@ -87,7 +83,6 @@ export class BasicAuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 401:
@@ -97,8 +92,9 @@ export class BasicAuthClient {
                         );
                     case 400:
                         return new SeedBasicAuthEnvironmentVariables.BadRequest(rawResponse);
+                    default:
+                        return new errors.SeedBasicAuthEnvironmentVariablesError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

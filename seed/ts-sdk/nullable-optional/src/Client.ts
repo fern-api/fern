@@ -28,6 +28,8 @@ export class SeedNullableOptionalClient {
     }
 
     public get nullableOptional(): NullableOptionalClient {
-        return (this._nullableOptional ??= new NullableOptionalClient(this._options, this._requestFn));
+        return (this._nullableOptional ??= new NullableOptionalClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 }

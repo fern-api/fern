@@ -17,12 +17,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiError(args),
@@ -37,12 +35,10 @@ export class ServiceClient {
      *     await client.folder.service.endpoint()
      */
     public endpoint(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: "/service",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -62,7 +58,6 @@ export class ServiceClient {
         request?: unknown,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/service",
@@ -70,13 +65,13 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 404:
                         return new SeedApi.folder.NotFoundError(body as string, rawResponse);
+                    default:
+                        return new errors.SeedApiError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

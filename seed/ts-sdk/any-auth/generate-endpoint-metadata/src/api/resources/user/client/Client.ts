@@ -17,12 +17,10 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UserClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options);
-    constructor(options: UserClient.Options, requestFn: core.RequestFn);
-    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UserClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedAnyAuthError(args),
@@ -40,12 +38,10 @@ export class UserClient {
         const _metadata: core.EndpointMetadata = {
             security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: [] }, { Basic: [] }, { InferredAuth: [] }],
         };
-        const _headers = {};
         return this._requestFn<SeedAnyAuth.User[]>({
             method: "POST",
             path: "users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });
@@ -59,12 +55,10 @@ export class UserClient {
      */
     public getAdmins(requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["admin"] }] };
-        const _headers = {};
         return this._requestFn<SeedAnyAuth.User[]>({
             method: "GET",
             path: "admins",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });

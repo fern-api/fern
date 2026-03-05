@@ -18,12 +18,10 @@ export class InlinedRequestClient {
     protected readonly _options: NormalizedClientOptions<InlinedRequestClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: InlinedRequestClient.Options);
-    constructor(options: InlinedRequestClient.Options, requestFn: core.RequestFn);
-    constructor(options: InlinedRequestClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: InlinedRequestClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedEnumError(args),
@@ -45,7 +43,6 @@ export class InlinedRequestClient {
         request: SeedEnum.SendEnumInlinedRequest,
         requestOptions?: InlinedRequestClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "inlined",
@@ -56,7 +53,6 @@ export class InlinedRequestClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

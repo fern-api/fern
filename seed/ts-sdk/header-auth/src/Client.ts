@@ -28,6 +28,6 @@ export class SeedHeaderTokenClient {
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._requestFn));
+        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

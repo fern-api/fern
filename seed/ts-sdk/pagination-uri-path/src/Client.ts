@@ -28,6 +28,6 @@ export class SeedPaginationUriPathClient {
     }
 
     public get users(): UsersClient {
-        return (this._users ??= new UsersClient(this._options, this._requestFn));
+        return (this._users ??= new UsersClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

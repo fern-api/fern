@@ -50,10 +50,11 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const handleNonStatusCodeError_js_1 = require("../../../../../../errors/handleNonStatusCodeError.js");
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class ParamsClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     /**
      * GET with path param
@@ -65,12 +66,10 @@ class ParamsClient {
      *     await client.endpoints.params.getWithPath("param")
      */
     getWithPath(param, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -87,12 +86,10 @@ class ParamsClient {
      */
     getWithInlinePath(request, requestOptions) {
         const { param } = request;
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -114,12 +111,10 @@ class ParamsClient {
             query,
             number: number_,
         };
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: "/params",
             queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-            headers: _headers,
             requestOptions,
         });
     }
@@ -141,12 +136,10 @@ class ParamsClient {
             query,
             number: number_,
         };
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: "/params",
             queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-            headers: _headers,
             requestOptions,
         });
     }
@@ -167,12 +160,10 @@ class ParamsClient {
         const _queryParams = {
             query,
         };
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-            headers: _headers,
             requestOptions,
         });
     }
@@ -193,12 +184,10 @@ class ParamsClient {
         const _queryParams = {
             query,
         };
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: Object.assign(Object.assign({}, _queryParams), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams),
-            headers: _headers,
             requestOptions,
         });
     }
@@ -213,7 +202,6 @@ class ParamsClient {
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
     modifyWithPath(param, request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
@@ -221,7 +209,6 @@ class ParamsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -239,7 +226,6 @@ class ParamsClient {
      */
     modifyWithInlinePath(request, requestOptions) {
         const { param, body: _body } = request;
-        const _headers = {};
         return this._requestFn({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
@@ -247,7 +233,6 @@ class ParamsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

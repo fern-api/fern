@@ -10,7 +10,6 @@ export declare class NoAuthClient {
     protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: NoAuthClient.Options);
-    constructor(options: NoAuthClient.Options, requestFn: core.RequestFn);
     /**
      * POST request with no auth
      *

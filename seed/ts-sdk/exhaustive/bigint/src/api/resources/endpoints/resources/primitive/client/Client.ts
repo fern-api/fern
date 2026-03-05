@@ -16,12 +16,10 @@ export class PrimitiveClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PrimitiveClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PrimitiveClient.Options);
-    constructor(options: PrimitiveClient.Options, requestFn: core.RequestFn);
-    constructor(options: PrimitiveClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PrimitiveClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -40,7 +38,6 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "/primitive/string",
@@ -48,7 +45,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -64,7 +60,6 @@ export class PrimitiveClient {
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
-        const _headers = {};
         return this._requestFn<number>({
             method: "POST",
             path: "/primitive/integer",
@@ -72,7 +67,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -88,7 +82,6 @@ export class PrimitiveClient {
         request: number | bigint,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number | bigint> {
-        const _headers = {};
         return this._requestFn<number | bigint>({
             method: "POST",
             path: "/primitive/long",
@@ -96,7 +89,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -112,7 +104,6 @@ export class PrimitiveClient {
         request: number,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<number> {
-        const _headers = {};
         return this._requestFn<number>({
             method: "POST",
             path: "/primitive/double",
@@ -120,7 +111,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -136,7 +126,6 @@ export class PrimitiveClient {
         request: boolean,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "POST",
             path: "/primitive/boolean",
@@ -144,7 +133,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -160,7 +148,6 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "/primitive/datetime",
@@ -168,7 +155,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -184,7 +170,6 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "/primitive/date",
@@ -192,7 +177,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -208,7 +192,6 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "/primitive/uuid",
@@ -216,7 +199,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -232,7 +214,6 @@ export class PrimitiveClient {
         request: string,
         requestOptions?: PrimitiveClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "/primitive/base64",
@@ -240,7 +221,6 @@ export class PrimitiveClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

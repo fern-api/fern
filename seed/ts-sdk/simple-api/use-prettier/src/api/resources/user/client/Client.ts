@@ -17,12 +17,10 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UserClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options);
-    constructor(options: UserClient.Options, requestFn: core.RequestFn);
-    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UserClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedSimpleApiError(args),
@@ -38,12 +36,10 @@ export class UserClient {
      *     await client.user.get("id")
      */
     public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedSimpleApi.User> {
-        const _headers = {};
         return this._requestFn<SeedSimpleApi.User>({
             method: "GET",
             path: `/users/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

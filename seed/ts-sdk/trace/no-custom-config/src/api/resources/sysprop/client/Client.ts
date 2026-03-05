@@ -18,12 +18,10 @@ export class SyspropClient {
     protected readonly _options: NormalizedClientOptions<SyspropClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SyspropClient.Options);
-    constructor(options: SyspropClient.Options, requestFn: core.RequestFn);
-    constructor(options: SyspropClient.Options = {}, requestFn?: core.RequestFn) {
+    constructor(options: SyspropClient.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: (args) => new errors.SeedTraceError(args),

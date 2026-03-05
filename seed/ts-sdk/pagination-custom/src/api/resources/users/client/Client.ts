@@ -17,12 +17,10 @@ export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UsersClient.Options);
-    constructor(options: UsersClient.Options, requestFn: core.RequestFn);
-    constructor(options: UsersClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UsersClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPaginationError(args),
@@ -47,7 +45,6 @@ export class UsersClient {
         const _queryParams: Record<string, unknown> = {
             starting_after: startingAfter,
         };
-        const _headers = {};
         const _request = {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -55,7 +52,6 @@ export class UsersClient {
                 "/users",
             ),
             method: "GET",
-            headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

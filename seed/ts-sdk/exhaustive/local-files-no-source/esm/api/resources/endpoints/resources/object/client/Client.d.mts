@@ -11,7 +11,6 @@ export declare class ObjectClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ObjectClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: ObjectClient.Options);
-    constructor(options: ObjectClient.Options, requestFn: core.RequestFn);
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.

@@ -17,12 +17,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedContentTypesError(args),
@@ -44,7 +42,6 @@ export class ServiceClient {
         request: SeedContentTypes.PatchProxyRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "PATCH",
             path: "",
@@ -52,7 +49,6 @@ export class ServiceClient {
             contentType: "application/merge-patch+json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -94,7 +90,6 @@ export class ServiceClient {
         request: SeedContentTypes.PatchComplexRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "PATCH",
             path: `complex/${core.url.encodePathParam(id)}`,
@@ -102,7 +97,6 @@ export class ServiceClient {
             contentType: "application/merge-patch+json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -127,7 +121,6 @@ export class ServiceClient {
         request: SeedContentTypes.NamedMixedPatchRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "PATCH",
             path: `named-mixed/${core.url.encodePathParam(id)}`,
@@ -135,7 +128,6 @@ export class ServiceClient {
             contentType: "application/merge-patch+json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -162,7 +154,6 @@ export class ServiceClient {
         request: SeedContentTypes.OptionalMergePatchRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "PATCH",
             path: "optional-merge-patch-test",
@@ -170,7 +161,6 @@ export class ServiceClient {
             contentType: "application/merge-patch+json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -193,7 +183,6 @@ export class ServiceClient {
         request: SeedContentTypes.RegularPatchRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "PATCH",
             path: `regular/${core.url.encodePathParam(id)}`,
@@ -201,7 +190,6 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

@@ -18,12 +18,10 @@ export class PathClient {
     protected readonly _options: NormalizedClientOptions<PathClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PathClient.Options);
-    constructor(options: PathClient.Options, requestFn: core.RequestFn);
-    constructor(options: PathClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PathClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedLiteralError(args),

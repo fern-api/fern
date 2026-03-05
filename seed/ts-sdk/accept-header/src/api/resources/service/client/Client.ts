@@ -17,12 +17,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedAcceptError(args),
@@ -39,18 +37,17 @@ export class ServiceClient {
      *     await client.service.endpoint()
      */
     public endpoint(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "DELETE",
             path: "/container/",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             errorHandler: (statusCode, body, rawResponse) => {
                 switch (statusCode) {
                     case 404:
                         return new SeedAccept.NotFoundError(body as unknown, rawResponse);
+                    default:
+                        return new errors.SeedAcceptError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             requestOptions,
         });

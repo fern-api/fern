@@ -17,12 +17,10 @@ export class BigunionClient {
     protected readonly _options: NormalizedClientOptions<BigunionClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: BigunionClient.Options);
-    constructor(options: BigunionClient.Options, requestFn: core.RequestFn);
-    constructor(options: BigunionClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: BigunionClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedUnionsError(args),
@@ -41,12 +39,10 @@ export class BigunionClient {
         id: string,
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUnions.BigUnion> {
-        const _headers = {};
         return this._requestFn<SeedUnions.BigUnion>({
             method: "GET",
             path: `/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -68,7 +64,6 @@ export class BigunionClient {
         request: SeedUnions.BigUnion,
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "PATCH",
             path: "",
@@ -76,7 +71,6 @@ export class BigunionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -104,7 +98,6 @@ export class BigunionClient {
         request: SeedUnions.BigUnion[],
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, boolean>> {
-        const _headers = {};
         return this._requestFn<Record<string, boolean>>({
             method: "PATCH",
             path: "/many",
@@ -112,7 +105,6 @@ export class BigunionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

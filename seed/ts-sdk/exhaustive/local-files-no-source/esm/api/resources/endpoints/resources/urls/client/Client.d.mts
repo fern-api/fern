@@ -10,7 +10,6 @@ export declare class UrlsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UrlsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: UrlsClient.Options);
-    constructor(options: UrlsClient.Options, requestFn: core.RequestFn);
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *

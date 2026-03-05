@@ -18,12 +18,10 @@ export class S3Client {
     protected readonly _options: NormalizedClientOptionsWithAuth<S3Client.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: S3Client.Options);
-    constructor(options: S3Client.Options, requestFn: core.RequestFn);
-    constructor(options: S3Client.Options, requestFn?: core.RequestFn) {
+    constructor(options: S3Client.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedMultiUrlEnvironmentError(args),
@@ -45,7 +43,6 @@ export class S3Client {
         requestOptions?: S3Client.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return this._requestFn<string>(async () => {
-            const _headers = {};
             return {
                 method: "POST",
                 path: "/s3/presigned-url",
@@ -53,7 +50,6 @@ export class S3Client {
                 contentType: "application/json",
                 requestType: "json",
                 queryParameters: requestOptions?.queryParams,
-                headers: _headers,
                 baseUrl:
                     (await core.Supplier.get(this._options.baseUrl)) ??
                     (

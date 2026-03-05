@@ -17,12 +17,10 @@ export class EnumClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EnumClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: EnumClient.Options);
-    constructor(options: EnumClient.Options, requestFn: core.RequestFn);
-    constructor(options: EnumClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: EnumClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -41,7 +39,6 @@ export class EnumClient {
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: EnumClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.WeatherReport> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.WeatherReport>({
             method: "POST",
             path: "/enum",
@@ -49,7 +46,6 @@ export class EnumClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

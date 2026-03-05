@@ -17,12 +17,10 @@ export class NullableClient {
     protected readonly _options: NormalizedClientOptions<NullableClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NullableClient.Options);
-    constructor(options: NullableClient.Options, requestFn: core.RequestFn);
-    constructor(options: NullableClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: NullableClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedNullableError(args),
@@ -55,12 +53,10 @@ export class NullableClient {
             tags,
             extra,
         };
-        const _headers = {};
         return this._requestFn<SeedNullable.User[]>({
             method: "GET",
             path: "/users",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -92,7 +88,6 @@ export class NullableClient {
         request: SeedNullable.CreateUserRequest,
         requestOptions?: NullableClient.RequestOptions,
     ): core.HttpResponsePromise<SeedNullable.User> {
-        const _headers = {};
         return this._requestFn<SeedNullable.User>({
             method: "POST",
             path: "/users",
@@ -100,7 +95,6 @@ export class NullableClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -118,7 +112,6 @@ export class NullableClient {
         request: SeedNullable.DeleteUserRequest = {},
         requestOptions?: NullableClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "DELETE",
             path: "/users",
@@ -126,7 +119,6 @@ export class NullableClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

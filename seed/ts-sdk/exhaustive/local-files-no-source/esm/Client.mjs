@@ -15,22 +15,22 @@ export class SeedExhaustiveClient {
     }
     get endpoints() {
         var _a;
-        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new EndpointsClient(this._options, this._requestFn)));
+        return ((_a = this._endpoints) !== null && _a !== void 0 ? _a : (this._endpoints = new EndpointsClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get inlinedRequests() {
         var _a;
-        return ((_a = this._inlinedRequests) !== null && _a !== void 0 ? _a : (this._inlinedRequests = new InlinedRequestsClient(this._options, this._requestFn)));
+        return ((_a = this._inlinedRequests) !== null && _a !== void 0 ? _a : (this._inlinedRequests = new InlinedRequestsClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get noAuth() {
         var _a;
-        return ((_a = this._noAuth) !== null && _a !== void 0 ? _a : (this._noAuth = new NoAuthClient(this._options, this._requestFn)));
+        return ((_a = this._noAuth) !== null && _a !== void 0 ? _a : (this._noAuth = new NoAuthClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get noReqBody() {
         var _a;
-        return ((_a = this._noReqBody) !== null && _a !== void 0 ? _a : (this._noReqBody = new NoReqBodyClient(this._options, this._requestFn)));
+        return ((_a = this._noReqBody) !== null && _a !== void 0 ? _a : (this._noReqBody = new NoReqBodyClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get reqWithHeaders() {
         var _a;
-        return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new ReqWithHeadersClient(this._options, this._requestFn)));
+        return ((_a = this._reqWithHeaders) !== null && _a !== void 0 ? _a : (this._reqWithHeaders = new ReqWithHeadersClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
 }

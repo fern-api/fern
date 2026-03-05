@@ -16,12 +16,10 @@ export class HealthClient {
     protected readonly _requestFn: core.RequestFn;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: HealthClient.Options);
-    constructor(options: HealthClient.Options, requestFn: core.RequestFn);
-    constructor(options: HealthClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: HealthClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExamplesError(args),
@@ -30,6 +28,6 @@ export class HealthClient {
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._requestFn));
+        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

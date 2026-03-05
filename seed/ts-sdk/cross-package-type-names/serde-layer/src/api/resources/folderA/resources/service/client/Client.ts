@@ -18,12 +18,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedCrossPackageTypeNamesError(args),
@@ -40,12 +38,10 @@ export class ServiceClient {
     public getDirectThread(
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedCrossPackageTypeNames.folderA.Response> {
-        const _headers = {};
         return this._requestFn<SeedCrossPackageTypeNames.folderA.Response>({
             method: "GET",
             path: "",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.folderA.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

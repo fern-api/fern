@@ -30,10 +30,12 @@ export class SeedUnionsClient {
     }
 
     public get bigunion(): BigunionClient {
-        return (this._bigunion ??= new BigunionClient(this._options, this._requestFn));
+        return (this._bigunion ??= new BigunionClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 
     public get union(): UnionClient {
-        return (this._union ??= new UnionClient(this._options, this._requestFn));
+        return (this._union ??= new UnionClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

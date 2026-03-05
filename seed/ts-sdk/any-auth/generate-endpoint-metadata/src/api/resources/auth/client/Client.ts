@@ -17,12 +17,10 @@ export class AuthClient {
     protected readonly _options: NormalizedClientOptions<AuthClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: AuthClient.Options);
-    constructor(options: AuthClient.Options, requestFn: core.RequestFn);
-    constructor(options: AuthClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: AuthClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedAnyAuthError(args),
@@ -45,7 +43,6 @@ export class AuthClient {
         requestOptions?: AuthClient.RequestOptions,
     ): core.HttpResponsePromise<SeedAnyAuth.TokenResponse> {
         const _metadata: core.EndpointMetadata = { security: undefined };
-        const _headers = {};
         return this._requestFn<SeedAnyAuth.TokenResponse>({
             method: "POST",
             path: "/token",
@@ -53,7 +50,6 @@ export class AuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });

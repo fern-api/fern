@@ -17,12 +17,10 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UserClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options);
-    constructor(options: UserClient.Options, requestFn: core.RequestFn);
-    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UserClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedEndpointSecurityAuthError(args),
@@ -40,12 +38,10 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ Bearer: [] }] };
-        const _headers = {};
         return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });
@@ -61,12 +57,10 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ ApiKey: [] }] };
-        const _headers = {};
         return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });
@@ -82,12 +76,10 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["read-only"] }] };
-        const _headers = {};
         return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });
@@ -103,12 +95,10 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ Basic: [] }] };
-        const _headers = {};
         return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });
@@ -124,12 +114,10 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedEndpointSecurityAuth.User[]> {
         const _metadata: core.EndpointMetadata = { security: [{ InferredAuth: [] }] };
-        const _headers = {};
         return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });
@@ -147,12 +135,10 @@ export class UserClient {
         const _metadata: core.EndpointMetadata = {
             security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: ["read-only"] }, { Basic: [] }, { InferredAuth: [] }],
         };
-        const _headers = {};
         return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });
@@ -170,12 +156,10 @@ export class UserClient {
         const _metadata: core.EndpointMetadata = {
             security: [{ Bearer: [], ApiKey: [], OAuth: ["read-only"], Basic: [], InferredAuth: [] }],
         };
-        const _headers = {};
         return this._requestFn<SeedEndpointSecurityAuth.User[]>({
             method: "GET",
             path: "users",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             endpointMetadata: _metadata,
             requestOptions,
         });

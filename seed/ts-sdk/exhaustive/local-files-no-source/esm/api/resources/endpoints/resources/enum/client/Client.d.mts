@@ -11,7 +11,6 @@ export declare class EnumClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EnumClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: EnumClient.Options);
-    constructor(options: EnumClient.Options, requestFn: core.RequestFn);
     /**
      * @param {SeedExhaustive.types.WeatherReport} request
      * @param {EnumClient.RequestOptions} requestOptions - Request-specific configuration.

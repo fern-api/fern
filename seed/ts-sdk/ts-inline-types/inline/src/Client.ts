@@ -42,7 +42,6 @@ export class SeedObjectClient {
         request: SeedObject.PostRootRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedObject.RootType1> {
-        const _headers = {};
         return this._requestFn<SeedObject.RootType1>({
             method: "POST",
             path: "/root/root",
@@ -50,7 +49,6 @@ export class SeedObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -81,7 +79,6 @@ export class SeedObjectClient {
         request: SeedObject.GetDiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/root/discriminated-union",
@@ -89,7 +86,6 @@ export class SeedObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -119,7 +115,6 @@ export class SeedObjectClient {
         request: SeedObject.GetUndiscriminatedUnionRequest,
         requestOptions?: SeedObjectClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/root/undiscriminated-union",
@@ -127,7 +122,6 @@ export class SeedObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

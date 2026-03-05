@@ -34,6 +34,6 @@ export class SeedEndpointSecurityAuthClient {
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options, this._requestFn));
+        return (this._user ??= new UserClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

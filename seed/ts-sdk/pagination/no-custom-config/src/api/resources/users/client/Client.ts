@@ -17,12 +17,10 @@ export class UsersClient {
     protected readonly _options: NormalizedClientOptions<UsersClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UsersClient.Options);
-    constructor(options: UsersClient.Options, requestFn: core.RequestFn);
-    constructor(options: UsersClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UsersClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPaginationError(args),
@@ -57,7 +55,6 @@ export class UsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -66,7 +63,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -132,7 +128,6 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -141,7 +136,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "POST",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -201,7 +195,6 @@ export class UsersClient {
             async (
                 request: SeedPagination.ListUsersBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -210,7 +203,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "POST",
-                        headers: _headers,
                         contentType: "application/json",
                         queryParameters: requestOptions?.queryParams,
                         requestType: "json",
@@ -280,7 +272,6 @@ export class UsersClient {
             async (
                 request: SeedPagination.ListUsersTopLevelBodyCursorPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersTopLevelCursorPaginationResponse>> => {
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -289,7 +280,6 @@ export class UsersClient {
                             "/users/top-level-cursor",
                         ),
                         method: "POST",
-                        headers: _headers,
                         contentType: "application/json",
                         queryParameters: requestOptions?.queryParams,
                         requestType: "json",
@@ -366,7 +356,6 @@ export class UsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -375,7 +364,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -444,7 +432,6 @@ export class UsersClient {
                     order: order != null ? order : undefined,
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -453,7 +440,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -514,7 +500,6 @@ export class UsersClient {
             async (
                 request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -523,7 +508,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "POST",
-                        headers: _headers,
                         contentType: "application/json",
                         queryParameters: requestOptions?.queryParams,
                         requestType: "json",
@@ -593,7 +577,6 @@ export class UsersClient {
                     limit,
                     order: order != null ? order : undefined,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -602,7 +585,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -669,7 +651,6 @@ export class UsersClient {
                     limit,
                     order: order != null ? order : undefined,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -678,7 +659,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -742,7 +722,6 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -751,7 +730,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -813,7 +791,6 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     cursor,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -822,7 +799,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -884,7 +860,6 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -893,7 +868,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -956,7 +930,6 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     starting_after: startingAfter,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -965,7 +938,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -1028,7 +1000,6 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     offset,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -1037,7 +1008,6 @@ export class UsersClient {
                             "/users",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -1100,7 +1070,6 @@ export class UsersClient {
                 const _queryParams: Record<string, unknown> = {
                     page,
                 };
-                const _headers = {};
                 const _response = await this._requestFn.fetch(
                     {
                         url: core.url.join(
@@ -1109,7 +1078,6 @@ export class UsersClient {
                             "/users/optional-data",
                         ),
                         method: "GET",
-                        headers: _headers,
                         queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                         timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                         maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

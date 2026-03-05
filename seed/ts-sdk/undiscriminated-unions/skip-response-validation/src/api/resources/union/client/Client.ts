@@ -17,12 +17,10 @@ export class UnionClient {
     protected readonly _options: NormalizedClientOptions<UnionClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UnionClient.Options);
-    constructor(options: UnionClient.Options, requestFn: core.RequestFn);
-    constructor(options: UnionClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UnionClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedUndiscriminatedUnionsError(args),
@@ -41,7 +39,6 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
-        const _headers = {};
         return this._requestFn<SeedUndiscriminatedUnions.MyUnion>({
             method: "POST",
             path: "",
@@ -49,7 +46,6 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -63,12 +59,10 @@ export class UnionClient {
     public getMetadata(
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
-        const _headers = {};
         return this._requestFn<SeedUndiscriminatedUnions.Metadata>({
             method: "GET",
             path: "/metadata",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -88,7 +82,6 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.MetadataUnion,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "PUT",
             path: "/metadata",
@@ -96,7 +89,6 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -118,7 +110,6 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.Request,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "POST",
             path: "/call",
@@ -126,7 +117,6 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -142,7 +132,6 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
-        const _headers = {};
         return this._requestFn<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>({
             method: "POST",
             path: "/duplicate",
@@ -150,7 +139,6 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -166,7 +154,6 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.NestedUnionRoot,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "/nested",
@@ -174,7 +161,6 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -195,7 +181,6 @@ export class UnionClient {
         request: SeedUndiscriminatedUnions.PaymentRequest,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "/camel-case",
@@ -203,7 +188,6 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

@@ -18,12 +18,10 @@ export class HomepageClient {
     protected readonly _options: NormalizedClientOptions<HomepageClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: HomepageClient.Options);
-    constructor(options: HomepageClient.Options, requestFn: core.RequestFn);
-    constructor(options: HomepageClient.Options = {}, requestFn?: core.RequestFn) {
+    constructor(options: HomepageClient.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: (args) => new errors.SeedTraceError(args),

@@ -18,12 +18,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExamplesError(args),
@@ -42,12 +40,10 @@ export class ServiceClient {
         movieId: SeedExamples.MovieId,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Movie> {
-        const _headers = {};
         return this._requestFn<SeedExamples.Movie>({
             method: "GET",
             path: `/movie/${core.url.encodePathParam(movieId)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -84,7 +80,6 @@ export class ServiceClient {
         request: SeedExamples.Movie,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.MovieId> {
-        const _headers = {};
         return this._requestFn<SeedExamples.MovieId>({
             method: "POST",
             path: "/movie",
@@ -92,7 +87,6 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -298,7 +292,6 @@ export class ServiceClient {
         request: SeedExamples.BigEntity,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Response> {
-        const _headers = {};
         return this._requestFn<SeedExamples.Response>({
             method: "POST",
             path: "/big-entity",
@@ -306,7 +299,6 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -327,7 +319,6 @@ export class ServiceClient {
         request?: SeedExamples.RefreshTokenRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/refresh-token",
@@ -335,7 +326,6 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

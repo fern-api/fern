@@ -16,12 +16,10 @@ export class ParamsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ParamsClient.Options);
-    constructor(options: ParamsClient.Options, requestFn: core.RequestFn);
-    constructor(options: ParamsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ParamsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -52,7 +50,6 @@ export class ParamsClient {
         param: string,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPath.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -61,7 +58,6 @@ export class ParamsClient {
                     `/params/path/${core.url.encodePathParam(param)}`,
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -120,7 +116,6 @@ export class ParamsClient {
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithInlinePath.Error>>
     > {
         const { param } = request;
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -129,7 +124,6 @@ export class ParamsClient {
                     `/params/path/${core.url.encodePathParam(param)}`,
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -191,7 +185,6 @@ export class ParamsClient {
             query,
             number: number_,
         };
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -200,7 +193,6 @@ export class ParamsClient {
                     "/params",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -266,7 +258,6 @@ export class ParamsClient {
             query,
             number: number_,
         };
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -275,7 +266,6 @@ export class ParamsClient {
                     "/params",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -340,7 +330,6 @@ export class ParamsClient {
         const _queryParams: Record<string, unknown> = {
             query,
         };
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -349,7 +338,6 @@ export class ParamsClient {
                     `/params/path-query/${core.url.encodePathParam(param)}`,
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -414,7 +402,6 @@ export class ParamsClient {
         const _queryParams: Record<string, unknown> = {
             query,
         };
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -423,7 +410,6 @@ export class ParamsClient {
                     `/params/path-query/${core.url.encodePathParam(param)}`,
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -480,7 +466,6 @@ export class ParamsClient {
         request: string,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithPath.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -489,7 +474,6 @@ export class ParamsClient {
                     `/params/path/${core.url.encodePathParam(param)}`,
                 ),
                 method: "PUT",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -552,7 +536,6 @@ export class ParamsClient {
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error>>
     > {
         const { param, body: _body } = request;
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -561,7 +544,6 @@ export class ParamsClient {
                     `/params/path/${core.url.encodePathParam(param)}`,
                 ),
                 method: "PUT",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

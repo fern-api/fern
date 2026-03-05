@@ -51,54 +51,55 @@ const Client_js_9 = require("../resources/put/client/Client.js");
 const Client_js_10 = require("../resources/union/client/Client.js");
 const Client_js_11 = require("../resources/urls/client/Client.js");
 class EndpointsClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError_js_1.handleNonStatusCodeError }));
     }
     get container() {
         var _a;
-        return ((_a = this._container) !== null && _a !== void 0 ? _a : (this._container = new Client_js_1.ContainerClient(this._options, this._requestFn)));
+        return ((_a = this._container) !== null && _a !== void 0 ? _a : (this._container = new Client_js_1.ContainerClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get contentType() {
         var _a;
-        return ((_a = this._contentType) !== null && _a !== void 0 ? _a : (this._contentType = new Client_js_2.ContentTypeClient(this._options, this._requestFn)));
+        return ((_a = this._contentType) !== null && _a !== void 0 ? _a : (this._contentType = new Client_js_2.ContentTypeClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get enum() {
         var _a;
-        return ((_a = this._enum) !== null && _a !== void 0 ? _a : (this._enum = new Client_js_3.EnumClient(this._options, this._requestFn)));
+        return ((_a = this._enum) !== null && _a !== void 0 ? _a : (this._enum = new Client_js_3.EnumClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get httpMethods() {
         var _a;
-        return ((_a = this._httpMethods) !== null && _a !== void 0 ? _a : (this._httpMethods = new Client_js_4.HttpMethodsClient(this._options, this._requestFn)));
+        return ((_a = this._httpMethods) !== null && _a !== void 0 ? _a : (this._httpMethods = new Client_js_4.HttpMethodsClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get object() {
         var _a;
-        return ((_a = this._object) !== null && _a !== void 0 ? _a : (this._object = new Client_js_5.ObjectClient(this._options, this._requestFn)));
+        return ((_a = this._object) !== null && _a !== void 0 ? _a : (this._object = new Client_js_5.ObjectClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get pagination() {
         var _a;
-        return ((_a = this._pagination) !== null && _a !== void 0 ? _a : (this._pagination = new Client_js_6.PaginationClient(this._options, this._requestFn)));
+        return ((_a = this._pagination) !== null && _a !== void 0 ? _a : (this._pagination = new Client_js_6.PaginationClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get params() {
         var _a;
-        return ((_a = this._params) !== null && _a !== void 0 ? _a : (this._params = new Client_js_7.ParamsClient(this._options, this._requestFn)));
+        return ((_a = this._params) !== null && _a !== void 0 ? _a : (this._params = new Client_js_7.ParamsClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get primitive() {
         var _a;
-        return ((_a = this._primitive) !== null && _a !== void 0 ? _a : (this._primitive = new Client_js_8.PrimitiveClient(this._options, this._requestFn)));
+        return ((_a = this._primitive) !== null && _a !== void 0 ? _a : (this._primitive = new Client_js_8.PrimitiveClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get put() {
         var _a;
-        return ((_a = this._put) !== null && _a !== void 0 ? _a : (this._put = new Client_js_9.PutClient(this._options, this._requestFn)));
+        return ((_a = this._put) !== null && _a !== void 0 ? _a : (this._put = new Client_js_9.PutClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get union() {
         var _a;
-        return ((_a = this._union) !== null && _a !== void 0 ? _a : (this._union = new Client_js_10.UnionClient(this._options, this._requestFn)));
+        return ((_a = this._union) !== null && _a !== void 0 ? _a : (this._union = new Client_js_10.UnionClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
     get urls() {
         var _a;
-        return ((_a = this._urls) !== null && _a !== void 0 ? _a : (this._urls = new Client_js_11.UrlsClient(this._options, this._requestFn)));
+        return ((_a = this._urls) !== null && _a !== void 0 ? _a : (this._urls = new Client_js_11.UrlsClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))));
     }
 }
 exports.EndpointsClient = EndpointsClient;

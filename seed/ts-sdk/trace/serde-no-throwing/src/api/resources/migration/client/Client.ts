@@ -18,12 +18,10 @@ export class MigrationClient {
     protected readonly _options: NormalizedClientOptions<MigrationClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: MigrationClient.Options);
-    constructor(options: MigrationClient.Options, requestFn: core.RequestFn);
-    constructor(options: MigrationClient.Options = {}, requestFn?: core.RequestFn) {
+    constructor(options: MigrationClient.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>

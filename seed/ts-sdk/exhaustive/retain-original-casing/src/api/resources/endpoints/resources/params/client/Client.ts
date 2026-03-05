@@ -18,12 +18,10 @@ export class ParamsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ParamsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ParamsClient.Options);
-    constructor(options: ParamsClient.Options, requestFn: core.RequestFn);
-    constructor(options: ParamsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ParamsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -41,12 +39,10 @@ export class ParamsClient {
      *     await client.endpoints.params.getWithPath("param")
      */
     public getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -67,12 +63,10 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const { param } = request;
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: `/params/path/${core.url.encodePathParam(param)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -98,12 +92,10 @@ export class ParamsClient {
             query,
             number: number_,
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: "/params",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -129,12 +121,10 @@ export class ParamsClient {
             query,
             number: number_,
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: "/params",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -160,12 +150,10 @@ export class ParamsClient {
         const _queryParams: Record<string, unknown> = {
             query,
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -190,12 +178,10 @@ export class ParamsClient {
         const _queryParams: Record<string, unknown> = {
             query,
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: `/params/path-query/${core.url.encodePathParam(param)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -215,7 +201,6 @@ export class ParamsClient {
         request: string,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
@@ -223,7 +208,6 @@ export class ParamsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -245,7 +229,6 @@ export class ParamsClient {
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         const { param, body: _body } = request;
-        const _headers = {};
         return this._requestFn<string>({
             method: "PUT",
             path: `/params/path/${core.url.encodePathParam(param)}`,
@@ -253,7 +236,6 @@ export class ParamsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

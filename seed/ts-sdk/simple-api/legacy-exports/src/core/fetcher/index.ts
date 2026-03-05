@@ -9,7 +9,6 @@ export {
     type CreateRequestFnOptions,
     createRequestFn,
     type EndpointConfig,
-    HttpClient,
     type HttpClientOptions,
     type RequestFn,
     type RequestOptions,

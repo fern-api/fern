@@ -95,7 +95,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
     public static readonly REQUEST_FN_PRIVATE_MEMBER = "_requestFn";
     private static readonly OPTIONS_PARAMETER_NAME = "options";
-    private static readonly REQUEST_FN_PARAMETER_NAME = "requestFn";
     public static readonly METADATA_FOR_TOKEN_SUPPLIER_VAR = "_metadata";
     public static readonly AUTH_PROVIDER_FIELD_NAME = "authProvider";
     public static readonly LOGGING_FIELD_NAME = "logging";
@@ -601,8 +600,35 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         referenceToOptions: ts.Expression;
         referenceToRequestFn?: ts.Expression;
     }): ts.Expression {
-        const args = referenceToRequestFn ? [referenceToOptions, referenceToRequestFn] : [referenceToOptions];
-        return ts.factory.createNewExpression(referenceToClient, undefined, args);
+        // If requestFn is provided, inject it as a hidden property on the options object:
+        //   new SubClient(Object.assign({}, this._options, { _requestFn: this._requestFn }))
+        // Object.assign bypasses strict object literal checking so TypeScript won't reject
+        // _requestFn as an unknown property on the Options type.
+        // Otherwise, just pass options:
+        //   new SubClient(this._options)
+        const optionsArg = referenceToRequestFn
+            ? ts.factory.createCallExpression(
+                  ts.factory.createPropertyAccessExpression(
+                      ts.factory.createIdentifier("Object"),
+                      ts.factory.createIdentifier("assign")
+                  ),
+                  undefined,
+                  [
+                      ts.factory.createObjectLiteralExpression([], false),
+                      referenceToOptions,
+                      ts.factory.createObjectLiteralExpression(
+                          [
+                              ts.factory.createPropertyAssignment(
+                                  GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER,
+                                  referenceToRequestFn
+                              )
+                          ],
+                          false
+                      )
+                  ]
+              )
+            : referenceToOptions;
+        return ts.factory.createNewExpression(referenceToClient, undefined, [optionsArg]);
     }
 
     public instantiateAsRoot(args: { context: SdkContext; npmPackage: NpmPackage }): ts.Expression {
@@ -717,7 +743,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             )
         );
 
-        const requestFnParamType = getTextOfTsNode(context.coreUtilities.fetcher.RequestFn._getReferenceToType());
+        const requestFnType = getTextOfTsNode(context.coreUtilities.fetcher.RequestFn._getReferenceToType());
 
         // Build constructor: auth vs no-auth determines normalization, root vs non-root determines parameters and RequestFn wiring
         const hasAuth = this.authProvider != null && this.anyEndpointWithAuth;
@@ -727,12 +753,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const hasOptionalOptions = !context.baseClient.anyRequiredBaseClientOptions(context);
 
-        // Overload signatures must NOT have initializers (TS2371).
-        // Only the implementation signature can have `= {}`.
-        const optionsParamForOverload = {
-            name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
-            type: optionsParamType
-        };
         const optionsParamForImpl = {
             name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
             type: optionsParamType,
@@ -750,37 +770,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
             });
         } else {
-            // Non-root client: two constructor overloads.
-            // Overload 1 (public): constructor(options: Options) — for standalone use
-            // Overload 2 (internal): constructor(options: Options, requestFn: RequestFn) — for parent injection
-            // Implementation: constructor(options: Options, requestFn?: RequestFn)
+            // Non-root client: single constructor(options: Options).
+            // The parent injects _requestFn as a hidden property on the options object:
+            //   new SubClient({ ...this._options, _requestFn: this._requestFn })
+            // The constructor extracts it if present, otherwise creates its own.
+            // End users only see constructor(options: Options) — _requestFn is not in the Options type.
             const statements = code`
                 ${optionsStatement}
-                this.${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER} = ${GeneratedSdkClientClassImpl.REQUEST_FN_PARAMETER_NAME} ?? ${this.getCreateRequestFnExpression(context)};
+                this.${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER} = (${GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME} as unknown as Record<string, unknown>)["${GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER}"] as ${requestFnType} ?? ${this.getCreateRequestFnExpression(context)};
             `;
             serviceClass.ctors.push({
-                overloads: [
-                    {
-                        parameters: [optionsParamForOverload]
-                    },
-                    {
-                        parameters: [
-                            optionsParamForOverload,
-                            {
-                                name: GeneratedSdkClientClassImpl.REQUEST_FN_PARAMETER_NAME,
-                                type: requestFnParamType
-                            }
-                        ]
-                    }
-                ],
-                parameters: [
-                    optionsParamForImpl,
-                    {
-                        name: GeneratedSdkClientClassImpl.REQUEST_FN_PARAMETER_NAME,
-                        type: requestFnParamType,
-                        hasQuestionToken: true
-                    }
-                ],
+                parameters: [optionsParamForImpl],
                 statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
             });
         }

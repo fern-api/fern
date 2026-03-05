@@ -30,10 +30,12 @@ export class SeedPathParametersClient {
     }
 
     public get organizations(): OrganizationsClient {
-        return (this._organizations ??= new OrganizationsClient(this._options, this._requestFn));
+        return (this._organizations ??= new OrganizationsClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 
     public get user(): UserClient {
-        return (this._user ??= new UserClient(this._options, this._requestFn));
+        return (this._user ??= new UserClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

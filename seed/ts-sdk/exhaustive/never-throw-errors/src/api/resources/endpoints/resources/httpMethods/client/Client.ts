@@ -15,12 +15,10 @@ export class HttpMethodsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<HttpMethodsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: HttpMethodsClient.Options);
-    constructor(options: HttpMethodsClient.Options, requestFn: core.RequestFn);
-    constructor(options: HttpMethodsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: HttpMethodsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -49,7 +47,6 @@ export class HttpMethodsClient {
         id: string,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.httpMethods.testGet.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -58,7 +55,6 @@ export class HttpMethodsClient {
                     `/http-methods/${core.url.encodePathParam(id)}`,
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
@@ -126,7 +122,6 @@ export class HttpMethodsClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -135,7 +130,6 @@ export class HttpMethodsClient {
                     "/http-methods",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -209,7 +203,6 @@ export class HttpMethodsClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -218,7 +211,6 @@ export class HttpMethodsClient {
                     `/http-methods/${core.url.encodePathParam(id)}`,
                 ),
                 method: "PUT",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -306,7 +298,6 @@ export class HttpMethodsClient {
             >
         >
     > {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -315,7 +306,6 @@ export class HttpMethodsClient {
                     `/http-methods/${core.url.encodePathParam(id)}`,
                 ),
                 method: "PATCH",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",
@@ -372,7 +362,6 @@ export class HttpMethodsClient {
         id: string,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -381,7 +370,6 @@ export class HttpMethodsClient {
                     `/http-methods/${core.url.encodePathParam(id)}`,
                 ),
                 method: "DELETE",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

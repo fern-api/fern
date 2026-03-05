@@ -54,9 +54,9 @@ export interface EndpointConfig {
     requestOptions?: RequestOptions;
     /**
      * Custom error handler for status-code errors. Called with the status code, body, and raw response.
-     * Return an Error to throw it, or undefined to fall through to the generic SDK error.
+     * Must always return an Error to throw — either a typed endpoint-specific error or the generic SDK error.
      */
-    errorHandler?: (statusCode: number, body: unknown, rawResponse: RawResponse) => Error | undefined;
+    errorHandler?: (statusCode: number, body: unknown, rawResponse: RawResponse) => Error;
     /** Whether to include credentials on cross-origin requests */
     withCredentials?: boolean;
     /** Endpoint metadata for auth provider routing */
@@ -77,10 +77,10 @@ export interface EndpointConfig {
 }
 
 /**
- * Options for constructing an HttpClient.
+ * Shared options for creating a RequestFn.
  *
  * Structurally compatible with the generated `NormalizedClientOptions` —
- * the generated client passes its normalized options directly to this constructor.
+ * the generated client passes its normalized options directly to `createRequestFn`.
  */
 export interface HttpClientOptions {
     baseUrl?: Supplier<string>;
@@ -137,6 +137,9 @@ export interface CreateRequestFnOptions extends HttpClientOptions {
  * Creates a RequestFn that closes over the provided options.
  * The returned function is the primary API for making HTTP requests in generated SDKs.
  *
+ * All shared HTTP mechanics (URL resolution, auth, header merging, timeout/retry,
+ * error handling) are encapsulated in closures — no class needed.
+ *
  * @example
  * ```typescript
  * const requestFn = createRequestFn({ ...normalizedOptions, createStatusCodeError, handleNonStatusCodeError });
@@ -147,114 +150,67 @@ export interface CreateRequestFnOptions extends HttpClientOptions {
  * ```
  */
 export function createRequestFn(options: CreateRequestFnOptions): RequestFn {
-    const client = new HttpClient(options, options.createStatusCodeError, options.handleNonStatusCodeError);
-    function requestFn<T>(config: EndpointConfig | (() => Promise<EndpointConfig>)): HttpResponsePromise<T> {
-        return client.request<T>(config);
-    }
-    requestFn.fetch = function <R = unknown>(
-        args: Fetcher.Args,
-        opts?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: Record<string, unknown> },
-    ): Promise<APIResponse<R, Fetcher.Error>> {
-        return client.fetch<R>(args, opts);
-    };
-    return requestFn;
-}
-
-/**
- * Internal HTTP client class. Not exported publicly — use `createRequestFn` instead.
- *
- * @param options - Normalized client options (baseUrl, auth, headers, etc.)
- * @param createStatusCodeError - Factory to create the SDK-specific generic error for status-code errors.
- * @param handleNonStatusCodeError - Handler for non-status-code errors (timeout, network, unknown, etc.)
- */
-export class HttpClient {
-    private readonly _options: HttpClientOptions;
-    private readonly _fetcherFn: FetchFunction;
-    private readonly _createStatusCodeError: (args: {
-        statusCode: number;
-        body: unknown;
-        rawResponse: RawResponse;
-    }) => Error;
-    private readonly _handleNonStatusCodeError: (
-        error: Fetcher.Error,
-        rawResponse: RawResponse,
-        method: string,
-        path: string,
-    ) => never;
-
-    constructor(
-        options: HttpClientOptions,
-        createStatusCodeError: (args: { statusCode: number; body: unknown; rawResponse: RawResponse }) => Error,
-        handleNonStatusCodeError: (
-            error: Fetcher.Error,
-            rawResponse: RawResponse,
-            method: string,
-            path: string,
-        ) => never,
-    ) {
-        this._options = options;
-        this._fetcherFn = options.fetcher ?? fetcherImpl;
-        this._createStatusCodeError = createStatusCodeError;
-        this._handleNonStatusCodeError = handleNonStatusCodeError;
-    }
+    const fetchFn: FetchFunction = options.fetcher ?? fetcherImpl;
 
     /**
-     * Low-level fetch that takes the same args as core.fetcher() and returns the raw APIResponse.
-     * Used by complex endpoints (streaming, pagination, file upload, non-throwing) that need
-     * to handle the response themselves. ALL HTTP calls should go through this method.
-     *
-     * Handles auth + global header merging on top of whatever endpoint-specific headers
-     * are provided in args.headers. Pass requestHeaders for per-request header overrides.
-     *
-     * @param args - Fetcher args (url, method, headers, body, etc.)
-     * @param options - Optional request-level overrides (per-request headers, endpoint metadata for auth)
+     * Low-level fetch returning the raw APIResponse.
+     * Handles auth + global header merging on top of endpoint-specific headers.
      */
-    public async fetch<R = unknown>(
+    async function fetchWithHeaders<R = unknown>(
         args: Fetcher.Args,
-        options?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: Record<string, unknown> },
+        fetchOptions?: { requestHeaders?: Record<string, unknown>; endpointMetadata?: Record<string, unknown> },
     ): Promise<APIResponse<R, Fetcher.Error>> {
-        // Merge headers: auth → global → endpoint-specific (args.headers) → per-request
-        const authHeaders: Record<string, string> = this._options.authProvider
+        const authHeaders: Record<string, string> = options.authProvider
             ? (
-                  await this._options.authProvider.getAuthRequest({
-                      endpointMetadata: options?.endpointMetadata ?? args.endpointMetadata,
+                  await options.authProvider.getAuthRequest({
+                      endpointMetadata: fetchOptions?.endpointMetadata ?? args.endpointMetadata,
                   })
               ).headers
             : {};
-        const mergedHeaders = mergeHeaders(authHeaders, this._options.headers, args.headers, options?.requestHeaders);
-        return this._fetcherFn<R>({ ...args, headers: mergedHeaders });
+        const mergedHeaders = mergeHeaders(authHeaders, options.headers, args.headers, fetchOptions?.requestHeaders);
+        return fetchFn<R>({ ...args, headers: mergedHeaders });
     }
 
     /**
-     * Make an HTTP request. Returns HttpResponsePromise so callers get both
-     * `await client.getUser()` and `client.getUser().withRawResponse()` for free.
-     *
-     * Accepts either a static config or an async config builder function.
-     * The async builder is used by endpoints that need async pre-processing
-     * (e.g. file upload form data building) while keeping the public method non-async.
+     * Resolves the timeout in milliseconds for a request.
+     * Priority: requestOptions.timeoutInSeconds > client-level > endpoint default > 60s.
+     * "infinity" means no timeout (returns undefined).
      */
-    public request<T>(config: EndpointConfig | (() => Promise<EndpointConfig>)): HttpResponsePromise<T> {
-        if (typeof config === "function") {
-            return HttpResponsePromise.fromPromise(config().then((resolved) => this._execute<T>(resolved)));
+    function resolveTimeoutMs(config: EndpointConfig): number | undefined {
+        const requestTimeout = config.requestOptions?.timeoutInSeconds;
+        if (requestTimeout != null) {
+            return requestTimeout * 1000;
         }
-        return HttpResponsePromise.fromPromise(this._execute<T>(config));
+        const clientTimeout = options.timeoutInSeconds;
+        if (clientTimeout != null) {
+            return clientTimeout * 1000;
+        }
+        const endpointDefault = config.defaultTimeoutInSeconds;
+        if (endpointDefault === "infinity") {
+            return undefined;
+        }
+        if (endpointDefault != null) {
+            return endpointDefault * 1000;
+        }
+        return 60 * 1000;
     }
 
-    private async _execute<T>(config: EndpointConfig): Promise<WithRawResponse<T>> {
+    /** Execute a single endpoint request and handle the response. */
+    async function execute<T>(config: EndpointConfig): Promise<WithRawResponse<T>> {
         // 1. Query params: endpoint-specific + per-request
         const queryParameters = config.queryParameters
             ? { ...config.queryParameters, ...config.requestOptions?.queryParams }
             : config.requestOptions?.queryParams;
 
-        // 2. Build Fetcher.Args and delegate to fetch() for header merging
+        // 2. Build Fetcher.Args and delegate to fetchWithHeaders for header merging
         const endpointHeaders = config.headers != null ? mergeOnlyDefinedHeaders(config.headers) : {};
-        const response = await this.fetch<T>(
+        const response = await fetchWithHeaders<T>(
             {
                 url: join(
                     config.baseUrl ??
-                        (await Supplier.get(this._options.baseUrl)) ??
-                        ((await Supplier.get(this._options.environment)) as string) ??
-                        this._options.defaultBaseUrl ??
+                        (await Supplier.get(options.baseUrl)) ??
+                        ((await Supplier.get(options.environment)) as string) ??
+                        options.defaultBaseUrl ??
                         "",
                     config.path,
                 ),
@@ -266,12 +222,12 @@ export class HttpClient {
                 queryParameters,
                 body: config.body,
                 duplex: config.duplex,
-                timeoutMs: this._resolveTimeoutMs(config),
-                maxRetries: config.requestOptions?.maxRetries ?? this._options.maxRetries,
+                timeoutMs: resolveTimeoutMs(config),
+                maxRetries: config.requestOptions?.maxRetries ?? options.maxRetries,
                 abortSignal: config.requestOptions?.abortSignal,
                 withCredentials: config.withCredentials,
-                fetchFn: this._options.fetch,
-                logging: this._options.logging,
+                fetchFn: options.fetch,
+                logging: options.logging,
             },
             {
                 requestHeaders: config.requestOptions?.headers,
@@ -287,17 +243,12 @@ export class HttpClient {
             return { data, rawResponse: response.rawResponse };
         }
 
-        // 4. Status-code errors: check endpoint-specific handler, then fall through to generic
+        // 4. Status-code errors: use endpoint-specific handler if provided, otherwise generic
         if (response.error.reason === "status-code") {
-            const customError = config.errorHandler?.(
-                response.error.statusCode,
-                response.error.body,
-                response.rawResponse,
-            );
-            if (customError) {
-                throw customError;
+            if (config.errorHandler) {
+                throw config.errorHandler(response.error.statusCode, response.error.body, response.rawResponse);
             }
-            throw this._createStatusCodeError({
+            throw options.createStatusCodeError({
                 statusCode: response.error.statusCode,
                 body: response.error.body,
                 rawResponse: response.rawResponse,
@@ -305,30 +256,16 @@ export class HttpClient {
         }
 
         // 5. Non-status-code errors (timeout, network, etc.)
-        return this._handleNonStatusCodeError(response.error, response.rawResponse, config.method, config.path);
+        return options.handleNonStatusCodeError(response.error, response.rawResponse, config.method, config.path);
     }
 
-    /**
-     * Resolves the timeout in milliseconds for a request.
-     * Priority: requestOptions.timeoutInSeconds > client-level > endpoint default > 60s.
-     * "infinity" means no timeout (returns undefined).
-     */
-    private _resolveTimeoutMs(config: EndpointConfig): number | undefined {
-        const requestTimeout = config.requestOptions?.timeoutInSeconds;
-        if (requestTimeout != null) {
-            return requestTimeout * 1000;
+    // Build the RequestFn: call signature + .fetch() method
+    function requestFn<T>(config: EndpointConfig | (() => Promise<EndpointConfig>)): HttpResponsePromise<T> {
+        if (typeof config === "function") {
+            return HttpResponsePromise.fromPromise(config().then((resolved) => execute<T>(resolved)));
         }
-        const clientTimeout = this._options.timeoutInSeconds;
-        if (clientTimeout != null) {
-            return clientTimeout * 1000;
-        }
-        const endpointDefault = config.defaultTimeoutInSeconds;
-        if (endpointDefault === "infinity") {
-            return undefined;
-        }
-        if (endpointDefault != null) {
-            return endpointDefault * 1000;
-        }
-        return 60 * 1000;
+        return HttpResponsePromise.fromPromise(execute<T>(config));
     }
+    requestFn.fetch = fetchWithHeaders;
+    return requestFn;
 }

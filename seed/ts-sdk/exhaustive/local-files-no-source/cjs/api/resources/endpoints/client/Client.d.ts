@@ -30,7 +30,6 @@ export declare class EndpointsClient {
     protected _union: UnionClient | undefined;
     protected _urls: UrlsClient | undefined;
     constructor(options: EndpointsClient.Options);
-    constructor(options: EndpointsClient.Options, requestFn: core.RequestFn);
     get container(): ContainerClient;
     get contentType(): ContentTypeClient;
     get enum(): EnumClient;

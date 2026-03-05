@@ -30,10 +30,12 @@ export class SeedWebsocketAuthClient {
     }
 
     public get auth(): AuthClient {
-        return (this._auth ??= new AuthClient(this._options, this._requestFn));
+        return (this._auth ??= new AuthClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get realtime(): RealtimeClient {
-        return (this._realtime ??= new RealtimeClient(this._options, this._requestFn));
+        return (this._realtime ??= new RealtimeClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 }

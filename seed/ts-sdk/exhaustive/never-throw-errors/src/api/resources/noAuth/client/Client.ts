@@ -15,12 +15,10 @@ export class NoAuthClient {
     protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NoAuthClient.Options);
-    constructor(options: NoAuthClient.Options, requestFn: core.RequestFn);
-    constructor(options: NoAuthClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: NoAuthClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -53,7 +51,6 @@ export class NoAuthClient {
         request?: unknown,
         requestOptions?: NoAuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.noAuth.postWithNoAuth.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -62,7 +59,6 @@ export class NoAuthClient {
                     "/no-auth",
                 ),
                 method: "POST",
-                headers: _headers,
                 contentType: "application/json",
                 queryParameters: requestOptions?.queryParams,
                 requestType: "json",

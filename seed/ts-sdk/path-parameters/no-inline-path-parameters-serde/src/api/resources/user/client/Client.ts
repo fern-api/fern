@@ -18,12 +18,10 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options);
-    constructor(options: UserClient.Options, requestFn: core.RequestFn);
-    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UserClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPathParametersError(args),
@@ -44,12 +42,10 @@ export class UserClient {
         _request: SeedPathParameters.GetUsersRequest = {},
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -76,7 +72,6 @@ export class UserClient {
         request: SeedPathParameters.User,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "POST",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
@@ -84,7 +79,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -116,7 +110,6 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { body: _body } = request;
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "PATCH",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}`,
@@ -124,7 +117,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -156,12 +148,10 @@ export class UserClient {
         const _queryParams: Record<string, unknown> = {
             limit,
         };
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User[]>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.user.searchUsers.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -191,12 +181,10 @@ export class UserClient {
         _request: SeedPathParameters.GetUserMetadataRequest = {},
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/metadata/v${core.url.encodePathParam(version)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -228,12 +216,10 @@ export class UserClient {
         _request: SeedPathParameters.GetUserSpecificsRequest = {},
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

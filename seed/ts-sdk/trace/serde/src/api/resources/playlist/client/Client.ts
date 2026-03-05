@@ -19,12 +19,10 @@ export class PlaylistClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PlaylistClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PlaylistClient.Options);
-    constructor(options: PlaylistClient.Options, requestFn: core.RequestFn);
-    constructor(options: PlaylistClient.Options = {}, requestFn?: core.RequestFn) {
+    constructor(options: PlaylistClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: (args) => new errors.SeedTraceError(args),
@@ -160,7 +158,7 @@ export class PlaylistClient {
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            errorHandler: (_statusCode, body, rawResponse) => {
+            errorHandler: (statusCode, body, rawResponse) => {
                 switch ((body as any)?.errorName) {
                     case "PlaylistIdNotFoundError":
                         return new SeedTrace.PlaylistIdNotFoundError(
@@ -175,8 +173,9 @@ export class PlaylistClient {
                         );
                     case "UnauthorizedError":
                         return new SeedTrace.UnauthorizedError(rawResponse);
+                    default:
+                        return new errors.SeedTraceError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             transformResponse: (body) =>
                 serializers.Playlist.parseOrThrow(body, {
@@ -226,7 +225,7 @@ export class PlaylistClient {
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            errorHandler: (_statusCode, body, rawResponse) => {
+            errorHandler: (statusCode, body, rawResponse) => {
                 switch ((body as any)?.errorName) {
                     case "PlaylistIdNotFoundError":
                         return new SeedTrace.PlaylistIdNotFoundError(
@@ -239,8 +238,9 @@ export class PlaylistClient {
                             }),
                             rawResponse,
                         );
+                    default:
+                        return new errors.SeedTraceError({ statusCode, body, rawResponse });
                 }
-                return undefined;
             },
             transformResponse: (body) =>
                 serializers.playlist.updatePlaylist.Response.parseOrThrow(body, {

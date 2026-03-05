@@ -123,12 +123,10 @@ export class SeedApiClient {
             neighbor: neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined,
             neighborRequired: typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired),
         };
-        const _headers = {};
         return this._requestFn<SeedApi.SearchResponse>({
             method: "GET",
             path: "user/getUsername",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }

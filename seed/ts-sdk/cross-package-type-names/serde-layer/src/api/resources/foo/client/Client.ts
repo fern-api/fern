@@ -18,12 +18,10 @@ export class FooClient {
     protected readonly _options: NormalizedClientOptions<FooClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: FooClient.Options);
-    constructor(options: FooClient.Options, requestFn: core.RequestFn);
-    constructor(options: FooClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: FooClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedCrossPackageTypeNamesError(args),
@@ -50,7 +48,6 @@ export class FooClient {
         const _queryParams: Record<string, unknown> = {
             optionalString,
         };
-        const _headers = {};
         return this._requestFn<SeedCrossPackageTypeNames.ImportingType>({
             method: "POST",
             path: "",
@@ -58,7 +55,6 @@ export class FooClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.ImportingType.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

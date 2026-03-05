@@ -18,12 +18,10 @@ export class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PutClient.Options);
-    constructor(options: PutClient.Options, requestFn: core.RequestFn);
-    constructor(options: PutClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PutClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -45,12 +43,10 @@ export class PutClient {
         requestOptions?: PutClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse> {
         const { id } = request;
-        const _headers = {};
         return this._requestFn<SeedExhaustive.endpoints.PutResponse>({
             method: "PUT",
             path: `${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.PutResponse.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

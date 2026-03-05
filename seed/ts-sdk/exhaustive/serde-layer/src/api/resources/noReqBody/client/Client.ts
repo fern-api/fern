@@ -18,12 +18,10 @@ export class NoReqBodyClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<NoReqBodyClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: NoReqBodyClient.Options);
-    constructor(options: NoReqBodyClient.Options, requestFn: core.RequestFn);
-    constructor(options: NoReqBodyClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: NoReqBodyClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -40,12 +38,10 @@ export class NoReqBodyClient {
     public getWithNoRequestBody(
         requestOptions?: NoReqBodyClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "GET",
             path: "/no-req-body",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithOptionalField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -65,12 +61,10 @@ export class NoReqBodyClient {
      *     await client.noReqBody.postWithNoRequestBody()
      */
     public postWithNoRequestBody(requestOptions?: NoReqBodyClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "/no-req-body",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

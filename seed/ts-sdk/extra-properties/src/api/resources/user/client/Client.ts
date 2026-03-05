@@ -17,12 +17,10 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options);
-    constructor(options: UserClient.Options, requestFn: core.RequestFn);
-    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UserClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExtraPropertiesError(args),
@@ -45,7 +43,6 @@ export class UserClient {
         request: SeedExtraProperties.CreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExtraProperties.User> {
-        const _headers = {};
         return this._requestFn<SeedExtraProperties.User>({
             method: "POST",
             path: "/user",
@@ -53,7 +50,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

@@ -18,12 +18,10 @@ export class FileUploadExampleClient {
     protected readonly _options: NormalizedClientOptions<FileUploadExampleClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: FileUploadExampleClient.Options);
-    constructor(options: FileUploadExampleClient.Options, requestFn: core.RequestFn);
-    constructor(options: FileUploadExampleClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: FileUploadExampleClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiError(args),

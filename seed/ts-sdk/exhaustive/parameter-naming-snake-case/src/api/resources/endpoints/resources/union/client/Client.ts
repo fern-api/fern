@@ -17,12 +17,10 @@ export class UnionClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UnionClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UnionClient.Options);
-    constructor(options: UnionClient.Options, requestFn: core.RequestFn);
-    constructor(options: UnionClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UnionClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -45,7 +43,6 @@ export class UnionClient {
         request: SeedExhaustive.types.Animal,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.Animal>({
             method: "POST",
             path: "/union",
@@ -53,7 +50,6 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

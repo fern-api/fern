@@ -17,12 +17,10 @@ export class PackageClient {
     protected readonly _options: NormalizedClientOptions<PackageClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PackageClient.Options);
-    constructor(options: PackageClient.Options, requestFn: core.RequestFn);
-    constructor(options: PackageClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PackageClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedNurseryApiError(args),
@@ -47,12 +45,10 @@ export class PackageClient {
         const _queryParams: Record<string, unknown> = {
             for: for_,
         };
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }

@@ -32,14 +32,16 @@ export class SeedPaginationClient {
     }
 
     public get complex(): ComplexClient {
-        return (this._complex ??= new ComplexClient(this._options, this._requestFn));
+        return (this._complex ??= new ComplexClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get inlineUsers(): InlineUsersClient {
-        return (this._inlineUsers ??= new InlineUsersClient(this._options, this._requestFn));
+        return (this._inlineUsers ??= new InlineUsersClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 
     public get users(): UsersClient {
-        return (this._users ??= new UsersClient(this._options, this._requestFn));
+        return (this._users ??= new UsersClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

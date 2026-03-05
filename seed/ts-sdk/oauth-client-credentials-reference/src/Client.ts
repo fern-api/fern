@@ -34,6 +34,6 @@ export class SeedOauthClientCredentialsReferenceClient {
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient(this._options, this._requestFn));
+        return (this._simple ??= new SimpleClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

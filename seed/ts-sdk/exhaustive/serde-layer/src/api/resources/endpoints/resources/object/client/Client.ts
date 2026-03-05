@@ -18,12 +18,10 @@ export class ObjectClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<ObjectClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ObjectClient.Options);
-    constructor(options: ObjectClient.Options, requestFn: core.RequestFn);
-    constructor(options: ObjectClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ObjectClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -58,7 +56,6 @@ export class ObjectClient {
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithOptionalField>({
             method: "POST",
             path: "/object/get-and-return-with-optional-field",
@@ -69,7 +66,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithOptionalField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -95,7 +91,6 @@ export class ObjectClient {
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithRequiredField>({
             method: "POST",
             path: "/object/get-and-return-with-required-field",
@@ -106,7 +101,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithRequiredField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -136,7 +130,6 @@ export class ObjectClient {
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithMapOfMap>({
             method: "POST",
             path: "/object/get-and-return-with-map-of-map",
@@ -147,7 +140,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithMapOfMap.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -190,7 +182,6 @@ export class ObjectClient {
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.NestedObjectWithOptionalField>({
             method: "POST",
             path: "/object/get-and-return-nested-with-optional-field",
@@ -201,7 +192,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.NestedObjectWithOptionalField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -246,7 +236,6 @@ export class ObjectClient {
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.NestedObjectWithRequiredField>({
             method: "POST",
             path: `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
@@ -257,7 +246,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.NestedObjectWithRequiredField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -319,7 +307,6 @@ export class ObjectClient {
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.NestedObjectWithRequiredField>({
             method: "POST",
             path: "/object/get-and-return-nested-with-required-field-list",
@@ -330,7 +317,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.NestedObjectWithRequiredField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -358,7 +344,6 @@ export class ObjectClient {
         request: SeedExhaustive.types.ObjectWithUnknownField,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithUnknownField> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithUnknownField>({
             method: "POST",
             path: "/object/get-and-return-with-unknown-field",
@@ -369,7 +354,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithUnknownField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -400,7 +384,6 @@ export class ObjectClient {
         request: SeedExhaustive.types.ObjectWithDatetimeLikeString,
         requestOptions?: ObjectClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDatetimeLikeString> {
-        const _headers = {};
         return this._requestFn<SeedExhaustive.types.ObjectWithDatetimeLikeString>({
             method: "POST",
             path: "/object/get-and-return-with-datetime-like-string",
@@ -411,7 +394,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.types.ObjectWithDatetimeLikeString.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

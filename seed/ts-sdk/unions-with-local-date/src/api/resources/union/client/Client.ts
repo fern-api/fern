@@ -17,12 +17,10 @@ export class UnionClient {
     protected readonly _options: NormalizedClientOptions<UnionClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UnionClient.Options);
-    constructor(options: UnionClient.Options, requestFn: core.RequestFn);
-    constructor(options: UnionClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UnionClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedUnionsError(args),
@@ -38,12 +36,10 @@ export class UnionClient {
      *     await client.union.get("id")
      */
     public get(id: string, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedUnions.Shape> {
-        const _headers = {};
         return this._requestFn<SeedUnions.Shape>({
             method: "GET",
             path: `/${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -64,7 +60,6 @@ export class UnionClient {
         request: SeedUnions.Shape,
         requestOptions?: UnionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
-        const _headers = {};
         return this._requestFn<boolean>({
             method: "PATCH",
             path: "",
@@ -72,7 +67,6 @@ export class UnionClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

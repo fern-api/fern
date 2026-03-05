@@ -15,12 +15,10 @@ export class SimpleClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SimpleClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SimpleClient.Options);
-    constructor(options: SimpleClient.Options, requestFn: core.RequestFn);
-    constructor(options: SimpleClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: SimpleClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>
@@ -46,7 +44,6 @@ export class SimpleClient {
     private async __getSomething(
         requestOptions?: SimpleClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedOauthClientCredentials.simple.getSomething.Error>>> {
-        const _headers = {};
         const _response = await this._requestFn.fetch(
             {
                 url: core.url.join(
@@ -55,7 +52,6 @@ export class SimpleClient {
                     "/get-something",
                 ),
                 method: "GET",
-                headers: _headers,
                 queryParameters: requestOptions?.queryParams,
                 timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
                 maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,

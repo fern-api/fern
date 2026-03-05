@@ -11,7 +11,6 @@ export declare class PutClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PutClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: PutClient.Options);
-    constructor(options: PutClient.Options, requestFn: core.RequestFn);
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.

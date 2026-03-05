@@ -16,12 +16,10 @@ export class InlineUsersClient {
     protected readonly _requestFn: core.RequestFn;
     protected _inlineUsers: InlineUsersClient_ | undefined;
 
-    constructor(options: InlineUsersClient.Options);
-    constructor(options: InlineUsersClient.Options, requestFn: core.RequestFn);
-    constructor(options: InlineUsersClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: InlineUsersClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPaginationError(args),
@@ -30,6 +28,8 @@ export class InlineUsersClient {
     }
 
     public get inlineUsers(): InlineUsersClient_ {
-        return (this._inlineUsers ??= new InlineUsersClient_(this._options, this._requestFn));
+        return (this._inlineUsers ??= new InlineUsersClient_(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 }

@@ -33,15 +33,15 @@ export class SeedExamplesClient {
     }
 
     public get file(): FileClient {
-        return (this._file ??= new FileClient(this._options, this._requestFn));
+        return (this._file ??= new FileClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get health(): HealthClient {
-        return (this._health ??= new HealthClient(this._options, this._requestFn));
+        return (this._health ??= new HealthClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get service(): ServiceClient {
-        return (this._service ??= new ServiceClient(this._options, this._requestFn));
+        return (this._service ??= new ServiceClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     /**
@@ -52,7 +52,6 @@ export class SeedExamplesClient {
      *     await client.echo("Hello world!\\n\\nwith\\n\\tnewlines")
      */
     public echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "",
@@ -60,7 +59,6 @@ export class SeedExamplesClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -76,7 +74,6 @@ export class SeedExamplesClient {
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): core.HttpResponsePromise<SeedExamples.Identifier> {
-        const _headers = {};
         return this._requestFn<SeedExamples.Identifier>({
             method: "POST",
             path: "",
@@ -84,7 +81,6 @@ export class SeedExamplesClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

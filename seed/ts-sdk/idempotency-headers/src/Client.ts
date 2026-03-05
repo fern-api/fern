@@ -28,6 +28,6 @@ export class SeedIdempotencyHeadersClient {
     }
 
     public get payment(): PaymentClient {
-        return (this._payment ??= new PaymentClient(this._options, this._requestFn));
+        return (this._payment ??= new PaymentClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

@@ -17,12 +17,10 @@ export class OptionalClient {
     protected readonly _options: NormalizedClientOptions<OptionalClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: OptionalClient.Options);
-    constructor(options: OptionalClient.Options, requestFn: core.RequestFn);
-    constructor(options: OptionalClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: OptionalClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedObjectsWithImportsError(args),
@@ -45,7 +43,6 @@ export class OptionalClient {
         request?: Record<string, unknown>,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "send-optional-body",
@@ -53,7 +50,6 @@ export class OptionalClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -71,7 +67,6 @@ export class OptionalClient {
         request?: SeedObjectsWithImports.SendOptionalBodyRequest,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "POST",
             path: "send-optional-typed-body",
@@ -79,7 +74,6 @@ export class OptionalClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -104,7 +98,6 @@ export class OptionalClient {
         request?: SeedObjectsWithImports.DeployParams | null,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<SeedObjectsWithImports.DeployResponse> {
-        const _headers = {};
         return this._requestFn<SeedObjectsWithImports.DeployResponse>({
             method: "POST",
             path: `deploy/${core.url.encodePathParam(actionId)}/versions/${core.url.encodePathParam(id)}`,
@@ -112,7 +105,6 @@ export class OptionalClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

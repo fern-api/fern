@@ -38,7 +38,6 @@ export class SeedApiClient {
         request: SeedApi.UploadDocumentRequest = {},
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.UploadDocumentResponse> {
-        const _headers = {};
         return this._requestFn<SeedApi.UploadDocumentResponse>({
             method: "POST",
             path: "documents/upload",
@@ -46,7 +45,6 @@ export class SeedApiClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

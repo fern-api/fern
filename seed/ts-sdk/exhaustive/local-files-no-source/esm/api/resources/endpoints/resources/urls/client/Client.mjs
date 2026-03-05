@@ -4,10 +4,11 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class UrlsClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -16,12 +17,10 @@ export class UrlsClient {
      *     await client.endpoints.urls.withMixedCase()
      */
     withMixedCase(requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: "/urls/MixedCase",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -32,12 +31,10 @@ export class UrlsClient {
      *     await client.endpoints.urls.noEndingSlash()
      */
     noEndingSlash(requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: "/urls/no-ending-slash",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -48,12 +45,10 @@ export class UrlsClient {
      *     await client.endpoints.urls.withEndingSlash()
      */
     withEndingSlash(requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: "/urls/with-ending-slash/",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -64,12 +59,10 @@ export class UrlsClient {
      *     await client.endpoints.urls.withUnderscores()
      */
     withUnderscores(requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "GET",
             path: "/urls/with_underscores",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

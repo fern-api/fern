@@ -18,12 +18,10 @@ export class ServiceClient {
     protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ServiceClient.Options);
-    constructor(options: ServiceClient.Options, requestFn: core.RequestFn);
-    constructor(options: ServiceClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedClientSideParamsError(args),
@@ -62,12 +60,10 @@ export class ServiceClient {
             fields,
             search,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.Resource[]>({
             method: "GET",
             path: "/api/resources",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -95,12 +91,10 @@ export class ServiceClient {
             include_metadata: includeMetadata,
             format,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.Resource>({
             method: "GET",
             path: `/api/resources/${core.url.encodePathParam(resourceId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -132,7 +126,6 @@ export class ServiceClient {
             limit,
             offset,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.SearchResponse>({
             method: "POST",
             path: "/api/resources/search",
@@ -140,7 +133,6 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -187,12 +179,10 @@ export class ServiceClient {
             search_engine: searchEngine,
             fields,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.PaginatedUserResponse>({
             method: "GET",
             path: "/api/users",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -220,12 +210,10 @@ export class ServiceClient {
             fields,
             include_fields: includeFields,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.User>({
             method: "GET",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -261,7 +249,6 @@ export class ServiceClient {
         request: SeedClientSideParams.CreateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.User>({
             method: "POST",
             path: "/api/users",
@@ -269,7 +256,6 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -307,7 +293,6 @@ export class ServiceClient {
         request: SeedClientSideParams.UpdateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<SeedClientSideParams.User> {
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.User>({
             method: "PATCH",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
@@ -315,7 +300,6 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -330,12 +314,10 @@ export class ServiceClient {
      *     await client.service.deleteUser("userId")
      */
     public deleteUser(userId: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "DELETE",
             path: `/api/users/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -363,12 +345,10 @@ export class ServiceClient {
             name,
             fields,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.Connection[]>({
             method: "GET",
             path: "/api/connections",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -394,12 +374,10 @@ export class ServiceClient {
         const _queryParams: Record<string, unknown> = {
             fields,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.Connection>({
             method: "GET",
             path: `/api/connections/${core.url.encodePathParam(connectionId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -446,12 +424,10 @@ export class ServiceClient {
             is_first_party: isFirstParty,
             app_type: appType != null ? toJson(appType) : undefined,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.PaginatedClientResponse>({
             method: "GET",
             path: "/api/clients",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -479,12 +455,10 @@ export class ServiceClient {
             fields,
             include_fields: includeFields,
         };
-        const _headers = {};
         return this._requestFn<SeedClientSideParams.Client>({
             method: "GET",
             path: `/api/clients/${core.url.encodePathParam(clientId)}`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }

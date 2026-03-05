@@ -11,7 +11,6 @@ export declare class UnionClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UnionClient.Options>;
     protected readonly _requestFn: core.RequestFn;
     constructor(options: UnionClient.Options);
-    constructor(options: UnionClient.Options, requestFn: core.RequestFn);
     /**
      * @param {SeedExhaustive.types.Animal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.

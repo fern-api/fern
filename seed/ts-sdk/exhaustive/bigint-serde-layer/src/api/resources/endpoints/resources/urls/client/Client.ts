@@ -17,12 +17,10 @@ export class UrlsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<UrlsClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UrlsClient.Options);
-    constructor(options: UrlsClient.Options, requestFn: core.RequestFn);
-    constructor(options: UrlsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UrlsClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedExhaustiveError(args),
@@ -37,12 +35,10 @@ export class UrlsClient {
      *     await client.endpoints.urls.withMixedCase()
      */
     public withMixedCase(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: "/urls/MixedCase",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.urls.withMixedCase.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -62,12 +58,10 @@ export class UrlsClient {
      *     await client.endpoints.urls.noEndingSlash()
      */
     public noEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: "/urls/no-ending-slash",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.urls.noEndingSlash.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -87,12 +81,10 @@ export class UrlsClient {
      *     await client.endpoints.urls.withEndingSlash()
      */
     public withEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: "/urls/with-ending-slash/",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.urls.withEndingSlash.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -112,12 +104,10 @@ export class UrlsClient {
      *     await client.endpoints.urls.withUnderscores()
      */
     public withUnderscores(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<string> {
-        const _headers = {};
         return this._requestFn<string>({
             method: "GET",
             path: "/urls/with_underscores",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.endpoints.urls.withUnderscores.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

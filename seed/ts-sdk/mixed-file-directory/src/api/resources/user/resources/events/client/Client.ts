@@ -19,12 +19,10 @@ export class EventsClient {
     protected readonly _requestFn: core.RequestFn;
     protected _metadata: MetadataClient | undefined;
 
-    constructor(options: EventsClient.Options);
-    constructor(options: EventsClient.Options, requestFn: core.RequestFn);
-    constructor(options: EventsClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: EventsClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedMixedFileDirectoryError(args),
@@ -33,7 +31,9 @@ export class EventsClient {
     }
 
     public get metadata(): MetadataClient {
-        return (this._metadata ??= new MetadataClient(this._options, this._requestFn));
+        return (this._metadata ??= new MetadataClient(
+            Object.assign({}, this._options, { _requestFn: this._requestFn }),
+        ));
     }
 
     /**
@@ -55,12 +55,10 @@ export class EventsClient {
         const _queryParams: Record<string, unknown> = {
             limit,
         };
-        const _headers = {};
         return this._requestFn<SeedMixedFileDirectory.user.Event[]>({
             method: "GET",
             path: "/users/events/",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }

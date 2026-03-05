@@ -41,7 +41,6 @@ export class SeedExtendsClient {
         request: SeedExtends.Inlined,
         requestOptions?: SeedExtendsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "POST",
             path: "/extends/extended-inline-request-body",
@@ -49,7 +48,6 @@ export class SeedExtendsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

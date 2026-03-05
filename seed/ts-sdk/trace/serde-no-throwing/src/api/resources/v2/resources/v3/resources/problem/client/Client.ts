@@ -18,12 +18,10 @@ export class ProblemClient {
     protected readonly _options: NormalizedClientOptions<ProblemClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: ProblemClient.Options);
-    constructor(options: ProblemClient.Options, requestFn: core.RequestFn);
-    constructor(options: ProblemClient.Options = {}, requestFn?: core.RequestFn) {
+    constructor(options: ProblemClient.Options = {}) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...{ ...this._options, defaultBaseUrl: "https://api.trace.come" },
                 createStatusCodeError: ((args: { statusCode: number; body: unknown; rawResponse: unknown }) =>

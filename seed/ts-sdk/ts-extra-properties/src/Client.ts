@@ -34,12 +34,10 @@ export class SeedApiClient {
      *     await client.getUser()
      */
     public getUser(requestOptions?: SeedApiClient.RequestOptions): core.HttpResponsePromise<SeedApi.User> {
-        const _headers = {};
         return this._requestFn<SeedApi.User>({
             method: "GET",
             path: "user",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
@@ -65,7 +63,6 @@ export class SeedApiClient {
         request: SeedApi.CreateUserRequest,
         requestOptions?: SeedApiClient.RequestOptions,
     ): core.HttpResponsePromise<SeedApi.User> {
-        const _headers = {};
         return this._requestFn<SeedApi.User>({
             method: "POST",
             path: "user",
@@ -76,7 +73,6 @@ export class SeedApiClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             transformResponse: (body) =>
                 serializers.User.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",

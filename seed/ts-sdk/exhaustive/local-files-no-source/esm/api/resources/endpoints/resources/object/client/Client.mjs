@@ -4,10 +4,11 @@ import * as core from "../../../../../../core/index.mjs";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
 export class ObjectClient {
-    constructor(options, requestFn) {
+    constructor(options) {
+        var _a;
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn !== null && requestFn !== void 0 ? requestFn : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
+            (_a = options._requestFn) !== null && _a !== void 0 ? _a : core.createRequestFn(Object.assign(Object.assign({}, this._options), { createStatusCodeError: (args) => new errors.SeedExhaustiveError(args), handleNonStatusCodeError: handleNonStatusCodeError }));
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
@@ -33,7 +34,6 @@ export class ObjectClient {
      *     })
      */
     getAndReturnWithOptionalField(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-optional-field",
@@ -41,7 +41,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -55,7 +54,6 @@ export class ObjectClient {
      *     })
      */
     getAndReturnWithRequiredField(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-required-field",
@@ -63,7 +61,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -81,7 +78,6 @@ export class ObjectClient {
      *     })
      */
     getAndReturnWithMapOfMap(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-map-of-map",
@@ -89,7 +85,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -120,7 +115,6 @@ export class ObjectClient {
      *     })
      */
     getAndReturnNestedWithOptionalField(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-nested-with-optional-field",
@@ -128,7 +122,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -160,7 +153,6 @@ export class ObjectClient {
      *     })
      */
     getAndReturnNestedWithRequiredField(string, request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
@@ -168,7 +160,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -218,7 +209,6 @@ export class ObjectClient {
      *         }])
      */
     getAndReturnNestedWithRequiredFieldAsList(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-nested-with-required-field-list",
@@ -226,7 +216,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -242,7 +231,6 @@ export class ObjectClient {
      *     })
      */
     getAndReturnWithUnknownField(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-unknown-field",
@@ -250,7 +238,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -269,7 +256,6 @@ export class ObjectClient {
      *     })
      */
     getAndReturnWithDatetimeLikeString(request, requestOptions) {
-        const _headers = {};
         return this._requestFn({
             method: "POST",
             path: "/object/get-and-return-with-datetime-like-string",
@@ -277,7 +263,6 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

@@ -18,12 +18,10 @@ export class AClient {
     protected _b: BClient | undefined;
     protected _c: CClient | undefined;
 
-    constructor(options: AClient.Options);
-    constructor(options: AClient.Options, requestFn: core.RequestFn);
-    constructor(options: AClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: AClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedApiError(args),
@@ -32,10 +30,10 @@ export class AClient {
     }
 
     public get b(): BClient {
-        return (this._b ??= new BClient(this._options, this._requestFn));
+        return (this._b ??= new BClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 
     public get c(): CClient {
-        return (this._c ??= new CClient(this._options, this._requestFn));
+        return (this._c ??= new CClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

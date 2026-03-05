@@ -28,6 +28,6 @@ export class SeedSingleUrlEnvironmentDefaultClient {
     }
 
     public get dummy(): DummyClient {
-        return (this._dummy ??= new DummyClient(this._options, this._requestFn));
+        return (this._dummy ??= new DummyClient(Object.assign({}, this._options, { _requestFn: this._requestFn })));
     }
 }

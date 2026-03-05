@@ -44,7 +44,6 @@ export class SeedPropertyAccessClient {
         request: SeedPropertyAccess.User.Request,
         requestOptions?: SeedPropertyAccessClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPropertyAccess.User.Response> {
-        const _headers = {};
         return this._requestFn<SeedPropertyAccess.User.Response>({
             method: "POST",
             path: "/users",
@@ -52,7 +51,6 @@ export class SeedPropertyAccessClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

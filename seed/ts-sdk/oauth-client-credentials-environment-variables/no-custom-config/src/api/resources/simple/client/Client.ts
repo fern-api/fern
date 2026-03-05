@@ -16,12 +16,10 @@ export class SimpleClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<SimpleClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: SimpleClient.Options);
-    constructor(options: SimpleClient.Options, requestFn: core.RequestFn);
-    constructor(options: SimpleClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: SimpleClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedOauthClientCredentialsEnvironmentVariablesError(args),
@@ -36,12 +34,10 @@ export class SimpleClient {
      *     await client.simple.getSomething()
      */
     public getSomething(requestOptions?: SimpleClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "GET",
             path: "/get-something",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

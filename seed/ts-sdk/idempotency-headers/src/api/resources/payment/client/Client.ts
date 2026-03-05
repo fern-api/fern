@@ -20,12 +20,10 @@ export class PaymentClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PaymentClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: PaymentClient.Options);
-    constructor(options: PaymentClient.Options, requestFn: core.RequestFn);
-    constructor(options: PaymentClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: PaymentClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedIdempotencyHeadersError(args),
@@ -71,12 +69,10 @@ export class PaymentClient {
      *     await client.payment.delete("paymentId")
      */
     public delete(paymentId: string, requestOptions?: PaymentClient.RequestOptions): core.HttpResponsePromise<void> {
-        const _headers = {};
         return this._requestFn<void>({
             method: "DELETE",
             path: `/payment/${core.url.encodePathParam(paymentId)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }

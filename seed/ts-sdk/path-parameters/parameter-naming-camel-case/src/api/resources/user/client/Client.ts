@@ -17,12 +17,10 @@ export class UserClient {
     protected readonly _options: NormalizedClientOptions<UserClient.Options>;
     protected readonly _requestFn: core.RequestFn;
 
-    constructor(options: UserClient.Options);
-    constructor(options: UserClient.Options, requestFn: core.RequestFn);
-    constructor(options: UserClient.Options, requestFn?: core.RequestFn) {
+    constructor(options: UserClient.Options) {
         this._options = normalizeClientOptions(options);
         this._requestFn =
-            requestFn ??
+            ((options as unknown as Record<string, unknown>)._requestFn as core.RequestFn) ??
             core.createRequestFn({
                 ...this._options,
                 createStatusCodeError: (args) => new errors.SeedPathParametersError(args),
@@ -44,12 +42,10 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { userId } = request;
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -68,7 +64,6 @@ export class UserClient {
         request: SeedPathParameters.User,
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "POST",
             path: `/${core.url.encodePathParam(this._options.tenantId)}/user/`,
@@ -76,7 +71,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -99,7 +93,6 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { userId, body: _body } = request;
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "PATCH",
             path: `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}`,
@@ -107,7 +100,6 @@ export class UserClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -130,12 +122,10 @@ export class UserClient {
         const _queryParams: Record<string, unknown> = {
             limit,
         };
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User[]>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/search`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            headers: _headers,
             requestOptions,
         });
     }
@@ -157,12 +147,10 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { userId, version } = request;
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
@@ -185,12 +173,10 @@ export class UserClient {
         requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         const { userId, version, thought } = request;
-        const _headers = {};
         return this._requestFn<SeedPathParameters.User>({
             method: "GET",
             path: `/${core.url.encodePathParam(this._options.tenantId)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
             queryParameters: requestOptions?.queryParams,
-            headers: _headers,
             requestOptions,
         });
     }
