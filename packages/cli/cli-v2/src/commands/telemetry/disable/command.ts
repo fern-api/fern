@@ -16,7 +16,7 @@ export class DisableCommand {
     }
 }
 
-export function addDisableCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addDisableCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new DisableCommand();
-    command(cli, "disable", "Disable telemetry", (context, args) => cmd.handle(context, args), undefined, parentPath);
+    command(cli, "disable", "Disable telemetry", (context, args) => cmd.handle(context, args));
 }

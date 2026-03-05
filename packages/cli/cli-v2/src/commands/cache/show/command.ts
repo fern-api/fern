@@ -99,7 +99,7 @@ export class ShowCommand {
     }
 }
 
-export function addShowCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addShowCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new ShowCommand();
     command(
         cli,
@@ -111,7 +111,6 @@ export function addShowCommand(cli: Argv<GlobalArgs>, parentPath?: string): void
                 type: "boolean",
                 description: "Output in JSON format",
                 default: false
-            }),
-        parentPath
+            })
     );
 }

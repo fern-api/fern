@@ -54,7 +54,7 @@ export class MigrateCommand {
     }
 }
 
-export function addMigrateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addMigrateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new MigrateCommand();
     command(
         cli,
@@ -66,7 +66,6 @@ export function addMigrateCommand(cli: Argv<GlobalArgs>, parentPath?: string): v
                 type: "boolean",
                 description: "Keep original files after migration",
                 default: true
-            }),
-        parentPath
+            })
     );
 }

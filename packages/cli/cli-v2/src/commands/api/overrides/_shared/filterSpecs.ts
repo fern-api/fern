@@ -1,0 +1,53 @@
+import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import type { ApiSpec } from "../../../../api/config/ApiSpec.js";
+import { isAsyncApiSpec } from "../../../../api/config/AsyncApiSpec.js";
+import { isOpenApiSpec } from "../../../../api/config/OpenApiSpec.js";
+import type { Workspace } from "../../../../workspace/Workspace.js";
+
+export interface SpecEntry {
+    apiName: string;
+    spec: ApiSpec;
+    /** Absolute path to the spec file */
+    specFilePath: AbsoluteFilePath;
+    /** Absolute path(s) to override files, if any */
+    overrides: AbsoluteFilePath[] | undefined;
+}
+
+/**
+ * Returns specs from the workspace that support overrides (OpenAPI, AsyncAPI),
+ * optionally filtered by API name and/or spec file path.
+ */
+export function filterSpecs(workspace: Workspace, options: { api?: string; spec?: string }): SpecEntry[] {
+    const results: SpecEntry[] = [];
+
+    for (const [apiName, apiDef] of Object.entries(workspace.apis)) {
+        if (options.api != null && apiName !== options.api) {
+            continue;
+        }
+
+        for (const apiSpec of apiDef.specs) {
+            let specFilePath: AbsoluteFilePath | undefined;
+            let overrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+
+            if (isOpenApiSpec(apiSpec)) {
+                specFilePath = apiSpec.openapi;
+                overrides = apiSpec.overrides;
+            } else if (isAsyncApiSpec(apiSpec)) {
+                specFilePath = apiSpec.asyncapi;
+                overrides = apiSpec.overrides;
+            } else {
+                continue;
+            }
+
+            if (options.spec != null && !specFilePath.endsWith(options.spec)) {
+                continue;
+            }
+
+            const overridesList = overrides == null ? undefined : Array.isArray(overrides) ? overrides : [overrides];
+
+            results.push({ apiName, spec: apiSpec, specFilePath, overrides: overridesList });
+        }
+    }
+
+    return results;
+}

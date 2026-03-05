@@ -219,7 +219,7 @@ export class UpdateCommand {
     }
 }
 
-export function addUpdateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addUpdateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new UpdateCommand();
     command(
         cli,
@@ -246,7 +246,6 @@ export function addUpdateCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
                     type: "boolean",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
-                }),
-        parentPath
+                })
     );
 }

@@ -579,7 +579,7 @@ export class GenerateCommand {
     }
 }
 
-export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addGenerateCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new GenerateCommand();
     command(
         cli,
@@ -652,7 +652,6 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
                     type: "boolean",
                     default: false,
                     description: "Ignore prompts to confirm generation"
-                }),
-        parentPath
+                })
     );
 }

@@ -54,14 +54,13 @@ export class StatusCommand {
     }
 }
 
-export function addStatusCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addStatusCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new StatusCommand();
     command<StatusArgs.Args>(
         cli,
         "status",
         "Show telemetry status",
         (context, args) => cmd.handle(context, args),
-        (yargs) => yargs.option("json", { type: "boolean", default: false, description: "Output status as JSON" }),
-        parentPath
+        (yargs) => yargs.option("json", { type: "boolean", default: false, description: "Output status as JSON" })
     );
 }

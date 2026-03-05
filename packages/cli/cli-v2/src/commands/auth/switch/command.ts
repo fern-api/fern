@@ -91,7 +91,7 @@ export class SwitchCommand {
     }
 }
 
-export function addSwitchCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+export function addSwitchCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new SwitchCommand();
     command(
         cli,
@@ -102,7 +102,6 @@ export function addSwitchCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
             yargs.option("user", {
                 type: "string",
                 description: "Switch to specific account"
-            }),
-        parentPath
+            })
     );
 }

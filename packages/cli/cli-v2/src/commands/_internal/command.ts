@@ -22,8 +22,7 @@ export function command<T extends GlobalArgs = GlobalArgs>(
     name: string,
     description: string,
     handler: CommandHandler<T>,
-    builder?: BuilderCallback<GlobalArgs, T>,
-    parentPath?: string
+    builder?: BuilderCallback<GlobalArgs, T>
 ): void {
     cli.command(
         name,
