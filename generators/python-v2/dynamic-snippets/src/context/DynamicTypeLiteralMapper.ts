@@ -363,6 +363,7 @@ export class DynamicTypeLiteralMapper {
     }): python.TypeInstantiation {
         const entries = this.convertObjectEntries({ object_, value });
 
+        // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
         if (this.context.useTypedDictRequests()) {
             return python.TypeInstantiation.typedDict(entries, { multiline: true });
         }

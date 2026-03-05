@@ -37,36 +37,37 @@ client.service.get_metadata(
 
 exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
 "from acme import Acme
+from acme.types import Actor, ExtendedMovie, Migration
 
 client = Acme(
     token="<YOUR_API_KEY>",
 )
 
 client.service.create_big_entity(
-    cast_member={
-        "id": "john.doe",
-        "name": "John Doe"
-    },
-    extended_movie={
-        "cast": [
+    cast_member=Actor(
+        id="john.doe",
+        name="John Doe",
+    ),
+    extended_movie=ExtendedMovie(
+        cast=[
             "John Travolta",
             "Samuel L. Jackson",
             "Uma Thurman",
             "Bruce Willis"
         ],
-        "id": "movie-sda231x",
-        "title": "Pulp Fiction",
-        "from": "Quentin Tarantino",
-        "rating": 8.5,
-        "type": "movie",
-        "tag": "tag-12efs9dv",
-        "metadata": {
+        id="movie-sda231x",
+        title="Pulp Fiction",
+        from="Quentin Tarantino",
+        rating=8.5,
+        type="movie",
+        tag="tag-12efs9dv",
+        metadata={
             "academyAward": True,
             "releaseDate": "2023-12-08",
             "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
         },
-        "revenue": 1000000
-    },
+        revenue=1000000,
+    ),
     event_info={
         "type": "metadata",
         "id": "event-12345",
@@ -76,10 +77,10 @@ client.service.create_big_entity(
         },
         "json_string": "abc"
     },
-    migration={
-        "name": "Migration 31 Aug",
-        "status": "RUNNING"
-    },
+    migration=Migration(
+        name="Migration 31 Aug",
+        status="RUNNING",
+    ),
 )
 "
 `;
@@ -216,6 +217,7 @@ exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] 
 
 exports[`snippets > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
 "from acme import Acme
+from acme.types.object import ObjectWithRequiredField
 
 client = Acme(
     token="<YOUR_API_KEY>",
@@ -223,15 +225,15 @@ client = Acme(
 
 client.endpoints.container.get_and_return_list_of_objects(
     request=[
-        {
-            "string": "one"
-        },
-        {
-            "string": "two"
-        },
-        {
-            "string": "three"
-        }
+        ObjectWithRequiredField(
+            string="one",
+        ),
+        ObjectWithRequiredField(
+            string="two",
+        ),
+        ObjectWithRequiredField(
+            string="three",
+        )
     ],
 )
 "
@@ -412,6 +414,7 @@ exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
 
 exports[`snippets > nullable > 'Body properties' 1`] = `
 "from acme import Acme
+from acme.nullable import Metadata
 from datetime import datetime
 
 client = Acme(
@@ -423,12 +426,12 @@ client.nullable.create_user(
     tags=[
         "admin"
     ],
-    metadata={
-        "created_at": datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
-        "updated_at": datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
-        "avatar": None,
-        "activated": None
-    },
+    metadata=Metadata(
+        created_at=datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
+        updated_at=datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
+        avatar=None,
+        activated=None,
+    ),
     avatar=None,
 )
 "
@@ -467,7 +470,7 @@ client.nullable.get_users(
 `;
 
 exports[`snippets > read-write-only > 'Body properties' 1`] = `
-"from acme import Acme
+"from acme import Acme, UserProfile, UserProfileVerification
 
 client = Acme(
     base_url="https://api.example.com",
@@ -475,17 +478,17 @@ client = Acme(
 
 client.create_user(
     password="password",
-    profile={
-        "name": "name",
-        "verification": {},
-        "ssn": "ssn"
-    },
+    profile=UserProfile(
+        name="name",
+        verification=UserProfileVerification(),
+        ssn="ssn",
+    ),
 )
 "
 `;
 
 exports[`snippets > read-write-only > 'Readonly value in request' 1`] = `
-"from acme import Acme
+"from acme import Acme, UserProfile, UserProfileVerification
 
 client = Acme(
     base_url="https://api.example.com",
@@ -494,11 +497,11 @@ client = Acme(
 client.create_user(
     id="id",
     password="password",
-    profile={
-        "name": "name",
-        "verification": {},
-        "ssn": "ssn"
-    },
+    profile=UserProfile(
+        name="name",
+        verification=UserProfileVerification(),
+        ssn="ssn",
+    ),
 )
 "
 `;
