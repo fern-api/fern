@@ -242,7 +242,7 @@ export class LocalTaskHandler {
                 }
 
                 // Apply Tier 1 ceiling constraint: AI cannot return higher than maxPossibleBump
-                let effectiveBump = analysis.version_bump;
+                let effectiveBump: VersionBump = analysis.version_bump;
                 if (maxPossibleBump != null) {
                     effectiveBump = this.constrainBump(effectiveBump, maxPossibleBump);
                     if (effectiveBump !== analysis.version_bump) {
@@ -267,7 +267,7 @@ export class LocalTaskHandler {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
                 // Use Tier 1 result as floor when AI fails, instead of unconditionally falling back to PATCH
                 const fallbackBump =
-                    tier1Result != null && BUMP_ORDER[tier1Result.bump] > BUMP_ORDER[VersionBump.PATCH]
+                    tier1Result != null && (BUMP_ORDER[tier1Result.bump] ?? 0) > (BUMP_ORDER[VersionBump.PATCH] ?? 1)
                         ? tier1Result.bump === LocalVersionBump.MAJOR
                             ? VersionBump.MAJOR
                             : tier1Result.bump === LocalVersionBump.MINOR
