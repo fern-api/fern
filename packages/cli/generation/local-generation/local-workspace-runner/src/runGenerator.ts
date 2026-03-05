@@ -229,6 +229,13 @@ export async function writeFilesToDiskAndRunGenerator({
         );
     }
 
+    // Step 3: Write current IR as new snapshot into the tmp output directory
+    // BEFORE copyGeneratedFiles() so it gets copied to the SDK output directory
+    const snapshotPathInTmp = path.join(absolutePathToTmpOutputDirectory, IR_SNAPSHOT_RELATIVE_PATH);
+    await mkdir(path.dirname(snapshotPathInTmp), { recursive: true });
+    await writeFile(snapshotPathInTmp, JSON.stringify(latest));
+    context.logger.debug("Wrote IR snapshot to " + snapshotPathInTmp);
+
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
@@ -244,13 +251,6 @@ export async function writeFilesToDiskAndRunGenerator({
         currentIr: latest
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
-
-    // Step 3: Write current IR as new snapshot into the tmp output directory
-    // so it gets copied over with the rest of the generated files
-    const snapshotPathInTmp = path.join(absolutePathToTmpOutputDirectory, IR_SNAPSHOT_RELATIVE_PATH);
-    await mkdir(path.dirname(snapshotPathInTmp), { recursive: true });
-    await writeFile(snapshotPathInTmp, JSON.stringify(latest));
-    context.logger.debug("Wrote IR snapshot to " + snapshotPathInTmp);
 
     return {
         ir: latest,
