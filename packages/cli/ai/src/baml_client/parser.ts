@@ -20,15 +20,38 @@ $ pnpm add @boundaryml/baml
 
 import type { BamlRuntime, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Video, Collector } from "@boundaryml/baml"
 import { toBamlError } from "@boundaryml/baml"
-import type { Checked, Check } from "./types.js"
-import type { partial_types } from "./partial_types.js"
-import type * as types from "./types.js"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types.js"
-import type TypeBuilder from "./type_builder.js"
+import type { Checked, Check } from "./types"
+import type { partial_types } from "./partial_types"
+import type * as types from "./types"
+import type {AnalyzeBehavioralResponse, AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, BehavioralBump, VersionBump} from "./types"
+import type TypeBuilder from "./type_builder"
 
 export class LlmResponseParser {
   constructor(private runtime: BamlRuntime, private ctxManager: BamlCtxManager) {}
 
+  
+  AnalyzeBehavioralChanges(
+      llmResponse: string,
+      __baml_options__?: { tb?: TypeBuilder, clientRegistry?: ClientRegistry, env?: Record<string, string | undefined> }
+  ): types.AnalyzeBehavioralResponse {
+    try {
+      const rawEnv = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
+      const env: Record<string, string> = Object.fromEntries(
+        Object.entries(rawEnv).filter(([_, value]) => value !== undefined) as [string, string][]
+      );
+      return this.runtime.parseLlmResponse(
+        "AnalyzeBehavioralChanges",
+        llmResponse,
+        false,
+        this.ctxManager.cloneContext(),
+        __baml_options__?.tb?.__tb(),
+        __baml_options__?.clientRegistry,
+        env,
+      ) as types.AnalyzeBehavioralResponse
+    } catch (error) {
+      throw toBamlError(error);
+    }
+  }
   
   AnalyzeSdkDiff(
       llmResponse: string,
@@ -58,6 +81,29 @@ export class LlmResponseParser {
 export class LlmStreamParser {
   constructor(private runtime: BamlRuntime, private ctxManager: BamlCtxManager) {}
 
+  
+  AnalyzeBehavioralChanges(
+      llmResponse: string,
+      __baml_options__?: { tb?: TypeBuilder, clientRegistry?: ClientRegistry, env?: Record<string, string | undefined> }
+  ): partial_types.AnalyzeBehavioralResponse {
+    try {
+      const rawEnv = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
+      const env: Record<string, string> = Object.fromEntries(
+        Object.entries(rawEnv).filter(([_, value]) => value !== undefined) as [string, string][]
+      );
+      return this.runtime.parseLlmResponse(
+        "AnalyzeBehavioralChanges",
+        llmResponse,
+        true,
+        this.ctxManager.cloneContext(),
+        __baml_options__?.tb?.__tb(),
+        __baml_options__?.clientRegistry,
+        env,
+      ) as partial_types.AnalyzeBehavioralResponse
+    } catch (error) {
+      throw toBamlError(error);
+    }
+  }
   
   AnalyzeSdkDiff(
       llmResponse: string,

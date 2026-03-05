@@ -8,6 +8,17 @@ enum VersionBump {
     NO_CHANGE
 }
 
+enum BehavioralBump {
+    MINOR
+    PATCH
+}
+
+class AnalyzeBehavioralResponse {
+    version_bump BehavioralBump
+    behavioral_changes string[] @description("List of behavioral changes found, empty if none")
+    message string @description("Commit message if changes found, empty string if no changes")
+}
+
 class AnalyzeCommitDiffRequest {
     diff string @description("The git diff to analyze for generating a commit message")
 }
@@ -69,4 +80,46 @@ function AnalyzeSdkDiff(diff: string @description("The git diff to analyze for g
     - message: A git commit message formatted like the example previously provided
     - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
   "#
+}
+
+function AnalyzeBehavioralChanges(
+    diff: string @description("The git diff of SDK implementation files"),
+    language: string @description("The SDK programming language")
+) -> AnalyzeBehavioralResponse {
+    client DefaultClient
+
+    prompt #"
+        You are analyzing implementation changes in a generated SDK.
+        The public API surface is unchanged — no method signatures, type
+        definitions, or exports were added, removed, or modified.
+
+        Language: {{language}}
+
+        Your task: identify behavioral changes that may affect SDK consumers.
+
+        Classify as MINOR if you find any of:
+        - Changed HTTP status code handling (e.g. 404 now throws instead of returning null)
+        - Changed default parameter values (timeout, retry count, page size, base URL)
+        - Changed serialization behavior (date formats, null handling, field ordering)
+        - Changed error message text that is part of the documented contract
+        - Changed HTTP header names or values sent to the server
+        - Changed retry or backoff behavior
+
+        Classify as PATCH if only:
+        - Code style or formatting changes
+        - Variable/method renames with identical behavior
+        - Import reorganization
+        - Performance improvements with identical outputs
+        - Comment or documentation changes inside code
+
+        Git Diff:
+        ---
+        {{diff}}
+        ---
+
+        Respond with:
+        - version_bump: MINOR if behavioral changes found, PATCH if not
+        - behavioral_changes: list of specific behavioral changes found (empty list for PATCH)
+        - message: conventional commit message if MINOR, empty string if PATCH
+    "#
 }

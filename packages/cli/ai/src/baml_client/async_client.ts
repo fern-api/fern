@@ -21,16 +21,16 @@ $ pnpm add @boundaryml/baml
 import type { BamlRuntime, FunctionResult, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Video, FunctionLog,
 HTTPRequest } from "@boundaryml/baml"
 import { toBamlError, BamlStream, BamlAbortError, Collector } from "@boundaryml/baml"
-import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types.js"
-import type { partial_types } from "./partial_types.js"
-import type * as types from "./types.js"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types.js"
-import type TypeBuilder from "./type_builder.js"
-import { AsyncHttpRequest, AsyncHttpStreamRequest } from "./async_request.js"
-import { LlmResponseParser, LlmStreamParser } from "./parser.js"
+import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types"
+import type { partial_types } from "./partial_types"
+import type * as types from "./types"
+import type {AnalyzeBehavioralResponse, AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, BehavioralBump, VersionBump} from "./types"
+import type TypeBuilder from "./type_builder"
+import { AsyncHttpRequest, AsyncHttpStreamRequest } from "./async_request"
+import { LlmResponseParser, LlmStreamParser } from "./parser"
 import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX,
-DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals.js"
-import type * as events from "./events.js"
+DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals"
+import type * as events from "./events"
 
 /**
 * @deprecated Use RecursivePartialNull from 'baml_client/types' instead.
@@ -96,6 +96,54 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
         }
 
         
+        async AnalyzeBehavioralChanges(
+        diff: string,language: string,
+        __baml_options__?: BamlCallOptions<never>
+        ): Promise<types.AnalyzeBehavioralResponse> {
+          try {
+          const options = { ...this.bamlOptions, ...(__baml_options__ || {}) }
+          const signal = options.signal;
+
+          if (signal?.aborted) {
+          throw new BamlAbortError('Operation was aborted', signal.reason);
+          }
+
+          // Check if onTick is provided - route through streaming if so
+          if (options.onTick) {
+          const stream = this.stream.AnalyzeBehavioralChanges(
+          diff,language,
+          __baml_options__
+          );
+
+          return await stream.getFinalResponse();
+          }
+
+          const collector = options.collector ? (Array.isArray(options.collector) ? options.collector :
+          [options.collector]) : [];
+          const rawEnv = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
+          const env: Record<string, string> = Object.fromEntries(
+            Object.entries(rawEnv).filter(([_, value]) => value !== undefined) as [string, string][]
+            );
+            const raw = await this.runtime.callFunction(
+            "AnalyzeBehavioralChanges",
+            {
+            "diff": diff,"language": language
+            },
+            this.ctxManager.cloneContext(),
+            options.tb?.__tb(),
+            options.clientRegistry,
+            collector,
+            options.tags || {},
+            env,
+            signal,
+            options.events,
+            )
+            return raw.parsed(false) as types.AnalyzeBehavioralResponse
+            } catch (error) {
+            throw toBamlError(error);
+            }
+            }
+            
         async AnalyzeSdkDiff(
         diff: string,
         __baml_options__?: BamlCallOptions<never>
@@ -158,6 +206,72 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             }
 
             
+            AnalyzeBehavioralChanges(
+            diff: string,language: string,
+            __baml_options__?: BamlCallOptions<never>
+            ): BamlStream<partial_types.AnalyzeBehavioralResponse, types.AnalyzeBehavioralResponse>
+              {
+              try {
+              const options = { ...this.bamlOptions, ...(__baml_options__ || {}) }
+              const signal = options.signal;
+
+              if (signal?.aborted) {
+              throw new BamlAbortError('Operation was aborted', signal.reason);
+              }
+
+              let collector = options.collector ? (Array.isArray(options.collector) ? options.collector :
+              [options.collector]) : [];
+
+              let onTickWrapper: (() => void) | undefined;
+
+              // Create collector and wrap onTick if provided
+              if (options.onTick) {
+              const tickCollector = new Collector("on-tick-collector");
+              collector = [...collector, tickCollector];
+
+              onTickWrapper = () => {
+              const log = tickCollector.last;
+              if (log) {
+              try {
+              options.onTick!("Unknown", log);
+              } catch (error) {
+              console.error("Error in onTick callback for AnalyzeBehavioralChanges", error);
+              }
+              }
+              };
+              }
+
+              const rawEnv = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
+              const env: Record<string, string> = Object.fromEntries(
+                Object.entries(rawEnv).filter(([_, value]) => value !== undefined) as [string, string][]
+                );
+                const raw = this.runtime.streamFunction(
+                "AnalyzeBehavioralChanges",
+                {
+                "diff": diff,"language": language
+                },
+                undefined,
+                this.ctxManager.cloneContext(),
+                options.tb?.__tb(),
+                options.clientRegistry,
+                collector,
+                options.tags || {},
+                env,
+                signal,
+                onTickWrapper,
+                )
+                return new BamlStream<partial_types.AnalyzeBehavioralResponse, types.AnalyzeBehavioralResponse>(
+                  raw,
+                  (a): partial_types.AnalyzeBehavioralResponse => a,
+                  (a): types.AnalyzeBehavioralResponse => a,
+                  this.ctxManager.cloneContext(),
+                  options.signal,
+                  )
+                  } catch (error) {
+                  throw toBamlError(error);
+                  }
+                  }
+                  
             AnalyzeSdkDiff(
             diff: string,
             __baml_options__?: BamlCallOptions<never>

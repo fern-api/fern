@@ -1,5 +1,5 @@
 import { ClientRegistry } from "@boundaryml/baml";
-import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
+import { b as BamlClient, BehavioralBump, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -25,6 +25,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        generatorLanguage: string | undefined;
     }
 }
 
@@ -39,6 +40,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private generatorLanguage: string | undefined;
 
     constructor({
         context,
@@ -50,7 +52,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        generatorLanguage
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -62,6 +65,7 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.generatorLanguage = generatorLanguage;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -177,12 +181,39 @@ export class LocalTaskHandler {
                     return null;
                 }
 
+                let finalBump = analysis.version_bump;
+                let finalMessage = analysis.message;
+
+                // Tier 3: behavioral analysis (only runs when surface analysis found no changes)
+                if (analysis.version_bump === VersionBump.PATCH) {
+                    try {
+                        const behavioralAnalysis = await bamlClient.AnalyzeBehavioralChanges(
+                            cleanedDiff,
+                            this.generatorLanguage ?? "unknown"
+                        );
+                        if (behavioralAnalysis.version_bump === BehavioralBump.MINOR) {
+                            this.context.logger.info(
+                                `Tier 3 behavioral analysis escalated to MINOR: ${behavioralAnalysis.behavioral_changes.join(", ")}`
+                            );
+                            finalBump = VersionBump.MINOR;
+                            finalMessage = behavioralAnalysis.message;
+                        } else {
+                            this.context.logger.info("Tier 3 behavioral analysis confirmed PATCH");
+                        }
+                    } catch (tier3Error) {
+                        this.context.logger.warn(
+                            `Tier 3 behavioral analysis failed, falling back to PATCH: ${tier3Error}`
+                        );
+                        // Non-fatal: keep the Tier 2 PATCH result
+                    }
+                }
+
                 // Calculate new version
-                const newVersion = this.incrementVersion(previousVersion, analysis.version_bump);
+                const newVersion = this.incrementVersion(previousVersion, finalBump);
 
-                this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
+                this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
 
-                const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
+                const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
 
                 return {
                     version: newVersion,

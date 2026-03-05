@@ -20,17 +20,21 @@ $ pnpm add @boundaryml/baml
 
 import { FieldType } from '@boundaryml/baml/native'
 import { TypeBuilder as _TypeBuilder, EnumBuilder, EnumViewer, ClassBuilder, ClassViewer } from '@boundaryml/baml/type_builder'
-import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals.js"
+import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals"
 
 export { FieldType, EnumBuilder, ClassBuilder }
 
 export default class TypeBuilder {
     private tb: _TypeBuilder;
     
+    AnalyzeBehavioralResponse: ClassViewer<'AnalyzeBehavioralResponse', "version_bump" | "behavioral_changes" | "message">;
+    
     AnalyzeCommitDiffRequest: ClassViewer<'AnalyzeCommitDiffRequest', "diff">;
     
     AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "version_bump">;
     
+    
+    BehavioralBump: EnumViewer<'BehavioralBump', "MINOR" | "PATCH">;
     
     VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE">;
     
@@ -38,13 +42,17 @@ export default class TypeBuilder {
     constructor() {
         this.tb = new _TypeBuilder({
           classes: new Set([
-            "AnalyzeCommitDiffRequest","AnalyzeCommitDiffResponse",
+            "AnalyzeBehavioralResponse","AnalyzeCommitDiffRequest","AnalyzeCommitDiffResponse",
           ]),
           enums: new Set([
-            "VersionBump",
+            "BehavioralBump","VersionBump",
           ]),
           runtime: DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME
         });
+        
+        this.AnalyzeBehavioralResponse = this.tb.classViewer("AnalyzeBehavioralResponse", [
+          "version_bump","behavioral_changes","message",
+        ]);
         
         this.AnalyzeCommitDiffRequest = this.tb.classViewer("AnalyzeCommitDiffRequest", [
           "diff",
@@ -54,6 +62,10 @@ export default class TypeBuilder {
           "message","version_bump",
         ]);
         
+        
+        this.BehavioralBump = this.tb.enumViewer("BehavioralBump", [
+          "MINOR","PATCH",
+        ]);
         
         this.VersionBump = this.tb.enumViewer("VersionBump", [
           "MAJOR","MINOR","PATCH","NO_CHANGE",
