@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Multipart Mixed Response API
+  version: 1.0.0
+  description: An API that returns multipart/mixed responses with typed parts.
+paths:
+  /plants/{plantId}/analyze:
+    post:
+      operationId: plants_analyze
+      summary: Analyze a plant and get structured results with audio
+      tags:
+        - Plants
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A multipart response containing JSON analysis and audio pronunciation
+          content:
+            multipart/mixed:
+              schema:
+                type: object
+                properties:
+                  analysis:
+                    $ref: "#/components/schemas/PlantAnalysis"
+                  audio:
+                    type: string
+                    format: binary
+                    description: Audio pronunciation of the plant name
+              encoding:
+                analysis:
+                  contentType: application/json
+                audio:
+                  contentType: audio/mpeg
+components:
+  schemas:
+    PlantAnalysis:
+      type: object
+      properties:
+        species:
+          type: string
+          description: The identified plant species
+        confidence:
+          type: number
+          format: double
+          description: Confidence score between 0 and 1
+        commonName:
+          type: string
+          description: Common name of the plant
+      required:
+        - species
+        - confidence

@@ -11,7 +11,8 @@ export type HttpResponseBody =
     /**
      * If there is a parameter that controls whether the response is streaming or not. Note
      * that if this is the response then `sdkRequest.streamParameter` will always be populated. */
-    | FernIr.HttpResponseBody.StreamParameter;
+    | FernIr.HttpResponseBody.StreamParameter
+    | FernIr.HttpResponseBody.Multipart;
 
 export namespace HttpResponseBody {
     export interface Json extends _Utils {
@@ -40,6 +41,10 @@ export namespace HttpResponseBody {
         type: "streamParameter";
     }
 
+    export interface Multipart extends FernIr.MultipartResponse, _Utils {
+        type: "multipart";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernIr.HttpResponseBody._Visitor<_Result>) => _Result;
     }
@@ -51,6 +56,7 @@ export namespace HttpResponseBody {
         bytes: (value: FernIr.BytesResponse) => _Result;
         streaming: (value: FernIr.StreamingResponse) => _Result;
         streamParameter: (value: FernIr.StreamParameterResponse) => _Result;
+        multipart: (value: FernIr.MultipartResponse) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -134,6 +140,19 @@ export const HttpResponseBody = {
         };
     },
 
+    multipart: (value: FernIr.MultipartResponse): FernIr.HttpResponseBody.Multipart => {
+        return {
+            ...value,
+            type: "multipart",
+            _visit: function <_Result>(
+                this: FernIr.HttpResponseBody.Multipart,
+                visitor: FernIr.HttpResponseBody._Visitor<_Result>,
+            ) {
+                return FernIr.HttpResponseBody._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.HttpResponseBody, visitor: FernIr.HttpResponseBody._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "json":
@@ -148,6 +167,8 @@ export const HttpResponseBody = {
                 return visitor.streaming(value.value);
             case "streamParameter":
                 return visitor.streamParameter(value);
+            case "multipart":
+                return visitor.multipart(value);
             default:
                 return visitor._other(value);
         }

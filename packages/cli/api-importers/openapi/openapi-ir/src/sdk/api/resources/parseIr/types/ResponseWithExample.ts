@@ -11,7 +11,8 @@ export type ResponseWithExample =
     | FernOpenapiIr.ResponseWithExample.StreamingText
     /**
      * Checks if `x-fern-streaming` is present and is true. */
-    | FernOpenapiIr.ResponseWithExample.StreamingJson;
+    | FernOpenapiIr.ResponseWithExample.StreamingJson
+    | FernOpenapiIr.ResponseWithExample.Multipart;
 
 export namespace ResponseWithExample {
     export interface File_ extends FernOpenapiIr.FileResponse, _Utils {
@@ -42,6 +43,10 @@ export namespace ResponseWithExample {
         type: "streamingJson";
     }
 
+    export interface Multipart extends FernOpenapiIr.MultipartResponseWithExample, _Utils {
+        type: "multipart";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>) => _Result;
     }
@@ -54,6 +59,7 @@ export namespace ResponseWithExample {
         streamingSse: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
         streamingText: (value: FernOpenapiIr.TextResponse) => _Result;
         streamingJson: (value: FernOpenapiIr.JsonResponseWithExample) => _Result;
+        multipart: (value: FernOpenapiIr.MultipartResponseWithExample) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -150,6 +156,19 @@ export const ResponseWithExample = {
         };
     },
 
+    multipart: (value: FernOpenapiIr.MultipartResponseWithExample): FernOpenapiIr.ResponseWithExample.Multipart => {
+        return {
+            ...value,
+            type: "multipart",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.ResponseWithExample.Multipart,
+                visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.ResponseWithExample._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(
         value: FernOpenapiIr.ResponseWithExample,
         visitor: FernOpenapiIr.ResponseWithExample._Visitor<_Result>,
@@ -169,6 +188,8 @@ export const ResponseWithExample = {
                 return visitor.streamingText(value);
             case "streamingJson":
                 return visitor.streamingJson(value);
+            case "multipart":
+                return visitor.multipart(value);
             default:
                 return visitor._other(value);
         }

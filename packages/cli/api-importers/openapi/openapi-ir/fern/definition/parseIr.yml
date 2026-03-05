@@ -172,6 +172,33 @@ types:
       streamingJson:
         type: JsonResponseWithExample
         docs: Checks if `x-fern-streaming` is present and is true.
+      multipart: MultipartResponseWithExample
+
+  MultipartResponseWithExample:
+    docs: |
+      Represents a multipart/mixed response with per-part schema information.
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
+      - commons.WithStatusCode
+    properties:
+      parts: list<MultipartResponsePartWithExample>
+
+  MultipartResponsePartWithExample:
+    docs: |
+      Represents an individual part within a multipart/mixed response.
+    extends:
+      - commons.WithDescription
+    properties:
+      name:
+        type: optional<string>
+        docs: Optional identifier or field name for this part.
+      contentType:
+        type: optional<string>
+        docs: The MIME type of this part (e.g., "application/json", "audio/mpeg").
+      schema:
+        type: optional<SchemaWithExample>
+        docs: The schema for this part. Present for typed parts (e.g., JSON). Absent for binary/file parts.
 
   JsonResponseWithExample:
     extends:

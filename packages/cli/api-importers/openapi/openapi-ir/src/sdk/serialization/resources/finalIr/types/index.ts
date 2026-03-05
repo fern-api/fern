@@ -46,6 +46,8 @@ export * from "./LongSchema.js";
 export * from "./MapSchema.js";
 export * from "./MultipartFormDataWebhookPayload.js";
 export * from "./MultipartRequest.js";
+export * from "./MultipartResponse.js";
+export * from "./MultipartResponsePart.js";
 export * from "./MultipartRequestProperty.js";
 export * from "./MultipartRequestPropertyEncoding.js";
 export * from "./MultipartSchema.js";

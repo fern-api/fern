@@ -140,6 +140,14 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                         type: "text"
                     };
                 },
+                multipart: (multipartResponse) => {
+                    // For now, treat multipart responses as file downloads in the Fern definition
+                    webhookDefinition.response = {
+                        docs: multipartResponse.description ?? undefined,
+                        type: "file",
+                        "status-code": multipartResponse.statusCode
+                    };
+                },
                 _other: () => {
                     throw new Error("Unrecognized Response type: " + webhook.response?.type);
                 }

@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { BytesResponse } from "./BytesResponse.js";
 import { FileResponse } from "./FileResponse.js";
 import { JsonResponse } from "./JsonResponse.js";
+import { MultipartResponse as MultipartResponseSerializer } from "./MultipartResponse.js";
 import { TextResponse } from "./TextResponse.js";
 
 export const Response: core.serialization.Schema<serializers.Response.Raw, FernOpenapiIr.Response> = core.serialization
@@ -17,6 +18,7 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
         streamingSse: JsonResponse,
         streamingText: TextResponse,
         streamingJson: JsonResponse,
+        multipart: MultipartResponseSerializer,
     })
     .transform<FernOpenapiIr.Response>({
         transform: (value) => {
@@ -35,6 +37,8 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
                     return FernOpenapiIr.Response.streamingText(value);
                 case "streamingJson":
                     return FernOpenapiIr.Response.streamingJson(value);
+                case "multipart":
+                    return FernOpenapiIr.Response.multipart(value);
                 default:
                     return value as FernOpenapiIr.Response;
             }
@@ -50,7 +54,8 @@ export declare namespace Response {
         | Response.Bytes
         | Response.StreamingSse
         | Response.StreamingText
-        | Response.StreamingJson;
+        | Response.StreamingJson
+        | Response.Multipart;
 
     export interface File extends FileResponse.Raw {
         type: "file";
@@ -78,5 +83,9 @@ export declare namespace Response {
 
     export interface StreamingJson extends JsonResponse.Raw {
         type: "streamingJson";
+    }
+
+    export interface Multipart extends MultipartResponseSerializer.Raw {
+        type: "multipart";
     }
 }

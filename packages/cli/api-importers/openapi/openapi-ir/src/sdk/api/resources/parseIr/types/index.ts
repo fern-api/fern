@@ -17,6 +17,8 @@ export * from "./JsonRequestWithExample.js";
 export * from "./JsonResponseWithExample.js";
 export * from "./MapSchemaWithExample.js";
 export * from "./MultipartFormDataWebhookPayloadWithExample.js";
+export * from "./MultipartResponsePartWithExample.js";
+export * from "./MultipartResponseWithExample.js";
 export * from "./NamedFullExample.js";
 export * from "./NullableSchemaWithExample.js";
 export * from "./ObjectPropertyWithExample.js";

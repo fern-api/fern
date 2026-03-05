@@ -318,6 +318,7 @@ types:
         docs: |
           If there is a parameter that controls whether the response is streaming or not. Note
           that if this is the response then `sdkRequest.streamParameter` will always be populated.
+      multipart: MultipartResponse
 
   JsonResponse:
     union:
@@ -360,6 +361,34 @@ types:
     extends:
       - commons.WithDocs
       - examples.WithV2Examples
+
+  MultipartResponse:
+    docs: |
+      Represents a multipart/mixed response with per-part schema information.
+      Each part has its own content type and optional schema.
+    extends:
+      - commons.WithDocs
+      - examples.WithV2Examples
+    properties:
+      parts: list<MultipartResponsePart>
+
+  MultipartResponsePart:
+    docs: |
+      Represents an individual part within a multipart/mixed response.
+    extends: commons.WithDocs
+    properties:
+      name:
+        type: optional<string>
+        docs: Optional identifier or field name for this part.
+      contentType:
+        type: optional<string>
+        docs: The MIME type of this part (e.g., "application/json", "audio/mpeg").
+      bodyType:
+        type: optional<types.TypeReference>
+        docs: |
+          A reference to the Fern IR type for this part.
+          For JSON parts, this points to the schema type.
+          For binary parts, this may be absent, indicating raw bytes/file content.
 
   StreamParameterResponse:
     properties:

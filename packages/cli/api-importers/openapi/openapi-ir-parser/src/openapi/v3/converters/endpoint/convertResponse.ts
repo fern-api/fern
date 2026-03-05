@@ -103,6 +103,7 @@ export function convertResponse({
             case "file":
             case "text":
             case "streamingText":
+            case "multipart":
                 return {
                     value: convertedResponse,
                     errors
@@ -280,13 +281,32 @@ function convertResolvedResponse({
             continue;
         }
 
+        if (mimeType.isMultiPartMixed()) {
+            const parts = parseMultipartMixedParts({
+                mediaObject,
+                context,
+                responseBreadcrumbs,
+                source,
+                namespace
+            });
+            if (parts != null) {
+                return ResponseWithExample.multipart({
+                    description: resolvedResponse.description,
+                    source,
+                    statusCode,
+                    parts
+                });
+            }
+            // Fall back to file response if multipart schema can't be parsed
+            return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
+        }
+
         if (
             mimeType.isOctetStream() ||
             mimeType.isPDF() ||
             mimeType.isAudio() ||
             mimeType.isImage() ||
-            mimeType.isVideo() ||
-            mimeType.isMultiPartMixed()
+            mimeType.isVideo()
         ) {
             return ResponseWithExample.file({ description: resolvedResponse.description, source, statusCode });
         }
@@ -307,6 +327,66 @@ function convertResolvedResponse({
     }
 
     return undefined;
+}
+
+function parseMultipartMixedParts({
+    mediaObject,
+    context,
+    responseBreadcrumbs,
+    source,
+    namespace
+}: {
+    mediaObject: OpenAPIV3.MediaTypeObject;
+    context: AbstractOpenAPIV3ParserContext;
+    responseBreadcrumbs: string[];
+    source: Source;
+    namespace: string | undefined;
+}): FernOpenapiIr.MultipartResponsePartWithExample[] | undefined {
+    const schema = mediaObject.schema;
+    if (schema == null) {
+        return undefined;
+    }
+
+    const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+    if (resolvedSchema.properties == null || Object.keys(resolvedSchema.properties).length === 0) {
+        return undefined;
+    }
+
+    const encoding = mediaObject.encoding;
+    const parts: FernOpenapiIr.MultipartResponsePartWithExample[] = [];
+
+    for (const [propertyName, propertySchema] of Object.entries(resolvedSchema.properties)) {
+        const resolvedPropertySchema = isReferenceObject(propertySchema)
+            ? context.resolveSchemaReference(propertySchema)
+            : propertySchema;
+
+        const contentType = encoding?.[propertyName]?.contentType ?? undefined;
+
+        const isBinaryPart =
+            resolvedPropertySchema.type === "string" &&
+            (resolvedPropertySchema.format === "binary" || resolvedPropertySchema.format === "byte");
+
+        const partSchema = isBinaryPart
+            ? undefined
+            : convertSchema(
+                  propertySchema,
+                  false,
+                  false,
+                  context,
+                  [...responseBreadcrumbs, propertyName],
+                  source,
+                  namespace
+              );
+
+        parts.push({
+            name: propertyName,
+            contentType,
+            schema: partSchema,
+            description: resolvedPropertySchema.description
+        });
+    }
+
+    return parts.length > 0 ? parts : undefined;
 }
 
 function markErrorSchemas({

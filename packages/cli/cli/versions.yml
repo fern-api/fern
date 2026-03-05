@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 4.39.0
+  changelogEntry:
+    - summary: |
+        Add multipart/mixed response support to the OpenAPI parser and IR.
+        Instead of collapsing multipart/mixed responses into plain file downloads,
+        they are now represented as structured multipart responses with per-part
+        schema information including content type, type reference, name, and description.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+
+
 - version: 4.38.0
   changelogEntry:
     - summary: |
@@ -937,6 +950,7 @@
       type: fix
   createdAt: "2026-03-05"
   irVersion: 65
+
 - version: 4.4.2
   changelogEntry:
     - summary: |

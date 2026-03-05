@@ -282,6 +282,16 @@ export function buildEndpoint({
                     "status-code": textResponse.statusCode
                 };
             },
+            multipart: (multipartResponse) => {
+                // For now, treat multipart responses as file downloads in the Fern definition
+                // since the Fern definition schema doesn't have a multipart response type yet.
+                // The IR conversion layer will handle the full multipart representation.
+                convertedEndpoint.response = {
+                    docs: multipartResponse.description ?? undefined,
+                    type: "file",
+                    "status-code": multipartResponse.statusCode
+                };
+            },
             _other: () => {
                 throw new Error("Unrecognized Response type: " + endpoint.response?.type);
             }

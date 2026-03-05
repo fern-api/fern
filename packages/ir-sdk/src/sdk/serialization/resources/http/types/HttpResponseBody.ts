@@ -7,6 +7,7 @@ import { BytesResponse } from "./BytesResponse.js";
 import { FileDownloadResponse } from "./FileDownloadResponse.js";
 import { JsonResponse } from "./JsonResponse.js";
 import { StreamingResponse } from "./StreamingResponse.js";
+import { MultipartResponse as MultipartResponseSerializer } from "./MultipartResponse.js";
 import { StreamParameterResponse } from "./StreamParameterResponse.js";
 import { TextResponse } from "./TextResponse.js";
 
@@ -23,6 +24,7 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
                 value: StreamingResponse,
             }),
             streamParameter: StreamParameterResponse,
+            multipart: MultipartResponseSerializer,
         })
         .transform<FernIr.HttpResponseBody>({
             transform: (value) => {
@@ -39,6 +41,8 @@ export const HttpResponseBody: core.serialization.Schema<serializers.HttpRespons
                         return FernIr.HttpResponseBody.streaming(value.value);
                     case "streamParameter":
                         return FernIr.HttpResponseBody.streamParameter(value);
+                    case "multipart":
+                        return FernIr.HttpResponseBody.multipart(value);
                     default:
                         return value as FernIr.HttpResponseBody;
                 }
@@ -53,7 +57,8 @@ export declare namespace HttpResponseBody {
         | HttpResponseBody.Text
         | HttpResponseBody.Bytes
         | HttpResponseBody.Streaming
-        | HttpResponseBody.StreamParameter;
+        | HttpResponseBody.StreamParameter
+        | HttpResponseBody.Multipart;
 
     export interface Json {
         type: "json";
@@ -79,5 +84,9 @@ export declare namespace HttpResponseBody {
 
     export interface StreamParameter extends StreamParameterResponse.Raw {
         type: "streamParameter";
+    }
+
+    export interface Multipart extends MultipartResponseSerializer.Raw {
+        type: "multipart";
     }
 }

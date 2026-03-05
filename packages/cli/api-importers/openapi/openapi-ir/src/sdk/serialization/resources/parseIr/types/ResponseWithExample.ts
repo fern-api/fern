@@ -7,6 +7,7 @@ import { BytesResponse } from "../../finalIr/types/BytesResponse.js";
 import { FileResponse } from "../../finalIr/types/FileResponse.js";
 import { TextResponse } from "../../finalIr/types/TextResponse.js";
 import { JsonResponseWithExample } from "./JsonResponseWithExample.js";
+import { MultipartResponseWithExample as MultipartResponseWithExampleSerializer } from "./MultipartResponseWithExample.js";
 
 export const ResponseWithExample: core.serialization.Schema<
     serializers.ResponseWithExample.Raw,
@@ -20,6 +21,7 @@ export const ResponseWithExample: core.serialization.Schema<
         streamingSse: JsonResponseWithExample,
         streamingText: TextResponse,
         streamingJson: JsonResponseWithExample,
+        multipart: MultipartResponseWithExampleSerializer,
     })
     .transform<FernOpenapiIr.ResponseWithExample>({
         transform: (value) => {
@@ -38,6 +40,8 @@ export const ResponseWithExample: core.serialization.Schema<
                     return FernOpenapiIr.ResponseWithExample.streamingText(value);
                 case "streamingJson":
                     return FernOpenapiIr.ResponseWithExample.streamingJson(value);
+                case "multipart":
+                    return FernOpenapiIr.ResponseWithExample.multipart(value);
                 default:
                     return value as FernOpenapiIr.ResponseWithExample;
             }
@@ -53,7 +57,8 @@ export declare namespace ResponseWithExample {
         | ResponseWithExample.Bytes
         | ResponseWithExample.StreamingSse
         | ResponseWithExample.StreamingText
-        | ResponseWithExample.StreamingJson;
+        | ResponseWithExample.StreamingJson
+        | ResponseWithExample.Multipart;
 
     export interface File extends FileResponse.Raw {
         type: "file";
@@ -81,5 +86,9 @@ export declare namespace ResponseWithExample {
 
     export interface StreamingJson extends JsonResponseWithExample.Raw {
         type: "streamingJson";
+    }
+
+    export interface Multipart extends MultipartResponseWithExampleSerializer.Raw {
+        type: "multipart";
     }
 }

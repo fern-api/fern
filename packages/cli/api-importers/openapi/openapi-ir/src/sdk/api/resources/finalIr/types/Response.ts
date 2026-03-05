@@ -11,7 +11,8 @@ export type Response =
     | FernOpenapiIr.Response.StreamingText
     /**
      * Checks if `x-fern-streaming` is present and is true. */
-    | FernOpenapiIr.Response.StreamingJson;
+    | FernOpenapiIr.Response.StreamingJson
+    | FernOpenapiIr.Response.Multipart;
 
 export namespace Response {
     export interface File_ extends FernOpenapiIr.FileResponse, _Utils {
@@ -42,6 +43,10 @@ export namespace Response {
         type: "streamingJson";
     }
 
+    export interface Multipart extends FernOpenapiIr.MultipartResponse, _Utils {
+        type: "multipart";
+    }
+
     export interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.Response._Visitor<_Result>) => _Result;
     }
@@ -54,6 +59,7 @@ export namespace Response {
         streamingSse: (value: FernOpenapiIr.JsonResponse) => _Result;
         streamingText: (value: FernOpenapiIr.TextResponse) => _Result;
         streamingJson: (value: FernOpenapiIr.JsonResponse) => _Result;
+        multipart: (value: FernOpenapiIr.MultipartResponse) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -150,6 +156,19 @@ export const Response = {
         };
     },
 
+    multipart: (value: FernOpenapiIr.MultipartResponse): FernOpenapiIr.Response.Multipart => {
+        return {
+            ...value,
+            type: "multipart",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.Response.Multipart,
+                visitor: FernOpenapiIr.Response._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.Response._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernOpenapiIr.Response, visitor: FernOpenapiIr.Response._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "file":
@@ -166,6 +185,8 @@ export const Response = {
                 return visitor.streamingText(value);
             case "streamingJson":
                 return visitor.streamingJson(value);
+            case "multipart":
+                return visitor.multipart(value);
             default:
                 return visitor._other(value);
         }

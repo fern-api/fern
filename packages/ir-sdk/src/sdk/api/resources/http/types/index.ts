@@ -45,6 +45,8 @@ export * from "./HttpService.js";
 export * from "./InlinedRequestBody.js";
 export * from "./InlinedRequestBodyProperty.js";
 export * from "./JsonResponse.js";
+export * from "./MultipartResponse.js";
+export * from "./MultipartResponsePart.js";
 export * from "./JsonResponseBody.js";
 export * from "./JsonResponseBodyWithProperty.js";
 export * from "./JsonStreamChunk.js";
