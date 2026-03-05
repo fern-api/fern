@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.61.6
+  changelogEntry:
+    - summary: |
+        Use a random Docker Compose project name (`wiremock-<random-hex>`) for wire tests
+        instead of a deterministic name derived from the package. This prevents project-name
+        collisions when multiple wiremock test suites run concurrently in CI.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.61.5
   changelogEntry:
     - summary: |

@@ -213,22 +213,6 @@ def verify_request_count(
     }
 
     /**
-     * Computes a Docker Compose project name at code-generation time.
-     *
-     * Docker Compose project names must consist only of lowercase alphanumeric
-     * characters, hyphens, and underscores, and must start with a letter or number.
-     * Computing this at generation time avoids runtime issues with directory names
-     * that contain dots or other invalid characters (e.g. `.seed`).
-     */
-    private getDockerProjectName(): string {
-        const orgName = this.context.config.organization;
-        const workspaceName = this.context.config.workspaceName;
-        const raw = `${orgName}-${workspaceName}`.toLowerCase();
-        const sanitized = raw.replace(/[^a-z0-9_-]/g, "").replace(/^[^a-z0-9]+/, "");
-        return sanitized || "wiremock-tests";
-    }
-
-    /**
      * Builds the content for the pytest plugin that manages the WireMock container lifecycle.
      *
      * The plugin is loaded via pytest_plugins declared in tests/wire/__init__.py and is
@@ -236,7 +220,6 @@ def verify_request_count(
      * controller process only, so that all workers reuse a single instance.
      */
     private buildPytestPluginContent(): string {
-        const projectName = this.getDockerProjectName();
         return `"""
 Pytest plugin that manages the WireMock container lifecycle for wire tests.
 
@@ -249,13 +232,14 @@ by pytest's normal test collection rules.
 """
 
 import os
+import secrets
 import subprocess
 
 import pytest
 
 _STARTED: bool = False
 _WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
-_PROJECT_NAME: str = "${projectName}"
+_PROJECT_NAME: str = f"wiremock-{secrets.token_hex(8)}"
 
 # This file lives at tests/conftest.py, so the project root is one level up.
 _PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
