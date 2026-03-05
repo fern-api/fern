@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.5.0
+  changelogEntry:
+    - summary: |
+        Add .fern/metadata.json fallback for AUTO version resolution. When both
+        package registry lookups and GitHub release lookups fail to determine the current
+        SDK version, the CLI now reads the sdkVersion field from the .fern/metadata.json
+        file in the GitHub repository (written by Fern generators during previous
+        generations). This provides an additional fallback layer for version resolution.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.4.4
   changelogEntry:
     - summary: |

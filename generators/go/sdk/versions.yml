@@ -2,10 +2,15 @@
 - version: 1.28.2
   changelogEntry:
     - summary: |
+<<<<<<< devin/1772663090-remove-redundant-withcontext
         Remove redundant `req.WithContext(ctx)` call in the generated HTTP caller.
         `http.NewRequestWithContext` already sets the context on the request, so
         the subsequent `req.WithContext(ctx)` was creating an unnecessary shallow
         copy of the request with the same context.
+=======
+        Upgrade generated CI workflow to use `golangci/golangci-lint-action@v9`
+        (from `@v6`) for proper compatibility with golangci-lint v2.x.
+>>>>>>> main
       type: fix
   createdAt: "2026-03-05"
   irVersion: 61
