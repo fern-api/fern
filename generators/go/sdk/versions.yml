@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.28.1
+  changelogEntry:
+    - summary: |
+        Resolve datetime aliases in marshal/unmarshal code generation. Fields typed as
+        aliases of `datetime` or `date` (e.g. `DatetimeAlias: type: datetime`) now
+        correctly use the custom `internal.DateTime` / `internal.Date` serialization
+        helpers instead of falling back to default `time.Time` JSON handling. Also
+        relaxes `DateTime.UnmarshalJSON` to accept ISO 8601 timestamps without a
+        timezone suffix (e.g. `2024-01-15T09:30:00`), falling back from RFC 3339
+        when the timezone is absent.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 61
+
 - version: 1.28.0
   changelogEntry:
     - summary: |
