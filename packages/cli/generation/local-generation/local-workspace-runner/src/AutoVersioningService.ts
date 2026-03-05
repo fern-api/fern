@@ -31,6 +31,57 @@ interface FileSection {
 }
 
 /**
+ * Glob-like patterns for files that should be completely excluded from the
+ * cleaned diff sent to AI analysis. These files add noise (lock files,
+ * generated docs, test fixtures, CI config) without carrying meaningful
+ * API-surface signal for semantic versioning.
+ *
+ * Each entry is a case-insensitive regex derived from the original glob.
+ */
+const EXCLUDED_FILE_PATTERNS: RegExp[] = [
+    // Documentation / generated reference
+    /(?:^|\/)reference\.md$/i,
+    /(?:^|\/)changelog/i,
+    /(?:^|\/)readme/i,
+
+    // Lock files (dependency resolution, zero semantic value)
+    /(?:^|\/)pnpm-lock\.yaml$/i,
+    /(?:^|\/)yarn\.lock$/i,
+    /(?:^|\/)package-lock\.json$/i,
+    /(?:^|\/)poetry\.lock$/i,
+    /(?:^|\/)gemfile\.lock$/i,
+    /(?:^|\/)go\.sum$/i,
+    /(?:^|\/)cargo\.lock$/i,
+    /(?:^|\/)composer\.lock$/i,
+    /\.lock$/i, // catch-all for any other lockfiles
+
+    // Test files
+    /\.test\.ts$/i,
+    /\.test\.js$/i,
+    /\.test\.py$/i,
+    /\.spec\.ts$/i,
+    /\.spec\.js$/i,
+    /_test\.go$/i,
+    /_test\.py$/i,
+    /Test\.java$/,
+    /(?:^|\/)tests\//i,
+    /(?:^|\/)__tests__\//i,
+    /(?:^|\/)test\//i,
+    /(?:^|\/)wire\//i, // Fern-generated wire tests
+
+    // Snapshot files
+    /(?:^|\/)__snapshots__\//i,
+    /\.snap$/i,
+
+    // CI / editor config (no API surface relevance)
+    /(?:^|\/)\.github\//i,
+    /(?:^|\/)\.circleci\//i,
+    /(?:^|\/)\.editorconfig$/i,
+    /(?:^|\/)\.prettierrc/i,
+    /(?:^|\/)biome\.json$/i
+];
+
+/**
  * Service for handling automatic semantic versioning operations including
  * git diff generation, version extraction, and version replacement.
  */
@@ -172,6 +223,13 @@ export class AutoVersioningService {
 
         const cleanedSections: FileSection[] = [];
         for (const section of fileSections) {
+            // Skip entire file sections whose path matches an exclusion pattern
+            const filePath = this.extractFilePathFromSection(section);
+            if (filePath != null && this.shouldExcludeFile(filePath)) {
+                this.logger.debug(`Excluding file from diff analysis: ${filePath}`);
+                continue;
+            }
+
             const cleaned = this.cleanFileSection(section, mappedMagicVersion);
             if (cleaned != undefined) {
                 cleanedSections.push(cleaned);
@@ -453,6 +511,31 @@ export class AutoVersioningService {
      * @param lineWithMagicVersion A line from git diff containing the magic version
      * @return The inferred previous version if found, or undefined if the version cannot be parsed
      */
+    /**
+     * Extracts the file path from a diff file section.
+     * Parses the "diff --git a/path b/path" header line.
+     */
+    private extractFilePathFromSection(section: FileSection): string | undefined {
+        const firstLine = section.lines[0];
+        if (firstLine == null) {
+            return undefined;
+        }
+        // diff --git a/some/path b/some/path
+        const match = firstLine.match(/^diff --git a\/(.+) b\/(.+)$/);
+        if (match?.[2] != null) {
+            return match[2];
+        }
+        return undefined;
+    }
+
+    /**
+     * Checks whether a file path matches any of the exclusion patterns.
+     * Excluded files are noise for AI-based semantic version analysis.
+     */
+    private shouldExcludeFile(filePath: string): boolean {
+        return EXCLUDED_FILE_PATTERNS.some((pattern) => pattern.test(filePath));
+    }
+
     private extractPreviousVersionFromDiffLine(lineWithMagicVersion: string): string | undefined {
         const prevVersionPattern = /[-].*?([v]?\d+\.\d+\.\d+(?:-[\w.-]+)?(?:\+[\w.-]+)?)/;
         const matcher = lineWithMagicVersion.match(prevVersionPattern);

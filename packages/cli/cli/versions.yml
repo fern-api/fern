@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.5.0
+  changelogEntry:
+    - summary: |
+        Expand AUTO versioning diff exclusion list to strip noise files before
+        AI analysis. The cleaned diff now excludes lock files (`pnpm-lock.yaml`,
+        `poetry.lock`, `yarn.lock`, etc.), test files (`*.test.ts`, `*_test.go`,
+        `tests/**`, `wire/**`), snapshot files (`*.snap`, `__snapshots__/**`),
+        generated documentation (`reference.md`), CI/editor config (`.github/**`,
+        `.editorconfig`, `.prettierrc*`, `biome.json`), and confirms
+        `CHANGELOG*`/`README*` exclusion is case-insensitive. This dramatically
+        reduces diff sizes sent to the AI endpoint, fixing silent failures on
+        large SDK diffs.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.4.4
   changelogEntry:
     - summary: |
