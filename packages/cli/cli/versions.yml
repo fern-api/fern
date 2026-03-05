@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.4.3
+  changelogEntry:
+    - summary: |
+        Fix `basepath-aware` multi-repo setup writing preview URLs to the
+        basepath route KV store (Upstash). When `--preview` is used with
+        `basepath-aware: true`, the CLI now correctly omits the
+        `basepathAware` flag from the `finishDocsRegister` request,
+        preventing preview deployments from polluting the production
+        basepath routing table.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.4.2
   changelogEntry:
     - summary: |
