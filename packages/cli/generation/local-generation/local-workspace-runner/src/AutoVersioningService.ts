@@ -548,7 +548,8 @@ export class AutoVersioningService {
             return undefined;
         }
         // diff --git a/some/path b/some/path
-        const match = firstLine.match(/^diff --git a\/(.+) b\/(.+)$/);
+        // Also handles quoted paths: diff --git "a/path with spaces" "b/path with spaces"
+        const match = firstLine.match(/^diff --git "?a\/(.+?)"? "?b\/(.+?)"?$/);
         if (match?.[2] != null) {
             return match[2];
         }
