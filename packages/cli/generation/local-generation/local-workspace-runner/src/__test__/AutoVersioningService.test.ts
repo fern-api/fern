@@ -176,23 +176,23 @@ describe("AutoVersioningService", () => {
 
     it("testCleanDiffForAI_preservesOtherLines", () => {
         const diff =
-            "diff --git a/README.md b/README.md\n" +
+            "diff --git a/src/config.ts b/src/config.ts\n" +
             "index abc123..def456 100644\n" +
-            "--- a/README.md\n" +
-            "+++ b/README.md\n" +
+            "--- a/src/config.ts\n" +
+            "+++ b/src/config.ts\n" +
             "@@ -1,5 +1,5 @@\n" +
-            " # Test Package\n" +
-            "-Version: 1.0.0\n" +
-            "+Version: 505.503.4455\n" +
+            " // Config file\n" +
+            '-const VERSION = "1.0.0";\n' +
+            '+const VERSION = "505.503.4455";\n' +
             " \n" +
-            " ## Features\n" +
-            "+- New awesome feature\n";
+            " // Features\n" +
+            "+export const NEW_FEATURE = true;\n";
 
         const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
 
-        expect(cleaned).toContain("# Test Package");
-        expect(cleaned).toContain("## Features");
-        expect(cleaned).toContain("- New awesome feature");
+        expect(cleaned).toContain("// Config file");
+        expect(cleaned).toContain("// Features");
+        expect(cleaned).toContain("NEW_FEATURE");
         expect(cleaned).not.toContain("505.503.4455");
     });
 
@@ -440,21 +440,21 @@ describe("AutoVersioningService", () => {
             '+    "version": "505.503.4455",\n' +
             '     "private": false\n' +
             " }\n" +
-            "diff --git a/README.md b/README.md\n" +
+            "diff --git a/src/types.ts b/src/types.ts\n" +
             "index abc123..def456 100644\n" +
-            "--- a/README.md\n" +
-            "+++ b/README.md\n" +
+            "--- a/src/types.ts\n" +
+            "+++ b/src/types.ts\n" +
             "@@ -1,3 +1,4 @@\n" +
-            " # My SDK\n" +
+            " // Types\n" +
             " \n" +
-            "+New feature added!\n" +
-            " ## Installation\n";
+            "+export type NewType = string;\n" +
+            " // End\n";
 
         const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
 
         expect(cleaned).not.toContain("package.json");
-        expect(cleaned).toContain("README.md");
-        expect(cleaned).toContain("+New feature added!");
+        expect(cleaned).toContain("types.ts");
+        expect(cleaned).toContain("+export type NewType = string;");
         expect(cleaned).not.toContain("0.0.60441");
         expect(cleaned).not.toContain("505.503.4455");
     });
@@ -1459,4 +1459,826 @@ describe("AutoVersioningService", () => {
     //         await fs.rm(tempDir, { recursive: true, force: true });
     //     }
     // });
+
+    // ==================== File Path Exclusion Tests ====================
+    // These tests verify that cleanDiffForAI excludes entire file sections
+    // whose paths match the exclusion patterns (lock files, test files,
+    // generated docs, snapshots, CI config) before sending to AI analysis.
+
+    it("testCleanDiffForAI_excludesReferenceMd", () => {
+        const diff =
+            "diff --git a/reference.md b/reference.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/reference.md\n" +
+            "+++ b/reference.md\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " # API Reference\n" +
+            "+## New Endpoint\n" +
+            "+POST /api/v1/users\n" +
+            " \n" +
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class Client {\n" +
+            "+    newMethod() { return true; }\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // reference.md should be excluded entirely
+        expect(cleaned).not.toContain("reference.md");
+        expect(cleaned).not.toContain("API Reference");
+        expect(cleaned).not.toContain("New Endpoint");
+        // Source file changes should be preserved
+        expect(cleaned).toContain("Client.ts");
+        expect(cleaned).toContain("+    newMethod() { return true; }");
+    });
+
+    it("testCleanDiffForAI_excludesPnpmLockYaml", () => {
+        const diff =
+            "diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/pnpm-lock.yaml\n" +
+            "+++ b/pnpm-lock.yaml\n" +
+            "@@ -1,5 +1,6 @@\n" +
+            " lockfileVersion: 5.4\n" +
+            "+  axios: 1.6.0\n" +
+            " \n" +
+            "diff --git a/src/index.ts b/src/index.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/index.ts\n" +
+            "+++ b/src/index.ts\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " export { Client } from './Client';\n" +
+            "+export { NewType } from './NewType';\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("pnpm-lock.yaml");
+        expect(cleaned).not.toContain("axios");
+        expect(cleaned).toContain("index.ts");
+        expect(cleaned).toContain("+export { NewType }");
+    });
+
+    it("testCleanDiffForAI_excludesMultipleLockFiles", () => {
+        const diff =
+            "diff --git a/yarn.lock b/yarn.lock\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/yarn.lock\n" +
+            "+++ b/yarn.lock\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " # yarn lockfile\n" +
+            "+some-package@^1.0.0:\n" +
+            " \n" +
+            "diff --git a/poetry.lock b/poetry.lock\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/poetry.lock\n" +
+            "+++ b/poetry.lock\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " [[package]]\n" +
+            '+name = "requests"\n' +
+            " \n" +
+            "diff --git a/Cargo.lock b/Cargo.lock\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/Cargo.lock\n" +
+            "+++ b/Cargo.lock\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " [[package]]\n" +
+            '+name = "serde"\n' +
+            " \n" +
+            "diff --git a/go.sum b/go.sum\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/go.sum\n" +
+            "+++ b/go.sum\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " github.com/pkg/errors v0.9.1 h1:abc\n" +
+            "+github.com/stretchr/testify v1.8.0 h1:def\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("yarn.lock");
+        expect(cleaned).not.toContain("poetry.lock");
+        expect(cleaned).not.toContain("Cargo.lock");
+        expect(cleaned).not.toContain("go.sum");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_excludesTestFiles", () => {
+        const diff =
+            "diff --git a/src/api.test.ts b/src/api.test.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/api.test.ts\n" +
+            "+++ b/src/api.test.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " describe('API', () => {\n" +
+            "+    it('should work', () => {});\n" +
+            " });\n" +
+            "diff --git a/src/client.ts b/src/client.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/client.ts\n" +
+            "+++ b/src/client.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class ApiClient {\n" +
+            "+    newEndpoint() {}\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // Test files matched by extension should be excluded
+        expect(cleaned).not.toContain("api.test.ts");
+        // Source files should be preserved
+        expect(cleaned).toContain("client.ts");
+        expect(cleaned).toContain("+    newEndpoint() {}");
+    });
+
+    it("testCleanDiffForAI_preservesDomainNamedDirectories", () => {
+        // Directories like tests/, test/, and wire/ should NOT be excluded because
+        // a customer's API domain could use those names (e.g. a QA platform with a
+        // "tests" resource, or a banking API with a "wire" transfer resource)
+        const diff =
+            "diff --git a/tests/integration/client.py b/tests/integration/client.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/tests/integration/client.py\n" +
+            "+++ b/tests/integration/client.py\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " class TestClient:\n" +
+            "+    def test_new_endpoint(self): pass\n" +
+            " \n" +
+            "diff --git a/src/test/client.ts b/src/test/client.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/test/client.ts\n" +
+            "+++ b/src/test/client.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class TestClient {\n" +
+            "+    runTest() {}\n" +
+            " }\n" +
+            "diff --git a/wire/transfer/client.ts b/wire/transfer/client.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/wire/transfer/client.ts\n" +
+            "+++ b/wire/transfer/client.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class WireTransferClient {\n" +
+            "+    initiateTransfer() {}\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // All three files should be preserved — they're domain source, not test infra
+        expect(cleaned).toContain("tests/integration/client.py");
+        expect(cleaned).toContain("src/test/client.ts");
+        expect(cleaned).toContain("wire/transfer/client.ts");
+        expect(cleaned).toContain("+    def test_new_endpoint(self): pass");
+        expect(cleaned).toContain("+    runTest() {}");
+        expect(cleaned).toContain("+    initiateTransfer() {}");
+    });
+
+    it("testCleanDiffForAI_excludesSnapshotFiles", () => {
+        const diff =
+            "diff --git a/__snapshots__/client.snap b/__snapshots__/client.snap\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/__snapshots__/client.snap\n" +
+            "+++ b/__snapshots__/client.snap\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " exports[`snapshot`] = `\n" +
+            "+new snapshot content\n" +
+            " `;\n" +
+            "diff --git a/results.snap b/results.snap\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/results.snap\n" +
+            "+++ b/results.snap\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " snapshot data\n" +
+            "+more data\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("__snapshots__");
+        expect(cleaned).not.toContain(".snap");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_excludesCIAndEditorConfig", () => {
+        const diff =
+            "diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.github/workflows/ci.yml\n" +
+            "+++ b/.github/workflows/ci.yml\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " name: CI\n" +
+            "+  - uses: actions/checkout@v4\n" +
+            " \n" +
+            "diff --git a/.editorconfig b/.editorconfig\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.editorconfig\n" +
+            "+++ b/.editorconfig\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " root = true\n" +
+            "+indent_size = 4\n" +
+            "diff --git a/.prettierrc.json b/.prettierrc.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.prettierrc.json\n" +
+            "+++ b/.prettierrc.json\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " {\n" +
+            '+    "semi": false\n' +
+            " }\n" +
+            "diff --git a/biome.json b/biome.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/biome.json\n" +
+            "+++ b/biome.json\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " {\n" +
+            '+    "formatter": {}\n' +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain(".github");
+        expect(cleaned).not.toContain(".editorconfig");
+        expect(cleaned).not.toContain(".prettierrc");
+        expect(cleaned).not.toContain("biome.json");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_excludesLintingAndDevtoolConfig", () => {
+        const diff =
+            "diff --git a/.eslintrc.json b/.eslintrc.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.eslintrc.json\n" +
+            "+++ b/.eslintrc.json\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " {\n" +
+            '+    "extends": ["plugin:@typescript-eslint/recommended"]\n' +
+            " }\n" +
+            "diff --git a/.rubocop.yml b/.rubocop.yml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.rubocop.yml\n" +
+            "+++ b/.rubocop.yml\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " AllCops:\n" +
+            "+  TargetRubyVersion: 3.0\n" +
+            "diff --git a/phpstan.neon b/phpstan.neon\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/phpstan.neon\n" +
+            "+++ b/phpstan.neon\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " parameters:\n" +
+            "+    level: 8\n" +
+            "diff --git a/rustfmt.toml b/rustfmt.toml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/rustfmt.toml\n" +
+            "+++ b/rustfmt.toml\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " max_width = 100\n" +
+            '+edition = "2021"\n' +
+            "diff --git a/tsconfig.json b/tsconfig.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/tsconfig.json\n" +
+            "+++ b/tsconfig.json\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " {\n" +
+            '+    "strict": true\n' +
+            " }\n" +
+            "diff --git a/vitest.config.mts b/vitest.config.mts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/vitest.config.mts\n" +
+            "+++ b/vitest.config.mts\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " export default {\n" +
+            "+    timeout: 5000\n" +
+            " }\n" +
+            "diff --git a/Makefile b/Makefile\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/Makefile\n" +
+            "+++ b/Makefile\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " build:\n" +
+            "+\tgo build ./...\n" +
+            "diff --git a/Rakefile b/Rakefile\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/Rakefile\n" +
+            "+++ b/Rakefile\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " task :default do\n" +
+            "+  puts 'hello'\n" +
+            " end\n" +
+            "diff --git a/snippet.json b/snippet.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/snippet.json\n" +
+            "+++ b/snippet.json\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " {\n" +
+            '+    "snippet": "new"\n' +
+            " }\n" +
+            "diff --git a/.gitignore b/.gitignore\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.gitignore\n" +
+            "+++ b/.gitignore\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " node_modules/\n" +
+            "+dist/\n" +
+            "diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/CONTRIBUTING.md\n" +
+            "+++ b/CONTRIBUTING.md\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " # Contributing\n" +
+            "+Please read the guidelines.\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain(".eslintrc");
+        expect(cleaned).not.toContain(".rubocop");
+        expect(cleaned).not.toContain("phpstan.neon");
+        expect(cleaned).not.toContain("rustfmt.toml");
+        expect(cleaned).not.toContain("tsconfig.json");
+        expect(cleaned).not.toContain("vitest.config");
+        expect(cleaned).not.toContain("Makefile");
+        expect(cleaned).not.toContain("Rakefile");
+        expect(cleaned).not.toContain("snippet.json");
+        expect(cleaned).not.toContain(".gitignore");
+        expect(cleaned).not.toContain("CONTRIBUTING");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_excludesChangelogCaseInsensitive", () => {
+        const diff =
+            "diff --git a/CHANGELOG.md b/CHANGELOG.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/CHANGELOG.md\n" +
+            "+++ b/CHANGELOG.md\n" +
+            "@@ -1,3 +1,5 @@\n" +
+            " # Changelog\n" +
+            "+## 2.0.0\n" +
+            "+- Breaking change\n" +
+            " \n" +
+            "diff --git a/changelog.md b/changelog.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/changelog.md\n" +
+            "+++ b/changelog.md\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " # Changes\n" +
+            "+- fix bug\n" +
+            "diff --git a/src/index.ts b/src/index.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/index.ts\n" +
+            "+++ b/src/index.ts\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " export { Client } from './Client';\n" +
+            "+export { Types } from './types';\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("CHANGELOG");
+        expect(cleaned).not.toContain("changelog");
+        expect(cleaned).toContain("index.ts");
+        expect(cleaned).toContain("+export { Types }");
+    });
+
+    it("testCleanDiffForAI_excludesReadmeCaseInsensitive", () => {
+        const diff =
+            "diff --git a/README.md b/README.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/README.md\n" +
+            "+++ b/README.md\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " # My SDK\n" +
+            "+New feature docs\n" +
+            " \n" +
+            "diff --git a/readme.rst b/readme.rst\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/readme.rst\n" +
+            "+++ b/readme.rst\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " My SDK\n" +
+            "+======\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("README");
+        expect(cleaned).not.toContain("readme");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_preservesSourceFilesAndPackageJson", () => {
+        // Verify that __init__.py, index.ts, package.json, pyproject.toml, go.mod
+        // and src/** files are NOT excluded
+        const diff =
+            "diff --git a/src/__init__.py b/src/__init__.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/__init__.py\n" +
+            "+++ b/src/__init__.py\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " from .client import Client\n" +
+            "+from .new_module import NewModule\n" +
+            "diff --git a/src/index.ts b/src/index.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/index.ts\n" +
+            "+++ b/src/index.ts\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " export { Client } from './Client';\n" +
+            "+export { NewType } from './NewType';\n" +
+            "diff --git a/package.json b/package.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/package.json\n" +
+            "+++ b/package.json\n" +
+            "@@ -3,6 +3,7 @@\n" +
+            '     "name": "my-sdk",\n' +
+            '     "private": false,\n' +
+            '+    "newDep": "^1.0.0",\n' +
+            " }\n" +
+            "diff --git a/pyproject.toml b/pyproject.toml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/pyproject.toml\n" +
+            "+++ b/pyproject.toml\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " [tool.poetry]\n" +
+            '+new-dep = "^1.0"\n' +
+            " \n" +
+            "diff --git a/go.mod b/go.mod\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/go.mod\n" +
+            "+++ b/go.mod\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " module github.com/example/sdk\n" +
+            "+require github.com/pkg/errors v0.9.1\n" +
+            " \n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // All source files and config files should be preserved
+        expect(cleaned).toContain("__init__.py");
+        expect(cleaned).toContain("index.ts");
+        expect(cleaned).toContain("package.json");
+        expect(cleaned).toContain("pyproject.toml");
+        expect(cleaned).toContain("go.mod");
+        expect(cleaned).toContain("+from .new_module import NewModule");
+        expect(cleaned).toContain("+export { NewType }");
+        expect(cleaned).toContain('+    "newDep": "^1.0.0"');
+    });
+
+    it("testCleanDiffForAI_excludesNestedReferenceMd", () => {
+        // reference.md in a subdirectory should also be excluded
+        const diff =
+            "diff --git a/docs/api/reference.md b/docs/api/reference.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/docs/api/reference.md\n" +
+            "+++ b/docs/api/reference.md\n" +
+            "@@ -1,3 +1,100 @@\n" +
+            " # API Reference\n" +
+            "+## Users endpoint added\n" +
+            " \n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("reference.md");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_excludesJavaTestFiles", () => {
+        const diff =
+            "diff --git a/src/test/java/com/example/ClientTest.java b/src/test/java/com/example/ClientTest.java\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/test/java/com/example/ClientTest.java\n" +
+            "+++ b/src/test/java/com/example/ClientTest.java\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " public class ClientTest {\n" +
+            "+    @Test void testNew() {}\n" +
+            " }\n" +
+            "diff --git a/src/main/java/com/example/Client.java b/src/main/java/com/example/Client.java\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/main/java/com/example/Client.java\n" +
+            "+++ b/src/main/java/com/example/Client.java\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " public class Client {\n" +
+            "+    public void newMethod() {}\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // Java test file matched by *Test.java naming convention
+        expect(cleaned).not.toContain("ClientTest.java");
+        // Source file should be preserved
+        expect(cleaned).toContain("Client.java");
+        expect(cleaned).toContain("+    public void newMethod() {}");
+    });
+
+    it("testCleanDiffForAI_excludesGoTestFiles", () => {
+        const diff =
+            "diff --git a/client_test.go b/client_test.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client_test.go\n" +
+            "+++ b/client_test.go\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " func TestClient(t *testing.T) {\n" +
+            "+    // new test\n" +
+            " }\n" +
+            "diff --git a/client.go b/client.go\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client.go\n" +
+            "+++ b/client.go\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " type Client struct {\n" +
+            "+    NewField string\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("client_test.go");
+        expect(cleaned).toContain("client.go");
+        expect(cleaned).toContain("+    NewField string");
+    });
+
+    it("testCleanDiffForAI_excludesPythonAndSpecTestFiles", () => {
+        const diff =
+            "diff --git a/client_test.py b/client_test.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/client_test.py\n" +
+            "+++ b/client_test.py\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " def test_client():\n" +
+            "+    assert True\n" +
+            " \n" +
+            "diff --git a/api.spec.ts b/api.spec.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/api.spec.ts\n" +
+            "+++ b/api.spec.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " describe('api', () => {\n" +
+            "+    it('works', () => {});\n" +
+            " });\n" +
+            "diff --git a/helpers.test.py b/helpers.test.py\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/helpers.test.py\n" +
+            "+++ b/helpers.test.py\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " def test_helpers():\n" +
+            "+    pass\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // _test.py, .test.py, and .spec.ts should be excluded
+        expect(cleaned).not.toContain("client_test.py");
+        expect(cleaned).not.toContain("api.spec.ts");
+        expect(cleaned).not.toContain("helpers.test.py");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_combinedExclusionWithReferenceMdAndLockfile", () => {
+        // This test specifically validates the acceptance criteria:
+        // a diff containing reference.md and pnpm-lock.yaml is stripped
+        const diff =
+            "diff --git a/reference.md b/reference.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/reference.md\n" +
+            "+++ b/reference.md\n" +
+            "@@ -1,100 +1,200 @@\n" +
+            " # API Reference\n" +
+            "+## New Users Endpoint\n" +
+            "+POST /api/v1/users\n" +
+            "+Creates a new user account.\n" +
+            " \n" +
+            "diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/pnpm-lock.yaml\n" +
+            "+++ b/pnpm-lock.yaml\n" +
+            "@@ -1,50 +1,55 @@\n" +
+            " lockfileVersion: 5.4\n" +
+            "+  axios: 1.6.0\n" +
+            "+  lodash: 4.17.21\n" +
+            " \n" +
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -10,6 +10,10 @@\n" +
+            " export class Client {\n" +
+            "+    public async createUser(request: CreateUserRequest): Promise<User> {\n" +
+            "+        return this.httpClient.post('/api/v1/users', request);\n" +
+            "+    }\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // reference.md and pnpm-lock.yaml should be stripped
+        expect(cleaned).not.toContain("reference.md");
+        expect(cleaned).not.toContain("pnpm-lock.yaml");
+        expect(cleaned).not.toContain("API Reference");
+        expect(cleaned).not.toContain("lockfileVersion");
+        // Source file changes should be preserved
+        expect(cleaned).toContain("Client.ts");
+        expect(cleaned).toContain("createUser");
+    });
+
+    it("testCleanDiffForAI_excludesCircleCIConfig", () => {
+        const diff =
+            "diff --git a/.circleci/config.yml b/.circleci/config.yml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/.circleci/config.yml\n" +
+            "+++ b/.circleci/config.yml\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " version: 2.1\n" +
+            "+  - run: npm test\n" +
+            " \n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain(".circleci");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_excludesGenericLockFile", () => {
+        // Tests the catch-all *.lock pattern
+        const diff =
+            "diff --git a/Gemfile.lock b/Gemfile.lock\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/Gemfile.lock\n" +
+            "+++ b/Gemfile.lock\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " GEM\n" +
+            "+  faraday (2.7.0)\n" +
+            " \n" +
+            "diff --git a/composer.lock b/composer.lock\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/composer.lock\n" +
+            "+++ b/composer.lock\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " {\n" +
+            '+    "packages": []\n' +
+            " }\n" +
+            "diff --git a/custom-tool.lock b/custom-tool.lock\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/custom-tool.lock\n" +
+            "+++ b/custom-tool.lock\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " lock data\n" +
+            "+more lock data\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("Gemfile.lock");
+        expect(cleaned).not.toContain("composer.lock");
+        expect(cleaned).not.toContain("custom-tool.lock");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_excludes__tests__Directory", () => {
+        const diff =
+            "diff --git a/src/__tests__/client.test.ts b/src/__tests__/client.test.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/__tests__/client.test.ts\n" +
+            "+++ b/src/__tests__/client.test.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " describe('Client', () => {\n" +
+            "+    it('should call endpoint', () => {});\n" +
+            " });\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("__tests__");
+        expect(cleaned.trim()).toBe("");
+    });
+
+    it("testCleanDiffForAI_exclusionAppliedBeforeVersionCleaning", () => {
+        // Verifies that file exclusion + version cleaning work together
+        const diff =
+            "diff --git a/reference.md b/reference.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/reference.md\n" +
+            "+++ b/reference.md\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " # API Reference\n" +
+            "+## New endpoint\n" +
+            " \n" +
+            "diff --git a/pnpm-lock.yaml b/pnpm-lock.yaml\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/pnpm-lock.yaml\n" +
+            "+++ b/pnpm-lock.yaml\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " lockfileVersion: 5.4\n" +
+            "+  new-dep: 1.0.0\n" +
+            " \n" +
+            "diff --git a/package.json b/package.json\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/package.json\n" +
+            "+++ b/package.json\n" +
+            "@@ -1,6 +1,6 @@\n" +
+            " {\n" +
+            '     "name": "test-sdk",\n' +
+            '-    "version": "1.0.0",\n' +
+            '+    "version": "505.503.4455",\n' +
+            '     "private": false\n' +
+            " }\n" +
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class Client {\n" +
+            "+    newMethod() {}\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // Excluded files should be gone
+        expect(cleaned).not.toContain("reference.md");
+        expect(cleaned).not.toContain("pnpm-lock.yaml");
+        // Version-only package.json should be cleaned away
+        expect(cleaned).not.toContain("505.503.4455");
+        expect(cleaned).not.toContain("package.json");
+        // Real source changes should remain
+        expect(cleaned).toContain("Client.ts");
+        expect(cleaned).toContain("+    newMethod() {}");
+    });
+
+    it("testCleanDiffForAI_preservesFilesStartingWithReadmeOrChangelog", () => {
+        // Files whose names merely START with "readme" or "changelog" but are
+        // actual source files should NOT be excluded (only standalone README*/CHANGELOG* files)
+        const diff =
+            "diff --git a/src/readmeGenerator.ts b/src/readmeGenerator.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/readmeGenerator.ts\n" +
+            "+++ b/src/readmeGenerator.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class ReadmeGenerator {\n" +
+            "+    generateReadme() {}\n" +
+            " }\n" +
+            "diff --git a/src/changelog_utils.ts b/src/changelog_utils.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/changelog_utils.ts\n" +
+            "+++ b/src/changelog_utils.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export function formatChangelog() {\n" +
+            "+    return 'formatted';\n" +
+            " }\n" +
+            "diff --git a/src/readmeConfig.ts b/src/readmeConfig.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/readmeConfig.ts\n" +
+            "+++ b/src/readmeConfig.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export const config = {\n" +
+            "+    title: 'My SDK',\n" +
+            " };\n" +
+            "diff --git a/src/changelogEntry.ts b/src/changelogEntry.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/changelogEntry.ts\n" +
+            "+++ b/src/changelogEntry.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export interface ChangelogEntry {\n" +
+            "+    date: string;\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        // All these source files should be PRESERVED (not excluded)
+        expect(cleaned).toContain("readmeGenerator.ts");
+        expect(cleaned).toContain("+    generateReadme() {}");
+        expect(cleaned).toContain("changelog_utils.ts");
+        expect(cleaned).toContain("+    return 'formatted';");
+        expect(cleaned).toContain("readmeConfig.ts");
+        expect(cleaned).toContain("+    title: 'My SDK',");
+        expect(cleaned).toContain("changelogEntry.ts");
+        expect(cleaned).toContain("+    date: string;");
+    });
+
+    it("testCleanDiffForAI_excludesReadmeAndChangelogWithVariousExtensions", () => {
+        // Standalone README/CHANGELOG files with different extensions should be excluded
+        const diff =
+            "diff --git a/README b/README\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/README\n" +
+            "+++ b/README\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " My SDK\n" +
+            "+Updated\n" +
+            "diff --git a/CHANGELOG b/CHANGELOG\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/CHANGELOG\n" +
+            "+++ b/CHANGELOG\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " # Changes\n" +
+            "+- new\n" +
+            "diff --git a/README.txt b/README.txt\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/README.txt\n" +
+            "+++ b/README.txt\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " Info\n" +
+            "+More info\n" +
+            "diff --git a/CHANGELOG.rst b/CHANGELOG.rst\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/CHANGELOG.rst\n" +
+            "+++ b/CHANGELOG.rst\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " Changes\n" +
+            "+- fix\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("README");
+        expect(cleaned).not.toContain("CHANGELOG");
+        expect(cleaned.trim()).toBe("");
+    });
 });

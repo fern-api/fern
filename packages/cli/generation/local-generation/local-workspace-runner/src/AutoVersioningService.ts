@@ -31,6 +31,91 @@ interface FileSection {
 }
 
 /**
+ * Glob-like patterns for files that should be completely excluded from the
+ * cleaned diff sent to AI analysis. These files add noise (lock files,
+ * generated docs, test fixtures, CI config) without carrying meaningful
+ * API-surface signal for semantic versioning.
+ *
+ * Each entry is a regex tested against the file path. Most use the /i flag
+ * for case-insensitive matching; /Test\.java$/ is intentionally
+ * case-sensitive to match Java's PascalCase naming convention.
+ */
+const EXCLUDED_FILE_PATTERNS: RegExp[] = [
+    // Documentation / generated reference
+    /(?:^|\/)reference\.md$/i,
+    /(?:^|\/)changelog(?:\.[^/]*)?$/i,
+    /(?:^|\/)readme(?:\.[^/]*)?$/i,
+
+    // Lock files (dependency resolution, zero semantic value)
+    /(?:^|\/)pnpm-lock\.yaml$/i,
+    /(?:^|\/)yarn\.lock$/i,
+    /(?:^|\/)package-lock\.json$/i,
+    /(?:^|\/)poetry\.lock$/i,
+    /(?:^|\/)gemfile\.lock$/i,
+    /(?:^|\/)go\.sum$/i,
+    /(?:^|\/)cargo\.lock$/i,
+    /(?:^|\/)composer\.lock$/i,
+    /\.lock$/i, // catch-all for any other lockfiles
+
+    // Test files (by naming convention only — directory patterns like tests/ and
+    // test/ are intentionally omitted because a customer's API domain could use
+    // those names, e.g. a QA platform SDK with a "tests" resource)
+    /\.test\.ts$/i,
+    /\.test\.js$/i,
+    /\.test\.py$/i,
+    /\.spec\.ts$/i,
+    /\.spec\.js$/i,
+    /_test\.go$/i,
+    /_test\.py$/i,
+    /Test\.java$/,
+    /(?:^|\/)__tests__\//i, // __tests__/ is unambiguously a test directory
+    /(?:^|\/)wiremock\//i, // Fern-generated WireMock test fixtures
+
+    // Snapshot files
+    /(?:^|\/)__snapshots__\//i,
+    /\.snap$/i,
+
+    // CI / editor config (no API surface relevance)
+    /(?:^|\/)\.github\//i,
+    /(?:^|\/)\.circleci\//i,
+    /(?:^|\/)\.editorconfig$/i,
+    /(?:^|\/)\.prettierrc/i,
+    /(?:^|\/)biome\.json$/i,
+
+    // Linting / static analysis config
+    /(?:^|\/)\.eslintrc/i,
+    /(?:^|\/)eslint\.config\./i,
+    /(?:^|\/)\.rubocop/i, // Ruby linter
+    /(?:^|\/)phpstan\.neon$/i, // PHP static analysis
+    /(?:^|\/)phpunit\.xml$/i, // PHP test runner config
+    /(?:^|\/)\.pylintrc$/i, // Python linter
+    /(?:^|\/)pylintrc$/i,
+    /(?:^|\/)\.flake8$/i, // Python linter
+    /(?:^|\/)\.mypy\.ini$/i, // Python type checker
+    /(?:^|\/)mypy\.ini$/i,
+    /(?:^|\/)\.swiftlint\.yml$/i, // Swift linter
+    /(?:^|\/)\.scalafmt\.conf$/i, // Scala formatter
+    /(?:^|\/)rustfmt\.toml$/i, // Rust formatter
+    /(?:^|\/)\.stylelintrc/i, // CSS linter
+
+    // Build / devtool config (no API surface)
+    /(?:^|\/)tsconfig[^/]*\.json$/i, // TypeScript compiler config
+    /(?:^|\/)vitest\.config\./i, // Test runner config
+    /(?:^|\/)jest\.config\./i, // Test runner config
+    /(?:^|\/)pnpm-workspace\.yaml$/i, // Workspace config
+    /(?:^|\/)\.npmrc$/i, // npm config
+    /(?:^|\/)\.yarnrc/i, // Yarn config
+    /(?:^|\/)tox\.ini$/i, // Python test runner
+    /(?:^|\/)Makefile$/i, // Build automation
+    /(?:^|\/)Rakefile$/i, // Ruby build tasks
+    /(?:^|\/)contributing(?:\.[^/]*)?$/i, // Contributor docs
+    /(?:^|\/)snippet\.json$/i, // Fern-generated snippet metadata
+    /(?:^|\/)\.gitignore$/i,
+    /(?:^|\/)\.gitattributes$/i,
+    /\.slnx$/i // .NET solution files
+];
+
+/**
  * Service for handling automatic semantic versioning operations including
  * git diff generation, version extraction, and version replacement.
  */
@@ -172,6 +257,13 @@ export class AutoVersioningService {
 
         const cleanedSections: FileSection[] = [];
         for (const section of fileSections) {
+            // Skip entire file sections whose path matches an exclusion pattern
+            const filePath = this.extractFilePathFromSection(section);
+            if (filePath != null && this.shouldExcludeFile(filePath)) {
+                this.logger.debug(`Excluding file from diff analysis: ${filePath}`);
+                continue;
+            }
+
             const cleaned = this.cleanFileSection(section, mappedMagicVersion);
             if (cleaned != undefined) {
                 cleanedSections.push(cleaned);
@@ -444,6 +536,32 @@ export class AutoVersioningService {
      */
     private escapeForSed(str: string): string {
         return str.replace(/[/&]/g, "\\$&");
+    }
+
+    /**
+     * Extracts the file path from a diff file section.
+     * Parses the "diff --git a/path b/path" header line.
+     */
+    private extractFilePathFromSection(section: FileSection): string | undefined {
+        const firstLine = section.lines[0];
+        if (firstLine == null) {
+            return undefined;
+        }
+        // diff --git a/some/path b/some/path
+        // Also handles quoted paths: diff --git "a/path with spaces" "b/path with spaces"
+        const match = firstLine.match(/^diff --git "?a\/(.+?)"? "?b\/(.+?)"?$/);
+        if (match?.[2] != null) {
+            return match[2];
+        }
+        return undefined;
+    }
+
+    /**
+     * Checks whether a file path matches any of the exclusion patterns.
+     * Excluded files are noise for AI-based semantic version analysis.
+     */
+    private shouldExcludeFile(filePath: string): boolean {
+        return EXCLUDED_FILE_PATTERNS.some((pattern) => pattern.test(filePath));
     }
 
     /**
