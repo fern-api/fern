@@ -50,15 +50,15 @@ export class EnumClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.WeatherReport.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.WeatherReport.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 }

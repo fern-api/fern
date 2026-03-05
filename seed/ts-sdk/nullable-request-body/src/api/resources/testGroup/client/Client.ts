@@ -63,15 +63,18 @@ export class TestGroupClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 422:
-                        return new SeedApi.UnprocessableEntityError(body as SeedApi.PlainObject, rawResponse);
-                    default:
-                        return new errors.SeedApiError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedApiError) {
+                switch (error.statusCode) {
+                    case 422:
+                        throw new SeedApi.UnprocessableEntityError(
+                            error.body as SeedApi.PlainObject,
+                            error.rawResponse,
+                        );
+                }
+            }
+            throw error;
         });
     }
 }

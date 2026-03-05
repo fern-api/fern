@@ -39,16 +39,16 @@ export class UrlsClient {
             method: "GET",
             path: "/urls/MixedCase",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.endpoints.urls.withMixedCase.Response.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.endpoints.urls.withMixedCase.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -62,16 +62,16 @@ export class UrlsClient {
             method: "GET",
             path: "/urls/no-ending-slash",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.endpoints.urls.noEndingSlash.Response.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.endpoints.urls.noEndingSlash.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -85,16 +85,16 @@ export class UrlsClient {
             method: "GET",
             path: "/urls/with-ending-slash/",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.endpoints.urls.withEndingSlash.Response.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.endpoints.urls.withEndingSlash.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -108,15 +108,15 @@ export class UrlsClient {
             method: "GET",
             path: "/urls/with_underscores",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.endpoints.urls.withUnderscores.Response.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.endpoints.urls.withUnderscores.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 }

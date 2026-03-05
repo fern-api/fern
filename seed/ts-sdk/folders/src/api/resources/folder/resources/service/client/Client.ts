@@ -65,15 +65,15 @@ export class ServiceClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 404:
-                        return new SeedApi.folder.NotFoundError(body as string, rawResponse);
-                    default:
-                        return new errors.SeedApiError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedApiError) {
+                switch (error.statusCode) {
+                    case 404:
+                        throw new SeedApi.folder.NotFoundError(error.body as string, error.rawResponse);
+                }
+            }
+            throw error;
         });
     }
 }

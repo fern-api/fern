@@ -54,16 +54,16 @@ export class SubmissionClient {
             path: `/sessions/create-session/${core.url.encodePathParam(serializers.Language.jsonOrThrow(language, { omitUndefined: true }))}`,
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.ExecutionSessionResponse.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.ExecutionSessionResponse.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -87,16 +87,16 @@ export class SubmissionClient {
             path: `/sessions/${core.url.encodePathParam(sessionId)}`,
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.submission.getExecutionSession.Response.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.submission.getExecutionSession.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -141,15 +141,15 @@ export class SubmissionClient {
             path: "/sessions/execution-sessions-state",
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.GetExecutionSessionStateResponse.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.GetExecutionSessionStateResponse.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 }

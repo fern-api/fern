@@ -71,16 +71,16 @@ export class PlaylistClient {
             requestType: "json",
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.Playlist.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.Playlist.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -120,16 +120,16 @@ export class PlaylistClient {
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.playlist.getPlaylists.Response.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.playlist.getPlaylists.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -158,26 +158,9 @@ export class PlaylistClient {
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch ((body as any)?.errorName) {
-                    case "PlaylistIdNotFoundError":
-                        return new SeedTrace.PlaylistIdNotFoundError(
-                            serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(body, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                skipValidation: true,
-                                breadcrumbsPrefix: ["response"],
-                            }),
-                            rawResponse,
-                        );
-                    case "UnauthorizedError":
-                        return new SeedTrace.UnauthorizedError(rawResponse);
-                    default:
-                        return new errors.SeedTraceError({ statusCode, body, rawResponse });
-                }
-            },
-            transformResponse: (body) =>
+            requestOptions,
+        })
+            .map((body) =>
                 serializers.Playlist.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
@@ -185,8 +168,27 @@ export class PlaylistClient {
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-            requestOptions,
-        });
+            )
+            .mapError((error) => {
+                if (error instanceof errors.SeedTraceError) {
+                    switch ((error.body as any)?.errorName) {
+                        case "PlaylistIdNotFoundError":
+                            throw new SeedTrace.PlaylistIdNotFoundError(
+                                serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(error.body, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    skipValidation: true,
+                                    breadcrumbsPrefix: ["response"],
+                                }),
+                                error.rawResponse,
+                            );
+                        case "UnauthorizedError":
+                            throw new SeedTrace.UnauthorizedError(error.rawResponse);
+                    }
+                }
+                throw error;
+            });
     }
 
     /**
@@ -225,24 +227,9 @@ export class PlaylistClient {
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch ((body as any)?.errorName) {
-                    case "PlaylistIdNotFoundError":
-                        return new SeedTrace.PlaylistIdNotFoundError(
-                            serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(body, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                skipValidation: true,
-                                breadcrumbsPrefix: ["response"],
-                            }),
-                            rawResponse,
-                        );
-                    default:
-                        return new errors.SeedTraceError({ statusCode, body, rawResponse });
-                }
-            },
-            transformResponse: (body) =>
+            requestOptions,
+        })
+            .map((body) =>
                 serializers.playlist.updatePlaylist.Response.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
@@ -250,8 +237,25 @@ export class PlaylistClient {
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-            requestOptions,
-        });
+            )
+            .mapError((error) => {
+                if (error instanceof errors.SeedTraceError) {
+                    switch ((error.body as any)?.errorName) {
+                        case "PlaylistIdNotFoundError":
+                            throw new SeedTrace.PlaylistIdNotFoundError(
+                                serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(error.body, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    skipValidation: true,
+                                    breadcrumbsPrefix: ["response"],
+                                }),
+                                error.rawResponse,
+                            );
+                    }
+                }
+                throw error;
+            });
     }
 
     /**

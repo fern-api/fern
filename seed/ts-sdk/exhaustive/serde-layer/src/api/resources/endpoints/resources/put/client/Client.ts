@@ -47,15 +47,15 @@ export class PutClient {
             method: "PUT",
             path: `${core.url.encodePathParam(id)}`,
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.endpoints.PutResponse.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.endpoints.PutResponse.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 }

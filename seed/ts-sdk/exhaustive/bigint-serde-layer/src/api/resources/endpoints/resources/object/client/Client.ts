@@ -66,16 +66,16 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.ObjectWithOptionalField.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.ObjectWithOptionalField.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -101,16 +101,16 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.ObjectWithRequiredField.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.ObjectWithRequiredField.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -140,16 +140,16 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.ObjectWithMapOfMap.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.ObjectWithMapOfMap.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -192,16 +192,16 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.NestedObjectWithOptionalField.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.NestedObjectWithOptionalField.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -246,16 +246,16 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.NestedObjectWithRequiredField.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.NestedObjectWithRequiredField.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -317,16 +317,16 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.NestedObjectWithRequiredField.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.NestedObjectWithRequiredField.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -354,16 +354,16 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.ObjectWithUnknownField.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.ObjectWithUnknownField.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -394,15 +394,15 @@ export class ObjectClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (body) =>
-                serializers.types.ObjectWithDatetimeLikeString.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.types.ObjectWithDatetimeLikeString.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 }

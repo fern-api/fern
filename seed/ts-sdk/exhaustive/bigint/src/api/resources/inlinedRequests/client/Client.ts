@@ -70,18 +70,18 @@ export class InlinedRequestsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 400:
-                        return new SeedExhaustive.BadRequestBody(
-                            body as SeedExhaustive.BadObjectRequestInfo,
-                            rawResponse,
-                        );
-                    default:
-                        return new errors.SeedExhaustiveError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedExhaustiveError) {
+                switch (error.statusCode) {
+                    case 400:
+                        throw new SeedExhaustive.BadRequestBody(
+                            error.body as SeedExhaustive.BadObjectRequestInfo,
+                            error.rawResponse,
+                        );
+                }
+            }
+            throw error;
         });
     }
 }

@@ -74,24 +74,9 @@ export class InlinedRequestsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 400:
-                        return new SeedExhaustive.BadRequestBody(
-                            serializers.BadObjectRequestInfo.parseOrThrow(body, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                                skipValidation: true,
-                                breadcrumbsPrefix: ["response"],
-                            }),
-                            rawResponse,
-                        );
-                    default:
-                        return new errors.SeedExhaustiveError({ statusCode, body, rawResponse });
-                }
-            },
-            transformResponse: (body) =>
+            requestOptions,
+        })
+            .map((body) =>
                 serializers.types.ObjectWithOptionalField.parseOrThrow(body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
@@ -99,7 +84,24 @@ export class InlinedRequestsClient {
                     skipValidation: true,
                     breadcrumbsPrefix: ["response"],
                 }),
-            requestOptions,
-        });
+            )
+            .mapError((error) => {
+                if (error instanceof errors.SeedExhaustiveError) {
+                    switch (error.statusCode) {
+                        case 400:
+                            throw new SeedExhaustive.BadRequestBody(
+                                serializers.BadObjectRequestInfo.parseOrThrow(error.body, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    skipValidation: true,
+                                    breadcrumbsPrefix: ["response"],
+                                }),
+                                error.rawResponse,
+                            );
+                    }
+                }
+                throw error;
+            });
     }
 }

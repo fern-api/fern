@@ -1,7 +1,13 @@
-import type { WithRawResponse } from "./RawResponse";
+import type { RawResponse, WithRawResponse } from "./RawResponse";
 
 /**
  * A promise that returns the parsed response and lets you retrieve the raw response too.
+ *
+ * Supports fluent chaining for response processing:
+ * - `.map(fn)` — transform the response data
+ * - `.mapRaw(fn)` — transform with access to the raw response
+ * - `.mapError(fn)` — intercept and rethrow errors (e.g. status-code discrimination)
+ * - `.tap(fn)` — side effects without modifying the chain
  */
 export class HttpResponsePromise<T> extends Promise<T> {
     private innerPromise: Promise<WithRawResponse<T>>;
@@ -112,5 +118,86 @@ export class HttpResponsePromise<T> extends Promise<T> {
      */
     public async withRawResponse(): Promise<WithRawResponse<T>> {
         return await this.innerPromise;
+    }
+
+    /**
+     * Transforms the response data while preserving the raw response.
+     * Returns a new `HttpResponsePromise` with the transformed data type.
+     *
+     * @example
+     * ```typescript
+     * return this._requestFn<unknown>({ method: "GET", path: "/users/me", requestOptions })
+     *     .map((body) => serializers.User.parseOrThrow(body));
+     * ```
+     */
+    public map<U>(fn: (data: T) => U | Promise<U>): HttpResponsePromise<U> {
+        return new HttpResponsePromise<U>(
+            this.innerPromise.then(async ({ data, rawResponse }) => ({
+                data: await fn(data),
+                rawResponse,
+            })),
+        );
+    }
+
+    /**
+     * Transforms the response data with access to the raw response.
+     * Returns a new `HttpResponsePromise` with the transformed data type.
+     *
+     * @example
+     * ```typescript
+     * return this._requestFn<unknown>({ method: "GET", path: "/users", requestOptions })
+     *     .mapRaw(({ data, rawResponse }) => ({
+     *         users: data as User[],
+     *         requestId: rawResponse.headers.get("x-request-id"),
+     *     }));
+     * ```
+     */
+    public mapRaw<U>(fn: (result: { data: T; rawResponse: RawResponse }) => U | Promise<U>): HttpResponsePromise<U> {
+        return new HttpResponsePromise<U>(
+            this.innerPromise.then(async ({ data, rawResponse }) => ({
+                data: await fn({ data, rawResponse }),
+                rawResponse,
+            })),
+        );
+    }
+
+    /**
+     * Intercepts errors and optionally rethrows them as different error types.
+     * The callback receives the caught error and should either throw a new error or rethrow the original.
+     * Returns a new `HttpResponsePromise` preserving the same data type.
+     *
+     * @example
+     * ```typescript
+     * return this._requestFn<Movie>({ method: "GET", path: `/movies/${id}`, requestOptions })
+     *     .mapError((error) => {
+     *         if (error instanceof errors.SeedApiError && error.statusCode === 404) {
+     *             throw new MovieDoesNotExistError(error.body, error.rawResponse);
+     *         }
+     *         throw error;
+     *     });
+     * ```
+     */
+    public mapError(fn: (error: unknown) => never): HttpResponsePromise<T> {
+        return new HttpResponsePromise<T>(this.innerPromise.catch((error: unknown) => fn(error)));
+    }
+
+    /**
+     * Executes a side-effect function with the response data without modifying the chain.
+     * Useful for logging, telemetry, caching, etc.
+     * Returns the same `HttpResponsePromise` with the original data type.
+     *
+     * @example
+     * ```typescript
+     * return this._requestFn<User>({ method: "GET", path: "/users/me", requestOptions })
+     *     .tap((data) => console.log("Got user:", data.id));
+     * ```
+     */
+    public tap(fn: (data: T) => void | Promise<void>): HttpResponsePromise<T> {
+        return new HttpResponsePromise<T>(
+            this.innerPromise.then(async (result) => {
+                await fn(result.data);
+                return result;
+            }),
+        );
     }
 }

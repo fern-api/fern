@@ -39,9 +39,8 @@ export class UserClient {
             method: "HEAD",
             path: "/users",
             queryParameters: requestOptions?.queryParams,
-            transformResponse: (_body, rawResponse) => rawResponse.headers,
             requestOptions,
-        });
+        }).mapRaw(({ data, rawResponse }) => rawResponse.headers);
     }
 
     /**

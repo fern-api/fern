@@ -441,17 +441,17 @@ export class ServiceClient {
                 queryParameters: requestOptions?.queryParams,
                 duplex: _maybeEncodedRequest.duplex,
                 headers: _headers,
-                transformResponse: (body) =>
-                    serializers.service.optionalArgs.Response.parseOrThrow(body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
                 requestOptions,
             };
-        });
+        }).map((body) =>
+            serializers.service.optionalArgs.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -484,17 +484,17 @@ export class ServiceClient {
                 queryParameters: requestOptions?.queryParams,
                 duplex: _maybeEncodedRequest.duplex,
                 headers: _headers,
-                transformResponse: (body) =>
-                    serializers.service.withInlineType.Response.parseOrThrow(body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
                 requestOptions,
             };
-        });
+        }).map((body) =>
+            serializers.service.withInlineType.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -529,17 +529,17 @@ export class ServiceClient {
                 queryParameters: requestOptions?.queryParams,
                 duplex: _maybeEncodedRequest.duplex,
                 headers: _headers,
-                transformResponse: (body) =>
-                    serializers.service.withJsonProperty.Response.parseOrThrow(body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
                 requestOptions,
             };
-        });
+        }).map((body) =>
+            serializers.service.withJsonProperty.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -599,16 +599,16 @@ export class ServiceClient {
                 queryParameters: requestOptions?.queryParams,
                 duplex: _maybeEncodedRequest.duplex,
                 headers: _headers,
-                transformResponse: (body) =>
-                    serializers.service.withLiteralAndEnumTypes.Response.parseOrThrow(body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
                 requestOptions,
             };
-        });
+        }).map((body) =>
+            serializers.service.withLiteralAndEnumTypes.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 }

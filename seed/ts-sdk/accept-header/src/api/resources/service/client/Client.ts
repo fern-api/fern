@@ -41,15 +41,15 @@ export class ServiceClient {
             method: "DELETE",
             path: "/container/",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 404:
-                        return new SeedAccept.NotFoundError(body as unknown, rawResponse);
-                    default:
-                        return new errors.SeedAcceptError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedAcceptError) {
+                switch (error.statusCode) {
+                    case 404:
+                        throw new SeedAccept.NotFoundError(error.body as unknown, error.rawResponse);
+                }
+            }
+            throw error;
         });
     }
 }

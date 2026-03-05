@@ -25,6 +25,10 @@ export interface RequestOptions {
 /**
  * Configuration for a single endpoint request.
  * Each endpoint method provides only what's unique to that endpoint.
+ *
+ * This interface is purely about "what to send" — response handling
+ * (error discrimination, deserialization) is done via fluent methods
+ * on the returned `HttpResponsePromise` (`.mapError()`, `.map()`, `.mapRaw()`).
  */
 export interface EndpointConfig {
     /** URL path relative to base (e.g. "/users", `/users/${id}`) */
@@ -47,17 +51,10 @@ export interface EndpointConfig {
     duplex?: "half";
     /** Per-request overrides from the caller */
     requestOptions?: RequestOptions;
-    /**
-     * Custom error handler for status-code errors. Called with the status code, body, and raw response.
-     * Must always return an Error to throw — either a typed endpoint-specific error or the generic SDK error.
-     */
-    errorHandler?: (statusCode: number, body: unknown, rawResponse: RawResponse) => Error;
     /** Whether to include credentials on cross-origin requests */
     withCredentials?: boolean;
     /** Endpoint metadata for auth provider routing */
     endpointMetadata?: Record<string, unknown>;
-    /** Custom response transform (e.g. for deserialization or HEAD responses) */
-    transformResponse?: (body: unknown, rawResponse: RawResponse) => unknown;
     /**
      * Override the default timeout for this endpoint (in seconds).
      * Falls back to requestOptions.timeoutInSeconds, then client-level timeout, then this value.

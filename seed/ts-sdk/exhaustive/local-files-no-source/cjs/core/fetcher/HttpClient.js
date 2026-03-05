@@ -116,18 +116,12 @@ function createRequestFn(options) {
                 requestHeaders: (_k = config.requestOptions) === null || _k === void 0 ? void 0 : _k.headers,
                 endpointMetadata: config.endpointMetadata,
             });
-            // 3. Success
+            // 3. Success — return data as-is; callers use .map() / .mapRaw() for transforms
             if (response.ok) {
-                const data = config.transformResponse
-                    ? config.transformResponse(response.body, response.rawResponse)
-                    : response.body;
-                return { data, rawResponse: response.rawResponse };
+                return { data: response.body, rawResponse: response.rawResponse };
             }
-            // 4. Status-code errors: use endpoint-specific handler if provided, otherwise generic
+            // 4. Status-code errors — throw generic SDK error; callers use .mapError() for discrimination
             if (response.error.reason === "status-code") {
-                if (config.errorHandler) {
-                    throw config.errorHandler(response.error.statusCode, response.error.body, response.rawResponse);
-                }
                 throw options.createStatusCodeError({
                     statusCode: response.error.statusCode,
                     body: response.error.body,

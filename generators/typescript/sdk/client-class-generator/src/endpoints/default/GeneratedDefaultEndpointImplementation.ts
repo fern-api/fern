@@ -881,16 +881,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             );
         }
 
-        // errorHandler (for endpoints with status-code-specific errors)
-        if (this.endpoint.errors.length > 0) {
-            configProperties.push(
-                ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier("errorHandler"),
-                    this.buildErrorHandler(context)
-                )
-            );
-        }
-
         // defaultTimeoutInSeconds (for custom per-endpoint timeouts)
         if (this.defaultTimeoutInSeconds !== undefined) {
             const timeoutExpr =
@@ -912,56 +902,6 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             );
         }
 
-        // transformResponse for HEAD method (returns rawResponse.headers as data)
-        if (this.endpoint.method === "HEAD" && this.endpoint.response?.body == null) {
-            const rawResponseParam = ts.factory.createIdentifier("rawResponse");
-            configProperties.push(
-                ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier("transformResponse"),
-                    ts.factory.createArrowFunction(
-                        undefined,
-                        undefined,
-                        [
-                            ts.factory.createParameterDeclaration(
-                                undefined,
-                                undefined,
-                                ts.factory.createIdentifier("_body")
-                            ),
-                            ts.factory.createParameterDeclaration(undefined, undefined, rawResponseParam)
-                        ],
-                        undefined,
-                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                        ts.factory.createPropertyAccessExpression(rawResponseParam, "headers")
-                    )
-                )
-            );
-        }
-
-        // transformResponse (for serde layer deserialization of JSON responses)
-        if (this.endpoint.method !== "HEAD" && this.includeSerdeLayer && this.endpoint.response?.body != null) {
-            const responseBody = this.endpoint.response.body;
-            if (responseBody.type === "json") {
-                const bodyParam = ts.factory.createIdentifier("body");
-                const deserializeExpr = context.sdkEndpointTypeSchemas
-                    .getGeneratedEndpointTypeSchemas(this.generatedSdkClientClass["packageId"], this.endpoint.name)
-                    .deserializeResponse(bodyParam, context);
-
-                configProperties.push(
-                    ts.factory.createPropertyAssignment(
-                        ts.factory.createIdentifier("transformResponse"),
-                        ts.factory.createArrowFunction(
-                            undefined,
-                            undefined,
-                            [ts.factory.createParameterDeclaration(undefined, undefined, bodyParam)],
-                            undefined,
-                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                            deserializeExpr
-                        )
-                    )
-                );
-            }
-        }
-
         // requestOptions (shorthand property — always last)
         configProperties.push(
             ts.factory.createShorthandPropertyAssignment(ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME))
@@ -970,11 +910,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         // 6. Build the config object
         const configObject = ts.factory.createObjectLiteralExpression(configProperties, true);
 
-        // 7. Build the request call
+        // 7. Build the request call with fluent chain
         const returnType = this.response.getReturnType(context);
 
+        let requestCallExpr: ts.Expression;
         if (needsAsync) {
-            // Async config builder: return this._requestFn<T>(async () => { ...stmts; return config })
+            // Async config builder: this._requestFn<T>(async () => { ...stmts; return config })
             const asyncBodyStatements: ts.Statement[] = [
                 ...buildStatements,
                 ts.factory.createReturnStatement(configObject)
@@ -989,7 +930,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 ts.factory.createBlock(asyncBodyStatements, true)
             );
 
-            const clientRequestCall = ts.factory.createCallExpression(
+            requestCallExpr = ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     ts.factory.createThis(),
                     ts.factory.createIdentifier(GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER)
@@ -997,11 +938,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 [returnType],
                 [asyncBuilderFn]
             );
-
-            outerStatements.push(ts.factory.createReturnStatement(clientRequestCall));
         } else {
-            // Sync: return this._requestFn<T>(config)
-            const clientRequestCall = ts.factory.createCallExpression(
+            // Sync: this._requestFn<T>(config)
+            requestCallExpr = ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     ts.factory.createThis(),
                     ts.factory.createIdentifier(GeneratedSdkClientClassImpl.REQUEST_FN_PRIVATE_MEMBER)
@@ -1009,9 +948,79 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 [returnType],
                 [configObject]
             );
-
-            outerStatements.push(ts.factory.createReturnStatement(clientRequestCall));
         }
+
+        // 8. Chain fluent methods for response handling
+
+        // .map() for HEAD method (returns rawResponse.headers as data)
+        if (this.endpoint.method === "HEAD" && this.endpoint.response?.body == null) {
+            const rawResponseParam = ts.factory.createIdentifier("rawResponse");
+            requestCallExpr = ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(requestCallExpr, ts.factory.createIdentifier("mapRaw")),
+                undefined,
+                [
+                    ts.factory.createArrowFunction(
+                        undefined,
+                        undefined,
+                        [
+                            ts.factory.createParameterDeclaration(
+                                undefined,
+                                undefined,
+                                ts.factory.createObjectBindingPattern([
+                                    ts.factory.createBindingElement(
+                                        undefined,
+                                        undefined,
+                                        ts.factory.createIdentifier("data"),
+                                        undefined
+                                    ),
+                                    ts.factory.createBindingElement(undefined, undefined, rawResponseParam, undefined)
+                                ])
+                            )
+                        ],
+                        undefined,
+                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                        ts.factory.createPropertyAccessExpression(rawResponseParam, "headers")
+                    )
+                ]
+            );
+        }
+
+        // .map() for serde layer deserialization of JSON responses
+        if (this.endpoint.method !== "HEAD" && this.includeSerdeLayer && this.endpoint.response?.body != null) {
+            const responseBody = this.endpoint.response.body;
+            if (responseBody.type === "json") {
+                const bodyParam = ts.factory.createIdentifier("body");
+                const deserializeExpr = context.sdkEndpointTypeSchemas
+                    .getGeneratedEndpointTypeSchemas(this.generatedSdkClientClass["packageId"], this.endpoint.name)
+                    .deserializeResponse(bodyParam, context);
+
+                requestCallExpr = ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(requestCallExpr, ts.factory.createIdentifier("map")),
+                    undefined,
+                    [
+                        ts.factory.createArrowFunction(
+                            undefined,
+                            undefined,
+                            [ts.factory.createParameterDeclaration(undefined, undefined, bodyParam)],
+                            undefined,
+                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                            deserializeExpr
+                        )
+                    ]
+                );
+            }
+        }
+
+        // .mapError() for endpoints with status-code-specific errors
+        if (this.endpoint.errors.length > 0) {
+            requestCallExpr = ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(requestCallExpr, ts.factory.createIdentifier("mapError")),
+                undefined,
+                [this.buildMapErrorHandler(context)]
+            );
+        }
+
+        outerStatements.push(ts.factory.createReturnStatement(requestCallExpr));
 
         return outerStatements;
     }
@@ -1038,65 +1047,65 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     /**
-     * Builds an errorHandler arrow function for the EndpointConfig.
-     * Generates a switch statement matching status codes or discriminant properties
-     * to typed error constructors. The default case explicitly returns the generic SDK error.
+     * Builds a .mapError() arrow function for fluent error discrimination.
+     * Generates: (error) => { if (error instanceof GenericSdkError) { switch(error.statusCode) { ... } } throw error; }
+     *
+     * The callback receives the thrown error (generic SDK error with .statusCode, .body, .rawResponse),
+     * checks instanceof, switches on the discriminant, and either throws a typed error or re-throws.
      */
-    private buildErrorHandler(context: SdkContext): ts.Expression {
-        const statusCodeParam = ts.factory.createIdentifier("statusCode");
-        const bodyParam = ts.factory.createIdentifier("body");
-        const rawResponseParam = ts.factory.createIdentifier("rawResponse");
-
-        // Build the default case: return new GenericSDKError({ statusCode, body, rawResponse })
+    private buildMapErrorHandler(context: SdkContext): ts.Expression {
+        const errorParam = ts.factory.createIdentifier("error");
         const genericErrorExpr = context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression();
-        const defaultReturn = ts.factory.createReturnStatement(
-            ts.factory.createNewExpression(genericErrorExpr, undefined, [
-                ts.factory.createObjectLiteralExpression(
-                    [
-                        ts.factory.createShorthandPropertyAssignment(statusCodeParam),
-                        ts.factory.createShorthandPropertyAssignment(bodyParam),
-                        ts.factory.createShorthandPropertyAssignment(rawResponseParam)
-                    ],
-                    false
-                )
-            ])
-        );
 
-        // Generate case clauses based on error discrimination strategy
+        // Access error.statusCode, error.body, error.rawResponse
+        const statusCodeAccess = ts.factory.createPropertyAccessExpression(errorParam, "statusCode");
+        const bodyAccess = ts.factory.createPropertyAccessExpression(errorParam, "body");
+        const rawResponseAccess = ts.factory.createPropertyAccessExpression(errorParam, "rawResponse");
+
+        // Build the switch statement based on error discrimination strategy
         const switchStatement = FernIr.ErrorDiscriminationStrategy._visit(this.errorDiscriminationStrategy, {
             statusCode: () =>
-                this.buildStatusCodeErrorHandler(context, statusCodeParam, bodyParam, rawResponseParam, defaultReturn),
+                this.buildStatusCodeMapErrorHandler(context, statusCodeAccess, bodyAccess, rawResponseAccess),
             property: (propertyStrategy) =>
-                this.buildPropertyErrorHandler(context, propertyStrategy, bodyParam, rawResponseParam, defaultReturn),
+                this.buildPropertyMapErrorHandler(context, propertyStrategy, bodyAccess, rawResponseAccess),
             _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             }
         });
 
-        // Return: (statusCode, body, rawResponse) => { switch(...) { ... } }
+        // Build: if (error instanceof GenericSdkError) { switch(...) { ... } }
+        const instanceofCheck = ts.factory.createIfStatement(
+            ts.factory.createBinaryExpression(
+                errorParam,
+                ts.factory.createToken(ts.SyntaxKind.InstanceOfKeyword),
+                genericErrorExpr
+            ),
+            ts.factory.createBlock([switchStatement], true)
+        );
+
+        // Final: throw error (re-throw for non-SDK errors)
+        const rethrow = ts.factory.createThrowStatement(errorParam);
+
+        // Return: (error) => { if (error instanceof SdkError) { switch(...) } throw error; }
         return ts.factory.createArrowFunction(
             undefined,
             undefined,
-            [
-                ts.factory.createParameterDeclaration(undefined, undefined, statusCodeParam),
-                ts.factory.createParameterDeclaration(undefined, undefined, bodyParam),
-                ts.factory.createParameterDeclaration(undefined, undefined, rawResponseParam)
-            ],
+            [ts.factory.createParameterDeclaration(undefined, undefined, errorParam)],
             undefined,
             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-            ts.factory.createBlock([switchStatement], true)
+            ts.factory.createBlock([instanceofCheck, rethrow], true)
         );
     }
 
     /**
-     * Builds a switch(statusCode) statement for status-code-discriminated errors.
+     * Builds a switch(error.statusCode) statement for status-code-discriminated errors.
+     * Case clauses throw typed errors; no default needed since we re-throw after the if block.
      */
-    private buildStatusCodeErrorHandler(
+    private buildStatusCodeMapErrorHandler(
         context: SdkContext,
-        statusCodeParam: ts.Identifier,
-        bodyParam: ts.Identifier,
-        rawResponseParam: ts.Identifier,
-        defaultReturn: ts.Statement
+        statusCodeAccess: ts.Expression,
+        bodyAccess: ts.Expression,
+        rawResponseAccess: ts.Expression
     ): ts.Statement {
         // Deduplicate errors by status code (first wins, same as GeneratedThrowingEndpointResponse)
         const seenStatusCodes = new Set<number>();
@@ -1110,52 +1119,50 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         });
 
         return ts.factory.createSwitchStatement(
-            statusCodeParam,
-            ts.factory.createCaseBlock([
-                ...deduplicatedErrors.map((error) => {
+            statusCodeAccess,
+            ts.factory.createCaseBlock(
+                deduplicatedErrors.map((error) => {
                     const errorDeclaration = this.errorResolver.getErrorDeclarationFromName(error.error);
                     return ts.factory.createCaseClause(ts.factory.createNumericLiteral(errorDeclaration.statusCode), [
-                        ts.factory.createReturnStatement(
-                            this.buildErrorExpression(context, error, bodyParam, rawResponseParam)
+                        ts.factory.createThrowStatement(
+                            this.buildErrorExpression(context, error, bodyAccess, rawResponseAccess)
                         )
                     ]);
-                }),
-                ts.factory.createDefaultClause([defaultReturn])
-            ])
+                })
+            )
         );
     }
 
     /**
-     * Builds a switch((body as any)?.[discriminant]) statement for property-discriminated errors.
+     * Builds a switch((error.body as any)?.[discriminant]) statement for property-discriminated errors.
+     * Case clauses throw typed errors; no default needed since we re-throw after the if block.
      */
-    private buildPropertyErrorHandler(
+    private buildPropertyMapErrorHandler(
         context: SdkContext,
         propertyStrategy: FernIr.ErrorDiscriminationByPropertyStrategy,
-        bodyParam: ts.Identifier,
-        rawResponseParam: ts.Identifier,
-        defaultReturn: ts.Statement
+        bodyAccess: ts.Expression,
+        rawResponseAccess: ts.Expression
     ): ts.Statement {
         return ts.factory.createSwitchStatement(
             ts.factory.createElementAccessChain(
-                ts.factory.createAsExpression(bodyParam, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
+                ts.factory.createAsExpression(bodyAccess, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                 ts.factory.createStringLiteral(propertyStrategy.discriminant.wireValue)
             ),
-            ts.factory.createCaseBlock([
-                ...this.endpoint.errors.map((error) =>
+            ts.factory.createCaseBlock(
+                this.endpoint.errors.map((error) =>
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
                             context.sdkError.getErrorDeclaration(error.error).discriminantValue.wireValue
                         ),
                         [
-                            ts.factory.createReturnStatement(
-                                this.buildErrorExpression(context, error, bodyParam, rawResponseParam)
+                            ts.factory.createThrowStatement(
+                                this.buildErrorExpression(context, error, bodyAccess, rawResponseAccess)
                             )
                         ]
                     )
-                ),
-                ts.factory.createDefaultClause([defaultReturn])
-            ])
+                )
+            )
         );
     }
 
@@ -1165,8 +1172,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private buildErrorExpression(
         context: SdkContext,
         error: FernIr.ResponseError,
-        bodyParam: ts.Identifier,
-        rawResponseParam: ts.Identifier
+        bodyExpr: ts.Expression,
+        rawResponseExpr: ts.Expression
     ): ts.Expression {
         const generatedSdkError = context.sdkError.getGeneratedSdkError(error.error);
         if (generatedSdkError?.type !== "class") {
@@ -1177,10 +1184,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             referenceToBody:
                 generatedSdkErrorSchema != null
                     ? generatedSdkErrorSchema.deserializeBody(context, {
-                          referenceToBody: bodyParam
+                          referenceToBody: bodyExpr
                       })
                     : undefined,
-            referenceToRawResponse: rawResponseParam
+            referenceToRawResponse: rawResponseExpr
         });
     }
 

@@ -43,18 +43,18 @@ export class BasicAuthClient {
             method: "GET",
             path: "basic-auth",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 401:
-                        return new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest(
-                            body as SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody,
-                            rawResponse,
-                        );
-                    default:
-                        return new errors.SeedBasicAuthEnvironmentVariablesError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedBasicAuthEnvironmentVariablesError) {
+                switch (error.statusCode) {
+                    case 401:
+                        throw new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest(
+                            error.body as SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody,
+                            error.rawResponse,
+                        );
+                }
+            }
+            throw error;
         });
     }
 
@@ -83,20 +83,20 @@ export class BasicAuthClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
+            requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedBasicAuthEnvironmentVariablesError) {
+                switch (error.statusCode) {
                     case 401:
-                        return new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest(
-                            body as SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody,
-                            rawResponse,
+                        throw new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest(
+                            error.body as SeedBasicAuthEnvironmentVariables.UnauthorizedRequestErrorBody,
+                            error.rawResponse,
                         );
                     case 400:
-                        return new SeedBasicAuthEnvironmentVariables.BadRequest(rawResponse);
-                    default:
-                        return new errors.SeedBasicAuthEnvironmentVariablesError({ statusCode, body, rawResponse });
+                        throw new SeedBasicAuthEnvironmentVariables.BadRequest(error.rawResponse);
                 }
-            },
-            requestOptions,
+            }
+            throw error;
         });
     }
 }

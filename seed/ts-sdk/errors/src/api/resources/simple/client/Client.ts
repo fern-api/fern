@@ -52,19 +52,19 @@ export class SimpleClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 404:
-                        return new SeedErrors.NotFoundError(body as SeedErrors.ErrorBody, rawResponse);
-                    case 400:
-                        return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
-                    case 500:
-                        return new SeedErrors.InternalServerError(body as SeedErrors.ErrorBody, rawResponse);
-                    default:
-                        return new errors.SeedErrorsError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedErrorsError) {
+                switch (error.statusCode) {
+                    case 404:
+                        throw new SeedErrors.NotFoundError(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                    case 400:
+                        throw new SeedErrors.BadRequestError(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                    case 500:
+                        throw new SeedErrors.InternalServerError(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                }
+            }
+            throw error;
         });
     }
 
@@ -94,21 +94,21 @@ export class SimpleClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 429:
-                        return new SeedErrors.FooTooMuch(body as SeedErrors.ErrorBody, rawResponse);
-                    case 500:
-                        return new SeedErrors.FooTooLittle(body as SeedErrors.ErrorBody, rawResponse);
-                    case 404:
-                        return new SeedErrors.NotFoundError(body as SeedErrors.ErrorBody, rawResponse);
-                    case 400:
-                        return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
-                    default:
-                        return new errors.SeedErrorsError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedErrorsError) {
+                switch (error.statusCode) {
+                    case 429:
+                        throw new SeedErrors.FooTooMuch(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                    case 500:
+                        throw new SeedErrors.FooTooLittle(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                    case 404:
+                        throw new SeedErrors.NotFoundError(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                    case 400:
+                        throw new SeedErrors.BadRequestError(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                }
+            }
+            throw error;
         });
     }
 
@@ -138,21 +138,21 @@ export class SimpleClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 429:
-                        return new SeedErrors.FooTooMuch(body as SeedErrors.ErrorBody, rawResponse);
-                    case 500:
-                        return new SeedErrors.FooTooLittle(body as SeedErrors.ErrorBody, rawResponse);
-                    case 404:
-                        return new SeedErrors.NotFoundError(body as SeedErrors.ErrorBody, rawResponse);
-                    case 400:
-                        return new SeedErrors.BadRequestError(body as SeedErrors.ErrorBody, rawResponse);
-                    default:
-                        return new errors.SeedErrorsError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedErrorsError) {
+                switch (error.statusCode) {
+                    case 429:
+                        throw new SeedErrors.FooTooMuch(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                    case 500:
+                        throw new SeedErrors.FooTooLittle(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                    case 404:
+                        throw new SeedErrors.NotFoundError(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                    case 400:
+                        throw new SeedErrors.BadRequestError(error.body as SeedErrors.ErrorBody, error.rawResponse);
+                }
+            }
+            throw error;
         });
     }
 }

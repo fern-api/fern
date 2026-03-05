@@ -55,15 +55,15 @@ export class ServiceClient {
             path: `/file/${core.url.encodePathParam(filename)}`,
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 404:
-                        return new SeedExamples.NotFoundError(body as string, rawResponse);
-                    default:
-                        return new errors.SeedExamplesError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedExamplesError) {
+                switch (error.statusCode) {
+                    case 404:
+                        throw new SeedExamples.NotFoundError(error.body as string, error.rawResponse);
+                }
+            }
+            throw error;
         });
     }
 }

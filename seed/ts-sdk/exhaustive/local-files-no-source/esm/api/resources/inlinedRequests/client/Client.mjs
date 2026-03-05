@@ -50,15 +50,15 @@ export class InlinedRequestsClient {
             contentType: "application/json",
             requestType: "json",
             queryParameters: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 400:
-                        return new SeedExhaustive.BadRequestBody(body, rawResponse);
-                    default:
-                        return new errors.SeedExhaustiveError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedExhaustiveError) {
+                switch (error.statusCode) {
+                    case 400:
+                        throw new SeedExhaustive.BadRequestBody(error.body, error.rawResponse);
+                }
+            }
+            throw error;
         });
     }
 }

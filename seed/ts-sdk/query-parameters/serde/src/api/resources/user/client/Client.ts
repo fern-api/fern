@@ -155,16 +155,16 @@ export class UserClient {
                 method: "GET",
                 path: "/user",
                 queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                transformResponse: (body) =>
-                    serializers.User.parseOrThrow(body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
                 requestOptions,
             };
-        });
+        }).map((body) =>
+            serializers.User.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 }

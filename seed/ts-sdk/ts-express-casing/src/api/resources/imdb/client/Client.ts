@@ -73,15 +73,15 @@ export class ImdbClient {
             method: "GET",
             path: `/movies/${core.url.encodePathParam(movie_id)}`,
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch (statusCode) {
-                    case 404:
-                        return new SeedApi.MovieDoesNotExistError(body as SeedApi.MovieId, rawResponse);
-                    default:
-                        return new errors.SeedApiError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedApiError) {
+                switch (error.statusCode) {
+                    case 404:
+                        throw new SeedApi.MovieDoesNotExistError(error.body as SeedApi.MovieId, error.rawResponse);
+                }
+            }
+            throw error;
         });
     }
 }

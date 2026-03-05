@@ -138,20 +138,20 @@ export class PlaylistClient {
             path: `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch ((body as any)?.errorName) {
+            requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedTraceError) {
+                switch ((error.body as any)?.errorName) {
                     case "PlaylistIdNotFoundError":
-                        return new SeedTrace.PlaylistIdNotFoundError(
-                            body as SeedTrace.PlaylistIdNotFoundErrorBody,
-                            rawResponse,
+                        throw new SeedTrace.PlaylistIdNotFoundError(
+                            error.body as SeedTrace.PlaylistIdNotFoundErrorBody,
+                            error.rawResponse,
                         );
                     case "UnauthorizedError":
-                        return new SeedTrace.UnauthorizedError(rawResponse);
-                    default:
-                        return new errors.SeedTraceError({ statusCode, body, rawResponse });
+                        throw new SeedTrace.UnauthorizedError(error.rawResponse);
                 }
-            },
-            requestOptions,
+            }
+            throw error;
         });
     }
 
@@ -188,18 +188,18 @@ export class PlaylistClient {
             requestType: "json",
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch ((body as any)?.errorName) {
-                    case "PlaylistIdNotFoundError":
-                        return new SeedTrace.PlaylistIdNotFoundError(
-                            body as SeedTrace.PlaylistIdNotFoundErrorBody,
-                            rawResponse,
-                        );
-                    default:
-                        return new errors.SeedTraceError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedTraceError) {
+                switch ((error.body as any)?.errorName) {
+                    case "PlaylistIdNotFoundError":
+                        throw new SeedTrace.PlaylistIdNotFoundError(
+                            error.body as SeedTrace.PlaylistIdNotFoundErrorBody,
+                            error.rawResponse,
+                        );
+                }
+            }
+            throw error;
         });
     }
 

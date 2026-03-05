@@ -43,18 +43,18 @@ export class PropertyBasedErrorClient {
             method: "GET",
             path: "property-based-error",
             queryParameters: requestOptions?.queryParams,
-            errorHandler: (statusCode, body, rawResponse) => {
-                switch ((body as any)?.errorName) {
-                    case "PropertyBasedErrorTest":
-                        return new SeedErrorProperty.PropertyBasedErrorTest(
-                            body as SeedErrorProperty.PropertyBasedErrorTestBody,
-                            rawResponse,
-                        );
-                    default:
-                        return new errors.SeedErrorPropertyError({ statusCode, body, rawResponse });
-                }
-            },
             requestOptions,
+        }).mapError((error) => {
+            if (error instanceof errors.SeedErrorPropertyError) {
+                switch ((error.body as any)?.errorName) {
+                    case "PropertyBasedErrorTest":
+                        throw new SeedErrorProperty.PropertyBasedErrorTest(
+                            error.body as SeedErrorProperty.PropertyBasedErrorTestBody,
+                            error.rawResponse,
+                        );
+                }
+            }
+            throw error;
         });
     }
 }

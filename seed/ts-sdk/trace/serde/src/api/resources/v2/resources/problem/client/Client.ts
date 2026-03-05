@@ -49,16 +49,16 @@ export class ProblemClient {
             path: "/problems-v2/lightweight-problem-info",
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.v2.problem.getLightweightProblems.Response.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.v2.problem.getLightweightProblems.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -80,16 +80,16 @@ export class ProblemClient {
             path: "/problems-v2/problem-info",
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.v2.problem.getProblems.Response.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.v2.problem.getProblems.Response.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -113,16 +113,16 @@ export class ProblemClient {
             path: `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}`,
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.v2.ProblemInfoV2.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.v2.ProblemInfoV2.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 
     /**
@@ -148,15 +148,15 @@ export class ProblemClient {
             path: `/problems-v2/problem-info/${core.url.encodePathParam(serializers.ProblemId.jsonOrThrow(problemId, { omitUndefined: true }))}/version/${core.url.encodePathParam(problemVersion)}`,
             queryParameters: requestOptions?.queryParams,
             headers: _headers,
-            transformResponse: (body) =>
-                serializers.v2.ProblemInfoV2.parseOrThrow(body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
             requestOptions,
-        });
+        }).map((body) =>
+            serializers.v2.ProblemInfoV2.parseOrThrow(body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            }),
+        );
     }
 }
