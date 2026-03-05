@@ -1,5 +1,5 @@
-import { generatorsYml } from "@fern-api/configuration";
-import { ContainerRunner } from "@fern-api/core-utils";
+import type { generatorsYml } from "@fern-api/configuration";
+import type { ContainerRunner } from "@fern-api/core-utils";
 import { runContainerizedGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import path from "path";
@@ -25,7 +25,7 @@ export class ContainerTestRunner extends TestRunner {
             if (!hasConfig) {
                 throw new Error(
                     `Generator ${this.generator.workspaceName} does not have a test.${this.runner} configuration in seed.yml. ` +
-                        `Cannot use explicitly specified container runtime '${this.runner}' without corresponding configuration.`
+                        `Cannot use explicitly specified container runtime '${this.runner}' without corresponding configuration.`,
                 );
             }
         } else {
@@ -48,35 +48,35 @@ export class ContainerTestRunner extends TestRunner {
             commands: containerCommands,
             logger: CONSOLE_LOGGER,
             workingDir: path.dirname(path.dirname(this.generator.absolutePathToWorkspace)),
-            doNotPipeOutput: false
+            doNotPipeOutput: false,
         });
         if (containerBuildReturn.exitCode !== 0) {
             throw new Error(`Failed to build the container for ${this.generator.workspaceName}.`);
         }
     }
 
-    protected async runGenerator(args: TestRunner.DoRunArgs): Promise<void> {
-        const {
-            absolutePathToFernDefinition,
-            fernWorkspace,
-            outputDir,
-            fixture,
-            taskContext,
-            selectAudiences,
-            outputVersion,
-            keepContainer,
-            language,
-            customConfig,
-            publishConfig,
-            outputMode,
-            irVersion,
-            publishMetadata,
-            readme,
-            shouldGenerateDynamicSnippetTests,
-            inspect = false,
-            license,
-            smartCasing
-        } = args;
+    protected async runGenerator({
+        absolutePathToFernDefinition,
+        fernWorkspace,
+        outputDir,
+        fixture,
+        taskContext,
+        selectAudiences,
+        outputVersion,
+        keepContainer,
+        language,
+        customConfig,
+        publishConfig,
+        outputMode,
+        irVersion,
+        publishMetadata,
+        readme,
+        shouldGenerateDynamicSnippetTests,
+        inspect = false,
+        license,
+        outputFolder,
+        smartCasing,
+    }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
             reviewers: undefined,
@@ -90,14 +90,14 @@ export class ContainerTestRunner extends TestRunner {
                     publishConfig,
                     outputMode,
                     fixtureName: fixture,
-                    outputFolder: args.outputFolder || undefined,
                     irVersion,
                     publishMetadata,
                     readme,
                     license,
-                    smartCasing
-                })
-            ]
+                    smartCasing,
+                    outputFolder,
+                }),
+            ],
         };
         await runContainerizedGenerationForSeed({
             organization: DUMMY_ORGANIZATION,
@@ -113,7 +113,7 @@ export class ContainerTestRunner extends TestRunner {
             keepDocker: keepContainer ?? false,
             dockerImage: this.getContainerImageName(),
             runner: this.runner,
-            ai: undefined
+            ai: undefined,
         });
     }
 
