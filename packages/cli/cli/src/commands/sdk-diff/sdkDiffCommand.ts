@@ -10,6 +10,7 @@ import { ClientRegistry } from "@boundaryml/baml";
 import { AnalyzeCommitDiffResponse, b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { countFilesInDiff, DIFF_SIZE_LIMIT, formatSizeKB } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
 import { FernCliError, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
@@ -94,12 +95,10 @@ export async function sdkDiffCommand({
         };
     }
 
-    const diffSizeKB = (gitDiff.length / 1024).toFixed(1);
-    const fileCount = (gitDiff.match(/^diff --git /gm) || []).length;
-    context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} bytes), ${fileCount} files changed`);
+    const diffSizeKB = formatSizeKB(gitDiff.length);
+    const fileCount = countFilesInDiff(gitDiff);
+    context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} chars), ${fileCount} files changed`);
 
-    // The FAI /sdks/analyze-commit-diff endpoint rejects diffs exceeding 100,000 characters
-    const DIFF_SIZE_LIMIT = 100_000; // 100K characters — matches FAI endpoint MAX_DIFF_SIZE
     if (gitDiff.length > DIFF_SIZE_LIMIT) {
         context.logger.warn(
             `Diff is too large for AI analysis ` +

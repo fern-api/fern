@@ -10,7 +10,14 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
+import {
+    AutoVersioningException,
+    AutoVersioningService,
+    AutoVersionResult,
+    countFilesInDiff,
+    DIFF_SIZE_LIMIT,
+    formatSizeKB
+} from "./AutoVersioningService.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
@@ -137,13 +144,13 @@ export class LocalTaskHandler {
             const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
-            const rawDiffSizeKB = (diffContent.length / 1024).toFixed(1);
-            const cleanedDiffSizeKB = (cleanedDiff.length / 1024).toFixed(1);
-            const fileCount = (diffContent.match(/^diff --git /gm) || []).length;
+            const rawDiffSizeKB = formatSizeKB(diffContent.length);
+            const cleanedDiffSizeKB = formatSizeKB(cleanedDiff.length);
+            const fileCount = countFilesInDiff(diffContent);
 
             this.context.logger.debug(
-                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} bytes), ` +
-                    `cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} bytes), ` +
+                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} chars), ` +
+                    `cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ` +
                     `files changed: ${fileCount}`
             );
 
@@ -171,8 +178,6 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            // The FAI /sdks/analyze-commit-diff endpoint rejects diffs exceeding 100,000 characters
-            const DIFF_SIZE_LIMIT = 100_000; // 100K characters — matches FAI endpoint MAX_DIFF_SIZE
             if (cleanedDiff.length > DIFF_SIZE_LIMIT) {
                 this.context.logger.warn(
                     `Cleaned diff is too large for AI analysis ` +
