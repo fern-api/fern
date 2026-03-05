@@ -17,29 +17,26 @@
  *    - Constructors, Assignment operators, Methods, Types, Member variables, Inner classes, etc.
  */
 
-import type {
-    CppClassIr,
-    CppFunctionIr
-} from "../../../src/types/CppLibraryDocsIr.js";
-import type { RenderContext, CompoundMeta } from "../context.js";
-import { buildLinkPath, getShortName, stripTemplateArgs, registerClassMembers, clearClassMembers } from "../context.js";
-import { renderFrontmatter as renderFrontmatterLines, trimTrailingBlankLines, renderCallout } from "./shared.js";
-import { renderDescriptionBlocks, renderSegmentsTrimmed, setCurrentPagePath, renderSeeAlso } from "./DescriptionRenderer.js";
-import { renderClassTemplateParams } from "./ParamRenderer.js";
-import { renderBareCodeBlock } from "./SignatureRenderer.js";
+import type { CppClassIr, CppFunctionIr } from "../../../src/types/CppLibraryDocsIr.js";
+import type { CompoundMeta, RenderContext } from "../context.js";
+import { buildLinkPath, clearClassMembers, getShortName, registerClassMembers, stripTemplateArgs } from "../context.js";
 import { renderBadge } from "./BadgeRenderer.js";
 import {
-    renderSingleMethod,
-    renderOverloadedMethod,
-    renderDestructor,
-    groupFunctionsByName
-} from "./MethodRenderer.js";
+    renderDescriptionBlocks,
+    renderSeeAlso,
+    renderSegmentsTrimmed,
+    setCurrentPagePath
+} from "./DescriptionRenderer.js";
 import {
-    renderTypedefTable,
-    renderMemberVariableTable,
-    renderInnerClass,
-    renderEnum
-} from "./TableRenderer.js";
+    groupFunctionsByName,
+    renderDestructor,
+    renderOverloadedMethod,
+    renderSingleMethod
+} from "./MethodRenderer.js";
+import { renderClassTemplateParams } from "./ParamRenderer.js";
+import { renderBareCodeBlock, renderClassTemplateSignature } from "./SignatureRenderer.js";
+import { renderCallout, renderFrontmatter as renderFrontmatterLines, trimTrailingBlankLines } from "./shared.js";
+import { renderEnum, renderInnerClass, renderMemberVariableTable, renderTypedefTable } from "./TableRenderer.js";
 
 // ---------------------------------------------------------------------------
 // Frontmatter
@@ -50,8 +47,7 @@ import {
  */
 function renderClassFrontmatter(cls: CppClassIr, meta: CompoundMeta): string {
     // Description is expected to be provided by the caller (pipeline/Lambda); fallback extracts from docstring summary
-    const description = meta.description
-        ?? (cls.docstring ? renderSegmentsTrimmed(cls.docstring.summary) : "");
+    const description = meta.description ?? (cls.docstring ? renderSegmentsTrimmed(cls.docstring.summary) : "");
 
     return renderFrontmatterLines(cls.path, description).join("\n");
 }
@@ -67,7 +63,14 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
     const lines: string[] = [];
     const docstring = cls.docstring;
 
-    // 1. Summary paragraphs and description blocks
+    // 1. Class template signature (if this is a templated class) - MUST BE FIRST
+    const templateSignature = renderClassTemplateSignature(cls, ctx);
+    if (templateSignature) {
+        lines.push(templateSignature);
+        lines.push("");
+    }
+
+    // 2. Summary paragraphs and description blocks
     if (docstring) {
         if (docstring.summary.length > 0) {
             const summary = renderSegmentsTrimmed(docstring.summary);
@@ -86,7 +89,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
     }
 
-    // 2. Include header (prepend namespace path prefix)
+    // 3. Include header (prepend namespace path prefix)
     if (cls.includeHeader) {
         const namespacePath = ctx.meta.namespacePath;
         const prefix = namespacePath.length > 0 ? namespacePath.join("/") + "/" : "";
@@ -94,7 +97,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         lines.push("");
     }
 
-    // 3. Callouts
+    // 4. Callouts
     // Deprecated
     if (docstring?.deprecated) {
         const depText = renderSegmentsTrimmed(docstring.deprecated);
@@ -123,7 +126,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
     }
 
-    // 4. See also (class-level) -- multi-line format
+    // 5. See also (class-level) -- multi-line format
     if (docstring?.seeAlso && docstring.seeAlso.length > 0) {
         const seeAlsoBlock = renderSeeAlso(docstring.seeAlso);
         if (seeAlsoBlock) {
@@ -131,7 +134,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
     }
 
-    // 5. Class-level examples
+    // 6. Class-level examples
     if (docstring?.examples && docstring.examples.length > 0) {
         lines.push("## Example");
         lines.push("");
@@ -142,7 +145,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
     }
 
-    // 6. Template parameters (AccordionGroup)
+    // 7. Template parameters (AccordionGroup)
     if (cls.templateParams.length > 0) {
         const tplParams = renderClassTemplateParams(cls.templateParams, cls.docstring);
         if (tplParams) {
@@ -151,9 +154,9 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
     }
 
-    // 7. Inherits from
+    // 8. Inherits from
     if (cls.baseClasses.length > 0) {
-        const baseLinks = cls.baseClasses.map(bc => {
+        const baseLinks = cls.baseClasses.map((bc) => {
             const access = `(${bc.access})`;
             // Display text preserves template args; URL strips them
             const displayText = bc.typeInfo?.display ?? bc.name;
@@ -168,7 +171,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         lines.push("");
     }
 
-    // 8. Final annotation
+    // 9. Final annotation
     if (cls.isFinal) {
         lines.push(`This class is marked ${renderBadge("final")}.`);
         lines.push("");
@@ -212,7 +215,7 @@ function buildMethodToLabelMap(cls: CppClassIr): Map<string, string> {
     }
 
     // Check if any key directly matches a method path
-    const hasDirectPathMatch = cls.methods.some(m => cls.sectionLabels[m.path] != null);
+    const hasDirectPathMatch = cls.methods.some((m) => cls.sectionLabels[m.path] != null);
 
     if (hasDirectPathMatch) {
         // Keys are method paths -- direct lookup, keyed by method index
@@ -257,15 +260,15 @@ function mergeSiblingMethodSections(sections: MethodSection[]): MethodSection[] 
         let baseLabel = current.label;
 
         // Get the set of method names in the current section
-        const currentMethodNames = new Set(current.methods.map(m => m.name));
+        const currentMethodNames = new Set(current.methods.map((m) => m.name));
 
         let j = i + 1;
         while (j < sections.length) {
             const next = sections[j]!;
-            const nextMethodNames = new Set(next.methods.map(m => m.name));
+            const nextMethodNames = new Set(next.methods.map((m) => m.name));
 
             // Check if method name sets overlap (same method names)
-            const hasOverlap = [...currentMethodNames].some(n => nextMethodNames.has(n));
+            const hasOverlap = [...currentMethodNames].some((n) => nextMethodNames.has(n));
 
             if (hasOverlap) {
                 // Check if one label is a prefix of the other
@@ -392,12 +395,7 @@ function categorizeMethodSections(cls: CppClassIr): MethodSection[] {
  * Methods with the same name are grouped as overloads.
  * Different method names within the same section are separated by ---.
  */
-function renderMethodSection(
-    label: string,
-    methods: CppFunctionIr[],
-    cls: CppClassIr,
-    ctx: RenderContext
-): string {
+function renderMethodSection(label: string, methods: CppFunctionIr[], cls: CppClassIr, ctx: RenderContext): string {
     const lines: string[] = [];
     lines.push(`## ${label}`);
     lines.push("");
@@ -425,9 +423,11 @@ function renderMethodSection(
         } else if (funcs.length === 1) {
             lines.push(renderSingleMethod(funcs[0]!, cls, ctx));
         } else {
-            lines.push(renderOverloadedMethod(funcs, cls, ctx, {
-                isConstructor: isConstructorSection && name === className
-            }));
+            lines.push(
+                renderOverloadedMethod(funcs, cls, ctx, {
+                    isConstructor: isConstructorSection && name === className
+                })
+            );
         }
 
         // No --- separators between methods within the same H2 section.
@@ -443,10 +443,7 @@ function renderMethodSection(
 /**
  * Render the static methods section.
  */
-function renderStaticMethodsSection(
-    cls: CppClassIr,
-    ctx: RenderContext
-): string {
+function renderStaticMethodsSection(cls: CppClassIr, ctx: RenderContext): string {
     if (cls.staticMethods.length === 0) {
         return "";
     }

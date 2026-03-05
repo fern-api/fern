@@ -18,23 +18,32 @@ import { needsQuoting } from "../context.js";
  * - Variadic params where the name may be separate from the type
  * - Types that already contain the name (no duplication)
  * - Unnamed params (type only)
+ * - Default values (e.g., "int N = 5", "Algorithm = BLOCK_SCAN_RAKING")
  */
 export function formatTemplateParam(tp: CppTemplateParamIr): string {
+    let result: string;
+
     if (tp.name) {
-        // For variadic params, the name may be separate from the type
-        // e.g., type="class...", name="_Properties" -> "class... _Properties"
-        if (tp.isVariadic) {
-            if (tp.type.includes(tp.name)) {
-                return tp.type;
-            }
-            return `${tp.type} ${tp.name}`;
+        // Check if the type already contains the name as a complete word
+        // e.g., "typename T" contains "T", "class... _Properties" contains "_Properties"
+        // but "BlockScanAlgorithm" should not be considered as containing "Algorithm"
+        const typeEndsWithName = tp.type.endsWith(` ${tp.name}`) || tp.type === tp.name;
+
+        if (typeEndsWithName) {
+            result = tp.type;
+        } else {
+            result = `${tp.type} ${tp.name}`;
         }
-        if (tp.type.includes(tp.name)) {
-            return tp.type;
-        }
-        return `${tp.type} ${tp.name}`;
+    } else {
+        result = tp.type;
     }
-    return tp.type;
+
+    // Add default value if present
+    if (tp.defaultValue?.display) {
+        result += ` = ${tp.defaultValue.display}`;
+    }
+
+    return result;
 }
 
 // ---------------------------------------------------------------------------

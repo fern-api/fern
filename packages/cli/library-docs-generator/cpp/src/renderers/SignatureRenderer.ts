@@ -10,12 +10,8 @@
  * - Default arguments
  */
 
-import type {
-    CppClassIr,
-    CppFunctionIr,
-    CppTypeInfo
-} from "../../../src/types/CppLibraryDocsIr.js";
-import { buildLinkPath, getShortName, stripTemplateArgs, type RenderContext } from "../context.js";
+import type { CppClassIr, CppFunctionIr, CppTypeInfo } from "../../../src/types/CppLibraryDocsIr.js";
+import { buildLinkPath, getShortName, type RenderContext, stripTemplateArgs } from "../context.js";
 import { isTypeRef, resolveCompoundRef } from "./DescriptionRenderer.js";
 import { isSfinaeParam } from "./ParamRenderer.js";
 import { formatTemplateParam } from "./shared.js";
@@ -126,9 +122,7 @@ function normalizeDefaultValueSpacing(paramsStr: string): string {
  * Inner class resolution is handled by `resolveCompoundRef` via the
  * module-level `nameToPathMap` populated by `registerClassMembers`.
  */
-function extractLinksFromTypeInfo(
-    typeInfo: CppTypeInfo | undefined
-): Map<string, string> {
+function extractLinksFromTypeInfo(typeInfo: CppTypeInfo | undefined): Map<string, string> {
     const links = new Map<string, string>();
     if (!typeInfo) {
         return links;
@@ -272,7 +266,7 @@ export function formatSignature(func: CppFunctionIr, ownerClass?: CppClassIr): s
  */
 function formatTemplateLine(func: CppFunctionIr): string {
     // Filter out SFINAE / enable_if template params (they are implementation details)
-    const renderableTemplateParams = func.templateParams.filter(tp => !isSfinaeParam(tp));
+    const renderableTemplateParams = func.templateParams.filter((tp) => !isSfinaeParam(tp));
 
     // If all template params were SFINAE, suppress the template line entirely
     if (renderableTemplateParams.length === 0) {
@@ -369,11 +363,7 @@ function reformatRawSignature(func: CppFunctionIr, ownerClass?: CppClassIr): str
         return `    ${trimmed}${comma}`;
     });
 
-    return [
-        `${prefix}(`,
-        ...formattedParams,
-        `)${quals}${specialSuffix}`
-    ].join("\n");
+    return [`${prefix}(`, ...formattedParams, `)${quals}${specialSuffix}`].join("\n");
 }
 
 /**
@@ -413,12 +403,15 @@ function findParamListOpenParen(sig: string): number {
  * The IR's isDeleted field is unreliable (often false even when signature has =delete),
  * so we check both the IR field and the raw signature string.
  */
-function detectDeletedOrDefaulted(sig: string, isDeletedFromIr: boolean): {
+function detectDeletedOrDefaulted(
+    sig: string,
+    isDeletedFromIr: boolean
+): {
     specialSuffix: string;
     strippedSig: string;
 } {
     const sigHasDelete = /=\s*delete\s*$/.test(sig);
-    const deleteSuffix = (isDeletedFromIr || sigHasDelete) ? " = delete" : "";
+    const deleteSuffix = isDeletedFromIr || sigHasDelete ? " = delete" : "";
 
     const sigHasDefault = /=\s*default\s*$/.test(sig);
     const defaultSuffix = sigHasDefault ? " = default" : "";
@@ -529,9 +522,7 @@ function splitParams(paramsStr: string): string[] {
  * Produces `{"key": "/path", "key2": "/path2"}` instead of `{"key":"/path","key2":"/path2"}`.
  */
 export function formatLinksJson(links: Record<string, string>): string {
-    const entries = Object.entries(links).map(
-        ([key, value]) => `"${key}": "${value}"`
-    );
+    const entries = Object.entries(links).map(([key, value]) => `"${key}": "${value}"`);
     return `{${entries.join(", ")}}`;
 }
 
@@ -542,13 +533,90 @@ export function renderCodeBlock(code: string, links: Record<string, string>): st
     const hasLinks = Object.keys(links).length > 0;
     const linksStr = hasLinks ? ` links={${formatLinksJson(links)}}` : "";
 
-    return [
-        `<CodeBlock${linksStr}>`,
-        "```cpp showLineNumbers={false}",
-        code,
-        "```",
-        "</CodeBlock>"
-    ].join("\n");
+    return [`<CodeBlock${linksStr}>`, "```cpp showLineNumbers={false}", code, "```", "</CodeBlock>"].join("\n");
+}
+
+/**
+ * Render a class template signature as a CodeBlock component with anchor ID.
+ *
+ * Displays the template parameters and class declaration in a code block.
+ * Includes anchor ID for linking to the class signature.
+ *
+ * Example output:
+ * ```cpp
+ * template <typename T, int BlockDimX, BlockScanAlgorithm Algorithm = BLOCK_SCAN_RAKING>
+ * class BlockScan
+ * ```
+ */
+export function renderClassTemplateSignature(cls: CppClassIr, ctx: RenderContext): string {
+    // Skip if no template parameters
+    if (cls.templateParams.length === 0) {
+        return "";
+    }
+
+    // Filter out SFINAE parameters
+    const renderableParams = cls.templateParams.filter((tp) => !isSfinaeParam(tp));
+    if (renderableParams.length === 0) {
+        return "";
+    }
+
+    // Format template parameters
+    const params = renderableParams.map(formatTemplateParam);
+
+    // Build template line with multi-line formatting for readability
+    let templateLine: string;
+    const joined = params.join(", ");
+    if (joined.length > 80) {
+        templateLine = `template <${params.join(",\n          ")}>`;
+    } else {
+        templateLine = `template <${joined}>`;
+    }
+
+    // Get the short class name for the class declaration line
+    const className = getShortName(cls.path);
+    const classKind = cls.kind; // "class" or "struct"
+    const classLine = `${classKind} ${className}`;
+
+    // Build the signature
+    const signature = [templateLine, classLine].join("\n");
+
+    // Build links for template parameters and class name
+    const links = extractClassTemplateLinks(cls, ctx);
+
+    // Add anchor ID for the class name
+    const anchorId = ` id="${className}"`;
+    const codeBlockStart = `<CodeBlock${anchorId}`;
+    const linksStr = Object.keys(links).length > 0 ? ` links={${formatLinksJson(links)}}` : "";
+
+    return [`${codeBlockStart}${linksStr}>`, "```cpp showLineNumbers={false}", signature, "```", "</CodeBlock>"].join(
+        "\n"
+    );
+}
+
+/**
+ * Extract links for class template signature (template parameters and class name).
+ */
+function extractClassTemplateLinks(cls: CppClassIr, ctx: RenderContext): Record<string, string> {
+    const links: Record<string, string> = {};
+
+    // Add link for the class itself
+    const className = getShortName(cls.path);
+    links[className] = buildLinkPath(cls.path);
+
+    // Extract links from template parameters
+    for (const param of cls.templateParams) {
+        // Template parameters don't have typeInfo, but their defaultValue might
+        if (param.defaultValue?.parts) {
+            const paramLinks = extractLinksFromTypeInfo(param.defaultValue);
+            for (const [key, value] of paramLinks) {
+                if (!links[key]) {
+                    links[key] = value;
+                }
+            }
+        }
+    }
+
+    return links;
 }
 
 /**
@@ -556,9 +624,5 @@ export function renderCodeBlock(code: string, links: Record<string, string>): st
  * Used for include headers and method-level examples.
  */
 export function renderBareCodeBlock(code: string, language: string = "cpp"): string {
-    return [
-        `\`\`\`${language} showLineNumbers={false}`,
-        code,
-        "```"
-    ].join("\n");
+    return [`\`\`\`${language} showLineNumbers={false}`, code, "```"].join("\n");
 }
