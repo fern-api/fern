@@ -38,6 +38,7 @@ from seed import SeedIdempotencyHeaders
 
 client = SeedIdempotencyHeaders(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.payment.create(
@@ -57,6 +58,7 @@ from seed import AsyncSeedIdempotencyHeaders
 
 client = AsyncSeedIdempotencyHeaders(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedObjectsWithImports
 
-client = SeedObjectsWithImports()
+client = SeedObjectsWithImports(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.optional.send_optional_body(
     request={
@@ -54,7 +56,9 @@ import asyncio
 
 from seed import AsyncSeedObjectsWithImports
 
-client = AsyncSeedObjectsWithImports()
+client = AsyncSeedObjectsWithImports(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

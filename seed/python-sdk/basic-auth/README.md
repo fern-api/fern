@@ -39,6 +39,7 @@ from seed import SeedBasicAuth
 client = SeedBasicAuth(
     username="<username>",
     password="<password>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.basic_auth.post_with_basic_auth(
@@ -58,6 +59,7 @@ from seed import AsyncSeedBasicAuth
 client = AsyncSeedBasicAuth(
     username="<username>",
     password="<password>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedNurseryApi
 
-client = SeedNurseryApi()
+client = SeedNurseryApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.package.test(
     for_="for",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedNurseryApi
 
-client = AsyncSeedNurseryApi()
+client = AsyncSeedNurseryApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

@@ -15,7 +15,9 @@
 ```python
 from seed import SeedErrors
 
-client = SeedErrors()
+client = SeedErrors(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.simple.foo_without_endpoint_error(
     bar="bar",
@@ -70,7 +72,9 @@ client.simple.foo_without_endpoint_error(
 ```python
 from seed import SeedErrors
 
-client = SeedErrors()
+client = SeedErrors(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.simple.foo(
     bar="bar",
@@ -125,7 +129,9 @@ client.simple.foo(
 ```python
 from seed import SeedErrors
 
-client = SeedErrors()
+client = SeedErrors(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.simple.foo_with_examples(
     bar="hello",

@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedUndiscriminatedUnions
 
-client = SeedUndiscriminatedUnions()
+client = SeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.get(
     request="string",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedUndiscriminatedUnions
 
-client = AsyncSeedUndiscriminatedUnions()
+client = AsyncSeedUndiscriminatedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

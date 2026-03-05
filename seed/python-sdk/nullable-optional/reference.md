@@ -29,7 +29,9 @@ Get a user by ID
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.get_user(
     user_id="userId",
@@ -98,7 +100,9 @@ Create a new user
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.create_user(
     username="username",
@@ -178,7 +182,9 @@ Update a user (partial update)
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.update_user(
     user_id="userId",
@@ -267,7 +273,9 @@ List all users
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.list_users(
     limit=1,
@@ -363,7 +371,9 @@ Search users
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.search_users(
     query="query",
@@ -460,7 +470,9 @@ Create a complex profile to test nullable enums and unions
 from seed import SeedNullableOptional
 from datetime import datetime
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.create_complex_profile(
     id="id",
@@ -633,7 +645,9 @@ Get a complex profile by ID
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.get_complex_profile(
     profile_id="profileId",
@@ -703,7 +717,9 @@ Update complex profile to test nullable field updates
 from seed import SeedNullableOptional
 from datetime import datetime
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.update_complex_profile(
     profile_id="profileId",
@@ -843,7 +859,9 @@ Test endpoint for validating null deserialization
 from seed import SeedNullableOptional
 from datetime import datetime
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.test_deserialization(
     required_string="requiredString",
@@ -963,7 +981,9 @@ Filter users by role with nullable enum
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.filter_by_role(
     role="ADMIN",
@@ -1050,7 +1070,9 @@ Get notification settings which may be null
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.get_notification_settings(
     user_id="userId",
@@ -1119,7 +1141,9 @@ Update tags to test array handling
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.update_tags(
     user_id="userId",
@@ -1224,7 +1248,9 @@ Get search results with nullable unions
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.get_search_results(
     query="query",

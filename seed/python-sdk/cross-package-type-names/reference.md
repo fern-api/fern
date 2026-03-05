@@ -15,7 +15,9 @@
 ```python
 from seed import SeedCrossPackageTypeNames
 
-client = SeedCrossPackageTypeNames()
+client = SeedCrossPackageTypeNames(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.folder_a.service.get_direct_thread()
 
@@ -61,7 +63,9 @@ client.folder_a.service.get_direct_thread()
 ```python
 from seed import SeedCrossPackageTypeNames
 
-client = SeedCrossPackageTypeNames()
+client = SeedCrossPackageTypeNames(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.folder_a.service.get_direct_thread()
 
@@ -107,7 +111,9 @@ client.folder_a.service.get_direct_thread()
 ```python
 from seed import SeedCrossPackageTypeNames
 
-client = SeedCrossPackageTypeNames()
+client = SeedCrossPackageTypeNames(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.foo.find(
     optional_string="optionalString",

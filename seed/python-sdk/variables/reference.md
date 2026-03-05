@@ -15,7 +15,9 @@
 ```python
 from seed import SeedVariables
 
-client = SeedVariables()
+client = SeedVariables(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.post()
 

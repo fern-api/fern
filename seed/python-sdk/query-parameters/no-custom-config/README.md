@@ -38,7 +38,9 @@ from seed import SeedQueryParameters
 from uuid import UUID
 from datetime import date, datetime
 
-client = SeedQueryParameters()
+client = SeedQueryParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.get_username(
     limit=1,
@@ -117,7 +119,9 @@ from datetime import date, datetime
 
 from seed import AsyncSeedQueryParameters
 
-client = AsyncSeedQueryParameters()
+client = AsyncSeedQueryParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

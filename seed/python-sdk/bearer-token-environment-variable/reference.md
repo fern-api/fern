@@ -31,6 +31,7 @@ from seed import SeedBearerTokenEnvironmentVariable
 
 client = SeedBearerTokenEnvironmentVariable(
     api_key="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.get_with_bearer_token()

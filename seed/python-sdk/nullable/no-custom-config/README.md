@@ -37,7 +37,9 @@ Instantiate and use the client with the following:
 from seed import SeedNullable
 from datetime import datetime
 
-client = SeedNullable()
+client = SeedNullable(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable.create_user(
     username="username",
@@ -71,7 +73,9 @@ from datetime import datetime
 
 from seed import AsyncSeedNullable
 
-client = AsyncSeedNullable()
+client = AsyncSeedNullable(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

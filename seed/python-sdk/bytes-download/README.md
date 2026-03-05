@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedBytesDownload
 
-client = SeedBytesDownload()
+client = SeedBytesDownload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.simple()
 ```
@@ -50,7 +52,9 @@ import asyncio
 
 from seed import AsyncSeedBytesDownload
 
-client = AsyncSeedBytesDownload()
+client = AsyncSeedBytesDownload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

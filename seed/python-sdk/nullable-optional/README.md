@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedNullableOptional
 
-client = SeedNullableOptional()
+client = SeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable_optional.create_user(
     username="username",
@@ -63,7 +65,9 @@ import asyncio
 
 from seed import AsyncSeedNullableOptional
 
-client = AsyncSeedNullableOptional()
+client = AsyncSeedNullableOptional(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

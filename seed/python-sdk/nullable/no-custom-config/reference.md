@@ -15,7 +15,9 @@
 ```python
 from seed import SeedNullable
 
-client = SeedNullable()
+client = SeedNullable(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable.get_users(
     usernames=[
@@ -113,7 +115,9 @@ client.nullable.get_users(
 from seed import SeedNullable
 from datetime import datetime
 
-client = SeedNullable()
+client = SeedNullable(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable.create_user(
     username="username",
@@ -209,7 +213,9 @@ client.nullable.create_user(
 ```python
 from seed import SeedNullable
 
-client = SeedNullable()
+client = SeedNullable(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.nullable.delete_user(
     username="xy",

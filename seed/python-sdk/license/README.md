@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedLicense
 
-client = SeedLicense()
+client = SeedLicense(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.get()
 ```
@@ -50,7 +52,9 @@ import asyncio
 
 from seed import AsyncSeedLicense
 
-client = AsyncSeedLicense()
+client = AsyncSeedLicense(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

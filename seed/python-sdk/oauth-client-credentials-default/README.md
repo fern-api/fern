@@ -40,6 +40,7 @@ from seed import SeedOauthClientCredentialsDefault
 client = SeedOauthClientCredentialsDefault(
     client_id="<clientId>",
     client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.auth.get_token(
@@ -60,6 +61,7 @@ from seed import AsyncSeedOauthClientCredentialsDefault
 client = AsyncSeedOauthClientCredentialsDefault(
     client_id="<clientId>",
     client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

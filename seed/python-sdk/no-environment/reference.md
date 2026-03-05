@@ -17,6 +17,7 @@ from seed import SeedNoEnvironment
 
 client = SeedNoEnvironment(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.dummy.get_dummy()

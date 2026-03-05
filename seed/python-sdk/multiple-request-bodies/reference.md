@@ -13,9 +13,11 @@
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
 client = SeedApi(
     token="<token>",
+    environment=SeedApiEnvironment.DEFAULT,
 )
 
 client.upload_json_document()

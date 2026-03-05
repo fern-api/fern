@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedPythonBackslashEscape
 
-client = SeedPythonBackslashEscape()
+client = SeedPythonBackslashEscape(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.get(
     id="id",
@@ -53,7 +55,9 @@ import asyncio
 
 from seed import AsyncSeedPythonBackslashEscape
 
-client = AsyncSeedPythonBackslashEscape()
+client = AsyncSeedPythonBackslashEscape(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

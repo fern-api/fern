@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedNoRetries
 
-client = SeedNoRetries()
+client = SeedNoRetries(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.retries.get_users()
 ```
@@ -50,7 +52,9 @@ import asyncio
 
 from seed import AsyncSeedNoRetries
 
-client = AsyncSeedNoRetries()
+client = AsyncSeedNoRetries(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

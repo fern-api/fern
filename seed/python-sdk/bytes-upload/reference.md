@@ -15,7 +15,9 @@
 ```python
 from seed import SeedBytesUpload
 
-client = SeedBytesUpload()
+client = SeedBytesUpload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.upload()
 

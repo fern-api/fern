@@ -39,6 +39,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.complex_.search(
@@ -66,6 +67,7 @@ from seed import AsyncSeedPagination
 
 client = AsyncSeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 
@@ -111,6 +113,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.complex_.search(

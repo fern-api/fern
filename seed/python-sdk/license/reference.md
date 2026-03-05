@@ -14,7 +14,9 @@
 ```python
 from seed import SeedLicense
 
-client = SeedLicense()
+client = SeedLicense(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.get()
 

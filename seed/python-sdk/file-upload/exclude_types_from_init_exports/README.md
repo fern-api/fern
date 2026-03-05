@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedFileUpload
 
-client = SeedFileUpload()
+client = SeedFileUpload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.just_file(
     file="example_file",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedFileUpload
 
-client = AsyncSeedFileUpload()
+client = AsyncSeedFileUpload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

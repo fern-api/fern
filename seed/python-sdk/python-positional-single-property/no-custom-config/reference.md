@@ -14,7 +14,9 @@
 ```python
 from seed import SeedPythonPositionalSingleProperty
 
-client = SeedPythonPositionalSingleProperty()
+client = SeedPythonPositionalSingleProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.create(
     instrument={

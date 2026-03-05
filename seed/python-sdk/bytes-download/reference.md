@@ -15,7 +15,9 @@
 ```python
 from seed import SeedBytesDownload
 
-client = SeedBytesDownload()
+client = SeedBytesDownload(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.simple()
 

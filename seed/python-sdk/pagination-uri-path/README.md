@@ -39,6 +39,7 @@ from seed import SeedPaginationUriPath
 
 client = SeedPaginationUriPath(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_uri_pagination()
@@ -55,6 +56,7 @@ from seed import AsyncSeedPaginationUriPath
 
 client = AsyncSeedPaginationUriPath(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 
@@ -89,6 +91,7 @@ from seed import SeedPaginationUriPath
 
 client = SeedPaginationUriPath(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_uri_pagination()

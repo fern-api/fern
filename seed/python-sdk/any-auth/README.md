@@ -39,6 +39,7 @@ from seed import SeedAnyAuth
 
 client = SeedAnyAuth(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.auth.get_token(
@@ -58,6 +59,7 @@ from seed import AsyncSeedAnyAuth
 
 client = AsyncSeedAnyAuth(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

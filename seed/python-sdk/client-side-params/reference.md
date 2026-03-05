@@ -31,6 +31,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.list_resources(
@@ -156,6 +157,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.get_resource(
@@ -245,6 +247,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.search_resources(
@@ -345,6 +348,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.list_users(
@@ -479,6 +483,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.get_user_by_id(
@@ -568,6 +573,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.create_user(
@@ -651,6 +657,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.update_user(
@@ -743,6 +750,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.delete_user(
@@ -814,6 +822,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.list_connections(
@@ -903,6 +912,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.get_connection(
@@ -983,6 +993,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.list_clients(
@@ -1120,6 +1131,7 @@ from seed import SeedClientSideParams
 
 client = SeedClientSideParams(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.get_client(

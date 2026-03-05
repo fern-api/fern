@@ -17,6 +17,7 @@ from seed import SeedAccept
 
 client = SeedAccept(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.endpoint()

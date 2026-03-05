@@ -14,7 +14,9 @@
 ```python
 from seed import SeedPropertyAccess
 
-client = SeedPropertyAccess()
+client = SeedPropertyAccess(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.create_user(
     id="id",

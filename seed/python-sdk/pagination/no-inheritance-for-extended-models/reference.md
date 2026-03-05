@@ -17,6 +17,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.complex_.search(
@@ -92,6 +93,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_cursor_pagination(
@@ -179,6 +181,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(
@@ -236,6 +239,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
@@ -294,6 +298,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_cursor_pagination(
@@ -381,6 +386,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_cursor_pagination(
@@ -468,6 +474,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_mixed_type_cursor_pagination()
@@ -526,6 +533,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_offset_step_pagination(
@@ -605,6 +613,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_offset_step_pagination(
@@ -685,6 +694,7 @@ from uuid import UUID
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_extended_results(
@@ -743,6 +753,7 @@ from uuid import UUID
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_extended_results(
@@ -800,6 +811,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_cursor_pagination(
@@ -860,6 +872,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inline_users.inline_users.list_with_global_config(
@@ -918,6 +931,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_cursor_pagination(
@@ -1005,6 +1019,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_mixed_type_cursor_pagination(
@@ -1062,6 +1077,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_mixed_type_cursor_pagination()
@@ -1136,6 +1152,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_top_level_body_cursor_pagination(
@@ -1205,6 +1222,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_cursor_pagination(
@@ -1292,6 +1310,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_cursor_pagination(
@@ -1379,6 +1398,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_mixed_type_cursor_pagination()
@@ -1437,6 +1457,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_offset_step_pagination(
@@ -1516,6 +1537,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_offset_step_pagination(
@@ -1596,6 +1618,7 @@ from uuid import UUID
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_extended_results(
@@ -1654,6 +1677,7 @@ from uuid import UUID
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_extended_results(
@@ -1711,6 +1735,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_cursor_pagination(
@@ -1771,6 +1796,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_cursor_pagination(
@@ -1831,6 +1857,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_global_config(
@@ -1888,6 +1915,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_with_optional_data(

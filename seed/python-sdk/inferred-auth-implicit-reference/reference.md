@@ -19,6 +19,7 @@ client = SeedInferredAuthImplicit(
     client_id="client_id",
     client_secret="client_secret",
     scope="scope",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.auth.get_token_with_client_credentials(
@@ -80,6 +81,7 @@ client = SeedInferredAuthImplicit(
     client_id="client_id",
     client_secret="client_secret",
     scope="scope",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.auth.refresh_token(
@@ -143,6 +145,7 @@ client = SeedInferredAuthImplicit(
     client_id="client_id",
     client_secret="client_secret",
     scope="scope",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.nested_no_auth.api.get_something()
@@ -193,6 +196,7 @@ client = SeedInferredAuthImplicit(
     client_id="client_id",
     client_secret="client_secret",
     scope="scope",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.nested.api.get_something()
@@ -243,6 +247,7 @@ client = SeedInferredAuthImplicit(
     client_id="client_id",
     client_secret="client_secret",
     scope="scope",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.simple.get_something()

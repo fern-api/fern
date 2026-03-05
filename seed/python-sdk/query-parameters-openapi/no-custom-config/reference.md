@@ -15,7 +15,9 @@
 from seed import SeedApi
 from datetime import date, datetime
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.search(
     limit=1,

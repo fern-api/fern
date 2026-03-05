@@ -14,7 +14,9 @@
 ```python
 from seed import SeedApi
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.submit_form_data(
     username="johndoe",

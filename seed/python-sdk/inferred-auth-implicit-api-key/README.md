@@ -38,6 +38,7 @@ from seed import SeedInferredAuthImplicitApiKey
 
 client = SeedInferredAuthImplicitApiKey(
     api_key="X-Api-Key",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.auth.get_token(
@@ -56,6 +57,7 @@ from seed import AsyncSeedInferredAuthImplicitApiKey
 
 client = AsyncSeedInferredAuthImplicitApiKey(
     api_key="X-Api-Key",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

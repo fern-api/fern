@@ -15,7 +15,9 @@
 ```python
 from seed import SeedHttpHead
 
-client = SeedHttpHead()
+client = SeedHttpHead(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.head()
 
@@ -60,7 +62,9 @@ client.user.head()
 ```python
 from seed import SeedHttpHead
 
-client = SeedHttpHead()
+client = SeedHttpHead(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.list(
     limit=1,

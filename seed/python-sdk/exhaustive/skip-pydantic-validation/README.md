@@ -39,6 +39,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_list_of_primitives(
@@ -60,6 +61,7 @@ from seed import AsyncSeedExhaustive
 
 client = AsyncSeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 
@@ -99,6 +101,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.pagination.list_items(

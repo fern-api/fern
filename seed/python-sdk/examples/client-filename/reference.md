@@ -13,9 +13,11 @@
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.echo(
@@ -70,9 +72,11 @@ client.echo(
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.echo(
@@ -128,9 +132,11 @@ client.echo(
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.file.notification.service.get_exception(
@@ -200,9 +206,11 @@ This endpoint returns a file by its name.
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.file.service.get_file(
@@ -273,9 +281,11 @@ This endpoint checks the health of a resource.
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.health.service.check(
@@ -344,9 +354,11 @@ This endpoint checks the health of the service.
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.health.service.ping()
@@ -392,9 +404,11 @@ client.health.service.ping()
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.service.get_movie(
@@ -449,9 +463,11 @@ client.service.get_movie(
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.service.create_movie(
@@ -517,9 +533,11 @@ client.service.create_movie(
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.service.get_metadata(
@@ -594,11 +612,13 @@ client.service.get_metadata(
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 from uuid import UUID
 from datetime import date, datetime
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.service.create_big_entity(
@@ -853,9 +873,11 @@ client.service.create_big_entity(
 
 ```python
 from seed import SeedExhaustive
+from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
     token="<token>",
+    environment=SeedExhaustiveEnvironment.PRODUCTION,
 )
 
 client.service.refresh_token()

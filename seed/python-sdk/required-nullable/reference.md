@@ -14,7 +14,9 @@
 ```python
 from seed import SeedApi
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.get_foo(
     required_baz="required_baz",
@@ -94,7 +96,9 @@ client.get_foo(
 ```python
 from seed import SeedApi
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.update_foo(
     id="id",

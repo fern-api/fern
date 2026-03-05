@@ -15,7 +15,9 @@
 ```python
 from seed import SeedUnknownAsAny
 
-client = SeedUnknownAsAny()
+client = SeedUnknownAsAny(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.unknown.post(
     request={"key": "value"},
@@ -70,7 +72,9 @@ client.unknown.post(
 ```python
 from seed import SeedUnknownAsAny
 
-client = SeedUnknownAsAny()
+client = SeedUnknownAsAny(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.unknown.post_object(
     unknown={"key": "value"},

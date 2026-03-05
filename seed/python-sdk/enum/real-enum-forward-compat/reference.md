@@ -15,7 +15,9 @@
 ```python
 from seed import SeedEnum
 
-client = SeedEnum()
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.headers.send(
     operand=">",
@@ -97,7 +99,9 @@ client.headers.send(
 ```python
 from seed import SeedEnum
 
-client = SeedEnum()
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.inlined_request.send(
     operand=">",
@@ -251,7 +255,9 @@ client.multipart_form.multipart_form(...)
 ```python
 from seed import SeedEnum
 
-client = SeedEnum()
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.path_param.send(
     operand=">",
@@ -316,7 +322,9 @@ client.path_param.send(
 ```python
 from seed import SeedEnum
 
-client = SeedEnum()
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.query_param.send(
     operand=">",
@@ -396,7 +404,9 @@ client.query_param.send(
 ```python
 from seed import SeedEnum
 
-client = SeedEnum()
+client = SeedEnum(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.query_param.send_list(
     operand=[

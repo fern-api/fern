@@ -17,6 +17,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_list_of_primitives(
@@ -77,6 +78,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_list_of_objects(
@@ -141,6 +143,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_set_of_primitives(
@@ -200,6 +203,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_set_of_objects(
@@ -261,6 +265,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_map_prim_to_prim(
@@ -320,6 +325,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_map_of_prim_to_object(
@@ -381,6 +387,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
@@ -440,6 +447,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.container.get_and_return_optional(
@@ -502,6 +510,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.content_type.post_json_patch_content_type(
@@ -580,6 +589,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.content_type.post_json_patch_content_with_charset_type(
@@ -657,6 +667,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.enum.get_and_return_enum(
@@ -715,6 +726,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.http_methods.test_get(
@@ -772,6 +784,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.http_methods.test_post(
@@ -829,6 +842,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.http_methods.test_put(
@@ -897,6 +911,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.http_methods.test_patch(
@@ -982,6 +997,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.http_methods.test_delete(
@@ -1042,6 +1058,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.object.get_and_return_with_optional_field(
@@ -1118,6 +1135,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.object.get_and_return_with_required_field(
@@ -1175,6 +1193,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.object.get_and_return_with_map_of_map(
@@ -1238,6 +1257,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.object.get_and_return_nested_with_optional_field(
@@ -1319,6 +1339,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.object.get_and_return_nested_with_required_field(
@@ -1409,6 +1430,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.object.get_and_return_nested_with_required_field_as_list(
@@ -1517,6 +1539,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.object.get_and_return_with_unknown_field(
@@ -1591,6 +1614,7 @@ from datetime import datetime
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.object.get_and_return_with_datetime_like_string(
@@ -1664,6 +1688,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.pagination.list_items(
@@ -1745,6 +1770,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.get_with_path(
@@ -1816,6 +1842,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.get_with_path(
@@ -1887,6 +1914,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.get_with_query(
@@ -1967,6 +1995,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.get_with_query(
@@ -2047,6 +2076,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.get_with_path_and_query(
@@ -2127,6 +2157,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.get_with_path_and_query(
@@ -2207,6 +2238,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.modify_with_path(
@@ -2287,6 +2319,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.modify_with_path(
@@ -2367,6 +2400,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.params.upload_with_path(
@@ -2433,6 +2467,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_string(
@@ -2490,6 +2525,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_int(
@@ -2547,6 +2583,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_long(
@@ -2604,6 +2641,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_double(
@@ -2661,6 +2699,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_bool(
@@ -2719,6 +2758,7 @@ from datetime import datetime
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_datetime(
@@ -2777,6 +2817,7 @@ from datetime import date
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_date(
@@ -2835,6 +2876,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_uuid(
@@ -2892,6 +2934,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.primitive.get_and_return_base_64(
@@ -2950,6 +2993,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.put.add(
@@ -3008,6 +3052,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.union.get_and_return_union(
@@ -3070,6 +3115,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.urls.with_mixed_case()
@@ -3117,6 +3163,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.urls.no_ending_slash()
@@ -3164,6 +3211,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.urls.with_ending_slash()
@@ -3211,6 +3259,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.endpoints.urls.with_underscores()
@@ -3275,6 +3324,7 @@ from uuid import UUID
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.inlined_requests.post_with_object_bodyand_response(
@@ -3386,6 +3436,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.no_auth.post_with_no_auth(
@@ -3444,6 +3495,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.no_req_body.get_with_no_request_body()
@@ -3491,6 +3543,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.no_req_body.post_with_no_request_body()
@@ -3539,6 +3592,7 @@ from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.req_with_headers.get_with_custom_header(

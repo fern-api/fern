@@ -40,6 +40,7 @@ from seed import SeedOauthClientCredentialsEnvironmentVariables
 client = SeedOauthClientCredentialsEnvironmentVariables(
     client_id="<clientId>",
     client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.auth.get_token_with_client_credentials(
@@ -61,6 +62,7 @@ from seed import AsyncSeedOauthClientCredentialsEnvironmentVariables
 client = AsyncSeedOauthClientCredentialsEnvironmentVariables(
     client_id="<clientId>",
     client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 

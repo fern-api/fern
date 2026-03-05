@@ -15,7 +15,9 @@
 ```python
 from seed import SeedStreaming
 
-client = SeedStreaming()
+client = SeedStreaming(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.dummy.generate(
     stream=False,

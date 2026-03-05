@@ -31,7 +31,9 @@ Other backslash examples: FOO\_BAR, path\to\file, C:\Users\name
 ```python
 from seed import SeedPythonBackslashEscape
 
-client = SeedPythonBackslashEscape()
+client = SeedPythonBackslashEscape(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.get(
     id="id",

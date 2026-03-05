@@ -15,7 +15,9 @@
 ```python
 from seed import SeedUnions
 
-client = SeedUnions()
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.bigunion.get(
     id="id",
@@ -71,7 +73,9 @@ client.bigunion.get(
 from seed import SeedUnions
 from datetime import datetime
 
-client = SeedUnions()
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.bigunion.update(
     request={
@@ -133,7 +137,9 @@ client.bigunion.update(
 from seed import SeedUnions
 from datetime import datetime
 
-client = SeedUnions()
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.bigunion.update_many(
     request=[
@@ -204,7 +210,9 @@ client.bigunion.update_many(
 ```python
 from seed import SeedUnions
 
-client = SeedUnions()
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.types.get(
     id="date-example",
@@ -259,7 +267,9 @@ client.types.get(
 ```python
 from seed import SeedUnions
 
-client = SeedUnions()
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.types.update(
     request={
@@ -317,7 +327,9 @@ client.types.update(
 ```python
 from seed import SeedUnions
 
-client = SeedUnions()
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.bigunion.get(
     id="id",
@@ -372,7 +384,9 @@ client.bigunion.get(
 ```python
 from seed import SeedUnions
 
-client = SeedUnions()
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.union.update(
     request={

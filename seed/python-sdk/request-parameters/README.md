@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedRequestParameters
 
-client = SeedRequestParameters()
+client = SeedRequestParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.create_username(
     tags=[
@@ -58,7 +60,9 @@ import asyncio
 
 from seed import AsyncSeedRequestParameters
 
-client = AsyncSeedRequestParameters()
+client = AsyncSeedRequestParameters(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

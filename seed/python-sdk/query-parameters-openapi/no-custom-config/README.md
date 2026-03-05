@@ -37,7 +37,9 @@ Instantiate and use the client with the following:
 from seed import SeedApi
 from datetime import date, datetime
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.search(
     limit=1,
@@ -128,7 +130,9 @@ from datetime import date, datetime
 
 from seed import AsyncSeedApi
 
-client = AsyncSeedApi()
+client = AsyncSeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

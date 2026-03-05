@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedMultiLineDocs
 
-client = SeedMultiLineDocs()
+client = SeedMultiLineDocs(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.user.create_user(
     name="name",
@@ -53,7 +55,9 @@ import asyncio
 
 from seed import AsyncSeedMultiLineDocs
 
-client = AsyncSeedMultiLineDocs()
+client = AsyncSeedMultiLineDocs(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

@@ -14,7 +14,9 @@
 ```python
 from seed import SeedUndiscriminatedUnionWithResponseProperty
 
-client = SeedUndiscriminatedUnionWithResponseProperty()
+client = SeedUndiscriminatedUnionWithResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.get_union()
 
@@ -59,7 +61,9 @@ client.get_union()
 ```python
 from seed import SeedUndiscriminatedUnionWithResponseProperty
 
-client = SeedUndiscriminatedUnionWithResponseProperty()
+client = SeedUndiscriminatedUnionWithResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.list_unions()
 

@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedErrors
 
-client = SeedErrors()
+client = SeedErrors(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.simple.foo_without_endpoint_error(
     bar="bar",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedErrors
 
-client = AsyncSeedErrors()
+client = AsyncSeedErrors(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

@@ -17,6 +17,7 @@ from seed import SeedPagination
 
 client = SeedPagination(
     token="<token>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.users.list_usernames_custom(

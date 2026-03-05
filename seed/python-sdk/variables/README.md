@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedVariables
 
-client = SeedVariables()
+client = SeedVariables(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.post()
 ```
@@ -50,7 +52,9 @@ import asyncio
 
 from seed import AsyncSeedVariables
 
-client = AsyncSeedVariables()
+client = AsyncSeedVariables(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

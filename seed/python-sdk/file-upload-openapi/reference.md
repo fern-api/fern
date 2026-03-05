@@ -29,7 +29,9 @@ Upload a file to the database
 ```python
 from seed import SeedApi
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.file_upload_example.upload_file(
     file="example_file",

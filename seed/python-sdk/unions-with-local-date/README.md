@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedUnions
 
-client = SeedUnions()
+client = SeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.bigunion.get(
     id="id",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedUnions
 
-client = AsyncSeedUnions()
+client = AsyncSeedUnions(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

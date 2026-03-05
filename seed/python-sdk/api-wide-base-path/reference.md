@@ -17,6 +17,7 @@ from seed import SeedApiWideBasePath
 
 client = SeedApiWideBasePath(
     path_param="pathParam",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 client.service.post(

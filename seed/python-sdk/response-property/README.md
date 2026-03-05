@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedResponseProperty
 
-client = SeedResponseProperty()
+client = SeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.service.get_movie(
     request="string",
@@ -52,7 +54,9 @@ import asyncio
 
 from seed import AsyncSeedResponseProperty
 
-client = AsyncSeedResponseProperty()
+client = AsyncSeedResponseProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:

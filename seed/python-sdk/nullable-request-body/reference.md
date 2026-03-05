@@ -29,7 +29,9 @@ Post a nullable request body
 ```python
 from seed import SeedApi
 
-client = SeedApi()
+client = SeedApi(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.test_group.test_method_name(
     path_param="path_param",

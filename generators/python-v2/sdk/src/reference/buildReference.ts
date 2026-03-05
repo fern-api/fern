@@ -14,7 +14,7 @@ export function buildReference({
     const builder = new ReferenceConfigBuilder();
     const serviceEntries = Object.entries(context.ir.services);
 
-    const snippetsByEndpointId = buildSnippetsByEndpointId(endpointSnippets ?? []);
+    const snippetsByEndpointId = buildSnippetsByEndpointId({ context, endpointSnippets: endpointSnippets ?? [] });
 
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
@@ -29,7 +29,13 @@ export function buildReference({
     return builder;
 }
 
-function buildSnippetsByEndpointId(endpointSnippets: FernGeneratorExec.Endpoint[]): Record<string, string> {
+function buildSnippetsByEndpointId({
+    context,
+    endpointSnippets
+}: {
+    context: SdkGeneratorContext;
+    endpointSnippets: FernGeneratorExec.Endpoint[];
+}): Record<string, string> {
     const snippets: Record<string, string> = {};
     for (const endpointSnippet of endpointSnippets) {
         if (endpointSnippet.id.identifierOverride == null) {
@@ -41,7 +47,10 @@ function buildSnippetsByEndpointId(endpointSnippets: FernGeneratorExec.Endpoint[
         if (snippets[endpointSnippet.id.identifierOverride] != null) {
             continue;
         }
-        snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.syncClient;
+        snippets[endpointSnippet.id.identifierOverride] = injectClientSetupIntoSnippet({
+            context,
+            snippet: endpointSnippet.snippet.syncClient
+        });
     }
     return snippets;
 }
@@ -397,4 +406,136 @@ function fixSnippetMethodPath({
         return snippet.replace(wrongMethodCall, expectedMethodCall);
     }
     return snippet;
+}
+
+/**
+ * Post-processes a prerendered snippet to inject base_url or environment setup
+ * into the client constructor, matching v1 output.
+ */
+function injectClientSetupIntoSnippet({
+    context,
+    snippet
+}: {
+    context: SdkGeneratorContext;
+    snippet: string;
+}): string {
+    const lines = snippet.split("\n");
+    const clientLineIdx = lines.findIndex((line) => line.startsWith("client = "));
+    if (clientLineIdx === -1) {
+        return snippet;
+    }
+
+    const clientLine = lines[clientLineIdx] ?? "";
+
+    // Find the closing paren of the constructor
+    let closingParenIdx = -1;
+    if (clientLine.endsWith("()")) {
+        closingParenIdx = clientLineIdx;
+    } else if (clientLine.endsWith("(")) {
+        for (let i = clientLineIdx + 1; i < lines.length; i++) {
+            if (lines[i] === ")") {
+                closingParenIdx = i;
+                break;
+            }
+        }
+    }
+
+    if (closingParenIdx === -1) {
+        return snippet;
+    }
+
+    const environmentInfo = getEnvironmentInfo({ context });
+    if (environmentInfo != null) {
+        const { importLine, constructorArg } = environmentInfo;
+
+        const packageName = context.getModulePath();
+        const packageImportIdx = lines.findIndex((line) => line.startsWith(`from ${packageName} import`));
+        if (packageImportIdx !== -1) {
+            lines.splice(packageImportIdx + 1, 0, importLine);
+            const adjustedClientLineIdx = clientLineIdx + 1;
+            const adjustedClosingParenIdx = closingParenIdx + 1;
+            injectConstructorArg(lines, adjustedClientLineIdx, adjustedClosingParenIdx, constructorArg);
+        }
+    } else {
+        const baseUrlArg = `    base_url="https://yourhost.com/path/to/api",`;
+        injectConstructorArg(lines, clientLineIdx, closingParenIdx, baseUrlArg);
+    }
+
+    return lines.join("\n");
+}
+
+function injectConstructorArg(lines: string[], clientLineIdx: number, closingParenIdx: number, arg: string): void {
+    const clientLine = lines[clientLineIdx] ?? "";
+
+    if (clientLine.endsWith("()")) {
+        const className = clientLine.slice("client = ".length, -2);
+        lines[clientLineIdx] = `client = ${className}(`;
+        lines.splice(clientLineIdx + 1, 0, arg, ")");
+    } else {
+        lines.splice(closingParenIdx, 0, arg);
+    }
+}
+
+function getEnvironmentInfo({
+    context
+}: {
+    context: SdkGeneratorContext;
+}): { importLine: string; constructorArg: string } | undefined {
+    const envConfig = context.ir.environments;
+    if (envConfig == null) {
+        return undefined;
+    }
+
+    const clientClassName = getClientClassName({ context });
+    const envClassName = `${clientClassName}Environment`;
+    const packageName = context.getModulePath();
+    const importLine = `from ${packageName}.environment import ${envClassName}`;
+
+    let firstEnvName: string | undefined;
+    if (envConfig.environments.type === "singleBaseUrl") {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
+        }
+        if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
+            firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
+        }
+    } else if (envConfig.environments.type === "multipleBaseUrls") {
+        const defaultEnvId = envConfig.defaultEnvironment;
+        const envs = envConfig.environments.environments;
+        if (defaultEnvId != null) {
+            const defaultEnv = envs.find((e) => e.id === defaultEnvId);
+            firstEnvName = defaultEnv?.name.screamingSnakeCase.unsafeName;
+        }
+        if (firstEnvName == null && envs.length > 0 && envs[0] != null) {
+            firstEnvName = envs[0].name.screamingSnakeCase.unsafeName;
+        }
+    }
+
+    if (firstEnvName == null) {
+        return undefined;
+    }
+
+    const constructorArg = `    environment=${envClassName}.${firstEnvName},`;
+    return { importLine, constructorArg };
+}
+
+function getClientClassName({ context }: { context: SdkGeneratorContext }): string {
+    if (context.customConfig.client?.exported_class_name != null) {
+        return context.customConfig.client.exported_class_name;
+    }
+    if (context.customConfig.client_class_name != null) {
+        return context.customConfig.client_class_name;
+    }
+    if (context.customConfig.client?.class_name != null) {
+        return context.customConfig.client.class_name;
+    }
+    const toPascalCase = (s: string): string =>
+        s
+            .split(/[-_\s]+/)
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+            .join("");
+    return toPascalCase(context.config.organization) + toPascalCase(context.config.workspaceName);
 }

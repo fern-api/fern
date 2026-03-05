@@ -36,7 +36,9 @@ Instantiate and use the client with the following:
 ```python
 from seed import SeedErrorProperty
 
-client = SeedErrorProperty()
+client = SeedErrorProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 client.property_based_error.throw_error()
 ```
@@ -50,7 +52,9 @@ import asyncio
 
 from seed import AsyncSeedErrorProperty
 
-client = AsyncSeedErrorProperty()
+client = AsyncSeedErrorProperty(
+    base_url="https://yourhost.com/path/to/api",
+)
 
 
 async def main() -> None:
