@@ -692,6 +692,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: true,
                     hidden: true,
                     description: "Run replay after generation (use --no-replay to skip)"
+                })
+                .option("retry-rate-limited", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -753,7 +759,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     fernignorePath: argv.fernignore,
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
-                    noReplay: !argv.replay
+                    noReplay: !argv.replay,
+                    retryRateLimited: argv["retry-rate-limited"]
                 });
             }
             if (argv.docs != null) {
@@ -807,7 +814,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 fernignorePath: argv.fernignore,
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
-                noReplay: !argv.replay
+                noReplay: !argv.replay,
+                retryRateLimited: argv["retry-rate-limited"]
             });
         }
     );
