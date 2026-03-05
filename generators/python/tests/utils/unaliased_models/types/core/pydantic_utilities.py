@@ -18,37 +18,92 @@ IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 if IS_PYDANTIC_V2:
     # isort will try to reformat the comments on these imports, which breaks mypy
     # isort: off
-    from pydantic.v1.datetime_parse import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
-        parse_date as parse_date,
+    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
+    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
+
+    def parse_datetime(value: typing.Any) -> dt.datetime:
+        if isinstance(value, dt.datetime):
+            return value
+        return _datetime_adapter.validate_python(value)
+
+    def parse_date(value: typing.Any) -> dt.date:
+        if isinstance(value, dt.date) and not isinstance(value, dt.datetime):
+            return value
+        return _date_adapter.validate_python(value)
+
+    # Use stdlib/typing_extensions instead of pydantic.v1 to avoid
+    # "Core Pydantic V1 functionality isn't compatible with Python 3.14" warnings.
+    from typing import Literal as Literal
+
+    get_args = typing_extensions.get_args
+    get_origin = typing_extensions.get_origin
+
+    def is_literal_type(type_: typing.Optional[typing.Type[typing.Any]]) -> bool:  # type: ignore[misc]
+        return get_origin(type_) is Literal
+
+    def is_union(type_: typing.Optional[typing.Type[typing.Any]]) -> bool:  # type: ignore[misc]
+        return get_origin(type_) is typing.Union
+
+    # Re-create the V1 encoder map so we never touch pydantic.v1
+    import decimal
+    from collections import deque
+    from enum import Enum
+    from ipaddress import (
+        IPv4Address,
+        IPv4Interface,
+        IPv4Network,
+        IPv6Address,
+        IPv6Interface,
+        IPv6Network,
     )
-    from pydantic.v1.datetime_parse import (  # pyright: ignore[reportMissingImports] # Pydantic v2
-        parse_datetime as parse_datetime,
-    )
-    from pydantic.v1.json import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
-        ENCODERS_BY_TYPE as encoders_by_type,
-    )
-    from pydantic.v1.typing import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
-        get_args as get_args,
-    )
-    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
-        get_origin as get_origin,
-    )
-    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
-        is_literal_type as is_literal_type,
-    )
-    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
-        is_union as is_union,
-    )
-    from pydantic.v1.fields import ModelField as ModelField  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pathlib import Path
+    from re import Pattern
+    from types import GeneratorType
+    from uuid import UUID
+
+    encoders_by_type: typing.Dict[typing.Type[typing.Any], typing.Callable[[typing.Any], typing.Any]] = {  # type: ignore[no-redef]
+        bytes: lambda o: o.decode(),
+        dt.date: lambda o: o.isoformat(),
+        dt.datetime: lambda o: o.isoformat(),
+        dt.time: lambda o: o.isoformat(),
+        dt.timedelta: lambda td: td.total_seconds(),
+        decimal.Decimal: float,
+        Enum: lambda o: o.value,
+        frozenset: list,
+        deque: list,
+        GeneratorType: list,
+        IPv4Address: str,
+        IPv4Interface: str,
+        IPv4Network: str,
+        IPv6Address: str,
+        IPv6Interface: str,
+        IPv6Network: str,
+        Path: str,
+        Pattern: lambda o: o.pattern,
+        set: list,
+        UUID: str,
+    }
+
+    # ModelField is not used at runtime under Pydantic V2; define a
+    # lightweight placeholder so the ``PydanticField`` type alias and
+    # any V1-only code paths still compile.
+    class _ModelFieldPlaceholder:  # type: ignore[no-redef]
+        alias: typing.Optional[str] = None
+        default: typing.Any = None
+
+        def get_default(self) -> typing.Any:  # type: ignore[misc]
+            return self.default
+
+    ModelField = _ModelFieldPlaceholder  # type: ignore[assignment, misc]
 else:
-    from pydantic.datetime_parse import parse_date as parse_date  # type: ignore # Pydantic v1
-    from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore # Pydantic v1
-    from pydantic.fields import ModelField as ModelField  # type: ignore # Pydantic v1
-    from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore # Pydantic v1
-    from pydantic.typing import get_args as get_args  # type: ignore # Pydantic v1
-    from pydantic.typing import get_origin as get_origin  # type: ignore # Pydantic v1
-    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore # Pydantic v1
-    from pydantic.typing import is_union as is_union  # type: ignore # Pydantic v1
+    from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
+    from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
+    from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined, no-redef, assignment]
+    from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[no-redef]
+    from pydantic.typing import get_args as get_args  # type: ignore[no-redef]
+    from pydantic.typing import get_origin as get_origin  # type: ignore[no-redef, assignment]
+    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore[no-redef]
+    from pydantic.typing import is_union as is_union  # type: ignore[no-redef]
 
     # isort: on
 
