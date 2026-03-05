@@ -81,7 +81,6 @@ async function handleMerge(context: Context, args: MergeArgs): Promise<void> {
         mergedCount++;
 
         if (editor != null) {
-
             editor.removeOverrides(entry.specFilePath);
             await Promise.all(
                 entry.overrides.map(async (overridePath) => {
@@ -103,7 +102,6 @@ async function handleMerge(context: Context, args: MergeArgs): Promise<void> {
             );
             context.stdout.info(chalk.dim("  Removed override references from fern.yml"));
         }
-
     }
 
     if (editor != null) {
