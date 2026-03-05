@@ -20,8 +20,6 @@ if TYPE_CHECKING:
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    import warnings
-
     _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
     _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
 
@@ -37,23 +35,79 @@ if IS_PYDANTIC_V2:
             return value
         return _date_adapter.validate_python(value)
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", UserWarning)
-        from pydantic.v1.fields import ModelField as ModelField
-        from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
-        from pydantic.v1.typing import get_args as get_args
-        from pydantic.v1.typing import get_origin as get_origin
-        from pydantic.v1.typing import is_literal_type as is_literal_type
-        from pydantic.v1.typing import is_union as is_union
+    # Use stdlib/typing_extensions instead of pydantic.v1 to avoid
+    # "Core Pydantic V1 functionality isn't compatible with Python 3.14" warnings.
+    from typing import Literal as Literal
+
+    get_args = typing_extensions.get_args
+    get_origin = typing_extensions.get_origin
+
+    def is_literal_type(type_: Optional[Type[Any]]) -> bool:  # type: ignore[misc]
+        return get_origin(type_) is Literal
+
+    def is_union(type_: Optional[Type[Any]]) -> bool:  # type: ignore[misc]
+        return get_origin(type_) is Union
+
+    # Re-create the V1 encoder map so we never touch pydantic.v1
+    import decimal
+    from collections import deque
+    from enum import Enum
+    from ipaddress import (
+        IPv4Address,
+        IPv4Interface,
+        IPv4Network,
+        IPv6Address,
+        IPv6Interface,
+        IPv6Network,
+    )
+    from pathlib import Path
+    from re import Pattern
+    from types import GeneratorType
+    from uuid import UUID
+
+    encoders_by_type: Dict[Type[Any], Callable[[Any], Any]] = {  # type: ignore[no-redef]
+        bytes: lambda o: o.decode(),
+        dt.date: lambda o: o.isoformat(),
+        dt.datetime: lambda o: o.isoformat(),
+        dt.time: lambda o: o.isoformat(),
+        dt.timedelta: lambda td: td.total_seconds(),
+        decimal.Decimal: float,
+        Enum: lambda o: o.value,
+        frozenset: list,
+        deque: list,
+        GeneratorType: list,
+        IPv4Address: str,
+        IPv4Interface: str,
+        IPv4Network: str,
+        IPv6Address: str,
+        IPv6Interface: str,
+        IPv6Network: str,
+        Path: str,
+        Pattern: lambda o: o.pattern,
+        set: list,
+        UUID: str,
+    }
+
+    # ModelField is not used at runtime under Pydantic V2; define a
+    # lightweight placeholder so the ``PydanticField`` type alias and
+    # any V1-only code paths still compile.
+    class _ModelFieldPlaceholder:  # type: ignore[no-redef]
+        alias: Optional[str] = None
+        default: Any = None
+
+        def get_default(self) -> Any:  # type: ignore[misc]
+            return self.default
+
+    ModelField = _ModelFieldPlaceholder  # type: ignore[assignment, misc]
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
-    from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined, no-redef]
+    from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined, no-redef, assignment]
     from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[no-redef]
     from pydantic.typing import get_args as get_args  # type: ignore[no-redef]
-    from pydantic.typing import get_origin as get_origin  # type: ignore[no-redef]
-    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore[no-redef]
-    from pydantic.typing import is_union as is_union  # type: ignore[no-redef]
+    from pydantic.typing import get_origin as get_origin  # type: ignore[no-redef, assignment]
+    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore[no-redef, assignment]
+    from pydantic.typing import is_union as is_union  # type: ignore[no-redef, assignment]
 
 from .datetime_utils import serialize_datetime
 from typing_extensions import TypeAlias
