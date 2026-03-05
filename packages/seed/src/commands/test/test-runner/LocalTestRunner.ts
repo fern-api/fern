@@ -14,13 +14,13 @@ export class LocalTestRunner extends TestRunner {
     public async build(): Promise<void> {
         const localConfig = await this.getLocalConfigOrthrow();
         const workingDir = AbsoluteFilePath.of(
-            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(localConfig.workingDirectory)),
+            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(localConfig.workingDirectory))
         );
         const result = await runScript({
             commands: localConfig.buildCommand,
             doNotPipeOutput: false,
             logger: CONSOLE_LOGGER,
-            workingDir,
+            workingDir
         });
         if (result.exitCode !== 0) {
             throw new Error(`Failed to locally build ${this.generator.workspaceName}.`);
@@ -35,7 +35,7 @@ export class LocalTestRunner extends TestRunner {
 
     private async runGeneratorLocal(
         args: Parameters<TestRunner["runGenerator"]>[0],
-        commands: string[],
+        commands: string[]
     ): Promise<void> {
         const {
             absolutePathToFernDefinition,
@@ -56,7 +56,7 @@ export class LocalTestRunner extends TestRunner {
             inspect = false,
             license,
             outputFolder,
-            smartCasing,
+            smartCasing
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -78,9 +78,9 @@ export class LocalTestRunner extends TestRunner {
                     publishMetadata,
                     readme,
                     license,
-                    smartCasing,
-                }),
-            ],
+                    smartCasing
+                })
+            ]
         };
 
         await runNativeGenerationForSeed(
@@ -95,18 +95,18 @@ export class LocalTestRunner extends TestRunner {
                 shouldGenerateDynamicSnippetTests,
                 skipUnstableDynamicSnippetTests: true,
                 inspect,
-                ai: undefined,
+                ai: undefined
             },
             commands,
             this.generator.workspaceConfig.test.local?.workingDirectory,
-            this.generator.workspaceConfig.test.local?.env,
+            this.generator.workspaceConfig.test.local?.env
         );
     }
 
     private async getLocalConfigOrthrow(): Promise<LocalBuildInfo> {
         if (this.generator.workspaceConfig.test.local == null) {
             throw new Error(
-                `Attempted to run ${this.generator.workspaceName} locally. No local configuration in seed.yml found.`,
+                `Attempted to run ${this.generator.workspaceName} locally. No local configuration in seed.yml found.`
             );
         }
         return this.generator.workspaceConfig.test.local;

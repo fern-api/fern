@@ -25,7 +25,7 @@ export class ContainerTestRunner extends TestRunner {
             if (!hasConfig) {
                 throw new Error(
                     `Generator ${this.generator.workspaceName} does not have a test.${this.runner} configuration in seed.yml. ` +
-                        `Cannot use explicitly specified container runtime '${this.runner}' without corresponding configuration.`,
+                        `Cannot use explicitly specified container runtime '${this.runner}' without corresponding configuration.`
                 );
             }
         } else {
@@ -48,7 +48,7 @@ export class ContainerTestRunner extends TestRunner {
             commands: containerCommands,
             logger: CONSOLE_LOGGER,
             workingDir: path.dirname(path.dirname(this.generator.absolutePathToWorkspace)),
-            doNotPipeOutput: false,
+            doNotPipeOutput: false
         });
         if (containerBuildReturn.exitCode !== 0) {
             throw new Error(`Failed to build the container for ${this.generator.workspaceName}.`);
@@ -75,7 +75,7 @@ export class ContainerTestRunner extends TestRunner {
         inspect = false,
         license,
         outputFolder,
-        smartCasing,
+        smartCasing
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -95,9 +95,9 @@ export class ContainerTestRunner extends TestRunner {
                     readme,
                     license,
                     smartCasing,
-                    outputFolder,
-                }),
-            ],
+                    outputFolder
+                })
+            ]
         };
         await runContainerizedGenerationForSeed({
             organization: DUMMY_ORGANIZATION,
@@ -113,7 +113,7 @@ export class ContainerTestRunner extends TestRunner {
             keepDocker: keepContainer ?? false,
             dockerImage: this.getContainerImageName(),
             runner: this.runner,
-            ai: undefined,
+            ai: undefined
         });
     }
 
