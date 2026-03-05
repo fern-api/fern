@@ -154,6 +154,15 @@ def _is_string_type(type_: Type[Any]) -> bool:
     return False
 
 
+def _filter_dict_to_variant_fields(data: Dict[str, Any], variant: Type[Any]) -> Dict[str, Any]:
+    """Filter a dict to only include keys that are declared fields on the variant model."""
+    if IS_PYDANTIC_V2:
+        variant_fields = set(getattr(variant, "model_fields", {}).keys())
+    else:
+        variant_fields = set(getattr(variant, "__fields__", {}).keys())
+    return {k: v for k, v in data.items() if k in variant_fields}
+
+
 def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
     """
     Parse a ServerSentEvent into the appropriate type.
@@ -227,7 +236,7 @@ def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
                         parsed_data = json.loads(data_value)
                         new_object = dict(sse_event)
                         new_object["data"] = parsed_data
-                        return parse_obj_as(type_, new_object)
+                        return parse_obj_as(type_, _filter_dict_to_variant_fields(new_object, matching_variant))
                     except json.JSONDecodeError as e:
                         _logger.warning(
                             "Failed to parse SSE data field as JSON for event-level discrimination: %s, data: %s",
@@ -235,6 +244,8 @@ def parse_sse_obj(sse: "ServerSentEvent", type_: Type[T]) -> T:
                             data_value[:100] if len(data_value) > 100 else data_value,
                         )
         # Either no matching variant, data is string type, or JSON parse failed
+        if matching_variant is not None:
+            return parse_obj_as(type_, _filter_dict_to_variant_fields(sse_event, matching_variant))
         return parse_obj_as(type_, sse_event)
 
     else:
