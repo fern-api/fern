@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.4.2
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing on Windows with
+        `Only URLs with a scheme in: file, data, and node are supported
+        by the default ESM loader. Received protocol 'c:'`. The dynamic
+        `import()` of the migration package now uses `pathToFileURL()` to
+        convert absolute filesystem paths to valid `file://` URLs, which
+        is required by the Node.js ESM loader on Windows.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.4.1
   changelogEntry:
     - summary: |
