@@ -41,11 +41,11 @@ ThrowIfVersionMismatch(version);
 
 
 
-export { b } from "./async_client.js"
+export { b } from "./async_client"
 
-export * from "./types.js"
-export type { partial_types } from "./partial_types.js"
-export * from "./tracing.js"
-export * as events from "./events.js"
-export { resetBamlEnvVars } from "./globals.js"
+export * from "./types"
+export type { partial_types } from "./partial_types"
+export * from "./tracing"
+export * as events from "./events"
+export { resetBamlEnvVars } from "./globals"
 export { BamlClientHttpError, BamlValidationError, BamlClientFinishReasonError } from "@boundaryml/baml"

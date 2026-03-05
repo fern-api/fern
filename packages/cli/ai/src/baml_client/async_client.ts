@@ -21,16 +21,16 @@ $ pnpm add @boundaryml/baml
 import type { BamlRuntime, FunctionResult, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Video, FunctionLog,
 HTTPRequest } from "@boundaryml/baml"
 import { toBamlError, BamlStream, BamlAbortError, Collector } from "@boundaryml/baml"
-import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types.js"
-import type { partial_types } from "./partial_types.js"
-import type * as types from "./types.js"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types.js"
-import type TypeBuilder from "./type_builder.js"
-import { AsyncHttpRequest, AsyncHttpStreamRequest } from "./async_request.js"
-import { LlmResponseParser, LlmStreamParser } from "./parser.js"
+import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types"
+import type { partial_types } from "./partial_types"
+import type * as types from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
+import type TypeBuilder from "./type_builder"
+import { AsyncHttpRequest, AsyncHttpStreamRequest } from "./async_request"
+import { LlmResponseParser, LlmStreamParser } from "./parser"
 import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX,
-DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals.js"
-import type * as events from "./events.js"
+DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals"
+import type * as events from "./events"
 
 /**
 * @deprecated Use RecursivePartialNull from 'baml_client/types' instead.
@@ -97,7 +97,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
 
         
         async AnalyzeSdkDiff(
-        diff: string,
+        diff: string,language: string,previous_version: string,
         __baml_options__?: BamlCallOptions<never>
         ): Promise<types.AnalyzeCommitDiffResponse> {
           try {
@@ -111,7 +111,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
           // Check if onTick is provided - route through streaming if so
           if (options.onTick) {
           const stream = this.stream.AnalyzeSdkDiff(
-          diff,
+          diff,language,previous_version,
           __baml_options__
           );
 
@@ -127,7 +127,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             const raw = await this.runtime.callFunction(
             "AnalyzeSdkDiff",
             {
-            "diff": diff
+            "diff": diff,"language": language,"previous_version": previous_version
             },
             this.ctxManager.cloneContext(),
             options.tb?.__tb(),
@@ -159,7 +159,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
 
             
             AnalyzeSdkDiff(
-            diff: string,
+            diff: string,language: string,previous_version: string,
             __baml_options__?: BamlCallOptions<never>
             ): BamlStream<partial_types.AnalyzeCommitDiffResponse, types.AnalyzeCommitDiffResponse>
               {
@@ -200,7 +200,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                 const raw = this.runtime.streamFunction(
                 "AnalyzeSdkDiff",
                 {
-                "diff": diff
+                "diff": diff,"language": language,"previous_version": previous_version
                 },
                 undefined,
                 this.ctxManager.cloneContext(),

@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.7.0
+  changelogEntry:
+    - summary: |
+        Pass `previous_version` and `language` to the AI prompt for AUTO
+        versioning diff analysis. The `AnalyzeSdkDiff` BAML function now
+        accepts three parameters (`diff`, `language`, `previous_version`)
+        instead of just `diff`, giving the AI meaningful calibration context
+        for commit messages and version bump decisions. New repos with no
+        previous version pass `"0.0.0"` as a sentinel value.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.6.0
   changelogEntry:
     - summary: |

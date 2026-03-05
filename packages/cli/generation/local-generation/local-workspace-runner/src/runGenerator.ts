@@ -224,7 +224,8 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false
+        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
+        generatorLanguage: generatorInvocation.language
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 
