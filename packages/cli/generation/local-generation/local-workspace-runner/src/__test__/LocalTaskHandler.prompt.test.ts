@@ -18,7 +18,7 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
         expect(diffAnalyzerBaml).toContain("function AnalyzeSdkDiff(");
         expect(diffAnalyzerBaml).toContain('diff: string @description("The git diff to analyze")');
         expect(diffAnalyzerBaml).toContain(
-            'language: string @description("The SDK programming language, e.g. \'typescript\', \'python\', \'java\'")'
+            "language: string @description(\"The SDK programming language, e.g. 'typescript', 'python', 'java'\")"
         );
         expect(diffAnalyzerBaml).toContain(
             "previous_version: string @description(\"The current published version before this change, e.g. '1.2.3'\")"
@@ -35,9 +35,7 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
 
     it("prompt includes guidance for previous_version context usage", () => {
         // Verify the guideline about not including previous_version literally
-        expect(diffAnalyzerBaml).toContain(
-            "The previous version is provided for context only. Do not include it"
-        );
+        expect(diffAnalyzerBaml).toContain("The previous version is provided for context only. Do not include it");
 
         // Verify 0.x version guidance
         expect(diffAnalyzerBaml).toContain("For 0.x versions: the API is considered pre-stable");
