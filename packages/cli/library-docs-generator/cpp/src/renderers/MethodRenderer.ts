@@ -780,12 +780,12 @@ export function renderMethodContent(
         lines.push("");
     }
 
-    // 2. Description (summary + description blocks)
-    renderMethodDescription(func, lines);
-
-    // 3. Signature CodeBlock
+    // 2. Signature CodeBlock (immediately after title/tabs)
     lines.push(renderSignatureCodeBlock(func, ownerClass, ctx));
     lines.push("");
+
+    // 3. Description (summary + description blocks)
+    renderMethodDescription(func, lines);
 
     // 4. Version annotation
     if (docstring?.sinceVersion) {
