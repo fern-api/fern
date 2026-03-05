@@ -1,11 +1,11 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "enable-forward-compatible-enums": true,
-    "inline-path-parameters": true
-  },
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "inline-path-parameters": true,
+    "enable-forward-compatible-enums": true
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

@@ -1,12 +1,12 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "experimental-explicit-nullable-optional": true,
-    "use-default-request-parameter-values": true,
-    "use-undiscriminated-unions": true
-  },
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "use-default-request-parameter-values": true,
+    "experimental-explicit-nullable-optional": true,
+    "use-undiscriminated-unions": true
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

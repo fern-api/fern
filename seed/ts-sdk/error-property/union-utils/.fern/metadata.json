@@ -1,11 +1,11 @@
 {
-  "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "includeOtherInUnionTypes": true,
-    "includeUtilsOnUnionMembers": true
-  },
-  "generatorName": "fernapi/fern-typescript-sdk",
-  "generatorVersion": "latest",
-  "originGitCommit": "DUMMY",
-  "sdkVersion": "0.0.1"
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "latest",
+    "generatorConfig": {
+        "includeUtilsOnUnionMembers": true,
+        "includeOtherInUnionTypes": true
+    },
+    "originGitCommit": "DUMMY",
+    "sdkVersion": "0.0.1"
 }

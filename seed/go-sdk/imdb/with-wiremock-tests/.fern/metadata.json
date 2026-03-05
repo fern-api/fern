@@ -1,13 +1,13 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "clientConstructorName": "NewIMDBClient",
-    "enableWireTests": true,
-    "errorCodes": "per-endpoint",
-    "packageName": "testPackageName"
-  },
   "generatorName": "fernapi/fern-go-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": true,
+    "packageName": "testPackageName",
+    "errorCodes": "per-endpoint",
+    "clientConstructorName": "NewIMDBClient"
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

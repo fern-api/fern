@@ -1,22 +1,22 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "clientConstructorName": "New",
-    "clientName": "Acme",
-    "customReadmeSections": [
-      {
-        "content": "Generator Invocation Custom Content for {{ owner }}:{{ repo }}:{{ version }}",
-        "title": "Generator Invocation Custom Section"
-      },
-      {
-        "content": "Override Content",
-        "title": "Override Section"
-      }
-    ],
-    "enableWireTests": false
-  },
   "generatorName": "fernapi/fern-go-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": false,
+    "clientName": "Acme",
+    "clientConstructorName": "New",
+    "customReadmeSections": [
+      {
+        "title": "Generator Invocation Custom Section",
+        "content": "Generator Invocation Custom Content for {{ owner }}:{{ repo }}:{{ version }}"
+      },
+      {
+        "title": "Override Section",
+        "content": "Override Content"
+      }
+    ]
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

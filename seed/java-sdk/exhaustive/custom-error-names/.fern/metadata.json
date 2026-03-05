@@ -1,12 +1,12 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "base-api-exception-class-name": "CustomApiException",
-    "base-exception-class-name": "CustomException",
-    "inline-path-parameters": true
-  },
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "inline-path-parameters": true,
+    "base-api-exception-class-name": "CustomApiException",
+    "base-exception-class-name": "CustomException"
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

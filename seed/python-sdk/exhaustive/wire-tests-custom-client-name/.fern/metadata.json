@@ -1,13 +1,13 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "client": {
-      "class_name": "Exhaustive"
-    },
-    "enable_wire_tests": true
-  },
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "enable_wire_tests": true,
+    "client": {
+      "class_name": "Exhaustive"
+    }
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

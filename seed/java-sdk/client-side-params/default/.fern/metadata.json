@@ -1,11 +1,11 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "enable-wire-tests": true,
-    "use-default-request-parameter-values": true
-  },
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "use-default-request-parameter-values": true,
+    "enable-wire-tests": true
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

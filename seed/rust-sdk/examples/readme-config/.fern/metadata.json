@@ -1,20 +1,20 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "customReadmeSections": [
-      {
-        "content": "Override Content",
-        "title": "Override Section"
-      },
-      {
-        "content": "Generator Invocation Custom Content for {{ packageName }}:{{ version }}",
-        "title": "Generator Invocation Custom Section"
-      }
-    ],
-    "enableWireTests": true
-  },
   "generatorName": "fernapi/fern-rust-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "enableWireTests": true,
+    "customReadmeSections": [
+      {
+        "title": "Override Section",
+        "content": "Override Content"
+      },
+      {
+        "title": "Generator Invocation Custom Section",
+        "content": "Generator Invocation Custom Content for {{ packageName }}:{{ version }}"
+      }
+    ]
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

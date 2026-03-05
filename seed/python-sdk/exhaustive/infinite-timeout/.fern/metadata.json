@@ -1,10 +1,10 @@
 {
   "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
   "generatorConfig": {
     "timeout_in_seconds": "infinity"
   },
-  "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "latest",
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

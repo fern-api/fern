@@ -1,11 +1,11 @@
 {
   "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "package-prefix": "com.seed.unions",
-    "use-local-date-for-dates": true
-  },
   "generatorName": "fernapi/fern-java-sdk",
   "generatorVersion": "latest",
+  "generatorConfig": {
+    "use-local-date-for-dates": true,
+    "package-prefix": "com.seed.unions"
+  },
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

@@ -1,10 +1,10 @@
 {
-  "cliVersion": "DUMMY",
-  "generatorConfig": {
-    "formDataSupport": "Node16"
-  },
-  "generatorName": "fernapi/fern-typescript-sdk",
-  "generatorVersion": "latest",
-  "originGitCommit": "DUMMY",
-  "sdkVersion": "0.0.1"
+    "cliVersion": "DUMMY",
+    "generatorName": "fernapi/fern-typescript-sdk",
+    "generatorVersion": "latest",
+    "generatorConfig": {
+        "formDataSupport": "Node16"
+    },
+    "originGitCommit": "DUMMY",
+    "sdkVersion": "0.0.1"
 }

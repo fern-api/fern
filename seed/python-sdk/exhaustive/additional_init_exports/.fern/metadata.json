@@ -1,5 +1,7 @@
 {
   "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
   "generatorConfig": {
     "additional_init_exports": [
       {
@@ -11,8 +13,6 @@
       }
     ]
   },
-  "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "latest",
   "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }
