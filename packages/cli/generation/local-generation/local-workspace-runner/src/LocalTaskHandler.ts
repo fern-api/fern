@@ -191,7 +191,7 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            const newVersion = this.incrementVersion(previousVersion, analysis.versionBump as VersionBump);
+            const newVersion = this.incrementVersion(previousVersion, analysis.versionBump);
             this.context.logger.info(`Version bump: ${analysis.versionBump}, new version: ${newVersion}`);
 
             const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);

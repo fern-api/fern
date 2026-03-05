@@ -1,3 +1,4 @@
+import { VersionBump } from "@fern-api/cli-ai";
 import crypto from "crypto";
 
 /**
@@ -8,8 +9,8 @@ import crypto from "crypto";
  * isWhitelabel to derive the final result.
  */
 export interface CachedAnalysis {
-    /** The version bump type as returned by the AI (e.g. "MAJOR", "MINOR", "PATCH", "NO_CHANGE"). */
-    versionBump: string;
+    /** The version bump type as returned by the AI. */
+    versionBump: VersionBump;
     /** The raw commit message from the AI (before any branding is applied). */
     message: string;
 }
