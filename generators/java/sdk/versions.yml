@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.2
+  changelogEntry:
+    - summary: |
+        Fix `custom-plugins` configuration not being applied when running in
+        local/download-files mode (`fern generate --local`). The download-files
+        config class was missing the `customPlugins` field, causing the values
+        to be silently dropped during deserialization.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 3.42.1
   changelogEntry:
     - summary: |
