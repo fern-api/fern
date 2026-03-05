@@ -2,7 +2,13 @@ import { execSync } from "child_process";
 import * as fs from "fs/promises";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
-import { AutoVersioningException, AutoVersioningService } from "../AutoVersioningService.js";
+import {
+    AutoVersioningException,
+    AutoVersioningService,
+    countFilesInDiff,
+    DIFF_SIZE_LIMIT,
+    formatSizeKB
+} from "../AutoVersioningService.js";
 
 // Mock logger for tests
 const mockLogger = {
@@ -2280,5 +2286,98 @@ describe("AutoVersioningService", () => {
         expect(cleaned).not.toContain("README");
         expect(cleaned).not.toContain("CHANGELOG");
         expect(cleaned.trim()).toBe("");
+    });
+});
+
+describe("countFilesInDiff", () => {
+    it("counts zero files in empty string", () => {
+        expect(countFilesInDiff("")).toBe(0);
+    });
+
+    it("counts a single file", () => {
+        const diff =
+            "diff --git a/src/Client.ts b/src/Client.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/Client.ts\n" +
+            "+++ b/src/Client.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " export class Client {\n" +
+            "+    newMethod() {}\n" +
+            " }\n";
+        expect(countFilesInDiff(diff)).toBe(1);
+    });
+
+    it("counts multiple files", () => {
+        const diff =
+            "diff --git a/package.json b/package.json\n" +
+            "index abc..def 100644\n" +
+            "--- a/package.json\n" +
+            "+++ b/package.json\n" +
+            "@@ -1,3 +1,3 @@\n" +
+            " {\n" +
+            '-  "version": "1.0.0"\n' +
+            '+  "version": "2.0.0"\n' +
+            " }\n" +
+            "diff --git a/src/index.ts b/src/index.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/index.ts\n" +
+            "+++ b/src/index.ts\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " export { Client } from './Client';\n" +
+            "+export { NewType } from './NewType';\n" +
+            "diff --git a/README.md b/README.md\n" +
+            "index abc..def 100644\n" +
+            "--- a/README.md\n" +
+            "+++ b/README.md\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " # My SDK\n" +
+            "+Updated\n";
+        expect(countFilesInDiff(diff)).toBe(3);
+    });
+
+    it("does not count 'diff --git' appearing mid-line", () => {
+        const diff =
+            "diff --git a/src/test.ts b/src/test.ts\n" +
+            "index abc..def 100644\n" +
+            "--- a/src/test.ts\n" +
+            "+++ b/src/test.ts\n" +
+            "@@ -1,3 +1,4 @@\n" +
+            " // This line mentions diff --git but is not a header\n" +
+            "+    newLine();\n" +
+            " }\n";
+        expect(countFilesInDiff(diff)).toBe(1);
+    });
+
+    it("handles diff with no trailing newline", () => {
+        const diff = "diff --git a/file.txt b/file.txt";
+        expect(countFilesInDiff(diff)).toBe(1);
+    });
+});
+
+describe("formatSizeKB", () => {
+    it("formats zero", () => {
+        expect(formatSizeKB(0)).toBe("0.0");
+    });
+
+    it("formats exactly 1KB", () => {
+        expect(formatSizeKB(1024)).toBe("1.0");
+    });
+
+    it("formats fractional KB with one decimal place", () => {
+        expect(formatSizeKB(1536)).toBe("1.5");
+    });
+
+    it("formats large sizes", () => {
+        expect(formatSizeKB(100_000)).toBe("97.7");
+    });
+
+    it("formats small sizes", () => {
+        expect(formatSizeKB(500)).toBe("0.5");
+    });
+});
+
+describe("DIFF_SIZE_LIMIT", () => {
+    it("is 100,000 characters", () => {
+        expect(DIFF_SIZE_LIMIT).toBe(100_000);
     });
 });
