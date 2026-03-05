@@ -20,7 +20,6 @@ import type {
     CppFunctionIr
 } from "../../../src/types/CppLibraryDocsIr.js";
 import {
-    getFunctionQualifiers,
     getCommonQualifiers,
     getOverloadSpecificQualifiers,
     renderBadges
@@ -983,11 +982,9 @@ export function renderSingleMethod(
     ctx: RenderContext
 ): string {
     const lines: string[] = [];
-    const qualifiers = getFunctionQualifiers(func);
-    const badgeStr = qualifiers.length > 0 ? ` ${renderBadges(qualifiers)}` : "";
     const displayName = escapeNameForHeading(func.name);
 
-    lines.push(`### ${displayName}${badgeStr}`);
+    lines.push(`### ${displayName}`);
     lines.push("");
 
     const content = renderMethodContent(func, ownerClass, ctx);
@@ -1140,12 +1137,9 @@ export function renderOverloadedMethod(
 
     const lines: string[] = [];
     const displayName = escapeNameForHeading(funcs[0]!.name);
-
-    // Common qualifiers go on the H3 heading (computed from all funcs, including deleted)
     const commonQuals = getCommonQualifiers(funcs);
-    const badgeStr = commonQuals.length > 0 ? ` ${renderBadges(commonQuals)}` : "";
 
-    lines.push(`### ${displayName}${badgeStr}`);
+    lines.push(`### ${displayName}`);
     lines.push("");
     lines.push("<Tabs>");
 
@@ -1259,12 +1253,9 @@ export function renderDestructor(
 ): string {
     const lines: string[] = [];
     const className = getShortName(ownerClass.path);
-    const qualifiers = getFunctionQualifiers(func);
-    const badgeStr = qualifiers.length > 0 ? ` ${renderBadges(qualifiers)}` : "";
-
     lines.push("### Destructor");
     lines.push("");
-    lines.push(`### ~${className}${badgeStr}`);
+    lines.push(`### ~${className}`);
     lines.push("");
 
     const content = renderMethodContent(func, ownerClass, ctx);
