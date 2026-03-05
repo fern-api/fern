@@ -184,6 +184,13 @@ vi.mock("../AutoVersioningService.js", () => ({
             super(message);
             this.name = "AutoVersioningException";
         }
+    },
+    DIFF_SIZE_LIMIT: 100_000,
+    countFilesInDiff: (diff: string) => {
+        return (diff.match(/diff --git/g) ?? []).length;
+    },
+    formatSizeKB: (charLength: number) => {
+        return (charLength / 1024).toFixed(1);
     }
 }));
 
