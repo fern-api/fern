@@ -78,7 +78,7 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
 
         if (docstring.description.length > 0) {
-            const desc = renderDescriptionBlocks(docstring.description);
+            const desc = renderDescriptionBlocks(docstring.description, { titledSectionHeadingLevel: 2 });
             if (desc) {
                 lines.push(desc);
                 lines.push("");

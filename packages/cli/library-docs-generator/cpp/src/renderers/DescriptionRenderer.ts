@@ -433,9 +433,17 @@ export function renderSeeAlso(seeAlsoItems: CppDocSegment[][]): string {
 // ---------------------------------------------------------------------------
 
 /**
+ * Options for block rendering.
+ */
+interface RenderBlockOptions {
+    /** When set, titledSection titles render as markdown headings at this level (e.g., 2 → "## Title"). */
+    titledSectionHeadingLevel?: number;
+}
+
+/**
  * Render a single doc block to MDX lines.
  */
-function renderBlock(block: CppDocBlock): string {
+function renderBlock(block: CppDocBlock, options?: RenderBlockOptions): string {
     switch (block.type) {
         case "paragraph": {
             const text = renderSegments(block.segments).trim();
@@ -459,7 +467,7 @@ function renderBlock(block: CppDocBlock): string {
             return escapeMultilineMdxSpecials(block.content);
         }
         case "list": {
-            return renderList(block.ordered, block.items);
+            return renderList(block.ordered, block.items, options);
         }
         case "image": {
             if (block.caption) {
@@ -470,11 +478,16 @@ function renderBlock(block: CppDocBlock): string {
         case "titledSection": {
             const lines: string[] = [];
             if (block.title) {
-                lines.push(`**${block.title}**`);
+                if (options?.titledSectionHeadingLevel) {
+                    const hashes = "#".repeat(options.titledSectionHeadingLevel);
+                    lines.push(`${hashes} ${block.title}`);
+                } else {
+                    lines.push(`**${block.title}**`);
+                }
                 lines.push("");
             }
             for (const subBlock of block.blocks) {
-                const rendered = renderBlock(subBlock);
+                const rendered = renderBlock(subBlock, options);
                 if (rendered) {
                     lines.push(rendered);
                 }
@@ -489,7 +502,7 @@ function renderBlock(block: CppDocBlock): string {
 /**
  * Render a list (ordered or unordered) to MDX.
  */
-function renderList(ordered: boolean, items: CppDocBlock[][]): string {
+function renderList(ordered: boolean, items: CppDocBlock[][], options?: RenderBlockOptions): string {
     const lines: string[] = [];
     for (let i = 0; i < items.length; i++) {
         const itemBlocks = items[i];
@@ -497,12 +510,12 @@ function renderList(ordered: boolean, items: CppDocBlock[][]): string {
             continue;
         }
         const prefix = ordered ? `${i + 1}.` : "-";
-        const firstBlock = renderBlock(itemBlocks[0]!);
+        const firstBlock = renderBlock(itemBlocks[0]!, options);
         lines.push(`${prefix} ${firstBlock}`);
 
         // Remaining blocks in the item get indented
         for (let j = 1; j < itemBlocks.length; j++) {
-            const rendered = renderBlock(itemBlocks[j]!);
+            const rendered = renderBlock(itemBlocks[j]!, options);
             if (rendered) {
                 const indented = rendered.split("\n").map(line => `   ${line}`).join("\n");
                 lines.push(indented);
@@ -515,11 +528,14 @@ function renderList(ordered: boolean, items: CppDocBlock[][]): string {
 /**
  * Render the description blocks of a docstring to MDX paragraphs.
  * Filters out empty/whitespace-only paragraphs.
+ *
+ * @param options.titledSectionHeadingLevel - When set, titledSection titles render
+ *   as markdown headings at this level (e.g., 2 → "## Title") instead of bold text.
  */
-export function renderDescriptionBlocks(blocks: CppDocBlock[]): string {
+export function renderDescriptionBlocks(blocks: CppDocBlock[], options?: RenderBlockOptions): string {
     const parts: string[] = [];
     for (const block of blocks) {
-        const rendered = renderBlock(block);
+        const rendered = renderBlock(block, options);
         if (rendered && rendered.trim()) {
             parts.push(rendered);
         }

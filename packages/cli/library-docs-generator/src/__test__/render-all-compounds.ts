@@ -27,9 +27,9 @@ interface CorpusEntry {
 }
 
 const CORPORA: CorpusEntry[] = [
-    { filename: "ir_output_cub.json", slug: "cub", label: "CUB" },
-    { filename: "ir_output_thrust.json", slug: "thrust", label: "Thrust" },
-    { filename: "ir_output_libcudacxx.json", slug: "cuda", label: "libcudacxx" },
+    { filename: "ir_output_cub_v3.json", slug: "cub", label: "CUB" },
+    { filename: "ir_output_thrust_v3.json", slug: "thrust", label: "Thrust" },
+    { filename: "ir_output_libcudacxx_v3.json", slug: "cuda", label: "libcudacxx" },
 ];
 
 interface CorpusResult {
@@ -56,7 +56,9 @@ function main(): void {
         }
 
         const raw = fs.readFileSync(irPath, "utf-8");
-        const ir: CppLibraryDocsIr = JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        // V3 IR files have a { ir, metadata } wrapper; unwrap if present
+        const ir: CppLibraryDocsIr = parsed.ir ?? parsed;
 
         const outputDir = path.join(OUTPUT_BASE, corpus.slug);
 
