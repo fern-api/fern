@@ -2,6 +2,7 @@
 
 import datetime as dt
 import typing
+import urllib.parse
 import uuid
 from json.decoder import JSONDecodeError
 
@@ -35,7 +36,7 @@ class RawHttpMethodsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{urllib.parse.quote(str(jsonable_encoder(id)), safe='')}",
             method="GET",
             request_options=request_options,
         )
@@ -111,7 +112,7 @@ class RawHttpMethodsClient:
         HttpResponse[ObjectWithOptionalField]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{urllib.parse.quote(str(jsonable_encoder(id)), safe='')}",
             method="PUT",
             json={
                 "string": string,
@@ -193,7 +194,7 @@ class RawHttpMethodsClient:
         HttpResponse[ObjectWithOptionalField]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{urllib.parse.quote(str(jsonable_encoder(id)), safe='')}",
             method="PATCH",
             json={
                 "string": string,
@@ -242,7 +243,7 @@ class RawHttpMethodsClient:
         HttpResponse[bool]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{urllib.parse.quote(str(jsonable_encoder(id)), safe='')}",
             method="DELETE",
             request_options=request_options,
         )
@@ -282,7 +283,7 @@ class AsyncRawHttpMethodsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{urllib.parse.quote(str(jsonable_encoder(id)), safe='')}",
             method="GET",
             request_options=request_options,
         )
@@ -358,7 +359,7 @@ class AsyncRawHttpMethodsClient:
         AsyncHttpResponse[ObjectWithOptionalField]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{urllib.parse.quote(str(jsonable_encoder(id)), safe='')}",
             method="PUT",
             json={
                 "string": string,
@@ -440,7 +441,7 @@ class AsyncRawHttpMethodsClient:
         AsyncHttpResponse[ObjectWithOptionalField]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{urllib.parse.quote(str(jsonable_encoder(id)), safe='')}",
             method="PATCH",
             json={
                 "string": string,
@@ -491,7 +492,7 @@ class AsyncRawHttpMethodsClient:
         AsyncHttpResponse[bool]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"http-methods/{jsonable_encoder(id)}",
+            f"http-methods/{urllib.parse.quote(str(jsonable_encoder(id)), safe='')}",
             method="DELETE",
             request_options=request_options,
         )

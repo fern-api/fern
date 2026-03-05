@@ -2,6 +2,7 @@
 
 import datetime as dt
 import typing
+import urllib.parse
 from json.decoder import JSONDecodeError
 
 from ..commons.types.problem_id import ProblemId
@@ -61,7 +62,7 @@ class RawPlaylistClient:
         HttpResponse[Playlist]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/create",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/create",
             method="POST",
             params={
                 "datetime": serialize_datetime(datetime),
@@ -128,7 +129,7 @@ class RawPlaylistClient:
         HttpResponse[typing.List[Playlist]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/all",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/all",
             method="GET",
             params={
                 "limit": limit,
@@ -174,7 +175,7 @@ class RawPlaylistClient:
         HttpResponse[Playlist]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/{urllib.parse.quote(str(jsonable_encoder(playlist_id)), safe='')}",
             method="GET",
             request_options=request_options,
         )
@@ -234,7 +235,7 @@ class RawPlaylistClient:
         HttpResponse[typing.Optional[Playlist]]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/{urllib.parse.quote(str(jsonable_encoder(playlist_id)), safe='')}",
             method="PUT",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=UpdatePlaylistRequest, direction="write"
@@ -289,7 +290,7 @@ class RawPlaylistClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/{urllib.parse.quote(str(jsonable_encoder(playlist_id)), safe='')}",
             method="DELETE",
             request_options=request_options,
         )
@@ -339,7 +340,7 @@ class AsyncRawPlaylistClient:
         AsyncHttpResponse[Playlist]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/create",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/create",
             method="POST",
             params={
                 "datetime": serialize_datetime(datetime),
@@ -406,7 +407,7 @@ class AsyncRawPlaylistClient:
         AsyncHttpResponse[typing.List[Playlist]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/all",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/all",
             method="GET",
             params={
                 "limit": limit,
@@ -452,7 +453,7 @@ class AsyncRawPlaylistClient:
         AsyncHttpResponse[Playlist]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/{urllib.parse.quote(str(jsonable_encoder(playlist_id)), safe='')}",
             method="GET",
             request_options=request_options,
         )
@@ -512,7 +513,7 @@ class AsyncRawPlaylistClient:
         AsyncHttpResponse[typing.Optional[Playlist]]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/{urllib.parse.quote(str(jsonable_encoder(playlist_id)), safe='')}",
             method="PUT",
             json=convert_and_respect_annotation_metadata(
                 object_=request, annotation=UpdatePlaylistRequest, direction="write"
@@ -567,7 +568,7 @@ class AsyncRawPlaylistClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v2/playlist/{jsonable_encoder(service_param)}/{jsonable_encoder(playlist_id)}",
+            f"v2/playlist/{urllib.parse.quote(str(jsonable_encoder(service_param)), safe='')}/{urllib.parse.quote(str(jsonable_encoder(playlist_id)), safe='')}",
             method="DELETE",
             request_options=request_options,
         )

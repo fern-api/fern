@@ -2,6 +2,7 @@
 
 import datetime as dt
 import typing
+import urllib.parse
 import uuid
 from json.decoder import JSONDecodeError
 
@@ -270,7 +271,7 @@ class RawObjectClient:
         HttpResponse[NestedObjectWithRequiredField]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
+            f"object/get-and-return-nested-with-required-field/{urllib.parse.quote(str(jsonable_encoder(string_)), safe='')}",
             method="POST",
             json={
                 "string": string,
@@ -676,7 +677,7 @@ class AsyncRawObjectClient:
         AsyncHttpResponse[NestedObjectWithRequiredField]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
+            f"object/get-and-return-nested-with-required-field/{urllib.parse.quote(str(jsonable_encoder(string_)), safe='')}",
             method="POST",
             json={
                 "string": string,
