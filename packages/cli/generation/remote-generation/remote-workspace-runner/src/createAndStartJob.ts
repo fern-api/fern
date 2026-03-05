@@ -142,13 +142,7 @@ async function createJob({
         // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
         const rawError = createResponse.error as any;
         if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
-            // Extract Retry-After header value if available in the response
-            const retryAfterHeader = rawError.content.headers?.["retry-after"];
-            const retryAfterSeconds =
-                retryAfterHeader != null && !Number.isNaN(Number(retryAfterHeader))
-                    ? Number(retryAfterHeader)
-                    : undefined;
-            throw new TooManyRequestsError(retryAfterSeconds);
+            throw new TooManyRequestsError();
         }
         return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
