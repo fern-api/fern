@@ -1,4 +1,3 @@
-export * from "./AutoVersioningCache.js";
 export { AutoVersioningCache } from "./AutoVersioningCache.js";
 export * from "./AutoVersioningService.js";
 export { AutoVersioningException, AutoVersioningService } from "./AutoVersioningService.js";

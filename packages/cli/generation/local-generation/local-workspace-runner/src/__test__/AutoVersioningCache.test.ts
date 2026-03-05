@@ -99,7 +99,7 @@ describe("AutoVersioningCache", () => {
         const cleanedDiff = "diff --git a/src/api.ts\n+export function newEndpoint() {}";
 
         let aiCallCount = 0;
-        const mockAnalyzeWithAI = async (diff: string): Promise<AutoVersionResult | null> => {
+        const mockAnalyzeWithAI = async (_diff: string): Promise<AutoVersionResult | null> => {
             aiCallCount++;
             return {
                 version: "1.3.0",

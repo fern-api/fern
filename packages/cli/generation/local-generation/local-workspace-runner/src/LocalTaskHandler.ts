@@ -170,8 +170,8 @@ export class LocalTaskHandler {
             }
 
             // Check cache for a previously computed result with the same cleaned diff
-            if (this.autoVersioningCache != null) {
-                const cacheKey = this.autoVersioningCache.key(cleanedDiff);
+            const cacheKey = this.autoVersioningCache != null ? this.autoVersioningCache.key(cleanedDiff) : undefined;
+            if (cacheKey != null && this.autoVersioningCache != null) {
                 const cached = this.autoVersioningCache.get(cacheKey);
                 if (cached !== undefined) {
                     this.context.logger.info(
@@ -220,8 +220,7 @@ export class LocalTaskHandler {
             }
 
             // Store result in cache for subsequent generators with the same diff
-            if (this.autoVersioningCache != null) {
-                const cacheKey = this.autoVersioningCache.key(cleanedDiff);
+            if (cacheKey != null && this.autoVersioningCache != null) {
                 this.autoVersioningCache.set(cacheKey, result);
             }
 
