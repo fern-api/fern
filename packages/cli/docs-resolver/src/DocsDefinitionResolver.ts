@@ -1446,8 +1446,10 @@ export class DocsDefinitionResolver {
             );
         }
 
-        // Extract GraphQL operations and types from the workspace
-        const graphqlData = await this.extractGraphQLData();
+        // Extract GraphQL operations and types scoped to the current API section's workspace.
+        // This ensures that only GraphQL specs belonging to this specific API definition are included,
+        // rather than merging all GraphQL operations from all workspaces into every API section.
+        const graphqlData = await this.extractGraphQLData(openapiWorkspace);
 
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
@@ -1568,9 +1570,11 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Extract GraphQL operations from a workspace
+     * Extract GraphQL operations from a specific workspace, or all workspaces if none is provided.
+     * When a targetWorkspace is specified, only GraphQL specs from that workspace are included,
+     * preventing GraphQL operations from leaking into unrelated API reference sections.
      */
-    private async extractGraphQLData(): Promise<{
+    private async extractGraphQLData(targetWorkspace?: OSSWorkspace): Promise<{
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
         namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
@@ -1579,8 +1583,11 @@ export class DocsDefinitionResolver {
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
+        // Scope to the target workspace if provided, otherwise fall back to all workspaces
+        const workspacesToProcess = targetWorkspace ? [targetWorkspace] : this.ossWorkspaces;
+
         // Process GraphQL specs directly (not relying on workspace pre-processing)
-        for (const ossWorkspace of this.ossWorkspaces) {
+        for (const ossWorkspace of workspacesToProcess) {
             const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
 
             for (const spec of graphqlSpecs) {
