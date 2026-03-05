@@ -1,6 +1,6 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { getLatestRelease as getLatestReleaseFromGithub } from "@fern-api/github";
+import { getFileContent, getLatestRelease as getLatestReleaseFromGithub } from "@fern-api/github";
 import type { FernFiddle } from "@fern-fern/fiddle-sdk";
 import latestVersion from "latest-version";
 import semver from "semver";
@@ -33,6 +33,10 @@ interface GoProxyResponse {
 
 interface CratesIoResponse {
     crate?: { max_stable_version?: string };
+}
+
+interface FernMetadataJson {
+    sdkVersion?: string;
 }
 
 // ─── Registry info extracted from output mode ───────────────────────
@@ -308,6 +312,15 @@ async function getExistingVersion({
     // Step 2: Fall back to GitHub releases
     if (githubRepository != null) {
         version = await getLatestRelease(githubRepository);
+    }
+
+    if (version != null) {
+        return version;
+    }
+
+    // Step 3: Fall back to .fern/metadata.json from the GitHub repo
+    if (githubRepository != null) {
+        version = await getVersionFromMetadataJson(githubRepository);
     }
 
     return version;
@@ -779,6 +792,29 @@ export async function getLatestRelease(githubRepository: string): Promise<string
         return await getLatestReleaseFromGithub(githubRepository);
     } catch (error) {
         // Repository doesn't exist or API error
+        return undefined;
+    }
+}
+
+/**
+ * Fetches the sdkVersion from the .fern/metadata.json file in the GitHub repository.
+ * This file is written by Fern generators during previous SDK generations.
+ *
+ * @param githubRepository - Repository in "owner/repo" format
+ * @returns The sdkVersion string, or undefined if the file doesn't exist or lacks the field
+ */
+/** @internal Exported for testing */
+export async function getVersionFromMetadataJson(githubRepository: string): Promise<string | undefined> {
+    try {
+        const content = await getFileContent(githubRepository, ".fern/metadata.json");
+        if (content != null) {
+            const metadata = JSON.parse(content) as FernMetadataJson;
+            if (metadata.sdkVersion != null) {
+                return metadata.sdkVersion;
+            }
+        }
+        return undefined;
+    } catch (error) {
         return undefined;
     }
 }

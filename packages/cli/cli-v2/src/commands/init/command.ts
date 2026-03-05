@@ -181,7 +181,6 @@ export function addInitCommand(cli: Argv<GlobalArgs>): void {
                 })
                 .option("yes", {
                     type: "boolean",
-                    alias: "y",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
                 })
