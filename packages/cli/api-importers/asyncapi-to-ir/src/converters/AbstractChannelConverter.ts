@@ -1,4 +1,4 @@
-import { FernIr, WebSocketChannel } from "@fern-api/ir-sdk";
+import { FernIr, HttpHeader, WebSocketChannel } from "@fern-api/ir-sdk";
 import { AbstractConverter, Converters } from "@fern-api/v3-importer-commons";
 
 import { AsyncAPIConverter } from "../AsyncAPIConverter.js";
@@ -10,6 +10,7 @@ export declare namespace AbstractChannelConverter {
         websocketGroup: string[] | undefined;
         channel: TChannel;
         channelPath: string;
+        globalHeaders: HttpHeader[];
     }
 
     export interface Output {
@@ -25,6 +26,7 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
 > {
     protected readonly channel: TChannel;
     protected readonly channelPath: string;
+    protected readonly globalHeaders: HttpHeader[];
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
     protected websocketGroup: string[] | undefined;
 
@@ -33,12 +35,14 @@ export abstract class AbstractChannelConverter<TChannel> extends AbstractConvert
         breadcrumbs,
         websocketGroup,
         channel,
-        channelPath
+        channelPath,
+        globalHeaders
     }: AbstractChannelConverter.Args<TChannel>) {
         super({ context, breadcrumbs });
         this.websocketGroup = websocketGroup;
         this.channel = channel;
         this.channelPath = channelPath;
+        this.globalHeaders = globalHeaders;
     }
 
     public abstract convert(): AbstractChannelConverter.Output | undefined;

@@ -25,14 +25,14 @@ export declare namespace ChannelConverter2_X {
 export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.ChannelV2> {
     protected inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema> = {};
 
-    constructor({ context, breadcrumbs, websocketGroup, channel, channelPath }: ChannelConverter2_X.Args) {
-        super({ context, breadcrumbs, websocketGroup, channel, channelPath });
+    constructor({ context, breadcrumbs, websocketGroup, channel, channelPath, globalHeaders }: ChannelConverter2_X.Args) {
+        super({ context, breadcrumbs, websocketGroup, channel, channelPath, globalHeaders });
     }
 
     public convert(): AbstractChannelConverter.Output | undefined {
         const pathParameters: PathParameter[] = [];
         const queryParameters: QueryParameter[] = [];
-        const headers: HttpHeader[] = [];
+        const headers: HttpHeader[] = [...this.globalHeaders];
 
         const displayNameExtension = new DisplayNameExtension({
             breadcrumbs: this.breadcrumbs,

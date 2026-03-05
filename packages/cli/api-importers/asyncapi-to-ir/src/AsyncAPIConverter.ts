@@ -1,4 +1,4 @@
-import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { FernIr, HttpHeader, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { AbstractConverter, AbstractSpecConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
 import { ChannelConverter2_X } from "./2.x/channel/ChannelConverter2_X.js";
@@ -9,6 +9,8 @@ import { AsyncAPIV3 } from "./3.0/index.js";
 import { ServersConverter3_0 } from "./3.0/servers/ServersConverter3_0.js";
 import { AsyncAPIConverterContext } from "./AsyncAPIConverterContext.js";
 import { AbstractChannelConverter } from "./converters/AbstractChannelConverter.js";
+import { FernGlobalHeadersExtension } from "./extensions/x-fern-global-headers.js";
+import { convertGlobalHeadersExtension } from "./utils/convertGlobalHeadersExtension.js";
 
 export type BaseIntermediateRepresentation = Omit<IntermediateRepresentation, "apiName" | "constants">;
 
@@ -42,7 +44,9 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
         this.convertServers();
 
-        this.convertChannels();
+        const globalHeaders = this.convertGlobalHeaders();
+
+        this.convertChannels({ globalHeaders });
 
         return this.finalizeIr();
     }
@@ -160,7 +164,32 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
         this.addEnvironmentsToIr({ environmentConfig: convertedServers });
     }
 
-    private convertChannels(): void {
+    private convertGlobalHeaders(): HttpHeader[] {
+        const globalHeaders: HttpHeader[] = [];
+
+        const globalHeadersExtension = new FernGlobalHeadersExtension({
+            breadcrumbs: ["x-fern-global-headers"],
+            document: this.context.spec,
+            context: this.context
+        });
+        const convertedGlobalHeaders = globalHeadersExtension.convert();
+        if (convertedGlobalHeaders != null) {
+            globalHeaders.push(
+                ...convertGlobalHeadersExtension({
+                    globalHeaders: convertedGlobalHeaders,
+                    context: this.context
+                })
+            );
+        }
+
+        if (globalHeaders.length > 0) {
+            this.addGlobalHeadersToIr(globalHeaders);
+        }
+
+        return globalHeaders;
+    }
+
+    private convertChannels({ globalHeaders }: { globalHeaders: HttpHeader[] }): void {
         for (const [channelPath, channel] of Object.entries(this.context.spec.channels ?? {})) {
             const groupNameExtension = new Extensions.SdkGroupNameExtension({
                 breadcrumbs: ["channels", channelPath],
@@ -180,7 +209,8 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                     websocketGroup,
                     channel,
                     channelPath,
-                    operations
+                    operations,
+                    globalHeaders
                 });
                 convertedChannel = channelConverter.convert();
             } else {
@@ -189,7 +219,8 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
                     breadcrumbs: ["channels", channelPath],
                     websocketGroup,
                     channel,
-                    channelPath
+                    channelPath,
+                    globalHeaders
                 });
                 convertedChannel = channelConverter.convert();
             }

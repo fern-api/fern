@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.5.0
+  changelogEntry:
+    - summary: |
+        Add `x-fern-global-headers` support for AsyncAPI specs. Global headers
+        defined at the document root of an AsyncAPI spec are now extracted and
+        included as headers on every WebSocket channel, matching the existing
+        behavior for OpenAPI specs. Both AsyncAPI v2 and v3 are supported.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.4.2
   changelogEntry:
     - summary: |
