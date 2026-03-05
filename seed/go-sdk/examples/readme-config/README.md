@@ -10,7 +10,6 @@ The CustomName Go library provides convenient access to the CustomName APIs from
 
 - [Documentation](#documentation)
 - [Reference](#reference)
-- [Lint](#lint)
 - [Base Readme Custom Section](#base-readme-custom-section)
 - [Generator Invocation Custom Section](#generator-invocation-custom-section)
 - [Override Section](#override-section)
@@ -31,14 +30,6 @@ API reference documentation is available [here](https://www.docs.fernapi.com).
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
-
-## Lint
-
-This SDK is fully compatible with [golangci-lint](https://golangci-lint.run/). The generated CI workflow (`.github/workflows/ci.yml`) includes a lint job that runs automatically on push. You can also run it locally:
-
-```sh
-golangci-lint run
-```
 
 ## Base Readme Custom Section
 

@@ -7,7 +7,6 @@ The Seed Go library provides convenient access to the Seed APIs from Go.
 ## Table of Contents
 
 - [Reference](#reference)
-- [Lint](#lint)
 - [Usage](#usage)
 - [Environments](#environments)
 - [Errors](#errors)
@@ -22,14 +21,6 @@ The Seed Go library provides convenient access to the Seed APIs from Go.
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
-
-## Lint
-
-This SDK is fully compatible with [golangci-lint](https://golangci-lint.run/). The generated CI workflow (`.github/workflows/ci.yml`) includes a lint job that runs automatically on push. You can also run it locally:
-
-```sh
-golangci-lint run
-```
 
 ## Usage
 
