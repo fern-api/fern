@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlantOrder"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/allof-duplicate-properties/fern\"\n\tfernclient \"github.com/allof-duplicate-properties/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreatePlantOrder(\n\tcontext.TODO(),\n\t\u0026fern.CreatePlantOrderRequest{\n\t\tPlantId: \"plantId\",\n\t\tBody: \u0026fern.PlantOrder{\n\t\t\tOrderId:   \"orderId\",\n\t\t\tAmount:    1.1,\n\t\t\tCurrency:  \"currency\",\n\t\t\tPlantName: \"plantName\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

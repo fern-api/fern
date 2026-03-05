@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: AllOf Duplicate Properties Test
+  version: 1.0.0
+  description: >
+    Test for duplicate properties when a schema uses allOf to extend a parent
+    schema but also redefines the same properties inline. The child's inline
+    properties should take precedence and not appear twice.
+servers:
+  - url: https://api.example.com
+paths:
+  /plants/{plantId}:
+    post:
+      summary: Create plant order
+      description: Creates an order for a plant.
+      operationId: createPlantOrder
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlantOrder"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantOrder"
+components:
+  schemas:
+    OrderBase:
+      type: object
+      description: Base order schema with common order fields.
+      properties:
+        orderId:
+          type: string
+          description: Unique identifier for the order.
+        amount:
+          type: number
+          format: double
+          description: Total amount for the order.
+        currency:
+          type: string
+          description: Currency code (e.g. USD, EUR).
+        dateTime:
+          type: string
+          format: date-time
+          description: Timestamp when the order was placed.
+      required:
+        - orderId
+        - amount
+        - currency
+    PlantOrder:
+      type: object
+      description: >
+        A plant order that extends OrderBase via allOf but also redefines
+        amount, currency, and orderId inline. Each property should appear
+        only once in the generated type.
+      allOf:
+        - $ref: "#/components/schemas/OrderBase"
+        - type: object
+          properties:
+            orderId:
+              type: string
+              description: Unique identifier for the plant order.
+            amount:
+              type: number
+              format: double
+              description: Total amount for the plant order.
+            currency:
+              type: string
+              description: Currency code for the plant order.
+            plantName:
+              type: string
+              description: Name of the plant being ordered.
+            quantity:
+              type: integer
+              description: Number of plants ordered.
+          required:
+            - orderId
+            - amount
+            - currency
+            - plantName

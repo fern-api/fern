@@ -1,0 +1,31 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "1e306cf",
+            "id": {
+                "method": "POST",
+                "path": "/plants/{plantId}",
+                "identifier_override": "endpoint_.createPlantOrder"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreatePlantOrderRequest;\nimport com.seed.api.types.PlantOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlantOrder(\n            \"plantId\",\n            CreatePlantOrderRequest\n                .builder()\n                .body(\n                    PlantOrder\n                        .builder()\n                        .orderId(\"orderId\")\n                        .amount(1.1)\n                        .currency(\"currency\")\n                        .plantName(\"plantName\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreatePlantOrderRequest;\nimport com.seed.api.types.PlantOrder;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlantOrder(\n            \"plantId\",\n            CreatePlantOrderRequest\n                .builder()\n                .body(\n                    PlantOrder\n                        .builder()\n                        .orderId(\"orderId\")\n                        .amount(1.1)\n                        .currency(\"currency\")\n                        .plantName(\"plantName\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "1ca2e391",
+            "id": {
+                "method": "POST",
+                "path": "/plants/{plantId}",
+                "identifier_override": "endpoint_.createPlantOrder"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreatePlantOrderRequest;\nimport com.seed.api.types.PlantOrder;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlantOrder(\n            \"plantId\",\n            CreatePlantOrderRequest\n                .builder()\n                .body(\n                    PlantOrder\n                        .builder()\n                        .orderId(\"orderId\")\n                        .amount(1.1)\n                        .currency(\"currency\")\n                        .plantName(\"plantName\")\n                        .dateTime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                        .quantity(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.CreatePlantOrderRequest;\nimport com.seed.api.types.PlantOrder;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.createPlantOrder(\n            \"plantId\",\n            CreatePlantOrderRequest\n                .builder()\n                .body(\n                    PlantOrder\n                        .builder()\n                        .orderId(\"orderId\")\n                        .amount(1.1)\n                        .currency(\"currency\")\n                        .plantName(\"plantName\")\n                        .dateTime(OffsetDateTime.parse(\"2024-01-15T09:30:00Z\"))\n                        .quantity(1)\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

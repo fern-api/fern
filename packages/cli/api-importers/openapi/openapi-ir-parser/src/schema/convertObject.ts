@@ -324,22 +324,28 @@ export function convertObject({
         }
     );
 
+    const existingPropertyKeys = new Set(convertedProperties.map((property) => property.key));
     convertedProperties.push(
-        ...inlinedParentProperties.map((property) => {
-            const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = property.conflict;
-            for (const parent of parents) {
-                const parentPropertySchema = parent.properties[property.key];
-                if (parentPropertySchema != null && !isSchemaWithExampleEqual(property.schema, parentPropertySchema)) {
-                    conflicts[parent.schemaId] = { differentSchema: true };
-                } else if (parentPropertySchema != null) {
-                    conflicts[parent.schemaId] = { differentSchema: false };
+        ...inlinedParentProperties
+            .filter((property) => !existingPropertyKeys.has(property.key))
+            .map((property) => {
+                const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = property.conflict;
+                for (const parent of parents) {
+                    const parentPropertySchema = parent.properties[property.key];
+                    if (
+                        parentPropertySchema != null &&
+                        !isSchemaWithExampleEqual(property.schema, parentPropertySchema)
+                    ) {
+                        conflicts[parent.schemaId] = { differentSchema: true };
+                    } else if (parentPropertySchema != null) {
+                        conflicts[parent.schemaId] = { differentSchema: false };
+                    }
                 }
-            }
-            return {
-                ...property,
-                conflict: conflicts
-            };
-        })
+                return {
+                    ...property,
+                    conflict: conflicts
+                };
+            })
     );
 
     return wrapObject({

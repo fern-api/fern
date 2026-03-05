@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/plants/{plantId}",
+                "method": "POST",
+                "identifier_override": "endpoint_.createPlantOrder"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/allof-duplicate-properties\";\n\nconst client = new SeedApiClient;\nawait client.createPlantOrder({\n    plantId: \"plantId\",\n    body: {\n        orderId: \"orderId\",\n        amount: 1.1,\n        currency: \"currency\",\n        plantName: \"plantName\"\n    }\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}
