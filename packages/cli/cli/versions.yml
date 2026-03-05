@@ -4,13 +4,16 @@
     - summary: |
         Expand AUTO versioning diff exclusion list to strip noise files before
         AI analysis. The cleaned diff now excludes lock files (`pnpm-lock.yaml`,
-        `poetry.lock`, `yarn.lock`, etc.), test files (`*.test.ts`, `*_test.go`,
-        `tests/**`, `wire/**`), snapshot files (`*.snap`, `__snapshots__/**`),
-        generated documentation (`reference.md`), CI/editor config (`.github/**`,
-        `.editorconfig`, `.prettierrc*`, `biome.json`), and confirms
-        `CHANGELOG*`/`README*` exclusion is case-insensitive. This dramatically
-        reduces diff sizes sent to the AI endpoint, fixing silent failures on
-        large SDK diffs.
+        `poetry.lock`, `yarn.lock`, etc.), test files by naming convention
+        (`*.test.ts`, `*_test.go`, `*Test.java`, `__tests__/`, `wiremock/`),
+        snapshot files (`*.snap`, `__snapshots__/`), generated documentation
+        (`reference.md`), CI/editor config (`.github/`, `.editorconfig`,
+        `.prettierrc*`, `biome.json`), linting configs (`.eslintrc*`,
+        `.rubocop*`, `phpstan.neon`, `rustfmt.toml`, etc.), and build/devtool
+        configs (`tsconfig*.json`, `Makefile`, `Rakefile`, `snippet.json`,
+        `.gitignore`, etc.). `CHANGELOG*`/`README*` exclusion confirmed
+        case-insensitive. This dramatically reduces diff sizes sent to the AI
+        endpoint, fixing silent failures on large SDK diffs.
       type: feat
   createdAt: "2026-03-05"
   irVersion: 65

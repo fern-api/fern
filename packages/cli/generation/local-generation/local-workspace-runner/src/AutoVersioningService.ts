@@ -36,7 +36,9 @@ interface FileSection {
  * generated docs, test fixtures, CI config) without carrying meaningful
  * API-surface signal for semantic versioning.
  *
- * Each entry is a case-insensitive regex derived from the original glob.
+ * Each entry is a regex tested against the file path. Most use the /i flag
+ * for case-insensitive matching; /Test\.java$/ is intentionally
+ * case-sensitive to match Java's PascalCase naming convention.
  */
 const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     // Documentation / generated reference
@@ -67,6 +69,7 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /_test\.py$/i,
     /Test\.java$/,
     /(?:^|\/)__tests__\//i, // __tests__/ is unambiguously a test directory
+    /(?:^|\/)wiremock\//i, // Fern-generated WireMock test fixtures
 
     // Snapshot files
     /(?:^|\/)__snapshots__\//i,
@@ -108,7 +111,8 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /(?:^|\/)contributing(?:\.[^/]*)?$/i, // Contributor docs
     /(?:^|\/)snippet\.json$/i, // Fern-generated snippet metadata
     /(?:^|\/)\.gitignore$/i,
-    /(?:^|\/)\.gitattributes$/i
+    /(?:^|\/)\.gitattributes$/i,
+    /\.slnx$/i // .NET solution files
 ];
 
 /**
