@@ -44,7 +44,10 @@ let migrationsInstallPromise: Promise<Record<string, MigrationModule> | undefine
  */
 async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string, MigrationModule> | undefined> {
     if (migrationsInstallPromise != null) {
-        return migrationsInstallPromise;
+        return migrationsInstallPromise.catch((err) => {
+            migrationsInstallPromise = undefined;
+            throw err;
+        });
     }
 
     migrationsInstallPromise = (async () => {
@@ -80,7 +83,7 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
         return migrations as Record<string, MigrationModule>;
     })();
 
-    // Reset the cached promise on failure so subsequent calls can retry.
+    // Reset the cached promise on failure so the next call can retry.
     migrationsInstallPromise.catch(() => {
         migrationsInstallPromise = undefined;
     });

@@ -171,7 +171,10 @@ export class GeneratorMigrator {
      */
     private async ensureMigrationsInstalled(): Promise<Record<string, MigrationModule> | undefined> {
         if (this.migrationsInstallPromise != null) {
-            return this.migrationsInstallPromise;
+            return this.migrationsInstallPromise.catch((err) => {
+                this.migrationsInstallPromise = undefined;
+                throw err;
+            });
         }
 
         this.migrationsInstallPromise = (async () => {
@@ -212,7 +215,7 @@ export class GeneratorMigrator {
             return migrations as Record<string, MigrationModule>;
         })();
 
-        // Reset the cached promise on failure so subsequent calls can retry.
+        // Reset the cached promise on failure so the next call can retry.
         this.migrationsInstallPromise.catch(() => {
             this.migrationsInstallPromise = undefined;
         });
