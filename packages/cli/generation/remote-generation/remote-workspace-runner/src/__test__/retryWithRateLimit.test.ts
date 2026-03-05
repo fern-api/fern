@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { TooManyRequestsError, retryWithRateLimit } from "../retryWithRateLimit.js";
+import { describe, expect, it, vi } from "vitest";
+import { retryWithRateLimit, TooManyRequestsError } from "../retryWithRateLimit.js";
 
 function createMockLogger() {
     return {
