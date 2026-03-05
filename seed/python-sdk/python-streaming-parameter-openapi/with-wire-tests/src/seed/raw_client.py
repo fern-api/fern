@@ -18,7 +18,7 @@ from .types.chat_stream_event import ChatStreamEvent
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawSeedPythonStreamingParameterOpenapiWithWireTests:
+class RawSeedApi:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -140,7 +140,7 @@ class RawSeedPythonStreamingParameterOpenapiWithWireTests:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawSeedPythonStreamingParameterOpenapiWithWireTests:
+class AsyncRawSeedApi:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 

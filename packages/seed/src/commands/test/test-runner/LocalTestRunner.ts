@@ -42,7 +42,6 @@ export class LocalTestRunner extends TestRunner {
             fernWorkspace,
             outputDir,
             fixture,
-            outputFolder,
             taskContext,
             selectAudiences,
             outputVersion,
@@ -94,8 +93,7 @@ export class LocalTestRunner extends TestRunner {
                 shouldGenerateDynamicSnippetTests,
                 skipUnstableDynamicSnippetTests: true,
                 inspect,
-                ai: undefined,
-                workspaceNameOverride: outputFolder ? `${fixture}-${outputFolder}` : undefined
+                ai: undefined
             },
             commands,
             this.generator.workspaceConfig.test.local?.workingDirectory,

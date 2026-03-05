@@ -218,17 +218,20 @@ def verify_request_count(
      * Docker Compose project names must consist only of lowercase alphanumeric
      * characters, hyphens, and underscores, and must start with a letter or number.
      *
-     * The name is derived from the SDK's own identity (organization + workspace
-     * name from the generator config) with a `-wiremock` suffix. This keeps the
-     * naming natural and tied to the project itself. The caller (e.g. seed test
-     * runner) controls uniqueness by varying the workspace name it sends to each
-     * generator execution.
+     * The name is derived from the SDK's own identity — the package name from
+     * pyproject.toml (or its equivalent from custom config / generator config) —
+     * with a `-wiremock` suffix. This keeps the naming natural and tied to the
+     * project itself. Since different fixture variants may specify different
+     * custom configs (e.g. different client class names), incorporating the
+     * resolved client class name ensures uniqueness when multiple variants of
+     * the same API run wire tests in parallel.
      */
     private getDockerProjectName(): string {
         const orgName = this.context.config.organization;
         const workspaceName = this.context.config.workspaceName;
+        const clientClassName = this.getClientClassName();
 
-        const raw = `${orgName}-${workspaceName}-wiremock`.toLowerCase();
+        const raw = `${orgName}-${workspaceName}-${clientClassName}-wiremock`.toLowerCase();
         const sanitized = raw.replace(/[^a-z0-9_-]/g, "").replace(/^[^a-z0-9]+/, "");
         return sanitized || "wiremock-tests";
     }

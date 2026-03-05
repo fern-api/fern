@@ -43,9 +43,9 @@ class CompletionsClient:
 
         Examples
         --------
-        from seed import SeedServerSentEventsWithWireTests
+        from seed import SeedServerSentEvents
 
-        client = SeedServerSentEventsWithWireTests(
+        client = SeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.completions.stream(
@@ -74,9 +74,9 @@ class CompletionsClient:
 
         Examples
         --------
-        from seed import SeedServerSentEventsWithWireTests
+        from seed import SeedServerSentEvents
 
-        client = SeedServerSentEventsWithWireTests(
+        client = SeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.completions.stream_without_terminator(
@@ -123,9 +123,9 @@ class AsyncCompletionsClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedServerSentEventsWithWireTests
+        from seed import AsyncSeedServerSentEvents
 
-        client = AsyncSeedServerSentEventsWithWireTests(
+        client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
 
@@ -163,9 +163,9 @@ class AsyncCompletionsClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedServerSentEventsWithWireTests
+        from seed import AsyncSeedServerSentEvents
 
-        client = AsyncSeedServerSentEventsWithWireTests(
+        client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
 

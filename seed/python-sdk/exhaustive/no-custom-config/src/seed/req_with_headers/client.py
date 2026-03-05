@@ -51,9 +51,9 @@ class ReqWithHeadersClient:
 
         Examples
         --------
-        from seed import SeedExhaustiveNoCustomConfig
+        from seed import SeedExhaustive
 
-        client = SeedExhaustiveNoCustomConfig(
+        client = SeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -115,9 +115,9 @@ class AsyncReqWithHeadersClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustiveNoCustomConfig
+        from seed import AsyncSeedExhaustive
 
-        client = AsyncSeedExhaustiveNoCustomConfig(
+        client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

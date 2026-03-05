@@ -12,9 +12,9 @@
 <dd>
 
 ```python
-from seed import SeedPythonStreamingParameterOpenapiWithWireTests
+from seed import SeedApi
 
-client = SeedPythonStreamingParameterOpenapiWithWireTests(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.chat_stream(
@@ -70,9 +70,9 @@ for chunk in response.data:
 <dd>
 
 ```python
-from seed import SeedPythonStreamingParameterOpenapiWithWireTests
+from seed import SeedApi
 
-client = SeedPythonStreamingParameterOpenapiWithWireTests(
+client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
 client.chat(

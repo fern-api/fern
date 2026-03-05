@@ -3,10 +3,10 @@
 - version: 4.61.5
   changelogEntry:
     - summary: |
-        Derive Docker Compose project name from the SDK's workspace name with a `-wiremock`
-        suffix, and allow the seed test runner to override the workspace name per fixture
-        variant. This prevents naming collisions when running wiremock tests for multiple
-        variants of the same fixture in parallel.
+        Include the resolved client class name in the Docker Compose project name for
+        wiremock integration tests. This prevents naming collisions when multiple variants
+        of the same fixture (e.g. exhaustive:no-custom-config vs
+        exhaustive:wire-tests-custom-client-name) run wire tests in parallel.
       type: fix
   createdAt: "2026-03-05"
   irVersion: 65
