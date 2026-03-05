@@ -245,10 +245,7 @@ export class GeneratorMigrator {
      * If package.json is missing after install (corrupt tar extraction),
      * wipes the cache and retries once.
      */
-    private async installWithRetry(params: {
-        cacheDir: string;
-        packageJsonPath: string;
-    }): Promise<{ main?: string }> {
+    private async installWithRetry(params: { cacheDir: string; packageJsonPath: string }): Promise<{ main?: string }> {
         const { cacheDir, packageJsonPath } = params;
 
         // First attempt
