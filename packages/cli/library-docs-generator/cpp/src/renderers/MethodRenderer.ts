@@ -919,19 +919,13 @@ export function renderMethodContent(
     // 3. Description (summary + description blocks)
     renderMethodDescription(func, lines);
 
-    // 4. Version annotation
-    if (docstring?.sinceVersion) {
-        lines.push(`*${docstring.sinceVersion}*`);
-        lines.push("");
-    }
-
-    // 5. Callouts (deprecated, notes, warnings, postconditions, preconditions)
+    // 4. Callouts (deprecated, notes, warnings, postconditions, preconditions)
     renderMethodCallouts(docstring, lines);
 
-    // 6-9. Returns, Throws, Template parameters, Parameters
+    // 5-8. Returns, Throws, Template parameters, Parameters
     renderMethodParamsSection(func, docstring, lines);
 
-    // 10-11. Examples and See also
+    // 9-10. Examples and See also
     renderMethodExamples(docstring, lines);
 
     // Trim trailing blank lines
