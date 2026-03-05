@@ -1,3 +1,4 @@
+import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { ClientRegistry } from "@boundaryml/baml";
 import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
@@ -13,6 +14,26 @@ import tmp from "tmp-promise";
 import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
+export interface AutoVersioningArtifacts {
+    rawDiff: string;
+    cleanedDiff: string;
+    llmResult: LlmResult;
+}
+
+export type LlmResult =
+    | {
+          timestamp: string;
+          success: true;
+          versionBump: string;
+          isNoChange: boolean;
+          commitMessage: string;
+      }
+    | {
+          timestamp: string;
+          success: false;
+          error: string;
+      };
+
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
@@ -25,6 +46,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        generatorName: string;
     }
 }
 
@@ -39,6 +61,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private generatorName: string;
 
     constructor({
         context,
@@ -50,7 +73,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        generatorName
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -62,6 +86,7 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.generatorName = generatorName;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -115,6 +140,9 @@ export class LocalTaskHandler {
     private async handleAutoVersioning(): Promise<AutoVersionResult | null> {
         const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
         let diffFile: string | undefined;
+        let rawDiff = "";
+        let cleanedDiff = "";
+        let llmResult: LlmResult | undefined;
 
         try {
             this.context.logger.info("Analyzing SDK changes for automatic semantic versioning");
@@ -122,6 +150,7 @@ export class LocalTaskHandler {
             // Generate git diff to file using local git command
             diffFile = await this.generateDiffFile();
             const diffContent = await readFile(diffFile, "utf-8");
+            rawDiff = diffContent;
 
             if (diffContent.trim().length === 0) {
                 this.context.logger.info("No changes detected in generated SDK");
@@ -135,7 +164,7 @@ export class LocalTaskHandler {
             }
 
             const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
-            const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
+            cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
             this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
             this.context.logger.debug(`Cleaned diff size: ${cleanedDiff.length} bytes`);
@@ -174,6 +203,13 @@ export class LocalTaskHandler {
 
                 if (analysis.version_bump === VersionBump.NO_CHANGE) {
                     this.context.logger.info("AI detected no semantic changes");
+                    llmResult = {
+                        timestamp: new Date().toISOString(),
+                        success: true,
+                        versionBump: analysis.version_bump,
+                        isNoChange: true,
+                        commitMessage: ""
+                    };
                     return null;
                 }
 
@@ -184,11 +220,24 @@ export class LocalTaskHandler {
 
                 const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
 
+                llmResult = {
+                    timestamp: new Date().toISOString(),
+                    success: true,
+                    versionBump: analysis.version_bump,
+                    isNoChange: false,
+                    commitMessage
+                };
+
                 return {
                     version: newVersion,
                     commitMessage
                 };
             } catch (aiError) {
+                llmResult = {
+                    timestamp: new Date().toISOString(),
+                    success: false,
+                    error: String(aiError)
+                };
                 this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
@@ -220,6 +269,16 @@ export class LocalTaskHandler {
             this.context.logger.error(`Failed to perform automatic versioning: ${error}`);
             throw new Error(`Automatic versioning failed: ${error}`);
         } finally {
+            // Upload artifacts to S3 if we have data to upload
+            if (llmResult != null) {
+                const artifacts: AutoVersioningArtifacts = {
+                    rawDiff,
+                    cleanedDiff,
+                    llmResult
+                };
+                await this.uploadAutoVersioningArtifacts(artifacts);
+            }
+
             // Clean up temp diff file
             if (diffFile) {
                 try {
@@ -228,6 +287,66 @@ export class LocalTaskHandler {
                     this.context.logger.warn(`Failed to delete temp diff file: ${diffFile}`, String(cleanupError));
                 }
             }
+        }
+    }
+
+    /**
+     * Uploads auto-versioning diagnostic artifacts to S3.
+     * Silently skips if AUTOVERSIONING_ARTIFACTS_BUCKET is not set.
+     * Never throws — upload failures are logged at WARN and swallowed.
+     */
+    public async uploadAutoVersioningArtifacts(artifacts: AutoVersioningArtifacts): Promise<void> {
+        const bucket = process.env.AUTOVERSIONING_ARTIFACTS_BUCKET;
+        if (!bucket) {
+            return;
+        }
+
+        try {
+            const sanitizedGeneratorName = this.generatorName.replace(/\//g, "-");
+            const timestamp = new Date().toISOString();
+            const prefix = `${sanitizedGeneratorName}/${timestamp}/autoversioning/`;
+
+            const s3Client = new S3Client({});
+
+            const rawDiffKey = `${prefix}raw-diff.txt`;
+            const cleanedDiffKey = `${prefix}cleaned-diff.txt`;
+            const llmResultKey = `${prefix}llm-result.json`;
+
+            await Promise.all([
+                s3Client.send(
+                    new PutObjectCommand({
+                        Bucket: bucket,
+                        Key: rawDiffKey,
+                        Body: artifacts.rawDiff,
+                        ContentType: "text/plain"
+                    })
+                ),
+                s3Client.send(
+                    new PutObjectCommand({
+                        Bucket: bucket,
+                        Key: cleanedDiffKey,
+                        Body: artifacts.cleanedDiff,
+                        ContentType: "text/plain"
+                    })
+                ),
+                s3Client.send(
+                    new PutObjectCommand({
+                        Bucket: bucket,
+                        Key: llmResultKey,
+                        Body: JSON.stringify(artifacts.llmResult, undefined, 2),
+                        ContentType: "application/json"
+                    })
+                )
+            ]);
+
+            this.context.logger.info(
+                `[AutoVersioning] Artifacts stored:\n` +
+                    `  s3://${bucket}/${rawDiffKey} (${artifacts.rawDiff.length} bytes)\n` +
+                    `  s3://${bucket}/${cleanedDiffKey} (${artifacts.cleanedDiff.length} bytes)\n` +
+                    `  s3://${bucket}/${llmResultKey}`
+            );
+        } catch (uploadError) {
+            this.context.logger.warn(`[AutoVersioning] Failed to upload artifacts to S3: ${uploadError}`);
         }
     }
 
