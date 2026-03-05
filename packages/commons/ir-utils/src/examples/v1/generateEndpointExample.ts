@@ -384,6 +384,8 @@ export function generateEndpointExample({
             }
             case "bytes":
                 return { type: "failure", message: "Bytes unsupported" };
+            case "multipart":
+                return { type: "failure", message: "Multipart unsupported" };
             default:
                 assertNever(endpoint.response.body);
         }

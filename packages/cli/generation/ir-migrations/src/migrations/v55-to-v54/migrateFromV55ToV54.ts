@@ -489,6 +489,12 @@ function convertHttpResponse(response: IrVersions.V55.http.HttpResponse): IrVers
 }
 
 function convertResponseBody(responseBody: IrVersions.V55.http.HttpResponseBody): IrVersions.V54.http.HttpResponseBody {
+    // Handle multipart (added in V65) before the switch since V55 types don't include it
+    if ((responseBody.type as string) === "multipart") {
+        return IrVersions.V54.http.HttpResponseBody.fileDownload({
+            docs: (responseBody as unknown as { docs?: string }).docs ?? undefined
+        });
+    }
     switch (responseBody.type) {
         case "json":
             return IrVersions.V54.http.HttpResponseBody.json(convertJsonResponse(responseBody.value));

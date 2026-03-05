@@ -264,6 +264,13 @@ export class IrGraph {
                 },
                 text: noop,
                 bytes: noop,
+                multipart: (multipartResponse) => {
+                    for (const part of multipartResponse.parts) {
+                        if (part.bodyType != null) {
+                            populateReferencesFromTypeReference(part.bodyType, referencedTypes, referencedSubpackages);
+                        }
+                    }
+                },
                 _other: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.body?.type);
                 }

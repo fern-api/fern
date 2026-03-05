@@ -618,6 +618,11 @@ export class IntermediateRepresentationChangeDetector {
                     return;
                 }
                 break;
+            case "multipart":
+                if (to.body.type === "multipart") {
+                    return;
+                }
+                break;
             default:
                 assertNever(from.body);
         }

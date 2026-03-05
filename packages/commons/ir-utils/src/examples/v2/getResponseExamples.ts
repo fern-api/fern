@@ -118,6 +118,8 @@ export function getResponseExamples({
         }
         case "streamParameter":
             break;
+        case "multipart":
+            break;
         default: {
             assertNever(endpointResponse.body);
         }

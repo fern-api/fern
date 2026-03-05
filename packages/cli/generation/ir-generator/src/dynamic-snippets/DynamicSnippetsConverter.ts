@@ -169,6 +169,7 @@ export class DynamicSnippetsConverter {
                     fileDownload: () => DynamicSnippets.Response.fileDownload(),
                     text: () => DynamicSnippets.Response.text(),
                     bytes: () => DynamicSnippets.Response.bytes(),
+                    multipart: () => DynamicSnippets.Response.fileDownload(),
                     _other: () => DynamicSnippets.Response.json()
                 }) ?? DynamicSnippets.Response.json(),
             // Defaults to 'json' because response is required (and it was hardcoded to that previously).
