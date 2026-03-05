@@ -35,8 +35,7 @@ export const NoNonComponentRefsRule: Rule = {
                                             contents.includes("swagger: 2.0"));
                                     const isOpenApiV2Json =
                                         contents.includes('"swagger":') &&
-                                        (contents.includes('"swagger":"2.0"') ||
-                                            contents.includes('"swagger": "2.0"'));
+                                        (contents.includes('"swagger":"2.0"') || contents.includes('"swagger": "2.0"'));
 
                                     if (isOpenApiV2Yaml || isOpenApiV2Json) {
                                         continue; // Skip v2 files
