@@ -4,14 +4,13 @@ import { randomUUID } from "crypto";
 import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
-import { Writable } from "stream";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
 import { SdkChecker } from "../sdk/checker/SdkChecker.js";
 import { WorkspaceLoader } from "../workspace/WorkspaceLoader.js";
 import { FIXTURES_DIR } from "./utils/constants.js";
 import { createTestContext } from "./utils/createTestContext.js";
-import { loadWorkspaceWithFernYml } from "./utils/loadWorkspace.js";
+import { loadWorkspace } from "./utils/loadWorkspace.js";
 
 /** A version checker that always reports versions as valid. */
 const NOOP_VERSION_CHECKER: SdkChecker.VersionChecker = async () => ({ violation: undefined });
@@ -32,20 +31,18 @@ describe("SdkChecker", () => {
     describe("valid configuration", () => {
         it("returns no errors for valid SDK config", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
-            const { workspace, fernYml } = await loadWorkspaceWithFernYml("simple-api");
+            const workspace = await loadWorkspace("simple-api");
 
-            const { stream, getOutput } = createCaptureStream();
             const checker = new SdkChecker({
                 context: createTestContext({ cwd }),
-                stream,
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
-            const result = await checker.check({ workspace, fernYml });
+            const result = await checker.check({ workspace });
 
             expect(result.errorCount).toBe(0);
             expect(result.warningCount).toBe(0);
-            expect(getOutput()).toBe("");
+            expect(result.violations).toHaveLength(0);
         });
 
         it("returns empty result for workspace without SDKs", async () => {
@@ -61,26 +58,18 @@ api:
             );
             await writeMinimalOpenApi(testDir);
 
-            const fernYml = await loadFernYml({ cwd: testDir });
-            const loader = new WorkspaceLoader({ cwd: testDir, logger: NOOP_LOGGER });
-            const loadResult = await loader.load({ fernYml });
-            expect(loadResult.success).toBe(true);
-            if (!loadResult.success) {
-                return;
-            }
+            const workspace = await loadTempWorkspace(testDir);
 
-            const { stream, getOutput } = createCaptureStream();
             const checker = new SdkChecker({
                 context: createTestContext({ cwd: testDir }),
-                stream,
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
-            const result = await checker.check({ workspace: loadResult.workspace, fernYml });
+            const result = await checker.check({ workspace });
 
             expect(result.errorCount).toBe(0);
             expect(result.warningCount).toBe(0);
-            expect(getOutput()).toBe("");
+            expect(result.violations).toHaveLength(0);
         });
     });
 
@@ -107,32 +96,28 @@ sdks:
             );
             await writeMinimalOpenApi(testDir);
 
-            const { workspace, fernYml } = await loadTempWorkspace(testDir);
-            const { stream, getOutput } = createCaptureStream();
+            const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
                 context: createTestContext({ cwd: testDir }),
-                stream,
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
-            const result = await checker.check({ workspace, fernYml });
+            const result = await checker.check({ workspace });
 
             expect(result.errorCount).toBe(1);
-            expect(getOutput()).toContain("not referenced by any target");
+            expect(result.violations.some((v) => v.message.includes("not referenced by any target"))).toBe(true);
         });
 
         it("passes when defaultGroup is referenced by a target", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
-            const { workspace, fernYml } = await loadWorkspaceWithFernYml("simple-api");
+            const workspace = await loadWorkspace("simple-api");
 
-            const { stream } = createCaptureStream();
             const checker = new SdkChecker({
                 context: createTestContext({ cwd }),
-                stream,
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
-            const result = await checker.check({ workspace, fernYml });
+            const result = await checker.check({ workspace });
 
             expect(result.errorCount).toBe(0);
         });
@@ -159,41 +144,37 @@ sdks:
             );
             await writeMinimalOpenApi(testDir);
 
-            const { workspace, fernYml } = await loadTempWorkspace(testDir);
-            const { stream, getOutput } = createCaptureStream();
+            const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
                 context: createTestContext({ cwd: testDir }),
-                stream,
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
-            const result = await checker.check({ workspace, fernYml });
+            const result = await checker.check({ workspace });
 
             expect(result.errorCount).toBe(1);
-            expect(getOutput()).toContain("not defined");
+            expect(result.violations.some((v) => v.message.includes("not defined"))).toBe(true);
         });
     });
 
     describe("version validation", () => {
         it("includes elapsed time in result", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
-            const { workspace, fernYml } = await loadWorkspaceWithFernYml("simple-api");
+            const workspace = await loadWorkspace("simple-api");
 
-            const { stream } = createCaptureStream();
             const checker = new SdkChecker({
                 context: createTestContext({ cwd }),
-                stream,
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
-            const result = await checker.check({ workspace, fernYml });
+            const result = await checker.check({ workspace });
 
             expect(result.elapsedMillis).toBeGreaterThanOrEqual(0);
         });
     });
 
-    describe("display", () => {
-        it("writes violations with severity icon and file location", async () => {
+    describe("violations returned in result", () => {
+        it("returns violations with file location for invalid config", async () => {
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -215,47 +196,40 @@ sdks:
             );
             await writeMinimalOpenApi(testDir);
 
-            const { workspace, fernYml } = await loadTempWorkspace(testDir);
-            const { stream, getOutput } = createCaptureStream();
+            const workspace = await loadTempWorkspace(testDir);
             const checker = new SdkChecker({
                 context: createTestContext({ cwd: testDir }),
-                stream,
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
-            await checker.check({ workspace, fernYml });
+            const result = await checker.check({ workspace });
 
-            const output = getOutput();
-            expect(output).toContain("not referenced by any target");
-            expect(output).toContain("fern.yml");
+            expect(result.violations.some((v) => v.message.includes("not referenced by any target"))).toBe(true);
+            expect(result.violations.some((v) => v.displayRelativeFilepath.includes("fern.yml"))).toBe(true);
         });
 
-        it("writes no output for valid workspace", async () => {
+        it("returns empty violations for valid workspace", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
-            const { workspace, fernYml } = await loadWorkspaceWithFernYml("simple-api");
+            const workspace = await loadWorkspace("simple-api");
 
-            const { stream, getOutput } = createCaptureStream();
             const checker = new SdkChecker({
                 context: createTestContext({ cwd }),
-                stream,
                 versionChecker: NOOP_VERSION_CHECKER
             });
 
-            await checker.check({ workspace, fernYml });
+            const result = await checker.check({ workspace });
 
-            expect(getOutput()).toBe("");
+            expect(result.violations).toHaveLength(0);
         });
     });
 
     describe("registry unreachable", () => {
         it("warns when registry is unreachable", async () => {
             const cwd = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
-            const { workspace, fernYml } = await loadWorkspaceWithFernYml("simple-api");
+            const workspace = await loadWorkspace("simple-api");
 
-            const { stream, getOutput } = createCaptureStream();
             const checker = new SdkChecker({
                 context: createTestContext({ cwd }),
-                stream,
                 versionChecker: async ({ target }) => ({
                     violation: {
                         severity: "warning",
@@ -266,26 +240,23 @@ sdks:
                 })
             });
 
-            const result = await checker.check({ workspace, fernYml });
+            const result = await checker.check({ workspace });
 
             // simple-api has 2 pinned targets (typescript + python), each gets a warning
             expect(result.warningCount).toBe(2);
-            expect(getOutput()).toContain("registry unreachable");
+            expect(result.violations.some((v) => v.message.includes("registry unreachable"))).toBe(true);
         });
     });
 });
 
-async function loadTempWorkspace(cwd: AbsoluteFilePath): Promise<{
-    workspace: import("../workspace/Workspace.js").Workspace;
-    fernYml: import("../config/fern-yml/FernYmlSchemaLoader.js").FernYmlSchemaLoader.Success;
-}> {
+async function loadTempWorkspace(cwd: AbsoluteFilePath): Promise<import("../workspace/Workspace.js").Workspace> {
     const fernYml = await loadFernYml({ cwd });
     const loader = new WorkspaceLoader({ cwd, logger: NOOP_LOGGER });
     const result = await loader.load({ fernYml });
     if (!result.success) {
         throw new Error(`Failed to load workspace: ${JSON.stringify(result.issues)}`);
     }
-    return { workspace: result.workspace, fernYml };
+    return result.workspace;
 }
 
 async function writeMinimalOpenApi(dir: AbsoluteFilePath): Promise<void> {
@@ -299,19 +270,4 @@ info:
 paths: {}
 `
     );
-}
-
-function createCaptureStream(): { stream: NodeJS.WriteStream; getOutput: () => string } {
-    let output = "";
-    const stream = new Writable({
-        write(chunk, _encoding, callback) {
-            output += chunk.toString();
-            callback();
-        }
-    }) as NodeJS.WriteStream;
-
-    return {
-        stream,
-        getOutput: () => output
-    };
 }
