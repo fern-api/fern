@@ -5,6 +5,7 @@
  * 1. Concurrent calls to loadMigrationModule only trigger a single npm install
  * 2. Failed installs reset the cached promise so subsequent calls can retry
  */
+import type { Logger } from "@fern-api/logger";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // Track npm install calls
@@ -61,10 +62,18 @@ const mockMigrationsMap = {
     }
 };
 
-// We need to mock the dynamic import() call inside ensureMigrationsInstalled.
-// Since it uses `await import(packageEntryPoint)`, we mock it at the global level.
-// vitest doesn't directly mock dynamic imports, so we use vi.stubGlobal or
-// mock the module resolution.
+function createMockLogger(): Logger {
+    return {
+        disable: vi.fn(),
+        enable: vi.fn(),
+        trace: vi.fn(),
+        debug: vi.fn(),
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
+        log: vi.fn()
+    };
+}
 
 describe("Migration loader deduplication", () => {
     beforeEach(async () => {
@@ -102,27 +111,23 @@ describe("Migration loader deduplication", () => {
         // We need to mock the dynamic import that happens inside ensureMigrationsInstalled.
         // The function does: const { migrations } = await import(packageEntryPoint);
         // We mock the path module to return a predictable path, then mock that path's import.
-        vi.doMock("/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js", () => ({
-            migrations: mockMigrationsMap
-        }));
+        vi.doMock(
+            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            () => ({
+                migrations: mockMigrationsMap
+            })
+        );
 
         const { loadMigrationModule } = await import("../loader.js");
-        const mockLogger = {
-            info: vi.fn(),
-            error: vi.fn(),
-            warn: vi.fn(),
-            debug: vi.fn(),
-            log: vi.fn(),
-            trace: vi.fn()
-        };
+        const mockLogger = createMockLogger();
 
         // Simulate 5 concurrent calls (like 5 workspaces in Promise.all)
         const results = await Promise.all([
-            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger as any }),
-            loadMigrationModule({ generatorName: "fernapi/fern-python-sdk", logger: mockLogger as any }),
-            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger as any }),
-            loadMigrationModule({ generatorName: "fernapi/fern-python-sdk", logger: mockLogger as any }),
-            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger as any })
+            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger }),
+            loadMigrationModule({ generatorName: "fernapi/fern-python-sdk", logger: mockLogger }),
+            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger }),
+            loadMigrationModule({ generatorName: "fernapi/fern-python-sdk", logger: mockLogger }),
+            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger })
         ]);
 
         // KEY ASSERTION: npm install should have been called exactly ONCE
@@ -143,25 +148,21 @@ describe("Migration loader deduplication", () => {
     });
 
     it("should retry npm install after a transient failure", async () => {
-        vi.doMock("/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js", () => ({
-            migrations: mockMigrationsMap
-        }));
+        vi.doMock(
+            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            () => ({
+                migrations: mockMigrationsMap
+            })
+        );
 
         const { loadMigrationModule } = await import("../loader.js");
-        const mockLogger = {
-            info: vi.fn(),
-            error: vi.fn(),
-            warn: vi.fn(),
-            debug: vi.fn(),
-            log: vi.fn(),
-            trace: vi.fn()
-        };
+        const mockLogger = createMockLogger();
 
         // First call: make npm install fail
         shouldFailNpmInstall = true;
 
         await expect(
-            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger as any })
+            loadMigrationModule({ generatorName: "fernapi/fern-typescript-sdk", logger: mockLogger })
         ).rejects.toThrow();
 
         expect(npmInstallCallCount).toBe(1);
@@ -174,7 +175,7 @@ describe("Migration loader deduplication", () => {
 
         const result = await loadMigrationModule({
             generatorName: "fernapi/fern-typescript-sdk",
-            logger: mockLogger as any
+            logger: mockLogger
         });
 
         // KEY ASSERTION: npm install should have been called TWICE total
@@ -185,23 +186,19 @@ describe("Migration loader deduplication", () => {
     });
 
     it("should return undefined for unknown generators", async () => {
-        vi.doMock("/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js", () => ({
-            migrations: mockMigrationsMap
-        }));
+        vi.doMock(
+            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            () => ({
+                migrations: mockMigrationsMap
+            })
+        );
 
         const { loadMigrationModule } = await import("../loader.js");
-        const mockLogger = {
-            info: vi.fn(),
-            error: vi.fn(),
-            warn: vi.fn(),
-            debug: vi.fn(),
-            log: vi.fn(),
-            trace: vi.fn()
-        };
+        const mockLogger = createMockLogger();
 
         const result = await loadMigrationModule({
             generatorName: "fernapi/fern-unknown-sdk",
-            logger: mockLogger as any
+            logger: mockLogger
         });
 
         expect(result).toBeUndefined();
