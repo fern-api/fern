@@ -228,9 +228,7 @@ def verify_request_count(
         const orgName = this.context.config.organization;
         const workspaceName = this.context.config.workspaceName;
 
-        const raw = packageName
-            ? `${packageName}-wiremock`
-            : `${orgName}-${workspaceName}-wiremock`;
+        const raw = packageName ? `${packageName}-wiremock` : `${orgName}-${workspaceName}-wiremock`;
         const sanitized = raw
             .toLowerCase()
             .replace(/[^a-z0-9_-]/g, "")
