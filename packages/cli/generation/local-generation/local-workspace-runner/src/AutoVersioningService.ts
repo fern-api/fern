@@ -322,12 +322,37 @@ export class AutoVersioningService {
     /**
      * Known patterns for API-surface signatures (function/method/class declarations).
      * Used by truncateDiff to prioritise sections with signature-like changes.
+     *
+     * Covers all languages Fern generates SDKs for:
+     * - TypeScript/JavaScript: export function, export class, export interface, export type
+     * - Java/C#: public class, public interface, public void, protected, internal
+     * - Python: def method_name, class ClassName
+     * - Go: func ExportedName (uppercase = exported)
+     * - Ruby: def method_name, class ClassName, module ModuleName
+     * - Swift: public func, public class, open class
+     * - Rust: pub fn, pub struct, pub enum, pub trait
+     * - PHP: public function, class ClassName
      */
     private static readonly SIGNATURE_PATTERNS: RegExp[] = [
+        // TypeScript / JavaScript
         /^[+-]\s*export\s+/,
+        // Java / C# / Swift / PHP — access modifiers
         /^[+-]\s*public\s+/,
+        /^[+-]\s*protected\s+/,
+        /^[+-]\s*internal\s+/,
+        /^[+-]\s*open\s+(class|func)\s+/,
+        // Python / Ruby
         /^[+-]\s*def\s+/,
-        /^[+-]\s*func\s+[A-Z]/
+        /^[+-]\s*class\s+[A-Z]/,
+        /^[+-]\s*module\s+[A-Z]/,
+        // Go — exported identifiers start with uppercase
+        /^[+-]\s*func\s+[A-Z]/,
+        /^[+-]\s*func\s+\([^)]+\)\s+[A-Z]/,
+        /^[+-]\s*type\s+[A-Z]/,
+        // Rust
+        /^[+-]\s*pub\s+(fn|struct|enum|trait|type|mod)\s+/,
+        // PHP
+        /^[+-]\s*function\s+/
     ];
 
     /**
