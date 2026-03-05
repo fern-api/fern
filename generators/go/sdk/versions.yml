@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.26.2
+  changelogEntry:
+    - summary: |
+        Remove redundant `req.WithContext(ctx)` call in the generated HTTP caller.
+        `http.NewRequestWithContext` already sets the context on the request, so
+        the subsequent `req.WithContext(ctx)` was creating an unnecessary shallow
+        copy of the request with the same context.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 61
+
 - version: 1.26.1
   changelogEntry:
     - summary: |
