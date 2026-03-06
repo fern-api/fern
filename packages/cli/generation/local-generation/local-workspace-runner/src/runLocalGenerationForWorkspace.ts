@@ -326,7 +326,9 @@ export async function runLocalGenerationForWorkspace({
                     dryRun
                 });
 
-                interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
+                if (!dryRun) {
+                    interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
+                }
 
                 // Run post-generation pipeline (replay + GitHub) when outputting to a self-hosted GitHub repo
                 if (selfhostedGithubConfig != null && shouldCommit) {
