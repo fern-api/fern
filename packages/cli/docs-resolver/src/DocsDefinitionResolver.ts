@@ -1590,10 +1590,8 @@ export class DocsDefinitionResolver {
         // We filter by apiName (from docs.yml api-name field) rather than by OSSWorkspace reference,
         // because the OSSWorkspace may not be resolved when the v3 parser fails or is disabled.
         let workspacesToProcess: OSSWorkspace[];
-        this.taskContext.logger.warn(
-            "[graphql-scoping-debug] apiName: " + apiName
-        );
-        this.taskContext.logger.warn(
+        process.stderr.write("[graphql-scoping-debug] apiName: " + apiName + "\n");
+        process.stderr.write(
             "[graphql-scoping-debug] ossWorkspaces: " +
                 JSON.stringify(
                     this.ossWorkspaces.map((ws) => ({
@@ -1601,7 +1599,8 @@ export class DocsDefinitionResolver {
                         absoluteFilePath: ws.absoluteFilePath,
                         type: ws.type
                     }))
-                )
+                ) +
+                "\n"
         );
         if (apiName != null) {
             // Match by workspaceName first (set to folder name during project loading),
@@ -1610,8 +1609,8 @@ export class DocsDefinitionResolver {
             const matched = this.ossWorkspaces.find(
                 (ws) => ws.workspaceName === apiName || ws.absoluteFilePath.split("/").pop() === apiName
             );
-            this.taskContext.logger.warn(
-                "[graphql-scoping-debug] matched: " + (matched?.workspaceName ?? "NONE")
+            process.stderr.write(
+                "[graphql-scoping-debug] matched: " + (matched?.workspaceName ?? "NONE") + "\n"
             );
             workspacesToProcess = matched ? [matched] : [];
         } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
