@@ -9,12 +9,7 @@
  * - [optional] and [inferred] prefixes
  */
 
-import type {
-    CppDocstringIr,
-    CppFunctionIr,
-    CppTemplateParamIr,
-    CppTypeInfo
-} from "../../../src/types/CppLibraryDocsIr.js";
+import type { CppDocstringIr, CppFunctionIr, CppTemplateParamIr } from "../../../src/types/CppLibraryDocsIr.js";
 import { renderSegmentsTrimmed } from "./DescriptionRenderer.js";
 import { normalizeAngleBracketSpacing } from "./SignatureRenderer.js";
 

@@ -18,12 +18,7 @@ import type { CppClassIr, CppDocstringIr, CppFunctionIr } from "../../../src/typ
 import type { RenderContext } from "../context.js";
 import { buildLinkPath, getShortName } from "../context.js";
 import { getCommonQualifiers, getOverloadSpecificQualifiers, renderBadges } from "./BadgeRenderer.js";
-import {
-    renderDescriptionBlocks,
-    renderDescriptionBlocksDeduped,
-    renderSeeAlso,
-    renderSegmentsTrimmed
-} from "./DescriptionRenderer.js";
+import { renderDescriptionBlocksDeduped, renderSeeAlso, renderSegmentsTrimmed } from "./DescriptionRenderer.js";
 import { renderMethodParams, renderMethodTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock, renderCodeBlock, renderSignatureCodeBlock } from "./SignatureRenderer.js";
 import { isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./shared.js";
@@ -64,7 +59,7 @@ function trimToNounPhrase(summary: string, maxLen: number = 50): string | undefi
         .trim();
     // Capitalize first letter after stripping
     if (trimmed.length > 0) {
-        trimmed = trimmed[0]!.toUpperCase() + trimmed.slice(1);
+        trimmed = trimmed[0]?.toUpperCase() + trimmed.slice(1);
     }
     if (trimmed.length <= maxLen) {
         return trimmed;
@@ -88,7 +83,7 @@ function trimToNounPhrase(summary: string, maxLen: number = 50): string | undefi
 function findTopLevelBreak(str: string): number {
     let depth = 0;
     for (let i = 0; i < str.length; i++) {
-        const ch = str[i]!;
+        const ch = str.charAt(i);
         if (ch === "[" || ch === "(" || ch === "<") {
             depth++;
         } else if (ch === "]" || ch === ")" || ch === ">") {
@@ -109,7 +104,10 @@ function lastParamIsAllocator(func: CppFunctionIr): boolean {
     if (func.parameters.length === 0) {
         return false;
     }
-    const lastParam = func.parameters[func.parameters.length - 1]!;
+    const lastParam = func.parameters[func.parameters.length - 1];
+    if (lastParam == null) {
+        return false;
+    }
     const name = lastParam.name ?? "";
     const type = lastParam.typeInfo?.display ?? "";
     // Param named "alloc" or "allocator" is a strong signal
@@ -802,7 +800,7 @@ function deduplicateTabTitles(entries: ReadonlyArray<{ title: string; func: CppF
     // Collect indices that share the same title
     const groupsByTitle = new Map<string, number[]>();
     for (let i = 0; i < titles.length; i++) {
-        const key = titles[i]!;
+        const key = titles[i] ?? "";
         const group = groupsByTitle.get(key);
         if (group) {
             group.push(i);
@@ -818,7 +816,7 @@ function deduplicateTabTitles(entries: ReadonlyArray<{ title: string; func: CppF
 
         // Step 1: Try differential named params
         const paramSets = indices.map(
-            (idx) => new Set(entries[idx]!.func.parameters.map((p) => p.name).filter((n) => n !== ""))
+            (idx) => new Set(entries[idx]?.func.parameters.map((p) => p.name).filter((n) => n !== ""))
         );
         // Union of all param names in the group
         const allNames = new Set<string>();
@@ -834,8 +832,11 @@ function deduplicateTabTitles(entries: ReadonlyArray<{ title: string; func: CppF
 
         if (differentialNames.length > 0) {
             for (let j = 0; j < indices.length; j++) {
-                const idx = indices[j]!;
-                const funcParams = paramSets[j]!;
+                const idx = indices[j];
+                const funcParams = paramSets[j];
+                if (idx == null || funcParams == null) {
+                    continue;
+                }
                 const uniqueParams = differentialNames.filter((name) => funcParams.has(name));
                 if (uniqueParams.length > 0) {
                     const humanized = uniqueParams.map(humanizeParamName).join(" and ");
@@ -847,7 +848,7 @@ function deduplicateTabTitles(entries: ReadonlyArray<{ title: string; func: CppF
         // Check if titles are now unique; if not, apply step 2
         const stillDuplicateGroups = new Map<string, number[]>();
         for (const idx of indices) {
-            const key = titles[idx]!;
+            const key = titles[idx] ?? "";
             const group = stillDuplicateGroups.get(key);
             if (group) {
                 group.push(idx);
@@ -863,10 +864,10 @@ function deduplicateTabTitles(entries: ReadonlyArray<{ title: string; func: CppF
 
             // Step 2: Param count suffix
             const countsAreUnique =
-                new Set(dupIndices.map((idx) => entries[idx]!.func.parameters.length)).size === dupIndices.length;
+                new Set(dupIndices.map((idx) => entries[idx]?.func.parameters.length)).size === dupIndices.length;
             if (countsAreUnique) {
                 for (const idx of dupIndices) {
-                    const count = entries[idx]!.func.parameters.length;
+                    const count = entries[idx]?.func.parameters.length;
                     titles[idx] = `${titles[idx]} (${count} params)`;
                 }
                 continue;
@@ -1181,7 +1182,8 @@ function sortConstructorOverloads(funcs: CppFunctionIr[]): void {
     // Find the first move constructor
     let moveStart = -1;
     for (let i = 0; i < funcs.length; i++) {
-        if (isMoveConstructor(funcs[i]!)) {
+        const func = funcs[i];
+        if (func != null && isMoveConstructor(func)) {
             moveStart = i;
             break;
         }
@@ -1194,7 +1196,10 @@ function sortConstructorOverloads(funcs: CppFunctionIr[]): void {
     // move+allocator variants which have 2 params but first is &&)
     let moveEnd = moveStart;
     for (let i = moveStart; i < funcs.length; i++) {
-        const f = funcs[i]!;
+        const f = funcs[i];
+        if (f == null) {
+            break;
+        }
         const ft = f.parameters[0]?.typeInfo?.display ?? "";
         if (ft.includes("&&") && !ft.includes("const")) {
             moveEnd = i + 1;
@@ -1207,7 +1212,8 @@ function sortConstructorOverloads(funcs: CppFunctionIr[]): void {
     let crossCopyStart = moveEnd;
     let crossCopyEnd = moveEnd;
     for (let i = moveEnd; i < funcs.length; i++) {
-        if (isCrossTypeCopyConstructor(funcs[i]!)) {
+        const crossFunc = funcs[i];
+        if (crossFunc != null && isCrossTypeCopyConstructor(crossFunc)) {
             crossCopyEnd = i + 1;
         } else {
             break;
@@ -1247,8 +1253,8 @@ export function renderOverloadedMethod(
     if (funcs.length === 0) {
         return "";
     }
-    if (funcs.length === 1) {
-        return renderSingleMethod(funcs[0]!, ownerClass, ctx, { skipHeading: options.skipHeading });
+    if (funcs.length === 1 && funcs[0] != null) {
+        return renderSingleMethod(funcs[0], ownerClass, ctx, { skipHeading: options.skipHeading });
     }
 
     // Separate deleted and non-deleted overloads
@@ -1263,12 +1269,12 @@ export function renderOverloadedMethod(
     }
 
     // If only one non-deleted overload and no deleted ones, render as single method
-    if (nonDeletedFuncs.length === 1 && deletedFuncs.length === 0) {
-        return renderSingleMethod(nonDeletedFuncs[0]!, ownerClass, ctx, { skipHeading: options.skipHeading });
+    if (nonDeletedFuncs.length === 1 && deletedFuncs.length === 0 && nonDeletedFuncs[0] != null) {
+        return renderSingleMethod(nonDeletedFuncs[0], ownerClass, ctx, { skipHeading: options.skipHeading });
     }
 
     const lines: string[] = [];
-    const displayName = escapeNameForHeading(funcs[0]!.name);
+    const displayName = escapeNameForHeading(funcs[0]?.name ?? "");
     const commonQuals = getCommonQualifiers(funcs);
 
     if (!options.skipHeading) {
@@ -1310,8 +1316,11 @@ export function renderOverloadedMethod(
 
     // Render non-deleted overloads as individual tabs
     for (let i = 0; i < nonDeletedFuncs.length; i++) {
-        const func = nonDeletedFuncs[i]!;
-        const tabTitle = deduplicatedTitles[i]!;
+        const func = nonDeletedFuncs[i];
+        const tabTitle = deduplicatedTitles[i];
+        if (func == null || tabTitle == null) {
+            continue;
+        }
         const overloadBadges = getOverloadSpecificQualifiers(func, commonQuals);
 
         lines.push(`<Tab title="${tabTitle}">`);
@@ -1349,7 +1358,10 @@ export function renderOverloadedMethod(
         lines.push("</Tab>");
     } else if (deletedFuncs.length === 1) {
         // Single deleted overload: render as a regular tab
-        const func = deletedFuncs[0]!;
+        const func = deletedFuncs[0];
+        if (func == null) {
+            return "";
+        }
         const originalIndex = funcs.indexOf(func);
         const tabTitle = titleGenerator(func, originalIndex);
         const overloadBadges = getOverloadSpecificQualifiers(func, commonQuals);
