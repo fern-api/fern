@@ -175,6 +175,9 @@ vi.mock("../AutoVersioningService.js", () => ({
         cleanDiffForAI() {
             return "cleaned diff content";
         }
+        chunkDiff() {
+            return ["cleaned diff content"];
+        }
         replaceMagicVersion() {
             return Promise.resolve(undefined);
         }
@@ -224,10 +227,14 @@ vi.mock("../AutoVersioningCache.js", () => ({
     }
 }));
 
-// Mock VersionUtils
-vi.mock("../VersionUtils.js", () => ({
-    isAutoVersion: vi.fn().mockReturnValue(true)
-}));
+// Mock VersionUtils — pass through real exports, only override isAutoVersion
+vi.mock("../VersionUtils.js", async () => {
+    const actual = await vi.importActual("../VersionUtils.js");
+    return {
+        ...actual,
+        isAutoVersion: vi.fn().mockReturnValue(true)
+    };
+});
 
 // Import after mocks are set up
 import { VersionBump } from "@fern-api/cli-ai";
