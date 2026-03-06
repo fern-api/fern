@@ -41,6 +41,10 @@ features:
     description: |
       You can add custom query parameters to requests using `RequestOptions`.
 
+  - id: WEBSOCKETS
+    description: |
+      The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.
+
   - id: PAGINATION
     description: |
       For paginated endpoints, the SDK automatically handles pagination using async streams. Use `futures::StreamExt` to iterate through all pages.

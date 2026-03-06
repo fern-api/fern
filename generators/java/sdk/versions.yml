@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.3
+  changelogEntry:
+    - summary: |
+        Update bundled npm tar package from 7.5.8 to 7.5.10 to fix
+        GHSA-qffp-2rhf-9h96 (Hardlink Path Traversal via Drive-Relative
+        Linkpath).
+      type: chore
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 3.42.2
   changelogEntry:
     - summary: |
