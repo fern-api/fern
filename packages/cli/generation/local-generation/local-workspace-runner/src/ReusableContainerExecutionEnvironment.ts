@@ -31,6 +31,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
     private readonly imageName: string;
     private readonly runner: ContainerRunner;
 
+    // Mutex to serialize execute() calls — the container uses fixed paths (/fern/*, /tmp/LICENSE)
+    // so concurrent executions would overwrite each other's files.
+    private executionQueue: Promise<void> = Promise.resolve();
+
     constructor({ imageName, runner }: { imageName: string; runner?: ContainerRunner }) {
         this.imageName = imageName;
         this.runner = runner ?? "docker";
@@ -53,7 +57,21 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         logger.info(`Started reusable container ${this.containerId} from image ${this.imageName}`);
     }
 
-    public async execute({
+    public async execute(args: ExecutionEnvironment.ExecuteArgs): Promise<void> {
+        if (this.containerId == null || this.entrypoint == null) {
+            throw new Error("Container not started. Call start() before execute().");
+        }
+
+        // Serialize access — the container uses fixed paths so only one fixture can run at a time.
+        const result = this.executionQueue.then(() => this.doExecute(args));
+        // Update the queue to wait for this execution (swallow errors so the queue continues)
+        this.executionQueue = result.catch(() => {
+            // Swallow errors so the queue continues to the next fixture
+        });
+        return result;
+    }
+
+    private async doExecute({
         irPath,
         configPath,
         outputPath,
@@ -65,31 +83,26 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         if (this.containerId == null || this.entrypoint == null) {
             throw new Error("Container not started. Call start() before execute().");
         }
-
-        const logger = context.logger;
+        const entrypoint = this.entrypoint;
         const containerId = this.containerId;
+        const logger = context.logger;
 
-        // Clean the output directory in the container for this fixture
+        // Clean the entire /fern directory and /tmp/LICENSE to ensure no state leaks between fixtures.
+        // This is critical — generators may write to any path under /fern (output, generators, sources, etc.)
+        // and we need a fresh environment for each fixture.
         await execInContainer({
             logger,
             containerId,
-            command: ["rm", "-rf", CONTAINER_CODEGEN_OUTPUT_DIRECTORY],
+            command: ["rm", "-rf", CONTAINER_FERN_DIRECTORY, "/tmp/LICENSE"],
             runner: this.runner,
             writeLogsToFile: false
         });
+
+        // Recreate /fern and /fern/output
         await execInContainer({
             logger,
             containerId,
             command: ["mkdir", "-p", CONTAINER_CODEGEN_OUTPUT_DIRECTORY],
-            runner: this.runner,
-            writeLogsToFile: false
-        });
-
-        // Ensure the /fern directory exists
-        await execInContainer({
-            logger,
-            containerId,
-            command: ["mkdir", "-p", CONTAINER_FERN_DIRECTORY],
             runner: this.runner,
             writeLogsToFile: false
         });
@@ -145,7 +158,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         await execInContainer({
             logger,
             containerId,
-            command: [...this.entrypoint, CONTAINER_GENERATOR_CONFIG_PATH],
+            command: [...entrypoint, CONTAINER_GENERATOR_CONFIG_PATH],
             runner: this.runner,
             writeLogsToFile: true
         });
@@ -193,8 +206,8 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             if (Array.isArray(entrypoint) && entrypoint.length > 0) {
                 return entrypoint;
             }
-        } catch {
-            // Fall through to error
+        } catch (e) {
+            logger.warn(`Failed to parse entrypoint for image ${this.imageName}: ${e}`);
         }
 
         throw new Error(
