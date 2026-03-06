@@ -190,7 +190,7 @@ describe("CLI flag threading: --dry-run passes through to LocalTaskHandler", () 
     });
 
     it("generateAPIWorkspaces accepts dryRun parameter", () => {
-        expect(generateAPIWorkspacesSource).toContain("dryRun?: boolean;");
+        expect(generateAPIWorkspacesSource).toContain("dryRun: boolean;");
     });
 
     it("generateAPIWorkspaces passes dryRun to generateWorkspace", () => {
@@ -198,7 +198,7 @@ describe("CLI flag threading: --dry-run passes through to LocalTaskHandler", () 
     });
 
     it("generateAPIWorkspace accepts dryRun parameter", () => {
-        expect(generateAPIWorkspaceSource).toContain("dryRun?: boolean;");
+        expect(generateAPIWorkspaceSource).toContain("dryRun: boolean;");
     });
 
     it("generateAPIWorkspace passes dryRun to runLocalGenerationForWorkspace", () => {
