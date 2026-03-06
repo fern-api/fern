@@ -248,6 +248,7 @@ export class LocalTaskHandler {
 
             let finalBump = analysis.versionBump;
             let finalMessage = analysis.message;
+            let finalChangelogEntry = analysis.changelogEntry;
 
             // Tier 3: behavioral analysis (only runs when surface analysis found no changes)
             if (analysis.versionBump === VersionBump.PATCH) {
@@ -263,6 +264,12 @@ export class LocalTaskHandler {
                         finalBump = VersionBump.MINOR;
                         // Use Tier 3 message if available, fall back to Tier 2 message
                         finalMessage = behavioralAnalysis.message || analysis.message;
+                        // Synthesize changelog entry from behavioral changes since Tier 2 PATCH
+                        // produces an empty changelog_entry and the BAML behavioral response
+                        // does not include one
+                        if (behavioralAnalysis.behavioralChanges.length > 0) {
+                            finalChangelogEntry = behavioralAnalysis.behavioralChanges.join(". ") + ".";
+                        }
                     } else {
                         this.context.logger.info("Tier 3 behavioral analysis confirmed PATCH");
                     }
@@ -278,7 +285,7 @@ export class LocalTaskHandler {
             const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
 
             // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
-            const changelogEntry = analysis.changelogEntry?.trim() || undefined;
+            const changelogEntry = finalChangelogEntry?.trim() || undefined;
 
             return {
                 version: newVersion,

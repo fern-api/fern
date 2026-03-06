@@ -259,8 +259,10 @@ const mockContext = {
     logger: mockLogger
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: accessing private method for testing
-async function callHandleAutoVersioning(handler: any): Promise<{ version: string; commitMessage: string } | null> {
+async function callHandleAutoVersioning(
+    // biome-ignore lint/suspicious/noExplicitAny: accessing private method for testing
+    handler: any
+): Promise<{ version: string; commitMessage: string; changelogEntry?: string } | null> {
     return handler.handleAutoVersioning();
 }
 
@@ -442,6 +444,29 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         expect(result?.version).toBe("1.1.0");
         // Should fall back to Tier 2 message since Tier 3 message is empty
         expect(result?.commitMessage).toContain(tier2Message);
+    });
+
+    it("synthesizes changelog entry from behavioral changes when Tier 3 escalates", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "chore: internal refactoring",
+            changelog_entry: "" // PATCH produces empty changelog
+        });
+        mockAnalyzeBehavioralChanges.mockResolvedValue({
+            version_bump: BehavioralBump.MINOR,
+            behavioral_changes: ["Changed default retry count from 3 to 5", "Changed timeout from 30s to 60s"],
+            message: "feat: update default retry and timeout values"
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.1.0");
+        // Changelog entry should be synthesized from behavioral changes
+        expect(result?.changelogEntry).toBe(
+            "Changed default retry count from 3 to 5. Changed timeout from 30s to 60s."
+        );
     });
 
     it("does not call Tier 3 when Tier 2 returns MAJOR", async () => {
