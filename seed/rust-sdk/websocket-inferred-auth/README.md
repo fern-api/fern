@@ -105,23 +105,23 @@ The SDK supports WebSocket connections for real-time communication. Use the gene
 ```rust
 use seed_websocket_auth::api::websocket::RealtimeClient;
 
-let mut client = RealtimeClient::connect(
+let mut realtime = RealtimeClient::connect(
     "wss://api.example.com",
     "session_id",
     None,
     None,
 ).await.expect("Failed to connect");
 
-// Send a message
-client.send_send(&SendEvent { /* fields */ }).await.expect("Failed to send");
-
-// Receive messages
-while let Some(Ok(message)) = client.recv().await {
+// Iterate over messages as they arrive
+while let Some(Ok(message)) = realtime.recv().await {
     println!("{:?}", message);
 }
 
-// Close the connection
-client.close().await.expect("Failed to close");
+// Send a message
+realtime.send_send(&SendEvent { /* fields */ }).await.expect("Failed to send");
+
+// Close the connection when done
+realtime.close().await.expect("Failed to close");
 ```
 
 ## Advanced

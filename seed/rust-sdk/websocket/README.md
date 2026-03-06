@@ -38,12 +38,12 @@ The SDK supports WebSocket connections for real-time communication. Use the gene
 ```rust
 use seed_websocket::api::websocket::EmptyRealtimeClient;
 
-let mut client = EmptyRealtimeClient::connect(
+let mut empty_realtime = EmptyRealtimeClient::connect(
     "wss://api.example.com",
 ).await.expect("Failed to connect");
 
-// Close the connection
-client.close().await.expect("Failed to close");
+// Close the connection when done
+empty_realtime.close().await.expect("Failed to close");
 ```
 
 ## Contributing

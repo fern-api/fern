@@ -591,105 +591,140 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return [];
         }
 
-        const snippets: string[] = [];
-        const crateName = this.crateName;
-
-        // Build channel name map using the same logic as WebSocketChannelGenerator
-        const channelNameMap = this.buildWebSocketChannelNameMap(websocketChannels);
-
-        for (const [channelId, channel] of Object.entries(websocketChannels)) {
-            const names = channelNameMap.get(channelId);
-            if (names == null) {
-                continue;
-            }
-
-            const { clientName, moduleName } = names;
-            const clientMessages = channel.messages.filter((m) => m.origin === "client");
-            const serverMessages = channel.messages.filter((m) => m.origin === "server");
-
-            const writer = new Writer();
-
-            // Import statement
-            writer.write(`use ${crateName}::api::websocket::${clientName};`);
-            writer.newLine();
-            writer.newLine();
-
-            // Build connect call
-            const connectParams: string[] = ['"wss://api.example.com"'];
-            for (const pathParam of channel.pathParameters) {
-                connectParams.push(`"${pathParam.name.snakeCase.safeName}"`);
-            }
-            for (const header of channel.headers) {
-                connectParams.push(`"${header.name.name.snakeCase.safeName}"`);
-            }
-            for (const qp of channel.queryParameters) {
-                const isOptional = qp.valueType.type === "container" && qp.valueType.container.type === "optional";
-                if (isOptional) {
-                    connectParams.push("None");
-                } else {
-                    connectParams.push(`"${qp.name.name.snakeCase.safeName}"`);
-                }
-            }
-
-            writer.write(`let mut client = ${clientName}::connect(`);
-            writer.newLine();
-            writer.indent();
-            for (let i = 0; i < connectParams.length; i++) {
-                writer.write(connectParams[i] + ",");
-                writer.newLine();
-            }
-            writer.dedent();
-            writer.write(").await.expect(\"Failed to connect\");");
-            writer.newLine();
-            writer.newLine();
-
-            // Show a send example if there are client messages
-            if (clientMessages.length > 0) {
-                const firstMsg = clientMessages[0];
-                if (firstMsg != null) {
-                    const methodName = this.getWebSocketMessageMethodName(firstMsg, "send");
-                    const bodyType = this.getWebSocketMessageBodyType(firstMsg);
-                    if (bodyType) {
-                        writer.write(`// Send a message`);
-                        writer.newLine();
-                        writer.write(`client.${methodName}(&${bodyType} { /* fields */ }).await.expect("Failed to send");`);
-                    } else {
-                        writer.write(`// Send a message`);
-                        writer.newLine();
-                        writer.write(`client.${methodName}(&serde_json::json!({})).await.expect("Failed to send");`);
-                    }
-                    writer.newLine();
-                    writer.newLine();
-                }
-            }
-
-            // Show receive example if there are server messages
-            if (serverMessages.length > 0) {
-                writer.write(`// Receive messages`);
-                writer.newLine();
-                writer.write(`while let Some(Ok(message)) = client.recv().await {`);
-                writer.newLine();
-                writer.indent();
-                writer.write(`println!("{:?}", message);`);
-                writer.dedent();
-                writer.newLine();
-                writer.write(`}`);
-                writer.newLine();
-                writer.newLine();
-            }
-
-            // Close
-            writer.write(`// Close the connection`);
-            writer.newLine();
-            writer.write(`client.close().await.expect("Failed to close");`);
-
-            snippets.push(writer.toString().trim() + "\n");
-
-            // Only generate one snippet — the first channel is enough for the README
-            break;
+        // Find the first WebSocket channel via subpackages (like Python's _get_example_websocket_channel)
+        const exampleChannel = this.getExampleWebSocketChannel();
+        if (exampleChannel == null) {
+            return [];
         }
 
+        const { subpackage, channel, channelId } = exampleChannel;
+        const crateName = this.crateName;
+
+        // Build channel name map to get proper client name
+        const channelNameMap = this.buildWebSocketChannelNameMap(websocketChannels);
+        const names = channelNameMap.get(channelId);
+        if (names == null) {
+            return [];
+        }
+
+        const { clientName } = names;
+        const clientMessages = channel.messages.filter((m) => m.origin === "client");
+        const serverMessages = channel.messages.filter((m) => m.origin === "server");
+
+        // Get the subpackage access path (e.g., "market_data" or "realtime")
+        const subpackageName = subpackage.name.snakeCase.safeName;
+
+        // Build connect params from IR
+        const connectParams: string[] = ['"wss://api.example.com"'];
+        for (const pathParam of channel.pathParameters) {
+            connectParams.push(`"${pathParam.name.snakeCase.safeName}"`);
+        }
+        for (const header of channel.headers) {
+            connectParams.push(`"${header.name.name.snakeCase.safeName}"`);
+        }
+        for (const qp of channel.queryParameters) {
+            const isOptional = qp.valueType.type === "container" && qp.valueType.container.type === "optional";
+            if (isOptional) {
+                connectParams.push("None");
+            } else {
+                connectParams.push(`"${qp.name.name.snakeCase.safeName}"`);
+            }
+        }
+
+        const snippets: string[] = [];
+
+        // --- Snippet: Connect + send + receive + close ---
+        const writer = new Writer();
+
+        // Use statement for the WebSocket client
+        writer.write(`use ${crateName}::api::websocket::${clientName};`);
+        writer.newLine();
+        writer.newLine();
+
+        // Connect
+        writer.write(`let mut ${subpackageName} = ${clientName}::connect(`);
+        writer.newLine();
+        writer.indent();
+        for (const param of connectParams) {
+            writer.write(param + ",");
+            writer.newLine();
+        }
+        writer.dedent();
+        writer.write(").await.expect(\"Failed to connect\");");
+        writer.newLine();
+        writer.newLine();
+
+        // Receive messages
+        if (serverMessages.length > 0) {
+            writer.write(`// Iterate over messages as they arrive`);
+            writer.newLine();
+            writer.write(`while let Some(Ok(message)) = ${subpackageName}.recv().await {`);
+            writer.newLine();
+            writer.indent();
+            writer.write(`println!("{:?}", message);`);
+            writer.dedent();
+            writer.newLine();
+            writer.write(`}`);
+            writer.newLine();
+            writer.newLine();
+        }
+
+        // Send a message
+        if (clientMessages.length > 0) {
+            const firstMsg = clientMessages[0];
+            if (firstMsg != null) {
+                const methodName = this.getWebSocketMessageMethodName(firstMsg, "send");
+                const bodyType = this.getWebSocketMessageBodyType(firstMsg);
+                writer.write(`// Send a message`);
+                writer.newLine();
+                if (bodyType) {
+                    writer.write(`${subpackageName}.${methodName}(&${bodyType} { /* fields */ }).await.expect("Failed to send");`);
+                } else {
+                    writer.write(`${subpackageName}.${methodName}(&serde_json::json!({})).await.expect("Failed to send");`);
+                }
+                writer.newLine();
+                writer.newLine();
+            }
+        }
+
+        // Close
+        writer.write(`// Close the connection when done`);
+        writer.newLine();
+        writer.write(`${subpackageName}.close().await.expect("Failed to close");`);
+
+        snippets.push(writer.toString().trim() + "\n");
+
         return snippets;
+    }
+
+    /**
+     * Find the first WebSocket channel by checking subpackages (mirrors Python's _get_example_websocket_channel).
+     */
+    private getExampleWebSocketChannel(): {
+        subpackage: FernIr.Subpackage;
+        channel: FernIr.WebSocketChannel;
+        channelId: string;
+    } | undefined {
+        const websocketChannels = this.context.ir.websocketChannels;
+        if (websocketChannels == null) {
+            return undefined;
+        }
+
+        for (const subpackageId of Object.keys(this.context.ir.subpackages)) {
+            const subpackage = this.context.ir.subpackages[subpackageId];
+            if (subpackage != null && subpackage.websocket != null && subpackage.websocket in websocketChannels) {
+                const channel = websocketChannels[subpackage.websocket];
+                if (channel != null) {
+                    return {
+                        subpackage,
+                        channel,
+                        channelId: subpackage.websocket
+                    };
+                }
+            }
+        }
+
+        return undefined;
     }
 
     private buildWebSocketChannelNameMap(

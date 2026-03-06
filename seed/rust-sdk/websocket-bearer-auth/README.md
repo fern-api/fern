@@ -38,22 +38,22 @@ The SDK supports WebSocket connections for real-time communication. Use the gene
 ```rust
 use seed_websocket_bearer_auth::api::websocket::RealtimeNoAuthClient;
 
-let mut client = RealtimeNoAuthClient::connect(
+let mut realtime_no_auth = RealtimeNoAuthClient::connect(
     "wss://api.example.com",
     "session_id",
     None,
 ).await.expect("Failed to connect");
 
-// Send a message
-client.send_send(&NoAuthSendEvent { /* fields */ }).await.expect("Failed to send");
-
-// Receive messages
-while let Some(Ok(message)) = client.recv().await {
+// Iterate over messages as they arrive
+while let Some(Ok(message)) = realtime_no_auth.recv().await {
     println!("{:?}", message);
 }
 
-// Close the connection
-client.close().await.expect("Failed to close");
+// Send a message
+realtime_no_auth.send_send(&NoAuthSendEvent { /* fields */ }).await.expect("Failed to send");
+
+// Close the connection when done
+realtime_no_auth.close().await.expect("Failed to close");
 ```
 
 ## Contributing
