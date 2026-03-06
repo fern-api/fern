@@ -4,7 +4,7 @@
  * exactly the same strings as the inlined versions they replace.
  */
 
-import type { CppFunctionIr, CppTemplateParamIr } from "../../../src/types/CppLibraryDocsIr.js";
+import type { CppDocstringIr, CppFunctionIr, CppTemplateParamIr } from "../../../src/types/CppLibraryDocsIr.js";
 import { needsQuoting } from "../context.js";
 
 // ---------------------------------------------------------------------------
@@ -113,4 +113,101 @@ export function isEffectivelyDeleted(func: CppFunctionIr): boolean {
     }
     // Check signature for =delete (the IR field is unreliable for some parsers)
     return /=\s*delete\s*$/.test(func.signature);
+}
+
+// ---------------------------------------------------------------------------
+// Docstring callouts (3f) — shared across all page renderers
+// ---------------------------------------------------------------------------
+
+/**
+ * Render all standard callout sections from a docstring: deprecated, warnings,
+ * notes, preconditions, postconditions. Appends to the provided lines array.
+ *
+ * Extracted to avoid identical callout rendering code across page renderers.
+ */
+export function renderDocstringCallouts(
+    docstring: CppDocstringIr | undefined,
+    lines: string[],
+    renderSegments: (segments: import("../../../src/types/CppLibraryDocsIr.js").CppDocSegment[]) => string
+): void {
+    if (!docstring) {
+        return;
+    }
+
+    if (docstring.deprecated) {
+        const depText = renderSegments(docstring.deprecated);
+        if (depText) {
+            lines.push("");
+            lines.push(...renderCallout("Error", depText, "Deprecated"));
+        }
+    }
+    if (docstring.warnings) {
+        for (const warning of docstring.warnings) {
+            const text = renderSegments(warning);
+            if (text) {
+                lines.push(...renderCallout("Warning", text));
+            }
+        }
+    }
+    if (docstring.notes) {
+        for (const note of docstring.notes) {
+            const text = renderSegments(note);
+            if (text) {
+                lines.push(...renderCallout("Note", text));
+            }
+        }
+    }
+    if (docstring.preconditions) {
+        for (const pre of docstring.preconditions) {
+            const text = renderSegments(pre);
+            if (text) {
+                lines.push(...renderCallout("Note", text, "Preconditions"));
+            }
+        }
+    }
+    if (docstring.postconditions) {
+        for (const post of docstring.postconditions) {
+            const text = renderSegments(post);
+            if (text) {
+                lines.push(...renderCallout("Note", text, "Postconditions"));
+            }
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Docstring examples (3g)
+// ---------------------------------------------------------------------------
+
+/**
+ * Render example code blocks from a docstring. Appends to the provided lines array.
+ */
+export function renderDocstringExamples(
+    docstring: CppDocstringIr | undefined,
+    lines: string[],
+    renderCodeBlock: (code: string, language?: string) => string
+): void {
+    if (!docstring?.examples || docstring.examples.length === 0) {
+        return;
+    }
+    lines.push("");
+    lines.push("## Example");
+    lines.push("");
+    for (const example of docstring.examples) {
+        const lang = example.language || "cpp";
+        lines.push(renderCodeBlock(example.code, lang));
+        lines.push("");
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Markdown table escaping (3h)
+// ---------------------------------------------------------------------------
+
+/**
+ * Escape content for use inside a markdown table cell.
+ * Replaces pipe characters with `\|` to prevent breaking the table layout.
+ */
+export function escapeTableCell(content: string): string {
+    return content.replace(/\|/g, "\\|");
 }

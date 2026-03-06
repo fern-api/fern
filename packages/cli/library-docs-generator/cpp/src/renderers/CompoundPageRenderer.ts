@@ -15,7 +15,10 @@ import type {
 import type { CompoundMeta } from "../context.js";
 import { renderClassPage } from "./ClassPageRenderer.js";
 import { renderConceptPage } from "./ConceptPageRenderer.js";
+import { renderEnumPage } from "./EnumPageRenderer.js";
 import { renderFunctionPage } from "./FunctionPageRenderer.js";
+import { renderTypedefPage } from "./TypedefPageRenderer.js";
+import { renderVariablePage } from "./VariablePageRenderer.js";
 
 /**
  * Union type for all compound IR entries that can produce a page.
@@ -40,14 +43,11 @@ export function renderCompoundPage(compound: CppCompoundIr, meta: CompoundMeta):
         case "function":
             return renderFunctionPage(compound.data, meta);
         case "enum":
-            // TODO: implement EnumPageRenderer
-            return `---\ntitle: ${meta.qualifiedName}\n---\n\n*Enum page coming soon.*\n`;
+            return renderEnumPage(compound.data, meta);
         case "typedef":
-            // TODO: implement TypedefPageRenderer
-            return `---\ntitle: ${meta.qualifiedName}\n---\n\n*Typedef page coming soon.*\n`;
+            return renderTypedefPage(compound.data, meta);
         case "variable":
-            // TODO: implement VariablePageRenderer
-            return `---\ntitle: ${meta.qualifiedName}\n---\n\n*Variable page coming soon.*\n`;
+            return renderVariablePage(compound.data, meta);
         default: {
             const _exhaustive: never = compound;
             throw new Error(`Unknown compound kind: ${JSON.stringify(_exhaustive)}`);
