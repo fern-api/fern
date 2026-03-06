@@ -34,6 +34,7 @@ export declare namespace LocalTaskHandler {
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
         autoVersioningCache?: AutoVersioningCache;
+        generatorLanguage: string | undefined;
     }
 }
 
@@ -49,6 +50,7 @@ export class LocalTaskHandler {
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
     private autoVersioningCache: AutoVersioningCache | undefined;
+    private generatorLanguage: string | undefined;
 
     constructor({
         context,
@@ -61,7 +63,8 @@ export class LocalTaskHandler {
         version,
         ai,
         isWhitelabel,
-        autoVersioningCache
+        autoVersioningCache,
+        generatorLanguage
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -74,6 +77,7 @@ export class LocalTaskHandler {
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
         this.autoVersioningCache = autoVersioningCache;
+        this.generatorLanguage = generatorLanguage;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -196,7 +200,11 @@ export class LocalTaskHandler {
             // Call AI (or reuse cached analysis) to determine version bump
             let analysis: CachedAnalysis | null;
             try {
-                analysis = await this.getAnalysis(cleanedDiff);
+                analysis = await this.getAnalysis(
+                    cleanedDiff,
+                    this.generatorLanguage ?? "unknown",
+                    previousVersion ?? "0.0.0"
+                );
             } catch (aiError) {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
                 this.context.logger.warn(

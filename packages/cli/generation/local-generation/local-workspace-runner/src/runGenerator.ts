@@ -228,7 +228,8 @@ export async function writeFilesToDiskAndRunGenerator({
         version,
         ai,
         isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
-        autoVersioningCache
+        autoVersioningCache,
+        generatorLanguage: generatorInvocation.language
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 
