@@ -73,6 +73,7 @@ export interface AnalyzeCommitDiffRequest {
 
 export interface AnalyzeCommitDiffResponse {
   message: string
+  changelog_entry: string
   version_bump: VersionBump
   
 }
