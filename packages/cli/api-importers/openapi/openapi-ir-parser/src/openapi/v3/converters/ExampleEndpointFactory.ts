@@ -512,19 +512,6 @@ export class ExampleEndpointFactory {
                 example = undefined;
             }
 
-            // For arrays, also validate that all items are primitives
-            if (example != null && example.type === "array") {
-                const allItemsArePrimitive = example.value.every((item) => isExamplePrimitive(item, false));
-                if (!allItemsArePrimitive) {
-                    this.logger.debug(
-                        `Array contains non-primitive items for query parameter ${
-                            queryParameter.name
-                        } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                    );
-                    example = undefined;
-                }
-            }
-
             if (required && example == null) {
                 return [];
             } else if (example != null) {
@@ -555,19 +542,6 @@ export class ExampleEndpointFactory {
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );
                 example = undefined;
-            }
-
-            // For arrays, also validate that all items are primitives
-            if (example != null && example.type === "array") {
-                const allItemsArePrimitive = example.value.every((item) => isExamplePrimitive(item, false));
-                if (!allItemsArePrimitive) {
-                    this.logger.debug(
-                        `Array contains non-primitive items for header parameter ${
-                            header.name
-                        } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                    );
-                    example = undefined;
-                }
             }
 
             if (required && example == null) {
@@ -621,19 +595,6 @@ export class ExampleEndpointFactory {
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );
                 example = undefined;
-            }
-
-            // For arrays, also validate that all items are primitives
-            if (example != null && example.type === "array") {
-                const allItemsArePrimitive = example.value.every((item) => isExamplePrimitive(item, false));
-                if (!allItemsArePrimitive) {
-                    this.logger.debug(
-                        `Array contains non-primitive items for global header parameter ${
-                            globalHeader.name
-                        } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                    );
-                    example = undefined;
-                }
             }
 
             if (example != null) {
@@ -916,7 +877,8 @@ export function isExamplePrimitive(example: FullExample, path = false): boolean 
             if (path) {
                 return false;
             } else {
-                return true;
+                // For arrays, validate that all items are primitives
+                return example.value.every((item) => isExamplePrimitive(item));
             }
         case "object":
         case "map":
