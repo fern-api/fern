@@ -249,11 +249,14 @@ export async function writeFilesToDiskAndRunGenerator({
 
     // Write current IR snapshot to the final output directory AFTER copyGeneratedFiles()
     // so it doesn't appear in the generator's tmp output (which would break e2e test snapshots).
-    // Writing to absolutePathToLocalOutput is safe because it's owned by the Node process.
-    const snapshotPathInFinalOutput = path.join(absolutePathToLocalOutput, IR_SNAPSHOT_RELATIVE_PATH);
-    await mkdir(path.dirname(snapshotPathInFinalOutput), { recursive: true });
-    await writeFile(snapshotPathInFinalOutput, JSON.stringify(latest));
-    context.logger.debug("Wrote IR snapshot to " + snapshotPathInFinalOutput);
+    // Only write when shouldCommit is true to avoid advancing the snapshot past uncommitted changes,
+    // which would cause the Tier 1 floor to become stale on subsequent runs.
+    if (generatedFilesResult.shouldCommit) {
+        const snapshotPathInFinalOutput = path.join(absolutePathToLocalOutput, IR_SNAPSHOT_RELATIVE_PATH);
+        await mkdir(path.dirname(snapshotPathInFinalOutput), { recursive: true });
+        await writeFile(snapshotPathInFinalOutput, JSON.stringify(latest));
+        context.logger.debug("Wrote IR snapshot to " + snapshotPathInFinalOutput);
+    }
 
     return {
         ir: latest,

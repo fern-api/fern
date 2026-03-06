@@ -4,7 +4,7 @@ import { VersionBump } from "./VersionUtils.js";
 export interface IrDiffResult {
     bump: VersionBump;
     reasons: IrDiffReason[];
-    /** Ceiling for downstream AI tiers — the AI cannot return higher than this. */
+    /** The highest bump detected by the analysis. Used as a floor — the AI cannot return lower than this. */
     maxPossibleBump: VersionBump;
 }
 
@@ -121,7 +121,7 @@ function isOptionalOrNullable(typeRef: TypeReference): boolean {
  * @param previousIr The IR from the previous generation (snapshot)
  * @param currentIr The IR from the current generation
  * @param language The target SDK language (e.g. "typescript", "python", "java", "go", "ruby", "csharp")
- * @returns IrDiffResult with bump level, reasons, and maxPossibleBump ceiling
+ * @returns IrDiffResult with bump level, reasons, and maxPossibleBump (used as floor, not ceiling)
  */
 export function analyzeIrDiff(
     previousIr: IntermediateRepresentation,
@@ -150,7 +150,8 @@ export function analyzeIrDiff(
     }
 
     // If no reasons at all, the IR is identical -> PATCH (cosmetic changes only)
-    // The caller uses maxPossibleBump as the ceiling for AI
+    // The caller uses bump as a floor: if MAJOR is detected, AI cannot downgrade it.
+    // Note: maxPossibleBump is kept equal to bump for backward compatibility.
     const maxPossibleBump = bump;
 
     return { bump, reasons, maxPossibleBump };

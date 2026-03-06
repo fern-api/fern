@@ -245,24 +245,18 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            // --- Tier 1 short-circuit: if IR diff says MAJOR, return immediately ---
-            if (tier1Result != null && tier1Result.bump === LocalVersionBump.MAJOR) {
-                const reasonsSummary = tier1Result.reasons.map((r) => `- ${r.description}`).join("\n");
+            // Tier 1 sets a floor: if IR diff detects MAJOR, we enforce MAJOR regardless
+            // of what AI returns. We still call AI for a better commit message.
+            // Note: Tier 1 is NOT used as a ceiling because the IR diff analysis does not yet
+            // cover all type shapes (union, undiscriminatedUnion, alias). Using an incomplete
+            // analysis as a ceiling could incorrectly suppress the AI's correct classification.
+            const tier1Floor = tier1Result?.bump === LocalVersionBump.MAJOR ? VersionBump.MAJOR : undefined;
+            if (tier1Floor != null) {
+                const reasonsSummary = tier1Result?.reasons.map((r) => `- ${r.description}`).join("\n");
                 this.context.logger.info(
-                    `Tier 1 IR diff: MAJOR bump detected, skipping AI analysis.\nReasons:\n${reasonsSummary}`
+                    `Tier 1 IR diff: MAJOR bump detected (floor). Will call AI for commit message.\nReasons:\n${reasonsSummary}`
                 );
-                const newVersion = this.incrementVersion(previousVersion, VersionBump.MAJOR);
-                const commitMessage = this.isWhitelabel
-                    ? `feat: breaking API changes\n\n${reasonsSummary}`
-                    : `feat: breaking API changes\n\n${reasonsSummary}\n\n🌿 Generated with Fern`;
-                return {
-                    version: newVersion,
-                    commitMessage
-                };
             }
-
-            // Determine AI ceiling from Tier 1 result
-            const maxPossibleBump = tier1Result?.maxPossibleBump;
 
             if (cleanedDiff.length > DIFF_SIZE_LIMIT) {
                 this.context.logger.warn(
@@ -286,20 +280,20 @@ export class LocalTaskHandler {
                     previousVersion ?? "0.0.0"
                 );
 
-                if (analysis.version_bump === VersionBump.NO_CHANGE) {
+                if (analysis.version_bump === VersionBump.NO_CHANGE && tier1Floor == null) {
                     this.context.logger.info("AI detected no semantic changes");
                     return null;
                 }
 
-                // Apply Tier 1 ceiling constraint: AI cannot return higher than maxPossibleBump
+                // Apply Tier 1 floor: if IR diff detected MAJOR, enforce it regardless of AI result
                 let effectiveBump: VersionBump = analysis.version_bump;
-                if (maxPossibleBump != null) {
-                    effectiveBump = this.constrainBump(effectiveBump, maxPossibleBump);
-                    if (effectiveBump !== analysis.version_bump) {
+                if (tier1Floor != null && tier1Floor === VersionBump.MAJOR) {
+                    if (effectiveBump !== VersionBump.MAJOR) {
                         this.context.logger.info(
-                            `AI suggested ${analysis.version_bump} but Tier 1 ceiling is ${maxPossibleBump}, using ${effectiveBump}`
+                            `AI suggested ${analysis.version_bump} but Tier 1 floor is MAJOR, enforcing MAJOR`
                         );
                     }
+                    effectiveBump = VersionBump.MAJOR;
                 }
 
                 // Calculate new version
@@ -407,9 +401,9 @@ export class LocalTaskHandler {
     }
 
     /**
-     * Constrains an AI-suggested bump to not exceed the Tier 1 ceiling.
+     * Applies a Tier 1 floor bump, ensuring the effective bump is at least as high as the floor.
      */
-    private constrainBump(aiBump: VersionBump, ceiling: LocalVersionBump): VersionBump {
+    private applyFloor(aiBump: VersionBump, floor: VersionBump): VersionBump {
         const bumpOrder: Record<string, number> = {
             NO_CHANGE: 0,
             PATCH: 1,
@@ -418,22 +412,9 @@ export class LocalTaskHandler {
         };
 
         const aiLevel = bumpOrder[aiBump] ?? 0;
-        const ceilingLevel = bumpOrder[ceiling] ?? 3;
+        const floorLevel = bumpOrder[floor] ?? 0;
 
-        if (aiLevel > ceilingLevel) {
-            // Map the ceiling back to the AI VersionBump type
-            switch (ceiling) {
-                case LocalVersionBump.PATCH:
-                    return VersionBump.PATCH;
-                case LocalVersionBump.MINOR:
-                    return VersionBump.MINOR;
-                case LocalVersionBump.MAJOR:
-                    return VersionBump.MAJOR;
-                default:
-                    return VersionBump.PATCH;
-            }
-        }
-        return aiBump;
+        return aiLevel >= floorLevel ? aiBump : floor;
     }
 
     /**
