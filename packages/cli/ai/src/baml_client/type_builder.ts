@@ -29,7 +29,7 @@ export default class TypeBuilder {
     
     AnalyzeCommitDiffRequest: ClassViewer<'AnalyzeCommitDiffRequest', "diff">;
     
-    AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "version_bump">;
+    AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "changelog_entry" | "version_bump">;
     
     
     VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE">;
@@ -51,7 +51,7 @@ export default class TypeBuilder {
         ]);
         
         this.AnalyzeCommitDiffResponse = this.tb.classViewer("AnalyzeCommitDiffResponse", [
-          "message","version_bump",
+          "message","changelog_entry","version_bump",
         ]);
         
         

@@ -176,7 +176,7 @@ export class GithubStep extends BaseStep {
         }
 
         const finalCommitMessage = this.config.commitMessage ?? "SDK Generation";
-        const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
+        const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage, this.config.changelogEntry);
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
         const enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
 

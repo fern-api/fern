@@ -128,6 +128,7 @@ export class GenerationRunner {
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
+        autoVersioningChangelogEntry?: string;
     }> {
         context.logger.info(`Starting generation for ${generatorInvocation.name}`);
 

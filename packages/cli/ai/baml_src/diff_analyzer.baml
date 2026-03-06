@@ -13,9 +13,14 @@ class AnalyzeCommitDiffRequest {
 }
 
 class AnalyzeCommitDiffResponse {
-    message string @description("The AI-generated commit message summarizing the changes in the diff")
+    message string
+        @description("Developer-facing git commit message. Use conventional commit format. Reference specific code symbols (function names, class names). Keep summary under 72 chars.")
 
-    version_bump VersionBump @description("The recommended semantic version bump: MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes and other changes, NO_CHANGE for empty diffs")
+    changelog_entry string
+        @description("User-facing release note for CHANGELOG.md and GitHub Releases. Describe the impact on SDK consumers, not implementation details. Include migration instructions for MAJOR. Use plain prose, not conventional commit format. Empty string for PATCH.")
+
+    version_bump VersionBump
+        @description("The recommended semantic version bump: MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes and other changes, NO_CHANGE for empty diffs")
 }
 
 // Main function that analyzes SDK diffs
@@ -132,8 +137,19 @@ function AnalyzeSdkDiff(
     {{diff}}
     ---
 
-    Remember again that YOU MUST return a structured JSON response with these two fields:
+    Changelog Entry Guidelines:
+    - Write for SDK consumers, not engineers reading the source code
+    - MAJOR: explain what broke and how to migrate ("The `getUser` method has been
+      removed. Replace calls with `fetchUser(id)` which returns the same type.")
+    - MINOR: describe the new capability ("New `createPayment()` method available
+      on `PaymentsClient`.")
+    - PATCH: leave empty string — patch changes don't warrant changelog entries
+    - Do not use conventional commit prefixes (no "feat:", "fix:", etc.)
+    - Write in third person ("The SDK now supports..." not "Add support for...")
+
+    Remember again that YOU MUST return a structured JSON response with these three fields:
     - message: A git commit message formatted like the example previously provided
+    - changelog_entry: A user-facing release note (empty string for PATCH)
     - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
   "#
 }
