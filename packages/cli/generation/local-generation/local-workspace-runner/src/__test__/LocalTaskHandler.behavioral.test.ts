@@ -603,16 +603,17 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         expect(result?.version).toBe("1.1.0");
         // Message should come from the MINOR chunk (chunk 2)
         expect(result?.commitMessage).toContain("feat: new feature in chunk 2");
+        // Changelog aggregates non-empty entries from all chunks
         expect(result?.changelogEntry).toBe("New feature added in chunk 2.");
         // All 3 chunks should have been analyzed
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(3);
     });
 
-    it("short-circuits on MAJOR bump — skips remaining chunks", async () => {
+    it("processes all chunks even after MAJOR bump to collect all changelog entries", async () => {
         // chunkDiff returns 4 chunks
         mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff", "chunk3 diff", "chunk4 diff"]);
 
-        // Chunk 1: PATCH, Chunk 2: MAJOR
+        // Chunk 1: PATCH, Chunk 2: MAJOR, Chunk 3: MINOR, Chunk 4: PATCH
         mockAnalyzeSdkDiff
             .mockResolvedValueOnce({
                 version_bump: VersionBump.PATCH,
@@ -623,6 +624,16 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
                 version_bump: VersionBump.MAJOR,
                 message: "break: removed public API",
                 changelog_entry: "Public API removed. Migration guide: ..."
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.MINOR,
+                message: "feat: new helper",
+                changelog_entry: "Added new helper methods."
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.PATCH,
+                message: "fix: typo",
+                changelog_entry: ""
             });
 
         const handler = await createTaskHandler();
@@ -631,9 +642,10 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         expect(result).not.toBeNull();
         expect(result?.version).toBe("2.0.0");
         expect(result?.commitMessage).toContain("break: removed public API");
-        expect(result?.changelogEntry).toBe("Public API removed. Migration guide: ...");
-        // Only 2 AI calls — chunks 3 and 4 were skipped
-        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(2);
+        // Changelog aggregates all non-empty entries from every chunk
+        expect(result?.changelogEntry).toBe("Public API removed. Migration guide: ...\nAdded new helper methods.");
+        // All 4 chunks analyzed (no short-circuit)
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(4);
     });
 
     it("returns null when all chunks produce NO_CHANGE", async () => {
@@ -659,7 +671,7 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(2);
     });
 
-    it("keeps message and changelog from highest-bump chunk (not first chunk)", async () => {
+    it("keeps message from highest-bump chunk, aggregates changelog from all chunks", async () => {
         mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff"]);
 
         // Chunk 1: MINOR with some changelog, Chunk 2: MAJOR with different changelog
@@ -680,9 +692,10 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
 
         expect(result).not.toBeNull();
         expect(result?.version).toBe("2.0.0");
-        // Message/changelog should come from chunk 2 (MAJOR > MINOR)
+        // Commit message comes from highest-bump chunk (MAJOR)
         expect(result?.commitMessage).toContain("break: removed deprecated endpoint");
-        expect(result?.changelogEntry).toBe("The deprecated endpoint has been removed.");
+        // Changelog aggregates entries from both chunks
+        expect(result?.changelogEntry).toBe("New helper method added.\nThe deprecated endpoint has been removed.");
     });
 
     it("handles mix of NO_CHANGE and non-null chunk results", async () => {

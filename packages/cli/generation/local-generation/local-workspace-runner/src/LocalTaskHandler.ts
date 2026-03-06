@@ -246,10 +246,11 @@ export class LocalTaskHandler {
                         specCommitMessage
                     );
                 } else {
-                    // Multiple chunks: analyze each sequentially, merge results
+                    // Multiple chunks: analyze each sequentially, merge results.
+                    // We process ALL chunks so that every changelog entry is captured.
                     let bestBump: string = VersionBump.NO_CHANGE;
                     let bestMessage = "";
-                    let bestChangelogEntry: string | undefined;
+                    const allChangelogEntries: string[] = [];
 
                     for (let i = 0; i < chunks.length; i++) {
                         const chunk = chunks[i];
@@ -277,24 +278,22 @@ export class LocalTaskHandler {
                         const prevBest = bestBump;
                         bestBump = maxVersionBump(bestBump, chunkAnalysis.versionBump);
 
-                        // Keep the message/changelog from the chunk that produced the highest bump
+                        // Keep the commit message from the chunk that produced the highest bump
                         if (bestBump !== prevBest) {
                             bestMessage = chunkAnalysis.message;
-                            bestChangelogEntry = chunkAnalysis.changelogEntry;
+                        }
+
+                        // Collect all non-empty changelog entries so the final
+                        // changelog reflects changes from every chunk.
+                        const entry = chunkAnalysis.changelogEntry?.trim();
+                        if (entry) {
+                            allChangelogEntries.push(entry);
                         }
 
                         this.context.logger.debug(
                             `Chunk ${i + 1} result: ${chunkAnalysis.versionBump}` +
                                 (bestBump !== prevBest ? ` (new highest: ${bestBump})` : "")
                         );
-
-                        // Short-circuit: MAJOR is the highest possible bump
-                        if (bestBump === VersionBump.MAJOR) {
-                            this.context.logger.debug(
-                                `MAJOR bump detected in chunk ${i + 1}; skipping remaining ${chunks.length - i - 1} chunks.`
-                            );
-                            break;
-                        }
                     }
 
                     if (bestBump === VersionBump.NO_CHANGE) {
@@ -303,7 +302,7 @@ export class LocalTaskHandler {
                         analysis = {
                             versionBump: bestBump as VersionBump,
                             message: bestMessage,
-                            changelogEntry: bestChangelogEntry ?? ""
+                            changelogEntry: allChangelogEntries.join("\n")
                         };
                     }
                 }

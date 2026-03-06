@@ -521,37 +521,41 @@ describe("E2E: maxVersionBump merging logic", () => {
         }
     });
 
-    it("simulates multi-chunk version merging across 10 chunks", () => {
-        // Simulate a scenario: 10 chunks with varying bumps
-        const chunkResults: (VersionBump | null)[] = [
-            VersionBump.PATCH,
-            null, // NO_CHANGE
-            VersionBump.PATCH,
-            VersionBump.MINOR,
-            VersionBump.PATCH,
-            null, // NO_CHANGE
-            VersionBump.PATCH,
-            VersionBump.MINOR,
-            VersionBump.PATCH,
-            VersionBump.PATCH
+    it("simulates multi-chunk version merging across 10 chunks with aggregated changelog", () => {
+        // Simulate a scenario: 10 chunks with varying bumps and changelog entries
+        const chunkResults: { bump: VersionBump | null; changelog: string }[] = [
+            { bump: VersionBump.PATCH, changelog: "Fixed retry logic." },
+            { bump: null, changelog: "" }, // NO_CHANGE
+            { bump: VersionBump.PATCH, changelog: "" },
+            { bump: VersionBump.MINOR, changelog: "Added new paginator helper." },
+            { bump: VersionBump.PATCH, changelog: "" },
+            { bump: null, changelog: "" }, // NO_CHANGE
+            { bump: VersionBump.PATCH, changelog: "" },
+            { bump: VersionBump.MINOR, changelog: "New webhook event types." },
+            { bump: VersionBump.PATCH, changelog: "" },
+            { bump: VersionBump.PATCH, changelog: "" }
         ];
 
         let bestBump: string = VersionBump.NO_CHANGE;
         let bestMessage = "";
-        let bestChangelog: string | undefined;
+        const allChangelogs: string[] = [];
 
         for (let i = 0; i < chunkResults.length; i++) {
             const result = chunkResults[i];
-            if (result == null) {
+            if (result == null || result.bump == null) {
                 continue;
             }
 
             const prevBest = bestBump;
-            bestBump = maxVersionBump(bestBump, result);
+            bestBump = maxVersionBump(bestBump, result.bump);
 
             if (bestBump !== prevBest) {
                 bestMessage = `message from chunk ${i + 1}`;
-                bestChangelog = `changelog from chunk ${i + 1}`;
+            }
+
+            const entry = result.changelog.trim();
+            if (entry) {
+                allChangelogs.push(entry);
             }
         }
 
@@ -559,32 +563,35 @@ describe("E2E: maxVersionBump merging logic", () => {
         expect(bestBump).toBe(VersionBump.MINOR);
         // Message should come from chunk 4 (first MINOR)
         expect(bestMessage).toBe("message from chunk 4");
-        expect(bestChangelog).toBe("changelog from chunk 4");
+        // Changelog aggregates all non-empty entries
+        expect(allChangelogs.join("\n")).toBe(
+            "Fixed retry logic.\nAdded new paginator helper.\nNew webhook event types."
+        );
     });
 
-    it("short-circuits on MAJOR bump", () => {
-        const chunkResults: VersionBump[] = [
-            VersionBump.PATCH,
-            VersionBump.MINOR,
-            VersionBump.MAJOR,
-            VersionBump.MINOR, // should be skipped
-            VersionBump.PATCH // should be skipped
+    it("processes all chunks even with MAJOR bump to collect full changelog", () => {
+        const chunkResults: { bump: VersionBump; changelog: string }[] = [
+            { bump: VersionBump.PATCH, changelog: "" },
+            { bump: VersionBump.MINOR, changelog: "New feature added." },
+            { bump: VersionBump.MAJOR, changelog: "Breaking API removed." },
+            { bump: VersionBump.MINOR, changelog: "Extra helpers added." },
+            { bump: VersionBump.PATCH, changelog: "" }
         ];
 
         let bestBump: string = VersionBump.NO_CHANGE;
-        let chunksProcessed = 0;
+        const allChangelogs: string[] = [];
 
         for (const result of chunkResults) {
-            chunksProcessed++;
-            bestBump = maxVersionBump(bestBump, result);
-
-            if (bestBump === VersionBump.MAJOR) {
-                break;
+            bestBump = maxVersionBump(bestBump, result.bump);
+            const entry = result.changelog.trim();
+            if (entry) {
+                allChangelogs.push(entry);
             }
         }
 
         expect(bestBump).toBe(VersionBump.MAJOR);
-        expect(chunksProcessed).toBe(3); // Stopped after chunk 3
+        // All chunks processed — changelog includes entries from all 5 chunks
+        expect(allChangelogs.join("\n")).toBe("New feature added.\nBreaking API removed.\nExtra helpers added.");
     });
 });
 
@@ -630,16 +637,16 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
             }
         );
 
-        // Simulate the merging logic from LocalTaskHandler (lines 254-297).
+        // Simulate the merging logic from LocalTaskHandler (lines 249-307).
         // This mirrors the production multi-chunk loop so we can verify the
         // algorithm end-to-end without mocking the full handler.
+        // All chunks are processed (no short-circuit) so that every changelog
+        // entry is captured.
         let bestBump: string = VersionBump.NO_CHANGE;
         let bestMessage = "";
-        let bestChangelogEntry: string | undefined;
-        let chunksAnalyzed = 0;
+        const allChangelogEntries: string[] = [];
 
         for (let i = 0; i < chunks.length; i++) {
-            chunksAnalyzed++;
             const response = mockAiResponses[i];
             if (response == null) {
                 continue;
@@ -655,34 +662,32 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
 
             if (bestBump !== prevBest) {
                 bestMessage = response.message;
-                bestChangelogEntry = response.changelogEntry;
             }
 
-            // Short-circuit on MAJOR
-            if (bestBump === VersionBump.MAJOR) {
-                break;
+            const entry = response.changelogEntry?.trim();
+            if (entry) {
+                allChangelogEntries.push(entry);
             }
         }
 
+        const aggregatedChangelog = allChangelogEntries.join("\n");
         const pipelineElapsed = performance.now() - pipelineStart;
 
         console.log("\n=== Full Pipeline Results ===");
         console.log(`  Raw diff: ${(Buffer.byteLength(rawDiff, "utf-8") / 1024 / 1024).toFixed(2)} MB`);
         console.log(`  Cleaned diff: ${(cleanedBytes / 1024).toFixed(1)} KB`);
-        console.log(
-            `  Chunks: ${chunks.length} (analyzed ${chunksAnalyzed} before ${bestBump === VersionBump.MAJOR ? "short-circuit" : "completion"})`
-        );
+        console.log(`  Chunks: ${chunks.length} (all analyzed)`);
         console.log(`  Best bump: ${bestBump}`);
         console.log(`  Message: ${bestMessage}`);
-        console.log(`  Changelog: ${bestChangelogEntry}`);
+        console.log(`  Changelog entries: ${allChangelogEntries.length}`);
         console.log(`  Total pipeline time: ${pipelineElapsed.toFixed(0)}ms`);
 
         // Assertions
         expect(bestBump).toBe(VersionBump.MAJOR);
         expect(bestMessage).toContain("removed deprecated");
-        expect(bestChangelogEntry).toContain("RemovedClass");
-        // Should have short-circuited after finding MAJOR in first chunk
-        expect(chunksAnalyzed).toBe(1);
+        // Changelog aggregates entries from all chunks with non-empty changelogs
+        expect(aggregatedChangelog).toContain("RemovedClass");
+        expect(allChangelogEntries.length).toBeGreaterThanOrEqual(1);
         // Pipeline should complete quickly (no real AI calls)
         expect(pipelineElapsed).toBeLessThan(5000);
     });
@@ -720,25 +725,30 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
         expect(chunks.length).toBeGreaterThan(1);
 
         // Simulate: first chunk has signatures (MINOR), rest are additions (PATCH)
+        // All chunks processed, changelog aggregated
         let bestBump: string = VersionBump.NO_CHANGE;
         let bestMessage = "";
+        const allChangelogs: string[] = [];
 
         for (let i = 0; i < chunks.length; i++) {
             const chunk = chunks[i] ?? "";
-            const bump = chunk.includes("Service") ? VersionBump.MINOR : VersionBump.PATCH;
+            const isMinor = chunk.includes("Service");
+            const bump = isMinor ? VersionBump.MINOR : VersionBump.PATCH;
             const prevBest = bestBump;
             bestBump = maxVersionBump(bestBump, bump);
 
             if (bestBump !== prevBest) {
-                bestMessage = bump === VersionBump.MINOR ? "feat: updated service APIs" : `fix: chunk ${i + 1}`;
+                bestMessage = isMinor ? "feat: updated service APIs" : `fix: chunk ${i + 1}`;
             }
 
-            if (bestBump === VersionBump.MAJOR) {
-                break;
+            if (isMinor) {
+                allChangelogs.push(`Updated service APIs in chunk ${i + 1}.`);
             }
         }
 
         expect(bestBump).toBe(VersionBump.MINOR);
         expect(bestMessage).toBe("feat: updated service APIs");
+        // Changelog should contain entries from all MINOR chunks
+        expect(allChangelogs.length).toBeGreaterThanOrEqual(1);
     });
 });
