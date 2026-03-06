@@ -17,8 +17,7 @@ const localTaskHandlerPath = resolve(__dirname, "../LocalTaskHandler.ts");
 const localTaskHandlerSource = readFileSync(localTaskHandlerPath, "utf-8");
 
 // Minimal stub for TaskContext to satisfy LocalTaskHandler constructor
-// biome-ignore lint/suspicious/noExplicitAny: test mock doesn't need full type
-function createMockContext(): any {
+function createMockContext(): LocalTaskHandler.Init["context"] {
     return {
         logger: {
             info: () => {

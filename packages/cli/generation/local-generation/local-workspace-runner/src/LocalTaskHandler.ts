@@ -311,7 +311,7 @@ export class LocalTaskHandler {
             return doAnalysis();
         }
 
-        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion);
+        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion, priorChangelog);
         const { promise, isHit } = this.autoVersioningCache.getOrCompute(cacheKey, doAnalysis);
 
         if (isHit) {
@@ -652,7 +652,8 @@ export class LocalTaskHandler {
             }
 
             return extracted;
-        } catch {
+        } catch (error) {
+            this.context.logger.debug(`Failed to read prior changelog: ${error}`);
             return "";
         }
     }

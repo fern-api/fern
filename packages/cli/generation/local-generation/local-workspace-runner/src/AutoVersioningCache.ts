@@ -29,8 +29,11 @@ export interface CachedAnalysis {
 export class AutoVersioningCache {
     private readonly cache = new Map<string, Promise<CachedAnalysis | null>>();
 
-    public key(cleanedDiff: string, language: string, previousVersion: string): string {
-        return crypto.createHash("sha256").update(`${language}\0${previousVersion}\0${cleanedDiff}`).digest("hex");
+    public key(cleanedDiff: string, language: string, previousVersion: string, priorChangelog: string = ""): string {
+        return crypto
+            .createHash("sha256")
+            .update(`${language}\0${previousVersion}\0${priorChangelog}\0${cleanedDiff}`)
+            .digest("hex");
     }
 
     /**
