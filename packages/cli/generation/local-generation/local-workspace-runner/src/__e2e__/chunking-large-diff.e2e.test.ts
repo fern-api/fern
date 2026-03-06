@@ -362,28 +362,6 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
             console.log(`  ${oversizedChunks} oversized single-file chunks out of ${chunks.length} total`);
         });
 
-        it("truncateDiff stays within byte budget", () => {
-            const cleaned = service.cleanDiffForAI(rawDiff, magicVersion);
-
-            const startTime = performance.now();
-            const { truncated, omittedFiles } = service.truncateDiff(cleaned, MAX_AI_DIFF_BYTES);
-            const elapsed = performance.now() - startTime;
-
-            const truncatedBytes = Buffer.byteLength(truncated, "utf-8");
-            console.log(
-                `truncateDiff: ${(truncatedBytes / 1024).toFixed(1)} KB truncated, ` +
-                    `${omittedFiles} files omitted (${elapsed.toFixed(0)}ms)`
-            );
-
-            // Should omit many files given a 1+ MB diff and 40KB budget
-            expect(omittedFiles).toBeGreaterThan(0);
-
-            // Truncated output should contain the truncation note
-            expect(truncated).toContain("[Diff truncated:");
-
-            // Truncated output should prioritize deletions
-            expect(truncated).toContain("RemovedClass");
-        });
     });
 
     describe("Realistic 700-file Java SDK diff", () => {

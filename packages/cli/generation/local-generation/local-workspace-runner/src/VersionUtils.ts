@@ -46,7 +46,6 @@ export const MAGIC_VERSION = "505.503.4455";
  * Maximum byte size for a single AI analysis call.
  * Diffs larger than this are split into chunks (via `chunkDiff`), each analysed
  * separately, with version bumps merged by taking the maximum.
- * Also used as the byte budget for `truncateDiff`.
  */
 export const MAX_AI_DIFF_BYTES = 40_000;
 
