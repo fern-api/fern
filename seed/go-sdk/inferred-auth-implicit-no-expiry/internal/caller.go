@@ -196,6 +196,7 @@ func newRequest(
 	if err != nil {
 		return nil, err
 	}
+	req = req.WithContext(ctx)
 	req.Header.Set(contentTypeHeader, reqContentType)
 	for name, values := range endpointHeaders {
 		req.Header[name] = values
