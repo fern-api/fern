@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.14.1
+  changelogEntry:
+    - summary: |
+        Fix `fern check` rejecting `og:dynamic` and `og:background-image` keys in
+        `docs.yml` metadata. These fields were added to the MetadataConfig API types
+        but the serialization schema was not updated, causing validation to fail with
+        "Unexpected key" errors when using the dynamic OG image feature introduced in
+        v4.3.0.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 4.14.0
   changelogEntry:
     - summary: |
