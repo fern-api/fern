@@ -27,7 +27,9 @@ class AnalyzeCommitDiffResponse {
 function AnalyzeSdkDiff(
     diff: string @description("The git diff to analyze"),
     language: string @description("The SDK programming language, e.g. 'typescript', 'python', 'java'"),
-    previous_version: string @description("The current published version before this change, e.g. '1.2.3'")
+    previous_version: string @description("The current published version before this change, e.g. '1.2.3'"),
+    prior_changelog: string @description("Prior changelog entries for version context. Empty string if unavailable."),
+    spec_commit_message: string @description("The commit message from the API spec repository that triggered this SDK generation. Use as a hint for the intent of the change, but verify against the actual diff. Empty string if unavailable.")
 ) -> AnalyzeCommitDiffResponse {
   client DefaultClient
 
@@ -576,6 +578,13 @@ function AnalyzeSdkDiff(
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
     - The previous version is provided for context only. Do not include it
     literally in the commit message summary line.
+
+    {% if spec_commit_message %}
+    The API spec change that triggered this SDK generation had the following commit message:
+    "{{spec_commit_message}}"
+    Use this as a hint for understanding the intent of the change, but always verify
+    against the actual diff below. The commit message may be vague or inaccurate.
+    {% endif %}
 
     Previous version: {{previous_version}}
     SDK language: {{language}}

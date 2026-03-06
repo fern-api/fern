@@ -9,7 +9,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli";
 import { cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -325,7 +325,8 @@ export async function runLocalGenerationForWorkspace({
                         whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
                         runner,
                         ai,
-                        autoVersioningCache
+                        autoVersioningCache,
+                        absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
                     });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));

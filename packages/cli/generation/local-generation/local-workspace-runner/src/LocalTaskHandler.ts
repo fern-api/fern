@@ -35,6 +35,7 @@ export declare namespace LocalTaskHandler {
         isWhitelabel: boolean;
         autoVersioningCache?: AutoVersioningCache;
         generatorLanguage: string | undefined;
+        absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     }
 }
 
@@ -51,6 +52,7 @@ export class LocalTaskHandler {
     private isWhitelabel: boolean;
     private autoVersioningCache: AutoVersioningCache | undefined;
     private generatorLanguage: string | undefined;
+    private absolutePathToSpecRepo: AbsoluteFilePath | undefined;
 
     constructor({
         context,
@@ -64,7 +66,8 @@ export class LocalTaskHandler {
         ai,
         isWhitelabel,
         autoVersioningCache,
-        generatorLanguage
+        generatorLanguage,
+        absolutePathToSpecRepo
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -78,6 +81,7 @@ export class LocalTaskHandler {
         this.isWhitelabel = isWhitelabel;
         this.autoVersioningCache = autoVersioningCache;
         this.generatorLanguage = generatorLanguage;
+        this.absolutePathToSpecRepo = absolutePathToSpecRepo;
     }
 
     public async copyGeneratedFiles(): Promise<{
@@ -209,13 +213,20 @@ export class LocalTaskHandler {
                 );
             }
 
+            // Read spec repo commit message for AI context
+            const specCommitMessage = await this.readSpecCommitMessage();
+            if (specCommitMessage) {
+                this.context.logger.debug(`Spec repo commit message: ${specCommitMessage}`);
+            }
+
             // Call AI (or reuse cached analysis) to determine version bump
             let analysis: CachedAnalysis | null;
             try {
                 analysis = await this.getAnalysis(
                     cleanedDiff,
                     this.generatorLanguage ?? "unknown",
-                    previousVersion ?? "0.0.0"
+                    previousVersion ?? "0.0.0",
+                    specCommitMessage
                 );
             } catch (aiError) {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
@@ -306,12 +317,20 @@ export class LocalTaskHandler {
     private async getAnalysis(
         cleanedDiff: string,
         language: string,
-        previousVersion: string
+        previousVersion: string,
+        specCommitMessage: string = ""
     ): Promise<CachedAnalysis | null> {
         const doAnalysis = async (): Promise<CachedAnalysis | null> => {
             const clientRegistry = await this.getClientRegistry();
             const bamlClient = BamlClient.withOptions({ clientRegistry });
-            const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff, language, previousVersion);
+            const priorChangelog = "";
+            const analysis = await bamlClient.AnalyzeSdkDiff(
+                cleanedDiff,
+                language,
+                previousVersion,
+                priorChangelog,
+                specCommitMessage
+            );
 
             if (analysis.version_bump === VersionBump.NO_CHANGE) {
                 return null;
@@ -327,7 +346,7 @@ export class LocalTaskHandler {
             return doAnalysis();
         }
 
-        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion);
+        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion, specCommitMessage);
         const { promise, isHit } = this.autoVersioningCache.getOrCompute(cacheKey, doAnalysis);
 
         if (isHit) {
@@ -606,6 +625,45 @@ export class LocalTaskHandler {
             doNotPipeOutput: true
         });
         return response.stdout;
+    }
+
+    /**
+     * Reads the most recent git commit message that touched the .fern/ directory
+     * in the spec repo. This provides context to the AI about why the API changed.
+     */
+    public async readSpecCommitMessage(): Promise<string> {
+        if (this.absolutePathToSpecRepo == null) {
+            return "";
+        }
+        try {
+            // Find the git repo root so we can look for commits touching .fern/
+            // regardless of where the workspace directory is nested
+            const repoRootResult = await loggingExeca(this.context.logger, "git", ["rev-parse", "--show-toplevel"], {
+                cwd: this.absolutePathToSpecRepo,
+                doNotPipeOutput: true
+            });
+            const repoRoot = repoRootResult.stdout.trim();
+            if (!repoRoot) {
+                return "";
+            }
+
+            const result = await loggingExeca(
+                this.context.logger,
+                "git",
+                ["log", "-1", "--format=%B", "--", ".fern/"],
+                { cwd: repoRoot, doNotPipeOutput: true }
+            );
+            const message = result.stdout.trim();
+            // Filter out unhelpful messages
+            if (!message || message.toLowerCase().startsWith("merge ") || message.length < 5) {
+                return "";
+            }
+            // Truncate to 500 chars to avoid bloating the prompt
+            return message.length > 500 ? message.slice(0, 500) + "\u2026" : message;
+        } catch (error) {
+            this.context.logger.debug(`Failed to read spec repo commit message: ${error}`);
+            return "";
+        }
     }
 
     /**

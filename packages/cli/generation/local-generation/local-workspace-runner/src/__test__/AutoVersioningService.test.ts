@@ -2287,6 +2287,45 @@ describe("AutoVersioningService", () => {
         expect(cleaned).not.toContain("CHANGELOG");
         expect(cleaned.trim()).toBe("");
     });
+
+    it("testCleanDiffForAI_excludesLicenseFiles", () => {
+        const diff =
+            "diff --git a/LICENSE b/LICENSE\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/LICENSE\n" +
+            "+++ b/LICENSE\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " MIT License\n" +
+            "+Copyright 2026\n" +
+            "diff --git a/LICENSE.md b/LICENSE.md\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/LICENSE.md\n" +
+            "+++ b/LICENSE.md\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " # License\n" +
+            "+Apache 2.0\n" +
+            "diff --git a/LICENSE.txt b/LICENSE.txt\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/LICENSE.txt\n" +
+            "+++ b/LICENSE.txt\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " BSD License\n" +
+            "+Updated\n" +
+            "diff --git a/src/api.ts b/src/api.ts\n" +
+            "index abc123..def456 100644\n" +
+            "--- a/src/api.ts\n" +
+            "+++ b/src/api.ts\n" +
+            "@@ -1,2 +1,3 @@\n" +
+            " export function hello() {\n" +
+            "+    return 'world';\n" +
+            " }\n";
+
+        const cleaned = new AutoVersioningService({ logger: mockLogger }).cleanDiffForAI(diff, "505.503.4455");
+
+        expect(cleaned).not.toContain("LICENSE");
+        expect(cleaned).toContain("src/api.ts");
+        expect(cleaned).toContain("return 'world'");
+    });
 });
 
 describe("countFilesInDiff", () => {

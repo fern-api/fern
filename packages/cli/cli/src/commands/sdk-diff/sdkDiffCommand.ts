@@ -114,7 +114,7 @@ export async function sdkDiffCommand({
         // Create a BAML client with options if we have a custom registry
         const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-        const analysis = await bamlClient.AnalyzeSdkDiff(gitDiff, "unknown", "0.0.0");
+        const analysis = await bamlClient.AnalyzeSdkDiff(gitDiff, "unknown", "0.0.0", "", "");
         context.logger.debug("Analysis complete");
         return analysis;
     } catch (error) {

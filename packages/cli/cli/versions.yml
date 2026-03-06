@@ -1,14 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.13.0
+  changelogEntry:
+    - summary: |
+        Merge behavioral analysis into the unified AnalyzeSdkDiff prompt. The
+        AI now classifies both public API surface changes AND behavioral changes
+        (HTTP status handling, default parameter values, serialization behavior,
+        retry/backoff configuration) in a single call — producing the version
+        bump, commit message, and changelog entry in one pass. This replaces the
+        previous two-call approach where a separate Tier 3 analysis ran after
+        Tier 2 returned PATCH.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 4.12.0
   changelogEntry:
     - summary: |
-        Add Tier 3 behavioral analysis for AUTO semantic versioning. When the
-        AI surface analysis (Tier 2) finds no public API changes (PATCH), a
-        second AI pass now inspects the full implementation diff for behavioral
-        changes: HTTP status code handling, default parameter values, serialization
-        behavior, error messages, HTTP headers, and retry/backoff configuration.
-        Behavioral changes escalate the version bump from PATCH to MINOR. Tier 3
-        failure is non-fatal and falls back to PATCH.
+        Pass the API spec repo commit message to the AI prompt during AUTO
+        versioning. When `fern generate` runs, the CLI now reads the most recent
+        git commit message that touched the `.fern/` directory and includes it
+        in the `AnalyzeSdkDiff` prompt as `spec_commit_message`. This gives the
+        AI ground-truth context about why the API changed, producing more
+        accurate version bumps and commit messages. Merge commits, empty
+        messages, and messages shorter than 5 characters are filtered out.
+        Messages longer than 500 characters are truncated.
       type: feat
   createdAt: "2026-03-06"
   irVersion: 65
