@@ -43,7 +43,7 @@ env?: Record<string, string | undefined>
 
   
   async AnalyzeSdkDiff(
-  diff: string,language: string,previous_version: string,
+  diff: string,language: string,previous_version: string,prior_changelog: string,spec_commit_message: string,
   __baml_options__?: BamlCallOptions<never>
   ): Promise<HTTPRequest> {
     try {
@@ -62,7 +62,7 @@ env?: Record<string, string | undefined>
       return await this.runtime.buildRequest(
       "AnalyzeSdkDiff",
       {
-      "diff": diff,"language": language,"previous_version": previous_version
+      "diff": diff,"language": language,"previous_version": previous_version,"prior_changelog": prior_changelog,"spec_commit_message": spec_commit_message
       },
       this.ctxManager.cloneContext(),
       __baml_options__?.tb?.__tb(),
@@ -82,7 +82,7 @@ env?: Record<string, string | undefined>
 
       
       async AnalyzeSdkDiff(
-      diff: string,language: string,previous_version: string,
+      diff: string,language: string,previous_version: string,prior_changelog: string,spec_commit_message: string,
       __baml_options__?: BamlCallOptions<never>
       ): Promise<HTTPRequest> {
         try {
@@ -101,7 +101,7 @@ env?: Record<string, string | undefined>
           return await this.runtime.buildRequest(
           "AnalyzeSdkDiff",
           {
-          "diff": diff,"language": language,"previous_version": previous_version
+          "diff": diff,"language": language,"previous_version": previous_version,"prior_changelog": prior_changelog,"spec_commit_message": spec_commit_message
           },
           this.ctxManager.cloneContext(),
           __baml_options__?.tb?.__tb(),

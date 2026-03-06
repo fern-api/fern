@@ -76,7 +76,8 @@ export async function writeFilesToDiskAndRunGenerator({
     whiteLabel,
     ir,
     ai,
-    autoVersioningCache
+    autoVersioningCache,
+    absolutePathToSpecRepo
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -103,6 +104,7 @@ export async function writeFilesToDiskAndRunGenerator({
     ir: IntermediateRepresentation;
     ai: generatorsYml.AiServicesSchema | undefined;
     autoVersioningCache?: AutoVersioningCache;
+    absolutePathToSpecRepo: AbsoluteFilePath | undefined;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -229,7 +231,8 @@ export async function writeFilesToDiskAndRunGenerator({
         ai,
         isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
         autoVersioningCache,
-        generatorLanguage: generatorInvocation.language
+        generatorLanguage: generatorInvocation.language,
+        absolutePathToSpecRepo
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 
