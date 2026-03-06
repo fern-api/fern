@@ -19,9 +19,9 @@
  * 10. Performance: chunking + analysis completes in reasonable time
  */
 
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { AutoVersioningService } from "../AutoVersioningService.js";
-import { MAX_AI_DIFF_BYTES, VersionBump, maxVersionBump } from "../VersionUtils.js";
+import { MAX_AI_DIFF_BYTES, maxVersionBump, VersionBump } from "../VersionUtils.js";
 
 // ---------------------------------------------------------------------------
 // Diff generators — reusable helpers that build realistic diff content
@@ -104,7 +104,10 @@ function makeLockFileSection(): string {
  * @param targetSizeMB Approximate target size in MB
  * @returns The raw diff string + metadata
  */
-function buildLargeJavaDiff(fileCount: number, targetSizeMB: number): {
+function buildLargeJavaDiff(
+    fileCount: number,
+    targetSizeMB: number
+): {
     rawDiff: string;
     metadata: {
         totalFiles: number;
@@ -281,14 +284,17 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
             const chunks = service.chunkDiff(cleaned, MAX_AI_DIFF_BYTES);
             const elapsed = performance.now() - startTime;
 
-            console.log(`chunkDiff: ${chunks.length} chunks from ${(cleanedBytes / 1024).toFixed(1)} KB cleaned diff (${elapsed.toFixed(0)}ms)`);
+            console.log(
+                `chunkDiff: ${chunks.length} chunks from ${(cleanedBytes / 1024).toFixed(1)} KB cleaned diff (${elapsed.toFixed(0)}ms)`
+            );
 
             // Should produce multiple chunks for a 1+ MB diff
             expect(chunks.length).toBeGreaterThan(1);
 
             // Verify each chunk's byte size
             for (let i = 0; i < chunks.length; i++) {
-                const chunkBytes = Buffer.byteLength(chunks[i]!, "utf-8");
+                const chunk = chunks[i];
+                const chunkBytes = Buffer.byteLength(chunk ?? "", "utf-8");
                 console.log(`  Chunk ${i + 1}: ${(chunkBytes / 1024).toFixed(1)} KB (${chunkBytes} bytes)`);
 
                 // Each chunk should be non-empty
@@ -299,7 +305,9 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
             const allChunkContent = chunks.join("\n");
             const cleanedFileSections = cleaned.match(/diff --git/g) ?? [];
             const chunkFileSections = allChunkContent.match(/diff --git/g) ?? [];
-            console.log(`  File sections: ${cleanedFileSections.length} in cleaned, ${chunkFileSections.length} in chunks`);
+            console.log(
+                `  File sections: ${cleanedFileSections.length} in cleaned, ${chunkFileSections.length} in chunks`
+            );
             expect(chunkFileSections.length).toBe(cleanedFileSections.length);
         });
 
@@ -308,12 +316,12 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
             const chunks = service.chunkDiff(cleaned, MAX_AI_DIFF_BYTES);
 
             // First chunk should contain deletion and signature files
-            const firstChunk = chunks[0]!;
+            const firstChunk = chunks[0] ?? "";
             expect(firstChunk).toContain("RemovedClass");
             expect(firstChunk).toContain("ApiClient");
 
             // Last chunk should contain lower-priority content (additions/context)
-            const lastChunk = chunks[chunks.length - 1]!;
+            const lastChunk = chunks[chunks.length - 1] ?? "";
             // Addition-only files should be toward the end
             expect(lastChunk).toContain("NewType");
         });
@@ -324,14 +332,17 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
 
             let oversizedChunks = 0;
             for (let i = 0; i < chunks.length; i++) {
-                const chunkBytes = Buffer.byteLength(chunks[i]!, "utf-8");
-                const fileSections = (chunks[i]!.match(/diff --git/g) ?? []).length;
+                const chunk = chunks[i] ?? "";
+                const chunkBytes = Buffer.byteLength(chunk, "utf-8");
+                const fileSections = (chunk.match(/diff --git/g) ?? []).length;
 
                 if (chunkBytes > MAX_AI_DIFF_BYTES) {
                     // Allowed only if the chunk is a single oversized file section
                     expect(fileSections).toBe(1);
                     oversizedChunks++;
-                    console.log(`  Oversized chunk ${i + 1}: ${(chunkBytes / 1024).toFixed(1)} KB (single file section — allowed)`);
+                    console.log(
+                        `  Oversized chunk ${i + 1}: ${(chunkBytes / 1024).toFixed(1)} KB (single file section — allowed)`
+                    );
                 }
             }
 
@@ -378,7 +389,9 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
             const chunkElapsed = performance.now() - chunkStart;
 
             const cleanedBytes = Buffer.byteLength(cleaned, "utf-8");
-            console.log(`  cleanDiffForAI: ${(cleanedBytes / 1024 / 1024).toFixed(2)} MB in ${cleanElapsed.toFixed(0)}ms`);
+            console.log(
+                `  cleanDiffForAI: ${(cleanedBytes / 1024 / 1024).toFixed(2)} MB in ${cleanElapsed.toFixed(0)}ms`
+            );
             console.log(`  chunkDiff: ${chunks.length} chunks in ${chunkElapsed.toFixed(0)}ms`);
             console.log(`  Total processing time: ${(cleanElapsed + chunkElapsed).toFixed(0)}ms`);
 
@@ -492,7 +505,7 @@ describe("E2E: maxVersionBump merging logic", () => {
         ];
 
         for (const [a, b, exp] of expected) {
-            expect(maxVersionBump(a!, b!)).toBe(exp);
+            expect(maxVersionBump(a as string, b as string)).toBe(exp);
         }
     });
 
@@ -591,30 +604,32 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
         const chunks = service.chunkDiff(cleaned, MAX_AI_DIFF_BYTES);
 
         // Simulate AI analysis for each chunk (mock responses)
-        const mockAiResponses: { versionBump: string; message: string; changelogEntry: string }[] = chunks.map((chunk, i) => {
-            // First chunk has deletions (highest priority) — give it MINOR
-            // Middle chunks get PATCH
-            // If any chunk has removal patterns, give it MAJOR
-            if (i === 0 && chunk.includes("RemovedClass")) {
+        const mockAiResponses: { versionBump: string; message: string; changelogEntry: string }[] = chunks.map(
+            (chunk, i) => {
+                // First chunk has deletions (highest priority) — give it MINOR
+                // Middle chunks get PATCH
+                // If any chunk has removal patterns, give it MAJOR
+                if (i === 0 && chunk.includes("RemovedClass")) {
+                    return {
+                        versionBump: VersionBump.MAJOR,
+                        message: "breaking: removed deprecated API classes",
+                        changelogEntry: "Removed deprecated RemovedClass API endpoints."
+                    };
+                }
+                if (chunk.includes("ApiClient")) {
+                    return {
+                        versionBump: VersionBump.MINOR,
+                        message: "feat: updated API client signatures",
+                        changelogEntry: "Updated API client method signatures."
+                    };
+                }
                 return {
-                    versionBump: VersionBump.MAJOR,
-                    message: "breaking: removed deprecated API classes",
-                    changelogEntry: "Removed deprecated RemovedClass API endpoints."
+                    versionBump: VersionBump.PATCH,
+                    message: `fix: internal changes in chunk ${i + 1}`,
+                    changelogEntry: ""
                 };
             }
-            if (chunk.includes("ApiClient")) {
-                return {
-                    versionBump: VersionBump.MINOR,
-                    message: "feat: updated API client signatures",
-                    changelogEntry: "Updated API client method signatures."
-                };
-            }
-            return {
-                versionBump: VersionBump.PATCH,
-                message: `fix: internal changes in chunk ${i + 1}`,
-                changelogEntry: ""
-            };
-        });
+        );
 
         // Simulate the merging logic from LocalTaskHandler
         let bestBump: string = VersionBump.NO_CHANGE;
@@ -624,7 +639,10 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
 
         for (let i = 0; i < chunks.length; i++) {
             chunksAnalyzed++;
-            const response = mockAiResponses[i]!;
+            const response = mockAiResponses[i];
+            if (response == null) {
+                continue;
+            }
 
             // Simulate getAnalysis() converting NO_CHANGE to null
             if (response.versionBump === VersionBump.NO_CHANGE) {
@@ -650,7 +668,9 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
         console.log("\n=== Full Pipeline Results ===");
         console.log(`  Raw diff: ${(Buffer.byteLength(rawDiff, "utf-8") / 1024 / 1024).toFixed(2)} MB`);
         console.log(`  Cleaned diff: ${(cleanedBytes / 1024).toFixed(1)} KB`);
-        console.log(`  Chunks: ${chunks.length} (analyzed ${chunksAnalyzed} before ${bestBump === VersionBump.MAJOR ? "short-circuit" : "completion"})`);
+        console.log(
+            `  Chunks: ${chunks.length} (analyzed ${chunksAnalyzed} before ${bestBump === VersionBump.MAJOR ? "short-circuit" : "completion"})`
+        );
         console.log(`  Best bump: ${bestBump}`);
         console.log(`  Message: ${bestMessage}`);
         console.log(`  Changelog: ${bestChangelogEntry}`);
@@ -716,7 +736,8 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
         let bestMessage = "";
 
         for (let i = 0; i < chunks.length; i++) {
-            const bump = chunks[i]!.includes("Service") ? VersionBump.MINOR : VersionBump.PATCH;
+            const chunk = chunks[i] ?? "";
+            const bump = chunk.includes("Service") ? VersionBump.MINOR : VersionBump.PATCH;
             const prevBest = bestBump;
             bestBump = maxVersionBump(bestBump, bump);
 
