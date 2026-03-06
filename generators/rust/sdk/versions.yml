@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.18.1
+  changelogEntry:
+    - summary: |
+        Escape Rust reserved keywords (e.g., `type`, `match`, `self`) when used as path parameter
+        names in generated client methods. Previously, reserved keywords like `type` were emitted
+        as-is, causing `rustfmt` and compilation failures. Now they are properly escaped with the
+        `r#` prefix (e.g., `r#type`).
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
 - version: 0.18.0
   changelogEntry:
     - summary: |
