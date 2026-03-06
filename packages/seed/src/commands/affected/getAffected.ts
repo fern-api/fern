@@ -45,6 +45,7 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
     "java-spring": ["generators/java/", "generators/java-v2/"],
     "go-sdk": ["generators/go/", "generators/go-v2/"],
     "go-model": ["generators/go/", "generators/go-v2/"],
+    "ruby-sdk": ["generators/ruby-v2/"],
     "ruby-sdk-v2": ["generators/ruby-v2/"],
     "csharp-sdk": ["generators/csharp/"],
     "csharp-model": ["generators/csharp/"],
