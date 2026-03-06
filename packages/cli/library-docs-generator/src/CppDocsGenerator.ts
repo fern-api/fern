@@ -5,6 +5,7 @@
  * 1. Collect compounds (classes, concepts, functions, enums, typedefs, variables) from the namespace tree
  * 2. Compute page keys, resolving filename collisions for template specializations
  * 3. Render each compound page and stream to disk via MdxFileWriter
+ * 4. Generate hierarchical index pages (namespace → category folders → entity pages)
  *
  * Designed for sequential rendering: global state in the renderers (nameToPathMap,
  * currentPagePath) requires that pages are rendered one at a time.
@@ -14,8 +15,15 @@ import type { CompoundMeta } from "../cpp/src/context.js";
 import { getShortName, stripTemplateArgs } from "../cpp/src/context.js";
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
-import { renderSegmentsPlainText, renderSegmentsTrimmed } from "../cpp/src/renderers/DescriptionRenderer.js";
-import { namespaceHasEntities, renderIndexPage } from "../cpp/src/renderers/IndexPageRenderer.js";
+import { renderSegmentsPlainText } from "../cpp/src/renderers/DescriptionRenderer.js";
+import type { CategoryWithEntries } from "../cpp/src/renderers/IndexPageRenderer.js";
+import {
+    ENTITY_CATEGORIES,
+    namespaceHasEntities,
+    renderCategoryIndexPage,
+    renderNamespaceIndexPage,
+    renderNamespacesIndexPage
+} from "../cpp/src/renderers/IndexPageRenderer.js";
 import { groupFunctionsByName } from "../cpp/src/renderers/MethodRenderer.js";
 import type { CppDocstringIr, CppLibraryDocsIr, CppNamespaceIr } from "./types/CppLibraryDocsIr.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
@@ -122,10 +130,11 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     }
 
     // Stage 4: Generate index pages for namespaces
-    const slugBaseName = slug.includes("/") ? slug.split("/").pop()! : slug;
+    const slugBaseName = slug.includes("/") ? (slug.split("/").pop() ?? slug) : slug;
     const libraryNs = ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName);
     if (libraryNs) {
-        generateIndexPages(libraryNs, slug, true, writer);
+        const title = LIBRARY_TITLES[libraryNs.name] ?? `${libraryNs.name} API Reference`;
+        generateIndexPages(libraryNs, slug, title, writer);
     }
 
     return writer.result();
@@ -225,6 +234,60 @@ function collectCompounds(ns: CppNamespaceIr, rootPrefix: string): CollectedComp
 }
 
 // ---------------------------------------------------------------------------
+// Filesystem path helpers
+// ---------------------------------------------------------------------------
+
+/**
+ * Map a CollectedCompound to its category folder name.
+ *
+ * For "class" compounds, inspects the underlying CppClassIr.kind to distinguish
+ * "class" -> "classes" vs "struct" -> "structs". Other kinds map directly.
+ */
+function categoryFolderForCompound(collected: CollectedCompound): string {
+    switch (collected.compound.kind) {
+        case "class": {
+            const classKind = collected.compound.data.kind;
+            return classKind === "struct" ? "structs" : "classes";
+        }
+        case "concept":
+            return "concepts";
+        case "function":
+            return "functions";
+        case "enum":
+            return "enums";
+        case "typedef":
+            return "typedefs";
+        case "variable":
+            return "variables";
+        default: {
+            const _exhaustive: never = collected.compound;
+            throw new Error(`Unknown compound kind: ${JSON.stringify(_exhaustive)}`);
+        }
+    }
+}
+
+/**
+ * Convert namespace path parts to a filesystem path, inserting "namespaces/"
+ * between levels.
+ *
+ * Examples:
+ *   ["thrust"]                   -> "thrust"
+ *   ["thrust", "mr"]            -> "thrust/namespaces/mr"
+ *   ["thrust", "system", "cuda"] -> "thrust/namespaces/system/namespaces/cuda"
+ */
+function namespacePathToFilesystem(nsParts: string[]): string {
+    const [first, ...rest] = nsParts;
+    if (first === undefined) {
+        return "";
+    }
+    const segments: string[] = [first];
+    for (const part of rest) {
+        segments.push("namespaces", part);
+    }
+    return segments.join("/");
+}
+
+// ---------------------------------------------------------------------------
 // Page key computation (collision resolution for template specializations)
 // ---------------------------------------------------------------------------
 
@@ -234,14 +297,15 @@ interface PageEntry {
 }
 
 function computePageKeys(compounds: CollectedCompound[], slug: string): PageEntry[] {
-    // Group by directory + base filename to detect collisions
+    // Group by directory + category + base filename to detect collisions
     const groups = new Map<string, CollectedCompound[]>();
     for (const c of compounds) {
         const stripped = stripTemplateArgs(c.path);
-        const parts = stripped.split("::");
-        const baseFilename = sanitizeForFilename(parts.at(-1) ?? "");
-        const dir = parts.slice(0, -1).join("/");
-        const groupKey = dir ? `${dir}/${baseFilename}` : baseFilename;
+        const nsParts = stripped.split("::").slice(0, -1);
+        const baseFilename = sanitizeForFilename(stripped.split("::").pop() ?? "");
+        const dir = namespacePathToFilesystem(nsParts);
+        const category = categoryFolderForCompound(c);
+        const groupKey = dir ? `${dir}/${category}/${baseFilename}` : `${category}/${baseFilename}`;
         const existing = groups.get(groupKey);
         if (existing) {
             existing.push(c);
@@ -253,9 +317,13 @@ function computePageKeys(compounds: CollectedCompound[], slug: string): PageEntr
     const result: PageEntry[] = [];
     for (const [groupKey, group] of groups) {
         if (group.length === 1) {
+            const single = group[0];
+            if (single === undefined) {
+                continue;
+            }
             result.push({
                 pageKey: `${slug}/${groupKey}.mdx`,
-                collected: group[0] as CollectedCompound
+                collected: single
             });
         } else {
             // Collision: append sanitized template suffix to disambiguate
@@ -326,19 +394,50 @@ const LIBRARY_TITLES: Record<string, string> = {
 /**
  * Recursively generate index pages for a namespace and all its descendants.
  *
- * Skips namespaces that have no entities (directly or recursively).
+ * For each namespace with entities, writes:
+ * - Namespace index page (links to category folders and namespaces/)
+ * - Category index pages for each non-empty category
+ * - namespaces/index.mdx if child namespaces with entities exist
  */
-function generateIndexPages(ns: CppNamespaceIr, slug: string, isRoot: boolean, writer: MdxFileWriter): void {
+function generateIndexPages(ns: CppNamespaceIr, slug: string, title: string, writer: MdxFileWriter): void {
     if (!namespaceHasEntities(ns)) {
         return;
     }
 
-    const title = isRoot ? (LIBRARY_TITLES[ns.name] ?? `${ns.name} API Reference`) : `Namespace ${ns.path}`;
-    const content = renderIndexPage(ns, title);
-    const pageKey = `${slug}/${ns.path.replace(/::/g, "/")}/index.mdx`;
-    writer.writePage(pageKey, content);
+    const nsDir = `${slug}/${namespacePathToFilesystem(ns.path.split("::"))}`;
 
+    // Pre-compute non-empty categories (single pass)
+    const nonEmptyCategories: CategoryWithEntries[] = [];
+    for (const category of ENTITY_CATEGORIES) {
+        const entries = category.collectEntries(ns);
+        if (entries.length > 0) {
+            nonEmptyCategories.push({ category, entries });
+        }
+    }
+
+    // Pre-compute child namespaces with entities
+    const childrenWithEntities = ns.namespaces
+        .filter((child) => namespaceHasEntities(child))
+        .sort((a, b) => a.path.localeCompare(b.path));
+
+    // 1. Namespace index page
+    const indexContent = renderNamespaceIndexPage(title, nonEmptyCategories, childrenWithEntities.length > 0);
+    writer.writePage(`${nsDir}/index.mdx`, indexContent);
+
+    // 2. Category index pages for non-empty categories
+    for (const categoryWithEntries of nonEmptyCategories) {
+        const categoryContent = renderCategoryIndexPage(ns.path, categoryWithEntries, title);
+        writer.writePage(`${nsDir}/${categoryWithEntries.category.folderName}/index.mdx`, categoryContent);
+    }
+
+    // 3. namespaces/index.mdx if child namespaces with entities exist
+    if (childrenWithEntities.length > 0) {
+        const namespacesContent = renderNamespacesIndexPage(ns.path, childrenWithEntities, title);
+        writer.writePage(`${nsDir}/namespaces/index.mdx`, namespacesContent);
+    }
+
+    // 4. Recurse into child namespaces
     for (const child of ns.namespaces) {
-        generateIndexPages(child, slug, false, writer);
+        generateIndexPages(child, slug, `Namespace ${child.path}`, writer);
     }
 }

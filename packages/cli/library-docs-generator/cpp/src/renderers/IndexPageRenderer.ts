@@ -1,12 +1,13 @@
 /**
- * Renders an API reference index page for a single C++ namespace.
+ * Renders API reference index pages for C++ namespace documentation.
  *
- * Each namespace gets its own index page listing:
- * 1. Sub-namespaces (links to their own index pages)
- * 2. Direct member entities grouped by category:
- *    Classes, Structs, Concepts, Functions, Type Definitions, Enumerations, Variables
+ * Three page types are produced per namespace:
+ * 1. Namespace index — links to non-empty category folder indexes and namespaces/index
+ * 2. Category index — bulleted entity list for a single category (e.g., classes/index.mdx)
+ * 3. Namespaces index — bulleted list of child namespaces (namespaces/index.mdx)
  *
- * The caller is responsible for recursion — this function renders one namespace only.
+ * The ENTITY_CATEGORIES array is the single source of truth for all 7 entity
+ * categories. Both this module and CppDocsGenerator consume it.
  */
 
 import type { CppClassIr, CppFunctionIr, CppNamespaceIr } from "../../../src/types/CppLibraryDocsIr.js";
@@ -14,29 +15,17 @@ import { buildLinkPath, stripTemplateArgs } from "../context.js";
 import { renderFrontmatter, trimTrailingBlankLines } from "./shared.js";
 
 // ---------------------------------------------------------------------------
-// Entity category definitions
+// Entity entry type
 // ---------------------------------------------------------------------------
 
-interface EntityEntry {
+export interface EntityEntry {
     displayName: string;
     linkPath: string;
 }
 
-/**
- * Check whether a namespace has any entities, either directly or in descendants.
- */
-export function namespaceHasEntities(ns: CppNamespaceIr): boolean {
-    if (
-        ns.classes.length > 0 ||
-        ns.concepts.length > 0 ||
-        ns.functions.length > 0 ||
-        ns.enums.length > 0 ||
-        ns.typedefs.length > 0 ||
-        ns.variables.length > 0
-    ) {
-        return true;
-    }
-    return ns.namespaces.some((child) => namespaceHasEntities(child));
+export interface CategoryWithEntries {
+    category: CategoryDefinition;
+    entries: EntityEntry[];
 }
 
 // ---------------------------------------------------------------------------
@@ -81,87 +70,166 @@ function collectFunctionEntries(functions: CppFunctionIr[]): EntityEntry[] {
 }
 
 // ---------------------------------------------------------------------------
-// Section rendering
+// Category definitions — single source of truth
 // ---------------------------------------------------------------------------
 
-/**
- * Render a category section (heading + bulleted list of links).
- * Returns an empty array if the entries list is empty.
- */
-function renderCategorySection(heading: string, entries: EntityEntry[]): string[] {
-    if (entries.length === 0) {
-        return [];
-    }
-    const lines: string[] = [];
-    lines.push(`## ${heading}`);
-    lines.push("");
-    for (const entry of entries) {
-        lines.push(`- [\`${entry.displayName}\`](${entry.linkPath})`);
-    }
-    lines.push("");
-    return lines;
+export interface CategoryDefinition {
+    folderName: string;
+    heading: string;
+    collectEntries: (ns: CppNamespaceIr) => EntityEntry[];
 }
 
+export const ENTITY_CATEGORIES: readonly CategoryDefinition[] = [
+    {
+        folderName: "classes",
+        heading: "Classes",
+        collectEntries: (ns) => collectClassEntries(ns.classes, "class")
+    },
+    {
+        folderName: "structs",
+        heading: "Structs",
+        collectEntries: (ns) => collectClassEntries(ns.classes, "struct")
+    },
+    {
+        folderName: "concepts",
+        heading: "Concepts",
+        collectEntries: (ns) => collectEntityEntries(ns.concepts)
+    },
+    {
+        folderName: "functions",
+        heading: "Functions",
+        collectEntries: (ns) => collectFunctionEntries(ns.functions)
+    },
+    {
+        folderName: "enums",
+        heading: "Enumerations",
+        collectEntries: (ns) => collectEntityEntries(ns.enums)
+    },
+    {
+        folderName: "typedefs",
+        heading: "Type Definitions",
+        collectEntries: (ns) => collectEntityEntries(ns.typedefs)
+    },
+    {
+        folderName: "variables",
+        heading: "Variables",
+        collectEntries: (ns) => collectEntityEntries(ns.variables)
+    }
+];
+
+// ---------------------------------------------------------------------------
+// Namespace entity check
+// ---------------------------------------------------------------------------
+
 /**
- * Render the sub-namespaces section with relative links to their index pages.
+ * Check whether a namespace has any entities, either directly or in descendants.
  */
-function renderSubNamespacesSection(ns: CppNamespaceIr): string[] {
-    const childNamespaces = ns.namespaces.filter((child) => namespaceHasEntities(child));
-    if (childNamespaces.length === 0) {
-        return [];
+export function namespaceHasEntities(ns: CppNamespaceIr): boolean {
+    const hasDirectEntities = ENTITY_CATEGORIES.some((cat) => cat.collectEntries(ns).length > 0);
+    if (hasDirectEntities) {
+        return true;
     }
-
-    const sorted = [...childNamespaces].sort((a, b) => a.path.localeCompare(b.path));
-
-    const lines: string[] = [];
-    lines.push("## Sub-Namespaces");
-    lines.push("");
-    for (const child of sorted) {
-        // Build a relative link from this namespace's index page to the child's index page.
-        // The child's index page is at {slug}/{child.path.replace(/::/g, '/')}/index.mdx
-        // relative to this page at {slug}/{ns.path.replace(/::/g, '/')}/index.mdx
-        // so the relative path is ./{childName}/index
-        const relativePath = `./${child.name}/index`;
-        lines.push(`- [\`${child.path}\`](${relativePath})`);
-    }
-    lines.push("");
-    return lines;
+    return ns.namespaces.some((child) => namespaceHasEntities(child));
 }
 
 // ---------------------------------------------------------------------------
-// Main renderer
+// Namespace index page
 // ---------------------------------------------------------------------------
 
 /**
- * Render a single namespace's API reference index page as MDX.
+ * Render a namespace's top-level index page.
  *
- * @param ns - The namespace IR to render
- * @param title - Page title (e.g., "CUB API Reference" or "Namespace thrust::mr")
- * @returns Complete MDX page content
+ * Contains only links to non-empty category folder indexes and, if applicable,
+ * a link to the namespaces/index page. No inline entity listings.
+ *
+ * @param title - Page title (e.g., "CUB API Reference" or "Namespace cub::detail")
+ * @param categories - Pre-computed non-empty categories with their entries
+ * @param hasChildNamespaces - Whether child namespaces with entities exist
  */
-export function renderIndexPage(ns: CppNamespaceIr, title: string): string {
+export function renderNamespaceIndexPage(
+    title: string,
+    categories: CategoryWithEntries[],
+    hasChildNamespaces: boolean
+): string {
     const lines: string[] = [];
 
-    // Frontmatter
-    // For root namespaces the title is like "CUB API Reference" — strip the suffix for the description.
-    // For sub-namespaces the title is like "Namespace thrust::mr" — use the qualified path directly.
-    const descriptionSubject = title.endsWith(" API Reference") ? title.replace(/ API Reference$/, "") : ns.path;
+    const descriptionSubject = title.endsWith(" API Reference") ? title.replace(/ API Reference$/, "") : title;
     const description = `API reference for the ${descriptionSubject} namespace.`;
     lines.push(...renderFrontmatter(title, description));
     lines.push("");
 
-    // Sub-namespaces (at the top, before entity categories)
-    lines.push(...renderSubNamespacesSection(ns));
+    // Links to non-empty category indexes
+    for (const { category } of categories) {
+        lines.push(`- [${category.heading}](./${category.folderName}/index)`);
+    }
 
-    // Entity categories in prescribed order:
-    // Classes -> Structs -> Concepts -> Functions -> Type Definitions -> Enumerations -> Variables
-    lines.push(...renderCategorySection("Classes", collectClassEntries(ns.classes, "class")));
-    lines.push(...renderCategorySection("Structs", collectClassEntries(ns.classes, "struct")));
-    lines.push(...renderCategorySection("Concepts", collectEntityEntries(ns.concepts)));
-    lines.push(...renderCategorySection("Functions", collectFunctionEntries(ns.functions)));
-    lines.push(...renderCategorySection("Type Definitions", collectEntityEntries(ns.typedefs)));
-    lines.push(...renderCategorySection("Enumerations", collectEntityEntries(ns.enums)));
-    lines.push(...renderCategorySection("Variables", collectEntityEntries(ns.variables)));
+    // Link to namespaces index if there are child namespaces with entities
+    if (hasChildNamespaces) {
+        lines.push("- [Namespaces](./namespaces/index)");
+    }
+
+    trimTrailingBlankLines(lines);
+    return lines.join("\n") + "\n";
+}
+
+// ---------------------------------------------------------------------------
+// Category index page
+// ---------------------------------------------------------------------------
+
+/**
+ * Render a category folder's index page (e.g., classes/index.mdx).
+ *
+ * Contains a bulleted list of entities with links.
+ *
+ * @param nsPath - Fully qualified namespace path (e.g., "cub" or "thrust::system")
+ * @param categoryWithEntries - Category definition with pre-computed entity entries
+ * @param nsTitle - Human-readable namespace title for the page heading
+ */
+export function renderCategoryIndexPage(
+    nsPath: string,
+    categoryWithEntries: CategoryWithEntries,
+    nsTitle: string
+): string {
+    const { category, entries } = categoryWithEntries;
+    const lines: string[] = [];
+
+    const title = `${nsTitle} — ${category.heading}`;
+    const description = `${category.heading} in the ${nsPath} namespace.`;
+    lines.push(...renderFrontmatter(title, description));
+    lines.push("");
+
+    for (const entry of entries) {
+        lines.push(`- [\`${entry.displayName}\`](${entry.linkPath})`);
+    }
+
+    trimTrailingBlankLines(lines);
+    return lines.join("\n") + "\n";
+}
+
+// ---------------------------------------------------------------------------
+// Namespaces index page
+// ---------------------------------------------------------------------------
+
+/**
+ * Render the namespaces/index.mdx page listing child namespaces.
+ *
+ * Each child namespace links to ./{child.name}/index.
+ *
+ * @param nsPath - Fully qualified namespace path (e.g., "cub" or "thrust::system")
+ * @param childNamespaces - Pre-filtered and sorted child namespaces that have entities
+ * @param nsTitle - Human-readable namespace title for the page heading
+ */
+export function renderNamespacesIndexPage(nsPath: string, childNamespaces: CppNamespaceIr[], nsTitle: string): string {
+    const lines: string[] = [];
+
+    const title = `${nsTitle} — Namespaces`;
+    const description = `Sub-namespaces of the ${nsPath} namespace.`;
+    lines.push(...renderFrontmatter(title, description));
+    lines.push("");
+
+    for (const child of childNamespaces) {
+        lines.push(`- [\`${child.path}\`](./${child.name}/index)`);
+    }
 
     trimTrailingBlankLines(lines);
     return lines.join("\n") + "\n";
