@@ -392,15 +392,10 @@ export class RootClientGenerator {
                 const parts = fernFilepathDir.split("/");
                 const moduleName = parts[parts.length - 1]; // Get the last part (actual directory name)
 
-                subModuleDeclarations.push(`pub mod ${moduleName};`);
+                const subClientName = this.context.getUniqueClientNameForSubpackage(subClientSubpackage);
 
-                // Only re-export client if the child actually has a service or endpoints in tree.
-                // Children that are pure namespace containers (no service, no endpoints) don't
-                // generate a client struct, so re-exporting would cause a compilation error.
-                if (subClientSubpackage.service != null || subClientSubpackage.hasEndpointsInTree) {
-                    const subClientName = this.context.getUniqueClientNameForSubpackage(subClientSubpackage);
-                    subModuleDeclarations.push(`pub use ${moduleName}::${subClientName};`);
-                }
+                subModuleDeclarations.push(`pub mod ${moduleName};`);
+                subModuleDeclarations.push(`pub use ${moduleName}::${subClientName};`);
             }
         });
 
