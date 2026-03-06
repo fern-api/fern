@@ -199,8 +199,8 @@ vi.mock("../AutoVersioningCache.js", () => ({
     AutoVersioningCache: class MockAutoVersioningCache {
         private cache = new Map<string, Promise<unknown>>();
 
-        key(cleanedDiff: string, language: string, previousVersion: string) {
-            return `${language}:${previousVersion}:${cleanedDiff.slice(0, 8)}`;
+        key(cleanedDiff: string, language: string, previousVersion: string, priorChangelog: string = "", specCommitMessage: string = "") {
+            return `${language}:${previousVersion}:${priorChangelog.slice(0, 4)}:${specCommitMessage.slice(0, 4)}:${cleanedDiff.slice(0, 8)}`;
         }
 
         getOrCompute(key: string, compute: () => Promise<unknown>) {
@@ -452,6 +452,34 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
         };
     }
 
+    async function createSharedCacheHandlers() {
+        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
+        const { AutoVersioningCache } = await import("../AutoVersioningCache.js");
+        const sharedCache = new AutoVersioningCache();
+
+        const makeHandler = () =>
+            new LocalTaskHandler({
+                // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+                context: mockContext as any,
+                // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+                absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+                absolutePathToTmpSnippetJSON: undefined,
+                absolutePathToLocalSnippetTemplateJSON: undefined,
+                // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+                absolutePathToLocalOutput: "/tmp/local-output" as any,
+                absolutePathToLocalSnippetJSON: undefined,
+                absolutePathToTmpSnippetTemplatesJSON: undefined,
+                version: "505.503.4455",
+                ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+                isWhitelabel: false,
+                generatorLanguage: "typescript",
+                absolutePathToSpecRepo: undefined,
+                autoVersioningCache: sharedCache
+            });
+
+        return { handler1: makeHandler(), handler2: makeHandler(), sharedCache };
+    }
+
     it("deduplicates concurrent AI calls via cache", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
             version_bump: VersionBump.MINOR,
@@ -459,48 +487,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
             changelog_entry: "Default timeout has been increased."
         });
 
-        // Create two handlers sharing the same cache (simulating concurrent generators)
-        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
-        const { AutoVersioningCache } = await import("../AutoVersioningCache.js");
-        const sharedCache = new AutoVersioningCache();
-
-        const handler1 = new LocalTaskHandler({
-            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
-            context: mockContext as any,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
-            absolutePathToTmpSnippetJSON: undefined,
-            absolutePathToLocalSnippetTemplateJSON: undefined,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToLocalOutput: "/tmp/local-output" as any,
-            absolutePathToLocalSnippetJSON: undefined,
-            absolutePathToTmpSnippetTemplatesJSON: undefined,
-            version: "505.503.4455",
-            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
-            isWhitelabel: false,
-            generatorLanguage: "typescript",
-            absolutePathToSpecRepo: undefined,
-            autoVersioningCache: sharedCache
-        });
-
-        const handler2 = new LocalTaskHandler({
-            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
-            context: mockContext as any,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
-            absolutePathToTmpSnippetJSON: undefined,
-            absolutePathToLocalSnippetTemplateJSON: undefined,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToLocalOutput: "/tmp/local-output" as any,
-            absolutePathToLocalSnippetJSON: undefined,
-            absolutePathToTmpSnippetTemplatesJSON: undefined,
-            version: "505.503.4455",
-            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
-            isWhitelabel: false,
-            generatorLanguage: "typescript",
-            absolutePathToSpecRepo: undefined,
-            autoVersioningCache: sharedCache
-        });
+        const { handler1, handler2 } = await createSharedCacheHandlers();
 
         // Run concurrently — both should get the same result
         const [result1, result2] = await Promise.all([
@@ -523,47 +510,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
             changelog_entry: ""
         });
 
-        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
-        const { AutoVersioningCache } = await import("../AutoVersioningCache.js");
-        const sharedCache = new AutoVersioningCache();
-
-        const handler1 = new LocalTaskHandler({
-            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
-            context: mockContext as any,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
-            absolutePathToTmpSnippetJSON: undefined,
-            absolutePathToLocalSnippetTemplateJSON: undefined,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToLocalOutput: "/tmp/local-output" as any,
-            absolutePathToLocalSnippetJSON: undefined,
-            absolutePathToTmpSnippetTemplatesJSON: undefined,
-            version: "505.503.4455",
-            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
-            isWhitelabel: false,
-            generatorLanguage: "typescript",
-            absolutePathToSpecRepo: undefined,
-            autoVersioningCache: sharedCache
-        });
-
-        const handler2 = new LocalTaskHandler({
-            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
-            context: mockContext as any,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
-            absolutePathToTmpSnippetJSON: undefined,
-            absolutePathToLocalSnippetTemplateJSON: undefined,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToLocalOutput: "/tmp/local-output" as any,
-            absolutePathToLocalSnippetJSON: undefined,
-            absolutePathToTmpSnippetTemplatesJSON: undefined,
-            version: "505.503.4455",
-            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
-            isWhitelabel: false,
-            generatorLanguage: "typescript",
-            absolutePathToSpecRepo: undefined,
-            autoVersioningCache: sharedCache
-        });
+        const { handler1, handler2 } = await createSharedCacheHandlers();
 
         // First call populates cache
         await callHandleAutoVersioning(handler1);
