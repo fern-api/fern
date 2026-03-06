@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.18.3
+  changelogEntry:
+    - summary: |
+        Fix duplicate module declarations and WebSocket type name collisions when multiple
+        subpackages (e.g., HTTP REST and AsyncAPI WebSocket) map to the same namespace. Deduplicates
+        `pub mod` declarations, client re-exports, and doc comments. WebSocket channel generators
+        now use collision-aware type names (e.g., `AuthResponse2` instead of `AuthResponse`) to
+        correctly reference disambiguated types in the trading namespace.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
 - version: 0.18.2
   changelogEntry:
     - summary: |
